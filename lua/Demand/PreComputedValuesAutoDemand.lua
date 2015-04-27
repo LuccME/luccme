@@ -10,6 +10,7 @@
 -- landUseTypesForInterpolation (optional).
 -- @arg component.execute Handles with the execution method of a PreComputedValuesAutoDemand component.
 -- @arg model.verify Handles with the verify method of a PreComputedValuesAutoDemand component.
+-- @arg component.printDemand Print the generated demand.
 -- @arg component.getCurrentDemand Return the current demand of the specified component.
 -- @arg component.getPreviousDemand Return the previous demand of the specified component.
 -- @arg component.getCurrentLuDemand Return the current demand for an specific luIndex.
@@ -216,10 +217,21 @@ function PreComputedValuesAutoDemand(component)
 	        self.numLU = self.numLU + 1
 	    end
 		
+		-- print the demand
+		self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
+
+	end
+
+	--- Print on screen the generated demand.
+	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @usage self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
+	component.printDemand = function(self, initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 		-- Print on screen the demands (for conference)
 		-- print the initial demand
 		print("\n\tInitial Demand\t Year")
 		local rowPrint = ""
+		local j, i
+		
 		for j, lu in pairs (luccMEModel.demand.landUseTypesForInterpolation) do
 			rowPrint = rowPrint .. initialDemand[j] .. " "
 		end
@@ -247,7 +259,7 @@ function PreComputedValuesAutoDemand(component)
 		end
 		print("\n")
 	end
-
+	
 	--- Return the current demand of the specified component.
 	-- @arg self A PreComputedValuesAutoDemand component.
 	-- @return self.currentDemand the current demand of the component.

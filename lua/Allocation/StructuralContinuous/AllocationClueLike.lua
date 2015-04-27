@@ -52,7 +52,6 @@ function allocationClueLike(component)
 
 		--Init demandDirection and elasticity (internal component variables)
 		self:initElasticity(luccMEModel, self.initialElasticity) 
-		-- self:computeMaxChange () ANAP
 		
 		-- Define iteration loop variables
 		local nIter = 0
@@ -170,27 +169,6 @@ function allocationClueLike(component)
 					  change = luAllocData.maxChange * (pot / math.abs(pot))
 				end
 					
-				--[[		
-					
-				if ((pot >= 0) and (luDirect == 1) and (luStatic< 1) and (cell.past[lu] >= luAllocData.changeLimiarValue)) then
-							  if (change >= luAllocData.maxChangeAboveLimiar) then
-									if (change/2 < luAllocData.maxChangeAboveLimiar) 				
-										then change = change/2
-										else change = luAllocData.maxChangeAboveLimiar 
-									end
-							  end
-				end
-				
-				if	   ((pot <= 0) and (luDirect == -1) and (luStatic < 1) and (cell.past[lu] <= luAllocData.changeLimiarValue)) then
-					   if (math.abs(change) >= luAllocData.maxChangeAboveLimiar) then
-								 if (math.abs(change/2) < luAllocData.maxChangeAboveLimiar)
-										then change = change/2
-										else change = (-1)*luAllocData.maxChangeAboveLimiar
-								 end
-						end
-					end
-						
-				--]]						
 				if (((pot >= 0) and (luDirect == 1) and (luStatic< 1)) or
 				   ((pot <= 0) and (luDirect == -1) and (luStatic < 1))) then
 						cell[lu] = cell.past[lu] + change 
@@ -202,12 +180,11 @@ function allocationClueLike(component)
 					cell[lu] = 0
 				end
 			  
-				if (cell[lu] > 1) then -- ANAP
+				if (cell[lu] > 1) then
 					cell[lu] = 1
 				end
 
 				if (cell[lu] <= luAllocData.minValue) then	
-					--print ("ERRO MIN 0", cell[lu], luAllocData.minValue)
 					if (cell.past[lu] >= luAllocData.minValue) then
 						cell[lu] = luAllocData.minValue
 					else
@@ -348,10 +325,9 @@ function allocationClueLike(component)
 
 				for i, luAllocData in pairs (self.allocationData) do
 					local lu = luTypes[i]
-					--if (luAllocData.static < 1) then
 					local luStatic = luAllocData.static
 					
-					if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then --ANAP teste2
+					if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
 						luStatic = 1
 					end		
 					

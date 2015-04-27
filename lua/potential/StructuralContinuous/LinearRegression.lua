@@ -176,7 +176,7 @@ function LinearRegression(component)
 			end
 				
 			if (regression < 0)then
-				regression = 0			--@todo Verificar se usar max min
+				regression = 0			
 			end
 				
 			if (luccmemodel.landUseNoData ~= nil) then

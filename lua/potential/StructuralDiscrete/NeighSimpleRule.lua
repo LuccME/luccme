@@ -42,13 +42,11 @@ function NeighSimpleRule(model)
 									)
 									
 				-- Step 4: Compute potential
-				--if (numNeigh > 0) then print (numNeigh, totalNeigh)end
 				if (totalNeigh > 0) then
 					cell[lu.."_pot"] = numNeigh / totalNeigh 	
 				else 	
 					cell[lu.."_pot"] = 0
 				end	
-				--print ("pot"..lu.."->"..cell[lu.."_pot"])
 			end
 		end
 	end -- end execute

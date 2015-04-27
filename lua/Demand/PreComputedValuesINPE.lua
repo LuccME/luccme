@@ -56,13 +56,11 @@ function PreComputedValuesINPE(component)
 				if (self.previousDemand[i] < self.currentDemand[i]) then
 					self.demandDirection[i] = increasing
 				end
-				if (self.previousDemand[i] > self.currentDemand[i]) then --@todo elseif?
+				if (self.previousDemand[i] > self.currentDemand[i]) then
 					self.demandDirection[i] = decreasing
 				end
 			end
 		end
-		--print("DEMAND EXECUTE - Direction", step)
-		--table.foreach(self.demandDirection, print)
 	end
 	
 	--- Handles with the parameters verification.

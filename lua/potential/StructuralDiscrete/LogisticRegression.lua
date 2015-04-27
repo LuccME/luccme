@@ -49,8 +49,6 @@ function LogisticRegression(model)  --@todo verificar o LandUse
 			end
 
  			for luind, inputValues in pairs (regressionData[cell.region]) do
-				--print("regiao", cell.region)
-				--print(inputValues.const, "atributos", inputValues.attributes)
 				local lu = luTypes[luind]
   				
   				-- Step 1: Calculates the regression estimates
@@ -87,7 +85,6 @@ function LogisticRegression(model)  --@todo verificar o LandUse
 		local attrs = inputValues.attributes
 	
 		for var, beta in pairs (betas) do
-			--print (var, beta)
 			regrLogit = regrLogit + beta * cell[var]
 		end
 			

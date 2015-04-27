@@ -7,17 +7,15 @@ function modifyRoads(lu, roadsModel, cell) --@todo apagar o lu? Função não parec
         --print ("modifyRoads")
         for i, attr in pairs (roadsModel.attrs) do
 			local diff = cell[attr] - cell.past[attr]
-			--if (diff ~= 0) then print (attr, diff, cell[attr], cell.past[attr]) end
+
 			if ((roadsModel.change < 0) and (diff < 0)) then
 				if (diff < roadsModel.change) then
 					incr =  incr + roadsModel.increment
-					-- print ("DECREASE", lu, attr, diff, incr)
 				end
 			end
 			if ((roadsModel.change > 0) and (diff > 0)) then
 				if (diff > roadsModel.change) then
 					incr =  incr + roadsModel.increment
-					-- print ("INCREASE", lu, attr, diff, incr)
 				end
 			end
 		end
@@ -91,7 +89,7 @@ function SpatialLagRegression(component)
 		end
 		
 		if (self.constChange == nil) then
-			self.constChange = 0.1 			-- original clue value @todo constant
+			self.constChange = 0.1 			-- original clue value
 		end
 
         if (event:getTime() > luccMEModel.startTime) then
@@ -203,8 +201,6 @@ function SpatialLagRegression(component)
 	component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
 		currentTime = event:getTime()
 		local regression = roadsModel.const
-		--  print (roadsModel.const)
-		--  io.flush ()
 
 		for var, beta in pairs (roadsModel.betas) do
 			regression = regression + beta * cell[var]
@@ -298,33 +294,7 @@ function SpatialLagRegression(component)
 										if (neigh[luccMEModel.landUseNoData] ~= 1) then
 											neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
 										end
-			--[[	
-										if (luData.isLog) then -- if the land use is log transformed
-											Y = math.log(10, Y+0.0001)
-											neighY = math.log(10, neighY+0.0001)
-										end
 
-										if (neigh[luccMEModel.landUseNoData] < 1) then
-											count = count + 1
-											neighSum = neighSum + neighY
-										end
-									end
-							)
-
-			if (count > 0) then
-				regresY = neighSum/count --v11
-				-- regresY = (Y + neighSum)/(count + 1) --v6 v8
-			else
-				regresY = Y
-			end
-
-			--regresY = (regresY + Y)/2 --v4 v5 v7
-
-			regressionX = regressionX + regresY * luData.ro
-			local regression = luData.newconst + regressionX
-			local regressionLimit = luData.const+ regressionX		
-			--]]	
-	
 										if (neigh[luccMEModel.landUseNoData] < 1) then
 											count = count + 1
 											neighSum = neighSum + neighY
@@ -333,13 +303,11 @@ function SpatialLagRegression(component)
 							)
 		
 			if (count > 0) then
-				--regresY = (neighSum/count)*luData.ro
 				regresY = ((Y + neighSum) / (count + 1)) * luData.ro  --v6 v8 v11
 			else
 				regresY = Y * luData.ro
 			end	
-			--regresY = (regresY + Y*luData.ro)/2 --v4 v5 v7 v10
-
+			
 			if (luData.isLog) then -- if the land use is log transformed
 				regresY = math.log(10, regresY + 0.0001)  --ANAP
 			end
@@ -348,13 +316,11 @@ function SpatialLagRegression(component)
 			local regressionLimit = luData.const + regressionX + regresY   		
 	
 			if (luData.roadsModel ~= nil) then
-			    --print (luData.roadsModel.const, luData.roadsModel.change)
 			    local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event)
 				
 				if (newRegression ~= regression) then
 				     regression = newRegression
 				     regressionLimit = regression
-				    -- print ("ROAS MODEL WORKING")
 				end
 		    end
 

@@ -38,10 +38,10 @@ function AllocationClueSLike(model)
   		local maxdiffarea = (self.maxDifference * totarea)
   		local luTypes = component.landUseTypes
   		local max_iteration = self.maxIteration 
-  		
-  		----------------------------------------------------
+
   		print ("Time : ", event:getTime())
     	print ("Step : ", step)
+
 		if useLog == true then
 			print ("----------------------------------------------------------------------------------------")
 			print ("Cell Area "..cellarea)
@@ -82,18 +82,14 @@ function AllocationClueSLike(model)
 					lu_pastIndex = toIndex(lu_past, luTypes)
 					possibleTransitions = self.transitionMatrix[cell.region][lu_pastIndex][luind]
 					
-					--local pot_plus_iter =  cell[lu.."_pot"] +  iteration[lu]
-					
 					-- POTENTIAL WITH ATTRACTION/REPULSION FACTOR "TAU"
 					if cell["tau_"..lu] == nil then
 						cell["tau_"..lu] = 0
 					end
 					
 					local pot_plus_iter = (1 + cell["tau_"..lu]) * cell[lu.."_pot"] +  iteration[lu]
-						--print("TAU: "..cell["tau_"..lu])				
 
 					if (possibleTransitions == 1)then
-						--print ("lu", lu, " regiao ", cell.region)
 						if (pot_plus_iter > probMaior) then
 							probMaior = pot_plus_iter
 							lu_maior = lu
@@ -108,9 +104,6 @@ function AllocationClueSLike(model)
 			end -- end for cell space
 								  	
 			local diff = calcDifferences(event, component)
-			print("-----------------------")
-			--table.foreach(diff, print)
-			print("-----------------------")
 			
 			allocation_ok = convergency(cs, diff, luTypes, maxdiffarea)
 			

@@ -78,20 +78,11 @@ function LuccMEModel(model)
 	
 		self.result = {}
 
-		---Verify whether the attributes to be saved were calculated in the model
+		-- Verify whether the attributes to be saved were calculated in the model
 		for i, lu in pairs (self.landUseTypes) do
 			if (self.cs.cells[1][lu] == nil) then
 				error("Invalid land use type", 2)
 			end
-			--[[	@todo Apagar?
-			local equal=0
-			for j, attr in pairs (self.save.saveAttrs) do
-				if (lu == attr) then
-					equal = 1
-					break
-				end
-			end
-			--]]
 			local equal = 1
 		end
 		

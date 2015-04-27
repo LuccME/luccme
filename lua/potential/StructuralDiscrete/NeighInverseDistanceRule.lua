@@ -48,17 +48,13 @@ function NeighInverseDistanceRule(model)
 								)
 								
 				-- Step 4: Compute potential
-				--if (numNeigh > 0) then print (numNeigh, totalNeigh)end
 				if (totalNeigh > 0) then
 					cell[lu.."_pot"] = numNeigh / totalNeigh 	
 				else 	
 					cell[lu.."_pot"] = 0
 				end	
-				
-				--print ("pot"..lu.."->"..cell[lu.."_pot"])
 			
 				local luData = self.potentialData[i]
-				--print (luData.factor)
 				local potDrivers = 0
 				
 				for var, coef in pairs (luData.multipliers) do
@@ -71,7 +67,6 @@ function NeighInverseDistanceRule(model)
 
 				if (potDrivers > 1) then potDrivers = 1 end
 
-				-- print ("potDrivers", potDrivers)
 				cell[lu.."_pot"] = cell[lu.."_pot"] + potDrivers
 			end
 		end

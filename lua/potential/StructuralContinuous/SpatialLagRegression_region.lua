@@ -236,7 +236,6 @@ function SpatialLagRegression_region(component)
 				local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
 
 				luData.newconst = luData.const
-				-- print (luData.newconst, luData.const)
 
 				if (luData.isLog) then
 					local const_unlog = math.pow(10, luData.newconst) + plus
@@ -273,7 +272,7 @@ function SpatialLagRegression_region(component)
 		for k,cell in pairs (cs.cells) do
             local regressionX = 0
             local region = cell[self.regionAttr]
-            --print (self.regionAttr, region, lu)
+  
             if (region == nil or region == 0) then
 				region = 1
 			end
@@ -307,7 +306,6 @@ function SpatialLagRegression_region(component)
 							)
 		
 			if (count > 0) then
-				--regresY = (neighSum/count)*luData.ro
 				regresY = (Y + neighSum) / (count + 1) * luData.ro  --v6 v8 v11
 			else
 				regresY = Y*luData.ro
@@ -315,19 +313,17 @@ function SpatialLagRegression_region(component)
 			
 			--regresY = (regresY + Y*luData.ro)/2 --v4 v5 v7 v10
 			if (luData.isLog) then -- if the land use is log transformed
-				regresY = math.log(10, regresY + 0.0001)  --ANAP  --@todo magic number
+				regresY = math.log(10, regresY + 0.0001)  --@todo magic number
 			end
 
 	        local regression = luData.newconst + regressionX + regresY
 			local regressionLimit = luData.const + regressionX + regresY   		
 	
 			if (luData.roadsModel ~= nil) then
-			    --print (luData.roadsModel.const, luData.roadsModel.change)
 			    local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event)
 				if (newRegression ~= regression) then
 				     regression = newRegression
 				     regressionLimit = regression
-				    -- print ("ROAS MODEL WORKING")
 				end
 		    end
 

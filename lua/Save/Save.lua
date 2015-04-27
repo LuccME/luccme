@@ -31,15 +31,13 @@ function databaseSave(luccmemodel)
 	end
 	
 	for year = luccmemodel.startTime + 1, luccmemodel.endTime, 1 do
-		-- for year = 2005, luccmemodel.endTime, 5 do
 		e2 = Event {	time = year,
 						priority = 21,
 						action = function(event)
 									forEachCell(luccmemodel.cs, function(cell)
 																	for j, lu in pairs (luccmemodel.landUseTypes) do
-																			--if (lu ~= luccmemodel.allocation.landUseNoData and lu ~= luccmemodel.allocation.complementarLU) then
 																			if (lu ~= luccmemodel.allocation.landUseNoData) then
-																				cell[lu.."_Ext"..year] = cell[lu] * luccmemodel.cs.cellArea     -- ANAP: concatenate all saveAttrs instead
+																				cell[lu.."_Ext"..year] = cell[lu] * luccmemodel.cs.cellArea
 																				cell[lu.."_Area"..year] = cell[lu.."_change"] * luccmemodel.cs.cellArea
 																			end
 																	end
@@ -74,8 +72,7 @@ function saveSingleTheme(luccmemodel)
 
 	for j, lu in pairs (luccmemodel.landUseTypes) do
 		if (lu ~= luccmemodel.allocation.landUseNoData and lu ~= luccmemodel.allocation.complementarLU) then
-				--for year = luccmemodel.scenarioStartTime, luccmemodel.endTime, 1 do
-				for year = luccmemodel.startTime + 1, luccmemodel.endTime, 1 do --ANAP
+				for year = luccmemodel.startTime + 1, luccmemodel.endTime, 1 do
 					out = lu.."_Ext"..year
 					change = lu.."_Area"..year
 					attrs_ext[n] = out
@@ -116,7 +113,6 @@ function saveSingleTheme_v1(luccmemodel, flagArea)
 	print ("-------------------------------------------------------------\n")
 
 	for j, lu in pairs (luccmemodel.landUseTypes) do
-		--print ("\n"..lu)
 		local tot = {}
 
 		for year = luccmemodel.startTime + 1, luccmemodel.endTime, 1 do
@@ -138,7 +134,6 @@ function saveSingleTheme_v1(luccmemodel, flagArea)
 						)
 			print ("       ", year, math.floor(tot[year]))
 
-			--if (lu == "luDeforest") then
 			if (lu ~= luccmemodel.potential.landUseNoData) then
 				if (flagArea == true) then
 					attrs_out[n] = out_area
@@ -175,7 +170,6 @@ function saveSingleTheme_v0(luccmemodel, flagArea)
 	print ("-------------------------------------------------------------\n")
 
 	for j, lu in pairs (luccmemodel.landUseTypes) do
-		--print ("\n"..lu)
 		local tot = {}
 		for year = luccmemodel.startTime, luccmemodel.endTime, 1 do
 			out = lu..year

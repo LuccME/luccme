@@ -116,7 +116,6 @@ function AllocationByOrdering(model)
 		if (allocation_ok == true) then 
  			--Atualizando os status de uso de cada uma das células se a demanda foi alocada corretamente
 			for k, cell in pairs (cs.cells) do			
- 				--changeUse (cell, currentUse(cell, luTypes), toLU(cell.simUse, luTypes))
  				changeUse(cell, currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
@@ -215,11 +214,10 @@ function changeUse(cell, cur_use, great_use)
 	cell[great_use.."_out"] = 1
 
 	cell[great_use.."_change"] = 0
-	cell[cur_use.."_change"] = 0  --ANAP
+	cell[cur_use.."_change"] = 0  
 	if (cur_use ~= great_use) then
 	       cell[great_use.."_change"] = 1
-	       cell[cur_use.."_change"] = -1 --ANAP
-	      -- print ("change ok  ", cur_use, great_use)
+	       cell[cur_use.."_change"] = -1 
 	 end
 end
 

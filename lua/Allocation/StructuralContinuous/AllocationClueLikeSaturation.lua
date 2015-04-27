@@ -56,9 +56,9 @@ function allocationClueLikeSaturation(component)
 		local cs = luccmeModel.cs
 
 		-- Init demandDirection and elasticity(internal component variables)
-		-- self:relaxProtected(event, luccmeModel)
 		self:initElasticity(luccmeModel, self.initialElasticity) 
 		self:updateAllocationParameters(event, luccmeModel)
+
 		-- Define iteration loop variables
 		local nIter = 0
 		local allocation_ok = false
@@ -88,7 +88,6 @@ function allocationClueLikeSaturation(component)
 				if ((nIter >  self.maxIteration * 0.50) and (flagFlex == false)) then  -- final attempt
 					maxAdjust = maxAdjust * 2
 					flagFlex = true
-					--self:relaxProtected(event, luccmeModel) SceA
 				end  
 			end
 		until((nIter >= self.maxIteration) or (allocation_ok == true))
@@ -150,12 +149,9 @@ function allocationClueLikeSaturation(component)
 	-- @usage self:relaxProtected(event, luccmeModel)
 	component.relaxProtected = function(self, event, luccmeModel)
 		if (self.attrProtection ~= nil and self.complementarLU ~= nil) then
-			--luccmeModel.potential:modifyProt(luccmeModel, self.attrProtection, self.complementarLU, event)
 			print("RELAX PROT", luccmeModel.potential.regressionData[1].betas[self.attrProtection])
 			luccmeModel.potential.regressionData[1].betas[self.attrProtection] = luccmeModel.potential.regressionData[1].betas[self.attrProtection] * 0.5
 			luccmeModel.potential:computePotential(luccmeModel, 1, event)
-			--self.allocationData[1].minValue = 0
-			--self.allocationData[2].maxValue = 1
 			print("           ", luccmeModel.potential.regressionData[1].betas[self.attrProtection])
 		end
 	end
@@ -173,12 +169,9 @@ function allocationClueLikeSaturation(component)
 							local prot_t = 0
 							local original = 1
 							local perc_def_original = 0
-			
-			
+
 							attrprot = self.attrProtection
-							--print(attrprot)
-							--io.flush()
-		   
+	   
 							if (self.attrProtection ~= nil) then
 								prot_t = cell[self.attrProtection]
 							end
@@ -186,8 +179,6 @@ function allocationClueLikeSaturation(component)
 								original = 1 - cell[self.landUseNoData]
 							end
 							local available_forest = original - prot_t
-
-							--if (prot_t > 0) then print(available_forest, prot_t, original) end
 			   
 							if (available_forest > 0) then
 								local total_perc = 0
@@ -220,14 +211,11 @@ function allocationClueLikeSaturation(component)
 								if (count > 0) then
 									perc_def_original = total_perc / count  -- v7 v8
 								end
-								-- perc_def_original =(perc_def_original + total_perc)/(count+1) -- v4 includes the current cell
 							else
 								perc_def_original = 1  
 							end
 
 							cell[self.saturationIndicator] = perc_def_original
-							-- cell.maxChange = 0.2*(1-perc_def_original)*available_forest
-							-- print(cell[self.saturationIndicator], cell.maxChange)
 						end
 					)
 	end
@@ -271,19 +259,13 @@ function allocationClueLikeSaturation(component)
 					pot = 0
 					change = 0
 				end
---[[
-				if (math.abs(change) >= cell.maxChange) then
-					if (pot ~= 0) then change = cell.maxChange*(pot/math.abs(pot)) end
-				end
-				--]]	
-					 		
+
 				if (math.abs(change) >= luAllocData.maxChange) then
 					 if (pot ~= 0) then
 						change = luAllocData.maxChange * (pot / math.abs(pot))
 					end
 				end
 					
-				--if ((pot >= 0) and (luDirect == 1) and (luStatic < 1) and (cell.past[lu] >= luAllocData.changeLimiarValue)) then
 				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue))) then
 					if (change >= luAllocData.maxChangeAboveLimiar) then
 						if (change/2 < luAllocData.maxChangeAboveLimiar) then
@@ -294,8 +276,6 @@ function allocationClueLikeSaturation(component)
 					end
 				end
 
-				--	if	((pot <= 0) and (luDirect == -1) and (luStatic < 1) and (cell.past[lu] <= luAllocData.changeLimiarValue)) then
-				--  print(cell[self.saturationIndicator])
 				if ((pot <= 0) and (luDirect == -1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue)) then
 					if (math.abs(change) >= luAllocData.maxChangeAboveLimiar) then
 						if (math.abs(change / 2) < luAllocData.maxChangeAboveLimiar) then
@@ -450,8 +430,8 @@ function allocationClueLikeSaturation(component)
 
 				for i, luAllocData in pairs (self.allocationData) do
 					local lu = luTypes[i]
-					--if (luAllocData.static < 1) then
 					local luStatic = luAllocData.static
+
 					if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
 						luStatic =1
 					 end		
@@ -495,6 +475,7 @@ function allocationClueLikeSaturation(component)
 						end
 					end
 				end
+				
 				-- perform the corrections
 				repeat
 					l = l + 1

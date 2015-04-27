@@ -59,8 +59,6 @@ function PreComputedValuesAutoDemand(component)
 				end
 			end
 		end
-		--print("DEMAND EXECUTE - Direction", step)
-		--table.foreach(self.demandDirection, print)
 	end
 	
 	--- Handles with the parameters verification and the generation for the Demand.
@@ -248,9 +246,6 @@ function PreComputedValuesAutoDemand(component)
 			rowPrint = ""
 		end
 		print("\n")
-
-		--self.currentDemand = self.annualDemand[1]	--@todo use a constant instead of "magic number"
-		--self.previousDemand = self.annualDemand[1]
 	end
 
 	--- Return the current demand of the specified component.

@@ -26,7 +26,6 @@ function InverseDistanceRule(model)
 			for i, lu in pairs (luTypes) do
 				cell[lu.."_pot"] = 0
 				local luData = self.potentialData[i]
-				--print (luData.factor)
 				local potDrivers = 0
 				
 				for var, coef in pairs (luData.multipliers) do
@@ -40,7 +39,7 @@ function InverseDistanceRule(model)
 				if (potDrivers > 1) then
 					potDrivers = 1
 				end
-				-- print ("potDrivers", potDrivers)
+
 				cell[lu.."_pot"] =  potDrivers
 			end
 		end

@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modeling.
---Copyright © 2009 - 2011 INPE.
+--LuccME - a framework for topdown land use change modelling.
+--Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or
@@ -22,10 +22,9 @@
 --
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
-
-function InverseDistanceRule (model)
+function InverseDistanceRule (component)
 	
-	model.execute = function (self,event,modelParameters)
+	component.execute = function (self,event,modelParameters)
 										 
 		local cs = modelParameters.cs 
 		local luTypes = modelParameters.landUseTypes 
@@ -33,37 +32,30 @@ function InverseDistanceRule (model)
  		local landUseDrivers = self.landUseDrivers 
   		local filename = self.filename 
 		
-	
- 		
-  		
   		for k, cell in pairs( cs.cells ) do
-  		 			
 			for i, lu in pairs( luTypes ) do  
-			
-			     
-					    cell[lu.."_pot"] = 0
-			
-			
-					 local luData 	= self.potentialData[i]
-					-- print (luData.factor)
-					 local potDrivers = 0
-				 for var, coef in pairs( luData.multipliers ) do 
-						if (cell[var] > 0) then potDrivers = potDrivers + coef*1/cell[var]*luData.factor
-						                    else potDrivers = potDrivers + luData.factor end
-					 end
-					 
-					 if (potDrivers > 1) then potDrivers = 1 end
-					 
-					-- print ("potDrivers", potDrivers)
-					 cell[lu.."_pot"] =  potDrivers
+				cell[lu.."_pot"] = 0
 
+				local luData 	= self.potentialData[i]
+				local potDrivers = 0
+
+				for var, coef in pairs( luData.multipliers ) do 
+					if (cell[var] > 0) then 
+						potDrivers = potDrivers + coef*1/cell[var]*luData.factor
+					else 
+						potDrivers = potDrivers + luData.factor 
+					end
+				end
+
+				if (potDrivers > 1) then potDrivers = 1 end
+
+				cell[lu.."_pot"] =  potDrivers
 			end
 		end
 	end -- end execute
 	
-	model.verify = function (self,event)
+	component.verify = function (self,event)
 	end
 	
-	
-	return model
-end --close RegressionLogistcModelNeighbourhood
+	return component
+end --close InverseDistanceRule

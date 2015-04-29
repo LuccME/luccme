@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modeling.
---Copyright © 2009 - 2011 INPE.
+--LuccME - a framework for topdown land use change modelling.
+--Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or
@@ -47,11 +47,11 @@ function LuccMEModel (model)
 			end
 		
 			if self.scenarioName == nil and self.scenarioStartTime ~= nil then
-				error("A scenario name is required")
+				error("A scenario name is required", 2)
 			end
 		
 			if self.scenarioName ~= nil and self.scenarioStartTime == nil then
-				error("A scenario start time is required")
+				error("A scenario start time is required", 2)
 			end
 		
 	        self.result = {}
@@ -59,21 +59,13 @@ function LuccMEModel (model)
 
 			---Verify whether the attributes to be saved were calculated in the model
 			for i, lu in pairs (self.landUseTypes) do
-				if self.cs.cells[1][lu]== nil then
+				if self.cs.cells[1][lu] == nil then
 					error("Invalid land use type", 2)
 				end
 
-		--[[	
-		      local equal=0
-			  for j, attr in pairs (self.save.saveAttrs) do
-					if lu == attr then
-						equal = 1
-						break
-					end
-		     end 
-		--]] 
-		   local equal=1
+				local equal = 1
 			end
+			
 			if equal == 0 then
 				error(" Attributes to be saved must be calculated as land use type in the model", 2)
 			end

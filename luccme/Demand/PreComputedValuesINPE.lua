@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modeling.
---Copyright © 2009 - 2011 INPE.
+--LuccME - a framework for topdown land use change modelling.
+--Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or
@@ -39,7 +39,7 @@ function PreComputedValuesINPE (component)
 component.execute = function (self, event, luccMEModel)	
 ----------------------------------------------------------------
 		step = event:getTime() - luccMEModel.startTime + 1
-	--	if (table.getn(self.annualDemand) < step) then	--ANAP PORTE TE130
+
 		if (#self.annualDemand < step) then	
 		        error ("Time required exceeds the demand set", 5) 
 		end
@@ -66,16 +66,13 @@ component.execute = function (self, event, luccMEModel)
 				
 			end
 		end 
-		--print ("DEMAND EXECUTE - Direction", step)
-		--table.foreach (self.demandDirection, print)
-		     
 	end	    
 	
 ---------------------------------------------------------------	
 component.verify = function  (self, event, luccMEModel)
 --------------------------------------------------------------- 
 		yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
---		if (table.getn(self.annualDemand) < yearsSimulated) then  ANAP
+
 		if (#self.annualDemand < yearsSimulated) then
 			error ("The simulation time exceeds the demand set", 5) 
 		end	
@@ -98,8 +95,6 @@ component.verify = function  (self, event, luccMEModel)
 	    self.currentDemand = self.annualDemand[1]
 		self.previousDemand =self.annualDemand[1]
 	end	    
-	    	
-	 		
     
 	component.getCurrentDemand = function (self)	
 		 return (self.currentDemand) 
@@ -139,6 +134,4 @@ component.verify = function  (self, event, luccMEModel)
     end		
     
 	return component   
-end -- ScenariosDemand
-		
-
+end 

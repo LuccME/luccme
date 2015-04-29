@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change componenting.
---Copyright © 2009 - 2011 INPE.
+--LuccME - a framework for topdown land use change modelling.
+--Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or
@@ -22,25 +22,24 @@
 --
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
+function AllocationClueSLike (component)
 
-function AllocationClueSLike (model)
-
-	model.execute = function (self,event,component) 
+	component.execute = function (self,event,model) 
 
 		------Global and Local Variables and Constants------
-		local useLog = component.useLog
-		local cs = component.cs
-		local potential = component.potential		
+		local useLog = model.useLog
+		local cs = model.cs
+		local potential = model.potential		
 		local cellarea = cs.cellArea
-		local step = event:getTime() - component.startTime + 1;		
-		local start = component.startTime		
-  		local demand = component.demand
+		local step = event:getTime() - model.startTime + 1;		
+		local start = model.startTime		
+  		local demand = model.demand
 		local nIter = 0
   		local allocation_ok = false
   		local numofcells  = #cs.cells
   		local totarea = (numofcells * cellarea)
   		local maxdiffarea = (self.maxDifference * totarea)
-  		local luTypes = component.landUseTypes
+  		local luTypes = model.landUseTypes
   		local max_iteration = self.maxIteration  
   		
   		----------------------------------------------------
@@ -78,7 +77,7 @@ function AllocationClueSLike (model)
 				local lu_maior = lu_past;
 				local probMaior = -999999999
 				local maxLuNeigh
-				if (component.region == nil) then cell.region = 1 end
+				if (cell.region == nil) then cell.region = 1 end
 				
 				for i, lu in  pairs( luTypes ) do	
 						
@@ -86,18 +85,14 @@ function AllocationClueSLike (model)
 						lu_pastIndex = toIndex(lu_past ,luTypes)
 						possibleTransitions = self.transitionMatrix[cell.region][lu_pastIndex][luind]
 						
-						--local pot_plus_iter =  cell[lu.."_pot"] +  iteration[lu]
-						
 						-- POTENTIAL WITH ATTRACTION/REPULSION FACTOR "TAU"
 						if cell["tau_"..lu] == nil then
 							cell["tau_"..lu] = 0
 						end
 						
 						local pot_plus_iter = (1 + cell["tau_"..lu]) * cell[lu.."_pot"] +  iteration[lu]
-							--print("TAU: "..cell["tau_"..lu])				
 
 						if (possibleTransitions == 1)then 
-							--print ("lu",lu," regiao ",cell.region)
 							if ( pot_plus_iter > probMaior) then
 								probMaior = pot_plus_iter
 								lu_maior = lu
@@ -111,10 +106,7 @@ function AllocationClueSLike (model)
 				changeUse (cell,lu_past,lu_maior)
 			end -- end for cell space
 								  	
-			local diff = calcDifferences (event, component)
-			print("-----------------------")
-			--table.foreach(diff, print)
-			print("-----------------------")
+			local diff = calcDifferences (event, model)
 			
 			allocation_ok = convergency(cs,diff, luTypes, maxdiffarea )
 			
@@ -136,19 +128,18 @@ function AllocationClueSLike (model)
  	
  	model.verify = function (self,event)
 	end
-  return model
+
+	return model
 end -- end of AllocationCluesLike
 
 -- ____________________________________
 --			AUXILIARY FUNCTIONS
 --_____________________________________
 
-function calcDifferences (event,component)
-	
-	local cs = component.cs
-	
-	local luTypes = component.landUseTypes
-	local demand = component.demand
+function calcDifferences (event,model)
+	local cs = model.cs
+	local luTypes = model.landUseTypes
+	local demand = model.demand
 	local cellarea  = cs.cellArea			
 	local tot_diff = 0.0
 	local maxdiff = 0.0
@@ -159,7 +150,7 @@ function calcDifferences (event,component)
 		areaAlloc = areaAllocated(cs,cellarea,land,1)
 		dem = demand:getCurrentLuDemand(luind)
 		differences[land] = (dem - (areaAlloc))
-		if component.useLog == true then
+		if model.useLog == true then
 			print (land.." -> " ..areaAlloc.."\t\tdemanda -> "..dem.." diferença -> "..differences[land]) 
 		end
 	end
@@ -218,22 +209,20 @@ function initIteration(lutypes)
 	return iteration
 end
 
-function changeUse(cell,cur_use, great_use)
+function changeUse(cell,cur_use, higher_use)
 	cell[cur_use] = 0
 	cell[cur_use.."_out"] = 0
-	cell[great_use] = 1
-	cell[great_use.."_out"] = 1
+	cell[higher_use] = 1
+	cell[higher_use.."_out"] = 1
 
-	cell[great_use.."_change"] = 0
-	cell[cur_use.."_change"] = 0  --ANAP
-	if (cur_use ~= great_use) then 
-	       cell[great_use.."_change"] = 1 
-	       cell[cur_use.."_change"] = -1 --ANAP
-	      -- print ("change ok  ", cur_use, great_use) 
+	cell[higher_use.."_change"] = 0
+	cell[cur_use.."_change"] = 0  
+	if (cur_use ~= higher_use) then 
+	       cell[higher_use.."_change"] = 1 
+	       cell[cur_use.."_change"] = -1 
 	 end
 	
 end
-
 
 function currentUse (cell, landuses)
 	for i,land  in pairs( landuses ) do
@@ -241,35 +230,4 @@ function currentUse (cell, landuses)
 			return land
 		end
 	end
-end
-
--- Considers M and N are the dimensions the componentler wants to evaluate.
--- As an example if M and N are equal 1 then the function below takes into account 
--- and area enclosing 9 cells such as the Moore´s neighbourhood.
--- The 'filter' atribute is a function of f(cell) type that returns cell.uso == forest and	cell.pa == 0 then, 
--- in this case the are considered encloses the 8 adjacent cells as long as the attribute pa is equal 0
--- It can be useful, as example, to guarantee that a property (land parcel) does not invade a forbidden area protected by spatial policies.
-
-
-function cellsBuffer (c, cs, M, N, filter)
-	local f = filter or function (cell) return true end; 
-	cells = {}
-	if( N < 0) then N = 1; end
-	if( M < 0) then M = 1; end
-	local lin;
-	local col;
-	local i=0;   
-	
-	for lin = -N,N,1 do
-		 for col = -M,M,1 do                   
-			 local coord = Coord{ x = (c.x + col), y = (c.y + lin)};                   
-			 cell_i = cs:getCell( coord );
-			 if( cell_i ) then
-				if  f(cell_i) then
-					table.insert(cells, cell_i );
-				end
-			end
-		end
-	end   
-	return cells
 end

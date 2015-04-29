@@ -1,8 +1,6 @@
--- mudar demand [i]
-
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modeling.
---Copyright © 2009 - 2011 INPE.
+--LuccME - a framework for topdown land use change modelling.
+--Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or
@@ -24,7 +22,6 @@
 --
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
-
 function allocationClueLike (component)
 -- external interface
 	-- execute
@@ -38,20 +35,18 @@ function allocationClueLike (component)
 	----------------------------------------------------------------   	 
 	component.execute = function (self,event,luccMEModel) 
 	----------------------------------------------------------------   	 
-	-- Syncronaze cellular space in the first year
+	-- Synchronize cellular space in the first year
 		   local luTypes 	= luccMEModel.landUseTypes
 		   local cs 		= luccMEModel.cs
-	
-	     
 		
 			--Init demandDirection and elasticity (internal component variables)
 		    self:initElasticity        (luccMEModel, self.initialElasticity)  
-	        --self:computeMaxChange () ANAP
+
 			-- Define iteration loop variables
 		    local nIter= 0
 			local allocation_ok = false
 			local maxAdjust = self.maxDifference  
-			local maxdiff = self.maxDifference*1000
+			local maxdiff = self.maxDifference*1000 -- Initializing for a large number of iteration
 			local flagFlex = false
 			 		
 		    -- Loop until maxdiff is achieved
@@ -73,15 +68,8 @@ function allocationClueLike (component)
 			        end
 				else  
 					nIter = nIter + 1
-				 
-			 	    if (nIter >  self.maxIteration*0.90) and (flagFlex == false) then  -- final attempt
-			 	        maxAdjust = maxAdjust*2 
-			 	        flagFlex = true 
-			 	   	end   
-		 	   end
-				
+		 	    end
 			until ((nIter >= self.maxIteration) or (allocation_ok == true) )
-			
 	        
 			if (nIter == self.maxIteration)then
 				print ("Demand not allocated correctly in this time step:", nIter)
@@ -110,7 +98,6 @@ function allocationClueLike (component)
 		     end
 				
 		     cs:synchronize()
-
 		end
 		
 ----------------------------------------------------------------   	 
@@ -129,8 +116,6 @@ function allocationClueLike (component)
 				self.elasticity[k] = value
 			end
 		end
-		
-	
 
 	----------------------------------------------------------------   	 
 	component.computeChange = function ( self, luccMEModel)
@@ -161,27 +146,6 @@ function allocationClueLike (component)
 					      change = luAllocData.maxChange*(pot/math.abs(pot)) 
 					end
 					
-			--[[		
-					 
-					if (( pot >= 0 ) and ( luDirect == 1 )  and ( luStatic< 1) and (cell.past[lu] >= luAllocData.changeLimiarValue)) then
-					              if (change >= luAllocData.maxChangeAboveLimiar) then 
-					                    if (change/2 < luAllocData.maxChangeAboveLimiar) 				
-					                        then change = change/2 
-					                        else change = luAllocData.maxChangeAboveLimiar  
-					                    end
-					              end
-					end
-					
-					if	   (( pot <= 0 ) and ( luDirect == -1 ) and ( luStatic < 1) and (cell.past[lu] <= luAllocData.changeLimiarValue)) then 
-					       if (math.abs(change) >= luAllocData.maxChangeAboveLimiar) then 
-					                 if (math.abs(change/2) < luAllocData.maxChangeAboveLimiar) 
-					                        then change = change/2 
-					                        else change = (-1)*luAllocData.maxChangeAboveLimiar 
-					                 end
-					        end
-					end
-						
-			--]]						
 					if (( pot >= 0 ) and ( luDirect == 1 )  and ( luStatic< 1)) or
 					   (( pot <= 0 ) and ( luDirect == -1 ) and ( luStatic < 1)) then
 					
@@ -194,14 +158,13 @@ function allocationClueLike (component)
 				            cell[ lu ] = 0 
 				   end
 				   
-				    if ( cell[ lu ] > 1 ) then -- ANAP
+				    if ( cell[ lu ] > 1 ) then 
 				            cell[ lu ] = 1 
 				   end
 				   
 
 			    if (cell[lu] <= luAllocData.minValue) then	
-			           			--print ("ERRO MIN 0", cell[lu], luAllocData.minValue)
-						if (cell.past[lu] >= luAllocData.minValue) then 
+							if (cell.past[lu] >= luAllocData.minValue) then 
 						       cell[lu] = luAllocData.minValue
 						else
 						      cell[lu] = cell.past[lu]
@@ -216,12 +179,10 @@ function allocationClueLike (component)
 						else
 						      cell[lu] = cell.past[lu]
 						end 
-		 			end
-				end  -- for cell
-			end -- for lu
-		end
-	
-
+				end
+			end  -- for cell
+		end -- for lu
+	end
 
 	----------------------------------------------------------------   	 
 	component.compareAllocationToDemand = function (self, event, luccMEModel)
@@ -284,10 +245,6 @@ function allocationClueLike (component)
 			return max
 		end
 		
-		
-		
-	
-
 	----------------------------------------------------------------   
 	component.correctCellChange = function (self, luccMEModel)
 	----------------------------------------------------------------   
@@ -324,16 +281,15 @@ function allocationClueLike (component)
 	
 					-- adapts land use/cover types if all of them change into the same direction
 					if (totchange > 0) then
-						if ((BACKP * totchange) > (max * 0.5))then  -- (max/2)
+						if ((BACKP * totchange) > (max * 0.5))then  
 							BACKP = (max / (2*totchange))
 						end
 					end
 	
 					for i, luAllocData in pairs( self.allocationData ) do
 						local lu = luTypes[i]
-						--if ( luAllocData.static < 1) then
 						local luStatic = luAllocData.static
-					    if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue)then --ANAP teste2
+					    if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue)then 
 										luStatic =1
 					     end		
 					   if (luStatic < 1) then
@@ -459,15 +415,10 @@ function allocationClueLike (component)
 		local cellarea = cs.cellArea
 		for i, lu in pairs( luTypes ) do
 			local area = 0
-			--local suit = lu
 			for k,cell in pairs( cs.cells ) do
 				local temp = cell[ lu ] 
 				if( temp > 0 ) then
-					if( isHierarchicallyCoupled ) then
-						area = area + temp --  * cellarea  --* cell.count
-					else
-						area = area + temp  -- * cellarea
-					end
+						area = area + temp 
 				end
 			end
 			areas[ i ] = area * cellarea
@@ -505,9 +456,3 @@ end -- close Allocation Component
 -------------------------------------------------------------------------------------
 -- SUBROUTINES
 -------------------------------------------------------------------------------------
-
-
-
-
-
-

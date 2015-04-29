@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modeling.
---Copyright © 2009 - 2011 INPE.
+--LuccME - a framework for topdown land use change modelling.
+--Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or
@@ -22,17 +22,16 @@
 --
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------t
+function AllocationBySimpleOrdering (component)
 
-function AllocationByOrdering (model)
+	component.execute = function (self,event,model) 
 
-	model.execute = function (self,event,model) 
-
-------Global and Local Variables and Constants------
-		local useLog = self.useLog
+	------Global and Local Variables and Constants------
+		local useLog = model.useLog
 		local cs = model.cs
 		local potential = model.potential		
 		local cellarea = cs.cellArea
-		local step = event:getTime() - model.startTime + 1;		
+		local step = event:getTime() - model.startTime + 1	
 		local start = model.startTime		
   		local demand = model.demand
 		local nIter = 0
@@ -43,7 +42,8 @@ function AllocationByOrdering (model)
   		local luTypes = model.landUseTypes
   		local dem = {}
   		local differences = {}
-  		--Inicialização das demandas
+  	
+	--Inicialização das demandas
 	   	for ind, lu in  pairs( luTypes ) do	
  			dem[lu] = -1
  		end
@@ -72,17 +72,15 @@ function AllocationByOrdering (model)
         end
 
 	
-			diff = 0
-		   	-- Crio o mapa de maiores probabilidades: simUse
-	
+		diff = 0
 			
 			-- Ordenação dos vetores de uso de acordo com as maiores probabilidades
 			for ind, lu in  pairs( luTypes ) do	
-			  if (lu ~= model.landUseNoData) then --ANAP
+			  if (lu ~= model.landUseNoData) then 
 				ord = Trajectory
 				{
 	    			target = cs,
-	   				select = function(cell) return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData) end, -- ANAP
+	   				select = function(cell) return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData) end,
 	    			greater = function(c, d) return c[lu.."_pot"] > d[lu.."_pot"] end
 				 }
 
@@ -96,11 +94,8 @@ function AllocationByOrdering (model)
 				 cs_size = #cs.cells
 				 trj_size =#ord.cells	 
 				 print ("demand", lu, dem[lu], "trajectory size",trj_size )
-				 --table.foreach(ord.cells, print)
 			
- 				 while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do  --ANAP (estava errado)
-				 
- --				 while (j < dem[lu]) and (j < (trj_size * cellarea))  do
+ 				 while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do 
 				 	-- Este atributo irá me indicar se a célula já teve seu uso alocado ou não
 				 	ord.cells[j].alloc = 1
 				 	ord.cells[j].simUse = lu
@@ -127,12 +122,11 @@ function AllocationByOrdering (model)
  		if (allocation_ok == true) then  
  			--Atualizando os status de uso de cada uma das células se a demanda foi alocada corretamente
 			for k,cell in pairs( cs.cells ) do			
- 				--changeUse (cell,currentUse(cell,luTypes),toLU(cell.simUse,luTypes))
  				changeUse (cell,currentUse(cell,luTypes), cell.simUse)
  				cell.alloc = 0
  			end
       		print ("Demand allocated correctly in this time step:",step)
- 			-- If the number of iteractions is larger than or equal to the maximum number of iteractions allowed
+ 			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
         else
         	print ("Demand not allocated correctly in this time step:", step)
         	os.exit();
@@ -140,16 +134,15 @@ function AllocationByOrdering (model)
         
  	end -- end of 'execute' function started in line 28
  	
-    model.verify = function (self,event)
+    component.verify = function (self,event)
 	end
 
-  return model
+  return component
 end -- end of AllocationCluesLike
 
 -- ____________________________________
 --			AUXILIARY FUNCTIONS
 --_____________________________________
-
 function areaAllocated (cs,cellarea, field, attr)
 	c = 0
 	forEachCell( cs, function( cell )
@@ -172,16 +165,6 @@ function toIndex (lu, usetypes )
 	end
 	return index
 end
-
-function toLU (lu, usetypes )
-	for i, value in  pairs( usetypes ) do	
-		if ( i == lu ) then
-			return value
-		end
-		
-	end
-	return index
-end
    
 function initIteration(lutypes)
 	local iteration = {}	
@@ -191,20 +174,18 @@ function initIteration(lutypes)
 	return iteration
 end
 
-function changeUse(cell,cur_use, great_use)
+function changeUse(cell,cur_use, higher_use)
 	cell[cur_use] = 0
 	cell[cur_use.."_out"] = 0
-	cell[great_use] = 1
-	cell[great_use.."_out"] = 1
+	cell[higher_use] = 1
+	cell[higher_use.."_out"] = 1
+	cell[higher_use.."_change"] = 0
+	cell[cur_use.."_change"] = 0  
 
-	cell[great_use.."_change"] = 0
-	cell[cur_use.."_change"] = 0  --ANAP
-	if (cur_use ~= great_use) then 
-	       cell[great_use.."_change"] = 1 
-	       cell[cur_use.."_change"] = -1 --ANAP
-	      -- print ("change ok  ", cur_use, great_use) 
+	if (cur_use ~= higher_use) then 
+	       cell[higher_use.."_change"] = 1 
+	       cell[cur_use.."_change"] = -1 
 	 end
-	
 end
 
 function currentUse (cell, landuses)
@@ -214,4 +195,3 @@ function currentUse (cell, landuses)
 		end
 	end
 end
-

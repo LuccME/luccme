@@ -133,11 +133,11 @@ function allocationClueLikeSaturation (component)
 			local original = 1
 			local perc_def_original = 0
 			
-			
 		    attrprot = self.attrProtection
 		    
 			if (self.attrProtection ~= nil) then prot_t = cell[self.attrProtection] end 
 			if (self.landUseNoData ~= nil) then  original = 1 - cell[self.landUseNoData] end 
+
             local available_forest = original - prot_t
 			    
 	        if (available_forest > 0) then

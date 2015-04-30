@@ -118,7 +118,7 @@ function AllocationClueSLike (component)
 			
       			print ("Demand allocated correctly in this time step:",step)
       			
-			-- If the number of iteractions is larger than or equal to the maximum number of iteractions allowed
+			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
        		elseif	(nIter >= max_iteration) then 
        			print ("Demand not allocated correctly in this time step:", step)
        			os.exit();
@@ -126,20 +126,20 @@ function AllocationClueSLike (component)
       	end -- end of 'while do' started in line 61
  	end -- end of 'execute' function started in line 28
  	
- 	model.verify = function (self,event)
+ 	component.verify = function (self,event)
 	end
 
-	return model
+	return component
 end -- end of AllocationCluesLike
 
 -- ____________________________________
 --			AUXILIARY FUNCTIONS
 --_____________________________________
 
-function calcDifferences (event,model)
-	local cs = model.cs
-	local luTypes = model.landUseTypes
-	local demand = model.demand
+function calcDifferences (event,component)
+	local cs = component.cs
+	local luTypes = component.landUseTypes
+	local demand = component.demand
 	local cellarea  = cs.cellArea			
 	local tot_diff = 0.0
 	local maxdiff = 0.0
@@ -150,7 +150,7 @@ function calcDifferences (event,model)
 		areaAlloc = areaAllocated(cs,cellarea,land,1)
 		dem = demand:getCurrentLuDemand(luind)
 		differences[land] = (dem - (areaAlloc))
-		if model.useLog == true then
+		if component.useLog == true then
 			print (land.." -> " ..areaAlloc.."\t\tdemanda -> "..dem.." diferença -> "..differences[land]) 
 		end
 	end

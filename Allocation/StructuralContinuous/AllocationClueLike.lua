@@ -172,13 +172,11 @@ function allocationClueLike (component)
 		 			end
 		 			
 				if (cell[lu] > luAllocData.maxValue) then	
-					     print ("ERRO MAX 1", cell[lu], luAllocData.maxValue)
-			
-						if (cell.past[lu] <= luAllocData.maxValue) then  
-						       cell[lu] = luAllocData.maxValue
-						else
-						      cell[lu] = cell.past[lu]
-						end 
+					if (cell.past[lu] <= luAllocData.maxValue) then  
+						   cell[lu] = luAllocData.maxValue
+					else
+						  cell[lu] = cell.past[lu]
+					end 
 				end
 			end  -- for cell
 		end -- for lu

@@ -69,14 +69,14 @@ component.verify = function (self, event, luccmeModel)
 	  
 	  local find = false	
       
-	  if (luccmemodel.landUseNoData == nil) then find = true end			
+	 if (luccmeModel.landUseNoData == nil) then find = true end			
 	     
      for j, lu in pairs (luccmeModel.landUseTypes) do 
 		   if (self.regressionData[j] == nil) then 
 		    	error("Invalid number of regressions", 2)
 		   end
      
-           if (luccmemodel.landUseNoData == lu) then find = true end
+           if (luccmeModel.landUseNoData == lu) then find = true end
   
 	 end
              
@@ -168,8 +168,8 @@ end	-- function adaptRegressionConstants
 				regression = 0
 			end
 				
-			if (luccmemodel.landUseNoData ~= nil) then  
-				regression = regression*(1-cell[luccmemodel.landUseNoData])
+			if (luccMEModel.landUseNoData ~= nil) then     
+				regression = regression*(1-cell[luccMEModel.landUseNoData]) 
 			end
 			        
 			cell[pot] = regression - cell.past[lu]  

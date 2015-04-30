@@ -59,7 +59,6 @@ function LogisticRegression (component)
 	end
 	
 	component.calcRegressionLogistic = function (cell,inputValues,luDrivers,model) 
-			
 			local regrLogit = inputValues.const
 			local betas = inputValues.betas
 			local attrs = inputValues.attributes
@@ -68,7 +67,7 @@ function LogisticRegression (component)
 				regrLogit = regrLogit + beta * cell[var]
 			end
 			
-		return (self.probability(regrLogit))
+		return (model.probability(regrLogit))
 	end	--end calcRegressionLogistic
 	
 	-- Computing the probability  

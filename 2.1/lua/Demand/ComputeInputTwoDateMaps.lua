@@ -8,8 +8,8 @@
 -- the final year to calculate the demand interpolation.
 -- @arg component.directionForInterpolation Set the direction of the demand for each
 -- landUseTypesForInterpolation (optional).
--- @arg component.execute Handles with the execution method of a PreComputedValuesAutoDemand component.
--- @arg model.verify Handles with the verify method of a PreComputedValuesAutoDemand component.
+-- @arg component.execute Handles with the execution method of a ComputeInputTwoDateMaps component.
+-- @arg model.verify Handles with the verify method of a ComputeInputTwoDateMaps component.
 -- @arg component.printDemand Print the generated demand.
 -- @arg component.getCurrentDemand Return the current demand of the specified component.
 -- @arg component.getPreviousDemand Return the previous demand of the specified component.
@@ -18,13 +18,13 @@
 -- @arg component.getCurrentLuDirection Return the current demand direction for an specific luIndex.
 -- @arg component.changeLuDirection Invert the demand direction for an specific luIndex.
 -- @return The modified component.
--- @usage demand = PreComputedValuesAutoDemand {
+-- @usage demand = ComputeInputTwoDateMaps {
 --  finalYearForInterpolation = 2004,
 --  landUseTypesForInterpolation = {"Dfinal", "Ffinal", "Ofinal"}
 -- }
-function PreComputedValuesAutoDemand(component)
+function ComputeInputTwoDateMaps(component)
 	--- Handles with the rules of the component execution.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.demand:execute(event, model)
@@ -63,7 +63,7 @@ function PreComputedValuesAutoDemand(component)
 	end
 	
 	--- Handles with the parameters verification and the generation for the Demand.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.demand:verify(event, self)
@@ -223,7 +223,7 @@ function PreComputedValuesAutoDemand(component)
 	end
 
 	--- Print on screen the generated demand.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @usage self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 	component.printDemand = function(self, initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 		-- Print on screen the demands (for conference)
@@ -261,7 +261,7 @@ function PreComputedValuesAutoDemand(component)
 	end
 	
 	--- Return the current demand of the specified component.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @return self.currentDemand the current demand of the component.
 	-- @usage currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
@@ -269,7 +269,7 @@ function PreComputedValuesAutoDemand(component)
     end
 
 	--- Return the previous demand of the specified component.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage previousDemand = demand:getPreviousDemand(i)
     component.getPreviousDemand = function(self)	
@@ -277,7 +277,7 @@ function PreComputedValuesAutoDemand(component)
     end
 
 	-- Return the current demand for an specific luIndex.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand for an specific luIndex.
 	-- @usage model:getCurrentLuDemand(luIndex)
@@ -290,7 +290,7 @@ function PreComputedValuesAutoDemand(component)
     end
 
 	-- Return the previous demand for an specific luIndex.
-	-- @arg self A PreComputedValuesAutoDemand component.
+	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The previous demand for an specific luIndex.
 	-- @usage model:getPreviousLuDemand(luIndex)
@@ -303,7 +303,7 @@ function PreComputedValuesAutoDemand(component)
     end
 
 	--- Return the current demand direction for an specific luIndex.
-	-- @arg self a PreComputedValuesAutoDemand component.
+	-- @arg self a ComputeInputTwoDateMaps component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
 	-- @usage model:getCurrentLuDirection(luIndex)
@@ -316,7 +316,7 @@ function PreComputedValuesAutoDemand(component)
     end	
 
 	--- Invert the demand direction for an specific luIndex.
-	-- @arg self a PreComputedValuesAutoDemand component.
+	-- @arg self a ComputeInputTwoDateMaps component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
 	-- @usage model:changeLuDirection(luIndex)

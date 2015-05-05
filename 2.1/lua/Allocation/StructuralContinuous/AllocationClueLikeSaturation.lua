@@ -1,29 +1,29 @@
---- Allocate the land uses based on potential calculated for each cell. xxxxxxxxxxxxxxxx
--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.maxDifference Maximum difference between informed demand and
--- demand allocated by the model.
--- @arg component.maxIteration Limit of interactions trying to allocate the demand.
--- @arg component.initialElasticity Initial value of the parameter which controls
--- the allocation interaction factor.
--- @arg component.minElasticity Minimum value of the parameter which controls the
--- allocation interaction factor.
--- @arg component.maxElasticity Maximum value of the parameter which controls the
--- allocation interaction factor.
--- @arg component.complementarLU A complementary land use type.
--- @arg component.landUseNoData Land uses that will not be consider.
--- @arg component.saturationIndicator XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.attrProtection XXXXXXXXXXXXXXXXXXXXXXXXXX
+--- Modification of the AllocationClueLike component. In this case  the speed of change in each cell  use a spatio-temporal variable, dynamically updated
+-- every year, that indicates if the cell is in a more consolidated or in a frontier area. The saturation threshold considers a 10x10 neighbourhood, 
+-- discounting protected areas. 
+-- @arg component.maxDifference Maximum allocation error allowed for each land use in area.
+-- @arg component.maxIteration Maximum number of iterations at each time step of the model.
+-- @arg component.initialElasticity Initial elasticity value (iterationFactor).
+-- @arg component.minElasticity Minimum elasticity value which controls the allocation interaction factor. 
+-- @arg component.maxElasticity Maximum elasticity value which controls the allocation interaction factor.
+-- @arg component.complementarLU The land use which will be recomputed in the end to sum exactly 100%.
+-- @arg component.landUseNoData Dummy land use (static).
+-- @arg component.saturationIndicator Name of a attribute which will be dynamically updated (and can be saved for calibration purposes).
+-- @arg component.attrProtection Database attribute indicating the percentage of protected areas to be excluded from the saturation level computation.
 -- @arg component.allocationData A table with two allocation parameters for each land use.
--- @arg component.allocationData.static Direction of land use change.
--- @arg component.allocationData.minValue XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.allocationData.maxValue XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.allocationData.minChange Minimum of change in each cell.
--- @arg component.allocationData.maxChange Limit of change in each cell.
--- @arg component.allocationData.changeLimiarValue XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.allocationData.maxChangeAboveLimiar XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- @arg component.allocationData.static Indicates if the variable can increase or decrease in each cell, or only change in the direction of the demand.
+-- @arg component.allocationData.minValue Minimum value allowed for the percentage of a given land use  in a cell (as a result of new changes -  the original 
+-- value can be out of the limits )
+-- @arg component.allocationData.maxValue Maximum value  allowed for the percentage of a given land use  in a cell (as a result of new changes - the original
+-- value can be out of the limits )
+-- @arg component.allocationData.minChange Minimum change in a given land use in a cell in a time step until (saturation) threshold.
+-- @arg component.allocationData.maxChange Maximum change in a given land use allowed in a cell in a time step until (saturation) threshold.
+-- @arg component.allocationData.changeLimiarValue Threshold (or limier) refers to a given amount of the land use in each cell.  After this limier, the speed
+-- of change of a given land use in the cell is modified. 
+-- @arg component.allocationData.maxChangeAboveLimiar Maximum change in a given land use allowed in a cell in a time step after (saturation) threshold.
+-- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.verify Handles with the verify method of a allocationClueLikeSaturation component.
--- @arg component.relaxProtected XXXXXXXXXXXXXXXXXXXXXXXXXX
 -- @arg component.updateAllocationParameters XXXXXXXXXXXXXXXXXXXXXXXXXX
 -- @arg	component.initElasticity Handles with the elasticity initialize considering a single
 -- elasticity for each land use (all cells).
@@ -55,7 +55,7 @@ function allocationClueLikeSaturation(component)
 		local luTypes = luccmeModel.landUseTypes
 		local cs = luccmeModel.cs
 
-		-- Init demandDirection and elasticity(internal component variables)
+		-- Initialize the demandDirection and elasticity(internal component variables)
 		self:initElasticity(luccmeModel, self.initialElasticity) 
 		self:updateAllocationParameters(event, luccmeModel)
 
@@ -63,7 +63,7 @@ function allocationClueLikeSaturation(component)
 		local nIter = 0
 		local allocation_ok = false
 		local maxAdjust = self.maxDifference 
-		local maxdiff = self.maxDifference * 1000
+		local maxdiff = self.maxDifference * 1000 -- Used to have a large number of iterations
 		local flagFlex = false
 
 		-- Loop until maxdiff is achieved
@@ -85,12 +85,8 @@ function allocationClueLikeSaturation(component)
 				end
 			else 
 				nIter = nIter + 1
-				if ((nIter >  self.maxIteration * 0.50) and (flagFlex == false)) then  -- final attempt
-					maxAdjust = maxAdjust * 2
-					flagFlex = true
-				end  
 			end
-		until((nIter >= self.maxIteration) or (allocation_ok == true))
+		until ((nIter >= self.maxIteration) or (allocation_ok == true))
 
 		if (nIter == self.maxIteration) then
 			print("Demand not allocated correctly in this time step:", nIter)
@@ -140,20 +136,6 @@ function allocationClueLikeSaturation(component)
 											m = 10,
 											n = 10
 										 }
-	end
-
-	--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	-- @arg self A allocationClueLikeSaturation component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self:relaxProtected(event, luccmeModel)
-	component.relaxProtected = function(self, event, luccmeModel)
-		if (self.attrProtection ~= nil and self.complementarLU ~= nil) then
-			print("RELAX PROT", luccmeModel.potential.regressionData[1].betas[self.attrProtection])
-			luccmeModel.potential.regressionData[1].betas[self.attrProtection] = luccmeModel.potential.regressionData[1].betas[self.attrProtection] * 0.5
-			luccmeModel.potential:computePotential(luccmeModel, 1, event)
-			print("           ", luccmeModel.potential.regressionData[1].betas[self.attrProtection])
-		end
 	end
 	
 	--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -268,7 +250,7 @@ function allocationClueLikeSaturation(component)
 					
 				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue))) then
 					if (change >= luAllocData.maxChangeAboveLimiar) then
-						if (change/2 < luAllocData.maxChangeAboveLimiar) then
+						if ((change / 2) < luAllocData.maxChangeAboveLimiar) then
 							change = change / 2
 						else
 							change = luAllocData.maxChangeAboveLimiar 
@@ -401,7 +383,7 @@ function allocationClueLikeSaturation(component)
 			local max  = math.abs(amax)
 			local l = 0
 
-			-- checks if total land use/cover ers from 100 percent
+			-- checks if total land use/covers from 100 percent
 			for i, lu in pairs (luTypes) do
 				totcov = totcov + cell[lu]
 			end
@@ -423,7 +405,7 @@ function allocationClueLikeSaturation(component)
 
 				-- adapts land use/cover types if all of them change into the same direction
 				if (totchange > 0) then
-					if ((BACKP * totchange) > (max * 0.5)) then  --(max/2)
+					if ((BACKP * totchange) > (max * 0.5)) then  
 						BACKP =(max / (2 * totchange))
 					end
 				end
@@ -433,7 +415,7 @@ function allocationClueLikeSaturation(component)
 					local luStatic = luAllocData.static
 
 					if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-						luStatic =1
+						luStatic = 1
 					 end		
 				   if (luStatic < 1) then
 						local dif = cell[lu] - cell.past[lu]
@@ -454,7 +436,7 @@ function allocationClueLikeSaturation(component)
 						
 						local luStatic = luAllocData.static
 						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic =1
+							luStatic = 1
 						end		
 						if (luStatic < 1) then
 							if (incr == (NCOV - nostatic)) then
@@ -501,7 +483,7 @@ function allocationClueLikeSaturation(component)
 								local lu = luTypes[i]
 								local luStatic = luAllocData.static
 								if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-									luStatic =1
+									luStatic = 1
 								end		
 								if (luStatic < 1) then
 									cell[lu] = cell[lu] *((1 - totstatic) / totcov)
@@ -511,7 +493,7 @@ function allocationClueLikeSaturation(component)
 							for i, luAllocData in pairs (self.allocationData) do
 								local lu = luTypes[i]
 								local aux = cell[lu]
-								cell[lu] = cell[lu] -(math.abs(cell[lu] - cell.past[lu]) *((totcov - (1 - totstatic)) / totchange))
+								cell[lu] = cell[lu] -(math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1 - totstatic)) / totchange))
 								if (cell[lu] < 0) then
 									cell[lu] = 0
 								end
@@ -539,10 +521,10 @@ function allocationClueLikeSaturation(component)
 						local lu = luTypes[i]
 						local luStatic = luAllocData.static
 						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic =1
+							luStatic = 1
 						end			
 						if (luStatic < 1) then
-							cell[lu] = cell[lu] *((1-totstatic)/totcov)
+							cell[lu] = cell[lu] *((1 - totstatic)/totcov)
 						end
 					end
 				end
@@ -561,19 +543,15 @@ function allocationClueLikeSaturation(component)
 		local cellarea = cs.cellArea
 		for i, lu in pairs (luTypes) do
 			local area = 0
-			--local suit = lu
 			for k, cell in pairs (cs.cells) do
 				local temp = cell[lu]
 				if (temp > 0) then
-					if (isHierarchicallyCoupled) then
-						area = area + temp --  * cellarea  --* cell.count
-					else
-						area = area + temp  -- * cellarea
-					end
+					area = area + temp
 				end
 			end
 			areas[i] = area * cellarea
 		end
+		
 		return areas
 	end
 

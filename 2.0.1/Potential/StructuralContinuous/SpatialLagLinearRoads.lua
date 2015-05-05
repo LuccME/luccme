@@ -212,7 +212,7 @@ end	-- function adaptRegressionConstants
 		
 			
             local regressionX = 0
-            				
+
 			for var, beta in pairs( luData.betas ) do 
 				regressionX = regressionX + beta * cell[var]
 			end
@@ -261,10 +261,6 @@ end	-- function adaptRegressionConstants
 				regression = math.pow( 10, (regression)) - 0.0001
 				regressionLimit = math.pow( 10, (regressionLimit)) - 0.0001
 			end 
-			
-	
-
-		   local oldReg = regressionLimit
 
 			if (regressionLimit > luData.maxReg) then
 				regression = 1

@@ -1,5 +1,5 @@
---- Calculates  potential of change  for each cell, based on spatial lag regression coefficients
--- for one region. Can be used when land use data are continuous.
+--- Similar to the LinearRegression approach, but relies spatial regression techniques to estimate the 
+-- regression cover (considers the spatial dependence of the land use). 
 -- @arg component A Spatial Lag Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
 -- @arg component.regressionData.const A linear regression constant.

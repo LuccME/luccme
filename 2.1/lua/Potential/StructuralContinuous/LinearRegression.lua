@@ -1,5 +1,7 @@
---- Calculates  potential of change for each cell, based on linear regression coefficients.
--- Can be used when land use data are continuous.
+--- Uses linear regression techniques to estimate the cell potential for change. Based on the original 
+-- continuous CLUE model proposal, the change potential for each use (increase or decrease the percentage
+-- in the cell at a given time is estimated as the difference between the regression cover and the actual 
+-- land use percentage at a given time (see Verburg et al. 1999 for a detailed description). 
 -- @arg component A Linear Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
 -- @arg component.regressionData.const A linear regression constant.

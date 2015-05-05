@@ -1,5 +1,6 @@
---- Calculates  potential of change  for each cell, based on spatial lag regression coefficients
--- for one region. Can be used when land use data are continuous.
+--- Modification of the SpatialLagRegression component to allow the use of simple linear regression in specific cases, 
+-- when roads are created or paved. The component is an example of how the framework can be extended for specific 
+-- applications. It was created to allow the representation of the creation new deforestation frontiers in the Brazilian Amazon.
 -- @arg component A Spatial Lag Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
 -- @arg component.regressionData.const A linear regression constant.

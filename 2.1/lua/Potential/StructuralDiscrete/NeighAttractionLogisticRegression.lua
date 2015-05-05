@@ -1,20 +1,20 @@
---- Calculates  potential of change  for each cell, based on logistic regression coefficients,
--- considering cells neighbourhood. Can be used when land use data are discrete.
--- @arg model A NeighAttractionLogisticRegression model.
--- @arg model.regressionData A table with the regression parameters for each attribute.
--- @arg model.regressionData.const A linear regression constant.
--- @arg model.regressionData.error A linear regression estimate error.
--- @arg model.regressionData.betas A linear regression betas for land use drivers
+--- Modification of the LogisticRegression  combining cellular automata based models ideas. Cell potential is modified 
+-- according to the attractiveness of the same class in a given (generic) neighbourhood.
+-- @arg component A NeighAttractionLogisticRegression component.
+-- @arg component.regressionData A table with the regression parameters for each attribute.
+-- @arg component.regressionData.const A linear regression constant.
+-- @arg component.regressionData.error A linear regression estimate error.
+-- @arg component.regressionData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
--- @arg model.regressionData.elasticity An elasticity value, closer to 1 is more difficulty
+-- @arg component.regressionData.elasticity An elasticity value, closer to 1 is more difficulty
 -- to transition for other land uses.
--- @arg model.regressionData.percNeighborsUse Percent of neighbours with the same use.
--- @arg model.landUseDrivers The land use drivers fields in database.
--- @arg model.execute Handles with the execution method of a NeighAttractionLogisticRegression model.
--- @arg model.verify Handles with the verify method of a NeighAttractionLogisticRegression model.
--- @arg model.calcRegressionLogistic Handles with the calculation of the regression.
--- @arg model.probability Compute the probability logistic method of a NeighAttractionLogisticRegression model.
--- @return The modified model.
+-- @arg component.regressionData.percNeighborsUse Percent of neighbours with the same use.
+-- @arg component.landUseDrivers The land use drivers fields in database.
+-- @arg component.execute Handles with the execution method of a NeighAttractionLogisticRegression component.
+-- @arg component.verify Handles with the verify method of a NeighAttractionLogisticRegression component.
+-- @arg component.calcRegressionLogistic Handles with the calculation of the regression.
+-- @arg component.probability Compute the probability logistic method of a NeighAttractionLogisticRegression component.
+-- @return The modified component.
 -- @usage myPontencial = NeighAttractionLogisticRegression {
 -- regressionData =	{
 -- 					-- Region 1
@@ -32,13 +32,13 @@
 --					},
 --					landUseDrivers = {},
 --}
-function NeighAttractionLogisticRegression(model)
-	--- Handles with the execution method of a NeighAttractionLogisticRegression model.
-	-- @arg self A NeighAttractionLogisticRegression model.
+function NeighAttractionLogisticRegression(component)
+	--- Handles with the execution method of a NeighAttractionLogisticRegression component.
+	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg modelParameters A parameter model.
 	-- @usage self.potential:execute(event, model)
-	model.execute = function(self, event, modelParameters)
+	component.execute = function(self, event, modelParameters)
 		local cs = modelParameters.cs
 		local luTypes = modelParameters.landUseTypes
 		local regressionData = self.regressionData
@@ -56,7 +56,7 @@ function NeighAttractionLogisticRegression(model)
   		for k, cell in pairs (cs.cells) do
 			totalNeigh = cell:getNeighborhood():size()
   		 	
-			if (model.region == nil) then
+			if (cell.region == nil) then
 				cell.region = 1
 			end 	
 			
@@ -64,7 +64,7 @@ function NeighAttractionLogisticRegression(model)
 				local lu = luTypes[luind]
 				
 				-- Step 1: Calculates the regression estimates
-				local regrProb = model.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
+				local regrProb = self.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
 				
 				-- Step 2: Calculates the elasticity
 				local elas = 0				
@@ -92,21 +92,21 @@ function NeighAttractionLogisticRegression(model)
 		end
 	end -- end execute
 	
-	--- Handles with the verify method of a NeighAttractionLogisticRegression model.
-	-- @arg self A NeighAttractionLogisticRegression model.
+	--- Handles with the verify method of a NeighAttractionLogisticRegression component.
+	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	model.verify = function(self, event)
+	component.verify = function(self, event)
 	end
 	
 	--- Handles with the calculation of the regression.
-	-- logistic method of a NeighAttractionLogisticRegression model.
+	-- logistic method of a NeighAttractionLogisticRegression component.
 	-- @arg cell A spatial location with homogeneous internal content.
-	-- @arg inputValues A parameter model.
+	-- @arg inputValues A parameter component.
 	-- @arg luDrivers The land use drivers fields in database.
-	-- @arg model A NeighAttractionLogisticRegression model.
-	-- @usage model.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
-	model.calcRegressionLogistic = function(cell, inputValues, luDrivers, model)
+	-- @arg component A NeighAttractionLogisticRegression component.
+	-- @usage component.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
+	component.calcRegressionLogistic = function(cell, inputValues, luDrivers, component)
 			local regrLogit = inputValues.const
 			local betas = inputValues.betas
 			local attrs = inputValues.attributes
@@ -115,13 +115,13 @@ function NeighAttractionLogisticRegression(model)
 				regrLogit = regrLogit + beta * cell[var]
 			end
 			
-		return model.probability(regrLogit)
+		return component.probability(regrLogit)
 	end	--end calcRegressionLogistic
 	
 	--- Compute the probability.
 	-- @arg z A value used to calculate the probability (second parameter of a pow).
-	-- @usage model.probability(regrLogit)
-	model.probability = function(z)
+	-- @usage component.probability(regrLogit)
+	component.probability = function(z)
 		local euler  = 2.718281828459045235360287
 		local zEuler = math.pow(euler, z)
 		local prob = zEuler/(1 + zEuler)
@@ -129,5 +129,5 @@ function NeighAttractionLogisticRegression(model)
 		return prob
 	end
 	
-	return model
-end --close RegressionLogistcModelNeighbourhood
+	return component
+end --close NeighAttractionLogisticRegression

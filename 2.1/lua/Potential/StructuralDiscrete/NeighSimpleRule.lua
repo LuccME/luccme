@@ -1,16 +1,17 @@
---- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
--- @arg model A NeighSimpleRule model.
--- @arg model.execute Handles with the execution method of a NeighSimpleRule model.
--- @arg model.verify Handles with the verify method of a NeighSimpleRule model.
--- @return The modified model.
+--- Simple component developed as teaching material. Not to be used in real applications. Estimates cell 
+-- potential for a given use according to the percentage of cells of the same type in a Moore neighbourhood.
+-- @arg component A NeighSimpleRule component.
+-- @arg component.execute Handles with the execution method of a NeighSimpleRule component.
+-- @arg component.verify Handles with the verify method of a NeighSimpleRule component.
+-- @return The modified component.
 -- @usage potential = NeighSimpleRule{}
-function NeighSimpleRule(model)
-	--- Handles with the execution method of a NeighSimpleRule model.
-	-- @arg self A NeighSimpleRule model.
+function NeighSimpleRule(component)
+	--- Handles with the execution method of a NeighSimpleRule component.
+	-- @arg self A NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg modelParameters A parameter model.
 	-- @usage self.potential:execute(event, model)
-	model.execute = function(self, event, modelParameters)
+	component.execute = function(self, event, modelParameters)
 		local cs = modelParameters.cs
 		local luTypes = modelParameters.landUseTypes
 		local potentialData = self.potentialData
@@ -27,7 +28,7 @@ function NeighSimpleRule(model)
   		
   		for k, cell in pairs (cs.cells) do
 			totalNeigh = cell:getNeighborhood():size()
-  		 	if (model.region == nil) then
+  		 	if (cell.region == nil) then
 				cell.region = 1
 			end 	
 
@@ -51,12 +52,12 @@ function NeighSimpleRule(model)
 		end
 	end -- end execute
 	
-	--- Handles with the verify method of a NeighSimpleRule model.
-	-- @arg self A NeighSimpleRule model.
+	--- Handles with the verify method of a NeighSimpleRule component.
+	-- @arg self A NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	model.verify = function(self, event)
+	component.verify = function(self, event)
 	end
 
-	return model
+	return component
 end --close RegressionLogistcModelNeighbourhood

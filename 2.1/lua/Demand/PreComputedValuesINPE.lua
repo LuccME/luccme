@@ -94,7 +94,7 @@ function PreComputedValuesINPE(component)
 	        self.numLU = self.numLU + 1
 	    end
 		
-	    self.currentDemand = self.annualDemand[1]	--@todo use a constant instead of "magic number"
+	    self.currentDemand = self.annualDemand[1]	
 		self.previousDemand = self.annualDemand[1]
 	end
 

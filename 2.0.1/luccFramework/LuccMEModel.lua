@@ -75,7 +75,7 @@ function LuccMEModel (model)
 		   if (cs.cells[1].past[luTypes[1]] == nil) then
 				cs:synchronize()
 			end  
-	        if self.useLog == nil then  self.useLog = true end 	            -- print model status during its execution 
+	        if self.useLog == nil then  self.useLog = true end 	 -- print model status during its execution 
 	        if self.isCoupled == nil then  isCoupled = false end -- inform whether the model is part of a coupling model 
  	        io.flush()
 			self.demand:verify(event,self) 
@@ -107,8 +107,6 @@ function LuccMEModel (model)
 			       		
 			     forEachCellPair(cs,cs_temp,function(cell,cell_temp)
 					  		for var, value in pairs(cell_temp) do
-					  		     --print ("cells update", var, value)
-
 								if var~= "cObj_" and var~="objectId_" and 
 								   var~="y" and var~="x" and var~="past" and
 								   var~="agents" and var~="agents_" and 

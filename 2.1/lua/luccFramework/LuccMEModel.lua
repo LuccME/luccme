@@ -69,11 +69,11 @@ function LuccMEModel(model)
 		end
 	
 		if (self.scenarioName == nil and self.scenarioStartTime ~= nil) then
-			error("A scenario name is required")
+			error("A scenario name is required", 2)
 		end
 	
 		if (self.scenarioName ~= nil and self.scenarioStartTime == nil) then
-			error("A scenario start time is required")
+			error("A scenario start time is required", 2)
 		end
 	
 		self.result = {}
@@ -143,7 +143,6 @@ function LuccMEModel(model)
 			       		
 			    forEachCellPair(cs, cs_temp, function(cell, cell_temp)
 													for var, value in pairs (cell_temp) do
-														 --print ("cells update", var, value)
 														if (var ~= "cObj_" and var ~= "objectId_" and
 															var ~= "y" and var ~= "x" and var ~= "past" and
 															var ~= "agents" and var ~= "agents_" and

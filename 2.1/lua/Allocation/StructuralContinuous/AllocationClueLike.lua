@@ -1,24 +1,27 @@
---- Allocate the  land uses based on potential calculated for each cell.
--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.maxDifference Maximum difference between informed demand and
--- demand allocated by the model.
--- @arg component.maxIteration Limit of interactions trying to allocate the demand.
--- @arg component.initialElasticity Initial value of the parameter which controls
--- the allocation interaction factor.
--- @arg component.minElasticity Minimum value of the parameter which controls the
--- allocation interaction factor.
--- @arg component.maxElasticity Maximum value of the parameter which controls the
--- allocation interaction factor.
--- @arg component.complementarLU A complementary land use type.
--- @arg component.landUseNoData Land uses that will not be consider.
+--- Based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described
+-- in Verburg et al. (1999).  Cells receive a percentage of the annual change that must be allocated to the whole area, proportionally to their potential.  
+-- In the case of deforestation, cells with a positive change potential will receive a percentage of the annual change that must be allocated to the whole 
+-- area, proportionally to their potential. The INPE version differs from the original CLUE model as it was adapted for the Brazilian context, for instance
+-- to represent the Forest Code and law enforcement (Aguiar, 2006). For instance, there are parameters to control the amount and speed of change that can 
+-- happen in each cell.
+-- @arg component.maxDifference Maximum allocation error allowed for each land use in area.
+-- @arg component.maxIteration Maximum number of iterations at each time step of the model.
+-- @arg component.initialElasticity Initial elasticity value (iterationFactor).
+-- @arg component.minElasticity Minimum elasticity value which controls the allocation interaction factor. 
+-- @arg component.maxElasticity Maximum elasticity value which controls the allocation interaction factor.
+-- @arg component.complementarLU The land use which will be recomputed in the end to sum exactly 100%.
+-- @arg component.landUseNoData Dummy land use (static).
 -- @arg component.allocationData A table with two allocation parameters for each land use.
--- @arg component.allocationData.static Direction of land use change.
--- @arg component.allocationData.minValue XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.allocationData.maxValue XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.allocationData.minChange Minimum of change in each cell.
--- @arg component.allocationData.maxChange Limit of change in each cell.
--- @arg component.allocationData.changeLimiarValue XXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg component.allocationData.maxChangeAboveLimiar XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- @arg component.allocationData.static Indicates if the variable can increase or decrease in each cell, or only change in the direction of the demand.
+-- @arg component.allocationData.minValue Minimum value allowed for the percentage of a given land use  in a cell (as a result of new changes -  the original 
+-- value can be out of the limits )
+-- @arg component.allocationData.maxValue Maximum value  allowed for the percentage of a given land use  in a cell (as a result of new changes - the original
+-- value can be out of the limits )
+-- @arg component.allocationData.minChange Minimum change in a given land use in a cell in a time step until (saturation) threshold.
+-- @arg component.allocationData.maxChange Maximum change in a given land use allowed in a cell in a time step until (saturation) threshold.
+-- @arg component.allocationData.changeLimiarValue Threshold (or limier) refers to a given amount of the land use in each cell.  After this limier, the speed
+-- of change of a given land use in the cell is modified. 
+-- @arg component.allocationData.maxChangeAboveLimiar Maximum change in a given land use allowed in a cell in a time step after (saturation) threshold.
 -- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.verify Handles with the verify method of a allocationClueLike component.
 -- @arg	component.initElasticity Handles with the elasticity initialize considering a single
@@ -79,11 +82,6 @@ function allocationClueLike(component)
 				end
 			else 
 				nIter = nIter + 1
-			
-				if ((nIter >  self.maxIteration * 0.90) and (flagFlex == false)) then  -- final attempt
-					maxAdjust = maxAdjust * 2
-					flagFlex = true
-				end  
 			end
 		until ((nIter >= self.maxIteration) or (allocation_ok == true))
 
@@ -158,7 +156,7 @@ function allocationClueLike(component)
 				local pot = cell[attr_pot]
 				local luStatic = luAllocData.static
 
-				local change = pot* self.elasticity[i]
+				local change = pot * self.elasticity[i]
 
 				if (math.abs(change) < luAllocData.minChange) then
 					pot = 0
@@ -169,7 +167,7 @@ function allocationClueLike(component)
 					  change = luAllocData.maxChange * (pot / math.abs(pot))
 				end
 					
-				if (((pot >= 0) and (luDirect == 1) and (luStatic< 1)) or
+				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1)) or
 				   ((pot <= 0) and (luDirect == -1) and (luStatic < 1))) then
 						cell[lu] = cell.past[lu] + change 
 				elseif (luStatic ~= 0) then
@@ -193,7 +191,6 @@ function allocationClueLike(component)
 				end
 
 				if (cell[lu] > luAllocData.maxValue) then	
-					print("ERRO MAX 1", cell[lu], luAllocData.maxValue)
 					if (cell.past[lu] <= luAllocData.maxValue) then 
 						cell[lu] = luAllocData.maxValue
 					else
@@ -296,7 +293,7 @@ function allocationClueLike(component)
 			local max = math.abs(amax)
 			local l = 0
 			
-			-- checks if total land use/cover ers from 100 percent
+			-- checks if total land use/covers from 100 percent
 			for i, lu in pairs (luTypes) do
 				totcov = totcov + cell[lu]
 			end
@@ -318,7 +315,7 @@ function allocationClueLike(component)
 
 				-- adapts land use/cover types if all of them change into the same direction
 				if (totchange > 0) then
-					if ((BACKP * totchange) > (max * 0.5)) then  -- (max/2)
+					if ((BACKP * totchange) > (max * 0.5)) then  
 						BACKP = (max / (2 * totchange))
 					end
 				end
@@ -394,13 +391,13 @@ function allocationClueLike(component)
 						end
 						totchange = totchange + math.abs(cell[lu] - cell.past[lu])
 					end
-					if (math.abs(totcov - (1-totstatic)) > 0.005) then
+					if (math.abs(totcov - (1 - totstatic)) > 0.005) then
 						if (totchange == 0) then
 							for i, luAllocData in pairs (self.allocationData) do
 								local lu = luTypes[i]
 								local luStatic = luAllocData.static
-								if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-									luStatic =1
+								if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
+									luStatic = 1
 								end		
 								if (luStatic < 1) then
 							
@@ -411,7 +408,7 @@ function allocationClueLike(component)
 							for i, luAllocData in pairs (self.allocationData) do
 								local lu = luTypes[i]
 								local aux = cell[lu]
-								cell[lu] = cell[lu] - (math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1-totstatic))/totchange))
+								cell[lu] = cell[lu] - (math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1 - totstatic)) / totchange))
 								if (cell[lu] < 0) then
 									cell[lu] = 0
 								end
@@ -419,18 +416,18 @@ function allocationClueLike(component)
 							end
 						end
 					end
-				until (math.abs(totcov - (1-totstatic)) <= 0.005) or (l >= 25)
+				until ((math.abs(totcov - (1 - totstatic)) <= 0.005) or (l >= 25))
 
 				if (l == 25) then
 					totcov = 0
 					totstatic = 0
 					for i, luAllocData in pairs (self.allocationData) do
 						local lu = luTypes[i]
-						 local luStatic = luAllocData.static
-						  if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-									luStatic =1
+						local luStatic = luAllocData.static
+						if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
+							luStatic = 1
 						end			
-						 if (luStatic < 1) then
+						if (luStatic < 1) then
 							totcov = totcov + cell[lu]
 						else
 							totstatic = totstatic + cell[lu]
@@ -440,9 +437,9 @@ function allocationClueLike(component)
 						local lu = luTypes[i]
 						local luStatic = luAllocData.static
 						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic =1
+							luStatic = 1
 						end			
-						 if (luStatic < 1) then
+						if (luStatic < 1) then
 							cell[lu] = cell[lu] * ((1 - totstatic) / totcov)
 						end
 					end
@@ -462,15 +459,10 @@ function allocationClueLike(component)
 		local cellarea = cs.cellArea
 		for i, lu in pairs (luTypes) do
 			local area = 0
-			--local suit = lu
 			for k,cell in pairs (cs.cells) do
 				local temp = cell[lu]
 				if (temp > 0) then
-					if (isHierarchicallyCoupled) then
-						area = area + temp --  * cellarea  --* cell.count
-					else
-						area = area + temp  -- * cellarea
-					end
+					area = area + temp
 				end
 			end
 			areas[i] = area * cellarea

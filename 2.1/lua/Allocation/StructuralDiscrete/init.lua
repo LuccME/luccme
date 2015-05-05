@@ -24,5 +24,5 @@
 -------------------------------------------------------------------------------------------
 
 require ("luccme.Allocation.StructuralDiscrete.AllocationClueSLike")
-require ("luccme.Allocation.StructuralDiscrete.AllocationByOrdering")
+require ("luccme.Allocation.StructuralDiscrete.AllocationBySimpleOrdering")
 

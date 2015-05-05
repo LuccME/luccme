@@ -1,17 +1,17 @@
 --- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg model A AllocationByOrdering model.
+-- @arg model A AllocationBySimpleOrdering model.
 -- @arg model.execute Handles with the rules of the component execution.
 -- @arg model.verify Handles with the parameters verification.
--- @usage allocation = AllocationByOrdering
+-- @usage allocation = AllocationBySimpleOrdering
 --                   {	
 --                       maxDifference = 0.001
 --						
 --					 }   
-function AllocationByOrdering(model)
+function AllocationBySimpleOrdering(model)
 	--- Handles with the rules of the component execution.
 	-- @arg self A allocationClueLike component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg model AllocationByOrdering model.
+	-- @arg model AllocationBySimpleOrdering model.
 	-- @usage self.allocation:execute(event, model)
 	model.execute = function(self, event, model)
 	------Global and Local Variables and Constants------
@@ -129,7 +129,7 @@ function AllocationByOrdering(model)
  	end -- end of 'execute' function
  	
 	--- Handles with the parameters verification.
-	-- @arg self An AllocationByOrdering component.
+	-- @arg self An AllocationBySimpleOrdering component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.allocation:verify(event, self)
     model.verify = function(self, event)

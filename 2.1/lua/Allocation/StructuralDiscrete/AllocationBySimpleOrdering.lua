@@ -1,25 +1,25 @@
---- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg model A AllocationBySimpleOrdering model.
--- @arg model.execute Handles with the rules of the component execution.
--- @arg model.verify Handles with the parameters verification.
+--- Simple model developed as teaching material. Not to be used in real applications. Instead of using the iterative process employed in the CLUE family, 
+-- the component implements a simple ordering approach. A more elaborate ordering approch is under construction.
+-- @arg component A AllocationBySimpleOrdering component.
+-- @arg component.execute Handles with the rules of the component execution.
+-- @arg component.verify Handles with the parameters verification.
 -- @usage allocation = AllocationBySimpleOrdering
 --                   {	
 --                       maxDifference = 0.001
---						
 --					 }   
-function AllocationBySimpleOrdering(model)
+function AllocationBySimpleOrdering(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A allocationClueLike component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg model AllocationBySimpleOrdering model.
 	-- @usage self.allocation:execute(event, model)
-	model.execute = function(self, event, model)
+	component.execute = function(self, event, model)
 	------Global and Local Variables and Constants------
-		local useLog = self.useLog
+		local useLog = model.useLog
 		local cs = model.cs
 		local potential = model.potential		
 		local cellarea = cs.cellArea
-		local step = event:getTime() - (model.startTime + 1)
+		local step = event:getTime() - model.startTime + 1	
 		local start = model.startTime		
   		local demand = model.demand
 		local nIter = 0
@@ -61,20 +61,18 @@ function AllocationBySimpleOrdering(model)
         end
 
 		diff = 0
-		-- Crio o mapa de maiores probabilidades: simUse
 
-		
 		-- Ordenação dos vetores de uso de acordo com as maiores probabilidades
 		for ind, lu in  pairs (luTypes) do	
-			if (lu ~= model.landUseNoData) then --ANAP
+			if (lu ~= model.landUseNoData) then 
 				ord = Trajectory { target = cs,
 								   select = function(cell)
 												return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
-											end, -- ANAP
+											end,
 								   greater = function(c, d)
 												return c[lu.."_pot"] > d[lu.."_pot"]
 											end
-								}
+								 }
 
 			 --Seleção de tantas células quanto forem necessárias na demanda
 				local j = 1
@@ -132,10 +130,10 @@ function AllocationBySimpleOrdering(model)
 	-- @arg self An AllocationBySimpleOrdering component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.allocation:verify(event, self)
-    model.verify = function(self, event)
+    component.verify = function(self, event)
 	end
 
-	return model
+	return component
 end -- end of AllocationCluesLike
 
 -- ____________________________________
@@ -176,20 +174,6 @@ function toIndex(lu, usetypes)
 	return index
 end
 
---- Return a land use type in a set of land use types.
--- @arg lu A land use type.
--- @arg usetypes A set of land use type.
--- @usage toLU(cell.simUse, luTypes)
-function toLU (lu, usetypes) -- @TODO FUNCIONA?????????
-	for i, value in  pairs (usetypes) do	
-		if (i == lu) then
-			return value
-		end
-	end
-
-	return index
-end
-
 --- Initialise the iteration vector for each land use type.
 -- @arg lutype A set of land uses type.
 -- @usage iteration = initIteration(luTypes)
@@ -205,18 +189,18 @@ end
 --- Handles with the change of an use for a cell area.
 -- @arg cell A cell area.
 -- @arg cur_use The current use.
--- @arg great_use The new use XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- @arg higher_use The biggest cell value
 -- @usage changeUse(cell, currentUse(cell, luTypes), cell.simUse)
-function changeUse(cell, cur_use, great_use)
+function changeUse(cell, cur_use, higher_use)
 	cell[cur_use] = 0
 	cell[cur_use.."_out"] = 0
-	cell[great_use] = 1
-	cell[great_use.."_out"] = 1
+	cell[higher_use] = 1
+	cell[higher_use.."_out"] = 1
 
-	cell[great_use.."_change"] = 0
+	cell[higher_use.."_change"] = 0
 	cell[cur_use.."_change"] = 0  
-	if (cur_use ~= great_use) then
-	       cell[great_use.."_change"] = 1
+	if (cur_use ~= higher_use) then
+	       cell[higher_use.."_change"] = 1
 	       cell[cur_use.."_change"] = -1 
 	 end
 end

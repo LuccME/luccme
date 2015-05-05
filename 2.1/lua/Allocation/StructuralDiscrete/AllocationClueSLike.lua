@@ -1,12 +1,13 @@
---- Allocate the  land uses based on potential  calculated for each cell.
--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg model.maxIteration Limit of interactions trying to allocate the demand.
--- @arg model.factorIteration Initial value of the parameter which controls the allocation interaction factor.
--- @arg model.maxDifference Maximum difference between informed demand and demand allocated by the model.
+--- Based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described in Verburg et al. (2002)
+-- based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described in Verburg et al. (1999),
+-- extended to incorporate new features, such as change in blocks (optional, parametrized by cell).
+-- @arg component.maxIteration Limit of interactions trying to allocate the demand.
+-- @arg component.factorIteration Initial value of the parameter which controls the allocation interaction factor.
+-- @arg component.maxDifference Maximum difference between informed demand and demand allocated by the model.
 -- @arg transitionMatrix Indicates the allowable (1) and  not allowable (0) transition in a landuse x landuse matrix.
 -- Must have at least one region.
--- @arg model.execute Handles with the rules of the component execution.
--- @arg model.verify Handles with the parameters verification.
+-- @arg component.execute Handles with the rules of the component execution.
+-- @arg component.verify Handles with the parameters verification.
 -- @usage allocation = AllocationClueSLike {
 -- maxIteration = 1000,
 -- factorIteration = 0.00001,
@@ -16,27 +17,27 @@
 --							{1, 1, 0},
 --							{0, 0, 1}} -- end Region 1
 -- }}
-function AllocationClueSLike(model)
+function AllocationClueSLike(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A AllocationClueSLike component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg component A AllocationClueSLike component with all data.
 	-- @usage self.allocation:execute(event, model)
-	model.execute = function(self, event, component)
+	component.execute = function(self, event, model)
 		------Global and Local Variables and Constants------
-		local useLog = component.useLog
-		local cs = component.cs
-		local potential = component.potential		
+		local useLog = model.useLog
+		local cs = model.cs
+		local potential = model.potential		
 		local cellarea = cs.cellArea
-		local step = event:getTime() - component.startTime + 1;		
-		local start = component.startTime		
-  		local demand = component.demand
+		local step = event:getTime() - model.startTime + 1;		
+		local start = model.startTime		
+  		local demand = model.demand
 		local nIter = 0
   		local allocation_ok = false
   		local numofcells  = #cs.cells
   		local totarea = (numofcells * cellarea)
   		local maxdiffarea = (self.maxDifference * totarea)
-  		local luTypes = component.landUseTypes
+  		local luTypes = model.landUseTypes
   		local max_iteration = self.maxIteration 
 
   		print ("Time : ", event:getTime())
@@ -73,7 +74,7 @@ function AllocationClueSLike(model)
 				local lu_maior = lu_past
 				local probMaior = -999999999
 				local maxLuNeigh
-				if (component.region == nil) then
+				if (cell.region == nil) then
 					cell.region = 1
 				end
 				
@@ -103,7 +104,7 @@ function AllocationClueSLike(model)
 				changeUse(cell, lu_past, lu_maior)
 			end -- end for cell space
 								  	
-			local diff = calcDifferences(event, component)
+			local diff = calcDifferences(event, model)
 			
 			allocation_ok = convergency(cs, diff, luTypes, maxdiffarea)
 			
@@ -126,10 +127,10 @@ function AllocationClueSLike(model)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:verify(event, self)
- 	model.verify = function(self, event)
+ 	component.verify = function(self, event)
 	end
 
-	return model
+	return component
 end -- end of AllocationCluesLike
 
 -- ____________________________________
@@ -252,20 +253,19 @@ end
 --- Handles with the change of an use for a cell area.
 -- @arg cell A cell area.
 -- @arg cur_use The current use.
--- @arg great_use The new use XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- @arg higher_use The new use XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 -- @usage changeUse(cell, lu_past, lu_maior)
-function changeUse(cell, cur_use, great_use)
+function changeUse(cell, cur_use, higher_use)
 	cell[cur_use] = 0
 	cell[cur_use.."_out"] = 0
-	cell[great_use] = 1
-	cell[great_use.."_out"] = 1
+	cell[higher_use] = 1
+	cell[higher_use.."_out"] = 1
 
-	cell[great_use.."_change"] = 0
-	cell[cur_use.."_change"] = 0  --ANAP
-	if (cur_use ~= great_use) then
-	       cell[great_use.."_change"] = 1
-	       cell[cur_use.."_change"] = -1 --ANAP
-	      -- print ("change ok  ", cur_use, great_use)
+	cell[higher_use.."_change"] = 0
+	cell[cur_use.."_change"] = 0  
+	if (cur_use ~= higher_use) then
+	       cell[higher_use.."_change"] = 1
+	       cell[cur_use.."_change"] = -1 
 	end
 end
 
@@ -279,40 +279,4 @@ function currentUse(cell, landuses)
 			return land
 		end
 	end
-end
-
---- Considers M and N are the dimensions the component wants to evaluate.
--- As an example if M and N are equal 1 then the function below takes into account
--- and area enclosing 9 cells such as the Moore's neighbourhood.
--- The 'filter' attribute is a function of f(cell) type that returns cell.uso == forest and	cell.pa == 0 then,
--- in this case the are considered encloses the 8 adjacent cells as long as the attribute pa is equal 0.
--- It can be useful, as example, to guarantee that a property (land parcel) does not invade a forbidden area protected by spatial policies.
--- @arg c XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg cs XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg M XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg N XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @arg filter XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- @usage XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-function cellsBuffer(c, cs, M, N, filter)
-	local f = filter or function (cell) return true end;
-	cells = {}
-	if(N < 0) then N = 1; end
-	if(M < 0) then M = 1; end
-	local lin;
-	local col;
-	local i=0;  
-	
-	for lin = -N, N, 1 do
-		 for col = -M, M, 1 do                  
-			 local coord = Coord{ x = (c.x + col), y = (c.y + lin)};                  
-			 cell_i = cs:getCell(coord);
-			 if(cell_i) then
-				if  f(cell_i) then
-					table.insert(cells, cell_i);
-				end
-			end
-		end
-	end  
-	
-	return cells
 end

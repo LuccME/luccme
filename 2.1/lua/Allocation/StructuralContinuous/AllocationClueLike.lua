@@ -36,7 +36,7 @@
 -- equations for each land use/cover type.
 -- @usage allocation = allocationClueLike { maxDifference = 50, maxIteration = 3000,
 -- initialElasticity = 0.1, minElasticity = 0.001, maxElasticity = 1.5,
--- complementarLU = "VegN_2000", landUseNoData 	= "O_2000",
+-- complementarLU = "VegN_2000",
 -- allocationData = {{static = -1, minValue = 0.2, maxValue = 0.8, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03},-- VEGN
 --            		 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- AG
 --		             {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- P

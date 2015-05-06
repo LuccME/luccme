@@ -1,2 +1,2 @@
-LuccME version: 1.0 Beta
-(release date 18/11/2011)
+LuccME version: 2.1
+(release date XX/XX/2015)

@@ -43,7 +43,6 @@
 --					 { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
 --					  betas = {beta1 =	0}}
 --					},
---		 			landUseNoData = "UsesPrcClass",
 --}
 function SpatialLagRegression_region(component)
 	--- Handles with the execution method of a SpatialLagRegression_region component.

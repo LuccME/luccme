@@ -32,7 +32,6 @@
 --					{ isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
 --					  betas = {beta1 =	0}}
 --					},
---		 			landUseNoData = "UsesPrcClass",
 --}
 function SpatialLagLinearRoads(component)
 	--- Handles with the execution method of a SpatialLagLinearRoads component.

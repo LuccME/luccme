@@ -29,7 +29,6 @@
 --					{ isLog = false, error = 0, const  = 0,
 --					  betas = {beta1 =	0}}
 --					},
---		 			landUseNoData = "UsesPrcClass",
 --}
 function LinearRegression(component)
 	--- Handles with the execution method of a LinearRegression component.
@@ -65,13 +64,13 @@ function LinearRegression(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:verify(event, self)
-	component.verify = function(self, event, luccmeModel)
+	component.verify = function(self, event, luccMEModel)
 		for i, luData in pairs (self.regressionData) do
-			if (luccmeModel.landUseTypes[i] == nil) then
+			if (luccMEModel.landUseTypes[i] == nil) then
 				error("Invalid number of regressions", 2)
 			end
 			for var, beta in pairs (luData.betas) do
-				if (luccmeModel.cs.cells[1][var] == nil) then
+				if (luccMEModel.cs.cells[1][var] == nil) then
 					error("Invalid land use driver", 2)
 				end
 			end
@@ -83,7 +82,7 @@ function LinearRegression(component)
 			find = true
 		end			
 
-		for j, lu in pairs (luccmeModel.landUseTypes) do
+		for j, lu in pairs (luccMEModel.landUseTypes) do
 			if (self.regressionData[j] == nil) then
 				error("Invalid number of regressions", 2)
 			end

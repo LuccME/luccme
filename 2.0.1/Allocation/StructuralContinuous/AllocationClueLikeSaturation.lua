@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modelling.
+--LuccME - a framework for top-down land use change modelling.
 --Copyright © 2009 - 2015 INPE.
 --
 --This code is part of the LuccME framework.
@@ -43,7 +43,7 @@ function allocationClueLikeSaturation (component)
 		
 			--Init demandDirection and elasticity (internal component variables)
 
-		    self:initElasticity        (luccmeModel, self.initialElasticity)  
+		    self:initElasticity(luccmeModel, self.initialElasticity)  
 	        self:updateAllocationParameters (event, luccmeModel) 
 			-- Define iteration loop variables
 		    local nIter= 0
@@ -136,7 +136,7 @@ function allocationClueLikeSaturation (component)
 		    attrprot = self.attrProtection
 		    
 			if (self.attrProtection ~= nil) then prot_t = cell[self.attrProtection] end 
-			if (self.landUseNoData ~= nil) then  original = 1 - cell[self.landUseNoData] end 
+			if (luccmeModel.landUseNoData ~= nil) then  original = 1 - cell[luccmeModel.landUseNoData] end 
 
             local available_forest = original - prot_t
 			    
@@ -149,7 +149,7 @@ function allocationClueLikeSaturation (component)
 	                 		    local prot_t = 0
 								local original = 1
 								if (self.attrProtection ~= nil) then prot_t = neigh[self.attrProtection] end 
-								if (self.landUseNoData ~= nil) then  original = 1 - neigh[self.landUseNoData] end 
+								if (luccmeModel.landUseNoData ~= nil) then  original = 1 - neigh[luccmeModel.landUseNoData] end 
 								
 			         		    local neigh_available_forest = original - prot_t
 				     		    if ( neigh_available_forest > 0) then

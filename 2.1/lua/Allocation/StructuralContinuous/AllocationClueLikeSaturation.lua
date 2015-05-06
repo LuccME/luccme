@@ -50,14 +50,14 @@ function allocationClueLikeSaturation(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:execute(event, model)
-	component.execute = function(self, event, luccmeModel)
+	component.execute = function(self, event, luccMEModel)
 		-- Synchronize cellular space in the first year
-		local luTypes = luccmeModel.landUseTypes
-		local cs = luccmeModel.cs
+		local luTypes = luccMEModel.landUseTypes
+		local cs = luccMEModel.cs
 
 		-- Initialize the demandDirection and elasticity(internal component variables)
-		self:initElasticity(luccmeModel, self.initialElasticity) 
-		self:updateAllocationParameters(event, luccmeModel)
+		self:initElasticity(luccMEModel, self.initialElasticity) 
+		self:updateAllocationParameters(event, luccMEModel)
 
 		-- Define iteration loop variables
 		local nIter = 0
@@ -69,18 +69,18 @@ function allocationClueLikeSaturation(component)
 		-- Loop until maxdiff is achieved
 		repeat
 			-- compute tentative allocation
-			self:computeChange(luccmeModel)
-			self:correctCellChange(luccmeModel)
+			self:computeChange(luccMEModel)
+			self:correctCellChange(luccMEModel)
 
-			if luccmeModel.useLog == true then
-				self:printAllocatedArea(event, luccmeModel, nIter)
+			if luccMEModel.useLog == true then
+				self:printAllocatedArea(event, luccMEModel, nIter)
 			end
 
 			-- verify if allocation reaches demand
-			maxdiff = self:compareAllocationToDemand (event, luccmeModel)		
+			maxdiff = self:compareAllocationToDemand (event, luccMEModel)		
 			if (maxdiff <= maxAdjust) then
 				allocation_ok = true
-				if luccmeModel.useLog == true then
+				if luccMEModel.useLog == true then
 					print("Demand allocated correctly in ", event:getTime(), "number of iterations", niter, "maximum error: ", maxdiff)
 				end
 			else 
@@ -123,7 +123,7 @@ function allocationClueLikeSaturation(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:verify(event, self)
-	component.verify = function(self, event, luccmeModel)
+	component.verify = function(self, event, luccMEModel)
 		if (self.complementarLU == nil) then
 			error ("Mandatory argument missing: complementarLU", 2)
 		end
@@ -131,7 +131,7 @@ function allocationClueLikeSaturation(component)
 			error ("Mandatory argument missing: saturationIndicator", 2)
 		end
 
-		luccmeModel.cs:createNeighborhood{	name = "10x10",
+		luccMEModel.cs:createNeighborhood{	name = "10x10",
 											strategy = "mxn",
 											m = 10,
 											n = 10
@@ -142,9 +142,9 @@ function allocationClueLikeSaturation(component)
 	-- @arg self A allocationClueLikeSaturation component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self:updateAllocationParameters(event, luccmeModel)
-	component.updateAllocationParameters = function(self, event, luccmeModel)
-		local cs = luccmeModel.cs
+	-- @usage self:updateAllocationParameters(event, luccMEModel)
+	component.updateAllocationParameters = function(self, event, luccMEModel)
+		local cs = luccMEModel.cs
 		local currentTime = event:getTime()
 		
 		forEachCell(cs, function(cell)
@@ -157,8 +157,8 @@ function allocationClueLikeSaturation(component)
 							if (self.attrProtection ~= nil) then
 								prot_t = cell[self.attrProtection]
 							end
-							if (luccmeModel.landUseNoData ~= nil) then
-								original = 1 - cell[luccmeModel.landUseNoData]
+							if (luccMEModel.landUseNoData ~= nil) then
+								original = 1 - cell[luccMEModel.landUseNoData]
 							end
 							local available_forest = original - prot_t
 			   
@@ -175,8 +175,8 @@ function allocationClueLikeSaturation(component)
 																	if (self.attrProtection ~= nil) then
 																		prot_t = neigh[self.attrProtection]
 																	end
-																	if (luccmeModel.landUseNoData ~= nil) then
-																		original = 1 - neigh[luccmeModel.landUseNoData]
+																	if (luccMEModel.landUseNoData ~= nil) then
+																		original = 1 - neigh[luccMEModel.landUseNoData]
 																	end
 																	local neigh_available_forest = original - prot_t
 																	if (neigh_available_forest > 0) then
@@ -207,11 +207,11 @@ function allocationClueLikeSaturation(component)
 	-- @arg self A allocationClueLikeSaturation component.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @arg value The elasticity value.
-	-- @usage self:initElasticity(luccmeModel, self.initialElasticity)
-	component.initElasticity = function(self, luccmeModel, value)
+	-- @usage self:initElasticity(luccMEModel, self.initialElasticity)
+	component.initElasticity = function(self, luccMEModel, value)
 		-- Init elasticity. In this version of the component, a single elasticity for each land use(all cells).
 		-- Similar to the coarse scale old clue
-		local luTypes = luccmeModel.landUseTypes
+		local luTypes = luccMEModel.landUseTypes
 		self.elasticity = {}	
 		for k, lu in pairs (luTypes) do
 			self.elasticity[k] = value
@@ -222,16 +222,16 @@ function allocationClueLikeSaturation(component)
 	-- @arg self A allocationClueLikeSaturation component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self:computeChange(luccmeModel)
-	component.computeChange = function(self, luccmeModel)
-		local cs = luccmeModel.cs
-		local luTypes = luccmeModel.landUseTypes
+	-- @usage self:computeChange(luccMEModel)
+	component.computeChange = function(self, luccMEModel)
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 
 		for i, luAllocData in pairs (self.allocationData) do
 			local lu = luTypes[i]
 			local attr_pot = lu.."_pot"
 			
-			local luDirect = luccmeModel.demand:getCurrentLuDirection(i)
+			local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
 			for k, cell in pairs (cs.cells) do				
 				local pot = cell[attr_pot]
 				local luStatic = luAllocData.static
@@ -303,20 +303,20 @@ function allocationClueLikeSaturation(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
-	component.compareAllocationToDemand = function(self, event, luccmeModel)
+	component.compareAllocationToDemand = function(self, event, luccMEModel)
 		-- Compares the demand to the amount of allocated land use/cover, then adapts elasticity
-		local cs = luccmeModel.cs
-		local luTypes = luccmeModel.landUseTypes
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 		local cellarea = cs.cellArea
 		local areas = self:countAllocatedLandUseArea(cs, luTypes)
 		local max = 0
 		local tot = 0
 
 		for i, lu in pairs (luTypes) do
-			local luDirect = luccmeModel.demand:getCurrentLuDirection(i)
-			local currentDemand  = luccmeModel.demand:getCurrentLuDemand(i)
+			local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
+			local currentDemand  = luccMEModel.demand:getCurrentLuDemand(i)
 
-			if (luDirect == 0) and (event:getTime() == luccmeModel.startTime) then
+			if (luDirect == 0) and (event:getTime() == luccMEModel.startTime) then
 				if (currentDemand >= areas[i]) then
 					luDirect = 1
 				else
@@ -332,21 +332,21 @@ function allocationClueLikeSaturation(component)
 
 			if (self.elasticity[i] > self.maxElasticity) then 
 				self.elasticity[i] = self.maxElasticity
-				luccmeModel.potential:modify(luccmeModel, i, luDirect, event)			
+				luccMEModel.potential:modify(luccMEModel, i, luDirect, event)			
 			end
 				
 			if (self.elasticity[i] < self.minElasticity) then
 				if (self.allocationData[i].static < 0) then 
 					self.elasticity[i] = self.minElasticity
-					luccmeModel.potential:modify(luccmeModel, i, luDirect * (-1), event) -- original clue does not modify in this case, but AMAZALERT results are like this
+					luccMEModel.potential:modify(luccMEModel, i, luDirect * (-1), event) -- original clue does not modify in this case, but AMAZALERT results are like this
 				else
-					luccmeModel.demand:changeLuDirection(i)
+					luccMEModel.demand:changeLuDirection(i)
 				end
 			end
 
-			if (luccmeModel.useLog == true) then
-				print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect, "const :", luccmeModel.potential.regressionData[i].const, "->", luccmeModel.potential.regressionData[i].newconst,
-						luccmeModel.potential.regressionData[i].newminReg, luccmeModel.potential.regressionData[i].newmaxReg) 
+			if (luccMEModel.useLog == true) then
+				print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect, "const :", luccMEModel.potential.regressionData[i].const, "->", luccMEModel.potential.regressionData[i].newconst,
+						luccMEModel.potential.regressionData[i].newminReg, luccMEModel.potential.regressionData[i].newmaxReg) 
 			end
 
 			local diff = math.abs((areas[i] - currentDemand))
@@ -364,11 +364,11 @@ function allocationClueLikeSaturation(component)
 	--- Corrects total land use/cover types to 100 percent.
 	-- @arg self A allocationClueLikeSaturation component.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self:correctCellChange(luccmeModel)
-	component.correctCellChange = function(self, luccmeModel)
+	-- @usage self:correctCellChange(luccMEModel)
+	component.correctCellChange = function(self, luccMEModel)
 	-- corrects total land use/cover types to 100 percent
-		local cs = luccmeModel.cs
-		local luTypes = luccmeModel.landUseTypes
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 		local NCOV = #luTypes
 		local BACKP = 0.5
 
@@ -560,18 +560,18 @@ function allocationClueLikeSaturation(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @arg nIter An iterator number.
-	-- @usage self:printAllocatedArea(event, luccmeModel, nIter)
-	component.printAllocatedArea = function(self, event, luccmeModel, nIter)
+	-- @usage self:printAllocatedArea(event, luccMEModel, nIter)
+	component.printAllocatedArea = function(self, event, luccMEModel, nIter)
 	-- calculates and prints the allocated by the regression equations for each land use/cover type
-		local cs = luccmeModel.cs
-		local luTypes = luccmeModel.landUseTypes
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 		local areas, total = {}, 0
 		local idx = 1
 		areas = self:countAllocatedLandUseArea(cs, luTypes)
 		
 		print("\nYear:"..event:getTime(), " Step: "..nIter)  
 		for i, lu in pairs (luTypes) do
-		    local currentDemand = luccmeModel.demand:getCurrentLuDemand(i)
+		    local currentDemand = luccMEModel.demand:getCurrentLuDemand(i)
 		    print(lu.." area: \t"..math.floor (areas[i]), "Difference: ", math.floor(areas[i] - currentDemand)) 
 		end
 		io.flush()

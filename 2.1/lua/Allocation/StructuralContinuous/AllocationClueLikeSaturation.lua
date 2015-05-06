@@ -37,7 +37,7 @@
 -- equations for each land use/cover type.
 -- @usage allocation = allocationClueLikeSaturation { maxDifference = 50, maxIteration = 3000,
 -- initialElasticity = 0.1, minElasticity = 0.001, maxElasticity = 1.5,
--- complementarLU = "VegN_2000", landUseNoData 	= "O_2000",
+-- complementarLU = "VegN_2000",
 -- saturationIndicator = "saturationLimiar", attrProtection = "protPublicForests_ALL",
 -- allocationData = {{static = -1, minValue = 0.2, maxValue = 0.8, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03},-- VEGN
 --            		 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- AG
@@ -157,8 +157,8 @@ function allocationClueLikeSaturation(component)
 							if (self.attrProtection ~= nil) then
 								prot_t = cell[self.attrProtection]
 							end
-							if (self.landUseNoData ~= nil) then
-								original = 1 - cell[self.landUseNoData]
+							if (luccmeModel.landUseNoData ~= nil) then
+								original = 1 - cell[luccmeModel.landUseNoData]
 							end
 							local available_forest = original - prot_t
 			   
@@ -175,8 +175,8 @@ function allocationClueLikeSaturation(component)
 																	if (self.attrProtection ~= nil) then
 																		prot_t = neigh[self.attrProtection]
 																	end
-																	if (self.landUseNoData ~= nil) then
-																		original = 1 - neigh[self.landUseNoData]
+																	if (luccmeModel.landUseNoData ~= nil) then
+																		original = 1 - neigh[luccmeModel.landUseNoData]
 																	end
 																	local neigh_available_forest = original - prot_t
 																	if (neigh_available_forest > 0) then

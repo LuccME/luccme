@@ -79,7 +79,7 @@ function SpatialLagRegression_region(component)
 		end
 
         if (event:getTime() > luccMEModel.startTime) then
-			self:adaptRegressionConstants(demand, event) -- LOG TIRAR
+			self:adaptRegressionConstants(demand, event)
         end
 	
 		for i, luData in pairs (self.regressionData) do
@@ -194,15 +194,12 @@ function SpatialLagRegression_region(component)
 	component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
 		currentTime = event:getTime()
 		local regression = roadsModel.const
-		--print (roadsModel.const)
-		--io.flush ()
 
 		for var, beta in pairs (roadsModel.betas) do
 			regression = regression + beta * cell[var]
 		end
 
 		if (currentTime < cell["alternate_model"] + 3) then
-			--print ("ROADS NEXT YEAR", cell["alternate_model"], currentTime)
 			return regression
 		end
 		
@@ -264,9 +261,6 @@ function SpatialLagRegression_region(component)
 		local lu = luTypes[luIndex]
 		local luDataRegion = self.regressionData[luIndex]
 		local pot = lu.."_pot"
-		local reg = lu.."_reg"
-		local reg2 = lu.."_reg2"
-		local reg3 = lu.."_reg3"
 
 		for k,cell in pairs (cs.cells) do
             local regressionX = 0
@@ -305,14 +299,13 @@ function SpatialLagRegression_region(component)
 							)
 		
 			if (count > 0) then
-				regresY = (Y + neighSum) / (count + 1) * luData.ro  --v6 v8 v11
+				regresY = (Y + neighSum) / (count + 1) * luData.ro  
 			else
 				regresY = Y*luData.ro
 			end	
 			
-			--regresY = (regresY + Y*luData.ro)/2 --v4 v5 v7 v10
 			if (luData.isLog) then -- if the land use is log transformed
-				regresY = math.log(10, regresY + 0.0001)  --@todo magic number
+				regresY = math.log(10, regresY + 0.0001)  
 			end
 
 	        local regression = luData.newconst + regressionX + regresY
@@ -349,11 +342,6 @@ function SpatialLagRegression_region(component)
 				regression = 0
 			end
 			
-			--cell[reg] = oldReg -- optional to save and analyse
-			cell[reg] = regresDrivers -- optional to save and analyse
-			cell[reg2] = regresY -- optional to save and analyse
-			cell[reg3] = regression -- optional to save and analyse
-
 			regression = regression * (1 - cell[luccMEModel.landUseNoData])
 
 			cell[pot] = regression - cell.past[lu]

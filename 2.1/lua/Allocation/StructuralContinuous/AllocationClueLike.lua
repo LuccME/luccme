@@ -82,8 +82,8 @@ function allocationClueLike(component)
 				end
 			else 
 				nIter = nIter + 1
-				if (nIter >  self.maxIteration*0.50) and (flagFlex == false) then
-					maxAdjust = maxAdjust*2 
+				if (nIter >  self.maxIteration * 0.50) and (flagFlex == false) then
+					maxAdjust = maxAdjust * 2 
 					flagFlex = true 
 				end   
 			end

@@ -97,7 +97,7 @@ function ComputeInputTwoDateMaps(component)
 		-- Check the number of years to simulate
 		if (yearsSimulated == 0) then
 			error("The simulation time is zero", 5)
-	    end
+	  end
 
 		-- Starts of annualDemand generation
 		local increasing = 1
@@ -115,25 +115,25 @@ function ComputeInputTwoDateMaps(component)
 		
 		-- Get the initialDemand on the database and the interpolation factor
 		forEachCell(luccMEModel.cs, function(cell)
-										for j, lu in pairs (luccMEModel.landUseTypes) do
-											if (initialDemand[j] == nil) then
-												initialDemand[j] = 0
-											end
-											initialDemand[j] = initialDemand[j] + (cell[lu] * luccMEModel.cs.cellArea)
-										end
-									end
-					)
+              										for j, lu in pairs (luccMEModel.landUseTypes) do
+              											if (initialDemand[j] == nil) then
+              												initialDemand[j] = 0
+              											end
+              											initialDemand[j] = initialDemand[j] + (cell[lu] * luccMEModel.cs.cellArea)
+              										end
+              									end
+					      )
 					
 		-- Get the validation demand (finalDemandForInterpolation) on the database
 		forEachCell(luccMEModel.cs, function(cell)
-										for j, lu in pairs (luccMEModel.demand.landUseTypesForInterpolation) do
-												if (finalDemandForInterpolation[j] == nil) then
-												finalDemandForInterpolation[j] = 0
-											end
-											finalDemandForInterpolation[j] = finalDemandForInterpolation[j] + (cell[lu] * luccMEModel.cs.cellArea)
-										end
-									end
-					)
+              										for j, lu in pairs (luccMEModel.demand.landUseTypesForInterpolation) do
+              												if (finalDemandForInterpolation[j] == nil) then
+              												finalDemandForInterpolation[j] = 0
+              											end
+              											finalDemandForInterpolation[j] = finalDemandForInterpolation[j] + (cell[lu] * luccMEModel.cs.cellArea)
+              										end
+              									end
+      					)
 				
 		-- Get the interpolationFactor for each parameter, if used the interpolationDirection too or calculate it
 		for i = 1, parametersNumber, 1 do

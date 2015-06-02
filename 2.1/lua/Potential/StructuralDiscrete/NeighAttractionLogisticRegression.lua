@@ -43,7 +43,7 @@ function NeighAttractionLogisticRegression(component)
 		local luTypes = modelParameters.landUseTypes
 		local regressionData = self.regressionData
  		local landUseDrivers = self.landUseDrivers
-  		local filename = self.filename
+		local filename = self.filename
 		
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)

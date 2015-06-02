@@ -73,17 +73,31 @@ function LogisticRegression(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event)
-	  if (self.const == nil) then
-      error("Const variable is missing", 2)
-	  end
-	  
-	  if (self.elasticity == nil) then
-      error("Elasticity variable is missing", 2)
-	  end
-	  
-	  if (self.betas == nil) then
-	    error("Beta variable is missing", 2)
+    local regionsNumber = #self.regressionData
+
+    if (regionsNumber == nil) then
+      error("The model must have at least One region")
+    else
+      for i = 1, regionsNumber, 1 do
+        for j = 1, 3, 1 do
+          if(self.regressionData[i][j].const == nil) then
+            error("Const variable is missing on Region "..i.." Land Use Type number "..j, 2)
+          end
+         
+          if(self.regressionData[i][j].elasticity == nil) then
+            error("Elasticity variable is missing on Region "..i.." Land Use Type number "..j, 2)
+          end
+         
+          if(self.regressionData[i][j].betas == nil) then
+            error("Betas variable is missing on Region "..i.." Land Use Type number "..j, 2)
+          end
+          
+          
+        end
+  
+      end
     end
+    error("Sair")
 	end
 	
 	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.

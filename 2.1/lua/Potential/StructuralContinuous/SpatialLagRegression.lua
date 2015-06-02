@@ -110,9 +110,9 @@ function SpatialLagRegression(component)
 			luccMEModel.landUseNoData = "defaultlandUseNoData"
 
 			forEachCell(cs, function(cell)
-								cell[luccMEModel.landUseNoData] = 0
-							end
-						)
+        								cell[luccMEModel.landUseNoData] = 0
+        							end
+      						)
 		end		
 
 		for j, lu in pairs (luccMEModel.landUseTypes) do
@@ -145,6 +145,7 @@ function SpatialLagRegression(component)
 	-- @arg direction The direction for the regression.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxx
+	-- @todo usa?
 	component.modify = function(self, luccMEModel, luIndex, direction, event)
 		luData = self.regressionData[luIndex]
 

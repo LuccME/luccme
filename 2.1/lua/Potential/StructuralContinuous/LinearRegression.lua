@@ -42,7 +42,7 @@ function LinearRegression(component)
 		local luTypes = luccMEModel.landUseTypes
         local demand = luccMEModel.demand
 		
-        -- create an internal const that can be modified during allocation
+    -- create an internal const that can be modified during allocation
 		for i, luData in pairs (self.regressionData) do
 			if (luData.const == nil) then
 				luData.const = 0
@@ -102,6 +102,7 @@ function LinearRegression(component)
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @arg direction The direction for the regression.
 	-- @usage XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	-- @todo usa?
 	component.modify = function(self, luccMEModel, luIndex, direction)
 		luData = self.regressionData[luIndex]
 

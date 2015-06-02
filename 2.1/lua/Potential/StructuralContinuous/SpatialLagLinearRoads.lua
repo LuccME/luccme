@@ -86,9 +86,9 @@ function SpatialLagLinearRoads(component)
 		cs = luccMEModel.cs
 
 		forEachCell(cs, function(cell)
-							cell["alternate_model"] = 0
-						end
-					)
+        							cell["alternate_model"] = 0
+        						end
+      					)
 
 		for i, luData in pairs (self.regressionData) do
 			if (luccMEModel.landUseTypes[i] == nil) then
@@ -111,9 +111,9 @@ function SpatialLagLinearRoads(component)
 			luccMEModel.landUseNoData = "defaultlandUseNoData"
 
 			forEachCell(cs, function(cell)
-								cell[luccMEModel.landUseNoData] = 0
-							end
-						)
+        								cell[luccMEModel.landUseNoData] = 0
+        							end
+      						)
 		end		
 
 		for j, lu in pairs (luccMEModel.landUseTypes) do
@@ -171,7 +171,7 @@ function SpatialLagLinearRoads(component)
 	-- @arg self A SpatialLagLinearRoads component.
 	-- @arg roadsModel A road model.
 	-- @arg cell A spatial location with homogeneous internal content.
-	-- @arg oldRegression XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	-- @arg oldRegression The previous regression value
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self:modifyRegression(luData.roadsModel, cell, regression, event)
 	component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)

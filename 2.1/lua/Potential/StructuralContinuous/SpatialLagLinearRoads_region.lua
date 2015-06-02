@@ -98,10 +98,10 @@ function SpatialLagRegression_region(component)
 		cs = luccMEModel.cs
 
 		forEachCell (cs, function(cell)
-							cell["alternate_model"] = 0
-							cell["region"] = 1
-						 end
-					)
+        							cell["alternate_model"] = 0
+        							cell["region"] = 1
+        						 end
+        				)
 
 		if (self.regionAttr == nil) then
 			self.regionAttr = "region"
@@ -129,9 +129,9 @@ function SpatialLagRegression_region(component)
 			find = true
 			luccMEModel.landUseNoData = "defaultlandUseNoData"
 			forEachCell (cs, function(cell)
-								cell[luccMEModel.landUseNoData] = 0
-							 end
-						)
+        								cell[luccMEModel.landUseNoData] = 0
+        							 end
+      						)
 		end		
 
 		for j, lu in pairs (luccMEModel.landUseTypes) do
@@ -188,7 +188,7 @@ function SpatialLagRegression_region(component)
 	-- @arg self A SpatialLagRegression_region component.
 	-- @arg roadsModel A road model.
 	-- @arg cell A spatial location with homogeneous internal content.
-	-- @arg oldRegression XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	-- @arg oldRegression The previous value of the regression
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self:modifyRegression(luData.roadsModel, cell, regression, event)
 	component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
@@ -210,9 +210,9 @@ function SpatialLagRegression_region(component)
 		for i, attr in pairs (roadsModel.attrs) do
 			local diff = cell[attr] - cell.past[attr]
 			if ((roadsModel.change < 0 and diff < 0 and diff < roadsModel.change) or
-				(roadsModel.change > 0 and diff > 0 and diff > roadsModel.change)) then
-					cell["alternate_model"]  = currentTime
-					return regression
+				  (roadsModel.change > 0 and diff > 0 and diff > roadsModel.change)) then
+					   cell["alternate_model"]  = currentTime
+					   return regression
 			end
 		end
 
@@ -283,20 +283,20 @@ function SpatialLagRegression_region(component)
 			local count = 0
 		
 			forEachNeighbor(cell, function(cell, neigh, weight)
-												Y = cell.past[lu]
-												neighY = neigh.past[lu]
-												if (cell[luccMEModel.landUseNoData] ~= 1) then
-													Y = Y / (1 - cell[luccMEModel.landUseNoData])
-												end
-												if (neigh[luccMEModel.landUseNoData] ~= 1) then
-													neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
-												end
-												if (neigh[luccMEModel.landUseNoData] < 1) then
-													count = count + 1
-													neighSum = neighSum + neighY
-												end
-									end
-							)
+      												Y = cell.past[lu]
+      												neighY = neigh.past[lu]
+      												if (cell[luccMEModel.landUseNoData] ~= 1) then
+      													Y = Y / (1 - cell[luccMEModel.landUseNoData])
+      												end
+      												if (neigh[luccMEModel.landUseNoData] ~= 1) then
+      													neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
+      												end
+      												if (neigh[luccMEModel.landUseNoData] < 1) then
+      													count = count + 1
+      													neighSum = neighSum + neighY
+      												end
+          									end
+        							)
 		
 			if (count > 0) then
 				regresY = (Y + neighSum) / (count + 1) * luData.ro  

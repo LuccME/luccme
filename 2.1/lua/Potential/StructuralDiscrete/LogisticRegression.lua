@@ -22,11 +22,11 @@
 --					  betas = {beta1 =	-0.05, beta2 =	0.2, beta3 = 0.1},
 --					  elasticity = 0.5},
 --					-- Region 2
---					{ isLog = false, error = 0.3, const  = -0.3,
+--					{ const  = -0.3,
 --					  betas = {beta1 =	0.03, beta2 =	0.6, beta3 = 0.01},
 --					  elasticity = 0.1},
 --					-- Region 3
---					{ isLog = false, error = 0, const  = 0,
+--					{ const  = 0,
 --					  betas = {beta1 =	0},
 --					  elasticity = 0.5},
 --					},
@@ -44,26 +44,27 @@ function LogisticRegression(component)
  		local luTypes = modelParameters.landUseTypes
  		local landUseDrivers = self.landUseDrivers
   		
-  		for k, cell in pairs (cs.cells) do
-			if (cell.region == nil) then
-				cell.region = 1
-			end
-
- 			for luind, inputValues in pairs (regressionData[cell.region]) do
-				local lu = luTypes[luind]
+		for k, cell in pairs (cs.cells) do
+  		if (cell.region == nil) then
+  			cell.region = 1
+  		end
+  
+  		for luind, inputValues in pairs (regressionData[cell.region]) do
+  			local lu = luTypes[luind]
   				
-  				-- Step 1: Calculates the regression estimates
-   				local regrLogit = self.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
-				
+  			-- Step 1: Calculates the regression estimates
+   			local regrLogit = self.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
+  			
    				-- Step 2: Calculates the elasticity
-				local elas = 0				
-				if (cell[lu] == 1) then
-					elas = inputValues.elasticity
-				end	
-				
-				--Step 3 : Computes the total probability
-				cell[lu.."_pot"] = regrLogit + elas
-			end	--close for region
+  			local elas = 0				
+  			
+  			if (cell[lu] == 1) then
+  				elas = inputValues.elasticity
+  			end	
+  			
+  			--Step 3 : Computes the total probability
+  			cell[lu.."_pot"] = regrLogit + elas
+  		end	--close for region
 		end -- close for cell
 	end
 	
@@ -72,6 +73,17 @@ function LogisticRegression(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event)
+	  if (self.const == nil) then
+      error("Const variable is missing", 2)
+	  end
+	  
+	  if (self.elasticity == nil) then
+      error("Elasticity variable is missing", 2)
+	  end
+	  
+	  if (self.betas == nil) then
+	    error("Beta variable is missing", 2)
+    end
 	end
 	
 	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.

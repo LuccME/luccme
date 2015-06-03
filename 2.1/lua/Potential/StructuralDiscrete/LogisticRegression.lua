@@ -93,7 +93,7 @@ function LogisticRegression(component)
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
-          error("Invalid number of regressions. Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
+          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
         end
         
         for j = 1, regressionNumber, 1 do

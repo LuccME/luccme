@@ -50,7 +50,38 @@ function InverseDistanceRule(component)
 	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	component.verify = function(self, event)
+	component.verify = function(self, event, modelParameters)
+	  -- check potentialData
+    if (self.potentialData == nil) then
+      error("regressionData is missing", 2)
+    end    
+    
+    local regressionNumber = #self.potentialData
+    local lutNumber = #modelParameters.landUseTypes
+    
+    -- check the number of regressions
+    if (regressionNumber ~= lutNumber) then
+      error("Invalid number of regressions. Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
+    end
+    
+    for j = 1, regressionNumber, 1 do
+      -- check factor variable
+      if(self.potentialData[j].factor == nil) then
+        error("factor variable is missing on LandUseType number "..j, 2)
+      end
+     
+      -- check multipliers variable
+      if (self.potentialData[j].multipliers == nil) then
+        error("multipliers variable is missing on LandUseType number "..j, 2)
+      end
+      
+      -- check betas within database
+      for k, lu in pairs (self.potentialData[j].multipliers) do
+        if (modelParameters.cs.cells[1][k] == nil) then
+          error("Multiplier "..k.." on LandUseType number "..j.." not found within database", 2)
+        end
+      end
+    end
 	end
 	
 	return component

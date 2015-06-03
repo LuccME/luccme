@@ -106,53 +106,75 @@ function SpatialLagRegression_region(component)
 		if (self.regionAttr == nil) then
 			self.regionAttr = "region"
 		end
+		
+    -- check regressionData
+    if (self.regressionData == nil) then
+      error("regressionData is missing", 2)
+    end    
+    
+    local regionsNumber = #self.regressionData
 
-		for j, luDataRegion in pairs (self.regressionData) do
-			for i, luData in pairs (luDataRegion) do
-				if (luccMEModel.landUseTypes[j] == nil) then
-					error("Invalid number of regressions", 2)
-				end
-				for var, beta in pairs (luData.betas) do
-					if (luccMEModel.cs.cells[1][var] == nil) then
-						error("Invalid land use driver", 2)
-					end
-				end
-				if (luData.ro == nil) then
-					error("ro parameter must be defined", 2)
-				end	
-			end
-		end
-
-		local find = false	
-
-		if (luccMEModel.landUseNoData == nil) then
-			find = true
-			luccMEModel.landUseNoData = "defaultlandUseNoData"
-			forEachCell (cs, function(cell)
-        								cell[luccMEModel.landUseNoData] = 0
-        							 end
-      						)
-		end		
-
-		for j, lu in pairs (luccMEModel.landUseTypes) do
-			if (self.regressionData[j] == nil) then
-				error("Invalid number of regressions", 2)
-			end
-			if (luccMEModel.landUseNoData == lu) then
-				find = true
-			end
-		end
-
-		if (find == false) then	
-			error("Invalid land use no data variable", 2)
-		end
-
+    -- check number of Regions
+    if (regionsNumber == nil or regionsNumber == 0) then
+      error("The model must have at least One region")
+    else
+      for i = 1, regionsNumber, 1 do
+        local regressionNumber = #self.regressionData[i]
+        local lutNumber = #luccMEModel.landUseTypes
+        
+        -- check the number of regressions
+        if (regressionNumber ~= lutNumber) then
+          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
+        end
+        
+        for j = 1, regressionNumber, 1 do
+          -- check isLog variable
+          if(self.regressionData[i][j].isLog == nil) then
+            error("isLog variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check ro variable
+          if(self.regressionData[i][j].ro == nil) then
+            error("ro variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check minReg variable
+          if(self.regressionData[i][j].minReg == nil) then
+            error("minReg variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check maxReg variable
+          if(self.regressionData[i][j].maxReg == nil) then
+            error("maxReg variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check constant variable
+          if(self.regressionData[i][j].const == nil) then
+            error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+         
+          -- check betas variable
+          if (self.regressionData[i][j].betas == nil) then
+            error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check betas within database
+          for k, lu in pairs (self.regressionData[i][j].betas) do
+            if (luccMEModel.cs.cells[1][k] == nil) then
+              error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+            end
+          end
+        end -- for j
+      end -- for i
+    end -- else		
+		
 		local filename = self.filename
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
 			cs:createNeighborhood()	
 		end
+		error("Sair")
 	end -- function verify
 
 	--- Handles with the modify method of a SpatialLagRegression_region component.

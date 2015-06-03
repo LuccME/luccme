@@ -72,33 +72,45 @@ function LogisticRegression(component)
 	-- @arg self A LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	component.verify = function(self, event)
+	component.verify = function(self, event, modelParameters)
+    -- check regressionData
+    if (self.regressionData == nil) then
+      error("regressionData is missing", 2)
+    end    
+    
     local regionsNumber = #self.regressionData
 
+    -- check number of Regions
     if (regionsNumber == nil) then
       error("The model must have at least One region")
     else
       for i = 1, regionsNumber, 1 do
         for j = 1, 3, 1 do
+          -- check constant variable
           if(self.regressionData[i][j].const == nil) then
-            error("Const variable is missing on Region "..i.." Land Use Type number "..j, 2)
+            error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
          
-          if(self.regressionData[i][j].elasticity == nil) then
-            error("Elasticity variable is missing on Region "..i.." Land Use Type number "..j, 2)
+          -- check elasticity variable
+          if (self.regressionData[i][j].elasticity == nil) then
+            error("elasticity variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
          
-          if(self.regressionData[i][j].betas == nil) then
-            error("Betas variable is missing on Region "..i.." Land Use Type number "..j, 2)
+          -- check betas variable
+          if (self.regressionData[i][j].betas == nil) then
+            error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
           
-          
-        end
-  
-      end
-    end
-    error("Sair")
-	end
+          -- check betas within database
+          for k, lu in pairs (self.regressionData[i][j].betas) do
+            if (modelParameters.cs.cells[1][k] == nil) then
+              error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+            end
+          end
+        end -- for j
+      end -- for i
+    end -- else
+	end -- verify
 	
 	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.
 	-- @arg cell A spatial location with homogeneous internal content.

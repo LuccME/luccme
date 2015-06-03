@@ -15,23 +15,26 @@
 -- @arg component.calcRegressionLogistic Handles with the calculation of the regression
 -- @arg component.probability Compute the probability logistic method of a LogisticRegression component.
 -- @return The modified component.
--- @usage myPontencial = LogisticRegression {
--- regressionData =	{
--- 					-- Region 1
---					{ const  = -0.1,
---					  betas = {beta1 =	-0.05, beta2 =	0.2, beta3 = 0.1},
---					  elasticity = 0.5},
---					-- Region 2
---					{ const  = -0.3,
---					  betas = {beta1 =	0.03, beta2 =	0.6, beta3 = 0.01},
---					  elasticity = 0.1},
---					-- Region 3
---					{ const  = 0,
---					  betas = {beta1 =	0},
---					  elasticity = 0.5},
---					},
---					landUseDrivers = {}
---}
+-- @usage potential  =  LogisticRegression {
+--    regressionData = { { --  Region 1
+--                        -- D
+--                        { const = -0.1004, 
+--                          betas = {beta1 = 0.05814, beta2 = -0.97500, beta3 = -2.51651},                
+--                          elasticity =  0.5, 
+--                        },
+--                        -- F
+--                        { const = -2.34188, 
+--                          betas = {beta1 = -0.02727, beta2 = -4.30977, beta3 = -3.10320},                                                              
+--                          elasticity =  0.5, 
+--                        },
+--                        -- O
+--                        { const = 0,
+--                          betas = {beta1 = 1},  
+--                          elasticity = 1,
+--                        }   
+--                       }  --end region 1 
+--                      } -- end regressionData
+--  }
 function LogisticRegression(component) 
 	--- Handles with the execution method of a LogisticRegression component.
 	-- @arg self A LogisticRegression component.
@@ -85,7 +88,15 @@ function LogisticRegression(component)
       error("The model must have at least One region")
     else
       for i = 1, regionsNumber, 1 do
-        for j = 1, 3, 1 do
+        local regressionNumber = #self.regressionData[i]
+        local lutNumber = #modelParameters.landUseTypes
+        
+        -- check the number of regressions
+        if (regressionNumber ~= lutNumber) then
+          error("Invalid number of regressions. Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
+        end
+        
+        for j = 1, regressionNumber, 1 do
           -- check constant variable
           if(self.regressionData[i][j].const == nil) then
             error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
@@ -110,6 +121,7 @@ function LogisticRegression(component)
         end -- for j
       end -- for i
     end -- else
+    error("Sair")
 	end -- verify
 	
 	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.

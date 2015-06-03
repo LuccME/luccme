@@ -84,7 +84,7 @@ function LogisticRegression(component)
     local regionsNumber = #self.regressionData
 
     -- check number of Regions
-    if (regionsNumber == nil) then
+    if (regionsNumber == nil or regionsNumber == 0) then
       error("The model must have at least One region")
     else
       for i = 1, regionsNumber, 1 do

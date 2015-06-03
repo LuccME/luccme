@@ -65,35 +65,42 @@ function LinearRegression(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
-		for i, luData in pairs (self.regressionData) do
-			if (luccMEModel.landUseTypes[i] == nil) then
-				error("Invalid number of regressions", 2)
-			end
-			for var, beta in pairs (luData.betas) do
-				if (luccMEModel.cs.cells[1][var] == nil) then
-					error("Invalid land use driver", 2)
-				end
-			end
-		end
-
-		local find = false	
-
-		if (luccmemodel.landUseNoData == nil) then
-			find = true
-		end			
-
-		for j, lu in pairs (luccMEModel.landUseTypes) do
-			if (self.regressionData[j] == nil) then
-				error("Invalid number of regressions", 2)
-			end
-			if (luccmemodel.landUseNoData == lu) then
-				find = true
-			end
-		end
-
-		if (find == false) then	
-			error("Invalid land use no data variable", 2)
-		end
+    -- check regressionData
+    if (self.regressionData == nil) then
+      error("regressionData is missing", 2)
+    end    
+    
+    local regressionNumber = #self.regressionData
+    local lutNumber = #luccMEModel.landUseTypes
+    
+    -- check the number of regressions
+    if (regressionNumber ~= lutNumber) then
+      error("Invalid number of regressions. Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
+    end
+    
+    for j = 1, regressionNumber, 1 do
+      -- check isLog variable
+      if(self.regressionData[j].isLog == nil) then
+        error("isLog variable is missing on LandUseType number "..j, 2)
+      end
+     
+      -- check const variable
+      if (self.regressionData[j].const == nil) then
+        error("const variable is missing on LandUseType number "..j, 2)
+      end
+     
+      -- check betas variable
+      if (self.regressionData[j].betas == nil) then
+        error("betas variable is missing on LandUseType number "..j, 2)
+      end
+      
+      -- check betas within database
+      for k, lu in pairs (self.regressionData[j].betas) do
+        if (luccMEModel.cs.cells[1][k] == nil) then
+          error("Beta "..k.." on LandUseType number "..j.." not found within database", 2)
+        end
+      end
+    end -- for j
 	end
 
 	--- Handles with the modify method of a LinearRegression component.

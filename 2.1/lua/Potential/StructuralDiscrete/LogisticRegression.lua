@@ -121,7 +121,6 @@ function LogisticRegression(component)
         end -- for j
       end -- for i
     end -- else
-    error("Sair")
 	end -- verify
 	
 	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.

@@ -158,7 +158,7 @@ function AllocationClueSLike(component)
         local transitionNumber = #self.transitionMatrix[i]
         local lutNumber = #modelParameters.landUseTypes
         
-        -- check the number of regressions
+        -- check the number of transitions
         if (transitionNumber ~= lutNumber) then
           error("Invalid number of transitions on Region number "..i..". Transitions: "..transitionNumber.." LandUseTypes: "..lutNumber, 2)
         end

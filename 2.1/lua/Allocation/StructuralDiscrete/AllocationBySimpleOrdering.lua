@@ -14,30 +14,30 @@ function AllocationBySimpleOrdering(component)
 	-- @arg model AllocationBySimpleOrdering model.
 	-- @usage self.allocation:execute(event, model)
 	component.execute = function(self, event, model)
-	------Global and Local Variables and Constants------
+	  ------Global and Local Variables and Constants------
 		local useLog = model.useLog
 		local cs = model.cs
 		local potential = model.potential		
 		local cellarea = cs.cellArea
 		local step = event:getTime() - model.startTime + 1	
 		local start = model.startTime		
-  		local demand = model.demand
+	  local demand = model.demand
 		local nIter = 0
-  		local allocation_ok = false
-  		local numofcells  = #cs.cells
-  		local totarea = (numofcells * cellarea)
-  		local maxdiffarea = (self.maxDifference * totarea)
-  		local luTypes = model.landUseTypes
-  		local dem = {}
-  		local differences = {}
-  		
+		local allocation_ok = false
+		local numofcells  = #cs.cells
+		local totarea = (numofcells * cellarea)
+		local maxdiffarea = (self.maxDifference * totarea)
+		local luTypes = model.landUseTypes
+		local dem = {}
+		local differences = {}
+		
 		--Inicialização das demandas
-	   	for ind, lu in  pairs (luTypes) do	
+   	for ind, lu in  pairs (luTypes) do	
  			dem[lu] = -1
  		end
   		
-  		print ("Time : ", event:getTime())
-    	print ("Step : ", step)
+		print ("Time : ", event:getTime())
+  	print ("Step : ", step)
 		if (useLog == true) then
 			print ("----------------------------------------------------------------------------------------")
 			print ("Cell Area "..cellarea)
@@ -49,7 +49,7 @@ function AllocationBySimpleOrdering(component)
 				print ("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
 			print ("----------------------------------------------------------------------------------------")
-	   	end
+   	end
 	   	
 		for k, cell in pairs (cs.cells) do
 			for luind, lu in  pairs (luTypes) do
@@ -58,7 +58,7 @@ function AllocationBySimpleOrdering(component)
 			end
 			cell.alloc = 0
 			cell.simUse = currentUse(cell, luTypes)
-        end
+    end
 
 		diff = 0
 
@@ -151,12 +151,12 @@ end -- end of AllocationCluesLike
 function areaAllocated(cs, cellarea, field, attr)
 	c = 0
 	forEachCell(cs, function(cell)
-						if (cell[field] == attr) then
-							c = c + 1 	
-						end
-					end
-				)
-				
+        						if (cell[field] == attr) then
+        							c = c + 1 	
+        						end
+        					end
+      				)
+      				
 	return (c * cellarea)
 end
 
@@ -167,8 +167,7 @@ end
 function toIndex(lu, usetypes)
 	local index = 0
 	for i, value in  pairs (usetypes) do
-	
-		if (value == lu) then
+	  if (value == lu) then
 			index = i
 			break
 		end
@@ -203,8 +202,8 @@ function changeUse(cell, cur_use, higher_use)
 	cell[higher_use.."_change"] = 0
 	cell[cur_use.."_change"] = 0  
 	if (cur_use ~= higher_use) then
-	       cell[higher_use.."_change"] = 1
-	       cell[cur_use.."_change"] = -1 
+    cell[higher_use.."_change"] = 1
+    cell[cur_use.."_change"] = -1 
 	 end
 end
 

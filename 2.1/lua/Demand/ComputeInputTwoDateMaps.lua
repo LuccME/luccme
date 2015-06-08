@@ -214,7 +214,7 @@ function ComputeInputTwoDateMaps(component)
 	    for k, lu in pairs (luTypes) do
 	        self.demandDirection[k] = 0
 	        if (self.annualDemand[1][k] == nil) then
-				error("Invalid number of land use in the demand table", 5)
+				    error("Invalid number of land use in the demand table", 5)
 	        end
 	        self.numLU = self.numLU + 1
 	    end

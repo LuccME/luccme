@@ -127,8 +127,53 @@ function AllocationClueSLike(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:verify(event, self)
- 	component.verify = function(self, event)
-	end
+ 	component.verify = function(self, event, modelParameters)
+    -- check maxIteration
+    if (self.maxIteration == nil) then
+      error("maxIteration variable is missing", 2)
+    end 
+    
+    -- check factorIteration
+    if (self.factorIteration == nil) then
+      error("factorIteration variable is missing", 2)
+    end  
+    
+    -- check maxDifference
+    if (self.maxDifference == nil) then
+      error("maxDifference variable is missing", 2)
+    end 
+    
+    -- check transitionMatrix
+    if (self.transitionMatrix == nil) then
+      error("transitionMatrix is missing", 2)
+    end    
+    
+    local regionsNumber = #self.transitionMatrix
+
+    -- check number of Regions
+    if (regionsNumber == nil or regionsNumber == 0) then
+      error("The model must have at least One region", 2)
+    else
+      for i = 1, regionsNumber, 1 do
+        local transitionNumber = #self.transitionMatrix[i]
+        local lutNumber = #modelParameters.landUseTypes
+        
+        -- check the number of regressions
+        if (transitionNumber ~= lutNumber) then
+          error("Invalid number of transitions on Region number "..i..". Transitions: "..transitionNumber.." LandUseTypes: "..lutNumber, 2)
+        end
+        
+        for j = 1, transitionNumber, 1 do
+          for k = 1, lutNumber, 1 do  
+            -- check the matrix values
+            if(self.transitionMatrix[i][j][k] ~= 0 and self.transitionMatrix[i][j][k] ~= 1) then
+              error("Invalid data on transitionMatrix: "..self.transitionMatrix[i][j][k]..". Region: "..i.. " Position: "..j.."x"..k..". The acceptable values are 0 or 1", 2)
+            end
+          end -- for k
+        end -- for j
+      end -- for i
+    end -- else
+	end -- verify
 
 	return component
 end -- end of AllocationCluesLike

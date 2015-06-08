@@ -128,18 +128,125 @@ function allocationClueLikeSaturation(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
-		if (self.complementarLU == nil) then
-			error ("Mandatory argument missing: complementarLU", 2)
-		end
-		if (self.saturationIndicator == nil) then
-			error ("Mandatory argument missing: saturationIndicator", 2)
-		end
+    -- check maxDifference
+    if (self.maxDifference == nil) then
+      error("maxDifference variable is missing", 2)
+    end      
+    
+    -- check maxIteration
+    if (self.maxIteration == nil) then
+      error("maxIteration variable is missing", 2)
+    end
+    
+    -- check initialElasticity
+    if (self.initialElasticity == nil) then
+      error("initialElasticity variable is missing", 2)
+    end      
+    
+    -- check minElasticity
+    if (self.minElasticity == nil) then
+      error("minElasticity variable is missing", 2)
+    end      
+    
+    -- check maxElasticity
+    if (self.maxElasticity == nil) then
+      error("maxElasticity variable is missing", 2)
+    end     
+    
+    -- check complementarLU
+    if (self.complementarLU == nil) then
+      error("complementarLU variable is missing", 2)
+    end 
+    
+    -- check saturationIndicator
+    if (self.saturationIndicator == nil) then
+      error("saturationIndicator variable is missing", 2)
+    end    
+    
+    -- check attrProtection
+    if (self.attrProtection == nil) then
+      error("attrProtection variable is missing", 2)
+    end   
+    
+    -- check allocationData
+    if (self.allocationData == nil) then
+      error("allocationData is missing", 2)
+    end    
+    
+    local allocationNumber = #self.allocationData
+    local lutNumber = #luccMEModel.landUseTypes
+    
+    -- check the number of aloccations
+    if (allocationNumber ~= lutNumber) then
+      error("Invalid number of allocations. Allocations: "..allocationNumber.." LandUseTypes: "..lutNumber)
+    end
+    
+    -- check data into allocationData
+    for j = 1, allocationNumber, 1 do
+      -- check static variable
+      if(self.allocationData[j].static == nil) then
+        error("static variable is missing on Allocation number "..j, 2)
+      end
+     
+      -- check minValue variable
+      if (self.allocationData[j].minValue == nil) then
+        error("minValue variable is missing on Allocation number "..j, 2)
+      end
+     
+      -- check maxValue variable
+      if (self.allocationData[j].maxValue == nil) then
+        error("maxValue variable is missing on Allocation number "..j, 2)
+      end
 
+      -- check minChange variable
+      if (self.allocationData[j].minChange == nil) then
+        error("minChange variable is missing on Allocation number "..j, 2)
+      end
+      
+      -- check maxChange variable
+      if (self.allocationData[j].maxChange == nil) then
+        error("maxChange variable is missing on Allocation number "..j, 2)
+      end     
+      
+      -- check changeLimiarValue variable
+      if (self.allocationData[j].changeLimiarValue == nil) then
+        error("changeLimiarValue variable is missing on Allocation number "..j, 2)
+      end
+      
+      -- check maxChangeAboveLimiar variable
+      if (self.allocationData[j].maxChangeAboveLimiar == nil) then
+        error("maxChangeAboveLimiar variable is missing on Allocation number "..j, 2)
+      end      
+    end
+
+    -- check complementarLU within database
+    if (self.complementarLU ~= nil) then
+      local foundCLU = 0
+    
+      for k = 1, lutNumber, 1 do
+        if (self.complementarLU == luccMEModel.landUseTypes[k]) then
+          foundCLU = 1
+          break
+        end
+      end
+      
+      if (foundCLU == 0) then
+        error("complementarLU: "..self.complementarLU.." not found within database", 2)
+      end		
+    end
+    
+    -- check attrProtection within database
+    if (self.attrProtection ~= nil) then
+      if (luccMEModel.cs.cells[1][self.attrProtection] == nil) then
+        error("attrProtection: "..self.attrProtection.." not found within database", 2)
+      end
+    end
+        
 		luccMEModel.cs:createNeighborhood{	name = "10x10",
-											strategy = "mxn",
-											m = 10,
-											n = 10
-										 }
+                  											strategy = "mxn",
+                  											m = 10,
+                  											n = 10
+                										 }
 	end
 	
 	--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

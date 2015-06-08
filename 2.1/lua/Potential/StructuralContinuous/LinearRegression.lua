@@ -188,8 +188,8 @@ function LinearRegression(component)
 				regression = 0			
 			end
 				
-			if (luccmemodel.landUseNoData ~= nil) then
-				regression = regression * (1 - cell[luccmemodel.landUseNoData])
+			if (luccMEModel.landUseNoData ~= nil) then
+				regression = regression * (1 - cell[luccMEModel.landUseNoData])
 			end
 					
 			cell[pot] = regression - cell.past[lu]

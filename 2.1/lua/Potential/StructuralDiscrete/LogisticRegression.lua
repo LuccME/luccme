@@ -85,7 +85,7 @@ function LogisticRegression(component)
 
     -- check number of Regions
     if (regionsNumber == nil or regionsNumber == 0) then
-      error("The model must have at least One region")
+      error("The model must have at least One region", 2)
     else
       for i = 1, regionsNumber, 1 do
         local regressionNumber = #self.regressionData[i]
@@ -93,7 +93,7 @@ function LogisticRegression(component)
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
-          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
+          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber, 2)
         end
         
         for j = 1, regressionNumber, 1 do

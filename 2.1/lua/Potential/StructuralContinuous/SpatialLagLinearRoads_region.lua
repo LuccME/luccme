@@ -174,7 +174,6 @@ function SpatialLagRegression_region(component)
 		else
 			cs:createNeighborhood()	
 		end
-		error("Sair")
 	end -- function verify
 
 	--- Handles with the modify method of a SpatialLagRegression_region component.

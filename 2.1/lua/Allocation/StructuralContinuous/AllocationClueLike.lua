@@ -218,7 +218,7 @@ function allocationClueLike(component)
       end
       
       if (foundCLU == 0) then
-        error("complementarLU: "..self.complementarLU.." not found within database", 2)
+        error("complementarLU: "..self.complementarLU.." is not a landUseType defined on main file.", 2)
       end
     end
 	end

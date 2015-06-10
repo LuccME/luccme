@@ -86,14 +86,14 @@ function LuccMEModel(model)
 
     -- Verify the cellular space
     if (not self.cs) then
-      error("A Cellular Spae must be defined", 2)
+      error("A Cellular Space must be defined", 2)
     end
 
     -- Verify whether the land use no data is declared and its valid
     if(self.landUseNoData == nil) then
       error("Land use no data type is missing", 2)
     elseif(self.cs.cells[1][self.landUseNoData] == nil) then
-      error("Invalid land use no data type", 2)
+      error("landUseNoData: "..self.landUseNoData.." not found within database", 2)
     end
     
 		self.result = {}
@@ -101,7 +101,7 @@ function LuccMEModel(model)
 		-- Verify whether the attributes to be saved were calculated in the model
 		for i, lu in pairs (self.landUseTypes) do
 			if (self.cs.cells[1][lu] == nil) then
-				error("Invalid land use type", 2)
+				error("landUseType: "..lu.." not found within database", 2)
 			end
 			local equal = 1
 		end

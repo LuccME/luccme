@@ -70,18 +70,23 @@ function LuccMEModel(model)
 		end
 	
 	  -- Verify the scenario name
-		if (self.scenarioName == nil and self.scenarioStartTime ~= nil) then
+		if (self.name == nil) then
 			error("A scenario name is required", 2)
 		end
 	 
 	  -- Verify the scenario start time
-		if (self.scenarioName ~= nil and self.scenarioStartTime == nil) then
+		if (self.startTime == nil) then
 			error("A scenario start time is required", 2)
 		end
 	
 	  -- Verify the scenario stop time
-    if (self.scenarioName ~= nil and self.scenarioEndTime == nil) then
+    if (self.endTime == nil) then
       error("A scenario end time is required", 2)
+    end
+    
+    -- Verify the scenario date
+    if (self.endTime <= self.startTime) then
+      error("The scenario end time must be higher than the scenario start time", 2)
     end
 
     -- Verify the cellular space
@@ -143,7 +148,10 @@ function LuccMEModel(model)
     if (not self.allocation) then
       error("An allocation component must be specified", 2)     
     end
-		
+    
+    -- Verify the dates to be saved
+    -- This verification is done on Save.lua, because it necessary to execute before here.
+
 		self.demand:verify(event, self)
 		self.potential:verify(event, self)
 		self.allocation:verify(event, self)

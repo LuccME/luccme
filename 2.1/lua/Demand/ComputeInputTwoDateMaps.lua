@@ -6,10 +6,10 @@
 -- @arg component An instance of the component itself (an object, with all the data).
 -- @arg component.finalYearForInterpolation The year to be consider as the final
 -- year to calculate the demand interpolation.
--- @arg component.landUseTypesForInterpolation The land use names within the data of
+-- @arg component.finalLandUseTypesForInterpolation The land use names within the data of
 -- the final year to calculate the demand interpolation.
 -- @arg component.directionForInterpolation Set the direction of the demand for each
--- landUseTypesForInterpolation (optional).
+-- finalLandUseTypesForInterpolation (optional).
 -- @arg component.execute Handles with the execution method of a ComputeInputTwoDateMaps component.
 -- @arg model.verify Handles with the verify method of a ComputeInputTwoDateMaps component.
 -- @arg component.printDemand Print the generated demand.
@@ -22,7 +22,7 @@
 -- @return The modified component.
 -- @usage demand = ComputeInputTwoDateMaps {
 --  finalYearForInterpolation = 2004,
---  landUseTypesForInterpolation = {"Dfinal", "Ffinal", "Ofinal"}
+--  finalLandUseTypesForInterpolation = {"Dfinal", "Ffinal", "Ofinal"}
 -- }
 function ComputeInputTwoDateMaps(component)
 	--- Handles with the rules of the component execution.
@@ -78,19 +78,19 @@ function ComputeInputTwoDateMaps(component)
 	    end
 		
 		--  Land use types for interpolation (correct number of uses)
-		if (self.landUseTypesForInterpolation == nil) then
-			error("\nlandUseTypesForInterpolation is missing\n", 5)
+		if (self.finalLandUseTypesForInterpolation == nil) then
+			error("\nfinalLandUseTypesForInterpolation is missing\n", 5)
 	    end
 		
 		--  Check the number of parameters for the interpolation (initial and final)
-		if (#self.landUseTypesForInterpolation ~= #luccMEModel.landUseTypes) then
-			error("\nlandUseTypes and landUseTypesForInterpolation MUST have the same number of parameters\n", 5)
+		if (#self.finalLandUseTypesForInterpolation ~= #luccMEModel.landUseTypes) then
+			error("\nlandUseTypes and finalLandUseTypesForInterpolation MUST have the same number of parameters\n", 5)
 		end
 		
 		-- Check, if used, the number of direction parameters
 		if (self.directionForInterpolation ~= nil) then
-			if (#self.landUseTypesForInterpolation ~= #self.directionForInterpolation) then
-				error("\nlandUseTypesForInterpolation and directionForInterpolation MUST have the same number of parameters\n", 5)
+			if (#self.finalLandUseTypesForInterpolation ~= #self.directionForInterpolation) then
+				error("\nfinalLandUseTypesForInterpolation and directionForInterpolation MUST have the same number of parameters\n", 5)
 			end
 		end
 
@@ -99,10 +99,10 @@ function ComputeInputTwoDateMaps(component)
 			error("The simulation time is zero", 5)
 	  end
 	  
-    -- check landUseTypesForInterpolation within database
-    for k, lu in pairs (self.landUseTypesForInterpolation) do
+    -- check finalLandUseTypesForInterpolation within database
+    for k, lu in pairs (self.finalLandUseTypesForInterpolation) do
       if (luccMEModel.cs.cells[1][lu] == nil) then
-        error("landUseTypesForInterpolation: "..lu.." not found within database", 2)
+        error("finalLandUseTypesForInterpolation: "..lu.." not found within database", 2)
       end
     end
 
@@ -161,7 +161,7 @@ function ComputeInputTwoDateMaps(component)
           
     -- Get the validation demand (finalDemandForInterpolation) on the database
     forEachCell(luccMEModel.cs, function(cell)
-                                  for j, lu in pairs (self.landUseTypesForInterpolation) do
+                                  for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
                                       if (finalDemandForInterpolation[j] == nil) then
                                       finalDemandForInterpolation[j] = 0
                                     end
@@ -214,14 +214,14 @@ function ComputeInputTwoDateMaps(component)
       end
       -- insert the initialDemand on the annualDemand
       if (i == 1) then
-        for j, lu in pairs (self.landUseTypesForInterpolation) do
+        for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
           self.annualDemand[i][j] = initialDemand[j]
           self.annualDemand[i][j] = math.floor(self.annualDemand[i][j] + 0.5)
         end
 
       -- insert the finalDemandForInterpolation (validation) on the annualDemand
       elseif (i == timeToCalcInterpolation + 1) then
-        for j, lu in pairs (self.landUseTypesForInterpolation) do
+        for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
           self.annualDemand[i][j] = finalDemandForInterpolation[j]
           self.annualDemand[i][j] = math.floor(self.annualDemand[i][j] + 0.5)
         end
@@ -229,7 +229,7 @@ function ComputeInputTwoDateMaps(component)
       -- compute the rest of the demand
       else
         -- calculate the demand for each parameter
-        for j, lu in pairs (self.landUseTypesForInterpolation) do
+        for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
           self.annualDemand[i][j] = self.annualDemand[i - 1][j] + (interpolationFactor[j] * interpolationDirection[j])
           self.annualDemand[i][j] = math.floor(self.annualDemand[i][j] + 0.5)
         end
@@ -252,7 +252,7 @@ function ComputeInputTwoDateMaps(component)
 		local rowPrint = ""
 		local j, i
 		
-		for j, lu in pairs (self.landUseTypesForInterpolation) do
+		for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 			rowPrint = rowPrint .. initialDemand[j] .. " "
 		end
 		print("\n", rowPrint, luccMEModel.startTime)
@@ -261,7 +261,7 @@ function ComputeInputTwoDateMaps(component)
 		-- print the final demand (used for the interpolation calculation)
 		print("\n\tInterpolation Final Demand\t Year")
 		rowPrint = ""
-		for j, lu in pairs (self.landUseTypesForInterpolation) do
+		for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 			rowPrint = rowPrint .. finalDemandForInterpolation[j] .. " "
 		end
 		print("\n", rowPrint, self.finalYearForInterpolation)
@@ -271,7 +271,7 @@ function ComputeInputTwoDateMaps(component)
 		print("\n\n\tAnnual Demand\t Year")
 		rowPrint = ""
 		for i = 1, timeToGenerateDemand + 1, 1 do
-			for j, lu in pairs (self.landUseTypesForInterpolation) do
+			for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 				rowPrint = rowPrint .. self.annualDemand[i][j] .. " "
 			end
 			print("\n", rowPrint, luccMEModel.startTime + (i - 1))
@@ -341,14 +341,14 @@ function ComputeInputTwoDateMaps(component)
 	-- @return The current demand direction for an specific luIndex.
 	-- @usage model:changeLuDirection(luIndex)
     component.changeLuDirection = function(self, luIndex)
-		local oppositeDirection = -1
-		
-		if (luIndex > self.numLU) then
-			error("Invalid land use index", 5)
-		end
-
-		self.demandDirection[luIndex] = self.demandDirection[luIndex] * oppositeDirection
-		return self.demandDirection[luIndex]
+  		local oppositeDirection = -1
+  		
+  		if (luIndex > self.numLU) then
+  			error("Invalid land use index", 5)
+  		end
+  
+  		self.demandDirection[luIndex] = self.demandDirection[luIndex] * oppositeDirection
+		  return self.demandDirection[luIndex]
     end		
 
 	return component

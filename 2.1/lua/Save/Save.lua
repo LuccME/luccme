@@ -5,6 +5,14 @@ function databaseSave(luccmemodel)
 	local saveYears = {}
 	tsave = Timer{}
 	
+  -- Verify the dates to be saved
+  for i = 1, #luccmemodel.save.saveYears, 1 do
+    if (luccmemodel.save.saveYears[i] < luccmemodel.startTime or luccmemodel.save.saveYears[i] > luccmemodel.endTime) then
+      error(luccmemodel.save.saveYears[i].." is selected to be saved, but it is out of the simulation range. From "..luccmemodel.startTime.." to "..luccmemodel.endTime..".", 2)
+    end
+  end
+	
+	
 	-- Verifies whether the years be to be saved were correctly chosen
 	if ((luccmemodel.save.yearly == false) and ((luccmemodel.save.saveYears == nil) or (luccmemodel.save.saveYears[1] == nil))) then
 		error("Please set which year of the simulation will be saved", 2)
@@ -19,33 +27,33 @@ function databaseSave(luccmemodel)
 	-- Save
 	for i, year in pairs (saveYears) do
 		e1 = Event {	time = year,
-						priority = 20,
-						action = function(event)
-									if (luccmemodel.save.mode == "multiple") then
-										luccmemodel.cs:save(event:getTime(), luccmemodel.save.outputTheme, luccmemodel.save.saveAttrs)
-									end
-									return false
-								 end
-					}
+						      priority = 20,
+						      action = function(event)
+          								  if (luccmemodel.save.mode == "multiple") then
+          									 luccmemodel.cs:save(event:getTime(), luccmemodel.save.outputTheme, luccmemodel.save.saveAttrs)
+          									end
+          									return false
+          								 end
+					     }
 		tsave:add(e1)
 	end
 	
 	for year = luccmemodel.startTime + 1, luccmemodel.endTime, 1 do
-		e2 = Event {	time = year,
-						priority = 21,
-						action = function(event)
-									forEachCell(luccmemodel.cs, function(cell)
-																	for j, lu in pairs (luccmemodel.landUseTypes) do
-																			if (lu ~= luccmemodel.allocation.landUseNoData) then
-																				cell[lu.."_Ext"..year] = cell[lu] * luccmemodel.cs.cellArea
-																				cell[lu.."_Area"..year] = cell[lu.."_change"] * luccmemodel.cs.cellArea
-																			end
-																	end
-																end
-												)
-									return false
-								 end
-					}
+		e2 = Event {  time = year,
+						      priority = 21,
+						      action = function(event)
+            									forEachCell(luccmemodel.cs, function(cell)
+            																	for j, lu in pairs (luccmemodel.landUseTypes) do
+            																			if (lu ~= luccmemodel.allocation.landUseNoData) then
+            																				cell[lu.."_Ext"..year] = cell[lu] * luccmemodel.cs.cellArea
+            																				cell[lu.."_Area"..year] = cell[lu.."_change"] * luccmemodel.cs.cellArea
+            																			end
+            																	end
+            															end
+            												      )
+            									return false
+            								 end
+					     }
 		tsave:add(e2)
 	end
 	
@@ -67,7 +75,7 @@ function saveSingleTheme(luccmemodel)
 		  forEachCell(luccmemodel.cs, function(cell)
 											cell["result_nodata"] = cell[luccmemodel.potential.landUseNoData]
 									  end
-					 )
+					       )
 	end
 
 	for j, lu in pairs (luccmemodel.landUseTypes) do

@@ -81,7 +81,7 @@ function NeighAttractionLogisticRegression (component)
 			for var, beta in pairs (betas) do
 				regrLogit = regrLogit + beta * cell[var]
 			end
-		return (self.probability(regrLogit))
+		return self.probability(regrLogit)
 	end	--end calcRegressionLogistic
 	
 	-- Computing the probability 
@@ -91,7 +91,7 @@ function NeighAttractionLogisticRegression (component)
 		local zEuler = math.pow(euler,z)
 		local prob = zEuler/(1+zEuler)
 			
-		return (prob)
+		return prob
 	end
 	
 	return component

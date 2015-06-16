@@ -138,7 +138,7 @@ function LogisticRegression(component)
 			regrLogit = regrLogit + beta * cell[var]
 		end
 			
-		return (component.probability(regrLogit))
+		return component.probability(regrLogit)
 	end	--end calcRegressionLogistic
 	
 	--- Compute the probability.

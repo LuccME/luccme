@@ -97,32 +97,32 @@ component.verify = function  (self, event, luccMEModel)
 	end	    
     
 	component.getCurrentDemand = function (self)	
-		 return (self.currentDemand) 
+		 return self.currentDemand 
     end
     
     component.getPreviousDemand = function (self)	
-		 return (self.previousDemand) 
+		 return self.previousDemand 
     end
     
     component.getCurrentLuDemand = function (self, luIndex)		
          if (luIndex > self.numLU) then
            	error ("Invalid land use index", 5) 
 	     end
-		 return (self.currentDemand[luIndex]) 
+		 return self.currentDemand[luIndex] 
     end
     
     component.getPreviousLuDemand = function (self, luIndex)	
          if (luIndex > self.numLU) then
            	error ("Invalid land use index", 5) 
 	     end	
-		 return (self.previousDemand[luIndex]) 
+		 return self.previousDemand[luIndex] 
     end
     
 	component.getCurrentLuDirection = function (self, luIndex)	
 	     if (luIndex > self.numLU) then
            	error ("Invalid land use index", 5) 
 	     end	
-		 return (self.demandDirection[luIndex]) 
+		 return self.demandDirection[luIndex]
     end	
     
     component.changeLuDirection = function (self, luIndex)	
@@ -130,7 +130,7 @@ component.verify = function  (self, event, luccMEModel)
            	error ("Invalid land use index", 5) 
 	     end	
 	     self.demandDirection[luIndex] = self.demandDirection[luIndex]*(-1)
-		 return (self.demandDirection[luIndex]) 
+		 return self.demandDirection[luIndex]
     end		
     
 	return component   

@@ -67,7 +67,7 @@ function LogisticRegression (component)
 				regrLogit = regrLogit + beta * cell[var]
 			end
 			
-		return (component.probability(regrLogit))
+		return component.probability(regrLogit)
 	end	--end calcRegressionLogistic
 	
 	-- Computing the probability  
@@ -76,7 +76,7 @@ function LogisticRegression (component)
 		local zEuler = math.pow(euler,z)
 		local prob = zEuler/(1+zEuler)
 		
-		return (prob)
+		return prob
 	end
 	
 	return component

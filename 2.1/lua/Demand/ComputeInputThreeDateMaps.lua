@@ -238,7 +238,7 @@ function ComputeInputThreeDateMaps(component)
     -- print the demand
     self:printDemand(initialDemand, middleDemandForInterpolation, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 
-    return (self.annualDemand)
+    return self.annualDemand
   end
   
   --- Calculate the interpolatin factor for 2 demands 
@@ -260,7 +260,7 @@ function ComputeInputThreeDateMaps(component)
       interpolationFactor[i] = math.abs((finalDemand[i] - initialDemand[i]) / timeToCalcInterpolation)
     end
     
-    return (interpolationFactor)
+    return interpolationFactor
   end
   
   --- Calulate the interpolation direction for 2 demands
@@ -304,7 +304,7 @@ function ComputeInputThreeDateMaps(component)
       end
     end
     
-    return (interpolationDirection)
+    return interpolationDirection
   end
 
   --- Get the demand on the database
@@ -323,7 +323,7 @@ function ComputeInputThreeDateMaps(component)
                                 end
                 )
     
-    return (returnDemand)
+    return returnDemand
   end
   
 	--- Print on screen the generated demand.

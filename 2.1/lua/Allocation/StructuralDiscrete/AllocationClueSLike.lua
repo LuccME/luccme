@@ -258,7 +258,7 @@ function AllocationClueSLike(component)
             end
           )
           
-    return (count*cellarea)
+    return (count * cellarea)
   end
   
   --- Return an Index for a land use type in a set of land use types.

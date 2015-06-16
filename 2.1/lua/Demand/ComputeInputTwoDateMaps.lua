@@ -239,7 +239,7 @@ function ComputeInputTwoDateMaps(component)
     -- print the demand
     self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
     
-    return (self.annualDemand)
+    return self.annualDemand
 	end
 
 	--- Print on screen the generated demand.

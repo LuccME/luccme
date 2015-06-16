@@ -187,7 +187,7 @@ function areaAllocated (cs,cellarea, field,attr)
 	forEachCell( cs, function( cell )
 		if (cell[field] == attr) then count = count + 1 end
 	end)
-	return (count*cellarea)
+	return (count * cellarea)
 end 
 
 function toIndex (lu, usetypes )

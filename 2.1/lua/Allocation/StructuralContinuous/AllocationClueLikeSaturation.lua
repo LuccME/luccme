@@ -281,25 +281,25 @@ function allocationClueLikeSaturation(component)
 									perc_def_original = 1
 								end
 								forEachNeighbor (cell, "10x10", function(cell, neigh, weight)
-																	local prot_t = 0
-																	local original = 1
-																	if (self.attrProtection ~= nil) then
-																		prot_t = neigh[self.attrProtection]
-																	end
-																	if (luccMEModel.landUseNoData ~= nil) then
-																		original = 1 - neigh[luccMEModel.landUseNoData]
-																	end
-																	local neigh_available_forest = original - prot_t
-																	if (neigh_available_forest > 0) then
-																		local neigh_perc = (1 - neigh[self.complementarLU]) / neigh_available_forest
-																		if (neigh_perc > 1) then
-																			neigh_perc = 1 
-																		end
-																		total_perc = total_perc + neigh_perc
-																		count = count + 1
-																	end
-																end
-												)
+                																	local prot_t = 0
+                																	local original = 1
+                																	if (self.attrProtection ~= nil) then
+                																		prot_t = neigh[self.attrProtection]
+                																	end
+                																	if (luccMEModel.landUseNoData ~= nil) then
+                																		original = 1 - neigh[luccMEModel.landUseNoData]
+                																	end
+                																	local neigh_available_forest = original - prot_t
+                																	if (neigh_available_forest > 0) then
+                																		local neigh_perc = (1 - neigh[self.complementarLU]) / neigh_available_forest
+                																		if (neigh_perc > 1) then
+                																			neigh_perc = 1 
+                																		end
+                																		total_perc = total_perc + neigh_perc
+                																		count = count + 1
+                																	end
+                																end
+          												)
 								-- print(count)
 								if (count > 0) then
 									perc_def_original = total_perc / count  -- v7 v8

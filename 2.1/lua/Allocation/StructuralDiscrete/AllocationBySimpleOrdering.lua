@@ -45,7 +45,7 @@ function AllocationBySimpleOrdering(component)
 			print ("Max diff area "..maxdiffarea)	 		
 			----------------------------------------------------
 			for landuse, ivalues in pairs (luTypes) do        
-				area = areaAllocated(cs, cellarea, luTypes[landuse], 1)
+				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
 				print ("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
 			print ("----------------------------------------------------------------------------------------")
@@ -57,7 +57,7 @@ function AllocationBySimpleOrdering(component)
 				cell[lu.."_out"] = cell[lu]
 			end
 			cell.alloc = 0
-			cell.simUse = currentUse(cell, luTypes)
+			cell.simUse = self:currentUse(cell, luTypes)
     end
 
 		diff = 0
@@ -93,7 +93,7 @@ function AllocationBySimpleOrdering(component)
 				end
 
 				-- Quantidade alocada do uso neste passo de tempo
-				areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
+				areaAlloc = self:areaAllocated(ord, cellarea, "alloc", 1)
 				print ("areaAlloc", lu, areaAlloc)
 				differences[lu] = (dem[lu] - areaAlloc)
 
@@ -114,7 +114,7 @@ function AllocationBySimpleOrdering(component)
 		if (allocation_ok == true) then 
  			--Atualizando os status de uso de cada uma das células se a demanda foi alocada corretamente
 			for k, cell in pairs (cs.cells) do			
- 				changeUse(cell, currentUse(cell, luTypes), cell.simUse)
+ 				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
       		print ("Demand allocated correctly in this time step:", step)
@@ -136,85 +136,54 @@ function AllocationBySimpleOrdering(component)
     end
 	end
 
+  --- Count the number of allocated areas.
+  -- @arg cs A multivalued set of Cells (Cell Space).
+  -- @arg cellarea A cell area.
+  -- @arg field The field to be checked (Columns name).
+  -- @arg attr The attribute to be checked.
+  -- @usage areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
+  component.areaAllocated = function(self, cs, cellarea, field, attr)
+    c = 0
+    forEachCell(cs, function(cell)
+                      if (cell[field] == attr) then
+                        c = c + 1   
+                      end
+                    end
+                )
+                
+    return (c * cellarea)
+  end
+
+  --- Handles with the change of an use for a cell area.
+  -- @arg cell A cell area.
+  -- @arg cur_use The current use.
+  -- @arg higher_use The biggest cell value
+  -- @usage self:changeUse(cell, currentUse(cell, luTypes), cell.simUse))
+  component.changeUse = function(self, cell, cur_use, higher_use)
+    cell[cur_use] = 0
+    cell[cur_use.."_out"] = 0
+    cell[higher_use] = 1
+    cell[higher_use.."_out"] = 1
+  
+    cell[higher_use.."_change"] = 0
+    cell[cur_use.."_change"] = 0  
+    if (cur_use ~= higher_use) then
+      cell[higher_use.."_change"] = 1
+      cell[cur_use.."_change"] = -1 
+     end
+  end
+
+  --- Return the current use for a cell area.
+  -- @arg cell A cell area.
+  -- @arg landuses A set of land use types.
+  -- @usage self:currentUse(cell, luTypes)
+  component.currentUse = function(self, cell, landuses)
+    for i, land  in pairs (landuses) do
+      if (cell[land] == 1) then
+        return land
+      end
+    end
+  end
+
 	return component
 end -- end of AllocationCluesLike
-
--- ____________________________________
---			AUXILIARY FUNCTIONS
---_____________________________________
---- Count the number of allocated areas.
--- @arg cs A multivalued set of Cells (Cell Space).
--- @arg cellarea A cell area.
--- @arg field The field to be checked (Columns name).
--- @arg attr The attribute to be checked.
--- @usage areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
-function areaAllocated(cs, cellarea, field, attr)
-	c = 0
-	forEachCell(cs, function(cell)
-        						if (cell[field] == attr) then
-        							c = c + 1 	
-        						end
-        					end
-      				)
-      				
-	return (c * cellarea)
-end
-
---- Return an Index for a land use type in a set of land use types.
--- @arg lu A land use type.
--- @arg usetypes A set of land use type.
--- @usage toIndex(lu , luTypes)
-function toIndex(lu, usetypes)
-	local index = 0
-	for i, value in  pairs (usetypes) do
-	  if (value == lu) then
-			index = i
-			break
-		end
-	end
-
-	return index
-end
-
---- Initialise the iteration vector for each land use type.
--- @arg lutype A set of land uses type.
--- @usage iteration = initIteration(luTypes)
-function initIteration(lutypes)
-	local iteration = {}	
-	for k, lu in pairs (lutypes) do
-		iteration[lu] = 0
-	end
-	
-	return iteration
-end
-
---- Handles with the change of an use for a cell area.
--- @arg cell A cell area.
--- @arg cur_use The current use.
--- @arg higher_use The biggest cell value
--- @usage changeUse(cell, currentUse(cell, luTypes), cell.simUse)
-function changeUse(cell, cur_use, higher_use)
-	cell[cur_use] = 0
-	cell[cur_use.."_out"] = 0
-	cell[higher_use] = 1
-	cell[higher_use.."_out"] = 1
-
-	cell[higher_use.."_change"] = 0
-	cell[cur_use.."_change"] = 0  
-	if (cur_use ~= higher_use) then
-    cell[higher_use.."_change"] = 1
-    cell[cur_use.."_change"] = -1 
-	 end
-end
-
---- Return the current use for a cell area.
--- @arg cell A cell area.
--- @arg landuses A set of land use types.
--- @usage currentUse(cell, luTypes)
-function currentUse(cell, landuses)
-	for i, land  in pairs (landuses) do
-		if (cell[land] == 1) then
-			return land
-		end
-	end
-end

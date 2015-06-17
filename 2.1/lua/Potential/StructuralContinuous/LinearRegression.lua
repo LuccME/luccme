@@ -103,6 +103,29 @@ function LinearRegression(component)
     end -- for j
 	end
 
+  --- Handles with the modify method of a LinearRegression component.
+  -- @arg self A SpatialLagLinearRoads component.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
+  -- @arg direction The direction for the regression.
+  -- @arg event A representation of a time instant when the simulation engine must execute.
+  -- @usage XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxx
+  component.modify = function (self, luccMEModel, luIndex, direction)
+    luData = self.regressionData[luIndex] 
+         
+    if (luData.newconst == nil) then 
+      luData.newconst = 0 
+    end  
+     
+    if (luData.isLog) then 
+      luData.newconst = luData.newconst - math.log(10, 0.1) * direction
+    else
+      luData.newconst = luData.newconst + 0.1 * direction
+    end
+  
+    self:computePotential (luccMEModel, luIndex)
+  end -- function modifyPotential 
+
 	--- Handles with the constants regression method of a LinearRegression component.
 	-- @arg self A LinearRegression component.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.

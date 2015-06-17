@@ -156,8 +156,7 @@ function SpatialLagRegression(component)
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @arg direction The direction for the regression.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @usage XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxx
-	-- @todo usa?
+	-- @usage luccMEModel.potential:modify(luccMEModel, i, luDirect, event)  
 	component.modify = function(self, luccMEModel, luIndex, direction, event)
 		luData = self.regressionData[luIndex]
 
@@ -176,9 +175,6 @@ function SpatialLagRegression(component)
 		self:computePotential(luccMEModel, luIndex, event)
 	end	-- function	modifyPotential
 
-	-------------------------------------------------------------------
-	-- SUBROUTINES FOR THIS COMPONENT
-	-------------------------------------------------------------------
 	--- Handles with the constants regression method of a SpatialLagRegression component.
 	-- @arg self A SpatialLagRegression component.
 	-- @arg demand A demand to calculate the potential.

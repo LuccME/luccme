@@ -103,13 +103,14 @@ function LinearRegression(component)
     end -- for j
 	end
 
-  --- Handles with the modify method of a LinearRegression component.
+  --- Handles with the potential modify method of a LinearRegression component.
+  -- This method is called by the Allocation component.
   -- @arg self A SpatialLagLinearRoads component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxx
+  -- @usage luccMEModel.potential:modify(luccMEModel, i, luDirect, event)
   component.modify = function (self, luccMEModel, luIndex, direction)
     luData = self.regressionData[luIndex] 
          

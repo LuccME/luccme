@@ -224,7 +224,7 @@ function ComputeInputThreeDateMaps(component)
       else
         -- calculate the demand for each parameter
         for j, lu in pairs (luccMEModel.landUseTypes) do
-          if(i < firstTimeToCalcInterpolation) then
+          if(i <= firstTimeToCalcInterpolation) then
             self.annualDemand[i][j] = self.annualDemand[i - 1][j] + (firstInterpolationFactor[j] * firstInterpolationDirection[j])
             self.annualDemand[i][j] = math.floor(self.annualDemand[i][j] + 0.5)
           else

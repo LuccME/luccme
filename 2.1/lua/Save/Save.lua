@@ -5,17 +5,28 @@ function databaseSave(luccmemodel)
 	local saveYears = {}
 	tsave = Timer{}
 	
+	-- Verify the outputTheme variable
+	if (luccmemodel.save.outputTheme == nil) then
+	  error("outputTheme variable is missing on save parameters", 2)
+	end
+
   -- Verify the dates to be saved
-  for i = 1, #luccmemodel.save.saveYears, 1 do
-    if (luccmemodel.save.saveYears[i] < luccmemodel.startTime or luccmemodel.save.saveYears[i] > luccmemodel.endTime) then
-      error(luccmemodel.save.saveYears[i].." is selected to be saved, but it is out of the simulation range. From "..luccmemodel.startTime.." to "..luccmemodel.endTime..".", 2)
+  if (luccmemodel.save.saveYears ~= nil) then
+    for i = 1, #luccmemodel.save.saveYears, 1 do
+      if (luccmemodel.save.saveYears[i] < luccmemodel.startTime or luccmemodel.save.saveYears[i] > luccmemodel.endTime) then
+        error(luccmemodel.save.saveYears[i].." is selected to be saved, but it is out of the simulation range. From "..luccmemodel.startTime.." to "..luccmemodel.endTime..".", 2)
+      end
     end
   end
 	
+	-- Check if one of the save year variable is declared 
+	if (luccmemodel.save.saveYears == nil and luccmemodel.save.yearly == nil) then
+	  error("saveYears or yearly variable must be used on save parameters.", 2)
+	end
 	
 	-- Verifies whether the years be to be saved were correctly chosen
 	if ((luccmemodel.save.yearly == false) and ((luccmemodel.save.saveYears == nil) or (luccmemodel.save.saveYears[1] == nil))) then
-		error("Please set which year of the simulation will be saved", 2)
+		error("Please set which year of the simulation will be saved. (saveYears variable on save parameters)", 2)
 	elseif (luccmemodel.save.yearly == true) then
 		for i = 0, (luccmemodel.endTime - luccmemodel.startTime) do
 			saveYears[i + 1] = luccmemodel.startTime + i
@@ -29,10 +40,10 @@ function databaseSave(luccmemodel)
 		e1 = Event {	time = year,
 						      priority = 20,
 						      action = function(event)
-          								  if (luccmemodel.save.mode == "multiple") then
-          									 luccmemodel.cs:save(event:getTime(), luccmemodel.save.outputTheme, luccmemodel.save.saveAttrs)
-          									end
-          									return false
+            								  if (luccmemodel.save.mode == "multiple") then
+            									 luccmemodel.cs:save(event:getTime(), luccmemodel.save.outputTheme, luccmemodel.save.saveAttrs)
+            									end
+            									return false
           								 end
 					     }
 		tsave:add(e1)

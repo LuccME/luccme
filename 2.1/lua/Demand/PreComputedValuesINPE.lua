@@ -102,6 +102,7 @@ function PreComputedValuesINPE(component)
 
 	--- Return the current demand of the specified component.
 	-- @arg self A PreComputedValuesINPE component.
+	-- Used on discrete allocation component
 	-- @return self.currentDemand the current demand of the component.
 	-- @usage currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
@@ -116,7 +117,8 @@ function PreComputedValuesINPE(component)
 		return self.previousDemand
     end
 
-	-- Return the current demand for an specific luIndex.
+	--- Return the current demand for an specific luIndex.
+	-- Used on allocation and continuous potential components.
 	-- @arg self A PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand for an specific luIndex.
@@ -129,7 +131,8 @@ function PreComputedValuesINPE(component)
 		return self.currentDemand[luIndex]
     end
 
-	-- Return the previous demand for an specific luIndex.
+	--- Return the previous demand for an specific luIndex.
+	-- Used on continuous pontencial component.
 	-- @arg self A PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The previous demand for an specific luIndex.
@@ -143,6 +146,7 @@ function PreComputedValuesINPE(component)
     end
 
 	--- Return the current demand direction for an specific luIndex.
+	-- Used on continuous allocation component.
 	-- @arg self a PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
@@ -156,6 +160,7 @@ function PreComputedValuesINPE(component)
     end	
 
 	--- Invert the demand direction for an specific luIndex.
+	-- Used on continuous allocation component.
 	-- @arg self a PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.

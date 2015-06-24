@@ -280,10 +280,11 @@ function ComputeInputTwoDateMaps(component)
 		print("\n")
 	end
 	
-	--- Return the current demand of the specified component.
-	-- @arg self A ComputeInputTwoDateMaps component.
-	-- @return self.currentDemand the current demand of the component.
-	-- @usage currentDemand = demand:getCurrentDemand(i)
+  --- Return the current demand of the specified component.
+  -- @arg self A PreComputedValuesINPE component.
+  -- Used on discrete allocation component
+  -- @return self.currentDemand the current demand of the component.
+  -- @usage currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
     end
@@ -296,11 +297,12 @@ function ComputeInputTwoDateMaps(component)
 		return self.previousDemand
     end
 
-	-- Return the current demand for an specific luIndex.
-	-- @arg self A ComputeInputTwoDateMaps component.
-	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-	-- @return The current demand for an specific luIndex.
-	-- @usage model:getCurrentLuDemand(luIndex)
+  --- Return the current demand for an specific luIndex.
+  -- Used on allocation and continuous potential components.
+  -- @arg self A PreComputedValuesINPE component.
+  -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
+  -- @return The current demand for an specific luIndex.
+  -- @usage model:getCurrentLuDemand(luIndex)
     component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -309,11 +311,12 @@ function ComputeInputTwoDateMaps(component)
 		return self.currentDemand[luIndex]
     end
 
-	-- Return the previous demand for an specific luIndex.
-	-- @arg self A ComputeInputTwoDateMaps component.
-	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-	-- @return The previous demand for an specific luIndex.
-	-- @usage model:getPreviousLuDemand(luIndex)
+  --- Return the previous demand for an specific luIndex.
+  -- Used on continuous pontencial component.
+  -- @arg self A PreComputedValuesINPE component.
+  -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
+  -- @return The previous demand for an specific luIndex.
+  -- @usage model:getPreviousLuDemand(luIndex)
 	component.getPreviousLuDemand = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -322,11 +325,12 @@ function ComputeInputTwoDateMaps(component)
 		return self.previousDemand[luIndex]
     end
 
-	--- Return the current demand direction for an specific luIndex.
-	-- @arg self a ComputeInputTwoDateMaps component.
-	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-	-- @return The current demand direction for an specific luIndex.
-	-- @usage model:getCurrentLuDirection(luIndex)
+  --- Return the current demand direction for an specific luIndex.
+  -- Used on continuous allocation component.
+  -- @arg self a PreComputedValuesINPE component.
+  -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
+  -- @return The current demand direction for an specific luIndex.
+  -- @usage model:getCurrentLuDirection(luIndex)
 	component.getCurrentLuDirection = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -335,11 +339,12 @@ function ComputeInputTwoDateMaps(component)
 		return self.demandDirection[luIndex]
     end	
 
-	--- Invert the demand direction for an specific luIndex.
-	-- @arg self a ComputeInputTwoDateMaps component.
-	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-	-- @return The current demand direction for an specific luIndex.
-	-- @usage model:changeLuDirection(luIndex)
+  --- Invert the demand direction for an specific luIndex.
+  -- Used on continuous allocation component.
+  -- @arg self a PreComputedValuesINPE component.
+  -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
+  -- @return The current demand direction for an specific luIndex.
+  -- @usage model:changeLuDirection(luIndex)
     component.changeLuDirection = function(self, luIndex)
   		local oppositeDirection = -1
   		

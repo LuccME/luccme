@@ -13,6 +13,7 @@
 -- @arg model.isCoupled A flag to inform with the model for simulation is coupled to another.
 -- @arg model.execute Handles with the execution method of a LuccMe model.
 -- @arg model.verify Handles with the verify method of a LuccMe model.
+-- @arg model.dinamicVars Handles with the dinamicVars method of a LuccMe model.
 -- @usage MyModel = LuccMEModel {
 -- -- APPLICATION MODEL DEFINITION
 -- name = "MyModel_1",
@@ -54,6 +55,7 @@ function LuccMEModel(model)
 			model:dinamicVars(event)
 		end
 		
+		-- execute the components 
 		self.demand:execute(event, model)
 	  self.potential:execute(event, model)
 		self.allocation:execute(event, model)
@@ -122,12 +124,12 @@ function LuccMEModel(model)
 			cs:synchronize()
 		end
 		
-		-- print model status during its execution
+		-- Print model status during its execution
 		if (self.useLog == nil) then
 			self.useLog = true 			
 		end
 		
-		-- inform whether the model is part of a coupling model
+		-- Inform whether the model is part of a coupling model
 		if (self.isCoupled == nil) then
 			isCoupled = false 			
 		end
@@ -152,6 +154,7 @@ function LuccMEModel(model)
     -- Verify the dates to be saved
     -- This verification is done on Save.lua, because it necessary to execute before here.
 
+		-- Verify the components
 		self.demand:verify(event, self)
 		self.potential:verify(event, self)
 		self.allocation:verify(event, self)
@@ -182,7 +185,7 @@ function LuccMEModel(model)
 					print (self.cs.theme.."_"..updtYear)
 				end
 
-				-- for each cell in the original cs, variables are contained in cs_temp is updated
+				-- For each cell in the original cs, variables are contained in cs_temp is updated
 				local flag = false
 			       		
 		    forEachCellPair(cs, cs_temp, function(cell, cell_temp)
@@ -197,14 +200,14 @@ function LuccMEModel(model)
               																		print("          ", var, cell[var])
               																	end		          					
               																end
-              														end --1st inner if
-              													end --for var
+              														end -- 1st inner if
+              													end -- for var
               													flag = true
-              											 end --function
+              											 end -- function
 							          )
-			end
-		end				
-	end
+			end -- if currentTime
+		end -- for				
+	end -- dinamicVars
 
 	return model
 end

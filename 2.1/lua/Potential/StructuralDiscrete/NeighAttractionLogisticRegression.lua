@@ -59,7 +59,7 @@ function NeighAttractionLogisticRegression(component)
  		
 		local totalNeigh = 0
   		
-  		for k, cell in pairs (cs.cells) do
+		for k, cell in pairs (cs.cells) do
 			totalNeigh = cell:getNeighborhood():size()
   		 	
 			if (cell.region == nil) then
@@ -94,8 +94,8 @@ function NeighAttractionLogisticRegression(component)
 				elseif numNeigh > (totalNeigh * inputValues.percNeighborsUse - 1) then
 					cell[lu.."_pot"] = (regrProb + elas) * (numNeigh / (totalNeigh * inputValues.percNeighborsUse))
 				end
-			end
-		end
+			end -- for luind
+		end -- for k
 	end -- end execute
 	
 	--- Handles with the verify method of a NeighAttractionLogisticRegression component.
@@ -163,13 +163,13 @@ function NeighAttractionLogisticRegression(component)
 	-- @arg component A NeighAttractionLogisticRegression component.
 	-- @usage component.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
 	component.calcRegressionLogistic = function(cell, inputValues, luDrivers, component)
-			local regrLogit = inputValues.const
-			local betas = inputValues.betas
-			local attrs = inputValues.attributes
-		
-			for var, beta in pairs (betas) do
-				regrLogit = regrLogit + beta * cell[var]
-			end
+		local regrLogit = inputValues.const
+		local betas = inputValues.betas
+		local attrs = inputValues.attributes
+	
+		for var, beta in pairs (betas) do
+			regrLogit = regrLogit + beta * cell[var]
+		end
 			
 		return component.probability(regrLogit)
 	end	--end calcRegressionLogistic

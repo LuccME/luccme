@@ -95,17 +95,17 @@ function allocationClueLike(component)
 		end				
 
 		forEachCell(cs, function(cell)
-							local total = 0
-							for i, lu in pairs (luTypes) do
-								if (lu ~= luccMEModel.complementarLU) then
-									total = total + cell[lu]
-								end
-							end
-							if (luccMEModel.complementarLU ~= nil) then
-								cell[luccMEModel.complementarLU] = 1 - total
-							end
-						end
-					)
+        							local total = 0
+        							for i, lu in pairs (luTypes) do
+        								if (lu ~= luccMEModel.complementarLU) then
+        									total = total + cell[lu]
+        								end
+        							end
+        							if (luccMEModel.complementarLU ~= nil) then
+        								cell[luccMEModel.complementarLU] = 1 - total
+        							end
+        						end
+      					)
 		   
 		for i, lu in pairs (luTypes) do
 			local out = lu.."_out"
@@ -299,7 +299,7 @@ function allocationClueLike(component)
 				end
 			end  -- for cell
 		end -- for lu
-	end
+	end -- computeChange
 
 	--- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
 	-- @arg self A allocationClueLike component.
@@ -368,7 +368,7 @@ function allocationClueLike(component)
 		end
 		
 		return max
-	end
+	end -- compareAllocationToDemand
 
 	--- Corrects total land use/cover types to 100 percent.
 	-- @arg self A allocationClueLike component.
@@ -543,10 +543,10 @@ function allocationClueLike(component)
 							cell[lu] = cell[lu] * ((1 - totstatic) / totcov)
 						end
 					end
-				end
-			end
-		end -- for each cell
-	end -- correct100
+				end -- if l
+			end -- if totcov
+		end -- for k
+	end -- correctCellChange
 	
 	--- Calculates total area allocated by the regression equations for each land use/cover type.
     -- @arg self A allocationClueLike component.
@@ -594,9 +594,4 @@ function allocationClueLike(component)
 	end
 
 	return component
-	
 end -- close Allocation Component
-
--------------------------------------------------------------------------------------
--- SUBROUTINES
--------------------------------------------------------------------------------------

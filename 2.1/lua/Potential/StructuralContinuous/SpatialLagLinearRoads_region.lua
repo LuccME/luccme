@@ -74,19 +74,18 @@ function SpatialLagRegression_region(component)
 			end
 		end
 		
-	    if (self.constChange == nil) then
+    if (self.constChange == nil) then
 			self.constChange = 0.1 			-- original clue value
 		end
 
-        if (event:getTime() > luccMEModel.startTime) then
+    if (event:getTime() > luccMEModel.startTime) then
 			self:adaptRegressionConstants(demand, event)
-        end
+    end
 	
 		for i, luData in pairs (self.regressionData) do
-		    self:computePotential (luccMEModel, i, event)
-	    end
-
-    end  -- function execute
+	    self:computePotential (luccMEModel, i, event)
+    end
+  end  -- function execute
 	
 	
 	--- Handles with the verify method of a SpatialLagRegression_region component.
@@ -285,10 +284,10 @@ function SpatialLagRegression_region(component)
 		local pot = lu.."_pot"
 
 		for k,cell in pairs (cs.cells) do
-            local regressionX = 0
-            local region = cell[self.regionAttr]
+      local regressionX = 0
+      local region = cell[self.regionAttr]
   
-            if (region == nil or region == 0) then
+      if (region == nil or region == 0) then
 				region = 1
 			end
 
@@ -330,7 +329,7 @@ function SpatialLagRegression_region(component)
 				regresY = math.log(10, regresY + 0.0001)  
 			end
 
-	        local regression = luData.newconst + regressionX + regresY
+      local regression = luData.newconst + regressionX + regresY
 			local regressionLimit = luData.const + regressionX + regresY   		
 	
 			if (luData.roadsModel ~= nil) then
@@ -339,7 +338,7 @@ function SpatialLagRegression_region(component)
 				     regression = newRegression
 				     regressionLimit = regression
 				end
-		    end
+	    end
 
 			if (luData.isLog) then -- if the land use is log transformed
 				regression = math.pow(10, (regression)) - 0.0001

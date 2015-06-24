@@ -61,8 +61,8 @@ function ComputeInputTwoDateMaps(component)
 					self.demandDirection[i] = decreasing
 				end
 			end
-		end
-	end
+		end -- for i
+	end -- execute
 	
 	--- Handles with the parameters verification and the generation for the Demand.
 	-- @arg self A ComputeInputTwoDateMaps component.
@@ -75,12 +75,12 @@ function ComputeInputTwoDateMaps(component)
 		--  Check the final year for interpolation
 		if (self.finalYearForInterpolation == nil) then
 			error("\nfinalYearForInterpolation is missing\n", 5)
-	    end
+    end
 		
 		--  Land use types for interpolation (correct number of uses)
 		if (self.finalLandUseTypesForInterpolation == nil) then
 			error("\nfinalLandUseTypesForInterpolation is missing\n", 5)
-	    end
+    end
 		
 		--  Check the number of parameters for the interpolation (initial and final)
 		if (#self.finalLandUseTypesForInterpolation ~= #luccMEModel.landUseTypes) then
@@ -120,14 +120,14 @@ function ComputeInputTwoDateMaps(component)
 		luTypes = luccMEModel.landUseTypes
 		self.numLU = 0
 
-	    for k, lu in pairs (luTypes) do
-	        self.demandDirection[k] = 0
-	        if (self.annualDemand[1][k] == nil) then
-				    error("Invalid number of land use in the demand table", 5)
-	        end
-	        self.numLU = self.numLU + 1
-	    end
-	end
+    for k, lu in pairs (luTypes) do
+        self.demandDirection[k] = 0
+        if (self.annualDemand[1][k] == nil) then
+			    error("Invalid number of land use in the demand table", 5)
+        end
+        self.numLU = self.numLU + 1
+    end
+	end -- verify
 	
   --- Generate the annual demand based on the data provided by the user
   -- @arg self A ComputeInputThreeDateMaps component.
@@ -240,7 +240,7 @@ function ComputeInputTwoDateMaps(component)
     self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
     
     return self.annualDemand
-	end
+	end -- generateDemand
 
 	--- Print on screen the generated demand.
 	-- @arg self A ComputeInputTwoDateMaps component.
@@ -287,15 +287,15 @@ function ComputeInputTwoDateMaps(component)
   -- @usage currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
-    end
+  end
 
 	--- Return the previous demand of the specified component.
 	-- @arg self A ComputeInputTwoDateMaps component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage previousDemand = demand:getPreviousDemand(i)
-    component.getPreviousDemand = function(self)	
+  component.getPreviousDemand = function(self)	
 		return self.previousDemand
-    end
+  end
 
   --- Return the current demand for an specific luIndex.
   -- Used on allocation and continuous potential components.
@@ -303,13 +303,13 @@ function ComputeInputTwoDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand for an specific luIndex.
   -- @usage model:getCurrentLuDemand(luIndex)
-    component.getCurrentLuDemand = function(self, luIndex)		
+  component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
 		end
 		
 		return self.currentDemand[luIndex]
-    end
+  end
 
   --- Return the previous demand for an specific luIndex.
   -- Used on continuous pontencial component.
@@ -323,7 +323,7 @@ function ComputeInputTwoDateMaps(component)
 		end	
 
 		return self.previousDemand[luIndex]
-    end
+  end
 
   --- Return the current demand direction for an specific luIndex.
   -- Used on continuous allocation component.
@@ -337,7 +337,7 @@ function ComputeInputTwoDateMaps(component)
 		end	
 
 		return self.demandDirection[luIndex]
-    end	
+  end	
 
   --- Invert the demand direction for an specific luIndex.
   -- Used on continuous allocation component.
@@ -345,7 +345,7 @@ function ComputeInputTwoDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
   -- @usage model:changeLuDirection(luIndex)
-    component.changeLuDirection = function(self, luIndex)
+  component.changeLuDirection = function(self, luIndex)
   		local oppositeDirection = -1
   		
   		if (luIndex > self.numLU) then
@@ -353,8 +353,9 @@ function ComputeInputTwoDateMaps(component)
   		end
   
   		self.demandDirection[luIndex] = self.demandDirection[luIndex] * oppositeDirection
+		  
 		  return self.demandDirection[luIndex]
-    end		
+  end		
 
 	return component
 end -- ScenariosDemand

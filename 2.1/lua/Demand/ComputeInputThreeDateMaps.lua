@@ -63,8 +63,8 @@ function ComputeInputThreeDateMaps(component)
 					self.demandDirection[i] = decreasing
 				end
 			end
-		end
-	end
+		end -- for i
+	end -- execute
 	
 	--- Handles with the parameters verification and the generation for the Demand.
 	-- @arg self A ComputeInputThreeDateMaps component.
@@ -147,14 +147,14 @@ function ComputeInputThreeDateMaps(component)
     luTypes = luccMEModel.landUseTypes
     self.numLU = 0
 
-      for k, lu in pairs (luTypes) do
-          self.demandDirection[k] = 0
-          if (self.annualDemand[1][k] == nil) then
-            error("Invalid number of land use in the demand table", 5)
-          end
-          self.numLU = self.numLU + 1
-      end
-	end
+    for k, lu in pairs (luTypes) do
+        self.demandDirection[k] = 0
+        if (self.annualDemand[1][k] == nil) then
+          error("Invalid number of land use in the demand table", 5)
+        end
+        self.numLU = self.numLU + 1
+    end
+	end -- verify
 
   --- Generate the annual demand based on the data provided by the user
   -- @arg self A ComputeInputThreeDateMaps component.
@@ -239,7 +239,7 @@ function ComputeInputThreeDateMaps(component)
     self:printDemand(initialDemand, middleDemandForInterpolation, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 
     return self.annualDemand
-  end
+  end -- generateDemand
   
   --- Calculate the interpolatin factor for 2 demands 
   -- @arg self  A ComputeInputThreeDateMaps component.
@@ -381,15 +381,15 @@ function ComputeInputThreeDateMaps(component)
   -- @usage currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
-    end
+  end
 
 	--- Return the previous demand of the specified component.
 	-- @arg self A ComputeInputThreeDateMaps component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage previousDemand = demand:getPreviousDemand(i)
-    component.getPreviousDemand = function(self)	
+  component.getPreviousDemand = function(self)	
 		return self.previousDemand
-    end
+  end
 
   --- Return the current demand for an specific luIndex.
   -- Used on allocation and continuous potential components.
@@ -397,13 +397,13 @@ function ComputeInputThreeDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand for an specific luIndex.
   -- @usage model:getCurrentLuDemand(luIndex)
-    component.getCurrentLuDemand = function(self, luIndex)		
+  component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
 		end
 		
 		return self.currentDemand[luIndex]
-    end
+  end
 
   --- Return the previous demand for an specific luIndex.
   -- Used on continuous pontencial component.
@@ -417,7 +417,7 @@ function ComputeInputThreeDateMaps(component)
 		end	
 
 		return self.previousDemand[luIndex]
-    end
+  end
 
   --- Return the current demand direction for an specific luIndex.
   -- Used on continuous allocation component.
@@ -431,7 +431,7 @@ function ComputeInputThreeDateMaps(component)
 		end	
 
 		return self.demandDirection[luIndex]
-    end	
+  end	
 
   --- Invert the demand direction for an specific luIndex.
   -- Used on continuous allocation component.
@@ -439,7 +439,7 @@ function ComputeInputThreeDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
   -- @usage model:changeLuDirection(luIndex)
-    component.changeLuDirection = function(self, luIndex)
+  component.changeLuDirection = function(self, luIndex)
 		local oppositeDirection = -1
 		
 		if (luIndex > self.numLU) then
@@ -447,8 +447,9 @@ function ComputeInputThreeDateMaps(component)
 		end
 
 		self.demandDirection[luIndex] = self.demandDirection[luIndex] * oppositeDirection
+		
 		return self.demandDirection[luIndex]
-    end		
+  end		
 
 	return component
 end -- ScenariosDemand

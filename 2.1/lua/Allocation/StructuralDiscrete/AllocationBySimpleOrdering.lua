@@ -66,13 +66,13 @@ function AllocationBySimpleOrdering(component)
 		for ind, lu in  pairs (luTypes) do	
 			if (lu ~= model.landUseNoData) then 
 				ord = Trajectory { target = cs,
-								   select = function(cell)
-												return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
-											end,
-								   greater = function(c, d)
-												return c[lu.."_pot"] > d[lu.."_pot"]
-											end
-								 }
+        								   select = function(cell)
+        												return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
+        											end,
+        								   greater = function(c, d)
+        												return c[lu.."_pot"] > d[lu.."_pot"]
+        											end
+        								 }
 
 			 --Seleção de tantas células quanto forem necessárias na demanda
 				local j = 1
@@ -117,13 +117,12 @@ function AllocationBySimpleOrdering(component)
  				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
-      		print ("Demand allocated correctly in this time step:", step)
+  		print ("Demand allocated correctly in this time step:", step)
  			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
-        else
-        	print ("Demand not allocated correctly in this time step:", step)
-        	os.exit();
-        end      	
-       
+    else
+    	print ("Demand not allocated correctly in this time step:", step)
+    	os.exit();
+    end      	
  	end -- end of 'execute' function
  	
 	--- Handles with the parameters verification.

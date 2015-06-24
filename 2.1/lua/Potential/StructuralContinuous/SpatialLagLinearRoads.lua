@@ -68,13 +68,13 @@ function SpatialLagLinearRoads(component)
 			self.constChange = 0.1 			-- original clue value
 		end
 
-        if (event:getTime() > luccMEModel.startTime) then
+    if (event:getTime() > luccMEModel.startTime) then
 			self:adaptRegressionConstants(demand, event) -- LOG TIRAR
-        end
+    end
 	
 		for i, luData in pairs (self.regressionData) do
-		    self:computePotential(luccMEModel, i, event)
-	    end
+	    self:computePotential(luccMEModel, i, event)
+    end
 	end  -- function execute
 	
 	--- Handles with the verify method of a SpatialLagLinearRoads component.
@@ -269,22 +269,22 @@ function SpatialLagLinearRoads(component)
 			regresDrivers = regressionX
 			
 			forEachNeighbor (cell, function(cell, neigh, weight)
-										Y = cell.past[lu]
-										neighY = neigh.past[lu]
-
-										if (cell[luccMEModel.landUseNoData] ~= 1) then
-											Y = Y / (1 - cell[luccMEModel.landUseNoData])
-										end
-										if (neigh[luccMEModel.landUseNoData] ~= 1) then
-											neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
-										end
-
-										if (neigh[luccMEModel.landUseNoData] < 1) then
-											count = count + 1
-											neighSum = neighSum + neighY
-										end
-									end
-							)
+          										Y = cell.past[lu]
+          										neighY = neigh.past[lu]
+          
+          										if (cell[luccMEModel.landUseNoData] ~= 1) then
+          											Y = Y / (1 - cell[luccMEModel.landUseNoData])
+          										end
+          										if (neigh[luccMEModel.landUseNoData] ~= 1) then
+          											neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
+          										end
+          
+          										if (neigh[luccMEModel.landUseNoData] < 1) then
+          											count = count + 1
+          											neighSum = neighSum + neighY
+          										end
+          									end
+          							)
 		
 			if (count > 0) then
 				regresY = ((Y + neighSum) / (count + 1)) * luData.ro  
@@ -296,17 +296,17 @@ function SpatialLagLinearRoads(component)
 				regresY = math.log(10, regresY + 0.0001)  
 			end
 
-	        local regression = luData.newconst + regressionX + regresY		
+      local regression = luData.newconst + regressionX + regresY		
 			local regressionLimit = luData.const + regressionX + regresY   		
 	
 			if (luData.roadsModel ~= nil) then
 			    local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event)
 				
 				if (newRegression ~= regression) then
-				     regression = newRegression
-				     regressionLimit = regression
+  		     regression = newRegression
+  		     regressionLimit = regression
 				end
-		    end
+	    end
 
 			if (luData.isLog) then -- if the land use is log transformed
 				regression = math.pow(10, regression) - 0.0001			

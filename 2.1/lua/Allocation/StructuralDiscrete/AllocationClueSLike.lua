@@ -31,17 +31,17 @@ function AllocationClueSLike(component)
 		local cellarea = cs.cellArea
 		local step = event:getTime() - model.startTime + 1;		
 		local start = model.startTime		
-  		local demand = model.demand
+		local demand = model.demand
 		local nIter = 0
-  		local allocation_ok = false
-  		local numofcells  = #cs.cells
-  		local totarea = (numofcells * cellarea)
-  		local maxdiffarea = (self.maxDifference * totarea)
-  		local luTypes = model.landUseTypes
-  		local max_iteration = self.maxIteration 
+		local allocation_ok = false
+		local numofcells  = #cs.cells
+		local totarea = (numofcells * cellarea)
+		local maxdiffarea = (self.maxDifference * totarea)
+		local luTypes = model.landUseTypes
+		local max_iteration = self.maxIteration 
 
-  		print ("Time : ", event:getTime())
-    	print ("Step : ", step)
+		print ("Time : ", event:getTime())
+  	print ("Step : ", step)
 
 		if useLog == true then
 			print ("----------------------------------------------------------------------------------------")
@@ -54,9 +54,9 @@ function AllocationClueSLike(component)
 				print ("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
 			print ("----------------------------------------------------------------------------------------")
-	   	end
+   	end
 		
-	   	local iteration = self:initIteration(luTypes)
+   	local iteration = self:initIteration(luTypes)
 	   	
 		for k, cell in pairs (cs.cells) do
 			for luind, lu in  pairs (luTypes) do
@@ -113,13 +113,13 @@ function AllocationClueSLike(component)
 			nIter= nIter + 1
 	      		
 			if (allocation_ok == true) then 
-      			print ("Demand allocated correctly in this time step:", step)
+  			print ("Demand allocated correctly in this time step:", step)
 			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
-       		elseif	(nIter >= max_iteration) then
-       			print ("Demand not allocated correctly in this time step:", step)
-       			os.exit();
-       		end      		
-      	end -- end of 'while do'
+   		elseif	(nIter >= max_iteration) then
+   			print ("Demand not allocated correctly in this time step:", step)
+   			os.exit();
+   		end      		
+  	end -- end of 'while do'
  	end -- end of 'execute'
  	
 	--- Handles with the parameters verification.

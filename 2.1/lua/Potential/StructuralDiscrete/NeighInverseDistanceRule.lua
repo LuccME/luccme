@@ -20,7 +20,7 @@ function NeighInverseDistanceRule(component)
 		local luTypes = modelParameters.landUseTypes
 		local potentialData = self.potentialData
  		local landUseDrivers = self.landUseDrivers
-  		local filename = self.filename
+		local filename = self.filename
 		
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
@@ -30,7 +30,7 @@ function NeighInverseDistanceRule(component)
  		
 		local totalNeigh = 0
   		
-  		for k, cell in pairs (cs.cells) do
+		for k, cell in pairs (cs.cells) do
 			totalNeigh = cell:getNeighborhood():size()
   		 	if (cell.region == nil) then
 				cell.region = 1
@@ -68,8 +68,8 @@ function NeighInverseDistanceRule(component)
 				if (potDrivers > 1) then potDrivers = 1 end
 
 				cell[lu.."_pot"] = cell[lu.."_pot"] + potDrivers
-			end
-		end
+			end -- for i
+		end -- for k
 	end -- end execute
 	
 	--- Handles with the verify method of a LogisticRegression component.
@@ -107,8 +107,8 @@ function NeighInverseDistanceRule(component)
           error("Multiplier "..k.." on LandUseType number "..j.." not found within database", 2)
         end
       end
-    end
-	end
+    end -- for j
+	end -- verify
 
 	return component
 end --close RegressionLogistcModelNeighbourhood

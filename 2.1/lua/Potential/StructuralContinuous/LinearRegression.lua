@@ -50,14 +50,14 @@ function LinearRegression(component)
 			luData.newconst = luData.const
 		end
 		
-        if (event:getTime() > luccMEModel.startTime) then
+    if (event:getTime() > luccMEModel.startTime) then
 			self:adaptRegressionConstants(demand, event)
-        end
+    end
 	
 		for i, luData in pairs (self.regressionData) do
 		    self:computePotential(luccMEModel, i)
-	    end
-    end  -- function execute
+    end
+  end  -- function execute
 
 	--- Handles with the verify method of a LinearRegression component.
 	-- @arg self A LinearRegression component.

@@ -67,13 +67,13 @@ function SpatialLagRegression(component)
 			self.constChange = 0.1 			-- original clue value
 		end
 
-        if (event:getTime() > luccMEModel.startTime) then
+    if (event:getTime() > luccMEModel.startTime) then
 			self:adaptRegressionConstants(demand, event) 
-        end
+    end
 	
 		for i, luData in pairs (self.regressionData) do
-		    self:computePotential(luccMEModel, i, event)
-	    end
+	    self:computePotential(luccMEModel, i, event)
+    end
 	end  -- function execute
 	
 	--- Handles with the verify method of a SpatialLagRegression component.
@@ -229,22 +229,22 @@ function SpatialLagRegression(component)
 			regresDrivers = regressionX
 			
 			forEachNeighbor (cell, function(cell, neigh, weight)
-										Y = cell.past[lu]
-										neighY = neigh.past[lu]
-
-										if (cell[luccMEModel.landUseNoData] ~= 1) then
-											Y = Y / (1 - cell[luccMEModel.landUseNoData])
-										end
-										if (neigh[luccMEModel.landUseNoData] ~= 1) then
-											neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
-										end
-
-										if (neigh[luccMEModel.landUseNoData] < 1) then
-											count = count + 1
-											neighSum = neighSum + neighY
-										end
-									end
-							)
+          										Y = cell.past[lu]
+          										neighY = neigh.past[lu]
+          
+          										if (cell[luccMEModel.landUseNoData] ~= 1) then
+          											Y = Y / (1 - cell[luccMEModel.landUseNoData])
+          										end
+          										if (neigh[luccMEModel.landUseNoData] ~= 1) then
+          											neighY = neighY / (1 - neigh[luccMEModel.landUseNoData])
+          										end
+          
+          										if (neigh[luccMEModel.landUseNoData] < 1) then
+          											count = count + 1
+          											neighSum = neighSum + neighY
+          										end
+          									end
+          							)
 		
 			if (count > 0) then
 				regresY = ((Y + neighSum) / (count + 1)) * luData.ro  

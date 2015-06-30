@@ -6,9 +6,12 @@
 -- @arg component.verify Handles with the verify method of a InverseDistanceRule component.
 -- @return The modified component.
 -- @usage potential = InverseDistanceRule {
---  potentialData = { {factor = 0.01, multipliers = {dist_estradas = 0.5, dist_br = 0.3}},  --D
+--  potentialData = {
+--          { -- Region 1 
+--            {factor = 0.01, multipliers = {dist_estradas = 0.5, dist_br = 0.3}},  --D
 --					  {factor = 0.01, multipliers = {dist_estradas = -0.5}},  				--F
 --					  {factor = 0.000, multipliers = {dist_estradas = 0}}					--O
+--          }
 --					}}
 function InverseDistanceRule(component)
 	--- Handles with the execution method of a InverseDistanceRule component.

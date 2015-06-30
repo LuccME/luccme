@@ -8,20 +8,20 @@
 -- @usage potential = InverseDistanceRule {
 --  potentialData = {
 --          { -- Region 1 
---            {factor = 0.01, multipliers = {dist_estradas = 0.5, dist_br = 0.3}},  --D
---					  {factor = 0.01, multipliers = {dist_estradas = -0.5}},  				--F
---					  {factor = 0.000, multipliers = {dist_estradas = 0}}					--O
+--            {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}},  --D
+--					  {const = 0.01, betas = {dist_estradas = -0.5}},  				--F
+--					  {const = 0.000, betas = {dist_estradas = 0}}					--O
 --          }
 --					}}
 function InverseDistanceRule(component)
 	--- Handles with the execution method of a InverseDistanceRule component.
 	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg modelParameters A parameter model.
+	-- @arg luccMEModel A parameter model.
 	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, modelParameters)
-		local cs = modelParameters.cs
-		local luTypes = modelParameters.landUseTypes
+	component.execute = function(self, event, luccMEModel)
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
  		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
@@ -39,11 +39,11 @@ function InverseDistanceRule(component)
     			local luData = self.potentialData[rNumber][i]
     			local potDrivers = 0
 
-    			for var, coef in pairs (luData.multipliers) do
+    			for var, coef in pairs (luData.betas) do
     				if (cell[var] > 0) then
-    					potDrivers = potDrivers + coef * 1 / cell[var] * luData.factor
+    					potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
     				else
-    					potDrivers = potDrivers + luData.factor
+    					potDrivers = potDrivers + luData.const
     				end
     			end
     
@@ -53,7 +53,7 @@ function InverseDistanceRule(component)
     
     			cell[lu.."_pot"] =  potDrivers
     		end -- for i
-  		end -- for luind
+  		end -- for rNumber
 		end -- for k
 	end -- end execute
 	
@@ -61,7 +61,7 @@ function InverseDistanceRule(component)
 	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	component.verify = function(self, event, modelParameters)
+	component.verify = function(self, event, luccMEModel)
 	  -- check potentialData
     if (self.potentialData == nil) then
       error("regressionData is missing", 2)
@@ -75,7 +75,7 @@ function InverseDistanceRule(component)
     else
       for i = 1, regionsNumber, 1 do
         local regressionNumber = #self.potentialData[i]
-        local lutNumber = #modelParameters.landUseTypes
+        local lutNumber = #luccMEModel.landUseTypes
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
@@ -83,19 +83,19 @@ function InverseDistanceRule(component)
         end
         
         for j = 1, regressionNumber, 1 do
-          -- check factor variable
-          if(self.potentialData[i][j].factor == nil) then
-            error("factor variable is missing on Region "..i.." LandUseType number "..j, 2)
+          -- check const variable
+          if(self.potentialData[i][j].const == nil) then
+            error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
          
-          -- check multipliers variable
-          if (self.potentialData[i][j].multipliers == nil) then
-            error("multipliers variable is missing on Region "..i.." LandUseType number "..j, 2)
+          -- check betas variable
+          if (self.potentialData[i][j].betas == nil) then
+            error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
           
           -- check betas within database
-          for k, lu in pairs (self.potentialData[i][j].multipliers) do
-            if (modelParameters.cs.cells[1][k] == nil) then
+          for k, lu in pairs (self.potentialData[i][j].betas) do
+            if (luccMEModel.cs.cells[1][k] == nil) then
               error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
             end
           end

@@ -39,12 +39,12 @@ function LogisticRegression(component)
 	--- Handles with the execution method of a LogisticRegression component.
 	-- @arg self A LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg modelParameters A parameter model.
+	-- @arg luccMEModel A parameter model.
 	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, modelParameters)
-		local cs = modelParameters.cs
+	component.execute = function(self, event, luccMEModel)
+		local cs = luccMEModel.cs
 		local regressionData = self.regressionData
- 		local luTypes = modelParameters.landUseTypes
+ 		local luTypes = luccMEModel.landUseTypes
  		local landUseDrivers = self.landUseDrivers
   		
 		for k, cell in pairs (cs.cells) do
@@ -75,7 +75,7 @@ function LogisticRegression(component)
 	-- @arg self A LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	component.verify = function(self, event, modelParameters)
+	component.verify = function(self, event, luccMEModel)
     -- check regressionData
     if (self.regressionData == nil) then
       error("regressionData is missing", 2)
@@ -89,7 +89,7 @@ function LogisticRegression(component)
     else
       for i = 1, regionsNumber, 1 do
         local regressionNumber = #self.regressionData[i]
-        local lutNumber = #modelParameters.landUseTypes
+        local lutNumber = #luccMEModel.landUseTypes
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
@@ -114,7 +114,7 @@ function LogisticRegression(component)
           
           -- check betas within database
           for k, lu in pairs (self.regressionData[i][j].betas) do
-            if (modelParameters.cs.cells[1][k] == nil) then
+            if (luccMEModel.cs.cells[1][k] == nil) then
               error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
             end
           end

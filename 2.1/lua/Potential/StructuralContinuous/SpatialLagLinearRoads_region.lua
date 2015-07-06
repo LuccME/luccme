@@ -82,8 +82,10 @@ function SpatialLagRegression_region(component)
 			self:adaptRegressionConstants(demand, event)
     end
 	
-		for i, luData in pairs (self.regressionData) do
-	    self:computePotential (luccMEModel, i, event)
+  	for j, luDataRegion in pairs (self.regressionData) do
+  		for i = 1, #luTypes, 1 do
+  	    self:computePotential (luccMEModel, i, event)
+      end
     end
   end  -- function execute
 	
@@ -183,21 +185,23 @@ function SpatialLagRegression_region(component)
 	-- @arg direction The direction for the regression.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage luccMEModel.potential:modify(luccMEModel, i, luDirect, event)
-	component.modify = function(self, luccMEModel, luIndex, direction, event)
-		luDataRegion = self.regressionData[luIndex]
-		for i, luData in pairs (luDataRegion) do
-			if (luData.newconst == nil) then
-				luData.newconst = 0
-			end	
-			if (luData.isLog) then
-				local const_unlog = math.pow(10, luData.newconst) + self.constChange * direction
-				if (const_unlog ~= 0) then
-					luData.newconst = math.log(10, const_unlog)
-				end	
-			else
-				luData.newconst = luData.newconst + self.constChange * direction
-			end
-		end
+	component.modify = function(self, luccMEModel, regIndex, luIndex, direction, event)
+		luDataRegion = self.regressionData[regIndex]
+    
+    for i = 1, #luDataRegion, 1 do
+      if (luDataRegion[i].newconst == nil) then 
+        luDataRegion[i].newconst = 0 
+      end  
+       
+      if (luDataRegion[i].isLog) then 
+        local const_unlog = math.pow(10, luDataRegion[i].newconst) + self.constChange * direction
+        if (const_unlog ~= 0) then
+          luDataRegion[i].newconst = math.log(10, const_unlog)
+        end 
+      else
+        luDataRegion[i].newconst = luDataRegion[i].newconst + self.constChange * direction
+      end
+    end
 
 		self:computePotential(luccMEModel, luIndex, event)
 	end	-- function	modifyPotential
@@ -280,7 +284,7 @@ function SpatialLagRegression_region(component)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes
 		local lu = luTypes[luIndex]
-		local luDataRegion = self.regressionData[luIndex]
+		local luDataRegion = self.regressionData
 		local pot = lu.."_pot"
 
 		for k,cell in pairs (cs.cells) do
@@ -293,7 +297,7 @@ function SpatialLagRegression_region(component)
 
 			local luData = luDataRegion[region]	
 			
-			for var, beta in pairs (luData.betas) do
+			for var, beta in pairs (luData[luIndex].betas) do
 				regressionX = regressionX + beta * cell[var]
 			end
 
@@ -320,38 +324,38 @@ function SpatialLagRegression_region(component)
         							)
 		
 			if (count > 0) then
-				regresY = (Y + neighSum) / (count + 1) * luData.ro  
+				regresY = (Y + neighSum) / (count + 1) * luData[luIndex].ro  
 			else
-				regresY = Y*luData.ro
+				regresY = Y*luData[luIndex].ro
 			end	
 			
-			if (luData.isLog) then -- if the land use is log transformed
+			if (luData[luIndex].isLog) then -- if the land use is log transformed
 				regresY = math.log(10, regresY + 0.0001)  
 			end
 
-      local regression = luData.newconst + regressionX + regresY
-			local regressionLimit = luData.const + regressionX + regresY   		
+      local regression = luData[luIndex].newconst + regressionX + regresY
+			local regressionLimit = luData[luIndex].const + regressionX + regresY   		
 	
-			if (luData.roadsModel ~= nil) then
-			    local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event)
+			if (luData[luIndex].roadsModel ~= nil) then
+			    local newRegression = self:modifyRegression(luData[luIndex].roadsModel, cell, regression, event)
 				if (newRegression ~= regression) then
 				     regression = newRegression
 				     regressionLimit = regression
 				end
 	    end
 
-			if (luData.isLog) then -- if the land use is log transformed
+			if (luData[luIndex].isLog) then -- if the land use is log transformed
 				regression = math.pow(10, (regression)) - 0.0001
 				regressionLimit = math.pow(10, (regressionLimit)) - 0.0001
 			end
 
 			local oldReg = regressionLimit
 
-			if (regressionLimit > luData.maxReg) then
+			if (regressionLimit > luData[luIndex].maxReg) then
 				regression = 1
 			end
 
-			if (regressionLimit <luData.minReg) then
+			if (regressionLimit <luData[luIndex].minReg) then
 				regression = 0
 			end
 

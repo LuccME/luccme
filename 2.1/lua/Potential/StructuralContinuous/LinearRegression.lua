@@ -40,22 +40,26 @@ function LinearRegression(component)
 		local cs = luccMEModel.cs
 		local luDrivers = self.landUseDrivers
 		local luTypes = luccMEModel.landUseTypes
-        local demand = luccMEModel.demand
+    local demand = luccMEModel.demand
 		
     -- create an internal const that can be modified during allocation
-		for i, luData in pairs (self.regressionData) do
-			if (luData.const == nil) then
-				luData.const = 0
-			end
-			luData.newconst = luData.const
+    for j, luDataRegion in pairs (self.regressionData) do
+  		for i, luData in pairs (luDataRegion) do
+  			if (luData.const == nil) then
+  				luData.const = 0
+  			end
+  			luData.newconst = luData.const
+  		end
 		end
 		
     if (event:getTime() > luccMEModel.startTime) then
 			self:adaptRegressionConstants(demand, event)
     end
 	
-		for i, luData in pairs (self.regressionData) do
-		    self:computePotential(luccMEModel, i)
+    for j, luDataRegion in pairs (self.regressionData) do	
+  		for i = 1, #luTypes, 1 do
+  		    self:computePotential(luccMEModel, i)
+      end
     end
   end  -- function execute
 
@@ -65,42 +69,63 @@ function LinearRegression(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
+	 cs = luccMEModel.cs
+	 
+   forEachCell (cs, function(cell)
+                      cell["alternate_model"] = 0
+                      cell["region"] = 1
+                     end
+                )
+
+    if (self.regionAttr == nil) then
+      self.regionAttr = "region"
+    end
+	
     -- check regressionData
     if (self.regressionData == nil) then
       error("regressionData is missing", 2)
     end    
     
-    local regressionNumber = #self.regressionData
-    local lutNumber = #luccMEModel.landUseTypes
-    
-    -- check the number of regressions
-    if (regressionNumber ~= lutNumber) then
-      error("Invalid number of regressions. Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
-    end
-    
-    for j = 1, regressionNumber, 1 do
-      -- check isLog variable
-      if(self.regressionData[j].isLog == nil) then
-        error("isLog variable is missing on LandUseType number "..j, 2)
-      end
-     
-      -- check const variable
-      if (self.regressionData[j].const == nil) then
-        error("const variable is missing on LandUseType number "..j, 2)
-      end
-     
-      -- check betas variable
-      if (self.regressionData[j].betas == nil) then
-        error("betas variable is missing on LandUseType number "..j, 2)
-      end
-      
-      -- check betas within database
-      for k, lu in pairs (self.regressionData[j].betas) do
-        if (luccMEModel.cs.cells[1][k] == nil) then
-          error("Beta "..k.." on LandUseType number "..j.." not found within database", 2)
+    local regionsNumber = #self.regressionData
+
+    -- check number of Regions
+    if (regionsNumber == nil or regionsNumber == 0) then
+      error("The model must have at least One region")
+    else
+      for i = 1, regionsNumber, 1 do
+        local regressionNumber = #self.regressionData[i]
+        local lutNumber = #luccMEModel.landUseTypes
+        
+        -- check the number of regressions
+        if (regressionNumber ~= lutNumber) then
+          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
         end
-      end
-    end -- for j
+        
+        for j = 1, regressionNumber, 1 do
+          -- check isLog variable
+          if(self.regressionData[i][j].isLog == nil) then
+            error("isLog variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+         
+          -- check const variable
+          if (self.regressionData[i][j].const == nil) then
+            error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+         
+          -- check betas variable
+          if (self.regressionData[i][j].betas == nil) then
+            rror("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check betas within database
+          for k, lu in pairs (self.regressionData[i][j].betas) do
+            if (luccMEModel.cs.cells[1][k] == nil) then
+              error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+            end
+          end
+        end -- for j
+      end -- for i
+    end -- else
 	end
 
   --- Handles with the potential modify method of a LinearRegression component.
@@ -111,17 +136,19 @@ function LinearRegression(component)
   -- @arg direction The direction for the regression.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage luccMEModel.potential:modify(luccMEModel, i, luDirect, event)
-  component.modify = function (self, luccMEModel, luIndex, direction)
-    luData = self.regressionData[luIndex] 
-         
-    if (luData.newconst == nil) then 
-      luData.newconst = 0 
-    end  
-     
-    if (luData.isLog) then 
-      luData.newconst = luData.newconst - math.log(10, 0.1) * direction
-    else
-      luData.newconst = luData.newconst + 0.1 * direction
+  component.modify = function (self, luccMEModel, regIndex, luIndex, direction)
+    luDataRegion = self.regressionData[regIndex]
+    
+    for i = 1, #luDataRegion, 1 do
+      if (luDataRegion[i].newconst == nil) then 
+        luDataRegion[i].newconst = 0 
+      end  
+       
+      if (luDataRegion[i].isLog) then 
+        luDataRegion[i].newconst = luDataRegion[i].newconst - math.log(10, 0.1) * direction
+      else
+        luDataRegion[i].newconst = luDataRegion[i].newconst + 0.1 * direction
+      end
     end
   
     self:computePotential (luccMEModel, luIndex)
@@ -134,23 +161,25 @@ function LinearRegression(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self:adaptRegressionConstants(demand, event)
 	component.adaptRegressionConstants = function(self, demand, event)
-		for i, luData in pairs (self.regressionData) do			
-			local currentDemand = demand:getCurrentLuDemand(i)
-			local previousDemand = demand:getPreviousLuDemand(i)
-			local plus = ((currentDemand - previousDemand) / previousDemand)
-
-			luData.newconst = luData .const
-					
-			if (luData.isLog) then
-				if (plus > 0) then
-					luData.newconst = luData.newconst - math.log(10, plus) * 0.01 --0.1
-				end
-				if (plus < 0) then
-					luData.newconst = luData.newconst + math.log(10, (-1) * plus) * 0.01 --0.1
-				end
-			else
-				luData.newconst = luData.newconst + plus * 0.01
-			end
+		for j, luDataRegion in pairs (self.regressionData) do
+		  for i, luData in pairs (luDataRegion) do			
+  			local currentDemand = demand:getCurrentLuDemand(j)
+  			local previousDemand = demand:getPreviousLuDemand(j)
+  			local plus = ((currentDemand - previousDemand) / previousDemand)
+  
+  			luData.newconst = luData .const
+  					
+  			if (luData.isLog) then
+  				if (plus > 0) then
+  					luData.newconst = luData.newconst - math.log(10, plus) * 0.01 --0.1
+  				end
+  				if (plus < 0) then
+  					luData.newconst = luData.newconst + math.log(10, (-1) * plus) * 0.01 --0.1
+  				end
+  			else
+  				luData.newconst = luData.newconst + plus * 0.01
+  			end
+  		end
 		end
 	end	-- function adaptRegressionConstants
 
@@ -162,15 +191,21 @@ function LinearRegression(component)
 	component.computePotential = function(self, luccMEModel, luIndex)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes
+    local luDataRegion = self.regressionData
 		local lu = luTypes[luIndex]
-		local luData = self.regressionData[luIndex]
 		local pot = lu.."_pot"
-		local reg = lu.."_reg"
-
+  
 		for k, cell in pairs (cs.cells) do
-			local regression = luData.newconst
-				
-			for var, beta in pairs (luData.betas) do
+			local region = cell[self.regionAttr]
+			
+      if (region == nil or region == 0) then
+        region = 1
+      end
+
+      local luData = luDataRegion[region]
+      local regression = luData[luIndex].newconst
+      
+			for var, beta in pairs (luData[luIndex].betas) do
 				regression = regression + beta * cell[var]
 			end
 				
@@ -191,7 +226,6 @@ function LinearRegression(component)
 			end
 					
 			cell[pot] = regression - cell.past[lu]
-			--cell[reg] = regression -- optional to save and analyse
 		end
 	end  -- function computePotential
 

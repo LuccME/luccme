@@ -234,8 +234,10 @@ function allocationClueLike(component)
 	-- Similar to the coarse scale old clue
 		local luTypes = luccMEModel.landUseTypes
 		self.elasticity = {}	
-		for k, lu in pairs (luTypes) do
-			self.elasticity[k] = value
+		for j, luDataRegion in pairs (luccMEModel.potential.regressionData) do
+  		for k, lu in pairs (luTypes) do
+  			self.elasticity[k] = value
+  		end
 		end
 	end
 
@@ -252,10 +254,11 @@ function allocationClueLike(component)
 			local attr_pot = lu.."_pot"
 			
 			local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
+			--local luDirect = luccMEModel.demand.demandDirection[i]
 			for k, cell in pairs (cs.cells) do				
 				local pot = cell[attr_pot]
 				local luStatic = luAllocData.static
-
+        
 				local change = pot * self.elasticity[i]
 
 				if (math.abs(change) < luAllocData.minChange) then
@@ -317,54 +320,56 @@ function allocationClueLike(component)
 		local max = 0
 		local tot = 0
 	
-		for i, lu in pairs (luTypes) do
-			local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
-			local currentDemand = luccMEModel.demand:getCurrentLuDemand(i)
-			
-			if ((luDirect == 0) and (event:getTime() == luccMEModel.startTime)) then
-				if (currentDemand >= areas[i]) then
-					luDirect = 1
-				else
-					luDirect = -1
-				end
-			end
-			
-			if (luDirect == 1) then
-				self.elasticity[i] = self.elasticity[i]  * (currentDemand / areas[i])
-			else
-				self.elasticity[i] = self.elasticity[i]  * (areas[i] / currentDemand)
-			end
-			
-			local flag = false
-			
-			if (self.elasticity[i] > self.maxElasticity) then 
-					flag = true
-					self.elasticity[i] = self.maxElasticity
-					luccMEModel.potential:modify (luccMEModel, i, luDirect)			
-			end
-			
-			if (self.elasticity[i] < self.minElasticity) then
-				flag = true
-				if (self.allocationData[i].static < 0) then 
-					self.elasticity[i] = self.minElasticity
-					luccMEModel.potential:modify (luccMEModel, i, luDirect * (-1)) -- original clue does not modify in this case, but AMAZALERT results are like this
-				else
-					luccMEModel.demand:changeLuDirection (i)
-				end
-			end
-			
-			if (luccMEModel.useLog == true and flag == true) then
-				print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect, "const :", luccMEModel.potential.regressionData[i].const, "->", luccMEModel.potential.regressionData[i].newconst,
-						luccMEModel.potential.regressionData[i].newminReg, luccMEModel.potential.regressionData[i].newmaxReg) 
-			end
-	
-			local diff = math.abs((areas[i] - currentDemand))
-			
-			if diff > max then
-				max = diff
-			end
-			
-			tot = tot + math.abs(areas[i] - currentDemand)
+    for j, luDataRegion in pairs (luccMEModel.potential.regressionData) do	
+  		for i, lu in pairs (luTypes) do
+  		  local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
+  			local currentDemand = luccMEModel.demand:getCurrentLuDemand(i)
+  			
+  			if ((luDirect == 0) and (event:getTime() == luccMEModel.startTime)) then
+  				if (currentDemand >= areas[i]) then
+  					luDirect = 1
+  				else
+  					luDirect = -1
+  				end
+  			end
+  			
+  			if (luDirect == 1) then
+  				self.elasticity[i] = self.elasticity[i]  * (currentDemand / areas[i])
+  			else
+  				self.elasticity[i] = self.elasticity[i]  * (areas[i] / currentDemand)
+  			end
+  			
+  			local flag = false
+  			
+  			if (self.elasticity[i] > self.maxElasticity) then 
+  					flag = true
+  					self.elasticity[i] = self.maxElasticity
+  					luccMEModel.potential:modify (luccMEModel, j, i, luDirect)			
+  			end
+  			
+  			if (self.elasticity[i] < self.minElasticity) then
+  				flag = true
+  				if (self.allocationData[i].static < 0) then 
+  					self.elasticity[i] = self.minElasticity
+  					luccMEModel.potential:modify (luccMEModel, j, i, luDirect * (-1)) -- original clue does not modify in this case, but AMAZALERT results are like this
+  				else
+  					luccMEModel.demand:changeLuDirection (i)
+  				end
+  			end
+  			
+  			if (luccMEModel.useLog == true and flag == true) then
+  				print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect, "const :", luccMEModel.potential.regressionData[j][i].const, "->", luccMEModel.potential.regressionData[j][i].newconst,
+  				luccMEModel.potential.regressionData[j][i].newminReg, luccMEModel.potential.regressionData[j][i].newmaxReg) 
+  			end
+  	
+  			local diff = math.abs((areas[i] - currentDemand))
+  			
+  			if diff > max then
+  				max = diff
+  			end
+  			
+  			tot = tot + math.abs(areas[i] - currentDemand)
+  		end
 		end
 		
 		return max

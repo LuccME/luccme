@@ -34,108 +34,102 @@ component.execute = function (self,event,luccMEModel)
 		local cs 		= luccMEModel.cs
 		local luDrivers = self.landUseDrivers
 		local luTypes 	= luccMEModel.landUseTypes
-        local demand 	= luccMEModel.demand
+    local demand 	= luccMEModel.demand
 		
-        -- create an internal const that can be modified during allocation
+    -- create an internal const that can be modified during allocation
 		for i, luData in pairs(self.regressionData) do
-			if luData.const  == nil then luData.const = 0 end
+			if luData.const  == nil then 
+			 luData.const = 0 
+		  end
 			luData.newconst = luData.const
 		end
 		
-        if (event:getTime() > luccMEModel.startTime) then 
+    if (event:getTime() > luccMEModel.startTime) then 
 			self:adaptRegressionConstants(demand, event )
-        end
+    end
 	
 		for i, luData in  pairs( self.regressionData ) do	                      
 		    self:computePotential (luccMEModel, i)
-	    end
+    end
 
-    end  -- function execute
+end  -- function execute
 ----------------------------------------------------------------------
 component.verify = function (self, event, luccmeModel)
 ----------------------------------------------------------------------
-
-
-	  for i, luData in pairs (self.regressionData) do 
-	        if (luccmeModel.landUseTypes[i] == nil) then
-			 	error("Invalid number of regressions", 2)
-			end 
-	        for var, beta in pairs (luData.betas) do
-				if luccmeModel.cs.cells[1][var]== nil then
-					error("Invalid land use driver", 2)
-			    end
-		    end
-	  end
-	  
-	  local find = false	
-      
-	 if (luccmeModel.landUseNoData == nil) then find = true end			
-	     
-     for j, lu in pairs (luccmeModel.landUseTypes) do 
-		   if (self.regressionData[j] == nil) then 
-		    	error("Invalid number of regressions", 2)
-		   end
-     
-           if (luccmeModel.landUseNoData == lu) then find = true end
+  for i, luData in pairs (self.regressionData) do 
+    if (luccmeModel.landUseTypes[i] == nil) then
+		 	error("Invalid number of regressions", 2)
+		end 
+    for var, beta in pairs (luData.betas) do
+			if luccmeModel.cs.cells[1][var]== nil then
+				error("Invalid land use driver", 2)
+	    end
+    end
+  end
   
-	 end
-             
-     if (find == false) then	
-            error("Invalid land use no data variable", 2)
-	 end
-
-		         
+  local find = false	
+    
+ if (luccmeModel.landUseNoData == nil) then 
+   find = true 
+ end			
+     
+ for j, lu in pairs (luccmeModel.landUseTypes) do 
+   if (self.regressionData[j] == nil) then 
+    	error("Invalid number of regressions", 2)
+   end
+   
+   if (luccmeModel.landUseNoData == lu) then 
+    find = true 
+   end
+ end
+           
+ if (find == false) then	
+  error("Invalid land use no data variable", 2)
+ end
 end
  
-
 ---------------------------------------------------------------------- 
 component.modify = function (self, luccMEModel, luIndex, direction)
 ---------------------------------------------------------------------- 
-
-	
-    luData = self.regressionData[luIndex] 
+  luData = self.regressionData[luIndex] 
 	     
-	if luData.newconst == nil then luData.newconst = 0 end	
+	if luData.newconst == nil then 
+	 luData.newconst = 0 
+  end	
 	 
-    if( luData.isLog ) then 
-	        luData.newconst = luData.newconst - math.log(10, 0.1)* direction
+  if( luData.isLog ) then 
+    luData.newconst = luData.newconst - math.log(10, 0.1)* direction
 	else
-		    luData.newconst = luData.newconst + 0.1 * direction
+		luData.newconst = luData.newconst + 0.1 * direction
 	end
-
     self:computePotential (luccMEModel, luIndex)
-
 end	-- function	modifyPotential	
-
- 
-
 
 -------------------------------------------------------------------
 -- SUBROUTINES FOR THIS COMPONENT
 -------------------------------------------------------------------
  		
-
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 component.adaptRegressionConstants = function(self, demand, event)
-			
    for i, luData in pairs(self.regressionData) do			
-			
-  		local currentDemand = demand:getCurrentLuDemand (i)
-        local previousDemand = demand:getPreviousLuDemand(i) 
-	    local plus =  ((currentDemand - previousDemand ) / previousDemand)
-	                       
-        luData.newconst = luData .const
+		local currentDemand = demand:getCurrentLuDemand (i)
+    local previousDemand = demand:getPreviousLuDemand(i) 
+    local plus =  ((currentDemand - previousDemand ) / previousDemand)
+                       
+    luData.newconst = luData .const
 				
-        if( luData.isLog ) then
+    if( luData.isLog ) then
 		 	if (plus > 0) then 
 				luData.newconst = luData.newconst - math.log(10, plus)*0.01 
-		  	end
-		  	if (plus < 0) then 
-		        luData.newconst = luData.newconst + math.log(10, (-1)*plus)*0.01
-		  	end
-       else luData.newconst = luData.newconst + plus*0.01  end 
-    end
+	  	end
+	  	if (plus < 0) then 
+        luData.newconst = luData.newconst + math.log(10, (-1)*plus)*0.01
+	  	end
+   else 
+      luData.newconst = luData.newconst + plus * 0.01  
+   end 
+  end
 end	-- function adaptRegressionConstants
 		
 

@@ -192,6 +192,7 @@ function AllocationClueSLike(component)
     for luind, land in pairs (luTypes) do
       areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
       dem = demand:getCurrentLuDemand(luind)
+      --dem = demand.currentDemand[luind]
       differences[land] = (dem - (areaAlloc))
       if component.useLog == true then
         print(land.." -> " ..areaAlloc.."\t\tdemanda -> "..dem.." diferença -> "..differences[land])

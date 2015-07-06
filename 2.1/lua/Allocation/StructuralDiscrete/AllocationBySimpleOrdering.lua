@@ -77,7 +77,8 @@ function AllocationBySimpleOrdering(component)
 			 --Seleção de tantas células quanto forem necessárias na demanda
 				local j = 1
 				if (dem[lu] == -1) then
-					dem[lu] = demand:getCurrentDemand(model)
+					--dem[lu] = demand:getCurrentDemand(model)
+					dem[lu] = demand.currentDemand
 					dem[lu] = dem[lu][ind]
 				end
 				cs_size = #cs.cells

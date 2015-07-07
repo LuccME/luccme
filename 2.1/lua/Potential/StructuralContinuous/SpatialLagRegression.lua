@@ -44,23 +44,25 @@ function SpatialLagRegression(component)
 		local luTypes = luccMEModel.landUseTypes
 		local demand = luccMEModel.demand
 		
-        -- create an internal constant that can be modified during allocation
-		for i, luData in pairs (self.regressionData) do
-			if (luData.const == nil) then
-				luData.const = 0
-			end
-			
-			if (luData.minReg == nil) then
-				luData.minReg = 0
-			end
-			
-			if (luData.maxReg == nil) then
-				luData.maxReg = 1
-			end
-			
-			luData.newconst = luData.const
-			luData.newminReg = luData.minReg
-			luData.newmaxReg = luData.maxReg
+    -- create an internal constant that can be modified during allocation
+    for j, luDataRegion in pairs (self.regressionData) do
+  		for i, luData in pairs (luDataRegion) do
+  			if (luData.const == nil) then
+  				luData.const = 0
+  			end
+  			
+  			if (luData.minReg == nil) then
+  				luData.minReg = 0
+  			end
+  			
+  			if (luData.maxReg == nil) then
+  				luData.maxReg = 1
+  			end
+  			
+  			luData.newconst = luData.const
+  			luData.newminReg = luData.minReg
+  			luData.newmaxReg = luData.maxReg
+  		end
 		end
 		
 		if (self.constChange == nil) then
@@ -71,8 +73,10 @@ function SpatialLagRegression(component)
 			self:adaptRegressionConstants(demand, event) 
     end
 	
-		for i, luData in pairs (self.regressionData) do
-	    self:computePotential(luccMEModel, i, event)
+		for i, luDataRegion in pairs (self.regressionData) do
+      for i = 1, #luTypes, 1 do
+	     self:computePotential(luccMEModel, i, event)
+     end
     end
 	end  -- function execute
 	
@@ -94,52 +98,60 @@ function SpatialLagRegression(component)
       error("regressionData is missing", 2)
     end    
     
-    local regressionNumber = #self.regressionData
-    local lutNumber = #luccMEModel.landUseTypes
-    
-    -- check the number of regressions
-    if (regressionNumber ~= lutNumber) then
-      error("Invalid number of regressions. Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
-    end
-    
-    for j = 1, regressionNumber, 1 do
-      -- check isLog variable
-      if(self.regressionData[j].isLog == nil) then
-        error("isLog variable is missing on LandUseType number "..j, 2)
-      end
-      
-      -- check minReg variable
-      if(self.regressionData[j].minReg == nil) then
-        error("minReg variable is missing on LandUseType number "..j, 2)
-      end
-            
-      -- check maxReg variable
-      if(self.regressionData[j].maxReg == nil) then
-        error("maxReg variable is missing on LandUseType number "..j, 2)
-      end
-      
-      -- check ro variable
-      if(self.regressionData[j].ro == nil) then
-        error("ro variable is missing on LandUseType number "..j, 2)
-      end                  
-     
-      -- check const variable
-      if (self.regressionData[j].const == nil) then
-        error("const variable is missing on LandUseType number "..j, 2)
-      end
-     
-      -- check betas variable
-      if (self.regressionData[j].betas == nil) then
-        error("betas variable is missing on LandUseType number "..j, 2)
-      end
-      
-      -- check betas within database
-      for k, lu in pairs (self.regressionData[j].betas) do
-        if (luccMEModel.cs.cells[1][k] == nil) then
-          error("Beta "..k.." on LandUseType number "..j.." not found within database", 2)
+    local regionsNumber = #self.regressionData
+
+    -- check number of Regions
+    if (regionsNumber == nil or regionsNumber == 0) then
+      error("The model must have at least One region")
+    else
+      for i = 1, regionsNumber, 1 do
+        local regressionNumber = #self.regressionData[i]
+        local lutNumber = #luccMEModel.landUseTypes
+        
+        -- check the number of regressions
+        if (regressionNumber ~= lutNumber) then
+          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
         end
-      end
-    end -- for j
+        for j = 1, regressionNumber, 1 do
+          -- check isLog variable
+          if(self.regressionData[i][j].isLog == nil) then
+            error("isLog variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check minReg variable
+          if(self.regressionData[i][j].minReg == nil) then
+            error("minReg variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+                
+          -- check maxReg variable
+          if(self.regressionData[i][j].maxReg == nil) then
+            error("maxReg variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check ro variable
+          if(self.regressionData[i][j].ro == nil) then
+            error("ro variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end                  
+         
+          -- check const variable
+          if (self.regressionData[i][j].const == nil) then
+            error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+         
+          -- check betas variable
+          if (self.regressionData[i][j].betas == nil) then
+            error("minReg variable is missing on Region "..i.." LandUseType number "..j, 2)
+          end
+          
+          -- check betas within database
+          for k, lu in pairs (self.regressionData[i][j].betas) do
+            if (luccMEModel.cs.cells[1][k] == nil) then
+              error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+            end
+          end
+        end -- for j
+     end 
+    end
 
 		local filename = self.filename
 		
@@ -157,51 +169,56 @@ function SpatialLagRegression(component)
 	-- @arg direction The direction for the regression.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage luccMEModel.potential:modify(luccMEModel, i, luDirect, event)  
-	component.modify = function(self, luccMEModel, luIndex, direction, event)
-		luData = self.regressionData[luIndex]
+  component.modify = function(self, luccMEModel, regIndex, luIndex, direction, event)
+    luDataRegion = self.regressionData[regIndex]
+    
+    for i = 1, #luDataRegion, 1 do
+      if (luDataRegion[i].newconst == nil) then 
+        luDataRegion[i].newconst = 0 
+      end  
+       
+      if (luDataRegion[i].isLog) then 
+        local const_unlog = math.pow(10, luDataRegion[i].newconst) + self.constChange * direction
+        if (const_unlog ~= 0) then
+          luDataRegion[i].newconst = math.log(10, const_unlog)
+        end 
+      else
+        luDataRegion[i].newconst = luDataRegion[i].newconst + self.constChange * direction
+      end
+    end
 
-		if (luData.newconst == nil) then
-			luData.newconst = 0
-		end	
-		if (luData.isLog) then
-			local const_unlog = math.pow(10, luData.newconst) + self.constChange * direction
-			if (const_unlog ~= 0) then
-				luData.newconst = math.log(10, const_unlog)
-			end	
-		else
-			luData.newconst = luData.newconst + self.constChange * direction
-		end
-
-		self:computePotential(luccMEModel, luIndex, event)
-	end	-- function	modifyPotential
+    self:computePotential(luccMEModel, luIndex, event)
+  end -- function modifyPotential
 
 	--- Handles with the constants regression method of a SpatialLagRegression component.
 	-- @arg self A SpatialLagRegression component.
 	-- @arg demand A demand to calculate the potential.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self:adaptRegressionConstants(demand, event)
-	component.adaptRegressionConstants = function(self, demand, event)
-		for i, luData in pairs (self.regressionData) do			
-			local currentDemand = demand:getCurrentLuDemand(i)
-			local previousDemand = demand:getPreviousLuDemand(i)
-			local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
+  component.adaptRegressionConstants = function(self, demand, event)
+    for j, luDataRegion in pairs (self.regressionData) do
+      for i, luData in pairs (luDataRegion) do
+        local currentDemand = demand:getCurrentLuDemand(j)
+        local previousDemand = demand:getPreviousLuDemand(j)
+        local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
 
-			luData.newconst = luData.const
-				
-			if (luData.isLog) then
-				local const_unlog = math.pow(10, luData.newconst) + plus
-				if (const_unlog ~= 0) then
-					luData.newconst = math.log(10, const_unlog)
-				end
-			else
-				luData.newconst = luData.newconst + plus
-			end
+        luData.newconst = luData.const
 
-			luData.newminReg = luData.newminReg + plus
-			luData.newmaxReg = luData.newmaxReg + plus
-			luData.const = luData.newconst
-		end
-	end	-- function adaptRegressionConstants
+        if (luData.isLog) then
+          local const_unlog = math.pow(10, luData.newconst) + plus
+          if (const_unlog ~= 0) then
+            luData.newconst = math.log(10, const_unlog)
+          end
+        else
+          luData.newconst = luData.newconst + plus
+        end
+
+        luData.newminReg = luData.newminReg + plus
+        luData.newmaxReg = luData.newmaxReg + plus
+        luData.const = luData.newconst
+      end
+    end
+  end -- function adaptRegressionConstants
 	
 	--- Handles with the compute potential method of a SpatialLagRegression component.
 	-- @arg self A SpatialLagRegression component.
@@ -213,16 +230,25 @@ function SpatialLagRegression(component)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes
 		local lu = luTypes[luIndex]
-		local luData = self.regressionData[luIndex]
+		local luDataRegion = self.regressionData
 		local pot = lu.."_pot"
 
 		for k, cell in pairs (cs.cells) do
+	    local regressionX = 0
+      local region = cell[self.regionAttr]
+  
+      if (region == nil or region == 0) then
+        region = 1
+      end
+
+      local luData = luDataRegion[region] 
+		
 			local regressionX = 0
 			local regresY = 0   
 			local neighSum = 0
 			local count = 0
 			
-			for var, beta in pairs (luData.betas) do
+			for var, beta in pairs (luData[luIndex].betas) do
 				regressionX = regressionX + beta * cell[var]
 			end
 			
@@ -247,28 +273,28 @@ function SpatialLagRegression(component)
           							)
 		
 			if (count > 0) then
-				regresY = ((Y + neighSum) / (count + 1)) * luData.ro  
+				regresY = ((Y + neighSum) / (count + 1)) * luData[luIndex].ro  
 			else
-				regresY = Y * luData.ro
+				regresY = Y * luData[luIndex].ro
 			end	
 			
-			if (luData.isLog) then -- if the land use is log transformed
+			if (luData[luIndex].isLog) then -- if the land use is log transformed
 				regresY = math.log(10, regresY + 0.0001)  
 			end
 
-	        local regression = luData.newconst + regressionX + regresY		
-			local regressionLimit = luData.const + regressionX + regresY   		
+	        local regression = luData[luIndex].newconst + regressionX + regresY		
+			local regressionLimit = luData[luIndex].const + regressionX + regresY   		
 
-			if (luData.isLog) then -- if the land use is log transformed
+			if (luData[luIndex].isLog) then -- if the land use is log transformed
 				regression = math.pow(10, regression) - 0.0001			
 				regressionLimit = math.pow(10, (regressionLimit)) - 0.0001
 			end
 
-			if (regressionLimit > luData.maxReg) then
+			if (regressionLimit > luData[luIndex].maxReg) then
 				regression = 1
 			end
 				
-			if (regressionLimit < luData.minReg) then
+			if (regressionLimit < luData[luIndex].minReg) then
 				regression = 0
 			end
 

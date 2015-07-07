@@ -1,5 +1,6 @@
---- Calculates  potential of change  for each cell, based on spatial lag regression coefficients
--- for n regions. Can be used when land use data are continuous.
+--- Modification of the SpatialLagRegression component to allow the use of simple linear regression in specific cases, 
+-- when roads are created or paved. The component is an example of how the framework can be extended for specific 
+-- applications. It was created to allow the representation of the creation new deforestation frontiers in the Brazilian Amazon.
 -- @arg component A Spatial Lag Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
 -- @arg component.regressionData.const A linear regression constant.
@@ -10,41 +11,31 @@
 -- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.regressionData.isLog Inform whether the model is part of a coupling model.
 -- @arg component.landUseDrivers The land use drivers fields in database.
--- @arg component.execute Handles with the execution method of a SpatialLagRegression_region component.
--- @arg component.verify Handles with the verify method of a SpatialLagRegression_region component.
--- @arg component.modify Handles with the modify method of a SpatialLagRegression_region component.
+-- @arg component.execute Handles with the execution method of a SpatialLagLinearRoads component.
+-- @arg component.verify Handles with the verify method of a SpatialLagLinearRoads component.
+-- @arg component.modify Handles with the modify method of a SpatialLagLinearRoads component.
 -- @arg component.modifyRegression Handles with the modify regression method of a
--- SpatialLagRegression component.
+-- SpatialLagLinearRoads component.
 -- @arg component.adaptRegressionConstants Handles with the constants regression method of a
--- SpatialLagRegression component.
--- @arg component.computePotential Handles with the modify method of a SpatialLagRegression_region component.
+-- SpatialLagLinearRoads component.
+-- @arg component.computePotential Handles with the modify method of a SpatialLagLinearRoads component.
 -- @return The modified component.
--- @usage myPontencial = SpatialLagRegression {
--- regressionData =	{
--- 					--Natural vegetation
---					{{ isLog = false, ro = 0.1, const  = -0.1, minReg = 0.15, maxReg = 0.92,
---					  betas = {beta1 =	-0.05, beta2 =	0.2, beta3 = 0.1}},
---					 { isLog = false, ro = 0.2, const  = -0.2, minReg = 0.3, maxReg = 0.92,
---					  betas = {beta1 =	-0.1, beta2 =	0.4, beta3 = 0.2}},
---					 { isLog = false, ro = 0.15, const  = -0.15, minReg = 0.2, maxReg = 0.92,
---					  betas = {beta1 =	-0.07, beta2 =	0.15, beta3 = 0.15}},},
---					-- Deforestation
---					{{ isLog = false, ro = 0.3, const  = -0.3, minReg = 0.13, maxReg = 0.89,
---					  betas = {beta1 =	0.03, beta2 =	0.6, beta3 = 0.01}},
--- 					 { isLog = false, ro = 0.15, const  = -0.15, minReg = 0.07, maxReg = 0.45,
---					  betas = {beta1 =	0.01, beta2 =	0.3, beta3 = 0.02}},
---					 { isLog = false, ro = 0.2, const  = -0.2, minReg = 0.1, maxReg = 0.6,
---					  betas = {beta1 =	0.03, beta2 =	0.5, beta3 = 0.01}}},
---					-- Others
---					{{ isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
---					  betas = {beta1 =	0}},
---					 { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
---					  betas = {beta1 =	0}},
---					 { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
---					  betas = {beta1 =	0}}
---					},
+-- @usage myPontencial = SpatialLagLinearRoads {
+-- regressionData = {
+--                    { -- Region 1
+--                      --Natural vegetation
+--                      { isLog = false, ro = 0.1, const  = -0.1, minReg = 0.15, maxReg = 0.92,
+--                        betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
+--                      -- Deforestation
+--                      { isLog = false, ro = 0.3, const  = -0.3, minReg = 0.13, maxReg = 0.89,
+--                        betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
+--                      -- Others
+--                      { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
+--                        betas = {beta1 =  0}}
+--                     } 
+--                   },
 --}
-function SpatialLagRegression(component)
+function SpatialLagLinearRoads(component)
 	--- Handles with the execution method of a SpatialLagRegression_region component.
 	-- @arg self A SpatialLagRegression_region component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.

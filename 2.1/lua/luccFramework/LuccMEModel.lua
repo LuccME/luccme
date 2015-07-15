@@ -171,18 +171,19 @@ function LuccMEModel(model)
 			-- If current year needs to update variables
 			if (currentTime == updtYear) then
 				print("Updating dynamic variables...")
+
 				if ((self.scenarioStartTime ~= nil) and (currentTime >= self.scenarioStartTime)) then
-				    cs_temp = CellularSpace {	host = self.cs.host, user = self.cs.user, password = self.cs.password,
-              												database = self.cs.database,
-              												theme = self.cs.theme.."_"..self.scenarioName.."_"..updtYear
-											              }
-					print (self.cs.theme.."_"..self.scenarioName.."_"..updtYear)
+			    cs_temp = CellularSpace {	host = self.cs.host, user = self.cs.user, password = self.cs.password,
+            												database = self.cs.database,
+            												theme = self.cs.theme.."_"..self.scenarioName.."_"..updtYear
+										              }
+					print(self.cs.theme.."_"..self.scenarioName.."_"..updtYear)
 				else
 					cs_temp = CellularSpace {	host = self.cs.host, user = self.cs.user, password = self.cs.password,
 				      							        database = self.cs.database,
 												            theme = self.cs.theme.."_"..updtYear
 											            }
-					print (self.cs.theme.."_"..updtYear)
+					print(self.cs.theme.."_"..updtYear)
 				end
 
 				-- For each cell in the original cs, variables are contained in cs_temp is updated

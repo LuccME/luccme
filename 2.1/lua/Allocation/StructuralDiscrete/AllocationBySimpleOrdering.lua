@@ -36,19 +36,20 @@ function AllocationBySimpleOrdering(component)
  			dem[lu] = -1
  		end
   		
-		print ("Time : ", event:getTime())
-  	print ("Step : ", step)
+		print("Time : ", event:getTime())
+  	print("Step : ", step)
+
 		if (useLog == true) then
-			print ("----------------------------------------------------------------------------------------")
-			print ("Cell Area "..cellarea)
-			print ("Num of cells "..numofcells)
-			print ("Max diff area "..maxdiffarea)	 		
-			----------------------------------------------------
+			print("----------------------------------------------------------------------------------------")
+			print("Cell Area "..cellarea)
+			print("Num of cells "..numofcells)
+			print("Max diff area "..maxdiffarea)
+
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
-				print ("Initial area for land use : "..luTypes[landuse].." -> " ..area)
+				print("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
-			print ("----------------------------------------------------------------------------------------")
+			print("----------------------------------------------------------------------------------------")
    	end
 	   	
 		for k, cell in pairs (cs.cells) do
@@ -83,7 +84,7 @@ function AllocationBySimpleOrdering(component)
 				end
 				cs_size = #cs.cells
 				trj_size = #ord.cells	
-				print ("demand", lu, dem[lu], "trajectory size", trj_size)
+				print("demand", lu, dem[lu], "trajectory size", trj_size)
 				--table.foreach(ord.cells, print)
 		
 				while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do 
@@ -95,7 +96,7 @@ function AllocationBySimpleOrdering(component)
 
 				-- Quantidade alocada do uso neste passo de tempo
 				areaAlloc = self:areaAllocated(ord, cellarea, "alloc", 1)
-				print ("areaAlloc", lu, areaAlloc)
+				print("areaAlloc", lu, areaAlloc)
 				differences[lu] = (dem[lu] - areaAlloc)
 
 				if (differences[lu]> 0) then
@@ -118,10 +119,10 @@ function AllocationBySimpleOrdering(component)
  				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
-  		print ("Demand allocated correctly in this time step:", step)
+  		print("Demand allocated correctly in this time step:", step)
  			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
     else
-    	print ("Demand not allocated correctly in this time step:", step)
+    	print("Demand not allocated correctly in this time step:", step)
     	os.exit();
     end      	
  	end -- end of 'execute' function

@@ -40,20 +40,28 @@ function AllocationClueSLike(component)
 		local luTypes = model.landUseTypes
 		local max_iteration = self.maxIteration 
 
-		print ("Time : ", event:getTime())
-  	print ("Step : ", step)
+		print("Time : ", event:getTime())
+		write:file("Time : ", event:getTime())
+  	print("Step : ", step)
+  	write:file("Step : ", step)
 
 		if useLog == true then
-			print ("----------------------------------------------------------------------------------------")
-			print ("Cell Area "..cellarea)
-			print ("Num of cells "..numofcells)
-			print ("Max diff area "..maxdiffarea)	 		
+			print("----------------------------------------------------------------------------------------")
+			write:file("----------------------------------------------------------------------------------------")
+			print("Cell Area "..cellarea)
+			write:file("Cell Area "..cellarea)
+			print("Num of cells "..numofcells)
+			write:file("Num of cells "..numofcells)
+			print("Max diff area "..maxdiffarea)
+			write:file("Max diff area "..maxdiffarea)	 		
 			----------------------------------------------------
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
-				print ("Initial area for land use : "..luTypes[landuse].." -> " ..area)
+				print("Initial area for land use : "..luTypes[landuse].." -> " ..area)
+				write:file("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
-			print ("----------------------------------------------------------------------------------------")
+			print("----------------------------------------------------------------------------------------")
+			write:file("----------------------------------------------------------------------------------------")
    	end
 		
    	local iteration = self:initIteration(luTypes)
@@ -67,7 +75,7 @@ function AllocationClueSLike(component)
 	   	
 		while ((nIter <= max_iteration) and (allocation_ok == false)) do	
 			if useLog == true then
-				print ("\nStep -> "..step.." Iteration -> "..nIter)
+				print("\nStep -> "..step.." Iteration -> "..nIter)
 			end	
 			for k, cell in pairs (cs.cells) do
 				local lu_past = self:currentUse(cell, luTypes)
@@ -113,10 +121,10 @@ function AllocationClueSLike(component)
 			nIter= nIter + 1
 	      		
 			if (allocation_ok == true) then 
-  			print ("Demand allocated correctly in this time step:", step)
+  			print("Demand allocated correctly in this time step:", step)
 			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
    		elseif	(nIter >= max_iteration) then
-   			print ("Demand not allocated correctly in this time step:", step)
+   			print("Demand not allocated correctly in this time step:", step)
    			os.exit();
    		end      		
   	end -- end of 'while do'
@@ -234,8 +242,8 @@ function AllocationClueSLike(component)
       end
     end
     if useLog == true then
-      print ("\n  Maximum error of allocation : "..maxdiff.."  km²   Maximum permited error(km²) : "..maxdiffarea)
-      print ("---------------------------------------------------------------------------------------------------------------------")
+      print("\n  Maximum error of allocation : ",maxdiff,"  km²   Maximum permited error(km²) : ",maxdiffarea)
+      print("---------------------------------------------------------------------------------------------------------------------")
     end
     if (maxdiff <= maxdiffarea) then
       return true

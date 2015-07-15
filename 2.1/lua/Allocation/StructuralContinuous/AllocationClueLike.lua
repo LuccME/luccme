@@ -344,14 +344,14 @@ function allocationClueLike(component)
   			if (self.elasticity[i] > self.maxElasticity) then 
   					flag = true
   					self.elasticity[i] = self.maxElasticity
-  					luccMEModel.potential:modify (luccMEModel, j, i, luDirect)			
+  					luccMEModel.potential:modify (luccMEModel, j, i, luDirect, event)			
   			end
   			
   			if (self.elasticity[i] < self.minElasticity) then
   				flag = true
   				if (self.allocationData[i].static < 0) then 
   					self.elasticity[i] = self.minElasticity
-  					luccMEModel.potential:modify (luccMEModel, j, i, luDirect * (-1)) -- original clue does not modify in this case, but AMAZALERT results are like this
+  					luccMEModel.potential:modify (luccMEModel, j, i, luDirect * (-1), event) -- original clue does not modify in this case, but AMAZALERT results are like this
   				else
   					luccMEModel.demand:changeLuDirection (i)
   				end
@@ -591,6 +591,7 @@ function allocationClueLike(component)
 		areas = self:countAllocatedLandUseArea(cs, luTypes)
 		
 		print("\nYear:"..event:getTime()," Step: "..nIter)  
+		
 		for i, lu in pairs (luTypes) do
 		    local currentDemand  = luccMEModel.demand:getCurrentLuDemand(i)
 		    print(lu.." area: \t"..math.floor(areas[i]), "Difference: ", math.floor(areas[i] - currentDemand)) 

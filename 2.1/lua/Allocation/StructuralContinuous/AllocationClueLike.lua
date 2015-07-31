@@ -65,9 +65,6 @@ function allocationClueLike(component)
 
     -- Loop until maxdiff is achieved
     repeat
-      if(event:getTime() == 2016 and nIter >= 2) then
-        error("Sair")
-      end
       -- compute tentative allocation
       self:computeChange(luccMEModel)
       self:correctCellChange(luccMEModel)
@@ -237,7 +234,7 @@ function allocationClueLike(component)
     -- Similar to the coarse scale old clue
 		local luTypes = luccMEModel.landUseTypes
 		self.elasticity = {}	
-		for k,lu in pairs( luTypes ) do
+		for k = 1, #luTypes, 1 do
 			self.elasticity[k] = value
 		end
 	end
@@ -358,7 +355,7 @@ function allocationClueLike(component)
       
         if (luccMEModel.useLog == true and flag == true) then
           if (j > nRegression) then
-             print("Regression "..j)
+             print("Region "..j)
              nRegression = j
           end
           print (lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const :",luccMEModel.potential.regressionData[j][i].const,"->", luccMEModel.potential.regressionData[j][i].newconst, 

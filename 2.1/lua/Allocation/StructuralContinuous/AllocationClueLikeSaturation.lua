@@ -68,9 +68,6 @@ function allocationClueLikeSaturation (component)
 
     -- Loop until maxdiff is achieved
     repeat
-      if(event:getTime() == 2015 and nIter >= 2) then
-        error("Sair")
-      end
       -- compute tentative allocation
       self:computeChange(luccMEModel)
       self:correctCellChange(luccMEModel)

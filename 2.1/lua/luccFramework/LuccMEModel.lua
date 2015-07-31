@@ -52,7 +52,7 @@ function LuccMEModel(model)
 		end
 		
 		if (self.updateYears ~= nil) then
-			model:dinamicVars(event)
+			model:dinamicVars(event, model)
 		end
 		
 		-- execute the components 
@@ -164,8 +164,9 @@ function LuccMEModel(model)
 	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage luccMeModel:dinamicVars(event)
-	model.dinamicVars = function(self, event)
+	model.dinamicVars = function(self, event, model)
 		currentTime = event:getTime()
+		local cs = model.cs
 		
 		for i, updtYear in pairs (self.updateYears) do
 			-- If current year needs to update variables

@@ -165,7 +165,7 @@ function LuccMEModel(model)
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage luccMeModel:dinamicVars(event)
 	model.dinamicVars = function(self, event, model)
-		currentTime = event:getTime()
+		local currentTime = event:getTime()
 		local cs = model.cs
 		
 		for i, updtYear in pairs (self.updateYears) do

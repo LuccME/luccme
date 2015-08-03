@@ -68,6 +68,9 @@ function allocationClueLikeSaturation (component)
 
     -- Loop until maxdiff is achieved
     repeat
+      if(event:getTime() == 2021 and nIter >= 1) then
+        error("Sair")
+      end
       -- compute tentative allocation
       self:computeChange(luccMEModel)
       self:correctCellChange(luccMEModel)
@@ -256,10 +259,10 @@ function allocationClueLikeSaturation (component)
   -- XXX
   component.relaxProtected = function (self, event, luccMEModel)
     if (self.attrProtection ~= nil and self.complementarLU ~= nil ) then
-         print ("RELAX PROT", luccMEModel.potential.regressionData[1].betas[self.attrProtection])
-         luccMEModel.potential.regressionData[1].betas[self.attrProtection] = luccMEModel.potential.regressionData[1].betas[self.attrProtection] * 0.5
-         luccMEModel.potential:computePotential (luccMEModel, 1, event)
-         print ("           ", luccMEModel.potential.regressionData[1].betas[self.attrProtection])
+         print ("RELAX PROT", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
+         luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] = luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] * 0.5
+         luccMEModel.potential:computePotential (luccMEModel, 1, 1, event)
+         print ("           ", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
     end
   end 	 	
 

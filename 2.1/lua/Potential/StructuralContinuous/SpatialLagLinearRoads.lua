@@ -88,11 +88,11 @@ function SpatialLagLinearRoads(component)
   component.verify = function(self, event, luccMEModel)
     local cs = luccMEModel.cs
 
-    forEachCell (cs, function(cell)
+    forEachCell(cs, function(cell)
                       cell["alternate_model"] = 0
                       cell["region"] = 1
                      end
-                )
+               )
 
     if (self.regionAttr == nil) then
       self.regionAttr = "region"
@@ -178,13 +178,15 @@ function SpatialLagLinearRoads(component)
     local cs = luccMEModel.cs
     local luData = self.regressionData[rNumber][luIndex] 
 
-    if luData.newconst == nil then 
+    if (luData.newconst == nil) then 
       luData.newconst = 0 
     end 
     
     if( luData.isLog ) then 
         local const_unlog = math.pow (10, luData.newconst) + self.constChange * direction
-        if (const_unlog ~= 0) then luData.newconst = math.log (10, const_unlog) end 
+        if (const_unlog ~= 0) then 
+          luData.newconst = math.log (10, const_unlog) 
+        end 
     else
         luData.newconst = luData.newconst + self.constChange * direction
     end
@@ -272,6 +274,7 @@ function SpatialLagLinearRoads(component)
     local lu = luTypes[luIndex]
     local luData = self.regressionData[rNumber][luIndex]
     local pot = lu.."_pot"
+    local activeRegionNumber = 0
     
     for k,cell in pairs (cs.cells) do
       if (cell.region == rNumber) then
@@ -311,7 +314,7 @@ function SpatialLagLinearRoads(component)
           regresY = Y * luData.ro  
         end 
         
-        if( luData.isLog ) then -- if the land use is log transformed
+        if (luData.isLog) then -- if the land use is log transformed
           regresY = math.log (10, regresY + 0.0001)  
         end
   
@@ -326,7 +329,7 @@ function SpatialLagLinearRoads(component)
           end
         end               
   
-        if( luData.isLog ) then -- if the land use is log transformed
+        if (luData.isLog) then -- if the land use is log transformed
           regression = math.pow(10, (regression)) - 0.0001
           regressionLimit = math.pow(10, (regressionLimit)) - 0.0001
         end 
@@ -337,7 +340,7 @@ function SpatialLagLinearRoads(component)
           regression = 1
         end
   
-        if (regressionLimit <luData.minReg) then
+        if (regressionLimit < luData.minReg) then
           regression = 0
         end
   
@@ -354,6 +357,10 @@ function SpatialLagLinearRoads(component)
         cell[pot] = regression - cell.past[lu] 
       end -- if region
     end -- for k
+    
+    if (activeRegionNumber == 0) then
+      error("Region ".. rNumber.." is not set into database.")  
+    end
   end  -- function computePotential
 
   return component

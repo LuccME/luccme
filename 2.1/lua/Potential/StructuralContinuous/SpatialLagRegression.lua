@@ -227,9 +227,12 @@ function SpatialLagRegression(component)
 		local lu = luTypes[luIndex]
 		local luData = self.regressionData[rNumber][luIndex]
 		local pot = lu.."_pot"
-		
+		local activeRegionNumber = 0
+				
 		for k,cell in pairs (cs.cells) do
 		  if (cell.region == rNumber) then
+		    activeRegionNumber = rNumber
+  			
   			local regressionX = 0
   							
   			for var, beta in pairs (luData.betas) do 
@@ -266,14 +269,14 @@ function SpatialLagRegression(component)
   				regresY = Y * luData.ro  
   			end	
   			
-  			if( luData.isLog ) then -- if the land use is log transformed
+  			if (luData.isLog) then -- if the land use is log transformed
   				regresY = math.log (10, regresY + 0.0001)  
   			end
   
   			local regression = luData.newconst + regressionX + regresY 
   			local regressionLimit = luData.const+ regressionX + regresY   		
   
-  			if( luData.isLog ) then -- if the land use is log transformed
+  			if (luData.isLog) then -- if the land use is log transformed
   				regression = math.pow(10, (regression)) - 0.0001
   				regressionLimit = math.pow(10, (regressionLimit)) - 0.0001
   			end 
@@ -284,7 +287,7 @@ function SpatialLagRegression(component)
   				regression = 1
   			end
   
-  			if (regressionLimit <luData.minReg) then
+  			if (regressionLimit < luData.minReg) then
   				regression = 0
   			end
   
@@ -301,6 +304,10 @@ function SpatialLagRegression(component)
   			cell[pot] = regression - cell.past[lu] 
 		  end -- if region
 		end -- for k
+		
+		if (activeRegionNumber == 0) then
+		  error("Region ".. rNumber.." is not set into database.")  
+		end
 	end  -- function computePotential
 
 	return component

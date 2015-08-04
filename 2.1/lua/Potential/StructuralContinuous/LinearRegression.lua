@@ -45,7 +45,7 @@ function LinearRegression(component)
     
     -- Create an internal constant that can be modified during allocation
     for rNumber = 1, regionsNumber, 1 do
-  		for i, luData in pairs(self.regressionData[rNumber]) do
+  		for i, luData in pairs (self.regressionData[rNumber]) do
   			if (luData.const  == nil) then 
   			  luData.const = 0 
   		  end
@@ -58,7 +58,7 @@ function LinearRegression(component)
       end
   	
   		for i = 1, #luTypes, 1 do                         
-  		  self:computePotential (luccMEModel, rNumber, i)
+  		  self:computePotential(luccMEModel, rNumber, i)
       end
     end
   end  -- function execute
@@ -71,11 +71,11 @@ function LinearRegression(component)
   component.verify = function(self, event, luccMEModel)
    local cs = luccMEModel.cs
    
-   forEachCell (cs, function(cell)
+   forEachCell(cs, function(cell)
                       cell["alternate_model"] = 0
                       cell["region"] = 1
                      end
-                )
+               )
 
     if (self.regionAttr == nil) then
       self.regionAttr = "region"
@@ -189,31 +189,38 @@ function LinearRegression(component)
     local lu = luTypes[luIndex]
     local luData = self.regressionData[rNumber][luIndex]
     local pot = lu.."_pot"
+    local activeRegionNumber = 0
     
-    for k,cell in pairs( cs.cells ) do
-      local regression = luData.newconst
-      	
-      for var, beta in pairs (luData.betas) do 
-      	regression = regression + beta * cell[var]
-      end
-      	
-      if (luData.isLog) then -- if the land use is log transformed
-    		regression = math.pow(10, regression)
+    for k,cell in pairs (cs.cells) do
+      if (cell.region == rNumber) then
+        local regression = luData.newconst
+        	
+        for var, beta in pairs (luData.betas) do 
+        	regression = regression + beta * cell[var]
+        end
+        	
+        if (luData.isLog) then -- if the land use is log transformed
+      		regression = math.pow(10, regression)
+      	end 
+        
+        if (regression > 1) then
+      		regression = 1
+      	end
+        		
+      	if (regression < 0) then
+      		regression = 0
+      	end
+        		
+      	if (luccMEModel.landUseNoData ~= nil) then     
+      		regression = regression * (1 - cell[luccMEModel.landUseNoData]) 
+      	end
+        	        
+      	cell[pot] = regression - cell.past[lu] 
     	end 
-      
-      if (regression > 1)then
-    		regression = 1
-    	end
-      		
-    	if (regression < 0)then
-    		regression = 0
-    	end
-      		
-    	if (luccMEModel.landUseNoData ~= nil) then     
-    		regression = regression * (1 - cell[luccMEModel.landUseNoData]) 
-    	end
-      	        
-    	cell[pot] = regression - cell.past[lu]  
+    end
+    
+    if (activeRegionNumber == 0) then
+      error("Region ".. rNumber.." is not set into database.")  
     end
   end  -- function computePotential
 

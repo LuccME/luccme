@@ -69,7 +69,7 @@ function LuccMEModel(model)
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage luccMeModel:verify(event)
 	model.verify = function(self, event)
-	  print("\nVerifying model parameters")
+	  print("\nVerifying Model parameters")
 	  -- Verify the model name
 		if (model.name == nil) then
 			error("Model name not defined", 2)

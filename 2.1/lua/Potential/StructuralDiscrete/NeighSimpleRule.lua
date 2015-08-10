@@ -17,7 +17,6 @@ function NeighSimpleRule(component)
 		local potentialData = self.potentialData
  		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
-		local nRegions = #self.potentialData
 		
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
@@ -34,27 +33,23 @@ function NeighSimpleRule(component)
 				  cell.region = 1
 			end 	
       
-      for rNumber = 1, nRegions, 1 do
-        if (cell.region == rNumber) then
-    			for i, lu in pairs (luTypes) do 
-    				cell[lu.."_pot"] = 0
-    					local numNeigh = 0;
-    					forEachNeighbor(cell, function(cell, neigh)				
-              												if (neigh[lu] == 1) then					
-              													numNeigh = numNeigh + 1
-              												end
-              											end
-            									)
-    									
-    				-- Step 4: Compute potential
-    				if (totalNeigh > 0) then
-    					cell[lu.."_pot"] = numNeigh / totalNeigh 	
-    				else 	
-    					cell[lu.."_pot"] = 0
-    				end	
-    			end -- for i
-  			end -- if i
-			end -- for rNumber
+			for i, lu in pairs (luTypes) do 
+				cell[lu.."_pot"] = 0
+					local numNeigh = 0;
+					forEachNeighbor(cell, function(cell, neigh)				
+          												if (neigh[lu] == 1) then					
+          													numNeigh = numNeigh + 1
+          												end
+          											end
+        									)
+									
+				-- Step 4: Compute potential
+				if (totalNeigh > 0) then
+					cell[lu.."_pot"] = numNeigh / totalNeigh 	
+				else 	
+					cell[lu.."_pot"] = 0
+				end	
+			end -- for i
 		end -- for k
 	end -- end execute
 	

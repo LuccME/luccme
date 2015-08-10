@@ -17,6 +17,7 @@ function NeighSimpleRule(component)
 		local potentialData = self.potentialData
  		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
+		local nRegions = #self.potentialData
 		
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)

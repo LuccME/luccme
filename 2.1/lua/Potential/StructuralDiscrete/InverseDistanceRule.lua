@@ -7,12 +7,14 @@
 -- @return The modified component.
 -- @usage potential = InverseDistanceRule {
 --  potentialData = {
---          { -- Region 1 
---            {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}},  --D
---					  {const = 0.01, betas = {dist_estradas = -0.5}},  				--F
---					  {const = 0.000, betas = {dist_estradas = 0}}					--O
---          }
---					}}
+--                    -- Region 1
+--                    {  
+--                      {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}},  --D
+--					            {const = 0.01, betas = {dist_estradas = -0.5}},  				       --F
+--					            {const = 0.00, betas = {dist_estradas = 0}}					           --O
+--                    }
+--					        }
+--}
 function InverseDistanceRule(component)
 	--- Handles with the execution method of a InverseDistanceRule component.
 	-- @arg self A InverseDistanceRule component.
@@ -33,26 +35,28 @@ function InverseDistanceRule(component)
       end
 
       for rNumber = 1, nRegions, 1 do
-    		for i, lu in pairs (luTypes) do
-    			cell[lu.."_pot"] = 0
-    			
-    			local luData = self.potentialData[rNumber][i]
-    			local potDrivers = 0
-
-    			for var, coef in pairs (luData.betas) do
-    				if (cell[var] > 0) then
-    					potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
-    				else
-    					potDrivers = potDrivers + luData.const
-    				end
-    			end
-    
-    			if (potDrivers > 1) then
-    				potDrivers = 1
-    			end
-    
-    			cell[lu.."_pot"] =  potDrivers
-    		end -- for i
+        if (cell.region == rNumber) then
+      		for i, lu in pairs (luTypes) do
+      			cell[lu.."_pot"] = 0
+      			
+      			local luData = self.potentialData[rNumber][i]
+      			local potDrivers = 0
+  
+      			for var, coef in pairs (luData.betas) do
+      				if (cell[var] > 0) then
+      					potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
+      				else
+      					potDrivers = potDrivers + luData.const
+      				end
+      			end
+      
+      			if (potDrivers > 1) then
+      				potDrivers = 1
+      			end
+      
+      			cell[lu.."_pot"] =  potDrivers
+      		end -- for i
+    		end -- if region 
   		end -- for rNumber
 		end -- for k
 	end -- end execute

@@ -19,16 +19,19 @@
 -- @return The modified component.
 -- @usage myPontencial = LinearRegression {
 -- regressionData = {
---          --Natural vegetation
---          { isLog = false, error = 0.1, const  = -0.1,
---            betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
---          -- Deforestation
---          { isLog = false, error = 0.3, const  = -0.3,
---            betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
---          -- Others
---          { isLog = false, error = 0, const  = 0,
---            betas = {beta1 =  0}}
---          },
+--                    -- Region 1
+--                    {
+--                      --Natural vegetation
+--                      { isLog = false, error = 0.1, const  = -0.1,
+--                        betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
+--                      -- Deforestation
+--                      { isLog = false, error = 0.3, const  = -0.3,
+--                        betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
+--                      -- Others
+--                      { isLog = false, error = 0, const  = 0,
+--                        betas = {beta1 =  0}}
+--                    }
+--                  }
 --}
 function LinearRegression(component)
   --- Handles with the execution method of a LinearRegression component.
@@ -132,6 +135,7 @@ function LinearRegression(component)
   -- This method is called by the Allocation component.
   -- @arg self A SpatialLagLinearRoads component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
   -- @arg event A representation of a time instant when the simulation engine must execute.
@@ -155,6 +159,7 @@ function LinearRegression(component)
   -- @arg self A LinearRegression component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg demand A demand to calculate the potential.
+  -- @arg rNumber The potential region number.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage self:adaptRegressionConstants(demand, rNumber, event)
   component.adaptRegressionConstants = function(self, demand, rNumber, event)
@@ -181,6 +186,7 @@ function LinearRegression(component)
   --- Handles with the compute potential method of a LinearRegression component.
   -- @arg self A LinearRegression component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @usage self:computePotential(luccMEModel, luIndex)		
   component.computePotential = function(self, luccMEModel, rNumber, luIndex)

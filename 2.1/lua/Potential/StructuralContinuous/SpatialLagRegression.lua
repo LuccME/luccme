@@ -21,16 +21,19 @@
 -- @return The modified component.
 -- @usage myPontencial = SpatialLagRegression {
 -- regressionData = {
---          --Natural vegetation
---          { isLog = false, ro = 0.1, const  = -0.1, minReg = 0.15, maxReg = 0.92,
---            betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
---          -- Deforestation
---          { isLog = false, ro = 0.3, const  = -0.3, minReg = 0.13, maxReg = 0.89,
---            betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
---          -- Others
---          { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
---            betas = {beta1 =  0}}
---          },
+--                    -- Region 1
+--                    { 
+--                      --Natural vegetation
+--                      { isLog = false, ro = 0.1, const  = -0.1, minReg = 0.15, maxReg = 0.92,
+--                        betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
+--                      -- Deforestation
+--                      { isLog = false, ro = 0.3, const  = -0.3, minReg = 0.13, maxReg = 0.89,
+--                        betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
+--                      -- Others
+--                      { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
+--                        betas = {beta1 =  0}}
+--                    }
+--                  }
 --}
 function SpatialLagRegression(component)
   --- Handles with the execution method of a SpatialLagRegression component.
@@ -168,7 +171,7 @@ function SpatialLagRegression(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage luccMEModel.potential:modify(luccMEModel, i, luDirect, event) 
+  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect, event) 
 	component.modify = function (self, luccMEModel, rNumber, luIndex, direction, event)
     local cs = luccMEModel.cs
 		local luData = self.regressionData[rNumber][luIndex] 
@@ -190,10 +193,11 @@ function SpatialLagRegression(component)
   --- Handles with the constants regression method of a SpatialLagRegression component.
   -- @arg self A SpatialLagRegression component.
   -- @arg demand A demand to calculate the potential.
+  -- @arg rNumber The potential region number.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:adaptRegressionConstants(demand, event)
-	component.adaptRegressionConstants = function(self, demand, rNumbers, event, luccMEModel)
-    for i, luData in pairs (self.regressionData[rNumbers]) do			
+  -- @usage self:adaptRegressionConstants(demand, rNumbers, event)
+	component.adaptRegressionConstants = function(self, demand, rNumber, event, luccMEModel)
+    for i, luData in pairs (self.regressionData[rNumber]) do			
     	local currentDemand = demand:getCurrentLuDemand(i)
     	local previousDemand = demand:getPreviousLuDemand(i) 
     	local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
@@ -218,9 +222,10 @@ function SpatialLagRegression(component)
   --- Handles with the compute potential method of a SpatialLagRegression component.
   -- @arg self A SpatialLagRegression component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg rNumber The pontencial region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:computePotential(luccMEModel, luIndex, event)		
+  -- @usage self:computePotential(luccMEModel, rNumber, luIndex, event)		
 	component.computePotential = function(self, luccMEModel, rNumber, luIndex, event)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes

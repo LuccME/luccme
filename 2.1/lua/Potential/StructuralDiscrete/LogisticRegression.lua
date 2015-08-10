@@ -16,24 +16,14 @@
 -- @arg component.probability Compute the probability logistic method of a LogisticRegression component.
 -- @return The modified component.
 -- @usage potential  =  LogisticRegression {
---    regressionData = { { --  Region 1
---                        -- D
---                        { const = -0.1004, 
---                          betas = {beta1 = 0.05814, beta2 = -0.97500, beta3 = -2.51651},                
---                          elasticity =  0.5, 
---                        },
---                        -- F
---                        { const = -2.34188, 
---                          betas = {beta1 = -0.02727, beta2 = -4.30977, beta3 = -3.10320},                                                              
---                          elasticity =  0.5, 
---                        },
---                        -- O
---                        { const = 0,
---                          betas = {beta1 = 1},  
---                          elasticity = 1,
---                        }   
---                       }  --end region 1 
---                      } -- end regressionData
+--    regressionData = { 
+--                      --  Region 1
+--                      {
+--                        {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}, elasticy = 0.5},  --D
+--                        {const = 0.01, betas = {dist_estradas = -0.5}, elasticy = 0.5},                --F
+--                        {const = 0.00, betas = {dist_estradas = 0}, elasticy = 0.5}                    --O 
+--                      }  
+--                     } 
 --  }
 function LogisticRegression(component) 
 	--- Handles with the execution method of a LogisticRegression component.
@@ -68,7 +58,7 @@ function LogisticRegression(component)
   			--Step 3 : Computes the total probability
   			cell[lu.."_pot"] = regrLogit + elas
   		end	--close for region
-		end -- close for cell
+		end -- for k
 	end
 	
 	--- Handles with the verify method of a LogisticRegression component.

@@ -8,8 +8,8 @@
 --  potentialData = { 
 --                    { -- Region 1            
 --                      {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}},  --D
---					            {const = 0.01, betas = {dist_estradas = -0.5}},  				--F
---					            {const = 0.000, betas = {dist_estradas = 0}}					--O
+--					            {const = 0.01, betas = {dist_estradas = -0.5}},  				       --F
+--					            {const = 0.000, betas = {dist_estradas = 0}}					         --O
 --                    }
 --					}}  					
 function NeighInverseDistanceRule(component)
@@ -37,49 +37,47 @@ function NeighInverseDistanceRule(component)
 		for k, cell in pairs (cs.cells) do
 		 if (cell.region == nil) then
         cell.region = 1
-      end
+     end
 
-      for rNumber = 1, nRegions, 1 do
+     for rNumber = 1, nRegions, 1 do
   			totalNeigh = cell:getNeighborhood():size()
-    		 	if (cell.region == nil) then
-  				cell.region = 1
-  			end 	
-  
-  			for i, lu in pairs (luTypes) do 
-  				cell[lu.."_pot"] = 0
-  				local numNeigh = 0;
-  				
-  				forEachNeighbor(cell, function(cell, neigh)				
-            											if (neigh[lu] == 1) then					
-            												numNeigh = numNeigh + 1
-            											end
-            										end
-          								)
-  								
-  				-- Step 4: Compute potential
-  				if (totalNeigh > 0) then
-  					cell[lu.."_pot"] = numNeigh / totalNeigh 	
-  				else 	
-  					cell[lu.."_pot"] = 0
-  				end	
-  			
-  				local luData = self.potentialData[rNumber][i]
-  				local potDrivers = 0
-  				
-  				for var, coef in pairs (luData.betas) do
-  					if (cell[var] > 0) then
-  						potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
-  					else
-  						potDrivers = potDrivers + luData.const
-  					end
-  				end
-  
-  				if (potDrivers > 1) then 
-  				  potDrivers = 1 
-				  end
+  		 	if (cell.region == rNumber) then  
+    			for i, lu in pairs (luTypes) do 
+    				cell[lu.."_pot"] = 0
+    				local numNeigh = 0;
+    				
+    				forEachNeighbor(cell, function(cell, neigh)				
+              											if (neigh[lu] == 1) then					
+              												numNeigh = numNeigh + 1
+              											end
+              										end
+            								)
+    								
+    				-- Step 4: Compute potential
+    				if (totalNeigh > 0) then
+    					cell[lu.."_pot"] = numNeigh / totalNeigh 	
+    				else 	
+    					cell[lu.."_pot"] = 0
+    				end	
+    			
+    				local luData = self.potentialData[rNumber][i]
+    				local potDrivers = 0
+    				
+    				for var, coef in pairs (luData.betas) do
+    					if (cell[var] > 0) then
+    						potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
+    					else
+    						potDrivers = potDrivers + luData.const
+    					end
+    				end
     
-  				cell[lu.."_pot"] = cell[lu.."_pot"] + potDrivers
-  			end -- for i
+    				if (potDrivers > 1) then 
+    				  potDrivers = 1 
+  				  end
+      
+    				cell[lu.."_pot"] = cell[lu.."_pot"] + potDrivers
+    			end -- for i
+  			end -- if region
 			end -- for rNumber
 		end -- for k
 	end -- end execute

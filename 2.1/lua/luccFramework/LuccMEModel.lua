@@ -58,9 +58,9 @@ function LuccMEModel(model)
 		-- execute the components
 		print("\nExecuting Demand component") 
 		self.demand:execute(event, model)
-		print("\nExecuting Potential component")
+		print("Executing Potential component")
 	  self.potential:execute(event, model)
-	  print("\nExecuting Allocation component")
+	  print("Executing Allocation component")
 		self.allocation:execute(event, model)
 	end
 

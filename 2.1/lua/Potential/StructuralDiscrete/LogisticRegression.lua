@@ -66,6 +66,7 @@ function LogisticRegression(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
+	  print("Verifying Potential parameters")
     -- check regressionData
     if (self.regressionData == nil) then
       error("regressionData is missing", 2)

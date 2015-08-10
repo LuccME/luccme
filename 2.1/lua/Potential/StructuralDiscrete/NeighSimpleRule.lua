@@ -62,6 +62,7 @@ function NeighSimpleRule(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event)
+	  print("Verifying Potential parameters")
 	end
 
 	return component

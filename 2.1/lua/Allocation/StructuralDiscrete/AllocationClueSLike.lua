@@ -136,6 +136,7 @@ function AllocationClueSLike(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:verify(event, self)
  	component.verify = function(self, event, modelParameters)
+ 	  print("Verifying Allocation parameters")
     -- check maxIteration
     if (self.maxIteration == nil) then
       error("maxIteration variable is missing", 2)

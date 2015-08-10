@@ -70,6 +70,7 @@ function ComputeInputTwoDateMaps(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.demand:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
+	  print("Verifying Demand parameters")
 		yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
 		
 		--  Check the final year for interpolation

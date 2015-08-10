@@ -90,6 +90,7 @@ function SpatialLagLinearRoads(component)
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self.potential:verify(event, self)
   component.verify = function(self, event, luccMEModel)
+    print("Verifying Potential parameters")
     local cs = luccMEModel.cs
 
     forEachCell(cs, function(cell)

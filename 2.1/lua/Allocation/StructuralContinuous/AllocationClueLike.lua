@@ -125,6 +125,7 @@ function allocationClueLike(component)
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self.allocation:verify(event, self)
   component.verify = function(self, event, luccMEModel)
+    print("Verifying Allocation parameters")
     -- check maxDifference
     if (self.maxDifference == nil) then
       error("maxDifference variable is missing", 2)

@@ -132,6 +132,7 @@ function AllocationBySimpleOrdering(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.allocation:verify(event, self)
   component.verify = function(self, event)
+    print("Verifying Allocation parameters")
     if (self.maxDifference == nil) then
       error("maxDifference variable is missing", 2)
     end

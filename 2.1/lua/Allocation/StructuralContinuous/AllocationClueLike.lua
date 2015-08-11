@@ -311,7 +311,6 @@ function allocationClueLike(component)
     -- Compares the demand to the amount of allocated land use/cover, then adapts elasticity
     local cs = luccMEModel.cs
     local luTypes = luccMEModel.landUseTypes
-    local cellarea = cs.cellArea
     local areas = self:countAllocatedLandUseArea(cs, luTypes)
     local max = 0
     local tot = 0

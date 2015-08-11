@@ -171,6 +171,7 @@ function LuccMEModel(model)
 	model.dinamicVars = function(self, event, model)
 		local currentTime = event:getTime()
 		local cs = model.cs
+		local cs_temp = {}
 		
 		for i, updtYear in pairs (self.updateYears) do
 			-- If current year needs to update variables

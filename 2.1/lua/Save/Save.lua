@@ -3,7 +3,9 @@
 -- @usage saveToDatabase = databaseSave(luccMeModel)
 function databaseSave(luccmemodel)
 	local saveYears = {}
-	tsave = Timer{}
+	local e1 = {}
+	local e2 = {}
+	local tsave = Timer{}
 	
 	-- Verify the outputTheme variable
 	if (luccmemodel.save.outputTheme == nil) then
@@ -78,6 +80,8 @@ function saveSingleTheme(luccmemodel)
 	local n = 1
 	local attrs_inc = {}
 	local attrs_ext = {}
+	local out = ""
+	local change = ""
 	
 	if (luccmemodel.potential.landUseNoData ~= nil) then
 		  attrs_inc[n] = "result_nodata"

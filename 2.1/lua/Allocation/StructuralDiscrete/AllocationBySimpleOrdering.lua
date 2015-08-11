@@ -36,7 +36,7 @@ function AllocationBySimpleOrdering(component)
  			dem[lu] = -1
  		end
   		
-		print("Time : ", event:getTime())
+		print("\nTime : ", event:getTime())
   	print("Step : ", step)
 
 		if (useLog == true) then
@@ -68,11 +68,11 @@ function AllocationBySimpleOrdering(component)
 			if (lu ~= model.landUseNoData) then 
 				ord = Trajectory { target = cs,
         								   select = function(cell)
-        												return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
-        											end,
+        												      return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
+        											      end,
         								   greater = function(c, d)
-        												return c[lu.."_pot"] > d[lu.."_pot"]
-        											end
+        												       return c[lu.."_pot"] > d[lu.."_pot"]
+        											       end
         								 }
 
 			 --Seleção de tantas células quanto forem necessárias na demanda

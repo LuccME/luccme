@@ -27,41 +27,34 @@ function AllocationClueSLike(component)
 		------Global and Local Variables and Constants------
 		local useLog = model.useLog
 		local cs = model.cs
-		local potential = model.potential		
 		local cellarea = cs.cellArea
 		local step = event:getTime() - model.startTime + 1;		
-		local start = model.startTime		
-		local demand = model.demand
 		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
 		local totarea = (numofcells * cellarea)
 		local maxdiffarea = (self.maxDifference * totarea)
 		local luTypes = model.landUseTypes
-		local max_iteration = self.maxIteration 
+		local max_iteration = self.maxIteration
+		local area = 0 
+		local luind = 0
+		local lu_pastIndex = 0
+		local possibleTransitions = 0
 
-		print("Time : ", event:getTime())
-		write:file("Time : ", event:getTime())
+		print("\nTime : ", event:getTime())
   	print("Step : ", step)
-  	write:file("Step : ", step)
 
 		if useLog == true then
 			print("----------------------------------------------------------------------------------------")
-			write:file("----------------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
-			write:file("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
-			write:file("Num of cells "..numofcells)
 			print("Max diff area "..maxdiffarea)
-			write:file("Max diff area "..maxdiffarea)	 		
 			----------------------------------------------------
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
 				print("Initial area for land use : "..luTypes[landuse].." -> " ..area)
-				write:file("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
 			print("----------------------------------------------------------------------------------------")
-			write:file("----------------------------------------------------------------------------------------")
    	end
 		
    	local iteration = self:initIteration(luTypes)
@@ -114,9 +107,9 @@ function AllocationClueSLike(component)
 								  	
 			local diff = self:calcDifferences(event, model)
 			
-			allocation_ok = self:convergency(cs, diff, luTypes, maxdiffarea)
+			allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
 			
-			self:adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, maxdiffarea)
+			self:adjustIteration(diff, luTypes, self.factorIteration, iteration)
 			
 			nIter= nIter + 1
 	      		
@@ -193,10 +186,9 @@ function AllocationClueSLike(component)
     local luTypes = component.landUseTypes
     local demand = component.demand
     local cellarea = cs.cellArea      
-    local tot_diff = 0.0
-    local maxdiff = 0.0
     local differences = {}
-    local time = event:getTime()
+    local areaAlloc = 0
+    local dem = 0
     
     for luind, land in pairs (luTypes) do
       areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
@@ -220,7 +212,7 @@ function AllocationClueSLike(component)
   -- @arg cellarea XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   -- @arg maxdiffarea XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, maxdiffarea)
-  component.adjustIteration = function(self, cs, diff, luTypes, faciter, iter, cellarea, maxdiffarea)    --@todo apagar? cs, cellarea, maxdiffarea 
+  component.adjustIteration = function(self,diff, luTypes, faciter, iter) 
     for luind, land in pairs (luTypes) do
       iter[land] = iter[land] + (diff[land] * faciter)
     end
@@ -233,7 +225,7 @@ function AllocationClueSLike(component)
   -- @arg faciter XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   -- @arg maxdiffarea XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   -- @usage allocation_ok = self:convergency(cs, diff, luTypes, maxdiffarea)
-  component.convergency = function(self, cs, diff, luTypes, maxdiffarea) --@todo apagar? cs
+  component.convergency = function(self, diff, luTypes, maxdiffarea) --@todo apagar? cs
     local tot_diff = 0.0
     local maxdiff = 0.0
     
@@ -242,7 +234,7 @@ function AllocationClueSLike(component)
         maxdiff = (math.abs(diff[land]))
       end
     end
-    if useLog == true then
+    if (useLog == true) then
       print("\n  Maximum error of allocation : ",maxdiff,"  km²   Maximum permited error(km²) : ",maxdiffarea)
       print("---------------------------------------------------------------------------------------------------------------------")
     end

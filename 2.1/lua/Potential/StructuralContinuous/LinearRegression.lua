@@ -57,7 +57,7 @@ function LinearRegression(component)
   		end
   		
       if (event:getTime() > luccMEModel.startTime) then 
-  			self:adaptRegressionConstants(demand, rNumber, event )
+  			self:adaptRegressionConstants(demand, rNumber)
       end
   	
   		for i = 1, #luTypes, 1 do                         
@@ -140,7 +140,7 @@ function LinearRegression(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect, event)
+  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect)
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local luData = self.regressionData[rNumber][luIndex] 
   	     
@@ -162,8 +162,8 @@ function LinearRegression(component)
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:adaptRegressionConstants(demand, rNumber, event)
-  component.adaptRegressionConstants = function(self, demand, rNumber, event)
+  -- @usage self:adaptRegressionConstants(demand, rNumber)
+  component.adaptRegressionConstants = function(self, demand, rNumber)
      for i, luData in pairs (self.regressionData[rNumber]) do			
       	local currentDemand = demand:getCurrentLuDemand(i)
         local previousDemand = demand:getPreviousLuDemand(i) 

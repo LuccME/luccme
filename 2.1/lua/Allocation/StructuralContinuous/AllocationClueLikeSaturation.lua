@@ -85,7 +85,7 @@ function allocationClueLikeSaturation (component)
         allocation_ok = true
         
         if (luccMEModel.useLog == true) then
-          print("Demand allocated correctly in ", event:getTime(), "number of iterations", niter, "maximum error: ", maxdiff)
+          print("Demand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
         end
       else 
         nIter = nIter + 1
@@ -262,7 +262,7 @@ function allocationClueLikeSaturation (component)
     if (self.attrProtection ~= nil and self.complementarLU ~= nil ) then
          print ("RELAX PROT", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
          luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] = luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] * 0.5
-         luccMEModel.potential:computePotential (luccMEModel, 1, 1, event)
+         luccMEModel.potential:computePotential (luccMEModel, 1, 1)
          print ("           ", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
     end
   end 	 	
@@ -281,8 +281,6 @@ function allocationClueLikeSaturation (component)
               local original = 1
               local perc_def_original = 0
 
-              attrprot = self.attrProtection
-     
               if (self.attrProtection ~= nil) then
                 prot_t = cell[self.attrProtection]
               end
@@ -512,6 +510,7 @@ function allocationClueLikeSaturation (component)
       local incr = 0
       local totcov = 0
       local totchange = 0
+      local totstatic = 0
       local amin = cell[luTypes[1]] - cell.past[luTypes[1]]
       local amax = amin
       local max  = math.abs(amax)
@@ -567,6 +566,7 @@ function allocationClueLikeSaturation (component)
         if ((decr == (NCOV - nostatic)) or (incr == (NCOV - nostatic))) then
           for i, luAllocData in pairs (self.allocationData) do
             local lu = luTypes[i]
+            local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
             
             local luStatic = luAllocData.static
             if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
@@ -702,8 +702,7 @@ function allocationClueLikeSaturation (component)
     -- Calculates and prints the allocated by the regression equations for each land use/cover type
     local cs = luccMEModel.cs
     local luTypes = luccMEModel.landUseTypes
-    local areas, total = {}, 0
-    local idx = 1
+    local areas = {}
     
     areas = self:countAllocatedLandUseArea(cs, luTypes)
     

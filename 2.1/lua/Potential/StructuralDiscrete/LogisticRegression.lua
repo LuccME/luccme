@@ -46,7 +46,7 @@ function LogisticRegression(component)
   			local lu = luTypes[luind]
   				
   			-- Step 1: Calculates the regression estimates
-   			local regrLogit = self.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
+   			local regrLogit = self.calcRegressionLogistic(cell, inputValues, self)
   			
    				-- Step 2: Calculates the elasticity
   			local elas = 0				
@@ -119,8 +119,8 @@ function LogisticRegression(component)
 	-- @arg inputValues A parameter component.
 	-- @arg luDrivers The land use drivers fields in database.
 	-- @arg component A LogisticRegression component.
-	-- @usage component.calcRegressionLogistic(cell, inputValues, landUseDrivers, self)
-	component.calcRegressionLogistic = function(cell, inputValues, luDrivers, component)
+	-- @usage component.calcRegressionLogistic(cell, inputValues, self)
+	component.calcRegressionLogistic = function(cell, inputValues, component)
 		local regrLogit = inputValues.const
 		local betas = inputValues.betas
 		local attrs = inputValues.attributes

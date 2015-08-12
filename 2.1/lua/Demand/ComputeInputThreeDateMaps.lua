@@ -36,6 +36,8 @@ function ComputeInputThreeDateMaps(component)
 		local increasing = 1
 		local decreasing = -1
 		local static = 0
+    local step = 0
+    local luTypes = luccMEModel.landUseTypes
 	
 		step = event:getTime() - luccMEModel.startTime + 1
 		
@@ -73,7 +75,7 @@ function ComputeInputThreeDateMaps(component)
 	-- @usage self.demand:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  print("Verifying Demand parameters")
-		yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
+		local yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
 		
 	   --  Check the middle year for interpolation
     if (self.middleYearForInterpolation == nil) then
@@ -145,7 +147,7 @@ function ComputeInputThreeDateMaps(component)
 		
     -- Check the land use types
     self.demandDirection = {}
-    luTypes = luccMEModel.landUseTypes
+    local luTypes = luccMEModel.landUseTypes
     self.numLU = 0
 
     for k, lu in pairs (luTypes) do

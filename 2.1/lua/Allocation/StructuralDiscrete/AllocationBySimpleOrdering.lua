@@ -61,7 +61,8 @@ function AllocationBySimpleOrdering(component)
 			cell.simUse = self:currentUse(cell, luTypes)
     end
 
-		diff = 0
+		local diff = 0
+		local ord = {}
 
 		-- Ordenação dos vetores de uso de acordo com as maiores probabilidades
 		for ind, lu in  pairs (luTypes) do	
@@ -82,8 +83,8 @@ function AllocationBySimpleOrdering(component)
 					dem[lu] = demand.currentDemand
 					dem[lu] = dem[lu][ind]
 				end
-				cs_size = #cs.cells
-				trj_size = #ord.cells	
+				local cs_size = #cs.cells
+				local trj_size = #ord.cells	
 				print("demand", lu, dem[lu], "trajectory size", trj_size)
 				--table.foreach(ord.cells, print)
 		
@@ -95,7 +96,7 @@ function AllocationBySimpleOrdering(component)
 				end
 
 				-- Quantidade alocada do uso neste passo de tempo
-				areaAlloc = self:areaAllocated(ord, cellarea, "alloc", 1)
+				local areaAlloc = self:areaAllocated(ord, cellarea, "alloc", 1)
 				print("areaAlloc", lu, areaAlloc)
 				differences[lu] = (dem[lu] - areaAlloc)
 
@@ -145,7 +146,7 @@ function AllocationBySimpleOrdering(component)
   -- @arg attr The attribute to be checked.
   -- @usage areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
   component.areaAllocated = function(self, cs, cellarea, field, attr)
-    c = 0
+    local c = 0
     forEachCell(cs, function(cell)
                       if (cell[field] == attr) then
                         c = c + 1   

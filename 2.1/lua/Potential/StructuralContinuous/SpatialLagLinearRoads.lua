@@ -75,11 +75,11 @@ function SpatialLagLinearRoads(component)
       end
   
       if (event:getTime() > luccMEModel.startTime) then 
-        self:adaptRegressionConstants(demand, rNumber, event, luccMEModel)
+        self:adaptRegressionConstants(demand, rNumber)
       end
     
       for i = 1, #luTypes, 1 do                       
-        self:computePotential (luccMEModel, rNumber, i, event)
+        self:computePotential (luccMEModel, rNumber, i)
       end
     end
   end  -- function execute
@@ -179,8 +179,8 @@ function SpatialLagLinearRoads(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect, event) 
-  component.modify = function (self, luccMEModel, rNumber, luIndex, direction, event)
+  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
+  component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local cs = luccMEModel.cs
     local luData = self.regressionData[rNumber][luIndex] 
 
@@ -197,7 +197,7 @@ function SpatialLagLinearRoads(component)
         luData.newconst = luData.newconst + self.constChange * direction
     end
     
-    self:computePotential (luccMEModel, rNumber, luIndex, event)
+    self:computePotential (luccMEModel, rNumber, luIndex)
   end -- function modifyPotential 
 
   --- Handles with the modify regression method of a SpatialLagRegression_region component.
@@ -206,8 +206,8 @@ function SpatialLagLinearRoads(component)
   -- @arg cell A spatial location with homogeneous internal content.
   -- @arg oldRegression The previous value of the regression
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:modifyRegression(luData.roadsModel, cell, regression, event)
-  component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
+  -- @usage self:modifyRegression(luData.roadsModel, cell, regression)
+  component.modifyRegression = function(self, roadsModel, cell, oldRegression)
     local currentTime = event:getTime()
     local regression = roadsModel.const
 
@@ -240,8 +240,8 @@ function SpatialLagLinearRoads(component)
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:adaptRegressionConstants(demand, event)
-  component.adaptRegressionConstants = function(self, demand, rNumber, event, luccMEModel)
+  -- @usage self:adaptRegressionConstants(demand, rNumber)
+  component.adaptRegressionConstants = function(self, demand, rNumber)
      for i, luData in pairs (self.regressionData[rNumber]) do      
       local currentDemand = demand:getCurrentLuDemand(i)
       local previousDemand = demand:getPreviousLuDemand(i) 
@@ -264,19 +264,14 @@ function SpatialLagLinearRoads(component)
     end
   end -- function adaptRegressionConstants		
 
-  --- Handles with the constants regression method of a SpatialLagRegression_region component.
-  -- @arg self A SpatialLagRegression_region component.
-  -- @arg demand A demand to calculate the potential.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:adaptRegressionConstants(demand, event)	
 --- Handles with the compute potential method of a SpatialLagRegression component.
   -- @arg self A SpatialLagRegression component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @usage self:computePotential(luccMEModel, luIndex, event)    
-  component.computePotential = function(self, luccMEModel, rNumber, luIndex, event)
+  -- @usage self:computePotential(luccMEModel, luIndex)    
+  component.computePotential = function(self, luccMEModel, rNumber, luIndex)
     local cs = luccMEModel.cs 
     local luTypes = luccMEModel.landUseTypes
     local lu = luTypes[luIndex]
@@ -292,7 +287,7 @@ function SpatialLagLinearRoads(component)
           regressionX = regressionX + beta * cell[var]
         end
         
-        regresDrivers = regressionX
+        --regresDrivers = regressionX
         local regresY = 0
         local neighSum = 0
         local count = 0
@@ -330,7 +325,7 @@ function SpatialLagLinearRoads(component)
         local regressionLimit = luData.const+ regressionX + regresY
         
         if (luData.roadsModel ~= nil) then 
-          local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event) 
+          local newRegression = self:modifyRegression(luData.roadsModel, cell, regression) 
           if (newRegression ~= regression) then
                regression = newRegression
                regressionLimit = regression

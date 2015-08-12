@@ -78,7 +78,7 @@ function allocationClueLike(component)
       if (maxdiff <= maxAdjust) then
         allocation_ok = true
         if (luccMEModel.useLog) == true then
-          print("Demand allocated correctly in ", event:getTime(), "number of iterations", niter, "maximum error: ", maxdiff)
+          print("Demand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
         end
       else 
         nIter = nIter + 1
@@ -362,13 +362,13 @@ function allocationClueLike(component)
                  luccMEModel.potential.regressionData[j][i].newminReg, luccMEModel.potential.regressionData[j][i].newmaxReg)
         end
       
-      	local  diff = math.abs((areas[i] - currentDemand)) 
+      	local diff = math.abs((areas[i] - currentDemand)) 
       	
       	if (diff > max) then 
       		max =  diff
       	end
       	
-      	tot =  tot + math.abs(areas[i] - currentDemand )
+      	tot = tot + math.abs(areas[i] - currentDemand )
       end -- for i
     end  -- for j
     
@@ -393,6 +393,7 @@ function allocationClueLike(component)
       local incr = 0
       local totcov = 0
       local totchange = 0
+      local totstatic = 0
       local amin = cell[luTypes[1]] - cell.past[luTypes[1]]
       local amax = amin
       local max = math.abs(amax)
@@ -451,6 +452,7 @@ function allocationClueLike(component)
         if (decr == (NCOV - nostatic)) or (incr == (NCOV - nostatic)) then
           for i, luAllocData in pairs (self.allocationData) do
             local lu = luTypes[i]
+            local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
             
             local luStatic = luAllocData.static
             if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
@@ -559,7 +561,7 @@ function allocationClueLike(component)
   -- @arg luTypes A set of land use types.
   -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
   component.countAllocatedLandUseArea = function(self, cs, luTypes)
-  -- Calculates total area allocated by the regression equations for each land use/cover type
+    -- Calculates total area allocated by the regression equations for each land use/cover type
     local areas = {}
     local cellarea = cs.cellArea
    
@@ -589,9 +591,8 @@ function allocationClueLike(component)
     -- Calculates and prints the allocated by the regression equations for each land use/cover type
     local cs = luccMEModel.cs
     local luTypes = luccMEModel.landUseTypes
-    local areas, total = {}, 0
-    local idx = 1
-    
+    local areas = {}
+
     areas = self:countAllocatedLandUseArea(cs, luTypes)
     
     print("\nYear:"..event:getTime()," Step: "..nIter)  

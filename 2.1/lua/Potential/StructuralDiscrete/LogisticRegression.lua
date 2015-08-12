@@ -38,10 +38,6 @@ function LogisticRegression(component)
  		local landUseDrivers = self.landUseDrivers
   		
 		for k, cell in pairs (cs.cells) do
-  		if (cell.region == nil) then
-  			cell.region = 1
-  		end
-  
   		for luind, inputValues in pairs (regressionData[cell.region]) do
   			local lu = luTypes[luind]
   				
@@ -66,6 +62,7 @@ function LogisticRegression(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
+	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
     -- check regressionData
     if (self.regressionData == nil) then
@@ -81,11 +78,26 @@ function LogisticRegression(component)
       for i = 1, regionsNumber, 1 do
         local regressionNumber = #self.regressionData[i]
         local lutNumber = #luccMEModel.landUseTypes
+        local activeRegionNumber = 0
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
           error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber, 2)
         end
+        
+        -- check active regions
+        for k,cell in pairs (cs.cells) do
+          if (cell.region == nil) then
+            cell.region = 1
+          end         
+          if (cell.region == i) then
+            activeRegionNumber = i
+          end
+        end
+        if (activeRegionNumber == 0) then
+          error("Region ".. i.." is not set into database.")  
+        end
+                   
         
         for j = 1, regressionNumber, 1 do
           -- check constant variable

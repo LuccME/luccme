@@ -42,11 +42,11 @@ function NeighAttractionLogisticRegression(component)
 	--- Handles with the execution method of a NeighAttractionLogisticRegression component.
 	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg modelParameters A parameter model.
+	-- @arg luccMEModel A parameter model.
 	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, modelParameters)
-		local cs = modelParameters.cs
-		local luTypes = modelParameters.landUseTypes
+	component.execute = function(self, event, luccMEModel)
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 		local regressionData = self.regressionData
  		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
@@ -61,11 +61,7 @@ function NeighAttractionLogisticRegression(component)
   		
 		for k, cell in pairs (cs.cells) do
 			totalNeigh = cell:getNeighborhood():size()
-  		 	
-			if (cell.region == nil) then
-				cell.region = 1
-			end 	
-			
+  		
 			for luind, inputValues in pairs (regressionData[cell.region]) do
 				local lu = luTypes[luind]
 				
@@ -102,7 +98,8 @@ function NeighAttractionLogisticRegression(component)
 	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
-	component.verify = function(self, event, modelParameters)
+	component.verify = function(self, event, luccMEModel)
+	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
     -- check regressionData
     if (self.regressionData == nil) then
@@ -117,13 +114,27 @@ function NeighAttractionLogisticRegression(component)
     else
       for i = 1, regionsNumber, 1 do
         local regressionNumber = #self.regressionData[i]
-        local lutNumber = #modelParameters.landUseTypes
+        local lutNumber = #luccMEModel.landUseTypes
+        local activeRegionNumber = 0
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
           error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber, 2)
         end
         
+        -- check active regions
+        for k,cell in pairs (cs.cells) do
+          if (cell.region == nil) then
+            cell.region = 1
+          end         
+          if (cell.region == i) then
+            activeRegionNumber = i
+          end
+        end 
+        if (activeRegionNumber == 0) then
+          error("Region ".. i.." is not set into database.")  
+        end
+                
         for j = 1, regressionNumber, 1 do
           -- check constant variable
           if(self.regressionData[i][j].const == nil) then
@@ -147,7 +158,7 @@ function NeighAttractionLogisticRegression(component)
           
           -- check betas within database
           for k, lu in pairs (self.regressionData[i][j].betas) do
-            if (modelParameters.cs.cells[1][k] == nil) then
+            if (luccMEModel.cs.cells[1][k] == nil) then
               error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
             end
           end

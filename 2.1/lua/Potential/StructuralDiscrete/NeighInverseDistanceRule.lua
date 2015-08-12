@@ -35,11 +35,7 @@ function NeighInverseDistanceRule(component)
 		local totalNeigh = 0
   		
 		for k, cell in pairs (cs.cells) do
-		 if (cell.region == nil) then
-        cell.region = 1
-     end
-
-     for rNumber = 1, nRegions, 1 do
+      for rNumber = 1, nRegions, 1 do
   			totalNeigh = cell:getNeighborhood():size()
   		 	if (cell.region == rNumber) then  
     			for i, lu in pairs (luTypes) do 
@@ -87,6 +83,7 @@ function NeighInverseDistanceRule(component)
 	-- @arg event A representation of a time instant when the simulation engine must execute.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
+	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
     -- check potentialData
     if (self.potentialData == nil) then
@@ -102,10 +99,24 @@ function NeighInverseDistanceRule(component)
       for i = 1, regionsNumber, 1 do
         local regressionNumber = #self.potentialData[i]
         local lutNumber = #luccMEModel.landUseTypes
+        local activeRegionNumber = 0
         
         -- check the number of regressions
         if (regressionNumber ~= lutNumber) then
           error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber, 2)
+        end
+        
+        -- check active regions
+        for k,cell in pairs (cs.cells) do
+          if (cell.region == nil) then
+            cell.region = 1
+          end 
+          if (cell.region == i) then
+            activeRegionNumber = i
+          end
+        end
+        if (activeRegionNumber == 0) then
+          error("Region ".. i.." is not set into database.")  
         end
         
         for j = 1, regressionNumber, 1 do

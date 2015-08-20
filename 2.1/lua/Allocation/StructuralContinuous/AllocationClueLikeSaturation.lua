@@ -42,7 +42,7 @@
 -- allocationData = {{static = -1, minValue = 0.2, maxValue = 0.8, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03},-- VEGN
 --                 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- AG
 --                 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- P
---               {static = 1, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.0, changeLimiarVelue = 0.0, maxChangeAboveLimiar = 0.00}}  -- O
+--                 {static = 1, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.0, changeLimiarVelue = 0.0, maxChangeAboveLimiar = 0.00}}  -- O
 --}
 function allocationClueLikeSaturation (component)
   --- Handles with the rules of the component execution.
@@ -267,7 +267,7 @@ function allocationClueLikeSaturation (component)
     end
   end 	 	
 
-  --- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  --- Update the allocation parameters based on the saturation of the region
   -- @arg self A allocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
@@ -316,9 +316,8 @@ function allocationClueLikeSaturation (component)
                                                   end
                                                 end
                                   )
-                -- print(count)
                 if (count > 0) then
-                  perc_def_original = total_perc / count  -- v7 v8
+                  perc_def_original = total_perc / count
                 end
               else
                 perc_def_original = 1  

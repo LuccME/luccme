@@ -205,27 +205,24 @@ function AllocationClueSLike(component)
 
   --- Modify for each land use the value of the cell area for an iteration.
   -- @arg cs A multivalued set of Cells (Cell Space).
-  -- @arg diff XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  -- @arg diff The demand area difference
   -- @arg luTypes A set of land uses types.
-  -- @arg faciter XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  -- @arg iter XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  -- @arg cellarea XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  -- @arg maxdiffarea XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  -- @arg interationFactor Interation factor
+  -- @arg iter The modifier (value) that changes the potential of each cell according to the difference to demand
   -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, maxdiffarea)
-  component.adjustIteration = function(self,diff, luTypes, faciter, iter) 
+  component.adjustIteration = function(self, diff, luTypes, interationFactor, iter) 
     for luind, land in pairs (luTypes) do
-      iter[land] = iter[land] + (diff[land] * faciter)
+      iter[land] = iter[land] + (diff[land] * interationFactor)
     end
   end
 
   --- Handles with the allocation convergence based on maxdiffarea.
   -- @arg cs A multivalued set of Cells (Cell Space).
-  -- @arg diff XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  -- @arg diff The demand area difference
   -- @arg luTypes A set of land uses types.
-  -- @arg faciter XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  -- @arg maxdiffarea XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  -- @usage allocation_ok = self:convergency(cs, diff, luTypes, maxdiffarea)
-  component.convergency = function(self, diff, luTypes, maxdiffarea) --@todo apagar? cs
+  -- @arg maxdiffarea The limit between the demand and the allocated area
+  -- @usage allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
+  component.convergency = function(self, diff, luTypes, maxdiffarea)
     local tot_diff = 0.0
     local maxdiff = 0.0
     
@@ -235,7 +232,7 @@ function AllocationClueSLike(component)
       end
     end
     if (useLog == true) then
-      print("\n  Maximum error of allocation : ",maxdiff,"  km²   Maximum permited error(km²) : ",maxdiffarea)
+      print("\n  Maximum error of allocation (area): ", maxdiff, " Maximum permited error (area): ", maxdiffarea)
       print("---------------------------------------------------------------------------------------------------------------------")
     end
     if (maxdiff <= maxdiffarea) then
@@ -294,7 +291,7 @@ function AllocationClueSLike(component)
   --- Handles with the change of an use for a cell area.
   -- @arg cell A cell area.
   -- @arg cur_use The current use.
-  -- @arg higher_use The new use XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  -- @arg higher_use The new land use attributed to the cell
   -- @usage self:changeUse(cell, lu_past, lu_maior)
   component.changeUse = function(self, cell, cur_use, higher_use)
     cell[cur_use] = 0

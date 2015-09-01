@@ -23,7 +23,7 @@
 -- @arg component.allocationData.maxChangeAboveLimiar Maximum change in a given land use allowed in a cell in a time step after (saturation) threshold.
 -- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.execute Handles with the rules of the component execution.
--- @arg component.verify Handles with the verify method of a allocationClueLikeSaturation component.
+-- @arg component.verify Handles with the verify method of a AllocationClueLikeSaturation component.
 -- @arg component.updateAllocationParameters XXXXXXXXXXXXXXXXXXXXXXXXXX
 -- @arg component.initElasticity Handles with the elasticity initialize considering a single
 -- elasticity for each land use (all cells).
@@ -35,7 +35,7 @@
 -- equations for each land use/cover type.
 -- @arg component.printAllocatedArea Calculates and prints the allocated by the regression
 -- equations for each land use/cover type.
--- @usage allocation = allocationClueLikeSaturation { maxDifference = 50, maxIteration = 3000,
+-- @usage allocation = AllocationClueLikeSaturation { maxDifference = 50, maxIteration = 3000,
 -- initialElasticity = 0.1, minElasticity = 0.001, maxElasticity = 1.5,
 -- complementarLU = "VegN_2000",
 -- saturationIndicator = "saturationLimiar", attrProtection = "protPublicForests_ALL",
@@ -44,9 +44,9 @@
 --                 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- P
 --                 {static = 1, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.0, changeLimiarVelue = 0.0, maxChangeAboveLimiar = 0.00}}  -- O
 --}
-function allocationClueLikeSaturation (component)
+function AllocationClueLikeSaturation (component)
   --- Handles with the rules of the component execution.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self.allocation:execute(event, model)  	 
@@ -129,7 +129,7 @@ function allocationClueLikeSaturation (component)
   end
 		
 --- Handles with the parameters verification.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self.allocation:verify(event, self)
@@ -268,7 +268,7 @@ function allocationClueLikeSaturation (component)
   end 	 	
 
   --- Update the allocation parameters based on the saturation of the region
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self:updateAllocationParameters(event, luccMEModel)
@@ -330,7 +330,7 @@ function allocationClueLikeSaturation (component)
 	
   --- Handles with the elasticity initialize considering a single elasticity for each land use (all cells).
   -- Similar to the coarse scale old clue.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg value The elasticity value.
   -- @usage self:initElasticity(luccMEModel, self.initialElasticity)
@@ -345,7 +345,7 @@ function allocationClueLikeSaturation (component)
   end
 
 --- Compute the allocation change.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self:computeChange(luccMEModel)
@@ -425,7 +425,7 @@ function allocationClueLikeSaturation (component)
   end
 
 --- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
@@ -493,7 +493,7 @@ function allocationClueLikeSaturation (component)
   end
 		
 	--- Corrects total land use/cover types to 100 percent.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self:correctCellChange(luccMEModel)
   component.correctCellChange = function(self, luccMEModel)
@@ -666,7 +666,7 @@ function allocationClueLikeSaturation (component)
   end -- correct100
 		
 --- Calculates total area allocated by the regression equations for each land use/cover type.
-    -- @arg self A allocationClueLikeSaturation component.
+    -- @arg self A AllocationClueLikeSaturation component.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg luTypes A set of land use types.
   -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
@@ -692,7 +692,7 @@ function allocationClueLikeSaturation (component)
   end
 
   --- Calculates and prints the allocated by the regression equations for each land use/cover type.
-  -- @arg self A allocationClueLikeSaturation component.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg nIter An iterator number.

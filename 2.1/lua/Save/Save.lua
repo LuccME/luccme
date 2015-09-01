@@ -109,4 +109,10 @@ function saveSingleTheme(luccmemodel)
 	luccmemodel.cs:save(luccmemodel.endTime, luccmemodel.save.outputTheme.."inc_area_", attrs_inc)
 	luccmemodel.cs:save(luccmemodel.endTime, luccmemodel.save.outputTheme.."ext_area_", attrs_ext)
 	print("\nEnd of Simulation")
+	local answer
+  repeat
+     io.write("\nPress any key to exit...")
+     io.flush()
+     answer = io.read()
+  until answer ~= "`"
 end

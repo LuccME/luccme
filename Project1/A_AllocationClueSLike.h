@@ -15,6 +15,10 @@ namespace LuccME {
 	/// </summary>
 	public ref class A_AllocationClueSLike : public System::Windows::Forms::Form
 	{
+	private:
+		String^ gSCells = "";
+		String^ gSCellsTitle = "";
+
 	public:
 		cReturnAllocation^ lReturn;
 		A_AllocationClueSLike(cReturnAllocation^ pAllocation)

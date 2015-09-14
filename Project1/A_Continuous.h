@@ -16,6 +16,7 @@ namespace LuccME {
 	public ref class A_Continuous : public System::Windows::Forms::Form
 	{
 	public:
+		bool intialize = true;
 		cReturnAllocation^ lReturn;
 		A_Continuous(cReturnAllocation^ pAllocation)
 		{
@@ -61,6 +62,8 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lSaturationIndicator;
 	private: System::Windows::Forms::TextBox^  tAttrProtection;
 	private: System::Windows::Forms::Label^  lAttrProtection;
+	private: System::Windows::Forms::Label^  lLegend;
+
 
 	private:
 		/// <summary>
@@ -96,6 +99,7 @@ namespace LuccME {
 			this->lSaturationIndicator = (gcnew System::Windows::Forms::Label());
 			this->tAttrProtection = (gcnew System::Windows::Forms::TextBox());
 			this->lAttrProtection = (gcnew System::Windows::Forms::Label());
+			this->lLegend = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAllocationData))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
@@ -194,6 +198,7 @@ namespace LuccME {
 			this->dgAllocationData->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgAllocationData->Size = System::Drawing::Size(882, 129);
 			this->dgAllocationData->TabIndex = 10;
+			this->dgAllocationData->CellEnter += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &A_Continuous::dgAllocationData_CellEnter);
 			this->dgAllocationData->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &A_Continuous::dgAllocationData_KeyDown);
 			// 
 			// tMaxDifference
@@ -335,11 +340,21 @@ namespace LuccME {
 			this->lAttrProtection->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lAttrProtection->Visible = false;
 			// 
+			// lLegend
+			// 
+			this->lLegend->AutoSize = true;
+			this->lLegend->Location = System::Drawing::Point(21, 557);
+			this->lLegend->Name = L"lLegend";
+			this->lLegend->Size = System::Drawing::Size(227, 13);
+			this->lLegend->TabIndex = 131;
+			this->lLegend->Text = L"* -1 - Unidirecional, 0 - Bidirecional, 1 - Estático";
+			// 
 			// A_Continuous
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(923, 591);
+			this->Controls->Add(this->lLegend);
 			this->Controls->Add(this->tAttrProtection);
 			this->Controls->Add(this->lAttrProtection);
 			this->Controls->Add(this->tSaturationIndicator);
@@ -375,5 +390,6 @@ namespace LuccME {
 	private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(System::Windows::Forms::DataGridView^ dgView);
 	private: System::Void dgAllocationData_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
+	private: System::Void dgAllocationData_CellEnter(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e);
 };
 }

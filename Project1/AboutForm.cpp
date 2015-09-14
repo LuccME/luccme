@@ -18,3 +18,10 @@ System::Void LuccME::AboutForm::AboutForm_Load(System::Object ^ sender, System::
 		lCopyright->Text = "Copyright © 2015. Todos os direitos reservados.";
 	}
 }
+
+System::Void LuccME::AboutForm::linkLabel1_LinkClicked(System::Object ^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs ^ e)
+{
+
+	linkLabel1->LinkVisited = true;
+	System::Diagnostics::Process::Start("http://luccme.ccst.inpe.br/");
+}

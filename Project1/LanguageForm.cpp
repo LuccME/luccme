@@ -4,10 +4,12 @@
 System::Void LuccME::LanguageForm::LanguageForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lLanguage == "en") {
+		this->Text = "Language Selection";
 		bSelectLanguage->Text = "Select";
 		rLEn->Checked = true;
 	}
 	else {
+		this->Text = "Seleção de Idioma";
 		bSelectLanguage->Text = "Selecionar";
 		rLBr->Checked = true;
 	}

@@ -172,6 +172,7 @@ namespace LuccME {
 			this->linkLabel1->TabIndex = 22;
 			this->linkLabel1->TabStop = true;
 			this->linkLabel1->Text = L"http://luccme.ccst.inpe.br/";
+			this->linkLabel1->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &AboutForm::linkLabel1_LinkClicked);
 			// 
 			// AboutForm
 			// 
@@ -201,5 +202,6 @@ namespace LuccME {
 		}
 #pragma endregion
 	private: System::Void AboutForm_Load(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void linkLabel1_LinkClicked(System::Object^  sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^  e);
 };
 }

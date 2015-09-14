@@ -14,9 +14,11 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 {
 	if (lReturn->Language == "en") {
 		bSalvar->Text = "Save";
+		lLegend->Text = "* -1 - Unidirectional, 0 - Bidirectional, 1 - Static";
 	}
 	else {
 		bSalvar->Text = "Salvar";
+		lLegend->Text = "* -1 - Unidirecional, 0 - Bidirecional, 1 - Estático";
 	}
 
 	if (lReturn->Return != "") {
@@ -171,7 +173,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 	} else{
 		dgAllocationData->ColumnCount = 8;
 		dgAllocationData->Columns[0]->Name = "LandUseType";
-		dgAllocationData->Columns[1]->Name = "static";
+		dgAllocationData->Columns[1]->Name = "static*";
 		dgAllocationData->Columns[2]->Name = "minValue";
 		dgAllocationData->Columns[3]->Name = "maxValue";
 		dgAllocationData->Columns[4]->Name = "minChange";
@@ -179,6 +181,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		dgAllocationData->Columns[6]->Name = "changeLimiarValue";
 		dgAllocationData->Columns[7]->Name = "maxChangeAboveLimiar";
 
+		int countRowDef = 0;
 		String^ tempLUT = "";
 		for (int i = 0; i < lReturn->LUT->Length; i++) {
 			if (lReturn->LUT[i] != ',') {
@@ -188,14 +191,31 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 			}
 			else {
 				dgAllocationData->Rows->Add(tempLUT);
+				dgAllocationData->Rows[countRowDef]->Cells[1]->Value = "0";
+				dgAllocationData->Rows[countRowDef]->Cells[2]->Value = "0";
+				dgAllocationData->Rows[countRowDef]->Cells[3]->Value = "1";
+				dgAllocationData->Rows[countRowDef]->Cells[4]->Value = "0";
+				dgAllocationData->Rows[countRowDef]->Cells[5]->Value = "1";
+				dgAllocationData->Rows[countRowDef]->Cells[6]->Value = "1";
+				dgAllocationData->Rows[countRowDef]->Cells[7]->Value = "0";
+				countRowDef++;
 				tempLUT = "";
 			}
 		}
 		if (tempLUT != "") {
 			dgAllocationData->Rows->Add(tempLUT);
+			dgAllocationData->Rows[countRowDef]->Cells[1]->Value = "0";
+			dgAllocationData->Rows[countRowDef]->Cells[2]->Value = "0";
+			dgAllocationData->Rows[countRowDef]->Cells[3]->Value = "1";
+			dgAllocationData->Rows[countRowDef]->Cells[4]->Value = "0";
+			dgAllocationData->Rows[countRowDef]->Cells[5]->Value = "1";
+			dgAllocationData->Rows[countRowDef]->Cells[6]->Value = "1";
+			dgAllocationData->Rows[countRowDef]->Cells[7]->Value = "0";
 		}
 
-		dgAllocationData->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+		for (int i = 0; i < 8; i++) {
+			dgAllocationData->Columns[i]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+		}
 		dgAllocationData->Columns[0]->ReadOnly = true;
 	}
 	if (lReturn->Component == 4) {
@@ -210,6 +230,8 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		lAttrProtection->Visible = false;
 		tAttrProtection->Visible = false;
 	}
+
+	intialize = false;
 }
 
 System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -289,20 +311,32 @@ System::Void LuccME::A_Continuous::dgAllocationData_KeyDown(System::Object ^ sen
 {
 	switch (e->KeyCode)
 	{
-	case Keys::Delete:
-		if (dgAllocationData->SelectedCells->Count != 0)
-		{
-			DataGridViewCell^ startCell = GetStartCell(dgAllocationData);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgAllocationData->RowCount; i++) {
-				for (int j = column; j < dgAllocationData->ColumnCount; j++) {
-					if (dgAllocationData->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgAllocationData->Rows[i]->Cells[j]->Value = "";
+		case Keys::Delete:
+			if (dgAllocationData->SelectedCells->Count != 0)
+			{
+				DataGridViewCell^ startCell = GetStartCell(dgAllocationData);
+				int row = startCell->RowIndex;
+				int column = startCell->ColumnIndex;
+				for (int i = row; i < dgAllocationData->RowCount; i++) {
+					for (int j = column; j < dgAllocationData->ColumnCount; j++) {
+						if (dgAllocationData->Rows[i]->Cells[j]->Selected == true && j != 0) {
+							dgAllocationData->Rows[i]->Cells[j]->Value = "";
+						}
 					}
 				}
 			}
+			break;
+	}
+}
+
+System::Void LuccME::A_Continuous::dgAllocationData_CellEnter(System::Object ^ sender, System::Windows::Forms::DataGridViewCellEventArgs ^ e)
+{
+	if (!intialize) {
+		DataGridViewCell^ startCell = GetStartCell(dgAllocationData);
+		int row = startCell->RowIndex;
+		int column = startCell->ColumnIndex;
+		if (column > 0) {
+			dgAllocationData->Rows[row]->Cells[column]->Style->ForeColor = System::Drawing::Color::Black;
 		}
-		break;
 	}
 }

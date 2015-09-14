@@ -15,10 +15,14 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 	if (lReturn->Language == "en") {
 		this->Text = "Allocation - Allocation ClueS Like";
 		bSalvar->Text = "Save";
+		gSCells = "All the cells must be fullfilled.";
+		gSCellsTitle = "Error - Empty Cells";
 	}
 	else {
 		this->Text = "Alocação - Allocation ClueS Like";
 		bSalvar->Text = "Salvar";
+		gSCells = "Todas as células devem ser preenchidas.";
+		gSCellsTitle = "Erro - Células Vazias";
 	}
 
 	if (lReturn->Return != "") {
@@ -136,6 +140,8 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 
 System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	bool check = true;
+
 	this->lReturn->Return = "";
 
 	this->lReturn->Return += tMaxIteration->Text;
@@ -146,10 +152,20 @@ System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sende
 	this->lReturn->Return += ";";
 
 	for (int i = 0; i < dgTransitionMatrix->RowCount; i++) {
+		if (!check) {
+			break;
+		}
 		for (int j = 0; j < dgTransitionMatrix->ColumnCount; j++) {
-			this->lReturn->Return += dgTransitionMatrix->Rows[i]->Cells[j]->Value;
-			if (j + 1 < dgTransitionMatrix->ColumnCount) {
-				this->lReturn->Return += ",";
+			if (dgTransitionMatrix->Rows[i]->Cells[j]->Value == nullptr) {
+				MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+				check = false;
+				break;
+			}
+			else {
+				this->lReturn->Return += dgTransitionMatrix->Rows[i]->Cells[j]->Value;
+				if (j + 1 < dgTransitionMatrix->ColumnCount) {
+					this->lReturn->Return += ",";
+				}
 			}
 		}
 		if (i + 1 < dgTransitionMatrix->RowCount) {
@@ -158,8 +174,13 @@ System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sende
 			}
 		}
 	}
-	
-	this->Close();
+
+	if (!check) {
+		this->lReturn->Return = "";
+	}
+	else {
+		this->Close();
+	}
 }
 
 System::Void LuccME::A_AllocationClueSLike::dgTransitionMatrix_CellValidating(System::Object ^ sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs ^ e)

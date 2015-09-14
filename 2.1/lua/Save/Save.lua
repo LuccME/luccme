@@ -111,7 +111,7 @@ function saveSingleTheme(luccmemodel)
 	print("\nEnd of Simulation")
 	local answer
   repeat
-     io.write("\nPress any key to exit...")
+     io.write("\nPress enter key to exit...")
      io.flush()
      answer = io.read()
   until answer ~= "`"

@@ -218,3 +218,14 @@ function LuccMEModel(model)
 
 	return model
 end
+
+error = function(message, code)
+          print(message)
+          local answer
+          repeat
+             io.write("\nPress enter key to exit...")
+             io.flush()
+             answer = io.read()
+          until answer ~= "`"
+          os.exit()
+        end

@@ -18,6 +18,8 @@ System::Void LuccME::P_Continuous::P_Continuous_Shown(System::Object ^ sender, S
 		bSalvar->Text = "Save";
 		gSLUT = "Land Use Types";
 		gSValues = "Values";
+		gSEmptyComponent = "The data of the component must be fulfilled.";
+		gSEmptyComponentTitle = "Component data missing";
 	}
 	else {
 		bAddBetas->Text = "Adicionar";
@@ -25,6 +27,8 @@ System::Void LuccME::P_Continuous::P_Continuous_Shown(System::Object ^ sender, S
 		bSalvar->Text = "Salvar";
 		gSLUT = "Tipos de Uso da Terra";
 		gSValues = "Valores";
+		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
+		gSEmptyComponentTitle = "Faltando preencher os dados";
 	}
 
 	this->lvLUT->View = View::Details;
@@ -321,13 +325,29 @@ System::Void LuccME::P_Continuous::bAddBetas_Click(System::Object ^ sender, Syst
 
 System::Void LuccME::P_Continuous::bSalvar_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	bool check = true;
+
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		this->lReturn->Return += lTempBetas[i];
-		if (i + 1 < lvLUT->Items->Count) {
-			this->lReturn->Return += "#";
+		if (lvLUT->Items[i]->SubItems->Count <= 1) {
+			check = false;
+			break;
 		}
 	}
-	this->Close();
+
+	lReturn->Return = "";
+
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			this->lReturn->Return += lTempBetas[i];
+			if (i + 1 < lvLUT->Items->Count) {
+				this->lReturn->Return += "#";
+			}
+		}
+		this->Close();
+	}
+	else {
+		MessageBox::Show(gSEmptyComponent, gSEmptyComponentTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
 }
 
 System::Windows::Forms::DataGridViewCell ^ LuccME::P_Continuous::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)

@@ -18,6 +18,8 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		bSalvar->Text = "Save";
 		gSLUT = "Land Use Types";
 		gSValues = "Values";
+		gSEmptyComponent = "The data of the component must be fulfilled.";
+		gSEmptyComponentTitle = "Component data missing";
 	}
 	else {
 		bAddBetas->Text = "Adicionar";
@@ -25,11 +27,14 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		bSalvar->Text = "Salvar";
 		gSLUT = "Tipos de Uso da Terra";
 		gSValues = "Valores";
+		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
+		gSEmptyComponentTitle = "Faltando preencher os dados";
 	}
 
 	this->lvLUT->View = View::Details;
 	this->lvLUT->GridLines = true;
 	this->lvLUT->Columns->Add(gSLUT, lvLUT->Width - 52, HorizontalAlignment::Left);
+
 	if (this->lReturn->LUT->Length > 0) {
 		String^ aux = "";
 		for (int i = 0; i < this->lReturn->LUT->Length; i++) {
@@ -305,14 +310,29 @@ System::Void LuccME::P_Discrete::bAddBetas_Click(System::Object ^ sender, System
 
 System::Void LuccME::P_Discrete::bSalvar_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	lReturn->Return = "";
+	bool check = true;
+	
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		this->lReturn->Return += lTempBetas[i];
-		if (i + 1 < lvLUT->Items->Count) {
-			this->lReturn->Return += "#";
+		if (lvLUT->Items[i]->SubItems->Count <= 1) {
+			check = false;
+			break;
 		}
 	}
-	this->Close();
+	
+	lReturn->Return = "";
+
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			this->lReturn->Return += lTempBetas[i];
+			if (i + 1 < lvLUT->Items->Count) {
+				this->lReturn->Return += "#";
+			}
+		}
+		this->Close();
+	}
+	else {
+		MessageBox::Show(gSEmptyComponent, gSEmptyComponentTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
 }
 
 System::Windows::Forms::DataGridViewCell ^ LuccME::P_Discrete::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)

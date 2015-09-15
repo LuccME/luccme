@@ -19,6 +19,8 @@ namespace LuccME {
 		String^ gSLUT = "";
 		String^ gSValues = "";
 		String^ gSAttributes = "";
+		String^ gSEmptyComponent = "";
+		String^ gSEmptyComponentTitle = "";
 
 	public:
 		cReturnPotential^ lReturn;

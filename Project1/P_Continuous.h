@@ -18,6 +18,8 @@ namespace LuccME {
 	private:
 		String^ gSLUT = "";
 		String^ gSValues = "";
+		String^ gSEmptyComponent = "";
+		String^ gSEmptyComponentTitle = "";
 
 	public:
 		cReturnPotential^ lReturn;

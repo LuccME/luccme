@@ -17,6 +17,8 @@ namespace LuccME {
 	private:
 		String^ gSLUT = "";
 		String^ gSValues = "";
+		String^ gSEmptyComponent = "";
+		String^ gSEmptyComponentTitle = "";
 
 	private: System::Windows::Forms::TextBox^  tLUT;
 	private: System::Windows::Forms::Button^  bCancel;

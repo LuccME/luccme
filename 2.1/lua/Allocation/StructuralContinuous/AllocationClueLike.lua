@@ -60,7 +60,7 @@ function AllocationClueLike(component)
     local nIter = 0
     local allocation_ok = false
     local maxAdjust = self.maxDifference 
-    local maxdiff = self.maxDifference * 1000 --@todo verificar
+    local maxdiff = self.maxDifference * 1000 -- Used to have a large number of iterations
     local flagFlex = false
 
     -- Loop until maxdiff is achieved

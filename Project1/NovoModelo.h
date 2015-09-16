@@ -791,9 +791,9 @@ namespace LuccME {
 				static_cast<System::Byte>(0)));
 			this->lLUND->Location = System::Drawing::Point(29, 220);
 			this->lLUND->Name = L"lLUND";
-			this->lLUND->Size = System::Drawing::Size(267, 23);
+			this->lLUND->Size = System::Drawing::Size(231, 23);
 			this->lLUND->TabIndex = 78;
-			this->lLUND->Text = L"Tipos de Uso da Terra sem Dados";
+			this->lLUND->Text = L"Tipos de Uso com \"No Data\"";
 			this->lLUND->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
 			// lLUTShow

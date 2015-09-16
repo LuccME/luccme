@@ -197,7 +197,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lLUTLarge->Text = "Tipos de Uso da Terra";
 		lLUTMedium->Text = "Tipos de Uso da Terra";
 		bLUTManager->Text = "Gerenciar";
-		lLUND->Text = "Tipos de Uso da Terra sem Dados";
+		lLUND->Text = "Tipo de Uso com \"No Data\"";
 		bLUNDManager->Text = "Gerenciar";
 		//tabPage4
 		lComponentes->Text = "Selecione os Componentes";
@@ -2132,20 +2132,17 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t" + tbAllocation->Lines[6]->ToString()->Replace("= ", "= \"") + "\",");
 					sw->WriteLine("\t" + tbAllocation->Lines[7] + " =");
 					sw->WriteLine("\t{");
-					sw->WriteLine("\t\t--Region 1");
-					sw->WriteLine("\t\t{");
 					for (int i = 8; i < tbAllocation->Lines->Length - 1; i++) {
 						if (tbAllocation->Lines[i] != "") {
 							if (i + 1 < tbAllocation->Lines->Length) {
-								sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i] + "},\t-- " + tempLUTs[i - 8]);
+								sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "},\t-- " + tempLUTs[i - 8]);
 							}
 							else {
-								sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i] + "}\t-- " + tempLUTs[i - 8]);
+								sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "}\t-- " + tempLUTs[i - 8]);
 								break;
 							}
 						}
 					}
-					sw->WriteLine("\t\t}");
 					sw->WriteLine("\t}");
 					sw->WriteLine("}\n");
 					break;
@@ -2163,20 +2160,17 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t" + tbAllocation->Lines[8]->ToString()->Replace("= ", "= \"") + "\",");
 					sw->WriteLine("\t" + tbAllocation->Lines[9] + " =");
 					sw->WriteLine("\t{");
-					sw->WriteLine("\t\t--Region 1");
-					sw->WriteLine("\t\t{");
 					for (int i = 10; i < tbAllocation->Lines->Length; i++) {
 						if (tbAllocation->Lines[i] != "") {
 							if (i + 1 < tbAllocation->Lines->Length) {
-								sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i] + "},\t-- " + tempLUTs[i - 10]);
+								sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "},\t-- " + tempLUTs[i - 10]);
 							}
 							else {
-								sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i] + "}\t-- " + tempLUTs[i - 10]);
+								sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "}\t-- " + tempLUTs[i - 10]);
 								break;
 							}
 						}
 					}
-					sw->WriteLine("\t\t}");
 					sw->WriteLine("\t}");
 					sw->WriteLine("}\n");
 					break;
@@ -2224,7 +2218,7 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 	}
 	
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	cmd->StartInfo->FileName = "terrame";
+	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
 	cmd->StartInfo->Arguments = arguments;
 	cmd->Start();
 	cmd->WaitForExit();

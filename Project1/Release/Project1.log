@@ -1,10 +1,10 @@
-﻿Build started 15/09/2015 16:58:07.
-     1>Project "D:\workspace\Project1\Project1\Project1.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 16/09/2015 11:25:36.
+     1>Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" on node 2 (Rebuild target(s)).
      1>PreBuildEvent:
-         copy D:\workspace\Project1\Project1\\*.chm D:\workspace\Project1\Release\\
+         copy D:\_SVN\LuccME\branches\Project1\Project1\\*.chm D:\_SVN\LuccME\branches\Project1\Release\\
          :VCEnd
-         D:\workspace\Project1\Project1\\ajuda.chm
-         D:\workspace\Project1\Project1\\help.chm
+         D:\_SVN\LuccME\branches\Project1\Project1\\ajuda.chm
+         D:\_SVN\LuccME\branches\Project1\Project1\\help.chm
                  2 arquivo(s) copiado(s).
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\\" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\\" /Zi /clr /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _UNICODE /D UNICODE /EHa /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib AboutForm.cpp AllocContinuousForm.cpp AllocDiscreteForm.cpp A_ABSO.cpp A_AllocationClueLike.cpp A_AllocationClueSLike.cpp A_Continuous.cpp D_CIThreeDM.cpp D_CITwoDM.cpp D_PCVINPEForm.cpp LanguageForm.cpp LUTForm.cpp MyForm.cpp MySQLForm.cpp NovoModelo.cpp PotContinuousForm.cpp PotDiscreteForm.cpp P_Continuous.cpp P_Discrete.cpp P_SpatialLagLinearRoads.cpp Source.cpp stdafx.cpp
@@ -36,7 +36,7 @@
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /clr /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _UNICODE /D UNICODE /EHa /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fp"Release\LuccME.pch" /Fa"Release\\" /Fo"Release\\" /Fd"Release\vc140.pdb" /analyze- /errorReport:prompt "C:\Users\Diego Melo\AppData\Local\Temp\.NETFramework,Version=v4.5.2.AssemblyAttributes.cpp"
          .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\workspace\Project1\Release\LuccME.exe" /INCREMENTAL:NO /NOLOGO /ASSEMBLYRESOURCE:Release\LuccME.AboutForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.A_ABSO.resources /ASSEMBLYRESOURCE:Release\LuccME.A_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.A_AllocationClueSLike.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CIThreeDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CITwoDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_PCVINPEForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LanguageForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LUTForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MyForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MySQLForm.resources /ASSEMBLYRESOURCE:Release\LuccME.NovoModelo.resources /ASSEMBLYRESOURCE:Release\LuccME.PotContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.PotDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Discrete.resources /ASSEMBLYRESOURCE:Release\LuccME.P_SpatialLagLinearRoads.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\workspace\Project1\Release\LuccME.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\AboutForm.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_SVN\LuccME\branches\Project1\Release\LuccME.exe" /INCREMENTAL:NO /NOLOGO /ASSEMBLYRESOURCE:Release\LuccME.AboutForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.A_ABSO.resources /ASSEMBLYRESOURCE:Release\LuccME.A_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.A_AllocationClueSLike.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CIThreeDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CITwoDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_PCVINPEForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LanguageForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LUTForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MyForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MySQLForm.resources /ASSEMBLYRESOURCE:Release\LuccME.NovoModelo.resources /ASSEMBLYRESOURCE:Release\LuccME.PotContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.PotDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Discrete.resources /ASSEMBLYRESOURCE:Release\LuccME.P_SpatialLagLinearRoads.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\_SVN\LuccME\branches\Project1\Release\LuccME.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\AboutForm.obj
          Release\AllocContinuousForm.obj
          Release\AllocDiscreteForm.obj
          Release\A_ABSO.obj
@@ -59,9 +59,9 @@
          Release\Source.obj
          Release\stdafx.obj
          "Release\.NETFramework,Version=v4.5.2.AssemblyAttributes.obj"
-         Project1.vcxproj -> D:\workspace\Project1\Release\LuccME.exe
-     1>Done Building Project "D:\workspace\Project1\Project1\Project1.vcxproj" (Rebuild target(s)).
+         Project1.vcxproj -> D:\_SVN\LuccME\branches\Project1\Release\LuccME.exe
+     1>Done Building Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:10.64
+Time Elapsed 00:00:09.52

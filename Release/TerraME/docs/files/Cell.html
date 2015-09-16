@@ -1,0 +1,1203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"><img src='../img/terrame.png'/><br/></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>TerraME</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- Types list -->
+
+<h1>Types</h1>
+<ul>
+
+		<li>
+			<a href="../files/Agent.html">Agent</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Automaton.html">Automaton</a>
+		</li>
+		
+	
+
+		<li><strong>Cell</strong></li>
+		
+	
+
+		<li>
+			<a href="../files/CellularSpace.html">CellularSpace</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Coord.html">Coord</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Environment.html">Environment</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Event.html">Event</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Flow.html">Flow</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Group.html">Group</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Jump.html">Jump</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Legend.html">Legend</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Neighborhood.html">Neighborhood</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Observer.html">Observer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Random.html">Random</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/SocialNetwork.html">SocialNetwork</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Society.html">Society</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/State.html">State</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Timer.html">Timer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Trajectory.html">Trajectory</a>
+		</li>
+		
+	
+
+
+</ul>
+
+
+<!-- Files list -->
+
+<h1>Files</h1>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<li>
+			<a href="../files/Utils.html">Utils</a>
+		</li>
+		
+	
+
+</ul>
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1><code>Cell
+
+
+
+</code></h1>
+
+
+<span class="description"></span>
+
+
+
+
+
+
+
+
+
+<span class="description">A spatial location with homogeneous internal content. It is a table that may contain nearness relations as well as persistent and runtime attributes. Persistent attributes are loaded from and saved to databases, while runtime attributes exist only along the simulation.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>x</strong>: A positive integer number starting in 0 (default).
+    </li> 
+    
+  
+    <li>
+	  <strong>y</strong>: A positive integer number starting in 0 (default).
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+<!-- Outputs of the function -->
+<p>Attributes of Cell that can be used as <b>read-only</b> by the modeler:</p>
+<ul>
+<span class="output">
+	
+	<li>
+	  <strong>agents</strong>: a vector of <a href=../files/Agent.html>Agents</a> necessary to use forEachAgent(cell) (only when its <a href=../files/CellularSpace.html>CellularSpace</a> belongs to an <a href=../files/Environment.html>Environment</a>).
+	</li>
+	
+	<li>
+	  <strong>parent</strong>: the CellularSpace it belongs.
+	</li>
+	
+	<li>
+	  <strong>past</strong>: a copy of the attributes at the time of the last synchronization.
+	</li>
+	
+	<li>
+	  <strong>placement</strong>: a <a href=../files/Group.html>Group</a> representing the default placement of the Cell (only when its CellularSpace belongs to an Environment.)
+	</li>
+	
+</span>
+</ul>
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span> = <span class="function">Cell</span> {
+    <span class="id">cover</span> = <span class="string">"forest"</span>,
+    <span class="id">soilWater</span> = <span class="number">0</span>
+}</code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/Utils.html#forEachNeighborhood">Utils:forEachNeighborhood	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+
+
+<h2 class="function_list">Functions</h2>
+<table class="function_list">
+
+	  <tr>
+		<td class="name" nowrap><a href="#addNeighborhood">addNeighborhood</a>&nbsp;
+	  <td class="summary">Add a new Neighborhood to the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#first">first</a>&nbsp;
+	  <td class="summary">Start a neighborhood iterator, pointing to the first element of the Neighborhood list.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getAgent">getAgent</a>&nbsp;
+	  <td class="summary">Retrieve an Agent that belongs to the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getAgents">getAgents</a>&nbsp;
+	  <td class="summary">Retrieve the Agents that belong to the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getCurrentNeighborhood">getCurrentNeighborhood</a>&nbsp;
+	  <td class="summary">Retrieve the Neighborhood currently pointed by the Neighborhood iterator, or nil otherwise.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getId">getId</a>&nbsp;
+	  <td class="summary">Retrieve a string with the unique identifier of the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getNeighborhood">getNeighborhood</a>&nbsp;
+	  <td class="summary">Retrieve a Neighborhood of the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getPast">getPast</a>&nbsp;
+	  <td class="summary">Retrieve a table with the attributes of the Cell in the last time synchronize() was called.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getStateName">getStateName</a>&nbsp;
+	  <td class="summary">Retrieve the name of the current state of a given Agent.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getX">getX</a>&nbsp;
+	  <td class="summary">Retrieve a positive integer number representing the 'x'  coord of the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getY">getY</a>&nbsp;
+	  <td class="summary">Retrieve a positive integer number representing the 'y' coord of the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#isEmpty">isEmpty</a>&nbsp;
+	  <td class="summary">Return whether the cell is empty according to a given placement.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#isFirst">isFirst</a>&nbsp;
+	  <td class="summary">Retrieve whether the neighborhood iterator is pointing to the first Neighborhood of the list.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#isLast">isLast</a>&nbsp;
+	  <td class="summary">Return whether the Neighborhood iterator has already passed by the last Neighborhood of the list, or whether the iterator does not exist.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#last">last</a>&nbsp;
+	  <td class="summary">Set the Neighborhood iterator to the last element of the Neighborhood list.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#next">next</a>&nbsp;
+	  <td class="summary">Update the Neighborhood iterator to the next Neighborhood of the list.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#notify">notify</a>&nbsp;
+	  <td class="summary">Notify every Observer connected to the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#sample">sample</a>&nbsp;
+	  <td class="summary">Returns a random Cell from a Neighborhood of this Cell </td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#setId">setId</a>&nbsp;
+	  <td class="summary">Update the 'id' of the cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#size">size</a>&nbsp;
+	  <td class="summary">Retrieve the number of Neighborhoods of the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#synchronize">synchronize</a>&nbsp;
+	  <td class="summary">Synchronizes the Cell.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="##">#</a>&nbsp;
+	  <td class="summary">Retrieve the number of Neighborhoods of the Cell.</td>
+    </tr>
+
+
+</table>
+
+
+
+
+
+<!--<br/>
+<br/>-->
+
+
+
+
+	
+<dl class="function">
+
+
+
+<dt><h2><a name="addNeighborhood">
+</a><strong>addNeighborhood</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Add a new <a href=../files/Neighborhood.html>Neighborhood</a> to the Cell. It returns a boolean value indicating whether the Neighborhood was successfully added.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A Neighborhood.
+    </li> 
+    
+  
+    <li>
+	  <strong>2nd</strong>: Neighborhood's name. Default is "neigh1".
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">addNeighborhood</span>(<span class="id">n</span>)
+<span class="id">cell</span>:<span class="function">addNeighborhood</span>(<span class="id">n</span>, <span class="string">"east"</span>)</code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/Neighborhood.html">Neighborhood	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="first">
+</a><strong>first</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Start a neighborhood iterator, pointing to the first element of the <a href=../files/Neighborhood.html>Neighborhood</a> list.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">first</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getAgent">
+</a><strong>getAgent</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve an <a href=../files/Agent.html>Agent</a> that belongs to the Cell. It assumes that there is at least one Agent per Cell.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: a string. Default is 'placement'.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">agent</span> = <span class="id">cell</span>:<span class="function">getAgent</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getAgents">
+</a><strong>getAgents</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve the <a href=../files/Agent.html>Agents</a> that belong to the Cell. Agents are indexed by numeric positions.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A string. Default is 'placement'.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">agent</span> = <span class="id">cell</span>:<span class="function">getAgents</span>()[<span class="number">1</span>]</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getCurrentNeighborhood">
+</a><strong>getCurrentNeighborhood</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve the <a href=../files/Neighborhood.html>Neighborhood</a> currently pointed by the Neighborhood iterator, or nil otherwise.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">getCurrentNeighborhood</span>()</code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/Neighborhood.html">Neighborhood	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getId">
+</a><strong>getId</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a string with the unique identifier of the Cell.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">id</span> = <span class="id">cell</span>:<span class="function">getId</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getNeighborhood">
+</a><strong>getNeighborhood</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a <a href=../files/Neighborhood.html>Neighborhood</a> of the Cell.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A string with the neighborhood’s name to be retrieved. Default is "neigh1".
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">n</span> = <span class="id">cell</span>:<span class="function">getNeighborhood</span>()
+<span class="id">n</span> = <span class="id">cell</span>:<span class="function">getNeighborhood</span>(<span class="string">"moore"</span>)</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getPast">
+</a><strong>getPast</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a table with the attributes of the Cell in the last time synchronize() was called.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cover</span> = <span class="id">cell</span>:<span class="function">getPast</span>().<span class="id">cover</span></code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/Cell.html#synchronize">Cell:synchronize	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getStateName">
+</a><strong>getStateName</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve the name of the current state of a given <a href=../files/Agent.html>Agent</a>.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: an Agent.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">name</span> = <span class="id">cell</span>:<span class="function">getStateName</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getX">
+</a><strong>getX</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a positive integer number representing the 'x'  coord of the Cell.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">x</span> = <span class="id">cell</span>:<span class="function">getX</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getY">
+</a><strong>getY</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a positive integer number representing the 'y' coord of the Cell.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">y</span> = <span class="id">cell</span>:<span class="function">getY</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="isEmpty">
+</a><strong>isEmpty</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Return whether the cell is empty according to a given placement.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: 
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">print</span>(<span class="id">cell</span>:<span class="function">isEmpty</span>())
+<span class="id">print</span>(<span class="id">cell</span>:<span class="function">isEmpty</span>(<span class="string">"workingplace"</span>))</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="isFirst">
+</a><strong>isFirst</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve whether the neighborhood iterator is pointing to the first <a href=../files/Neighborhood.html>Neighborhood</a> of the list.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="reserved">if</span> <span class="id">cell</span>:<span class="function">isFirst</span>() <span class="reserved">then</span>
+    ...
+<span class="reserved">end</span></code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="isLast">
+</a><strong>isLast</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Return whether the <a href=../files/Neighborhood.html>Neighborhood</a> iterator has already passed by the last Neighborhood of the list, or whether the iterator does not exist.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">l</span> = <span class="id">cell</span>:<span class="function">isLast</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="last">
+</a><strong>last</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Set the <a href=../files/Neighborhood.html>Neighborhood</a> iterator to the last element of the Neighborhood list.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="function">last</span> = <span class="id">cell</span>:<span class="function">last</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="next">
+</a><strong>next</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Update the <a href=../files/Neighborhood.html>Neighborhood</a> iterator to the next Neighborhood of the list.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">next</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="notify">
+</a><strong>notify</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Notify every <a href=../files/Observer.html>Observer</a> connected to the Cell.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: The time to be used by the Observer. Most of the strategies available ignore this value; therefore it can be left empty. See the Observer documentation for details.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">notify</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="sample">
+</a><strong>sample</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Returns a random Cell from a <a href=../files/Neighborhood.html>Neighborhood</a> of this Cell</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A string with the neighborhood's name to be retrieved. Default is "neigh1".
+    </li> 
+    
+  
+    <li>
+	  <strong>2nd</strong>: A <a href=../files/Random.html>Random</a> object. As default, TerraME uses its internal random number generator.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell_neighbor</span> = <span class="id">cell</span>:<span class="function">sample</span>(<span class="string">"moore"</span>)</code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/Cell.html#getNeighborhood">getNeighborhood	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="setId">
+</a><strong>setId</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Update the 'id' of the cell.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A string.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">setId</span>(<span class="string">"newid"</span>)</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="size">
+</a><strong>size</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve the number of <a href=../files/Neighborhood.html>Neighborhoods</a> of the Cell.</span>
+
+
+
+
+
+
+
+
+<h3>Return value:</h3>
+<ol>
+a positive integer number
+</ol>
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="function">size</span> = #<span class="id">cell</span></code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="synchronize">
+</a><strong>synchronize</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Synchronizes the Cell. TerraME can keep two copies of the attributes of a Cell in memory: one stores the past values and the other stores the current (present) values. Synchronize copies the current values to a table named past, within the Cell.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">cell</span>:<span class="function">synchronize</span>()</code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/CellularSpace.html#synchronize">CellularSpace:synchronize	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="#">
+</a><strong>#</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve the number of <a href=../files/Neighborhood.html>Neighborhoods</a> of the Cell.</span>
+
+
+
+
+
+
+
+
+<h3>Return value:</h3>
+<ol>
+a positive integer number
+</ol>
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="function">size</span> = #<span class="id">cell</span></code></pre>
+
+
+
+</dd>
+
+    
+
+</dl>
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"><img src='../img/terrame.png'/><br/></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>TerraME</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- Types list -->
+
+<h1>Types</h1>
+<ul>
+
+		<li>
+			<a href="../files/Agent.html">Agent</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Automaton.html">Automaton</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Cell.html">Cell</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/CellularSpace.html">CellularSpace</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Coord.html">Coord</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Environment.html">Environment</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Event.html">Event</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Flow.html">Flow</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Group.html">Group</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Jump.html">Jump</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Legend.html">Legend</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Neighborhood.html">Neighborhood</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Observer.html">Observer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Random.html">Random</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/SocialNetwork.html">SocialNetwork</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Society.html">Society</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/State.html">State</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Timer.html">Timer</a>
+		</li>
+		
+	
+
+		<li><strong>Trajectory</strong></li>
+		
+	
+
+
+</ul>
+
+
+<!-- Files list -->
+
+<h1>Files</h1>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<li>
+			<a href="../files/Utils.html">Utils</a>
+		</li>
+		
+	
+
+</ul>
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1><code>Trajectory
+
+
+
+</code></h1>
+
+
+<span class="description"></span>
+
+
+
+
+
+
+
+
+
+<span class="description">Type that defines a spatial trajectory over the <a href=../files/Cell.html>Cells</a> of a <a href=../files/CellularSpace.html>CellularSpace</a>. It inherits CellularSpace; therefore it is possible to use all functions of such type within a Trajectory. For instance, calling <a href=../files/Utils.html#forEachCell>forEachCell()</a> also traverses Trajectories, and it is possible to create a Trajectory from another Trajectory.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>build</strong>: A boolean value indicating whether the Trajectory will be computed or not when created. Default is true. 
+    </li> 
+    
+  
+    <li>
+	  <strong>greater</strong>: A function (Cell, Cell)->boolean to sort the generated subset of Cells. It returns true if the first one has priority over the second one. If this argument is missing, no sorting function will be applied. See <a href=../files/Utils.html#greaterByAttribute>greaterByAttribute()</a> and <a href=../files/Utils.html#greaterByCoord>greaterByCoord()</a> as predefined options to sort objects.
+    </li> 
+    
+  
+    <li>
+	  <strong>select</strong>: A function (Cell)->boolean to filter the CellularSpace, adding to the Trajectory only those Cells whose returning value is true. If this argument is missing, all Cells will be included in the Trajectory.
+    </li> 
+    
+  
+    <li>
+	  <strong>target</strong>: The CellularSpace over which the Trajectory will take place.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+<!-- Outputs of the function -->
+<p>Attributes of Trajectory that can be used as <b>read-only</b> by the modeler:</p>
+<ul>
+<span class="output">
+	
+	<li>
+	  <strong>cells</strong>: A vector of Cells pointed by the Trajectory.
+	</li>
+	
+	<li>
+	  <strong>greater</strong>: The last function used to sort the Trajectory. 
+	</li>
+	
+	<li>
+	  <strong>parent</strong>: The CellularSpace where the Trajectory takes place.
+	</li>
+	
+	<li>
+	  <strong>select</strong>: The last function used to filter the Trajectory.
+	</li>
+	
+</span>
+</ul>
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">traj</span> = <span class="function">Trajectory</span> {
+    <span class="id">target</span> = <span class="id">cs</span>,
+    <span class="id">select</span> = <span class="reserved">function</span>(<span class="id">c</span>)
+        <span class="reserved">return</span> <span class="id">c</span>.<span class="id">cover</span> == <span class="string">"forest"</span>
+    <span class="reserved">end</span>,
+    <span class="id">greater</span> = <span class="reserved">function</span>(<span class="id">c</span>, <span class="id">d</span>)
+        <span class="reserved">return</span> <span class="id">c</span>.<span class="id">dist</span> < <span class="id">d</span>.<span class="id">dist</span>
+    <span class="reserved">end</span>
+}
+
+<span class="id">traj</span> = <span class="function">Trajectory</span> {
+    <span class="id">target</span> = <span class="id">cs</span>,
+    <span class="id">greater</span> = <span class="reserved">function</span>(<span class="id">c</span>, <span class="id">d</span>)
+        <span class="reserved">return</span> <span class="id">c</span>.<span class="id">dist</span> < <span class="id">d</span>.<span class="id">dist</span>
+    <span class="reserved">end</span>
+}
+
+<span class="id">traj</span> = <span class="function">Trajectory</span> {
+    <span class="id">target</span> = <span class="id">cs</span>,
+    <span class="function">build</span> = <span class="reserved">false</span>
+}</code></pre>
+
+
+
+</dd>
+
+
+
+<h2 class="function_list">Functions</h2>
+<table class="function_list">
+
+	  <tr>
+		<td class="name" nowrap><a href="#addCell">addCell</a>&nbsp;
+	  <td class="summary">Add a new Cell to the Trajectory.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#clone">clone</a>&nbsp;
+	  <td class="summary">Retrieve a copy of the Trajectory, with the same parent, select, greater, and Cells.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#filter">filter</a>&nbsp;
+	  <td class="summary">Apply a filter over the original CellularSpace.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#getCell">getCell</a>&nbsp;
+	  <td class="summary">Retrieve a Cell in Trajectory given by Coord index.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#notify">notify</a>&nbsp;
+	  <td class="summary">Notify every Observer connected to the Trajectory.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#randomize">randomize</a>&nbsp;
+	  <td class="summary">Randomize the Cells, changing their traversing order.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#rebuild">rebuild</a>&nbsp;
+	  <td class="summary">Rebuild the Trajectory from the original data using the last filter and sort functions.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#sort">sort</a>&nbsp;
+	  <td class="summary">Sort the current CellularSpace subset of the Trajectory.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="##">#</a>&nbsp;
+	  <td class="summary">Retrieve the number of Cells of the CellularSpace.</td>
+    </tr>
+
+
+</table>
+
+
+
+
+
+<!--<br/>
+<br/>-->
+
+
+
+
+	
+<dl class="function">
+
+
+
+<dt><h2><a name="addCell">
+</a><strong>addCell</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Add a new <a href=../files/Cell.html>Cell</a> to the Trajectory. It returns boolean valure indicating whether the Cell was added.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A position where cell will be placed.
+    </li> 
+    
+  
+    <li>
+	  <strong>2nd</strong>: A Cell wich will be updated.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="clone">
+</a><strong>clone</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a copy of the Trajectory, with the same parent, select, greater, and <a href=../files/Cell.html>Cells</a>.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">copy</span> = <span class="id">traj</span>:<span class="function">clone</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="filter">
+</a><strong>filter</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Apply a filter over the original <a href=../files/CellularSpace.html>CellularSpace</a>. It returns true if the function was applied sucessfully.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A function (<a href=../files/Cell.html>Cell</a>)->boolean to filter the CellularSpace, adding to the Trajectory only those Cells whose returning value is true. The default value is the previous filter applied to the Trajectory.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">traj</span>:<span class="function">filter</span>(<span class="reserved">function</span>(<span class="id">cell</span>)
+    <span class="reserved">return</span> <span class="id">cell</span>.<span class="id">cover</span> = <span class="string">"forest"</span>
+<span class="reserved">end</span>)</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="getCell">
+</a><strong>getCell</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve a <a href=../files/Cell.html>Cell</a> in Trajectory given by <a href=../files/Coord.html>Coord</a> index. It returns nil if the cell was not found.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: Coord A coord where the cell is.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="notify">
+</a><strong>notify</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Notify every <a href=../files/Observer.html>Observer</a> connected to the Trajectory.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: The time to be used in the observer. Most of the strategies available ignore this value; therefore it can be left empty. See the Observer documentation for details.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="randomize">
+</a><strong>randomize</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Randomize the <a href=../files/Cell.html>Cells</a>, changing their traversing order.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A <a href=../files/Random.html>Random</a> object. As default, TerraME uses its internal random number generator.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">traj</span>:<span class="function">randomize</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="rebuild">
+</a><strong>rebuild</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Rebuild the Trajectory from the original data using the last filter and sort functions.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">traj</span>:<span class="function">rebuild</span>()</code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="sort">
+</a><strong>sort</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Sort the current <a href=../files/CellularSpace.html>CellularSpace</a> subset of the Trajectory. It returns a boolean value indicating whether the Trajectory was sucessfully sorted.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A function (<a href=../files/Cell.html>Cell</a>, Cell)->boolean to sort the generated subset of Cells. It returns true if the first one has priority over the second one. Default: No sorting function will be applied.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">traj</span>:<span class="function">sort</span>(<span class="reserved">function</span>(<span class="id">c</span>, <span class="id">d</span>)
+    <span class="reserved">return</span> <span class="id">c</span>.<span class="id">dist</span> < <span class="id">d</span>.<span class="id">dist</span>
+<span class="reserved">end</span>)</code></pre>
+
+
+
+<h3>See also</h3>
+<ul>
+	
+	<li>
+		
+			<a href="../files/Utils.html#greaterByAttribute">Utils:greaterByAttribute	</a>
+		
+	</li>
+	
+	<li>
+		
+			<a href="../files/Utils.html#greaterByCoord">Utils:greaterByCoord	</a>
+		
+	</li>
+	
+</ul>
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="#">
+</a><strong>#</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Retrieve the number of <a href=../files/Cell.html>Cells</a> of the <a href=../files/CellularSpace.html>CellularSpace</a>.</span>
+
+
+
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">print</span>(#<span class="id">traj</span>)</code></pre>
+
+
+
+</dd>
+
+    
+
+</dl>
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

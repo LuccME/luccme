@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>TerraME</title>
+    <link rel="stylesheet" href="luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo">
+		<a href="http://www.terrame.org">
+		<img src='img/terrame.png'/><br/></div></a>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+<div id="navigation">
+
+
+
+<h1>TerraME</h1>
+<ul>
+	
+	<li><strong>Index</strong></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- Types list -->
+
+<h1>Types</h1>
+<ul>
+
+		<li>
+			<a href="files/Agent.html">Agent</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Automaton.html">Automaton</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Cell.html">Cell</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/CellularSpace.html">CellularSpace</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Coord.html">Coord</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Environment.html">Environment</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Event.html">Event</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Flow.html">Flow</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Group.html">Group</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Jump.html">Jump</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Legend.html">Legend</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Neighborhood.html">Neighborhood</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Observer.html">Observer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Random.html">Random</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/SocialNetwork.html">SocialNetwork</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Society.html">Society</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/State.html">State</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Timer.html">Timer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="files/Trajectory.html">Trajectory</a>
+		</li>
+		
+	
+
+
+</ul>
+
+
+<!-- Files list -->
+
+<h1>Files</h1>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<li>
+			<a href="files/Utils.html">Utils</a>
+		</li>
+		
+	
+
+</ul>
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+<div id="index-header">
+	<h1>TerraME</h1>
+	Version: 1.3.1<br>
+	Release: July 2014<br>
+	TerraLAB/UFOP and INPE<br>
+	
+	<a href="mailto:pedro.andrade@inpe.br"> pedro.andrade@inpe.br </a>, <a href="mailto:tiago@iceb.ufop.br"> tiago@iceb.ufop.br </a><br>
+</div>
+<p>This document presents a detailed description of each type and function of TerraME, ordered alphabetically by its types. TerraME adopts <i>American English</i> (e.g., neighbor instead of neighbo<b>u</b>r), with the following syntax convention:
+<ul>
+<li>Names of types have the <b>upper</b> <a href="http://en.wikipedia.org/wiki/CamelCase">CamelCase</a> style, starting with a capital letter, followed by other words starting with capitalized letters (e.g., Agent, Trajectory, CellularSpace).</li>
+<li>Functions and parameters names have the lower CamelCase style, with names starting with lowercase letters, followed by other words starting with capitalized letters (e.g., load, database, forEachCell, dbType).<br/><br/>
+There are two signatures for functions in TerraME. The first one uses the structure "function(v1, v2, ...)", where v1 is the 1st argument, v2 is the 2nd, and so forth. The arguments of a call to a function that has this signature must follow the specified order. It is possible to use fewer arguments than the function signature, with missing arguments taking their default values. Parameters of functions following this format are described as 1st, 2nd, etc. in this document. Every parameter that
+does not have a default value is compulsory.<br/>The second signature is "function{arg1 = v1, arg2 = v2, ...}", where v1 is the value of named argument arg1, v2 is the value of named argument arg2, and so on. These arguments can be used in any order, but the function call needs to use braces. Every type constructor of TerraME and some of its functions have this kind of signature. In this document, such arguments are described with their names.
+</li>
+</ul>
+
+
+
+
+<h2>Types</h2>
+<table class="file_list">
+<!--<tr><td colspan="2">Files</td></tr>-->
+
+	
+	<tr>
+		<td class="name"><a href="files/Agent.html">Agent</a></td>
+		<td class="summary">
+			An autonomous entity that is capable of performing actions as well as interact with other Agents and the spatial representation of the model.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Automaton.html">Automaton</a></td>
+		<td class="summary">
+			A hybrid state machine that needs to be located on a CellularSpace, and is replicated over each Cell of the space.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Cell.html">Cell</a></td>
+		<td class="summary">
+			A spatial location with homogeneous internal content.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/CellularSpace.html">CellularSpace</a></td>
+		<td class="summary">
+			A multivalued set of Cells.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Coord.html">Coord</a></td>
+		<td class="summary">
+			A spatial location, represented by a pair (x, y).
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Environment.html">Environment</a></td>
+		<td class="summary">
+			A container that encapsulates space, time, behavior, and other environments.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Event.html">Event</a></td>
+		<td class="summary">
+			An Event represents a time instant when the simulation engine must execute some computation.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Flow.html">Flow</a></td>
+		<td class="summary">
+			A Flow describes the behavior of an automaton or Agent in a given State.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Group.html">Group</a></td>
+		<td class="summary">
+			Type that defines an ordered selection over a Society.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Jump.html">Jump</a></td>
+		<td class="summary">
+			Control a discrete transition between States.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Legend.html">Legend</a></td>
+		<td class="summary">
+			Type that defines how to color an attribute to be observed.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Neighborhood.html">Neighborhood</a></td>
+		<td class="summary">
+			Each Cell has one or more Neighborhoods to represent proximity relations.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Observer.html">Observer</a></td>
+		<td class="summary">
+			Observer is the way to collect data from the objects of a model in order to save, to graphically plot them, or to send them to another computer.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Random.html">Random</a></td>
+		<td class="summary">
+			Type to generate random numbers.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/SocialNetwork.html">SocialNetwork</a></td>
+		<td class="summary">
+			Social networks represent relations between Agents.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Society.html">Society</a></td>
+		<td class="summary">
+			Type to create and manipulate a set of Agents.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/State.html">State</a></td>
+		<td class="summary">
+			A container of Jumps and Flows.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Timer.html">Timer</a></td>
+		<td class="summary">
+			A Timer is an event-based scheduler that executes and controls the simulation.
+        </td>
+	</tr>
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Trajectory.html">Trajectory</a></td>
+		<td class="summary">
+			Type that defines a spatial trajectory over the Cells of a CellularSpace.
+        </td>
+	</tr>
+	
+
+	
+
+</table>
+
+
+
+<h2>Files</h2>
+<table class="file_list">
+<!--<tr><td colspan="2">Files</td></tr>-->
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+	<tr>
+		<td class="name"><a href="files/Utils.html">Utils</a></td>
+		<td class="summary">
+           
+    </td>
+	</tr>
+	
+
+</table>
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

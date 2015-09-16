@@ -200,6 +200,8 @@ function LinearRegression(component)
     
     for k,cell in pairs (cs.cells) do
       if (cell.region == rNumber) then
+        activeRegionNumber = rNumber
+        
         local regression = luData.newconst
         	
         for var, beta in pairs (luData.betas) do 

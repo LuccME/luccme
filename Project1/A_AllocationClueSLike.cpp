@@ -17,12 +17,14 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 		bSalvar->Text = "Save";
 		gSCells = "All the cells must be fullfilled.";
 		gSCellsTitle = "Error - Empty Cells";
+		lLegend->Text = "0 - Not Allowable Trasition; 1 - Allowable Transition";
 	}
 	else {
 		this->Text = "Alocação - Allocation ClueS Like";
 		bSalvar->Text = "Salvar";
 		gSCells = "Todas as células devem ser preenchidas.";
 		gSCellsTitle = "Erro - Células Vazias";
+		lLegend->Text = "0 - Transição não Permitida; 1 - Transição Permitida";
 	}
 
 	if (lReturn->Return != "") {
@@ -60,6 +62,9 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 
 		String^ tempLUT = "";
 		int count = 1;
+		dgTransitionMatrix->ColumnCount = count;
+		dgTransitionMatrix->Columns[count - 1]->Name = "->";
+		count++;
 		for (int i = 0; i < this->lReturn->LUT->Length; i++) {
 			if (this->lReturn->LUT[i] != ',') {
 				if (this->lReturn->LUT[i] != '\"') {
@@ -69,6 +74,7 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 			else {
 				dgTransitionMatrix->ColumnCount = count;
 				dgTransitionMatrix->Columns[count - 1]->Name = tempLUT;
+				dgTransitionMatrix->Rows->Add(tempLUT);
 				count++;
 				tempLUT = "";
 			}
@@ -76,14 +82,17 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 		if (tempLUT != "") {
 			dgTransitionMatrix->ColumnCount = count;
 			dgTransitionMatrix->Columns[count - 1]->Name = tempLUT;
+			dgTransitionMatrix->Rows->Add(tempLUT);
 		}
 
-		for (int i = 0; i < count; i++) {
-			dgTransitionMatrix->Rows->Add();
-		}
+		dgTransitionMatrix->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+		dgTransitionMatrix->Columns[0]->ReadOnly = true;
+		//for (int i = 0; i < count; i++) {
+		//	dgTransitionMatrix->Rows->Add();
+		//}
 
 		int row = 0;
-		int column = 0;
+		int column = 1;
 		String^ tempValue;
 		for (int i = j; i < this->lReturn->Return->Length; i++) {
 			if (this->lReturn->Return[i] != ';') {
@@ -100,7 +109,7 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 			}
 			else {
 				dgTransitionMatrix->Rows[row]->Cells[column]->Value = tempValue;
-				column = 0;
+				column = 1;
 				row++;
 				tempValue = "";
 			}
@@ -113,6 +122,9 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 		if (lReturn->LUT != "") {
 			String^ tempLUT = "";
 			int count = 1;
+			dgTransitionMatrix->ColumnCount = count;
+			dgTransitionMatrix->Columns[count - 1]->Name = "->";
+			count++;
 			for (int i = 0; i < this->lReturn->LUT->Length; i++) {
 				if (this->lReturn->LUT[i] != ',') {
 					if (this->lReturn->LUT[i] != '\"') {
@@ -122,6 +134,7 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 				else {
 					dgTransitionMatrix->ColumnCount = count;
 					dgTransitionMatrix->Columns[count - 1]->Name = tempLUT;
+					dgTransitionMatrix->Rows->Add(tempLUT);
 					count++;
 					tempLUT = "";
 				}
@@ -129,11 +142,14 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 			if (tempLUT != "") {
 				dgTransitionMatrix->ColumnCount = count;
 				dgTransitionMatrix->Columns[count - 1]->Name = tempLUT;
+				dgTransitionMatrix->Rows->Add(tempLUT);
 			}
 
-			for (int i = 0; i < count; i++) {
-				dgTransitionMatrix->Rows->Add();
-			}
+			dgTransitionMatrix->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+			dgTransitionMatrix->Columns[0]->ReadOnly = true;
+			//for (int i = 0; i < count; i++) {
+			//	dgTransitionMatrix->Rows->Add();
+			//}
 		}
 	}
 }
@@ -155,7 +171,7 @@ System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sende
 		if (!check) {
 			break;
 		}
-		for (int j = 0; j < dgTransitionMatrix->ColumnCount; j++) {
+		for (int j = 1; j < dgTransitionMatrix->ColumnCount; j++) {
 			if (dgTransitionMatrix->Rows[i]->Cells[j]->Value == nullptr) {
 				MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				check = false;

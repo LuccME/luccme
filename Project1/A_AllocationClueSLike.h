@@ -18,6 +18,7 @@ namespace LuccME {
 	private:
 		String^ gSCells = "";
 		String^ gSCellsTitle = "";
+	private: System::Windows::Forms::Label^  lLegend;
 
 	public:
 		cReturnAllocation^ lReturn;
@@ -78,6 +79,7 @@ namespace LuccME {
 			this->lMaxDifference = (gcnew System::Windows::Forms::Label());
 			this->lTransitionMatrix = (gcnew System::Windows::Forms::Label());
 			this->dgTransitionMatrix = (gcnew System::Windows::Forms::DataGridView());
+			this->lLegend = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgTransitionMatrix))->BeginInit();
 			this->SuspendLayout();
@@ -94,7 +96,7 @@ namespace LuccME {
 			// 
 			// bSalvar
 			// 
-			this->bSalvar->Location = System::Drawing::Point(203, 496);
+			this->bSalvar->Location = System::Drawing::Point(203, 499);
 			this->bSalvar->Name = L"bSalvar";
 			this->bSalvar->Size = System::Drawing::Size(75, 23);
 			this->bSalvar->TabIndex = 87;
@@ -176,7 +178,7 @@ namespace LuccME {
 			this->lTransitionMatrix->AutoSize = true;
 			this->lTransitionMatrix->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lTransitionMatrix->Location = System::Drawing::Point(169, 305);
+			this->lTransitionMatrix->Location = System::Drawing::Point(169, 295);
 			this->lTransitionMatrix->Name = L"lTransitionMatrix";
 			this->lTransitionMatrix->Size = System::Drawing::Size(146, 23);
 			this->lTransitionMatrix->TabIndex = 95;
@@ -190,19 +192,29 @@ namespace LuccME {
 			this->dgTransitionMatrix->AllowUserToResizeColumns = false;
 			this->dgTransitionMatrix->AllowUserToResizeRows = false;
 			this->dgTransitionMatrix->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgTransitionMatrix->Location = System::Drawing::Point(47, 341);
+			this->dgTransitionMatrix->Location = System::Drawing::Point(19, 331);
 			this->dgTransitionMatrix->Name = L"dgTransitionMatrix";
 			this->dgTransitionMatrix->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
-			this->dgTransitionMatrix->Size = System::Drawing::Size(390, 135);
+			this->dgTransitionMatrix->Size = System::Drawing::Size(459, 135);
 			this->dgTransitionMatrix->TabIndex = 94;
 			this->dgTransitionMatrix->CellValidating += gcnew System::Windows::Forms::DataGridViewCellValidatingEventHandler(this, &A_AllocationClueSLike::dgTransitionMatrix_CellValidating);
 			this->dgTransitionMatrix->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &A_AllocationClueSLike::dgTransitionMatrix_KeyDown);
+			// 
+			// lLegend
+			// 
+			this->lLegend->AutoSize = true;
+			this->lLegend->Location = System::Drawing::Point(24, 476);
+			this->lLegend->Name = L"lLegend";
+			this->lLegend->Size = System::Drawing::Size(29, 13);
+			this->lLegend->TabIndex = 96;
+			this->lLegend->Text = L"label";
 			// 
 			// A_AllocationClueSLike
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->lLegend);
 			this->Controls->Add(this->lTransitionMatrix);
 			this->Controls->Add(this->dgTransitionMatrix);
 			this->Controls->Add(this->tMaxDifference);

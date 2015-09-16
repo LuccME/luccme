@@ -94,6 +94,7 @@ Class LuccME.A_Continuous: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(cReturnAllocation): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    Boolean intialize : Public
     cReturnAllocation lReturn : Public
 Class LuccME.AllocDiscreteForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form

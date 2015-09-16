@@ -140,7 +140,7 @@ namespace LuccME {
 			// tConst
 			// 
 			this->tConst->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tConst->Location = System::Drawing::Point(302, 172);
+			this->tConst->Location = System::Drawing::Point(311, 172);
 			this->tConst->Name = L"tConst";
 			this->tConst->Size = System::Drawing::Size(161, 20);
 			this->tConst->TabIndex = 2;
@@ -154,7 +154,7 @@ namespace LuccME {
 			this->lConst->AutoSize = true;
 			this->lConst->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lConst->Location = System::Drawing::Point(241, 168);
+			this->lConst->Location = System::Drawing::Point(252, 168);
 			this->lConst->Name = L"lConst";
 			this->lConst->Size = System::Drawing::Size(55, 23);
 			this->lConst->TabIndex = 56;
@@ -211,7 +211,7 @@ namespace LuccME {
 			// tElasticy
 			// 
 			this->tElasticy->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tElasticy->Location = System::Drawing::Point(302, 214);
+			this->tElasticy->Location = System::Drawing::Point(311, 214);
 			this->tElasticy->Name = L"tElasticy";
 			this->tElasticy->Size = System::Drawing::Size(161, 20);
 			this->tElasticy->TabIndex = 3;
@@ -225,19 +225,19 @@ namespace LuccME {
 			this->lElasticy->AutoSize = true;
 			this->lElasticy->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lElasticy->Location = System::Drawing::Point(228, 210);
+			this->lElasticy->Location = System::Drawing::Point(228, 212);
 			this->lElasticy->Name = L"lElasticy";
 			this->lElasticy->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lElasticy->Size = System::Drawing::Size(69, 23);
+			this->lElasticy->Size = System::Drawing::Size(81, 23);
 			this->lElasticy->TabIndex = 62;
-			this->lElasticy->Text = L"Elasticy";
+			this->lElasticy->Text = L"Elasticity";
 			this->lElasticy->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lElasticy->Visible = false;
 			// 
 			// tPercNeighborsUse
 			// 
 			this->tPercNeighborsUse->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tPercNeighborsUse->Location = System::Drawing::Point(391, 253);
+			this->tPercNeighborsUse->Location = System::Drawing::Point(400, 253);
 			this->tPercNeighborsUse->Name = L"tPercNeighborsUse";
 			this->tPercNeighborsUse->Size = System::Drawing::Size(72, 20);
 			this->tPercNeighborsUse->TabIndex = 4;

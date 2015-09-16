@@ -485,6 +485,8 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 		LuccME::D_PCVINPEForm^ demandForm = gcnew D_PCVINPEForm(lDemand);
 		demandForm->ShowDialog();
 		gDemand = lDemand->Return;
+		gDemand = gDemand->Replace("\n", "");
+		gDemand = gDemand->Replace("\r", "");
 		gDemandLUT = gLandUseTypes;
 		if (gDemand != "") {
 			int count = 0;
@@ -757,7 +759,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 					}
 					else {
 						lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-						lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticy=");
+						lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
 						lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
 						lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
 						lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
@@ -768,7 +770,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 				}
 				if (lines3[lineCount] != "") {
 					lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-					lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticy=");
+					lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
 					lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
 					lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
 					lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
@@ -805,7 +807,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 					}
 					else {
 						lines4[lineCount] = String::Concat("const=", lines4[lineCount]);
-						lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticy=");
+						lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticity=");
 						lines4[lineCount] = lines4[lineCount]->Replace("@", ",percNeighborsUse=");
 						lines4[lineCount] = lines4[lineCount]->Replace(";", ",betas={");
 						lines4[lineCount] = lines4[lineCount]->Replace("=", " = ");
@@ -818,7 +820,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 				}
 				if (lines4[lineCount] != "") {
 					lines4[lineCount] = String::Concat("const=", lines4[lineCount]);
-					lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticy=");
+					lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticity=");
 					lines4[lineCount] = lines4[lineCount]->Replace("@", ",percNeighborsUse=");
 					lines4[lineCount] = lines4[lineCount]->Replace(";", ",betas={");
 					lines4[lineCount] = lines4[lineCount]->Replace("=", " = ");
@@ -1679,9 +1681,9 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		}
 		else {
 			sw->WriteLine("\t\tsaveYears = {" + lYearsToSave->Text + "},");
-			sw->WriteLine("\t\tmode = \"multiple\",");
 		}
 		
+		sw->WriteLine("\t\tmode = \"multiple\",");
 		sw->WriteLine("\t\tsaveAttrs = ");
 		sw->WriteLine("\t\t{");
 		String^ aux = "";
@@ -1737,9 +1739,9 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		sw->WriteLine("env_" + tModelName->Text + " = Environment{}");
 		sw->WriteLine("env_" + tModelName->Text + ":add(timer)\n");
 
-		sw->WriteLine("\t-----------------------------------------------------");
-		sw->WriteLine("\t-- ENVIROMMENT EXECUTION                           --");
-		sw->WriteLine("\t-----------------------------------------------------");
+		sw->WriteLine("-----------------------------------------------------");
+		sw->WriteLine("-- ENVIROMMENT EXECUTION                           --");
+		sw->WriteLine("-----------------------------------------------------");
 		sw->WriteLine("if " + tModelName->Text + ".isCoupled == false then");
 		sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
 		sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
@@ -1791,7 +1793,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
 						}
 						else {
-							sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t\t-- " + Convert::ToString(tempYear + i - 2));
+							sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
 						}
 					}
 					sw->WriteLine("\t}");
@@ -1865,7 +1867,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				case 7:
 					sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 					sw->WriteLine("{");
-					if (gPotentialComponent < 6) {
+					if (gPotentialComponent < 4) {
 						sw->WriteLine("\tpotentialData =");
 					}
 					else {
@@ -1908,7 +1910,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 									else {
 										sw->WriteLine("\t\t\t\t\t" + tempBetas->Replace("=", " = "));
 										sw->WriteLine("\t\t\t\t}");
-										sw->WriteLine("\t\t\t}\n");
+										sw->WriteLine("\t\t\t},\n");
 										tempBetas = "";
 										break;
 									}
@@ -2037,7 +2039,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 										sw->WriteLine("\t\t\t\t\t\t" + tempBetas->Replace("=", " = "));
 										sw->WriteLine("\t\t\t\t\t}");
 										sw->WriteLine("\t\t\t\t}");
-										sw->WriteLine("\t\t\t}\n");
+										sw->WriteLine("\t\t\t},\n");
 										tempBetas = "";
 										break;
 									}
@@ -3142,14 +3144,14 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gPotential += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("elasticy") != 1) { 
+					while (line->Contains("elasticity") != 1) { 
 						line = sw->ReadLine();
 					}
 
 					line = line->Replace("\n", "");
 					line = line->Replace("\t", "");
 					line = line->Replace(" ", "");
-					line = line->Replace("elasticy=", "");
+					line = line->Replace("elasticity=", "");
 					line = line->Replace(",", ";");
 					gPotential += line;
 
@@ -3214,7 +3216,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						}
 						else {
 							lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-							lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticy=");
+							lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
 							lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
 							lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
 							lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
@@ -3225,7 +3227,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 					if (lines3[lineCount] != "") {
 						lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-						lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticy=");
+						lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
 						lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
 						lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
 						lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
@@ -3266,14 +3268,14 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gPotential += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("elasticy") != 1) { 
+					while (line->Contains("elasticity") != 1) { 
 						line = sw->ReadLine();
 					}
 
 					line = line->Replace("\n", "");
 					line = line->Replace("\t", "");
 					line = line->Replace(" ", "");
-					line = line->Replace("elasticy=", "");
+					line = line->Replace("elasticity=", "");
 					line = line->Replace(",", ";");
 					gPotential += line;
 
@@ -3355,7 +3357,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						}
 						else {
 							lines4[lineCount] = String::Concat("const=", lines4[lineCount]);
-							lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticy=");
+							lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticity=");
 							lines4[lineCount] = lines4[lineCount]->Replace("@", ",percNeighborsUse=");
 							lines4[lineCount] = lines4[lineCount]->Replace(";", ",betas={");
 							lines4[lineCount] = lines4[lineCount]->Replace("=", " = ");
@@ -3368,7 +3370,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 					if (lines4[lineCount] != "") {
 						lines4[lineCount] = String::Concat("const=", lines4[lineCount]);
-						lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticy=");
+						lines4[lineCount] = lines4[lineCount]->Replace("$", ",elasticity=");
 						lines4[lineCount] = lines4[lineCount]->Replace("@", ",percNeighborsUse=");
 						lines4[lineCount] = lines4[lineCount]->Replace(";", ",betas={");
 						lines4[lineCount] = lines4[lineCount]->Replace("=", " = ");

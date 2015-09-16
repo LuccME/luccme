@@ -1,4 +1,4 @@
-﻿Build started 14/09/2015 16:17:21.
+﻿Build started 15/09/2015 16:58:07.
      1>Project "D:\workspace\Project1\Project1\Project1.vcxproj" on node 2 (Rebuild target(s)).
      1>PreBuildEvent:
          copy D:\workspace\Project1\Project1\\*.chm D:\workspace\Project1\Release\\
@@ -64,4 +64,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:08.88
+Time Elapsed 00:00:10.64

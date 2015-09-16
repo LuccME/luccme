@@ -7,7 +7,7 @@
 -- @arg component.regressionData.error A linear regression estimate error.
 -- @arg component.regressionData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
--- @arg component.regressionData.elasticity An elasticity value, closer to 1 is more difficulty
+-- @arg component.regressionData.elasticity An elasticity value, closer to 1 is more easy
 -- to transition for other land uses.
 -- @arg component.landUseDrivers The land use drivers fields in database.
 -- @arg component.execute Handles with the execution method of a LogisticRegression component.

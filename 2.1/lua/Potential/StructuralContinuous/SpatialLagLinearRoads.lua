@@ -79,7 +79,7 @@ function SpatialLagLinearRoads(component)
       end
     
       for i = 1, #luTypes, 1 do                       
-        self:computePotential (luccMEModel, rNumber, i)
+        self:computePotential (luccMEModel, rNumber, i, event)
       end
     end
   end  -- function execute
@@ -207,7 +207,7 @@ function SpatialLagLinearRoads(component)
   -- @arg oldRegression The previous value of the regression
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage self:modifyRegression(luData.roadsModel, cell, regression)
-  component.modifyRegression = function(self, roadsModel, cell, oldRegression)
+  component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
     local currentTime = event:getTime()
     local regression = roadsModel.const
 
@@ -271,7 +271,7 @@ function SpatialLagLinearRoads(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage self:computePotential(luccMEModel, luIndex)    
-  component.computePotential = function(self, luccMEModel, rNumber, luIndex)
+  component.computePotential = function(self, luccMEModel, rNumber, luIndex, event)
     local cs = luccMEModel.cs 
     local luTypes = luccMEModel.landUseTypes
     local lu = luTypes[luIndex]
@@ -281,6 +281,7 @@ function SpatialLagLinearRoads(component)
     
     for k,cell in pairs (cs.cells) do
       if (cell.region == rNumber) then
+        activeRegionNumber = rNumber
         local regressionX = 0
                 
         for var, beta in pairs (luData.betas) do 
@@ -325,7 +326,7 @@ function SpatialLagLinearRoads(component)
         local regressionLimit = luData.const+ regressionX + regresY
         
         if (luData.roadsModel ~= nil) then 
-          local newRegression = self:modifyRegression(luData.roadsModel, cell, regression) 
+          local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event) 
           if (newRegression ~= regression) then
                regression = newRegression
                regressionLimit = regression

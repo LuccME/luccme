@@ -262,7 +262,7 @@ function AllocationClueLikeSaturation (component)
     if (self.attrProtection ~= nil and self.complementarLU ~= nil ) then
          print ("RELAX PROT", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
          luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] = luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] * 0.5
-         luccMEModel.potential:computePotential (luccMEModel, 1, 1)
+         luccMEModel.potential:computePotential (luccMEModel, 1, 1, event)
          print ("           ", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
     end
   end 	 	

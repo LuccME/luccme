@@ -2232,6 +2232,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 	if (lOpen) {
 		bool main = false;
 		bool submodel = false;
+		bool imported = true;
 		this->Text = gSEditing;
 
 		MessageBox::Show(gSMainLoad, gSMainLoadTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -2275,7 +2276,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			}
 			
 			lSelectedFolder->Text = tempLine->Substring(0, lastSlash - j);
-
+			
 			line = sw->ReadLine();
 			while (line->Contains("name") != 1) {
 				line = sw->ReadLine();
@@ -2301,6 +2302,30 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			tModelName->Text = tempLine;
 			tModelName->ForeColor = System::Drawing::Color::Black;
 			
+			tempLine = "";
+			lastSlash = 0;
+			line = mainFile->FileName;
+
+			for (int i = 0; i < line->Length; i++) {
+				if (line[i] != '\\') {
+					tempLine += line[i];
+				}
+				else {
+					if (line[i] == '\\') {
+						tempLine += line[i];
+						lastSlash = i;
+					}
+				}
+			}
+
+			
+			tempLine = tempLine->Substring(0, lastSlash);
+
+			if (lSelectedFolder->Text != tempLine) {
+				lSelectedFolder->Text = "";
+				imported = false;
+			}
+
 			line = sw->ReadLine();
 			while (line->Contains("startTime") != 1) {
 				line = sw->ReadLine();
@@ -2355,40 +2380,143 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			tEndTime->Text = tempLine;
 			tEndTime->ForeColor = System::Drawing::Color::Black;
 
-			line = sw->ReadLine();
-			while (line->Contains("database") != 1) {
-				line = sw->ReadLine();
-			}
-
-			j = 0;
-			while (line[j] != '\"') {
-				j++;
-			}
-
-			j++;
-			tempLine = "";
-
-			for (int i = j; i < line->Length; i++) {
-				if (line[i] != '\"') {
-						tempLine += line[i];
-				}
-				else {
-					break;
-				}
-			}
-			tempLine = tempLine->Replace("\\\\", "\\");
-			{
-				array<String^>^ tempBD = gcnew array<String^>(2);
-				tempBD[0] = gSAccess;
-				tempBD[1] = tempLine;
-				tbSelectedBatabase->Lines = tempBD;
-			}
+			String^ tempDB = "";
 
 			line = sw->ReadLine();
 			while (line->Contains("theme") != 1) {
+				tempDB += line;
 				line = sw->ReadLine();
 			}
 
+			tempDB = tempDB->Replace("\n", "");
+			tempDB = tempDB->Replace("\t", "");
+			String^ dbAux = "";
+
+			if(tempDB->Contains("host")){
+				j = 0;
+				while (tempDB[j] != '{') {
+					j++;
+				}
+
+				tempDB = tempDB->Substring(j + 1)->Replace(" ","");
+
+				array<String^>^ tempBd = gcnew array<String^>(5);
+				tempBd[0] = gSMySQL;
+				gSelectedDatabase = "";
+
+				j = 0;
+				while (tempDB[j] != '=') {
+					j++;
+				}
+
+				tempDB = tempDB->Substring(j + 1);
+
+				j = 0;
+				dbAux = "";
+				while (tempDB[j] != ',') {
+					dbAux += tempDB[j];
+					j++;
+				}
+				
+				tempBd[1] = "host = " + dbAux;
+				gSelectedDatabase += dbAux;
+				
+				j = 0;
+				while (tempDB[j] != '=') {
+					j++;
+				}
+
+				tempDB = tempDB->Substring(j + 1);
+
+				j = 0;
+				dbAux = "";
+				while (tempDB[j] != ',') {
+					dbAux += tempDB[j];
+					j++;
+				}
+
+				tempBd[2] = "user = " + dbAux;
+				gSelectedDatabase += "," + dbAux;
+
+				j = 0;
+				while (tempDB[j] != '=') {
+					j++;
+				}
+
+				tempDB = tempDB->Substring(j + 1);
+
+				j = 0;
+				dbAux = "";
+				while (tempDB[j] != ',') {
+					dbAux += tempDB[j];
+					j++;
+				}
+
+				tempBd[3] = "password = " + dbAux;
+				gSelectedDatabase += "," + dbAux;
+
+				j = 0;
+				while (tempDB[j] != '=') {
+					j++;
+				}
+
+				tempDB = tempDB->Substring(j + 1);
+
+				j = 0;
+				dbAux = "";
+				while (tempDB[j] != ',') {
+					dbAux += tempDB[j];
+					j++;
+				}
+
+				tempBd[4] = "database = " + dbAux;
+				gSelectedDatabase += "," + dbAux;
+				
+				tbSelectedBatabase->Lines = tempBd;
+			}
+			else {
+				j = 0;
+				while (tempDB[j] != '{') {
+					j++;
+				}
+
+				tempDB = tempDB->Substring(j+1);
+
+				j = 0;
+				while (tempDB[j] != '\"') {
+					j++;
+				}
+
+				j++;
+				dbAux = "";
+
+				for (int i = j; i < tempDB->Length - 2; i++) {
+					if (tempDB[j] != '\"') {
+						dbAux += tempDB[i];
+					}
+					else {
+						break;
+					}
+				}
+
+				dbAux = dbAux->Replace("\\\\", "\\");
+
+				{
+					array<String^>^ tempBd = gcnew array<String^>(2);
+					String^ path = dbAux;
+
+					if (File::Exists(path))
+					{
+						tempBd[0] = gSAccess;
+						tempBd[1] = dbAux;
+						tbSelectedBatabase->Lines = tempBd;
+					}
+					else {
+						imported = false;
+					}
+				}
+			}
+			
 			j = 0;
 			while (line[j] != '\"') {
 				j++;
@@ -4804,7 +4932,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			sw->Close();
 			submodel = true;
 		}
-		if (main && submodel) {
+		if (main && submodel && imported) {
 			lRunModel->Visible = true;
 			bRun->Visible = true;
 		}

@@ -24,7 +24,7 @@
 -- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.verify Handles with the verify method of a AllocationClueLikeSaturation component.
--- @arg component.updateAllocationParameters XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- @arg component.updateAllocationParameters Handles with the allocation parameters update.
 -- @arg component.initElasticity Handles with the elasticity initialize considering a single
 -- elasticity for each land use (all cells).
 -- @arg component.computeChange Compute the Allocation change based on the potential of the cell.
@@ -256,8 +256,6 @@ function AllocationClueLikeSaturation (component)
                                      }
   end
 
-  --- XXXXXXXXXXXXXXXXXXXX
-  -- XXX
   component.relaxProtected = function (self, event, luccMEModel)
     if (self.attrProtection ~= nil and self.complementarLU ~= nil ) then
          print ("RELAX PROT", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])

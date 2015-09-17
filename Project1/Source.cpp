@@ -10,5 +10,6 @@ int main(void)
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	LuccME::MyForm^ myForm1 = gcnew LuccME::MyForm();
+	myForm1->TopMost = true;
 	Application::Run(myForm1);
 }

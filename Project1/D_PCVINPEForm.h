@@ -142,6 +142,7 @@ namespace LuccME {
 			this->Controls->Add(this->lPCVINPE);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"D_PCVINPEForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Demanda - Pre Computed Values INPE";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &D_PCVINPEForm::D_PCVINPEForm_FormClosing);
 			this->Shown += gcnew System::EventHandler(this, &D_PCVINPEForm::D_PCVINPEForm_Shown);

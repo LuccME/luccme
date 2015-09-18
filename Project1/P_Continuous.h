@@ -322,6 +322,7 @@ namespace LuccME {
 			this->Controls->Add(this->lMaxReg);
 			this->Controls->Add(this->lMinReg);
 			this->Name = L"P_Continuous";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Potencial - Continuous";
 			this->Shown += gcnew System::EventHandler(this, &P_Continuous::P_Continuous_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();

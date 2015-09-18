@@ -125,6 +125,7 @@ namespace LuccME {
 			this->Controls->Add(this->bLinearRegression);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"PotContinuousForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Pontencial - Componentes Contínuos";
 			this->Shown += gcnew System::EventHandler(this, &PotContinuousForm::PotContinuousForm_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

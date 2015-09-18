@@ -280,6 +280,7 @@ namespace LuccME {
 			this->Controls->Add(this->bSalvar);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"P_Discrete";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Pontencial - Discrete";
 			this->Shown += gcnew System::EventHandler(this, &P_Discrete::P_Discrete_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

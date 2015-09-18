@@ -191,6 +191,7 @@ namespace LuccME {
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"AboutForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Sobre";
 			this->Load += gcnew System::EventHandler(this, &AboutForm::AboutForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

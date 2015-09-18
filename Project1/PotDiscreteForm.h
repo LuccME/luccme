@@ -146,6 +146,7 @@ namespace LuccME {
 			this->Controls->Add(this->bNeighSimpleRule);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"PotDiscreteForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Pontencial - Componentes Discretos";
 			this->Shown += gcnew System::EventHandler(this, &PotDiscreteForm::PotDiscreteForm_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

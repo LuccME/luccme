@@ -166,6 +166,7 @@ namespace LuccME {
 			this->Controls->Add(this->lFinalYear);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"D_CITwoDM";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Demand - Compute Input Two Date Maps";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &D_CITwoDM::D_CITwoDM_FormClosing);
 			this->Shown += gcnew System::EventHandler(this, &D_CITwoDM::D_CITwoDM_Shown);

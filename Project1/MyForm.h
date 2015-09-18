@@ -235,6 +235,7 @@ namespace LuccME {
 			this->Controls->Add(this->pbLogo2);
 			this->HelpButton = true;
 			this->Name = L"MyForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Gerenciador de Modelos";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

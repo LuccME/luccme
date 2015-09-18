@@ -470,6 +470,7 @@ namespace LuccME {
 			this->Controls->Add(this->lBetas);
 			this->Controls->Add(this->lBetasRM);
 			this->Name = L"P_SpatialLagLinearRoads";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Potencial - Spatial Lag Linear Roads";
 			this->Shown += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();

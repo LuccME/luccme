@@ -16,7 +16,6 @@ System::Void LuccME::MyForm::bNovoModelo_Click(System::Object ^ sender, System::
 {
 	LuccME::NovoModelo^ novoModelo = gcnew LuccME::NovoModelo(lLanguage, false, 0);
 	this->Visible = false;
-	novoModelo->TopMost = true;
 	novoModelo->ShowDialog();
 	try {
 		this->Visible = true;
@@ -55,7 +54,7 @@ System::Void LuccME::MyForm::checkLanguage()
 	}
 	
 	if (lLanguage == "en") {
-		this->Text = "Model Manager";
+		this->Text = "LuccME - Model Manager";
 		bNovoModelo->Text = "New Model";
 		bAbrirModelo->Text = "Open Model";
 		arquivoToolStripMenuItem->Text = "File";
@@ -68,7 +67,7 @@ System::Void LuccME::MyForm::checkLanguage()
 		sobreToolStripMenuItem->Text = "About";
 	}
 	else {
-		this->Text = "Gerenciador de Modelos";
+		this->Text = "LuccME - Gerenciador de Modelos";
 		bNovoModelo->Text = "Novo Modelo";
 		bAbrirModelo->Text = "Abrir Modelo";
 		arquivoToolStripMenuItem->Text = "Arquivo";
@@ -106,7 +105,6 @@ System::Void LuccME::MyForm::bAbrirModelo_Click(System::Object ^ sender, System:
 {
 	LuccME::NovoModelo^ novoModelo = gcnew LuccME::NovoModelo(lLanguage, true, 0);
 	this->Visible = false;
-	novoModelo->TopMost = true;
 	novoModelo->ShowDialog();
 	try {
 		this->Visible = true;

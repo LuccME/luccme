@@ -404,8 +404,10 @@ System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, Syst
 	cReturn^ lLandUses = gcnew cReturn();
 	lLandUses->Return = gLandUseTypes;
 	lLandUses->Language = lLanguage;
+
 	LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUses);
 	landUseTypeForm->ShowDialog();
+
 	gLandUseTypes = lLandUses->Return;
 	lLUTShow->Text = gLandUseTypes;
 }
@@ -418,9 +420,11 @@ System::Void LuccME::NovoModelo::bLUNDManager_Click(System::Object ^ sender, Sys
 	}
 	lLandUsesNoData->Return = gLandUseNoData;
 	lLandUsesNoData->Language = lLanguage;
+	
 	LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUsesNoData);
 	landUseTypeForm->Text = gSLUTManager;
 	landUseTypeForm->ShowDialog();
+
 	gLandUseNoData = lLandUsesNoData->Return;
 	lLUNDShow->Text = gLandUseNoData;
 }
@@ -482,8 +486,10 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 		lDemand->YearsForSimulation = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text) + 1;
 		lDemand->LUT = gLandUseTypes;
 		lDemand->Language = lLanguage;
+
 		LuccME::D_PCVINPEForm^ demandForm = gcnew D_PCVINPEForm(lDemand);
 		demandForm->ShowDialog();
+
 		gDemand = lDemand->Return;
 		gDemand = gDemand->Replace("\n", "");
 		gDemand = gDemand->Replace("\r", "");

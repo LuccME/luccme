@@ -119,6 +119,7 @@ namespace LuccME {
 			this->Controls->Add(this->lMaxDifference);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"A_ABSO";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Allocation - Allocation By Simple Ordering";
 			this->Shown += gcnew System::EventHandler(this, &A_ABSO::A_ABSO_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

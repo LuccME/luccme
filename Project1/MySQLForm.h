@@ -210,6 +210,7 @@ namespace LuccME {
 			this->Controls->Add(this->lHost);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"MySQLForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Configurando Banco de Dados MySQL";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &MySQLForm::MySQLForm_FormClosing);
 			this->Shown += gcnew System::EventHandler(this, &MySQLForm::MySQLForm_Shown);

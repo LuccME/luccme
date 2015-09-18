@@ -197,6 +197,7 @@ namespace LuccME {
 			this->Controls->Add(this->lLUT);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"LUTForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Gerenciar Usos da Terra";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &LUTForm::LUTForm_FormClosing);
 			this->Shown += gcnew System::EventHandler(this, &LUTForm::LUTForm_Shown);

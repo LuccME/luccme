@@ -1266,6 +1266,7 @@ namespace LuccME {
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"NovoModelo";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Criando um Novo Modelo";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &NovoModelo::NovoModelo_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &NovoModelo::NovoModelo_Load);

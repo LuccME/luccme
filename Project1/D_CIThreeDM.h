@@ -208,6 +208,7 @@ namespace LuccME {
 			this->Controls->Add(this->lFinalYear);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"D_CIThreeDM";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"D_CIThreeDM";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &D_CIThreeDM::D_CIThreeDM_FormClosing);
 			this->Shown += gcnew System::EventHandler(this, &D_CIThreeDM::D_CIThreeDM_Shown);

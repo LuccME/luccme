@@ -376,6 +376,7 @@ namespace LuccME {
 			this->Controls->Add(this->lMaxIteration);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"A_Continuous";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Alocação - Continuo";
 			this->Shown += gcnew System::EventHandler(this, &A_Continuous::A_Continuous_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAllocationData))->EndInit();

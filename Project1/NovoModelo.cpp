@@ -158,6 +158,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSAllocDiscTitle = "Open Discrete Allocation Component (Continuos Potential)";
 		gSPotDisc = "A Discrete Pontential Component was modified.\nDo you want to set a Continuous Allocation Component?"; 
 		gSAllocContTitle = "Open Continuous Allocation Component (Discrete Potential)";
+		gSUnauthorized = "You do not have writting permission on the selected folder.\nTry a different one or run LuccME as admin.";
+		gSUnauthorizedTitle = "Error - Writting Permimission";
 	}
 	else {
 		//Form
@@ -290,6 +292,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSAllocDiscTitle = "Abrir Componente de Alocação Discreto (Potencial Contínuo)";
 		gSPotDisc = "Um Componente de Potencial Discreto foi alterado.\nVocê deseja abrir um Componente de Alocação Contínuo?";
 		gSAllocContTitle = "Abrir Componente de Alocação Contínuo (Potencial Discreto)";
+		gSUnauthorized = "Você não possui permissão de escrita no diretório selecionado.\nEscolha outro diretório ou execute o LuccME como administrador.";
+		gSUnauthorizedTitle = "Erro - Permissão de escrita";
 	}
 }
 
@@ -1568,7 +1572,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		checked = false;
 	}
 
-	else if (lLUND->Text == "") {
+	else if (lLUNDShow->Text == "") {
 		MessageBox::Show(gSLUTNDShow, gSLUTNDShowTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
@@ -1607,186 +1611,205 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 		//Creating main File
 		String^ path = lSelectedFolder->Text->Replace("\\","\\\\") + "\\" + tModelName->Text->ToLower() + "_main.lua";
-		
-		if (File::Exists(path))
+		path = path->Replace("\\\\\\\\", "\\\\");
+
+
+		StreamWriter^ sw = nullptr;
+
+		try
 		{
-			File::Delete(path);
-			
-		}
-			
-		StreamWriter^ sw = File::CreateText(path);
+			if (File::Exists(path))
+			{
+				File::Delete(path);
 
-		sw->WriteLine("--------------------------------------------------------------");
-		sw->WriteLine("-- This file contains a LUCCME APPLICATION MODEL definition --");
-		sw->WriteLine("--               Compatible with LuccME 2.1                 --");
-		sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
-		sw->WriteLine("--               " + dateTime + "                     --");
-		sw->WriteLine("--------------------------------------------------------------\n");
-
-		sw->WriteLine("require (\"luccme\")\n");
-		sw->WriteLine("dofile (\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tModelName->Text->ToLower() + "_submodel.lua\")\n");
-		sw->WriteLine();
-
-		sw->WriteLine("--------------------------------------------------------------");
-		sw->WriteLine("--             LuccME APPLICATION MODEL DEFINITION          --");
-		sw->WriteLine("--------------------------------------------------------------\n");
-
-		sw->WriteLine(tModelName->Text + " = LuccMEModel");
-		sw->WriteLine("{");
-		sw->WriteLine("\tname = \"" + tModelName->Text + "\",\n");
-
-		sw->WriteLine("\t-----------------------------------------------------");
-		sw->WriteLine("\t-- Temporal dimension definition                   --");
-		sw->WriteLine("\t-----------------------------------------------------\n");
-		sw->WriteLine("\tstartTime = " + tStartTime->Text + ",");
-		sw->WriteLine("\tendTime = " + tEndTime->Text + ",\n");
-
-		sw->WriteLine("\t-----------------------------------------------------");
-		sw->WriteLine("\t-- Spatial dimension definition                    --");
-		sw->WriteLine("\t-----------------------------------------------------\n");
-		sw->WriteLine("\tcs = CellularSpace");
-		sw->WriteLine("\t{");
-		if (tbSelectedBatabase->Lines->Length > 0) {
-			if (tbSelectedBatabase->Lines[0]->ToString() == gSAccess) {
-				sw->WriteLine("\t\tdatabase = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
 			}
-			else {
-				sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[1]->ToString() + ",");
-				sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[2]->ToString() + ",");
-				sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[3]->ToString() + ",");
-				sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[4]->ToString() + ",\n");
-			}
+			sw = File::CreateText(path);
 		}
-		sw->WriteLine("\t\ttheme = \"" + tThemeName->Text + "\",");
-		sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
-		sw->WriteLine("\t},\n");
-
-		sw->WriteLine("\t-----------------------------------------------------");
-		sw->WriteLine("\t-- Land use variables definition                   --");
-		sw->WriteLine("\t-----------------------------------------------------\n");
-		sw->WriteLine("\tlandUseTypes =");
-		sw->WriteLine("\t{");
-		sw->WriteLine("\t\t" + lLUTShow->Text->Replace(",",", "));
-		sw->WriteLine("\t},\n");
-		sw->WriteLine("\tlandUseNoData	= " + lLUNDShow->Text->Replace(",", ", ") + ",\n");
-
-		sw->WriteLine("\t-----------------------------------------------------");
-		sw->WriteLine("\t-- Behaviour dimension definition:                 --");
-		sw->WriteLine("\t-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --");
-		sw->WriteLine("\t-----------------------------------------------------\n");
-		sw->WriteLine("\tdemand = D1,");
-		sw->WriteLine("\tpotential = P1,");
-		sw->WriteLine("\tallocation = A1,\n");
-
-		sw->WriteLine("\tsave  =");
-		sw->WriteLine("\t{");
-		sw->WriteLine("\t\toutputTheme = \"" + tOutputTheme->Text + "_\",");
-		if (cSaveYearly->Checked) {
-			sw->WriteLine("\t\tyearly = true,");
-
-		}
-		else {
-			sw->WriteLine("\t\tsaveYears = {" + lYearsToSave->Text + "},");
+		catch (UnauthorizedAccessException^)
+		{
+			MessageBox::Show(gSUnauthorized, gSUnauthorizedTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+			checked = false;
 		}
 		
-		sw->WriteLine("\t\tmode = \"multiple\",");
-		sw->WriteLine("\t\tsaveAttrs = ");
-		sw->WriteLine("\t\t{");
-		String^ aux = "";
-		for (int i = 0; i < lAttrToSave->Text->Length; i++) {
-			if (lAttrToSave->Text[i] != ',') {
-				aux += lAttrToSave->Text[i];
+		if (checked) {
+			sw->WriteLine("--------------------------------------------------------------");
+			sw->WriteLine("-- This file contains a LUCCME APPLICATION MODEL definition --");
+			sw->WriteLine("--               Compatible with LuccME 2.1                 --");
+			sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
+			sw->WriteLine("--               " + dateTime + "                     --");
+			sw->WriteLine("--------------------------------------------------------------\n");
+
+			sw->WriteLine("require (\"luccme\")\n");
+			String^ folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
+			if (folderAux->Length > 4) {
+				sw->WriteLine("dofile (\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_submodel.lua\")\n");
 			}
 			else {
+				sw->WriteLine("dofile (\"" + folderAux + tModelName->Text->ToLower() + "_submodel.lua\")\n");
+			}
+			sw->WriteLine();
+
+			sw->WriteLine("--------------------------------------------------------------");
+			sw->WriteLine("--             LuccME APPLICATION MODEL DEFINITION          --");
+			sw->WriteLine("--------------------------------------------------------------\n");
+
+			sw->WriteLine(tModelName->Text + " = LuccMEModel");
+			sw->WriteLine("{");
+			sw->WriteLine("\tname = \"" + tModelName->Text + "\",\n");
+
+			sw->WriteLine("\t-----------------------------------------------------");
+			sw->WriteLine("\t-- Temporal dimension definition                   --");
+			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\tstartTime = " + tStartTime->Text + ",");
+			sw->WriteLine("\tendTime = " + tEndTime->Text + ",\n");
+
+			sw->WriteLine("\t-----------------------------------------------------");
+			sw->WriteLine("\t-- Spatial dimension definition                    --");
+			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\tcs = CellularSpace");
+			sw->WriteLine("\t{");
+			if (tbSelectedBatabase->Lines->Length > 0) {
+				if (tbSelectedBatabase->Lines[0]->ToString() == gSAccess) {
+					sw->WriteLine("\t\tdatabase = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+				}
+				else {
+					sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[1]->ToString() + ",");
+					sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[2]->ToString() + ",");
+					sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[3]->ToString() + ",");
+					sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[4]->ToString() + ",\n");
+				}
+			}
+			sw->WriteLine("\t\ttheme = \"" + tThemeName->Text + "\",");
+			sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
+			sw->WriteLine("\t},\n");
+
+			sw->WriteLine("\t-----------------------------------------------------");
+			sw->WriteLine("\t-- Land use variables definition                   --");
+			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\tlandUseTypes =");
+			sw->WriteLine("\t{");
+			sw->WriteLine("\t\t" + lLUTShow->Text->Replace(",", ", "));
+			sw->WriteLine("\t},\n");
+			sw->WriteLine("\tlandUseNoData	= " + lLUNDShow->Text->Replace(",", ", ") + ",\n");
+
+			sw->WriteLine("\t-----------------------------------------------------");
+			sw->WriteLine("\t-- Behaviour dimension definition:                 --");
+			sw->WriteLine("\t-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --");
+			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\tdemand = D1,");
+			sw->WriteLine("\tpotential = P1,");
+			sw->WriteLine("\tallocation = A1,\n");
+
+			sw->WriteLine("\tsave  =");
+			sw->WriteLine("\t{");
+			sw->WriteLine("\t\toutputTheme = \"" + tOutputTheme->Text + "_\",");
+			if (cSaveYearly->Checked) {
+				sw->WriteLine("\t\tyearly = true,");
+
+			}
+			else {
+				sw->WriteLine("\t\tsaveYears = {" + lYearsToSave->Text + "},");
+			}
+
+			sw->WriteLine("\t\tmode = \"multiple\",");
+			sw->WriteLine("\t\tsaveAttrs = ");
+			sw->WriteLine("\t\t{");
+			String^ aux = "";
+			for (int i = 0; i < lAttrToSave->Text->Length; i++) {
+				if (lAttrToSave->Text[i] != ',') {
+					aux += lAttrToSave->Text[i];
+				}
+				else {
+					if (aux[0] == ' ') {
+						aux = aux->Remove(0, 1);
+					}
+					sw->WriteLine("\t\t\t\"" + aux + "_out\",");
+					sw->WriteLine("\t\t\t\"" + aux + "_change\",");
+					sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
+					aux = "";
+				}
+			}
+			if (aux != "") {
 				if (aux[0] == ' ') {
 					aux = aux->Remove(0, 1);
 				}
 				sw->WriteLine("\t\t\t\"" + aux + "_out\",");
 				sw->WriteLine("\t\t\t\"" + aux + "_change\",");
 				sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
-				aux = "";
 			}
-		}
-		if (aux != "") {
-			if (aux[0] == ' ') {
-				aux = aux->Remove(0, 1);
+			sw->WriteLine("\t\t},\n");
+			sw->WriteLine("\t},\n");
+
+			if (cIsCoupled->Checked) {
+				sw->WriteLine("\tisCoupled = true");
 			}
-			sw->WriteLine("\t\t\t\"" + aux + "_out\",");
-			sw->WriteLine("\t\t\t\"" + aux + "_change\",");
-			sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
-		}
-		sw->WriteLine("\t\t},\n");
-		sw->WriteLine("\t},\n");
-		
-		if (cIsCoupled->Checked) {
-			sw->WriteLine("\tisCoupled = true");
-		}
-		else {
-			sw->WriteLine("\tisCoupled = false");
-		}
-		sw->WriteLine("}  -- END LuccME application model definition\n");
+			else {
+				sw->WriteLine("\tisCoupled = false");
+			}
+			sw->WriteLine("}  -- END LuccME application model definition\n");
 
-		sw->WriteLine("-----------------------------------------------------");
-		sw->WriteLine("-- ENVIROMMENT DEFINITION                          --");
-		sw->WriteLine("-----------------------------------------------------");
-		sw->WriteLine("timer = Timer");
-		sw->WriteLine("{");
-		sw->WriteLine("\tEvent");
-		sw->WriteLine("\t{");
-		sw->WriteLine("\t\ttime = " + tModelName->Text + ".startTime,");
-		sw->WriteLine("\t\tperiod = 1,");
-		sw->WriteLine("\t\tpriority = 1,");
-		sw->WriteLine("\t\taction = function(event)");
-		sw->WriteLine("\t\t\t\t\t\t" + tModelName->Text + ":execute(event)");
-		sw->WriteLine("\t\t\t\t  end");
-		sw->WriteLine("\t}");
-		sw->WriteLine("}\n");
-
-		sw->WriteLine("env_" + tModelName->Text + " = Environment{}");
-		sw->WriteLine("env_" + tModelName->Text + ":add(timer)\n");
-
-		sw->WriteLine("-----------------------------------------------------");
-		sw->WriteLine("-- ENVIROMMENT EXECUTION                           --");
-		sw->WriteLine("-----------------------------------------------------");
-		sw->WriteLine("if " + tModelName->Text + ".isCoupled == false then");
-		sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
-		sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
-		sw->WriteLine("\tenv_" + tModelName->Text + ":execute(" + tModelName->Text + ".endTime)");
-		sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
-		sw->WriteLine("end");
-
-		sw->Close();
-		
-		if (File::Exists(path))
-		{
-			mainFile = true;
-		}
-
-		//Creating Submodel File
-		path = lSelectedFolder->Text->Replace("\\", "\\\\") + "\\" + tModelName->Text->ToLower() + "_submodel.lua";
-
-		if (File::Exists(path))
-		{
-			File::Delete(path);
-		}
-
-		sw = File::CreateText(path);
-
-		sw->WriteLine("--------------------------------------------------------------");
-		sw->WriteLine("--       This file contains the COMPONENTS definition       --");
-		sw->WriteLine("--               Compatible with LuccME 2.1                 --");
-		sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
-		sw->WriteLine("--               " + dateTime + "                     --");
-		sw->WriteLine("--------------------------------------------------------------\n");
-
-		if (tbDemand->Lines->Length > 0) {
 			sw->WriteLine("-----------------------------------------------------");
-			sw->WriteLine("-- Demand                                          --");
+			sw->WriteLine("-- ENVIROMMENT DEFINITION                          --");
 			sw->WriteLine("-----------------------------------------------------");
-			
-			int tempYear = 0;
-			switch (gDemandComponent)
+			sw->WriteLine("timer = Timer");
+			sw->WriteLine("{");
+			sw->WriteLine("\tEvent");
+			sw->WriteLine("\t{");
+			sw->WriteLine("\t\ttime = " + tModelName->Text + ".startTime,");
+			sw->WriteLine("\t\tperiod = 1,");
+			sw->WriteLine("\t\tpriority = 1,");
+			sw->WriteLine("\t\taction = function(event)");
+			sw->WriteLine("\t\t\t\t\t\t" + tModelName->Text + ":execute(event)");
+			sw->WriteLine("\t\t\t\t  end");
+			sw->WriteLine("\t}");
+			sw->WriteLine("}\n");
+
+			sw->WriteLine("env_" + tModelName->Text + " = Environment{}");
+			sw->WriteLine("env_" + tModelName->Text + ":add(timer)\n");
+
+			sw->WriteLine("-----------------------------------------------------");
+			sw->WriteLine("-- ENVIROMMENT EXECUTION                           --");
+			sw->WriteLine("-----------------------------------------------------");
+			sw->WriteLine("if " + tModelName->Text + ".isCoupled == false then");
+			sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
+			sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
+			sw->WriteLine("\tenv_" + tModelName->Text + ":execute(" + tModelName->Text + ".endTime)");
+			sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
+			sw->WriteLine("end");
+
+			sw->Close();
+
+			if (File::Exists(path))
 			{
+				mainFile = true;
+			}
+
+			//Creating Submodel File
+			path = lSelectedFolder->Text->Replace("\\", "\\\\") + "\\" + tModelName->Text->ToLower() + "_submodel.lua";
+			path = path->Replace("\\\\\\\\", "\\\\");
+
+			if (File::Exists(path))
+			{
+				File::Delete(path);
+			}
+
+			sw = File::CreateText(path);
+			
+			sw->WriteLine("--------------------------------------------------------------");
+			sw->WriteLine("--       This file contains the COMPONENTS definition       --");
+			sw->WriteLine("--               Compatible with LuccME 2.1                 --");
+			sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
+			sw->WriteLine("--               " + dateTime + "                     --");
+			sw->WriteLine("--------------------------------------------------------------\n");
+
+			if (tbDemand->Lines->Length > 0) {
+				sw->WriteLine("-----------------------------------------------------");
+				sw->WriteLine("-- Demand                                          --");
+				sw->WriteLine("-----------------------------------------------------");
+
+				int tempYear = 0;
+				switch (gDemandComponent)
+				{
 				case 1:
 					sw->WriteLine("D1 = " + tbDemand->Lines[0]);
 					sw->WriteLine("{");
@@ -1805,7 +1828,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t}");
 					sw->WriteLine("}\n");
 					break;
-				
+
 				case 2:
 					sw->WriteLine("D1 = " + tbDemand->Lines[0]);
 					sw->WriteLine("{");
@@ -1823,39 +1846,39 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\tfinalLandUseTypesForInterpolation = {" + tbDemand->Lines[5]->ToString()->Replace(",", ", ") + "},");
 					sw->WriteLine("}\n");
 					break;
-				
+
 				default:
 					break;
+				}
 			}
-		}
-		
-		if (tbPotential->Lines->Length > 0) {
-			sw->WriteLine("-----------------------------------------------------");
-			sw->WriteLine("-- Potential                                       --");
-			sw->WriteLine("-----------------------------------------------------");
 
-			array<String^>^ tempLUTs = gcnew array<String^>(50);
-			int row = 0;
-			String^ aux = "";
-			String^ tempBetas = "";
-			for (int i = 0; i < gLandUseTypes->Length; i++) {
-				if (gLandUseTypes[i] != ',') {
-					if (gLandUseTypes[i] != '\"') {
-						aux += gLandUseTypes[i];
+			if (tbPotential->Lines->Length > 0) {
+				sw->WriteLine("-----------------------------------------------------");
+				sw->WriteLine("-- Potential                                       --");
+				sw->WriteLine("-----------------------------------------------------");
+
+				array<String^>^ tempLUTs = gcnew array<String^>(50);
+				int row = 0;
+				String^ aux = "";
+				String^ tempBetas = "";
+				for (int i = 0; i < gLandUseTypes->Length; i++) {
+					if (gLandUseTypes[i] != ',') {
+						if (gLandUseTypes[i] != '\"') {
+							aux += gLandUseTypes[i];
+						}
+					}
+					else {
+						tempLUTs[row] = aux;
+						aux = "";
+						row++;
 					}
 				}
-				else {
+				if (aux != "") {
 					tempLUTs[row] = aux;
-					aux = "";
-					row++;
 				}
-			}
-			if (aux != "") {
-				tempLUTs[row] = aux;
-			}
 
-			switch (gPotentialComponent)
-			{
+				switch (gPotentialComponent)
+				{
 				case 1:
 					sw->WriteLine("P1 = " + tbPotential->Lines[0] + "\n");
 					break;
@@ -1877,7 +1900,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\tpotentialData =");
 					}
 					else {
-						sw->WriteLine("\tregressionData ="); 
+						sw->WriteLine("\tregressionData =");
 					}
 					sw->WriteLine("\t{");
 					sw->WriteLine("\t\t--Region 1");
@@ -1965,7 +1988,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							sw->WriteLine("\n\t\t\t\t" + aux->Substring(j, 9)); //Betas
 							sw->WriteLine("\t\t\t\t{");
 							j += 11;
-							while(aux[j] != '%') {
+							while (aux[j] != '%') {
 								if (aux[j] != ',') {
 									if (aux[j] != '}') {
 										if (aux[j] != ' ') {
@@ -2066,36 +2089,36 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 				default:
 					break;
+				}
 			}
-		}
 
-		if (tbAllocation->Lines->Length > 0) {
-			sw->WriteLine("-----------------------------------------------------");
-			sw->WriteLine("-- Allocation                                      --");
-			sw->WriteLine("-----------------------------------------------------");
+			if (tbAllocation->Lines->Length > 0) {
+				sw->WriteLine("-----------------------------------------------------");
+				sw->WriteLine("-- Allocation                                      --");
+				sw->WriteLine("-----------------------------------------------------");
 
-			array<String^>^ tempLUTs = gcnew array<String^>(50);
-			int row = 0;
-			String^ aux = "";
-			String^ tempBetas = "";
-			for (int i = 0; i < gLandUseTypes->Length; i++) {
-				if (gLandUseTypes[i] != ',') {
-					if (gLandUseTypes[i] != '\"') {
-						aux += gLandUseTypes[i];
+				array<String^>^ tempLUTs = gcnew array<String^>(50);
+				int row = 0;
+				String^ aux = "";
+				String^ tempBetas = "";
+				for (int i = 0; i < gLandUseTypes->Length; i++) {
+					if (gLandUseTypes[i] != ',') {
+						if (gLandUseTypes[i] != '\"') {
+							aux += gLandUseTypes[i];
+						}
+					}
+					else {
+						tempLUTs[row] = aux;
+						aux = "";
+						row++;
 					}
 				}
-				else {
+				if (aux != "") {
 					tempLUTs[row] = aux;
-					aux = "";
-					row++;
 				}
-			}
-			if (aux != "") {
-				tempLUTs[row] = aux;
-			}
 
-			switch (gAllocationComponent)
-			{
+				switch (gAllocationComponent)
+				{
 				case 1:
 					sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 					sw->WriteLine("{");
@@ -2182,32 +2205,41 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					break;
 				default:
 					break;
+				}
+
+			}
+			sw->Close();
+
+			if (File::Exists(path))
+			{
+				subFile = true;
+
 			}
 
-		}
-		sw->Close();
+			if (mainFile && subFile) {
+				if (lSelectedFolder->Text->Length > 4) {
+					MessageBox::Show(gSSuccess + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_main.lua" +
+						"\n" + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_submodel.lua", gSSuccessTitle,
+						MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					MessageBox::Show(gSSuccess + lSelectedFolder->Text + tModelName->Text->ToLower() + "_main.lua" +
+						"\n" + lSelectedFolder->Text + tModelName->Text->ToLower() + "_submodel.lua", gSSuccessTitle,
+						MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
 
-		if (File::Exists(path))
-		{
-			subFile = true;
-
-		}
-
-		if (mainFile && subFile) {
-			MessageBox::Show(gSSuccess + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_main.lua" +
-							"\n" + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_submodel.lua", gSSuccessTitle,
-							MessageBoxButtons::OK, MessageBoxIcon::Information);
-			lRunModel->Visible = true;
-			bRun->Visible = true;
-		}
-		else {
-			if (!mainFile) {
-				MessageBox::Show("Erro na gravação do arquivo Principal.\nVerifique o caminho:" + lSelectedFolder->Text, "Erro na geração dos Arquivos",
-					MessageBoxButtons::OK, MessageBoxIcon::Error);
+				lRunModel->Visible = true;
+				bRun->Visible = true;
 			}
 			else {
-				MessageBox::Show("Erro na gravação do arquivo Submodelos.\nVerifique o caminho:" + lSelectedFolder->Text, "Erro na geração dos Arquivos",
-					MessageBoxButtons::OK, MessageBoxIcon::Error);
+				if (!mainFile) {
+					MessageBox::Show("Erro na gravação do arquivo Principal.\nVerifique o caminho:" + lSelectedFolder->Text, "Erro na geração dos Arquivos",
+						MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+				else {
+					MessageBox::Show("Erro na gravação do arquivo Submodelos.\nVerifique o caminho:" + lSelectedFolder->Text, "Erro na geração dos Arquivos",
+						MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			}
 		}
 	}

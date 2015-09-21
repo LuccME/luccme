@@ -19,8 +19,7 @@ System::Void LuccME::MyForm::bNovoModelo_Click(System::Object ^ sender, System::
 	novoModelo->ShowDialog();
 	try {
 		this->Visible = true;
-	} catch (ObjectDisposedException^ e) {
-		e = nullptr;
+	} catch (ObjectDisposedException^) {
 		Application::Exit();
 	}
 	lLanguage = novoModelo->lLanguage;
@@ -109,8 +108,7 @@ System::Void LuccME::MyForm::bAbrirModelo_Click(System::Object ^ sender, System:
 	try {
 		this->Visible = true;
 	}
-	catch (ObjectDisposedException^ e) {
-		e = nullptr;
+	catch (ObjectDisposedException^) {
 		Application::Exit();
 	}
 	lLanguage = novoModelo->lLanguage;

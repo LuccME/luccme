@@ -18,6 +18,8 @@ namespace LuccME {
 	{
 	private: 
 		System::Windows::Forms::TextBox^  tbSelectedBatabase;
+		String^ gSUnauthorized = "";
+		String^ gSUnauthorizedTitle = "";
 		String^ gSExit = "";
 		String^ gSExitTitle = "";
 		String^ gSSuccessTitle = "";

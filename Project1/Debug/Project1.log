@@ -1,9 +1,7 @@
-﻿Build started 21/09/2015 15:14:54.
+﻿Build started 21/09/2015 15:36:39.
      1>Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-     1>ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\LuccME.res" LuccME.rc 
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_SVN\LuccME\branches\Project1\Debug\LuccME.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\LuccME.AboutForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.AllocContinuousForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.AllocDiscreteForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.A_ABSO.resources /ASSEMBLYRESOURCE:Debug\LuccME.A_Continuous.resources /ASSEMBLYRESOURCE:Debug\LuccME.A_AllocationClueSLike.resources /ASSEMBLYRESOURCE:Debug\LuccME.D_CIThreeDM.resources /ASSEMBLYRESOURCE:Debug\LuccME.D_CITwoDM.resources /ASSEMBLYRESOURCE:Debug\LuccME.D_PCVINPEForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.LanguageForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.LUTForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.MyForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.MySQLForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.NovoModelo.resources /ASSEMBLYRESOURCE:Debug\LuccME.PotContinuousForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.PotDiscreteForm.resources /ASSEMBLYRESOURCE:Debug\LuccME.P_Continuous.resources /ASSEMBLYRESOURCE:Debug\LuccME.P_Discrete.resources /ASSEMBLYRESOURCE:Debug\LuccME.P_SpatialLagLinearRoads.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\_SVN\LuccME\branches\Project1\Debug\LuccME.pdb" /ASSEMBLYDEBUG /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\LuccME.res
          Debug\AboutForm.obj
          Debug\AllocContinuousForm.obj
@@ -33,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.64
+Time Elapsed 00:00:03.53

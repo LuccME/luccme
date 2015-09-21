@@ -169,6 +169,7 @@
     <ClInclude Include="P_SpatialLagLinearRoads.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="A_ABSO.resx">
       <DependentUpon>A_ABSO.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="A_Continuous.resx">
       <DependentUpon>A_Continuous.h</DependentUpon>
@@ -207,6 +209,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MySQLForm.resx">
       <DependentUpon>MySQLForm.h</DependentUpon>
@@ -231,11 +234,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\icone.ico" />
+    <Image Include="Resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ajuda.chm" />
     <None Include="help.chm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LuccME.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

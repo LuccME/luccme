@@ -1,4 +1,4 @@
-﻿Build started 21/09/2015 14:28:08.
+﻿Build started 21/09/2015 15:15:20.
      1>Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" on node 2 (Rebuild target(s)).
      1>PreBuildEvent:
          copy D:\_SVN\LuccME\branches\Project1\Project1\\*.chm D:\_SVN\LuccME\branches\Project1\Release\\
@@ -35,8 +35,11 @@
          Generating Code...
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /clr /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _UNICODE /D UNICODE /EHa /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fp"Release\LuccME.pch" /Fa"Release\\" /Fo"Release\\" /Fd"Release\vc140.pdb" /analyze- /errorReport:prompt "C:\Users\Diego Melo\AppData\Local\Temp\.NETFramework,Version=v4.5.2.AssemblyAttributes.cpp"
          .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\LuccME.res" LuccME.rc 
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_SVN\LuccME\branches\Project1\Release\LuccME.exe" /INCREMENTAL:NO /NOLOGO /ASSEMBLYRESOURCE:Release\LuccME.AboutForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.A_ABSO.resources /ASSEMBLYRESOURCE:Release\LuccME.A_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.A_AllocationClueSLike.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CIThreeDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CITwoDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_PCVINPEForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LanguageForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LUTForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MyForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MySQLForm.resources /ASSEMBLYRESOURCE:Release\LuccME.NovoModelo.resources /ASSEMBLYRESOURCE:Release\LuccME.PotContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.PotDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Discrete.resources /ASSEMBLYRESOURCE:Release\LuccME.P_SpatialLagLinearRoads.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\_SVN\LuccME\branches\Project1\Release\LuccME.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\AboutForm.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_SVN\LuccME\branches\Project1\Release\LuccME.exe" /INCREMENTAL:NO /NOLOGO /ASSEMBLYRESOURCE:Release\LuccME.AboutForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.AllocDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.A_ABSO.resources /ASSEMBLYRESOURCE:Release\LuccME.A_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.A_AllocationClueSLike.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CIThreeDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_CITwoDM.resources /ASSEMBLYRESOURCE:Release\LuccME.D_PCVINPEForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LanguageForm.resources /ASSEMBLYRESOURCE:Release\LuccME.LUTForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MyForm.resources /ASSEMBLYRESOURCE:Release\LuccME.MySQLForm.resources /ASSEMBLYRESOURCE:Release\LuccME.NovoModelo.resources /ASSEMBLYRESOURCE:Release\LuccME.PotContinuousForm.resources /ASSEMBLYRESOURCE:Release\LuccME.PotDiscreteForm.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Continuous.resources /ASSEMBLYRESOURCE:Release\LuccME.P_Discrete.resources /ASSEMBLYRESOURCE:Release\LuccME.P_SpatialLagLinearRoads.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\_SVN\LuccME\branches\Project1\Release\LuccME.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\LuccME.res
+         Release\AboutForm.obj
          Release\AllocContinuousForm.obj
          Release\AllocDiscreteForm.obj
          Release\A_ABSO.obj
@@ -64,4 +67,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:09.02
+Time Elapsed 00:00:09.55

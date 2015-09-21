@@ -1481,6 +1481,17 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		}
 
 		int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+		int tempTime = Convert::ToInt16(tStartTime->Text);
+
+		lvYearsToSave->Clear();
+		lvYearsToSave->View = View::Details;
+		lvYearsToSave->GridLines = true;
+		lvYearsToSave->Columns->Add(gSAnos, lvYearsToSave->Width - 22, HorizontalAlignment::Center);
+
+		for (int i = 0; i <= time; i++) {
+			lvYearsToSave->Items->Add(Convert::ToString(tempTime + i));
+		}
+
 		if (gAttrTime != time) {
 			lYearsToSave->Text = "";
 		}

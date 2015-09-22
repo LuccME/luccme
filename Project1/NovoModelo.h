@@ -18,6 +18,9 @@ namespace LuccME {
 	{
 	private: 
 		System::Windows::Forms::TextBox^  tbSelectedBatabase;
+		String^ gSPotContAlocDisc = "";
+		String^ gSPotContAlocDiscTitle = "";
+		String^ gSPotDiscAlocCont = "";
 		String^ gSUnauthorized = "";
 		String^ gSUnauthorizedTitle = "";
 		String^ gSExit = "";

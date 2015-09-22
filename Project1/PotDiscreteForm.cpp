@@ -9,24 +9,33 @@ System::Void LuccME::PotDiscreteForm::PotDiscreteForm_Shown(System::Object ^ sen
 		gSPotMod = "Another Potencial Component was modified.\nThe potential values will be lost\nDo you want to proceed?";
 		gSPotModTitle = "Another Potential Component was used";
 		gSPot = "Pontential - ";
+		gSNSR = "This component does not have parameters. Do you want to select it?";
+		gSNSRTitle = "Confirmation - Neigh Simple Rule";
 	}
 	else {
 		this->Text = "Pontencial - Componentes Discretos";
 		gSPotMod = "Outro componente de Potencial foi modificado anteriormente.\nOs valores de potencial serão apagados.\nDeseja continuar?";
 		gSPotModTitle = "Outro componente de Potencial já utilizado";
 		gSPot = "Pontencial - ";
+		gSNSR = "Este componente não possui parâmetros. Deseja selecioná-lo?";
+		gSNSRTitle = "Confirmação - Neigh Simple Rule";
 	}
 }
 
 System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
+	if (MessageBox::Show(gSNSR, gSNSRTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Question) == LuccME::DialogResult::No) {
+		check = false;
+	}
+
 	if (this->lReturn->Component != 1 && this->lReturn->Component != 0) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
 		
 	}
+
 	if (check) {
 		lReturn->Return = "";
 		lReturn->Component = 1;

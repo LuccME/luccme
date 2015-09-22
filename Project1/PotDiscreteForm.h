@@ -19,6 +19,8 @@ namespace LuccME {
 		String^ gSPotMod = "";
 		String^ gSPotModTitle = "";
 		String^ gSPot = "";
+		String^ gSNSR = "";
+		String^ gSNSRTitle = "";
 
 	public:
 		cReturnPotential^ lReturn;

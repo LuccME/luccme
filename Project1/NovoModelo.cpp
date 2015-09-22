@@ -22,10 +22,25 @@ using namespace System::Drawing;
 
 System::Void LuccME::NovoModelo::checkLanguage()
 {
-	//MessageBox::Show(gAllocation, "Alocacao");
-	//MessageBox::Show(gPotential, "Potencial");
-	//MessageBox::Show(gDemand, "Demanda");
-	//MessageBox::Show(gLandUseTypes, "LUT");
+	if (gPotentialComponent > 5 || gAllocationComponent > 2) {
+		bPotDiscrete->Enabled = false;
+		bAllocDiscrete->Enabled = false;
+		bPotContinuous->Enabled = true;
+		bAllocContinuous->Enabled = true;
+	}
+	else if ((gPotentialComponent > 0 && gPotentialComponent < 6) || (gAllocationComponent > 0 && gAllocationComponent < 3)) {
+		bPotDiscrete->Enabled = true;
+		bAllocDiscrete->Enabled = true;
+		bPotContinuous->Enabled = false;
+		bAllocContinuous->Enabled = false;
+	}
+	else {
+		bPotDiscrete->Enabled = true;
+		bAllocDiscrete->Enabled = true;
+		bPotContinuous->Enabled = true;
+		bAllocContinuous->Enabled = true;
+	}
+
 
 	if (lLanguage == "en") {
 		//Form
@@ -160,6 +175,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSAllocContTitle = "Open Continuous Allocation Component (Discrete Potential)";
 		gSUnauthorized = "You do not have writting permission on the selected folder.\nTry a different one or run LuccME as admin.";
 		gSUnauthorizedTitle = "Error - Writting Permimission";
+		gSPotContAlocDisc = "Continuous Potential Component and Discrete Allocation Component.";
+		gSPotContAlocDiscTitle = "Error - Using Continuous and Discrete Components";
+		gSPotDiscAlocCont = "Discrete Potential Component and Continuous Allocation Component.";
 	}
 	else {
 		//Form
@@ -224,6 +242,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lRunModel->Text = "Rodar o Modelo";
 		bRun->Text = "Rodar Modelo";
 		//Strings
+		gSPotDiscAlocCont = "Componente de Potencial Discreto e Componente de Alocação Contínuo.";
+		gSPotContAlocDisc = "Componente de Potencial Contínuo e Componente de Alocação Discreto.";
+		gSPotContAlocDiscTitle = "Erro - Componentes Contínuos e Discretos sendo utilizados";
 		gSExit = "Os dados alterados serão perdidos.\nDeseja Continuar?";
 		gSExitTitle = "Saindo - Dados não salvos";
 		gSSuccessTitle = "Arquivos gerados com Sucesso";
@@ -842,6 +863,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 			break;
 		}
 	}
+	checkLanguage();
 }
 
 System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -1126,6 +1148,7 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 			break;
 		}
 	}
+	checkLanguage();
 }
 
 System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -1229,6 +1252,7 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 			break;
 		}
 	}
+	checkLanguage();
 }
 
 System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -1428,6 +1452,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 			tbAllocation->Lines = lines;
 		}
 	}
+	checkLanguage();
 }
 
 System::Void LuccME::NovoModelo::cSaveYearly_CheckedChanged(System::Object ^ sender, System::EventArgs ^ e)
@@ -1610,6 +1635,16 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 	else if (lYearsToSave->Text == "" && cSaveYearly->Checked == false) {
 		MessageBox::Show(gSYearSave, gSYearSaveTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
+	else if (gPotentialComponent > 5 && (gAllocationComponent > 0 && gAllocationComponent < 3)) {
+		MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
+	else if ((gPotentialComponent > 0 && gPotentialComponent < 6) && gAllocationComponent > 2) {
+		MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
@@ -4981,9 +5016,19 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			sw->Close();
 			submodel = true;
 		}
+		
 		if (main && submodel && imported) {
-			lRunModel->Visible = true;
-			bRun->Visible = true;
+			if (gPotentialComponent > 5 && (gAllocationComponent > 0 && gAllocationComponent < 3)) {
+				MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			else if ((gPotentialComponent > 0 && gPotentialComponent < 6) && gAllocationComponent > 2) {
+				MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			else {
+				lRunModel->Visible = true;
+				bRun->Visible = true;
+				checkLanguage();
+			}
 		}
 	}
 }

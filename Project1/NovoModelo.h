@@ -113,6 +113,7 @@ namespace LuccME {
 		String^ gAllocationLUT = "";
 		String^ gAttrLUT = "";
 		int gAttrTime = 0;
+		int gDynTime = 0;
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;
@@ -148,7 +149,15 @@ namespace LuccME {
 		bool access = false;
 		bool lOpen = false;
 		String^ lLanguage;
-		int lReturn;
+private: System::Windows::Forms::TabPage^  tabPage7;
+private: System::Windows::Forms::CheckBox^  cDynamicVariables;
+private: System::Windows::Forms::Label^  lAtualizaveis;
+private: System::Windows::Forms::Button^  bDynamicSelect;
+private: System::Windows::Forms::Label^  lDynamicConfirm;
+private: System::Windows::Forms::Label^  lAnosVariaveis;
+private: System::Windows::Forms::ListView^  lvYearsDynamic;
+public:
+	int lReturn;
 		NovoModelo(String^ pLanguage, bool pOpen, int pReturn)
 		{
 			InitializeComponent();
@@ -320,6 +329,13 @@ namespace LuccME {
 			this->lRunModel = (gcnew System::Windows::Forms::Label());
 			this->bGerarArquivos = (gcnew System::Windows::Forms::Button());
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
+			this->tabPage7 = (gcnew System::Windows::Forms::TabPage());
+			this->lAtualizaveis = (gcnew System::Windows::Forms::Label());
+			this->bDynamicSelect = (gcnew System::Windows::Forms::Button());
+			this->lDynamicConfirm = (gcnew System::Windows::Forms::Label());
+			this->lAnosVariaveis = (gcnew System::Windows::Forms::Label());
+			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
+			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
@@ -330,6 +346,7 @@ namespace LuccME {
 			this->tabPage4->SuspendLayout();
 			this->tabPage5->SuspendLayout();
 			this->tabPage6->SuspendLayout();
+			this->tabPage7->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pbLogo1
@@ -432,6 +449,7 @@ namespace LuccME {
 			this->tNovoModelo->Controls->Add(this->tabPage4);
 			this->tNovoModelo->Controls->Add(this->tabPage5);
 			this->tNovoModelo->Controls->Add(this->tabPage6);
+			this->tNovoModelo->Controls->Add(this->tabPage7);
 			this->tNovoModelo->Location = System::Drawing::Point(12, 173);
 			this->tNovoModelo->Name = L"tNovoModelo";
 			this->tNovoModelo->SelectedIndex = 0;
@@ -1252,6 +1270,91 @@ namespace LuccME {
 			this->lFileMaker->Text = L"Gerar os Arquivos";
 			this->lFileMaker->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
+			// tabPage7
+			// 
+			this->tabPage7->Controls->Add(this->lAtualizaveis);
+			this->tabPage7->Controls->Add(this->bDynamicSelect);
+			this->tabPage7->Controls->Add(this->lDynamicConfirm);
+			this->tabPage7->Controls->Add(this->lAnosVariaveis);
+			this->tabPage7->Controls->Add(this->lvYearsDynamic);
+			this->tabPage7->Controls->Add(this->cDynamicVariables);
+			this->tabPage7->Location = System::Drawing::Point(4, 22);
+			this->tabPage7->Name = L"tabPage7";
+			this->tabPage7->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage7->Size = System::Drawing::Size(703, 455);
+			this->tabPage7->TabIndex = 6;
+			this->tabPage7->Text = L"Recursos Avançados";
+			this->tabPage7->UseVisualStyleBackColor = true;
+			// 
+			// lAtualizaveis
+			// 
+			this->lAtualizaveis->AutoSize = true;
+			this->lAtualizaveis->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lAtualizaveis->Location = System::Drawing::Point(19, 82);
+			this->lAtualizaveis->Name = L"lAtualizaveis";
+			this->lAtualizaveis->Size = System::Drawing::Size(168, 23);
+			this->lAtualizaveis->TabIndex = 98;
+			this->lAtualizaveis->Text = L"a serem Atualizadas";
+			this->lAtualizaveis->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->lAtualizaveis->Visible = false;
+			// 
+			// bDynamicSelect
+			// 
+			this->bDynamicSelect->Location = System::Drawing::Point(60, 286);
+			this->bDynamicSelect->Name = L"bDynamicSelect";
+			this->bDynamicSelect->Size = System::Drawing::Size(75, 23);
+			this->bDynamicSelect->TabIndex = 97;
+			this->bDynamicSelect->Text = L"Selecionar";
+			this->bDynamicSelect->UseVisualStyleBackColor = true;
+			this->bDynamicSelect->Visible = false;
+			this->bDynamicSelect->Click += gcnew System::EventHandler(this, &NovoModelo::bDynamicSelect_Click);
+			// 
+			// lDynamicConfirm
+			// 
+			this->lDynamicConfirm->AutoSize = true;
+			this->lDynamicConfirm->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lDynamicConfirm->Location = System::Drawing::Point(14, 331);
+			this->lDynamicConfirm->Name = L"lDynamicConfirm";
+			this->lDynamicConfirm->Size = System::Drawing::Size(0, 19);
+			this->lDynamicConfirm->TabIndex = 96;
+			this->lDynamicConfirm->Visible = false;
+			// 
+			// lAnosVariaveis
+			// 
+			this->lAnosVariaveis->AutoSize = true;
+			this->lAnosVariaveis->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lAnosVariaveis->Location = System::Drawing::Point(22, 60);
+			this->lAnosVariaveis->Name = L"lAnosVariaveis";
+			this->lAnosVariaveis->Size = System::Drawing::Size(163, 23);
+			this->lAnosVariaveis->TabIndex = 95;
+			this->lAnosVariaveis->Text = L"Anos com Variáveis";
+			this->lAnosVariaveis->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->lAnosVariaveis->Visible = false;
+			// 
+			// lvYearsDynamic
+			// 
+			this->lvYearsDynamic->Location = System::Drawing::Point(16, 108);
+			this->lvYearsDynamic->Name = L"lvYearsDynamic";
+			this->lvYearsDynamic->Size = System::Drawing::Size(171, 166);
+			this->lvYearsDynamic->TabIndex = 94;
+			this->lvYearsDynamic->UseCompatibleStateImageBehavior = false;
+			this->lvYearsDynamic->Visible = false;
+			// 
+			// cDynamicVariables
+			// 
+			this->cDynamicVariables->AutoSize = true;
+			this->cDynamicVariables->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
+			this->cDynamicVariables->Location = System::Drawing::Point(16, 17);
+			this->cDynamicVariables->Name = L"cDynamicVariables";
+			this->cDynamicVariables->Size = System::Drawing::Size(186, 27);
+			this->cDynamicVariables->TabIndex = 88;
+			this->cDynamicVariables->Text = L"Variáveis Dinamicas";
+			this->cDynamicVariables->UseVisualStyleBackColor = true;
+			this->cDynamicVariables->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cDynamicVariables_CheckedChanged);
+			// 
 			// statusStrip1
 			// 
 			this->statusStrip1->Location = System::Drawing::Point(0, 655);
@@ -1291,6 +1394,8 @@ namespace LuccME {
 			this->tabPage5->PerformLayout();
 			this->tabPage6->ResumeLayout(false);
 			this->tabPage6->PerformLayout();
+			this->tabPage7->ResumeLayout(false);
+			this->tabPage7->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -1324,5 +1429,7 @@ namespace LuccME {
 	private: System::Void abrirToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void luccMEToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void NovoModelo_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
+	private: System::Void cDynamicVariables_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bDynamicSelect_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

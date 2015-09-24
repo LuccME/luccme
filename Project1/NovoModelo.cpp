@@ -1548,6 +1548,24 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 			bSelectedAttr->Visible = false;
 		}
 	}
+
+	if (tNovoModelo->SelectedIndex == 6) {
+		int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+		int tempTime = Convert::ToInt16(tStartTime->Text);
+
+		if (gDynTime != time) {
+			lDynamicConfirm->Text = "";
+		}
+		
+		lvYearsDynamic->Clear();
+		lvYearsDynamic->View = View::Details;
+		lvYearsDynamic->GridLines = true;
+		lvYearsDynamic->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
+
+		for (int i = 0; i <= time; i++) {
+			lvYearsDynamic->Items->Add(Convert::ToString(tempTime + i));
+		}
+	}
 }
 
 System::Void LuccME::NovoModelo::bSelectedAttr_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -1697,7 +1715,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 			sw->WriteLine("--------------------------------------------------------------");
 			sw->WriteLine("--             LuccME APPLICATION MODEL DEFINITION          --");
-			sw->WriteLine("--------------------------------------------------------------\n");
+			sw->WriteLine("--------------------------------------------------------------");
 
 			sw->WriteLine(tModelName->Text + " = LuccMEModel");
 			sw->WriteLine("{");
@@ -1705,13 +1723,13 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\t-- Temporal dimension definition                   --");
-			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\tstartTime = " + tStartTime->Text + ",");
 			sw->WriteLine("\tendTime = " + tEndTime->Text + ",\n");
 
 			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\t-- Spatial dimension definition                    --");
-			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\tcs = CellularSpace");
 			sw->WriteLine("\t{");
 			if (tbSelectedBatabase->Lines->Length > 0) {
@@ -1727,11 +1745,22 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 			}
 			sw->WriteLine("\t\ttheme = \"" + tThemeName->Text + "\",");
 			sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
-			sw->WriteLine("\t},\n");
+			sw->WriteLine("\t},");
 
+			if (cDynamicVariables->Checked == true) {
+				if (lDynamicConfirm->Text != "") {
+					sw->WriteLine();
+					sw->WriteLine("\t-----------------------------------------------------");
+					sw->WriteLine("\t-- Dynamic variables definition                    --");
+					sw->WriteLine("\t-----------------------------------------------------");
+					sw->WriteLine("\tupdateYears = {" + lDynamicConfirm->Text + "},");
+				}
+			}
+
+			sw->WriteLine();
 			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\t-- Land use variables definition                   --");
-			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\tlandUseTypes =");
 			sw->WriteLine("\t{");
 			sw->WriteLine("\t\t" + lLUTShow->Text->Replace(",", ", "));
@@ -1741,7 +1770,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\t-- Behaviour dimension definition:                 --");
 			sw->WriteLine("\t-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --");
-			sw->WriteLine("\t-----------------------------------------------------\n");
+			sw->WriteLine("\t-----------------------------------------------------");
 			sw->WriteLine("\tdemand = D1,");
 			sw->WriteLine("\tpotential = P1,");
 			sw->WriteLine("\tallocation = A1,\n");
@@ -2645,6 +2674,39 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			}
 			tCellArea->Text = tempLine;
 			tCellArea->ForeColor = System::Drawing::Color::Black;
+
+			//Editing HERE
+			bool dynamicCheck = false;
+			line = sw->ReadLine();
+			while (sw->EndOfStream == false) {
+				if (line->Contains("updateYears") != 1) {
+					line = sw->ReadLine();
+				}
+				else {
+					dynamicCheck = true;
+					break;
+				}
+			}
+
+			if (dynamicCheck) {
+				tempLine = "";
+				j = 0;
+				while (line[j] != '{') {
+					j++;
+				}
+				j++;
+				while (line[j] != '}') {
+					tempLine += line[j];
+					j++;
+				}
+				cDynamicVariables->Checked = true;
+				lDynamicConfirm->Text = tempLine;
+				gDynTime = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+
+			}
+			sw->Close();
+			sw = gcnew System::IO::StreamReader(fileName);
+			//END of editing
 
 			line = sw->ReadLine();
 			while (line->Contains("landUseTypes") != 1) {
@@ -5101,4 +5163,36 @@ System::Void LuccME::NovoModelo::NovoModelo_FormClosing(System::Object ^ sender,
 			e->Cancel = true;
 		}
 	}
+}
+
+System::Void LuccME::NovoModelo::cDynamicVariables_CheckedChanged(System::Object ^ sender, System::EventArgs ^ e)
+{
+	if (cDynamicVariables->Checked == true) {
+		lAnosVariaveis->Visible = true;
+		lAtualizaveis->Visible = true;
+		lvYearsDynamic->Visible = true;
+		bDynamicSelect->Visible = true;
+		lDynamicConfirm->Visible = true;
+	}
+	else {
+		lAnosVariaveis->Visible = false;
+		lAtualizaveis->Visible = false;
+		lvYearsDynamic->Visible = false;
+		bDynamicSelect->Visible = false;
+		lDynamicConfirm->Visible = false;
+	}
+}
+
+System::Void LuccME::NovoModelo::bDynamicSelect_Click(System::Object ^ sender, System::EventArgs ^ e)
+{
+	lDynamicConfirm->Text = "";
+	for (int i = 0; i < lvYearsDynamic->Items->Count; i++) {
+		if (lvYearsDynamic->Items[i]->Selected) {
+			lDynamicConfirm->Text += lvYearsDynamic->Items[i]->Text + ", ";
+		}
+	}
+	if (lDynamicConfirm->Text != "") {
+		lDynamicConfirm->Text = lDynamicConfirm->Text->Substring(0, lDynamicConfirm->Text->Length - 2);
+	}
+	gDynTime = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
 }

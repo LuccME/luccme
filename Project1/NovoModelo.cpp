@@ -2772,13 +2772,15 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				j++;
 				k = j;
-				while (tempLine[j] != '_') {
+				while (tempLine[j] != ',') {
 					j++;
 				}
+				
+				String^ testeAux = tempLine->Substring(k, j - k);
 
 				lAttrToSave->Text = "";
-				lAttrToSave->Text += tempLine->Substring(k, j - k);
-				tempLine = tempLine->Substring(j);
+				lAttrToSave->Text += tempLine->Substring(k, j - k)->Replace("\"","");
+				tempLine = tempLine->Substring(j-4);
 
 				tempLine = tempLine->Replace("\t", " ");
 				tempLine = tempLine->Replace("  ", " ");
@@ -2790,7 +2792,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						String^ tempLUT = tempLine->Substring(i);
 						String^ tempAux = "";
 						k = 0;
-						while (tempLUT[k] != '_') {
+						while (tempLUT[k] != ',') {
 							if (k < tempLUT->Length - 1) {
 								if (tempLUT[k] != '\"') {
 									if (tempLUT[k] != '}') {
@@ -2816,6 +2818,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						j++;
 					}
 				}
+				lAttrToSave->Text = lAttrToSave->Text->Replace("_out", "");
 				gAttrLUT = gLandUseTypes;
 			}
 			sw->Close();

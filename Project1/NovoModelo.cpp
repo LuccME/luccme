@@ -62,6 +62,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		tabPage5->Text = "Parameters to Save";
 		tabPage6->Text = "Files Maker";
 		tabPage7->Text = "Advanced Resources";
+		tabPage8->Text = "Validation";
 		//tabPage1
 		lArquivos->Text = "     Files";
 		lDirProj->Text = "Folder to Save the Model";
@@ -108,11 +109,17 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		//tabPage7
 		cDynamicVariables->Text = "Dynamic Variables";
 		lAnosVariaveis->Text = "Years with variables";
-		lAtualizaveis->Text = "   to be Updated    ";
+		lAtualizaveis->Text = "     to be Updated";
 		bDynamicSelect->Text = "Select";
 		cScenario->Text = "Scenario";
-		lScenariosStartTime->Text = "Scenario Start Time";
-		lScenarioName->Text = "Scenario Name";
+		lScenariosStartTime->Text = "    Scenario Start Time";
+		lScenarioName->Text = "  Scenario Name";
+		//tabPage8
+		lInputThemeName->Text = "  Theme Name";
+		lAttributeForValidation->Text = "Attribute for Validation";
+		lAttributeFinalValidation->Text = "Real Final Attribute";
+		lAttributeInitValidation->Text = "Initial Attribute";
+		bValidate->Text = "Validate";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -271,6 +278,12 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cScenario->Text = "Cenário";
 		lScenariosStartTime->Text = "Ano de Início do Cenário";
 		lScenarioName->Text = "Nome de Cenário";
+		//tabPage8
+		lInputThemeName->Text = "Nome do Tema";
+		lAttributeForValidation->Text = "Atributo a ser Validado";
+		lAttributeFinalValidation->Text = "Atributo Real Final";
+		lAttributeInitValidation->Text = "Atributo Inicial";
+		bValidate->Text = "Validar";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";
@@ -1608,6 +1621,20 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 			lvYearsDynamic->Items->Add(Convert::ToString(tempTime + i));
 		}
 	}
+	
+	if (tNovoModelo->SelectedIndex == 7) {
+		if (runnable == true) {
+			lInputThemeName->Visible = true;
+			tInputThemeName->Visible = true;
+			lAttributeForValidation->Visible = true;
+			tAttributeForValidation->Visible = true;
+			lAttributeFinalValidation->Visible = true;
+			tAttributeFinalValidation->Visible = true;
+			lAttributeInitValidation->Visible = true;
+			tAttributeInitValidation->Visible = true;
+			bValidate->Visible = true;
+		}
+	}
 }
 
 System::Void LuccME::NovoModelo::bSelectedAttr_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -2372,6 +2399,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 					lRunModel->Visible = true;
 					bRun->Visible = true;
+					runnable = true;
 				}
 				else {
 					if (!mainFile) {
@@ -2773,6 +2801,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gSelectedDatabase += "," + dbAux;
 
 						tbSelectedBatabase->Lines = tempBd;
+						access = false;
 					}
 					else {
 						j = 0;
@@ -2810,6 +2839,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 								tempBd[0] = gSAccess;
 								tempBd[1] = dbAux;
 								tbSelectedBatabase->Lines = tempBd;
+								access = true;
 							}
 							else {
 								imported = false;
@@ -5431,6 +5461,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				else {
 					lRunModel->Visible = true;
 					bRun->Visible = true;
+					runnable = true;
 					checkLanguage();
 				}
 			}
@@ -5559,5 +5590,144 @@ System::Void LuccME::NovoModelo::cScenario_CheckedChanged(System::Object ^ sende
 		tScenariosStartTime->Visible = false;
 		lScenarioName->Visible = false;
 		tScenarioName->Visible = false;
+	}
+}
+
+System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System::EventArgs ^ e)
+{
+	String^ path = "validation.lua";
+	StreamWriter^ sw = File::CreateText(path);
+
+	sw->WriteLine("error = function(message, code)");
+	sw->WriteLine("print(message)");
+	sw->WriteLine("local answer");
+	sw->WriteLine("repeat");
+	sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
+	sw->WriteLine("io.flush()");
+	sw->WriteLine("answer = io.read()");
+	sw->WriteLine("until answer ~= \"`\"");
+	sw->WriteLine("os.exit()");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("numberOfWindows = 20");
+	sw->WriteLine("");
+	sw->WriteLine("input_theme_name = \"" + tInputThemeName->Text + "\"");
+	sw->WriteLine("last_sim = \"" + tAttributeForValidation->Text + "\"");
+	sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
+	sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
+	sw->WriteLine("");
+	if (access) {
+		sw->WriteLine("cs = CellularSpace {database = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\", theme = input_theme_name}");
+	}
+	else {
+		sw->WriteLine("cs = CellularSpace {" + tbSelectedBatabase->Lines[1]->ToString() + ",");
+		sw->WriteLine(tbSelectedBatabase->Lines[2]->ToString() + ",");
+		sw->WriteLine(tbSelectedBatabase->Lines[3]->ToString() + ",");
+		sw->WriteLine(tbSelectedBatabase->Lines[4]->ToString() + ",");
+		sw->WriteLine("theme = input_theme_name\n}");
+	}
+	sw->WriteLine("");
+	sw->WriteLine("flag_save = true");
+	sw->WriteLine("output_theme = \"validation\"");
+	sw->WriteLine("attribute1 = \"sim\"");
+	sw->WriteLine("attribute2 = \"real\"");
+	sw->WriteLine("");
+	sw->WriteLine("if cs.cells[1][init_real]== nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
+	sw->WriteLine("if cs.cells[1][last_real]== nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
+	sw->WriteLine("if cs.cells[1][last_sim]== nil then	error(\"Attribute: \"..last_real..\".Does not exist in the theme\") end");
+	sw->WriteLine("");
+	sw->WriteLine("forEachCell(cs, function(cell) ");
+	sw->WriteLine("cell[attribute1] = cell[last_sim] - cell[init_real]");
+	sw->WriteLine("cell[attribute2] = cell[last_real]- cell[init_real]");
+	sw->WriteLine("end)");
+	sw->WriteLine("");
+	sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+	sw->WriteLine("forEachCell(cs2, function(cell)	cell.flag = 0 end)");
+	sw->WriteLine("local count = 0");
+	sw->WriteLine("local diff = 0");
+	sw->WriteLine("local sum = 0");
+	sw->WriteLine("local cc1 = {}");
+	sw->WriteLine("local cc2 = {}");
+	sw->WriteLine("local internalcount = 0");
+	sw->WriteLine("");
+	sw->WriteLine("forEachCell(cs2, function(cell)");
+	sw->WriteLine("internalcount = 0");
+	sw->WriteLine("sumcc1 = 0");
+	sw->WriteLine("sumcc2 = 0");
+	sw->WriteLine("");
+	sw->WriteLine("if cell.flag == 0 then");
+	sw->WriteLine("for xx = 0, (window - 1) do");
+	sw->WriteLine("for yy = 0, (window - 1) do");
+	sw->WriteLine("if cs1:getCell(cell.x+xx, cell.y+yy) ~= nil then");
+	sw->WriteLine("internalcount = internalcount + 1");
+	sw->WriteLine("cc1[internalcount] = cs1:getCell(cell.x+xx, cell.y+yy)");
+	sw->WriteLine("cc2[internalcount] = cs2:getCell(cell.x+xx, cell.y+yy)");
+	sw->WriteLine("end");
+	sw->WriteLine("end");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("for j = 1, internalcount do");
+	sw->WriteLine("sumcc1 = sumcc1 + cc1[j][attribute1]");
+	sw->WriteLine("sumcc2 = sumcc2 + cc2[j][attribute2]");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("diffcell = (sumcc2 - sumcc1)");
+	sw->WriteLine("count = count + internalcount");
+	sw->WriteLine("");
+	sw->WriteLine("for i = 1, internalcount do");
+	sw->WriteLine("cc2[i][\"diff\"..window] = diffcell");
+	sw->WriteLine("cc2[i].flag = 1");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("sum = sum + sumcc2");
+	sw->WriteLine("diff = diff + math.abs(diffcell)");
+	sw->WriteLine("return true");
+	sw->WriteLine("end");
+	sw->WriteLine("end)");
+	sw->WriteLine("return count, diff, sum");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("print(\"\\nSimulation Results - Sucess Allocated Cells (%):\\n\")");
+	sw->WriteLine("io.flush()");
+	sw->WriteLine("attrs = {}");
+	sw->WriteLine("");
+	sw->WriteLine("for i = 1, numberOfWindows do");
+	sw->WriteLine("attrs[i]=\"diff\"..i");
+	sw->WriteLine("total,diff,sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+	sw->WriteLine("");
+	sw->WriteLine("if (sum < diff) then");
+	sw->WriteLine("total,diff,sum = MultiRes(cs, attribute2, cs, attribute1, i)");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("if (sum == 0) then sum = 0.00001 end");
+	sw->WriteLine("print (i, 1 - (diff/(2*sum)))");
+	sw->WriteLine("io.flush()");
+	sw->WriteLine("end");
+	sw->WriteLine("");
+	sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
+	sw->WriteLine("attrs[numberOfWindows+2] = attribute2");
+	sw->WriteLine("");
+	sw->WriteLine("if (flag_save) then cs:save(1, output_theme, attrs ) end");
+	sw->WriteLine("print(\"\\nEnd of Validation\")");
+	sw->WriteLine("local answer");
+	sw->WriteLine("repeat");
+	sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
+	sw->WriteLine("io.flush()");
+	sw->WriteLine("answer = io.read()");
+	sw->WriteLine("until answer ~= \"`\"");
+
+	sw->Close();
+
+	String^ arguments = "validation.lua";
+	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
+	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->Arguments = arguments;
+	cmd->Start();
+	cmd->WaitForExit();
+	cmd->Close();
+
+	if (File::Exists(path))
+	{
+		File::Delete(path);
 	}
 }

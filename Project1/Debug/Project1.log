@@ -1,4 +1,4 @@
-﻿Build started 25/09/2015 14:02:51.
+﻿Build started 25/09/2015 17:06:03.
      1>Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
@@ -29,11 +29,9 @@
          Debug\Source.obj
          Debug\stdafx.obj
          "Debug\.NETFramework,Version=v4.5.2.AssemblyAttributes.obj"
-     1>P_SpatialLagLinearRoads.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'P_SpatialLagLinearRoads.obj' or at 'D:\_SVN\LuccME\branches\Project1\Debug\vc140.pdb'; linking object as if no debug info
-     1>P_Discrete.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'P_Discrete.obj' or at 'D:\_SVN\LuccME\branches\Project1\Debug\vc140.pdb'; linking object as if no debug info
          Project1.vcxproj -> D:\_SVN\LuccME\branches\Project1\Debug\LuccME.exe
      1>Done Building Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.61
+Time Elapsed 00:00:03.00

@@ -170,6 +170,7 @@ Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Int32 gDynTime : Public
     Boolean closing : Public
     Boolean forceWriting : Public
+    Boolean runnable : Public
     Boolean access : Public
     Boolean lOpen : Public
     System.String lLanguage : Public

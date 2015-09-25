@@ -128,6 +128,7 @@ namespace LuccME {
 		int gDynTime = 0;
 		bool closing = false;
 		bool forceWriting = false;
+		bool runnable = false;
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;
@@ -176,6 +177,16 @@ private: System::Windows::Forms::TextBox^  tScenariosStartTime;
 private: System::Windows::Forms::Label^  lScenariosStartTime;
 private: System::Windows::Forms::TextBox^  tScenarioName;
 private: System::Windows::Forms::Label^  lScenarioName;
+private: System::Windows::Forms::TabPage^  tabPage8;
+private: System::Windows::Forms::Button^  bValidate;
+private: System::Windows::Forms::TextBox^  tAttributeFinalValidation;
+private: System::Windows::Forms::Label^  lAttributeFinalValidation;
+private: System::Windows::Forms::TextBox^  tAttributeInitValidation;
+private: System::Windows::Forms::Label^  lAttributeInitValidation;
+private: System::Windows::Forms::TextBox^  tAttributeForValidation;
+private: System::Windows::Forms::Label^  lAttributeForValidation;
+private: System::Windows::Forms::TextBox^  tInputThemeName;
+private: System::Windows::Forms::Label^  lInputThemeName;
 
 
 public:
@@ -363,6 +374,16 @@ public:
 			this->lAnosVariaveis = (gcnew System::Windows::Forms::Label());
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
+			this->tabPage8 = (gcnew System::Windows::Forms::TabPage());
+			this->bValidate = (gcnew System::Windows::Forms::Button());
+			this->tAttributeFinalValidation = (gcnew System::Windows::Forms::TextBox());
+			this->lAttributeFinalValidation = (gcnew System::Windows::Forms::Label());
+			this->tAttributeInitValidation = (gcnew System::Windows::Forms::TextBox());
+			this->lAttributeInitValidation = (gcnew System::Windows::Forms::Label());
+			this->tAttributeForValidation = (gcnew System::Windows::Forms::TextBox());
+			this->lAttributeForValidation = (gcnew System::Windows::Forms::Label());
+			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
+			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
@@ -374,6 +395,7 @@ public:
 			this->tabPage5->SuspendLayout();
 			this->tabPage6->SuspendLayout();
 			this->tabPage7->SuspendLayout();
+			this->tabPage8->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pbLogo1
@@ -477,6 +499,7 @@ public:
 			this->tNovoModelo->Controls->Add(this->tabPage5);
 			this->tNovoModelo->Controls->Add(this->tabPage6);
 			this->tNovoModelo->Controls->Add(this->tabPage7);
+			this->tNovoModelo->Controls->Add(this->tabPage8);
 			this->tNovoModelo->Location = System::Drawing::Point(12, 173);
 			this->tNovoModelo->Name = L"tNovoModelo";
 			this->tNovoModelo->SelectedIndex = 0;
@@ -1328,6 +1351,7 @@ public:
 			this->tScenarioName->Text = L"cenarioA";
 			this->tScenarioName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tScenarioName->Visible = false;
+			this->tScenarioName->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lScenarioName
 			// 
@@ -1352,6 +1376,7 @@ public:
 			this->tScenariosStartTime->Text = L"2015";
 			this->tScenariosStartTime->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tScenariosStartTime->Visible = false;
+			this->tScenariosStartTime->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lScenariosStartTime
 			// 
@@ -1447,6 +1472,136 @@ public:
 			this->cDynamicVariables->UseVisualStyleBackColor = true;
 			this->cDynamicVariables->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cDynamicVariables_CheckedChanged);
 			// 
+			// tabPage8
+			// 
+			this->tabPage8->Controls->Add(this->bValidate);
+			this->tabPage8->Controls->Add(this->tAttributeFinalValidation);
+			this->tabPage8->Controls->Add(this->lAttributeFinalValidation);
+			this->tabPage8->Controls->Add(this->tAttributeInitValidation);
+			this->tabPage8->Controls->Add(this->lAttributeInitValidation);
+			this->tabPage8->Controls->Add(this->tAttributeForValidation);
+			this->tabPage8->Controls->Add(this->lAttributeForValidation);
+			this->tabPage8->Controls->Add(this->tInputThemeName);
+			this->tabPage8->Controls->Add(this->lInputThemeName);
+			this->tabPage8->Location = System::Drawing::Point(4, 22);
+			this->tabPage8->Name = L"tabPage8";
+			this->tabPage8->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage8->Size = System::Drawing::Size(703, 455);
+			this->tabPage8->TabIndex = 7;
+			this->tabPage8->Text = L"Validação";
+			this->tabPage8->UseVisualStyleBackColor = true;
+			// 
+			// bValidate
+			// 
+			this->bValidate->Location = System::Drawing::Point(259, 370);
+			this->bValidate->Name = L"bValidate";
+			this->bValidate->Size = System::Drawing::Size(185, 47);
+			this->bValidate->TabIndex = 110;
+			this->bValidate->Text = L"Validar";
+			this->bValidate->UseVisualStyleBackColor = true;
+			this->bValidate->Visible = false;
+			this->bValidate->Click += gcnew System::EventHandler(this, &NovoModelo::bValidate_Click);
+			// 
+			// tAttributeFinalValidation
+			// 
+			this->tAttributeFinalValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tAttributeFinalValidation->Location = System::Drawing::Point(270, 311);
+			this->tAttributeFinalValidation->Name = L"tAttributeFinalValidation";
+			this->tAttributeFinalValidation->Size = System::Drawing::Size(162, 20);
+			this->tAttributeFinalValidation->TabIndex = 109;
+			this->tAttributeFinalValidation->Text = L"Floresta";
+			this->tAttributeFinalValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tAttributeFinalValidation->Visible = false;
+			this->tAttributeFinalValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lAttributeFinalValidation
+			// 
+			this->lAttributeFinalValidation->AutoSize = true;
+			this->lAttributeFinalValidation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lAttributeFinalValidation->Location = System::Drawing::Point(272, 285);
+			this->lAttributeFinalValidation->Name = L"lAttributeFinalValidation";
+			this->lAttributeFinalValidation->Size = System::Drawing::Size(158, 23);
+			this->lAttributeFinalValidation->TabIndex = 108;
+			this->lAttributeFinalValidation->Text = L"Atributo Real Final";
+			this->lAttributeFinalValidation->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lAttributeFinalValidation->Visible = false;
+			// 
+			// tAttributeInitValidation
+			// 
+			this->tAttributeInitValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tAttributeInitValidation->Location = System::Drawing::Point(270, 226);
+			this->tAttributeInitValidation->Name = L"tAttributeInitValidation";
+			this->tAttributeInitValidation->Size = System::Drawing::Size(162, 20);
+			this->tAttributeInitValidation->TabIndex = 107;
+			this->tAttributeInitValidation->Text = L"Floresta";
+			this->tAttributeInitValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tAttributeInitValidation->Visible = false;
+			this->tAttributeInitValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lAttributeInitValidation
+			// 
+			this->lAttributeInitValidation->AutoSize = true;
+			this->lAttributeInitValidation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lAttributeInitValidation->Location = System::Drawing::Point(287, 200);
+			this->lAttributeInitValidation->Name = L"lAttributeInitValidation";
+			this->lAttributeInitValidation->Size = System::Drawing::Size(128, 23);
+			this->lAttributeInitValidation->TabIndex = 106;
+			this->lAttributeInitValidation->Text = L"Atributo Inicial";
+			this->lAttributeInitValidation->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lAttributeInitValidation->Visible = false;
+			// 
+			// tAttributeForValidation
+			// 
+			this->tAttributeForValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tAttributeForValidation->Location = System::Drawing::Point(270, 141);
+			this->tAttributeForValidation->Name = L"tAttributeForValidation";
+			this->tAttributeForValidation->Size = System::Drawing::Size(162, 20);
+			this->tAttributeForValidation->TabIndex = 105;
+			this->tAttributeForValidation->Text = L"Floresta_out";
+			this->tAttributeForValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tAttributeForValidation->Visible = false;
+			this->tAttributeForValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lAttributeForValidation
+			// 
+			this->lAttributeForValidation->AutoSize = true;
+			this->lAttributeForValidation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lAttributeForValidation->Location = System::Drawing::Point(256, 115);
+			this->lAttributeForValidation->Name = L"lAttributeForValidation";
+			this->lAttributeForValidation->Size = System::Drawing::Size(191, 23);
+			this->lAttributeForValidation->TabIndex = 104;
+			this->lAttributeForValidation->Text = L"Atributo a ser Validado";
+			this->lAttributeForValidation->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lAttributeForValidation->Visible = false;
+			// 
+			// tInputThemeName
+			// 
+			this->tInputThemeName->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tInputThemeName->Location = System::Drawing::Point(270, 56);
+			this->tInputThemeName->Name = L"tInputThemeName";
+			this->tInputThemeName->Size = System::Drawing::Size(162, 20);
+			this->tInputThemeName->TabIndex = 103;
+			this->tInputThemeName->Text = L"theme_name";
+			this->tInputThemeName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tInputThemeName->Visible = false;
+			this->tInputThemeName->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lInputThemeName
+			// 
+			this->lInputThemeName->AutoSize = true;
+			this->lInputThemeName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lInputThemeName->Location = System::Drawing::Point(288, 30);
+			this->lInputThemeName->Name = L"lInputThemeName";
+			this->lInputThemeName->Size = System::Drawing::Size(127, 23);
+			this->lInputThemeName->TabIndex = 102;
+			this->lInputThemeName->Text = L"Nome do Tema";
+			this->lInputThemeName->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lInputThemeName->Visible = false;
+			// 
 			// statusStrip1
 			// 
 			this->statusStrip1->Location = System::Drawing::Point(0, 655);
@@ -1488,6 +1643,8 @@ public:
 			this->tabPage6->PerformLayout();
 			this->tabPage7->ResumeLayout(false);
 			this->tabPage7->PerformLayout();
+			this->tabPage8->ResumeLayout(false);
+			this->tabPage8->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -1524,5 +1681,6 @@ public:
 	private: System::Void cDynamicVariables_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bDynamicSelect_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cScenario_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
-};
+	private: System::Void bValidate_Click(System::Object^  sender, System::EventArgs^  e);
+	};
 }

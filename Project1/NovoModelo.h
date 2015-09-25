@@ -18,6 +18,14 @@ namespace LuccME {
 	{
 	private: 
 		System::Windows::Forms::TextBox^  tbSelectedBatabase;
+		String^ gSScenST = "";
+		String^ gSScenSTTitle = "";
+		String^ gSScenName = "";
+		String^ gSScenNameTitle = "";
+		String^ gSCheckDyn = "";
+		String^ gSCheckDynTitle = "";
+		String^ gSImportError = "";
+		String^ gSImportErrorTitle = "";
 		String^ gSPotContAlocDisc = "";
 		String^ gSPotContAlocDiscTitle = "";
 		String^ gSPotDiscAlocCont = "";
@@ -95,6 +103,10 @@ namespace LuccME {
 		String^ gSAllocDiscTitle = "";
 		String^ gSPotDisc = "";
 		String^ gSAllocContTitle = "";
+		String^ gSMFE = "";
+		String^ gSMFETitle = "";
+		String^ gSSMFE = "";
+		String^ gSFE = "";
 
 	public:
 		String^ gLandUseTypes = "";
@@ -114,6 +126,8 @@ namespace LuccME {
 		String^ gAttrLUT = "";
 		int gAttrTime = 0;
 		int gDynTime = 0;
+		bool closing = false;
+		bool forceWriting = false;
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;
@@ -156,6 +170,14 @@ private: System::Windows::Forms::Button^  bDynamicSelect;
 private: System::Windows::Forms::Label^  lDynamicConfirm;
 private: System::Windows::Forms::Label^  lAnosVariaveis;
 private: System::Windows::Forms::ListView^  lvYearsDynamic;
+private: System::Windows::Forms::CheckBox^  cScenario;
+private: System::Windows::Forms::TextBox^  tScenariosStartTime;
+
+private: System::Windows::Forms::Label^  lScenariosStartTime;
+private: System::Windows::Forms::TextBox^  tScenarioName;
+private: System::Windows::Forms::Label^  lScenarioName;
+
+
 public:
 	int lReturn;
 		NovoModelo(String^ pLanguage, bool pOpen, int pReturn)
@@ -330,6 +352,11 @@ public:
 			this->bGerarArquivos = (gcnew System::Windows::Forms::Button());
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
 			this->tabPage7 = (gcnew System::Windows::Forms::TabPage());
+			this->tScenarioName = (gcnew System::Windows::Forms::TextBox());
+			this->lScenarioName = (gcnew System::Windows::Forms::Label());
+			this->tScenariosStartTime = (gcnew System::Windows::Forms::TextBox());
+			this->lScenariosStartTime = (gcnew System::Windows::Forms::Label());
+			this->cScenario = (gcnew System::Windows::Forms::CheckBox());
 			this->lAtualizaveis = (gcnew System::Windows::Forms::Label());
 			this->bDynamicSelect = (gcnew System::Windows::Forms::Button());
 			this->lDynamicConfirm = (gcnew System::Windows::Forms::Label());
@@ -1272,6 +1299,11 @@ public:
 			// 
 			// tabPage7
 			// 
+			this->tabPage7->Controls->Add(this->tScenarioName);
+			this->tabPage7->Controls->Add(this->lScenarioName);
+			this->tabPage7->Controls->Add(this->tScenariosStartTime);
+			this->tabPage7->Controls->Add(this->lScenariosStartTime);
+			this->tabPage7->Controls->Add(this->cScenario);
 			this->tabPage7->Controls->Add(this->lAtualizaveis);
 			this->tabPage7->Controls->Add(this->bDynamicSelect);
 			this->tabPage7->Controls->Add(this->lDynamicConfirm);
@@ -1285,6 +1317,66 @@ public:
 			this->tabPage7->TabIndex = 6;
 			this->tabPage7->Text = L"Recursos Avançados";
 			this->tabPage7->UseVisualStyleBackColor = true;
+			// 
+			// tScenarioName
+			// 
+			this->tScenarioName->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tScenarioName->Location = System::Drawing::Point(254, 186);
+			this->tScenarioName->Name = L"tScenarioName";
+			this->tScenarioName->Size = System::Drawing::Size(162, 20);
+			this->tScenarioName->TabIndex = 103;
+			this->tScenarioName->Text = L"cenarioA";
+			this->tScenarioName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tScenarioName->Visible = false;
+			// 
+			// lScenarioName
+			// 
+			this->lScenarioName->AutoSize = true;
+			this->lScenarioName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lScenarioName->Location = System::Drawing::Point(262, 157);
+			this->lScenarioName->Name = L"lScenarioName";
+			this->lScenarioName->Size = System::Drawing::Size(147, 23);
+			this->lScenarioName->TabIndex = 102;
+			this->lScenarioName->Text = L"Nome de Cenário";
+			this->lScenarioName->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lScenarioName->Visible = false;
+			// 
+			// tScenariosStartTime
+			// 
+			this->tScenariosStartTime->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tScenariosStartTime->Location = System::Drawing::Point(254, 104);
+			this->tScenariosStartTime->Name = L"tScenariosStartTime";
+			this->tScenariosStartTime->Size = System::Drawing::Size(162, 20);
+			this->tScenariosStartTime->TabIndex = 101;
+			this->tScenariosStartTime->Text = L"2015";
+			this->tScenariosStartTime->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tScenariosStartTime->Visible = false;
+			// 
+			// lScenariosStartTime
+			// 
+			this->lScenariosStartTime->AutoSize = true;
+			this->lScenariosStartTime->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lScenariosStartTime->Location = System::Drawing::Point(235, 75);
+			this->lScenariosStartTime->Name = L"lScenariosStartTime";
+			this->lScenariosStartTime->Size = System::Drawing::Size(202, 23);
+			this->lScenariosStartTime->TabIndex = 100;
+			this->lScenariosStartTime->Text = L"Ano de Início do Cenário";
+			this->lScenariosStartTime->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lScenariosStartTime->Visible = false;
+			// 
+			// cScenario
+			// 
+			this->cScenario->AutoSize = true;
+			this->cScenario->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
+			this->cScenario->Location = System::Drawing::Point(289, 17);
+			this->cScenario->Name = L"cScenario";
+			this->cScenario->Size = System::Drawing::Size(98, 27);
+			this->cScenario->TabIndex = 99;
+			this->cScenario->Text = L"Cenários";
+			this->cScenario->UseVisualStyleBackColor = true;
+			this->cScenario->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cScenario_CheckedChanged);
 			// 
 			// lAtualizaveis
 			// 
@@ -1431,5 +1523,6 @@ public:
 	private: System::Void NovoModelo_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
 	private: System::Void cDynamicVariables_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bDynamicSelect_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void cScenario_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 };
 }

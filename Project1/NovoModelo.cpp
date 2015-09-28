@@ -120,6 +120,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lAttributeFinalValidation->Text = "Real Final Attribute";
 		lAttributeInitValidation->Text = "Initial Attribute";
 		bValidate->Text = "Validate";
+		cDynamicVariables->Text = "Dynamic Variables";
+		cScenario->Text = "Scenarios";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -284,6 +286,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lAttributeFinalValidation->Text = "Atributo Real Final";
 		lAttributeInitValidation->Text = "Atributo Inicial";
 		bValidate->Text = "Validar";
+		cDynamicVariables->Text = "Variáveis Dinâmicas";
+		cScenario->Text = "Cenários";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";

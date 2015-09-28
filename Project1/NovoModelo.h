@@ -1468,7 +1468,7 @@ public:
 			this->cDynamicVariables->Name = L"cDynamicVariables";
 			this->cDynamicVariables->Size = System::Drawing::Size(186, 27);
 			this->cDynamicVariables->TabIndex = 88;
-			this->cDynamicVariables->Text = L"Variáveis Dinamicas";
+			this->cDynamicVariables->Text = L"Variáveis Dinâmicas";
 			this->cDynamicVariables->UseVisualStyleBackColor = true;
 			this->cDynamicVariables->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cDynamicVariables_CheckedChanged);
 			// 

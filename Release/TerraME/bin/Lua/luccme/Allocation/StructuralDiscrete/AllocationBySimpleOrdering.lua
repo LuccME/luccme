@@ -123,8 +123,7 @@ function AllocationBySimpleOrdering(component)
   		print("Demand allocated correctly in this time step:", step)
  			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
     else
-    	print("Demand not allocated correctly in this time step:", step)
-    	os.exit();
+    	error("Demand not allocated correctly in this time step: "..step)
     end      	
  	end -- end of 'execute' function
  	

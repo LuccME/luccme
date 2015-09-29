@@ -76,9 +76,8 @@ function allocationClueLike (component)
 			until ((nIter >= self.maxIteration) or (allocation_ok == true) )
 	        
 			if (nIter == self.maxIteration)then
-				print ("Demand not allocated correctly in this time step:", nIter)
-				os.exit()
-            end				
+				error("Demand not allocated correctly in this time step:", nIter)
+      end				
             
             forEachCell(cs, function(cell)
                local total = 0 

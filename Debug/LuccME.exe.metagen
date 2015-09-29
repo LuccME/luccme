@@ -8,6 +8,7 @@
   LuccME.D_CITwoDM.resources - Embedded, ContainedInManifestFile, 
   LuccME.D_PCVINPEForm.resources - Embedded, ContainedInManifestFile, 
   LuccME.LanguageForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.LUND.resources - Embedded, ContainedInManifestFile, 
   LuccME.LUTForm.resources - Embedded, ContainedInManifestFile, 
   LuccME.MyForm.resources - Embedded, ContainedInManifestFile, 
   LuccME.MySQLForm.resources - Embedded, ContainedInManifestFile, 
@@ -140,6 +141,13 @@ Class LuccME.LanguageForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
     System.String lLanguage : Public
+Class LuccME.LUND: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturn): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturn lReturn : Public
+    System.String aux : Public
+    Boolean close : Public
 Class LuccME.LUTForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(cReturn): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
@@ -171,6 +179,7 @@ Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Boolean closing : Public
     Boolean forceWriting : Public
     Boolean runnable : Public
+    System.Windows.Forms.TabPage validation : Public
     Boolean access : Public
     Boolean lOpen : Public
     System.String lLanguage : Public

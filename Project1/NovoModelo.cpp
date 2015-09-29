@@ -12,6 +12,7 @@
 #include "Function.h"
 #include "LanguageForm.h"
 #include "AboutForm.h"
+#include "LUND.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -499,18 +500,24 @@ System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, Syst
 System::Void LuccME::NovoModelo::bLUNDManager_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	cReturn^ lLandUsesNoData = gcnew cReturn();
-	if (gLandUseNoData == "" && gLandUseTypes != "") {
+	//if (gLandUseNoData == "" && gLandUseTypes != "") {
+	if (gLandUseTypes != "") {
 		gLandUseNoData = gLandUseTypes;
 	}
 	lLandUsesNoData->Return = gLandUseNoData;
 	lLandUsesNoData->Language = lLanguage;
 	
-	LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUsesNoData);
-	landUseTypeForm->Text = gSLUTManager;
-	landUseTypeForm->ShowDialog();
+	//LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUsesNoData);
+	//landUseTypeForm->Text = gSLUTManager;
+	//landUseTypeForm->ShowDialog();
 
+	LuccME::LUND^ landUseTypeForm = gcnew LUND(lLandUsesNoData);
+	landUseTypeForm->ShowDialog();
+	
 	gLandUseNoData = lLandUsesNoData->Return;
-	lLUNDShow->Text = gLandUseNoData;
+	if (!(lLUNDShow->Text != "" && gLandUseNoData == "")) {
+		lLUNDShow->Text = gLandUseNoData;
+	}
 }
 
 System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -1559,6 +1566,10 @@ System::Void LuccME::NovoModelo::bSelectedYears_Click(System::Object ^ sender, S
 
 System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
 {
+	if (tNovoModelo->TabPages->Count == 7) {
+		tNovoModelo->TabPages->Add(validation);
+	}
+
 	if (tNovoModelo->SelectedIndex == 4) {
 		if (gAttrLUT != gLandUseTypes) {
 			lAttrToSave->Text = "";
@@ -1884,33 +1895,35 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t\tsaveYears = {" + lYearsToSave->Text + "},");
 				}
 
-				sw->WriteLine("\t\tmode = \"multiple\",");
-				sw->WriteLine("\t\tsaveAttrs = ");
-				sw->WriteLine("\t\t{");
-				String^ aux = "";
-				for (int i = 0; i < lAttrToSave->Text->Length; i++) {
-					if (lAttrToSave->Text[i] != ',') {
-						aux += lAttrToSave->Text[i];
+				if (lAttrToSave->Text != "") {
+					sw->WriteLine("\t\tmode = \"multiple\",");
+					sw->WriteLine("\t\tsaveAttrs = ");
+					sw->WriteLine("\t\t{");
+					String^ aux = "";
+					for (int i = 0; i < lAttrToSave->Text->Length; i++) {
+						if (lAttrToSave->Text[i] != ',') {
+							aux += lAttrToSave->Text[i];
+						}
+						else {
+							if (aux[0] == ' ') {
+								aux = aux->Remove(0, 1);
+							}
+							sw->WriteLine("\t\t\t\"" + aux + "_out\",");
+							sw->WriteLine("\t\t\t\"" + aux + "_change\",");
+							sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
+							aux = "";
+						}
 					}
-					else {
+					if (aux != "") {
 						if (aux[0] == ' ') {
 							aux = aux->Remove(0, 1);
 						}
 						sw->WriteLine("\t\t\t\"" + aux + "_out\",");
 						sw->WriteLine("\t\t\t\"" + aux + "_change\",");
 						sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
-						aux = "";
 					}
+					sw->WriteLine("\t\t},\n");
 				}
-				if (aux != "") {
-					if (aux[0] == ' ') {
-						aux = aux->Remove(0, 1);
-					}
-					sw->WriteLine("\t\t\t\"" + aux + "_out\",");
-					sw->WriteLine("\t\t\t\"" + aux + "_change\",");
-					sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
-				}
-				sw->WriteLine("\t\t},\n");
 				sw->WriteLine("\t},\n");
 
 				if (cIsCoupled->Checked) {
@@ -2493,8 +2506,12 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 
 System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System::EventArgs ^ e)
 {
+	validation = tabPage8;
+    tNovoModelo->TabPages->RemoveAt(7);
+
 	checkLanguage();
 	NovoModelo::Update();
+	
 	if (lOpen) {
 		try {
 			bool main = false;

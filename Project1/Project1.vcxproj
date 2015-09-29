@@ -98,6 +98,7 @@
     <ClCompile Include="D_CITwoDM.cpp" />
     <ClCompile Include="D_PCVINPEForm.cpp" />
     <ClCompile Include="LanguageForm.cpp" />
+    <ClCompile Include="LUND.cpp" />
     <ClCompile Include="LUTForm.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MySQLForm.cpp" />
@@ -140,6 +141,9 @@
     </ClInclude>
     <ClInclude Include="Function.h" />
     <ClInclude Include="LanguageForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="LUND.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="LUTForm.h">
@@ -203,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LanguageForm.resx">
       <DependentUpon>LanguageForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LUND.resx">
+      <DependentUpon>LUND.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LUTForm.resx">
       <DependentUpon>LUTForm.h</DependentUpon>

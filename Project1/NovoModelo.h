@@ -129,6 +129,7 @@ namespace LuccME {
 		bool closing = false;
 		bool forceWriting = false;
 		bool runnable = false;
+		TabPage^ validation = gcnew TabPage();
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;

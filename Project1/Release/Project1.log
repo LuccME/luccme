@@ -1,4 +1,4 @@
-﻿Build started 30/09/2015 11:55:51.
+﻿Build started 30/09/2015 15:50:05.
      1>Project "D:\_SVN\LuccME\branches\Project1\Project1\Project1.vcxproj" on node 2 (Rebuild target(s)).
      1>PreBuildEvent:
          copy D:\_SVN\LuccME\branches\Project1\Project1\\*.chm D:\_SVN\LuccME\branches\Project1\Release\\
@@ -69,4 +69,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:10.11
+Time Elapsed 00:00:10.56

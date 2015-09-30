@@ -524,10 +524,12 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 {
 	cReturnPCVINPE^ lDemand = gcnew cReturnPCVINPE();
 	bool check = true;
+	String^ rTempAux = "";
 
 	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != 1) {
 		if (gDemandComponent != 1 && gDemandComponent != 0 ) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
+				rTempAux = gDemand;
 				lDemand->Return = gLandUseTypes;
 				lDemand->Empty = true;
 			}
@@ -613,6 +615,9 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 			tbDemand->Lines = lines;
 			gDemandComponent = 1;
 		}
+		else {
+			gDemand = rTempAux;
+		}
 	}
 }
 
@@ -620,10 +625,12 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 {
 	cReturnCITwoMP^ lDemand = gcnew cReturnCITwoMP();
 	bool check = true;
+	String^ rTempAux = "";
 
 	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != 2) {
 		if (gDemandComponent != 2 && gDemandComponent != 0) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
+				rTempAux = gDemand;
 				lDemand->Return = gLandUseTypes;
 				lDemand->Empty = true;
 			}
@@ -681,6 +688,9 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 			tbDemand->Lines = lines;
 			gDemandComponent = 2;
 		}
+		else {
+			gDemand = rTempAux;
+		}
 	}
 }
 
@@ -688,10 +698,12 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 {
 	cReturnCIThreeMP^ lDemand = gcnew cReturnCIThreeMP();
 	bool check = true;
+	String^ rTempAux = "";
 
 	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != 3) {
 		if (gDemandComponent != 3 && gDemandComponent != 0) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
+				rTempAux = gDemand;
 				lDemand->Return = gLandUseTypes;
 				lDemand->Empty = true;
 			}
@@ -753,6 +765,9 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 
 			tbDemand->Lines = lines;
 			gDemandComponent = 3;
+		}
+		else {
+			gDemand = rTempAux;
 		}
 	}
 }

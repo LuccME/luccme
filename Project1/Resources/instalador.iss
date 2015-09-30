@@ -34,13 +34,8 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-;x64 files 
-Source: "D:\_SVN\LuccME\branches\Project1\Project1\Resources\dll\x64\*"; DestDir: "C:\LuccME"; Flags: ignoreversion; Check: Is64BitInstallMode
-;x86 file
-Source: "D:\_SVN\LuccME\branches\Project1\Project1\Resources\dll\x86\*"; DestDir: "C:\LuccME"; Check: not Is64BitInstallMode; Flags: solidbreak
-;common files
 Source: "D:\_SVN\LuccME\branches\Project1\Release\LuccME.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
-Source: "D:\_SVN\LuccME\branches\Project1\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\_SVN\LuccME\branches\Project1\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

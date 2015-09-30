@@ -1566,10 +1566,6 @@ System::Void LuccME::NovoModelo::bSelectedYears_Click(System::Object ^ sender, S
 
 System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
 {
-	if (tNovoModelo->TabPages->Count == 7) {
-		tNovoModelo->TabPages->Add(validation);
-	}
-
 	if (tNovoModelo->SelectedIndex == 4) {
 		if (gAttrLUT != gLandUseTypes) {
 			lAttrToSave->Text = "";
@@ -5653,13 +5649,13 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 	sw->WriteLine("attribute1 = \"sim\"");
 	sw->WriteLine("attribute2 = \"real\"");
 	sw->WriteLine("");
-	sw->WriteLine("if cs.cells[1][init_real]== nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
-	sw->WriteLine("if cs.cells[1][last_real]== nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
-	sw->WriteLine("if cs.cells[1][last_sim]== nil then	error(\"Attribute: \"..last_real..\".Does not exist in the theme\") end");
+	sw->WriteLine("if cs.cells[1][init_real] == nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
+	sw->WriteLine("if cs.cells[1][last_real] == nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
+	sw->WriteLine("if cs.cells[1][last_sim] == nil then error(\"Attribute: \"..last_sim..\". Does not exist in the theme.\") end");
 	sw->WriteLine("");
 	sw->WriteLine("forEachCell(cs, function(cell) ");
-	sw->WriteLine("cell[attribute1] = cell[last_sim] - cell[init_real]");
-	sw->WriteLine("cell[attribute2] = cell[last_real]- cell[init_real]");
+	sw->WriteLine("cell[attribute1] = math.abs(cell[last_sim] - cell[init_real])");
+	sw->WriteLine("cell[attribute2] = math.abs(cell[last_real]- cell[init_real])");
 	sw->WriteLine("end)");
 	sw->WriteLine("");
 	sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");

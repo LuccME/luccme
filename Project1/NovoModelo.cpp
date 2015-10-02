@@ -3338,7 +3338,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				
 					gDemand = "";
 					bool enter = false;
-					for (int i = j; i < tempLine->Length; i++) {
+					for (int i = 0; i < tempLine->Length; i++) {
 						while (tempLine[i] != '{') {
 							if (i == tempLine->Length - 1) {
 								enter = false;

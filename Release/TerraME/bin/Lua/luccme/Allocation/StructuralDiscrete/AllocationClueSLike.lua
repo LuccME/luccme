@@ -45,7 +45,7 @@ function AllocationClueSLike(component)
   	print("Step : ", step)
 
 		if useLog == true then
-			print("----------------------------------------------------------------------------------------")
+			print("-------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
 			print("Max diff area "..maxdiffarea)
@@ -54,7 +54,7 @@ function AllocationClueSLike(component)
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
 				print("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
-			print("----------------------------------------------------------------------------------------")
+			print("-------------------------------------------------------------------------------")
    	end
 		
    	local iteration = self:initIteration(luTypes)
@@ -231,8 +231,8 @@ function AllocationClueSLike(component)
       end
     end
     if (useLog == true) then
-      print("\n  Maximum error of allocation (area): ", maxdiff, " Maximum permited error (area): ", maxdiffarea)
-      print("---------------------------------------------------------------------------------------------------------------------")
+      print("\n  Maximum error of allocation (area): ", maxdiff, "\nMaximum permited error (area): ", maxdiffarea)
+      print("-------------------------------------------------------------------------------")
     end
     if (maxdiff <= maxdiffarea) then
       return true

@@ -4,9 +4,9 @@
 -- @arg component.execute Handles with the rules of the component execution.
 -- @arg component.verify Handles with the parameters verification.
 -- @usage allocation = AllocationBySimpleOrdering
---                   {	
---                       maxDifference = 0.001
---					 }   
+--                     {	
+--                          maxDifference = 0.001
+--					           }   
 function AllocationBySimpleOrdering(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A allocationClueLike component.
@@ -40,16 +40,16 @@ function AllocationBySimpleOrdering(component)
   	print("Step : ", step)
 
 		if (useLog == true) then
-			print("----------------------------------------------------------------------------------------")
+			print("-------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
 			print("Max diff area "..maxdiffarea)
 
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
-				print("Initial area for land use : "..luTypes[landuse].." -> " ..area)
+				print("Initial area for land use : "..luTypes[landuse].." -> "..area)
 			end		
-			print("----------------------------------------------------------------------------------------")
+			print("-------------------------------------------------------------------------------")
    	end
 	   	
 		for k, cell in pairs (cs.cells) do

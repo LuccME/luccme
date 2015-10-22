@@ -417,7 +417,7 @@ public:
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(735, 24);
+			this->menuStrip1->Size = System::Drawing::Size(762, 24);
 			this->menuStrip1->TabIndex = 17;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -504,7 +504,7 @@ public:
 			this->tNovoModelo->Location = System::Drawing::Point(12, 173);
 			this->tNovoModelo->Name = L"tNovoModelo";
 			this->tNovoModelo->SelectedIndex = 0;
-			this->tNovoModelo->Size = System::Drawing::Size(711, 481);
+			this->tNovoModelo->Size = System::Drawing::Size(740, 481);
 			this->tNovoModelo->TabIndex = 18;
 			this->tNovoModelo->SelectedIndexChanged += gcnew System::EventHandler(this, &NovoModelo::tNovoModelo_SelectedIndexChanged);
 			// 
@@ -524,7 +524,7 @@ public:
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(703, 455);
+			this->tabPage1->Size = System::Drawing::Size(732, 455);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Definições do Modelo";
 			this->tabPage1->UseVisualStyleBackColor = true;
@@ -1607,7 +1607,7 @@ public:
 			// 
 			this->statusStrip1->Location = System::Drawing::Point(0, 655);
 			this->statusStrip1->Name = L"statusStrip1";
-			this->statusStrip1->Size = System::Drawing::Size(735, 22);
+			this->statusStrip1->Size = System::Drawing::Size(762, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
 			// 
@@ -1616,7 +1616,7 @@ public:
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoScroll = true;
-			this->ClientSize = System::Drawing::Size(735, 677);
+			this->ClientSize = System::Drawing::Size(762, 677);
 			this->Controls->Add(this->statusStrip1);
 			this->Controls->Add(this->tNovoModelo);
 			this->Controls->Add(this->menuStrip1);

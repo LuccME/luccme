@@ -21,9 +21,9 @@
 -- @return the modified component.
 -- @usage demand = PreComputedValuesINPE {
 -- annualDemand = {	{	205	,	5706	,	3	},
---					{	253	,	5658	,	3	},
---					{	300	,	5611	,	3	},
---					{	348	,	5563	,	3	}}
+--					        {	253	,	5658	,	3	},
+--					        {	300	,	5611	,	3	},
+--					        {	348	,	5563	,	3	}}
 -- }
 function PreComputedValuesINPE(component)
 	--- Handles with the rules of the component execution.

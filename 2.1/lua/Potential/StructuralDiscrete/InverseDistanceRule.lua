@@ -2,6 +2,8 @@
 -- use according to the inverse of the distance to given attributes.
 -- @arg component A InverseDistanceRule component.
 -- @arg component.potentialData A table with the potential parameters for each attribute.
+-- @arg component.potentialData.const A linear regression constant.
+-- @arg component.potentialData.betas A linear regression betas for land use drivers.
 -- @arg component.execute Handles with the execution method of a InverseDistanceRule component.
 -- @arg component.verify Handles with the verify method of a InverseDistanceRule component.
 -- @return The modified component.
@@ -19,7 +21,7 @@ function InverseDistanceRule(component)
 	--- Handles with the execution method of a InverseDistanceRule component.
 	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg luccMEModel A parameter model.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:execute(event, model)
 	component.execute = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
@@ -60,6 +62,7 @@ function InverseDistanceRule(component)
 	--- Handles with the verify method of a InverseDistanceRule component.
 	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
+	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs 

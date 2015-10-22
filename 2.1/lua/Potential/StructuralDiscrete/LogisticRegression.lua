@@ -4,12 +4,10 @@
 -- @arg component A Logistic Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
 -- @arg component.regressionData.const A linear regression constant.
--- @arg component.regressionData.error A linear regression estimate error.
--- @arg component.regressionData.betas A linear regression betas for land use drivers
--- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.regressionData.elasticity An elasticity value, closer to 1 is more easy
 -- to transition for other land uses.
--- @arg component.landUseDrivers The land use drivers fields in database.
+-- @arg component.regressionData.betas A linear regression betas for land use drivers
+-- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.execute Handles with the execution method of a LogisticRegression component.
 -- @arg component.verify Handles with the verify method of a LogisticRegression component.
 -- @arg component.calcRegressionLogistic Handles with the calculation of the regression
@@ -29,7 +27,7 @@ function LogisticRegression(component)
 	--- Handles with the execution method of a LogisticRegression component.
 	-- @arg self A LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg luccMEModel A parameter model.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:execute(event, model)
 	component.execute = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
@@ -60,6 +58,7 @@ function LogisticRegression(component)
 	--- Handles with the verify method of a LogisticRegression component.
 	-- @arg self A LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs

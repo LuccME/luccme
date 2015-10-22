@@ -4,11 +4,10 @@
 -- land use percentage at a given time (see Verburg et al. 1999 for a detailed description). 
 -- @arg component A Linear Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
+-- @arg component.regressionData.isLog Inform whether the model is part of a coupling model.
 -- @arg component.regressionData.const A linear regression constant.
--- @arg component.regressionData.error A linear regression estimate error.
 -- @arg component.regressionData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
--- @arg component.regressionData.isLog Inform whether the model is part of a coupling model.
 -- @arg component.landUseDrivers The land use drivers fields in database.
 -- @arg component.execute Handles with the execution method of a LinearRegression component.
 -- @arg component.verify Handles with the verify method of a LinearRegression component.
@@ -139,7 +138,6 @@ function LinearRegression(component)
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect)
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local luData = self.regressionData[rNumber][luIndex] 
@@ -158,10 +156,8 @@ function LinearRegression(component)
 
   --- Handles with the constants regression method of a LinearRegression component.
   -- @arg self A LinearRegression component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage self:adaptRegressionConstants(demand, rNumber)
   component.adaptRegressionConstants = function(self, demand, rNumber)
      for i, luData in pairs (self.regressionData[rNumber]) do			

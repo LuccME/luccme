@@ -7,7 +7,6 @@
 -- @arg component.minElasticity Minimum elasticity value which controls the allocation interaction factor. 
 -- @arg component.maxElasticity Maximum elasticity value which controls the allocation interaction factor.
 -- @arg component.complementarLU The land use which will be recomputed in the end to sum exactly 100%.
--- @arg component.landUseNoData Dummy land use (static).
 -- @arg component.saturationIndicator Name of a attribute which will be dynamically updated (and can be saved for calibration purposes).
 -- @arg component.attrProtection Database attribute indicating the percentage of protected areas to be excluded from the saturation level computation.
 -- @arg component.allocationData A table with two allocation parameters for each land use.
@@ -127,7 +126,7 @@ function AllocationClueLikeSaturation (component)
     cs:synchronize()
   end
 		
---- Handles with the parameters verification.
+  --- Handles with the parameters verification.
   -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
@@ -257,10 +256,10 @@ function AllocationClueLikeSaturation (component)
 
   component.relaxProtected = function (self, event, luccMEModel)
     if (self.attrProtection ~= nil and self.complementarLU ~= nil ) then
-         print ("RELAX PROT", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
+         --print ("RELAX PROT", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
          luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] = luccMEModel.potential.regressionData[1][1].betas[self.attrProtection] * 0.5
          luccMEModel.potential:computePotential (luccMEModel, 1, 1, event)
-         print ("           ", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
+         --print ("           ", luccMEModel.potential.regressionData[1][1].betas[self.attrProtection])
     end
   end 	 	
 
@@ -341,7 +340,7 @@ function AllocationClueLikeSaturation (component)
     end
   end
 
---- Compute the allocation change.
+  --- Compute the allocation change.
   -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
@@ -421,7 +420,7 @@ function AllocationClueLikeSaturation (component)
     end -- for lu
   end
 
---- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
+  --- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
   -- @arg self A AllocationClueLikeSaturation component.
   -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
@@ -494,7 +493,7 @@ function AllocationClueLikeSaturation (component)
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self:correctCellChange(luccMEModel)
   component.correctCellChange = function(self, luccMEModel)
-  -- corrects total land use/cover types to 100 percent
+    -- corrects total land use/cover types to 100 percent
     local cs = luccMEModel.cs
     local luTypes = luccMEModel.landUseTypes
     local NCOV = #luTypes
@@ -662,13 +661,13 @@ function AllocationClueLikeSaturation (component)
     end -- for each cell
   end -- correct100
 		
---- Calculates total area allocated by the regression equations for each land use/cover type.
-    -- @arg self A AllocationClueLikeSaturation component.
+  --- Calculates total area allocated by the regression equations for each land use/cover type.
+  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg luTypes A set of land use types.
   -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
   component.countAllocatedLandUseArea = function(self, cs, luTypes)
-  -- Calculates total area allocated by the regression equations for each land use/cover type
+    -- Calculates total area allocated by the regression equations for each land use/cover type
     local areas = {}
     local cellarea = cs.cellArea
     

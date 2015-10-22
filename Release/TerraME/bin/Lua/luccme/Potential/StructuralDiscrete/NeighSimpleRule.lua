@@ -9,11 +9,11 @@ function NeighSimpleRule(component)
 	--- Handles with the execution method of a NeighSimpleRule component.
 	-- @arg self A NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg modelParameters A parameter model.
+	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, modelParameters)
-		local cs = modelParameters.cs
-		local luTypes = modelParameters.landUseTypes
+	component.execute = function(self, event, luccMEModel)
+		local cs = luccMEModel.cs
+		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
  		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
@@ -56,7 +56,7 @@ function NeighSimpleRule(component)
 	--- Handles with the verify method of a NeighSimpleRule component.
 	-- @arg self A NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @usage self.potential:verify(event, self)
+	-- @usage self.potential:verify(self, event)
 	component.verify = function(self, event)
 	  print("Verifying Potential parameters")
 	end

@@ -1,5 +1,5 @@
 --- Save the generated data after the simulation into the database for each year a theme will be created.
--- @arg luccmemodel A LuccMe model.
+-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 -- @usage saveToDatabase = databaseSave(luccMeModel)
 function databaseSave(luccmemodel)
 	local saveYears = {}
@@ -74,7 +74,7 @@ function databaseSave(luccmemodel)
 end
 
 --- Save the generated data after the simulation into the database all the data for each year will be created in a single theme.
--- @arg luccmemodel A LuccMe model.
+-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 -- @usage saveToDatabase = saveSingleTheme(luccMeModel)
 function saveSingleTheme(luccmemodel)
 	local n = 1
@@ -108,7 +108,10 @@ function saveSingleTheme(luccmemodel)
 	io.flush()
 	luccmemodel.cs:save(luccmemodel.endTime, luccmemodel.save.outputTheme.."inc_area_", attrs_inc)
 	luccmemodel.cs:save(luccmemodel.endTime, luccmemodel.save.outputTheme.."ext_area_", attrs_ext)
+	
 	print("\nEnd of Simulation")
+	
+	-- Hold the screen
 	local answer
   repeat
      io.write("\nPress enter key to exit...")

@@ -3,13 +3,13 @@
 -- applications. It was created to allow the representation of the creation new deforestation frontiers in the Brazilian Amazon.
 -- @arg component A Spatial Lag Regression component.
 -- @arg component.regressionData A table with the regression parameters for each attribute.
+-- @arg component.regressionData.isLog Inform whether the model is part of a coupling model.
 -- @arg component.regressionData.const A linear regression constant.
--- @arg component.regressionData.ro Auto regressive coefficient.
 -- @arg component.regressionData.minReg A coefficient to minimize the regression value.
 -- @arg component.regressionData.maxReg A coefficient to potentiality the regression value.
+-- @arg component.regressionData.ro Auto regressive coefficient.
 -- @arg component.regressionData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
--- @arg component.regressionData.isLog Inform whether the model is part of a coupling model.
 -- @arg component.landUseDrivers The land use drivers fields in database.
 -- @arg component.execute Handles with the execution method of a SpatialLagLinearRoads component.
 -- @arg component.verify Handles with the verify method of a SpatialLagLinearRoads component.
@@ -178,7 +178,6 @@ function SpatialLagLinearRoads(component)
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local cs = luccMEModel.cs
@@ -239,7 +238,6 @@ function SpatialLagLinearRoads(component)
   -- @arg self A SpatialLagRegression component.
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
   -- @usage self:adaptRegressionConstants(demand, rNumber)
   component.adaptRegressionConstants = function(self, demand, rNumber)
      for i, luData in pairs (self.regressionData[rNumber]) do      

@@ -1,6 +1,8 @@
 --- Simple component developed as teaching material. Not to be used in real applications. Estimates cell potential combining above two methods.
 -- @arg component A NeighInverseDistanceRule component.
 -- @arg component.potentialData A table with the potential parameters for each attribute.
+-- @arg component.potentialData.const A linear regression constant.
+-- @arg component.potentialData.betas A linear regression betas for land use drivers.
 -- @arg component.execute Handles with the execution method of a NeighInverseDistanceRule component.
 -- @arg component.verify Handles with the verify method of a LogisticRegression component.
 -- @return The modified component.
@@ -16,7 +18,7 @@ function NeighInverseDistanceRule(component)
 	--- Handles with the execution method of a NeighInverseDistanceRule component.
 	-- @arg self A NeighInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg luccMEModel A parameter model.
+	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:execute(event, model)
 	component.execute = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
@@ -81,6 +83,7 @@ function NeighInverseDistanceRule(component)
 	--- Handles with the verify method of a LogisticRegression component.
 	-- @arg self A NeighInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must execute.
+	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs

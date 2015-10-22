@@ -219,6 +219,7 @@ function LuccMEModel(model)
 	return model
 end
 
+-- Override the error function to hold the screen.
 error = function(message, code)
           print(message)
           local answer

@@ -10,7 +10,6 @@
 -- @arg component.minElasticity Minimum elasticity value which controls the allocation interaction factor. 
 -- @arg component.maxElasticity Maximum elasticity value which controls the allocation interaction factor.
 -- @arg component.complementarLU The land use which will be recomputed in the end to sum exactly 100%.
--- @arg component.landUseNoData Dummy land use (static).
 -- @arg component.allocationData A table with two allocation parameters for each land use.
 -- @arg component.allocationData.static Indicates if the variable can increase or decrease in each cell, or only change in the direction of the demand.
 -- @arg component.allocationData.minValue Minimum value allowed for the percentage of a given land use  in a cell (as a result of new changes -  the original 
@@ -239,7 +238,7 @@ function AllocationClueLike(component)
 		end
 	end
 
-	 --- Compute the Allocation change based on the potential of the cell.
+	--- Compute the Allocation change based on the potential of the cell.
   -- @arg self A AllocationClueLike component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self:computeChange(luccMEModel)
@@ -555,7 +554,7 @@ function AllocationClueLike(component)
   end -- correctCellChange
 	
   --- Calculates total area allocated by the regression equations for each land use/cover type.
-    -- @arg self A AllocationClueLike component.
+  -- @arg self A AllocationClueLike component.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg luTypes A set of land use types.
   -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)

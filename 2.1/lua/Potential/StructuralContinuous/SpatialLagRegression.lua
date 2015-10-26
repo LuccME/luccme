@@ -15,6 +15,7 @@
 -- @arg component.modify Handles with the modify method of a SpatialLagRegression component.
 -- @arg component.adaptRegressionConstants Handles with the constants regression method of a
 -- SpatialLagRegression component.
+-- @arg component.modifyDriver Modify potencial for an protected area.
 -- @arg component.computePotential Handles with the modify method of a SpatialLagRegression component.
 -- @return The modified component.
 -- @usage myPontencial = SpatialLagRegression {
@@ -216,6 +217,37 @@ function SpatialLagRegression(component)
       luData.const = luData.newconst  
     end
 	end	-- function adaptRegressionConstants
+	
+  --- Modify potencial for an protected area.
+  -- @arg complementarLU Land use name.
+  -- @arg attrProtection The protetion attribute name.
+  -- @arg rate A rate for potencial multiplier.
+  -- @arg event A representation of a time instant when the simulation engine must execute.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
+    local regionsNumber = #luccMEModel.potential.regressionData
+    local luTypes = luccMEModel.landUseTypes
+    local luIndex = 1
+    
+    for i, complementarLU in pairs (luTypes) do
+      if (complementarLU == luTypes[i]) then
+        luIndex = i
+        break
+      end
+    end
+    
+    for i = 1, regionsNumber, 1 do
+      local regressionNumber = #luccMEModel.potential.regressionData[i]
+      
+      for j = 1, regressionNumber, 1 do
+        if (luccMEModel.potential.regressionData[i][j].betas[attrProtection] ~= nil) then 
+          luccMEModel.potential.regressionData[i][j].betas[attrProtection] = luccMEModel.potential.regressionData[i][j].betas[attrProtection] * rate
+        end
+      end
+      
+      self:computePotential(luccMEModel, i, luIndex)
+    end
+  end
 
   --- Handles with the compute potential method of a SpatialLagRegression component.
   -- @arg self A SpatialLagRegression component.

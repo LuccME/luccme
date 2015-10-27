@@ -2,11 +2,11 @@
 -- Based on the original CLUE-S framework potential calculation (Verburg et al., 2002), 
 -- modifies the probability with a user defined elasticity, for the current land use.
 -- @arg component A Logistic Regression component.
--- @arg component.regressionData A table with the regression parameters for each attribute.
--- @arg component.regressionData.const A linear regression constant.
--- @arg component.regressionData.elasticity An elasticity value, closer to 1 is more easy
+-- @arg component.potentialData A table with the regression parameters for each attribute.
+-- @arg component.potentialData.const A linear regression constant.
+-- @arg component.potentialData.elasticity An elasticity value, closer to 1 is more easy
 -- to transition for other land uses.
--- @arg component.regressionData.betas A linear regression betas for land use drivers
+-- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.execute Handles with the execution method of a LogisticRegression component.
 -- @arg component.verify Handles with the verify method of a LogisticRegression component.
@@ -14,7 +14,7 @@
 -- @arg component.probability Compute the probability logistic method of a LogisticRegression component.
 -- @return The modified component.
 -- @usage potential  =  LogisticRegression {
---    regressionData = { 
+--    potentialData = { 
 --                      --  Region 1
 --                      {
 --                        {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}, elasticy = 0.5},  --D
@@ -31,12 +31,12 @@ function LogisticRegression(component)
 	-- @usage self.potential:execute(event, model)
 	component.execute = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
-		local regressionData = self.regressionData
+		local potentialData = self.potentialData
  		local luTypes = luccMEModel.landUseTypes
  		local landUseDrivers = self.landUseDrivers
   		
 		for k, cell in pairs (cs.cells) do
-  		for luind, inputValues in pairs (regressionData[cell.region]) do
+  		for luind, inputValues in pairs (potentialData[cell.region]) do
   			local lu = luTypes[luind]
   				
   			-- Step 1: Calculates the regression estimates
@@ -63,19 +63,19 @@ function LogisticRegression(component)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
-    -- check regressionData
-    if (self.regressionData == nil) then
-      error("regressionData is missing", 2)
+    -- check potentialData
+    if (self.potentialData == nil) then
+      error("potentialData is missing", 2)
     end    
     
-    local regionsNumber = #self.regressionData
+    local regionsNumber = #self.potentialData
 
     -- check number of Regions
     if (regionsNumber == nil or regionsNumber == 0) then
       error("The model must have at least One region", 2)
     else
       for i = 1, regionsNumber, 1 do
-        local regressionNumber = #self.regressionData[i]
+        local regressionNumber = #self.potentialData[i]
         local lutNumber = #luccMEModel.landUseTypes
         local activeRegionNumber = 0
         
@@ -100,22 +100,22 @@ function LogisticRegression(component)
         
         for j = 1, regressionNumber, 1 do
           -- check constant variable
-          if(self.regressionData[i][j].const == nil) then
+          if(self.potentialData[i][j].const == nil) then
             error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
          
           -- check elasticity variable
-          if (self.regressionData[i][j].elasticity == nil) then
+          if (self.potentialData[i][j].elasticity == nil) then
             error("elasticity variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
          
           -- check betas variable
-          if (self.regressionData[i][j].betas == nil) then
+          if (self.potentialData[i][j].betas == nil) then
             error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
           
           -- check betas within database
-          for k, lu in pairs (self.regressionData[i][j].betas) do
+          for k, lu in pairs (self.potentialData[i][j].betas) do
             if (luccMEModel.cs.cells[1][k] == nil) then
               error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
             end

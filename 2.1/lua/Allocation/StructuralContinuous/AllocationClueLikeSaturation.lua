@@ -422,7 +422,7 @@ function AllocationClueLikeSaturation (component)
     local tot = 0
     local nRegression = 0
 		
-		for j = 1, #luccMEModel.potential.regressionData, 1 do
+		for j = 1, #luccMEModel.potential.potentialData, 1 do
       for i, lu in  pairs( luTypes) do
         local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
         local currentDemand = luccMEModel.demand:getCurrentLuDemand(i) 
@@ -460,8 +460,8 @@ function AllocationClueLikeSaturation (component)
              print("Region "..j)
              nRegression = j
           end
-          print (lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const :",luccMEModel.potential.regressionData[j][i].const,"->", luccMEModel.potential.regressionData[j][i].newconst, 
-                 luccMEModel.potential.regressionData[j][i].newminReg, luccMEModel.potential.regressionData[j][i].newmaxReg)
+          print (lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const :",luccMEModel.potential.potentialData[j][i].const,"->", luccMEModel.potential.potentialData[j][i].newconst, 
+                 luccMEModel.potential.potentialData[j][i].newminReg, luccMEModel.potential.potentialData[j][i].newmaxReg)
         end
         
     	  local  diff = math.abs((areas[i] - currentDemand)) 

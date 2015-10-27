@@ -69,7 +69,7 @@ function InverseDistanceRule(component)
 	  print("Verifying Potential parameters")
 	  -- check potentialData
     if (self.potentialData == nil) then
-      error("regressionData is missing", 2)
+      error("potentialData is missing", 2)
     end    
     
      local regionsNumber = #self.potentialData

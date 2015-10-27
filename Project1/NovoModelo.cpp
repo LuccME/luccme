@@ -2097,7 +2097,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							sw->WriteLine("\tpotentialData =");
 						}
 						else {
-							sw->WriteLine("\tregressionData =");
+							sw->WriteLine("\tpotentialData =");
 						}
 						sw->WriteLine("\t{");
 						sw->WriteLine("\t\t--Region 1");
@@ -2157,7 +2157,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					case 8:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
-						sw->WriteLine("\tregressionData =");
+						sw->WriteLine("\tpotentialData =");
 						sw->WriteLine("\t{");
 						sw->WriteLine("\t\t--Region 1");
 						sw->WriteLine("\t\t{");
@@ -4066,7 +4066,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //regressionData
+					while (line->Contains("=") != 1) { //potentialData
 						line = sw->ReadLine();
 					}
 
@@ -4210,7 +4210,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //regressionData
+					while (line->Contains("=") != 1) { //potentialData
 						line = sw->ReadLine();
 					}
 
@@ -4415,7 +4415,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //regressionData
+					while (line->Contains("=") != 1) { //potentialData
 						line = sw->ReadLine();
 					}
 

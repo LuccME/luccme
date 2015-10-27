@@ -3150,13 +3150,14 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tempLine = "";
 
 					for (int i = j; i < line->Length; i++) {
-						if (line[i] != '_') {
+						if (line[i] != ',') {
 							tempLine += line[i];
 						}
 						else {
 							break;
 						}
 					}
+					tempLine = tempLine->Replace("\"", "");
 					tOutputTheme->Text = tempLine;
 					tOutputTheme->ForeColor = System::Drawing::Color::Black;
 				}

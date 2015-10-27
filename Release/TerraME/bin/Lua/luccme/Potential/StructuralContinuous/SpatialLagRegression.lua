@@ -1,13 +1,13 @@
 --- Similar to the LinearRegression approach, but relies spatial regression techniques to estimate the 
 -- regression cover (considers the spatial dependence of the land use). 
 -- @arg component A Spatial Lag Regression component.
--- @arg component.regressionData A table with the regression parameters for each attribute.
--- @arg component.regressionData.isLog Inform whether the model is part of a coupling model.
--- @arg component.regressionData.const A linear regression constant.
--- @arg component.regressionData.minReg A coefficient to minimize the regression value.
--- @arg component.regressionData.maxReg A coefficient to potentiality the regression value.
--- @arg component.regressionData.ro Auto regressive coefficient.
--- @arg component.regressionData.betas A linear regression betas for land use drivers
+-- @arg component.potentialData A table with the regression parameters for each attribute.
+-- @arg component.potentialData.isLog Inform whether the model is part of a coupling model.
+-- @arg component.potentialData.const A linear regression constant.
+-- @arg component.potentialData.minReg A coefficient to minimize the regression value.
+-- @arg component.potentialData.maxReg A coefficient to potentiality the regression value.
+-- @arg component.potentialData.ro Auto regressive coefficient.
+-- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.landUseDrivers The land use drivers fields in database.
 -- @arg component.execute Handles with the execution method of a SpatialLagRegression component.
@@ -15,10 +15,11 @@
 -- @arg component.modify Handles with the modify method of a SpatialLagRegression component.
 -- @arg component.adaptRegressionConstants Handles with the constants regression method of a
 -- SpatialLagRegression component.
+-- @arg component.modifyDriver Modify potencial for an protected area.
 -- @arg component.computePotential Handles with the modify method of a SpatialLagRegression component.
 -- @return The modified component.
 -- @usage myPontencial = SpatialLagRegression {
--- regressionData = {
+-- potentialData = {
 --                    -- Region 1
 --                    { 
 --                      --Natural vegetation
@@ -42,11 +43,11 @@ function SpatialLagRegression(component)
   component.execute = function(self, event, luccMEModel)
     local luTypes = luccMEModel.landUseTypes
     local demand = luccMEModel.demand
-    local regionsNumber = #self.regressionData
+    local regionsNumber = #self.potentialData
     
     -- Create an internal constant that can be modified during allocation
     for rNumber = 1, regionsNumber, 1 do
-  		for i, luData in pairs(self.regressionData[rNumber]) do
+  		for i, luData in pairs(self.potentialData[rNumber]) do
         if (luData.const == nil) then
           luData.const = 0
         end
@@ -95,19 +96,19 @@ function SpatialLagRegression(component)
                     end
                 )
 
-    -- check regressionData
-    if (self.regressionData == nil) then
-      error("regressionData is missing", 2)
+    -- check potentialData
+    if (self.potentialData == nil) then
+      error("potentialData is missing", 2)
     end    
     
-    local regionsNumber = #self.regressionData
+    local regionsNumber = #self.potentialData
 
     -- check number of Regions
     if (regionsNumber == nil or regionsNumber == 0) then
       error("The model must have at least One region")
     else
       for i = 1, regionsNumber, 1 do
-        local regressionNumber = #self.regressionData[i]
+        local regressionNumber = #self.potentialData[i]
         local lutNumber = #luccMEModel.landUseTypes
         
         -- check the number of regressions
@@ -116,37 +117,37 @@ function SpatialLagRegression(component)
         end
         for j = 1, regressionNumber, 1 do
           -- check isLog variable
-          if(self.regressionData[i][j].isLog == nil) then
+          if(self.potentialData[i][j].isLog == nil) then
             error("isLog variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
           
           -- check minReg variable
-          if(self.regressionData[i][j].minReg == nil) then
+          if(self.potentialData[i][j].minReg == nil) then
             error("minReg variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
                 
           -- check maxReg variable
-          if(self.regressionData[i][j].maxReg == nil) then
+          if(self.potentialData[i][j].maxReg == nil) then
             error("maxReg variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
           
           -- check ro variable
-          if(self.regressionData[i][j].ro == nil) then
+          if(self.potentialData[i][j].ro == nil) then
             error("ro variable is missing on Region "..i.." LandUseType number "..j, 2)
           end                  
          
           -- check const variable
-          if (self.regressionData[i][j].const == nil) then
+          if (self.potentialData[i][j].const == nil) then
             error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
          
           -- check betas variable
-          if (self.regressionData[i][j].betas == nil) then
+          if (self.potentialData[i][j].betas == nil) then
             error("minReg variable is missing on Region "..i.." LandUseType number "..j, 2)
           end
           
           -- check betas within database
-          for k, lu in pairs (self.regressionData[i][j].betas) do
+          for k, lu in pairs (self.potentialData[i][j].betas) do
             if (luccMEModel.cs.cells[1][k] == nil) then
               error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
             end
@@ -173,7 +174,7 @@ function SpatialLagRegression(component)
   -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
 	component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local cs = luccMEModel.cs
-		local luData = self.regressionData[rNumber][luIndex] 
+		local luData = self.potentialData[rNumber][luIndex] 
 
 		if luData.newconst == nil then 
 		  luData.newconst = 0 
@@ -195,7 +196,7 @@ function SpatialLagRegression(component)
   -- @arg rNumber The potential region number.
   -- @usage self:adaptRegressionConstants(demand, rNumbers)
 	component.adaptRegressionConstants = function(self, demand, rNumber)
-    for i, luData in pairs (self.regressionData[rNumber]) do			
+    for i, luData in pairs (self.potentialData[rNumber]) do			
     	local currentDemand = demand:getCurrentLuDemand(i)
     	local previousDemand = demand:getPreviousLuDemand(i) 
     	local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
@@ -216,6 +217,37 @@ function SpatialLagRegression(component)
       luData.const = luData.newconst  
     end
 	end	-- function adaptRegressionConstants
+	
+  --- Modify potencial for an protected area.
+  -- @arg complementarLU Land use name.
+  -- @arg attrProtection The protetion attribute name.
+  -- @arg rate A rate for potencial multiplier.
+  -- @arg event A representation of a time instant when the simulation engine must execute.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
+    local regionsNumber = #luccMEModel.potential.potentialData
+    local luTypes = luccMEModel.landUseTypes
+    local luIndex = 1
+    
+    for i, complementarLU in pairs (luTypes) do
+      if (complementarLU == luTypes[i]) then
+        luIndex = i
+        break
+      end
+    end
+    
+    for i = 1, regionsNumber, 1 do
+      local regressionNumber = #luccMEModel.potential.potentialData[i]
+      
+      for j = 1, regressionNumber, 1 do
+        if (luccMEModel.potential.potentialData[i][j].betas[attrProtection] ~= nil) then 
+          luccMEModel.potential.potentialData[i][j].betas[attrProtection] = luccMEModel.potential.potentialData[i][j].betas[attrProtection] * rate
+        end
+      end
+      
+      self:computePotential(luccMEModel, i, luIndex)
+    end
+  end
 
   --- Handles with the compute potential method of a SpatialLagRegression component.
   -- @arg self A SpatialLagRegression component.
@@ -227,7 +259,7 @@ function SpatialLagRegression(component)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes
 		local lu = luTypes[luIndex]
-		local luData = self.regressionData[rNumber][luIndex]
+		local luData = self.potentialData[rNumber][luIndex]
 		local pot = lu.."_pot"
 		local activeRegionNumber = 0
 				

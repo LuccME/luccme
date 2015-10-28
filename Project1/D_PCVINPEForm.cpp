@@ -11,6 +11,7 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 		bSalvar->Text = "Save";
 		gSDataMod = "The data was modified, but not saved.\nThe data will be lost.\nDo you want to proceed?";
 		gSExit = "Exit - Pre Computed Values INPE";
+		lPCVINPE->Text = "Annual Demand";
 	}
 	else {
 		this->Text = "Demanda - Pre Computed Values INPE";
@@ -20,6 +21,7 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 		bSalvar->Text = "Salvar";
 		gSDataMod = "Os dados foram modificados, mas não foram salvos.\nOs dados serão perdidos.\nDeseja continuar?";
 		gSExit = "Sair - Pre Computed Values INPE";
+		lPCVINPE->Text = "Demanda Anual";
 	}
 
 	dgDemand->ColumnCount = 1;

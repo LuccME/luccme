@@ -100,12 +100,12 @@ namespace LuccME {
 			this->lPCVINPE->AutoSize = true;
 			this->lPCVINPE->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lPCVINPE->Location = System::Drawing::Point(146, 166);
+			this->lPCVINPE->Location = System::Drawing::Point(197, 170);
 			this->lPCVINPE->Name = L"lPCVINPE";
-			this->lPCVINPE->Size = System::Drawing::Size(220, 23);
+			this->lPCVINPE->Size = System::Drawing::Size(135, 23);
 			this->lPCVINPE->TabIndex = 36;
-			this->lPCVINPE->Text = L"Pre Computed Values INPE";
-			this->lPCVINPE->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lPCVINPE->Text = L"Demanda Anual";
+			this->lPCVINPE->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// dgDemand
 			// 

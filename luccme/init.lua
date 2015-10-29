@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------------------
---LuccME - a framework for topdown land use change modelling.
---Copyright © 2009 - 2015 INPE.
+--LuccME - a framework for top-down land use change modelling.
+--Copyright © 2009 - 2011 INPE.
 --
 --This code is part of the LuccME framework.
 --This framework is a free software; you can redistribute and/or

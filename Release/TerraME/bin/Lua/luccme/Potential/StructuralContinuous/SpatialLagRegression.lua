@@ -88,13 +88,19 @@ function SpatialLagRegression(component)
     print("Verifying Potential parameters")
     local cs = luccMEModel.cs
 
-    forEachCell(cs, function(cell)
+   if (self.regionAttr == nil) then
+     self.regionAttr = "region"
+   end   
+
+   forEachCell(cs, function(cell)
                       cell["alternate_model"] = 0
-                      if (cell.region == nil) then
-                        cell.region = 1
+                      if (cell[self.regionAttr] == nil) then
+                        cell["region"] = 1
+                      else
+                        cell["region"] = cell[self.regionAttr]
                       end
-                    end
-                )
+                     end
+               )
 
     -- check potentialData
     if (self.potentialData == nil) then

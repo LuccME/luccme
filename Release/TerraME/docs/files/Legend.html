@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"><img src='../img/terrame.png'/><br/></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>TerraME</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- Types list -->
+
+<h1>Types</h1>
+<ul>
+
+		<li>
+			<a href="../files/Agent.html">Agent</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Automaton.html">Automaton</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Cell.html">Cell</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/CellularSpace.html">CellularSpace</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Coord.html">Coord</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Environment.html">Environment</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Event.html">Event</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Flow.html">Flow</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Group.html">Group</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Jump.html">Jump</a>
+		</li>
+		
+	
+
+		<li><strong>Legend</strong></li>
+		
+	
+
+		<li>
+			<a href="../files/Neighborhood.html">Neighborhood</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Observer.html">Observer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Random.html">Random</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/SocialNetwork.html">SocialNetwork</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Society.html">Society</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/State.html">State</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Timer.html">Timer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Trajectory.html">Trajectory</a>
+		</li>
+		
+	
+
+
+</ul>
+
+
+<!-- Files list -->
+
+<h1>Files</h1>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<li>
+			<a href="../files/Utils.html">Utils</a>
+		</li>
+		
+	
+
+</ul>
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1><code>Legend
+
+
+
+</code></h1>
+
+
+<span class="description"></span>
+
+
+
+
+
+
+
+
+
+<span class="description">Type that defines how to color an attribute to be observed. It is used only with a map <a href=../files/Observer.html>Observer</a>. The configuration of a legend can be changed visually by double clicking the graphical interface along the simulation.</span>
+
+
+	
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>colorBar</strong>: A table where each position is a table with a 'color', a 'value', and a 'label' (optional). Colors can be described as string ("red", "green", "blue", "white", "black", "yellow", "brown", "cyan", "gray", "magenta", "orange", "purple", and their light and dark compositions, such as "lightGray" and "darkGray"), or as tables with three integer numbers representing RGB compositions. Labels are strings that will be shown in the graphical interface describing the colors.
+    </li> 
+    
+  
+    <li>
+	  <strong>font</strong>: A string with the font used to draw each <a href=../files/Agent.html>Agent</a>. Default is "Symbol".
+    </li> 
+    
+  
+    <li>
+	  <strong>fontSize</strong>: An integer positive number indicating the font size. Default is 12.
+    </li> 
+    
+  
+    <li>
+	  <strong>grouping</strong>: A string with the strategy to slice and color the data. See below.
+    </li> 
+    
+      </span>
+      <!-- Strategy of the parameter -->
+       
+      <table class="param_tab">
+	  
+      
+        <tr>
+        
+          
+            <th>
+            Grouping
+            </th>
+          
+          
+            <th>
+            Description
+            </th>
+          
+          
+            <th>
+            Compulsory parameters
+            </th>
+          
+          
+            <th>
+            Optional parameters
+            </th>
+          
+        
+        <tr>
+        
+          
+            <td>
+            "equalsteps"
+            </td>
+          
+          
+            <td>
+            The values are divided into a set of slices with the same range. Each slice is associated to a given color. Equalsteps require only two colors in the colorBar, one for the minimum and the other for the maximum value. The other colors are computed from a linear interpolation of the two colors.
+            </td>
+          
+          
+            <td>
+            colorBar, maximum, minimum, slices
+            </td>
+          
+          
+            <td>
+            font, fontSize, precision, symbol, type, width
+            </td>
+          
+        
+        <tr>
+        
+          
+            <td>
+            "quantil"
+            </td>
+          
+          
+            <td>
+            Aggregate the values into slices with approximately the same size. Values are ordered from lower to higher and then sliced. This strategy uses two colors in the same way of equalsteps.
+            </td>
+          
+          
+            <td>
+            colorBar, maximum, minimum, slices
+            </td>
+          
+          
+            <td>
+            precision, type, width
+            </td>
+          
+        
+        <tr>
+        
+          
+            <td>
+            "stdeviation"
+            </td>
+          
+          
+            <td>
+            Define slices according to the distribution of a given attribute. Values with similar positive or negative distances to the average will belong to the same slice.
+            </td>
+          
+          
+            <td>
+            colorBar, stdColorBar
+            </td>
+          
+          
+            <td>
+            precision, stdDeviation, type, width
+            </td>
+          
+        
+        <tr>
+        
+          
+            <td>
+            "uniquevalue"
+            </td>
+          
+          
+            <td>
+            Map each attribute value to a given color. Attributes with type string can only be sliced with this strategy.
+            </td>
+          
+          
+            <td>
+            colorBar
+            </td>
+          
+          
+            <td>
+            type, width
+            </td>
+          
+        
+        <tr>
+        
+          
+            <td>
+            
+            </td>
+          
+        
+        </tr>    
+      </table>
+      <span class="param">
+    
+  
+    <li>
+	  <strong>maximum</strong>: The maximum value of the attribute (used only for numbers).
+    </li> 
+    
+  
+    <li>
+	  <strong>minimum</strong>: The minimum value of the attribute (used only for numbers).
+    </li> 
+    
+  
+    <li>
+	  <strong>precision</strong>: The number of decimal digits for slicing. It must be an integer number greater than zero. It indicates that differences less than 10^(-digits) will not be considered. It means that, for instance, if a slice is in the interval [1.0,2.0] and precision is 2 (0.01), a value 0.99 might belong to such slice.
+    </li> 
+    
+  
+    <li>
+	  <strong>slices</strong>: The number of colors to be used for plotting. It must be an integer number greater than one.
+    </li> 
+    
+  
+    <li>
+	  <strong>stdColorBar</strong>: A table just as colorBar. It is needed only when standard deviation is the chosen strategy. 
+    </li> 
+    
+  
+    <li>
+	  <strong>stdDeviation</strong>: When the grouping mode is stddeviation, it has to be one of "full", "half" "quarter", or "none".
+    </li> 
+    
+  
+    <li>
+	  <strong>symbol</strong>: A symbol to draw Agents. It can be one of: "none", "ellipse", "rect", "diamond", "triangle", "dtriangle", "utriangle", "ltriangle", "rtriangle", "cross", "xcross", "hline", "vline", "asterisk", "star", "hexagon". Default is an arrow.
+    </li> 
+    
+  
+    <li>
+	  <strong>type</strong>: The type of the attribute to be observed. It has to be one of "bool", "number", "string", and "datetime" (an ordered string).
+    </li> 
+    
+  
+    <li>
+	  <strong>width</strong>: The width of the line to be drawn. Used for drawing <a href=../files/Neighborhood.html>Neighborhoods</a> (default is 10).
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">coverLeg</span> = <span class="function">Legend</span> {
+    <span class="id">grouping</span> = <span class="string">"uniquevalue"</span>,
+    <span class="id">colorBar</span> = {
+        {<span class="id">value</span> = <span class="number">0</span>, <span class="id">color</span> = <span class="string">"white"</span>},
+        {<span class="id">value</span> = <span class="number">1</span>, <span class="id">color</span> = <span class="string">"red"</span>},
+        {<span class="id">value</span> = <span class="number">2</span>, <span class="id">color</span> = <span class="string">"green"</span>}
+    }		
+}
+
+<span class="id">deforLeg</span> = <span class="function">Legend</span> {
+    <span class="id">grouping</span> = <span class="string">"equalsteps"</span>,
+    <span class="id">slices</span> = <span class="number">10</span>,
+    <span class="id">colorBar</span> = {
+        {<span class="id">value</span> = <span class="number">0</span>, <span class="id">color</span> = <span class="string">"green"</span>},
+        {<span class="id">value</span> = <span class="number">1</span>, <span class="id">color</span> = <span class="string">"red"</span>}
+    }
+}</code></pre>
+
+
+
+</dd>
+
+
+
+</table>
+
+
+
+
+
+<!--<br/>
+<br/>-->
+
+
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

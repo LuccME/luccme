@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"><img src='../img/terrame.png'/><br/></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>TerraME</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- Types list -->
+
+<h1>Types</h1>
+<ul>
+
+		<li>
+			<a href="../files/Agent.html">Agent</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Automaton.html">Automaton</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Cell.html">Cell</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/CellularSpace.html">CellularSpace</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Coord.html">Coord</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Environment.html">Environment</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Event.html">Event</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Flow.html">Flow</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Group.html">Group</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Jump.html">Jump</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Legend.html">Legend</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Neighborhood.html">Neighborhood</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Observer.html">Observer</a>
+		</li>
+		
+	
+
+		<li><strong>Random</strong></li>
+		
+	
+
+		<li>
+			<a href="../files/SocialNetwork.html">SocialNetwork</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Society.html">Society</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/State.html">State</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Timer.html">Timer</a>
+		</li>
+		
+	
+
+		<li>
+			<a href="../files/Trajectory.html">Trajectory</a>
+		</li>
+		
+	
+
+
+</ul>
+
+
+<!-- Files list -->
+
+<h1>Files</h1>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<li>
+			<a href="../files/Utils.html">Utils</a>
+		</li>
+		
+	
+
+</ul>
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1><code>Random
+
+
+
+</code></h1>
+
+
+<span class="description"></span>
+
+
+
+
+
+
+
+
+
+<span class="description">Type to generate random numbers. It uses RandomLib, a C++ interface to the Mersenne Twister random number generator MT19937 and to the SIMD-oriented Fast Mersenne Twister random number generator, SFMT19937. Every instance of Random has its own random seed.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>seed</strong>: An integer number to generate the pseudo-random numbers. Default is the current time of the system.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">random</span> = <span class="function">Random</span>()
+
+<span class="id">random</span> = <span class="function">Random</span> { <span class="id">seed</span> = <span class="number">0</span> }</code></pre>
+
+
+
+</dd>
+
+
+
+<h2 class="function_list">Functions</h2>
+<table class="function_list">
+
+	  <tr>
+		<td class="name" nowrap><a href="#integer">integer</a>&nbsp;
+	  <td class="summary">Generate an integer random number.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#number">number</a>&nbsp;
+	  <td class="summary">Generate a real number randomly.</td>
+    </tr>
+
+	  <tr>
+		<td class="name" nowrap><a href="#reSeed">reSeed</a>&nbsp;
+	  <td class="summary">Reset the seed to generate random numbers.</td>
+    </tr>
+
+
+</table>
+
+
+
+
+
+<!--<br/>
+<br/>-->
+
+
+
+
+	
+<dl class="function">
+
+
+
+<dt><h2><a name="integer">
+</a><strong>integer</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Generate an integer random number.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: An integer number. If abscent, integer() will generate numbers between zero and one. If it is the only parameter used, it will generate numbers from zero to this value.
+    </li> 
+    
+  
+    <li>
+	  <strong>2nd</strong>: An integer number. When used, integer() will generate numbers between the first parameter and the second, inclusive.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">value</span> = <span class="id">random</span>:<span class="function">integer</span>() <span class="comment">-- 0 or 1</span>
+
+<span class="id">value</span> = <span class="id">random</span>:<span class="function">integer</span>(<span class="number">10</span>) <span class="comment">-- from 0 to 10</span>
+
+<span class="id">value</span> = <span class="id">random</span>:<span class="function">integer</span>(<span class="number">5</span>, <span class="number">10</span>) <span class="comment">-- from 5 to 10</span></code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="number">
+</a><strong>number</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Generate a real number randomly.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A number. If abscent, number() will generate numbers between zero and one. If it is the only parameter used, it will generate numbers from zero to this value.
+    </li> 
+    
+  
+    <li>
+	  <strong>2nd</strong>: A number. When used, number() will generate numbers between the first parameter and the second.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">value</span> = <span class="id">random</span>:<span class="function">number</span>() <span class="comment">-- between 0 and 1</span>
+
+<span class="id">value</span> = <span class="id">random</span>:<span class="function">number</span>(<span class="number">10</span>) <span class="comment">-- between 0 and 10</span>
+
+<span class="id">value</span> = <span class="id">random</span>:<span class="function">number</span>(<span class="number">5</span>, <span class="number">10</span>) <span class="comment">-- between 5 and 10</span></code></pre>
+
+
+
+</dd>
+
+    
+
+
+
+<dt><h2><a name="reSeed">
+</a><strong>reSeed</strong>&nbsp;
+</h2></dt>
+<dd>
+
+<span class="description">Reset the seed to generate random numbers.</span>
+
+
+
+
+<!-- Function parameters -->
+  <h3>Parameters</h3>
+<ul><span class="param">
+
+    <li>
+	  <strong>1st</strong>: A positive integer number.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">value</span> = <span class="id">random</span>:<span class="function">reSeed</span>(<span class="number">1</span>)</code></pre>
+
+
+
+</dd>
+
+    
+
+</dl>
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

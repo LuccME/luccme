@@ -42,7 +42,7 @@ function AllocationClueSLike(component)
 		local possibleTransitions = 0
 
 		print("\nTime : ", event:getTime())
-  	print("Step : ", step)
+    print("Step : ", step)
 
 		if useLog == true then
 			print("-------------------------------------------------------------------------------")
@@ -75,6 +75,7 @@ function AllocationClueSLike(component)
 				local lu_maior = lu_past
 				local probMaior = -999999999
 				local maxLuNeigh
+				
 				if (cell.region == nil) then
 					cell.region = 1
 				end
@@ -111,7 +112,7 @@ function AllocationClueSLike(component)
 			
 			self:adjustIteration(diff, luTypes, self.factorIteration, iteration)
 			
-			nIter= nIter + 1
+			nIter = nIter + 1
 	      		
 			if (allocation_ok == true) then 
   			print("Demand allocated correctly in this time step:", step)
@@ -250,12 +251,12 @@ function AllocationClueSLike(component)
   component.areaAllocated = function(self, cs, cellarea, field, attr)
     local count = 0
     forEachCell(cs, function(cell)
-              if (cell[field] == attr) then
-                count = count + 1
-              end
-            end
-          )
-          
+                      if (cell[field] == attr) then
+                        count = count + 1
+                      end
+                    end
+                )
+    print("\n\n",count, cellarea, field)          
     return (count * cellarea)
   end
   
@@ -299,7 +300,8 @@ function AllocationClueSLike(component)
     cell[higher_use.."_out"] = 1
   
     cell[higher_use.."_change"] = 0
-    cell[cur_use.."_change"] = 0  
+    cell[cur_use.."_change"] = 0 
+     
     if (cur_use ~= higher_use) then
            cell[higher_use.."_change"] = 1
            cell[cur_use.."_change"] = -1 

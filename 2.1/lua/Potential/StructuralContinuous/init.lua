@@ -26,3 +26,4 @@
 require ("luccme.Potential.StructuralContinuous.LinearRegression")
 require ("luccme.Potential.StructuralContinuous.SpatialLagLinearRoads")
 require ("luccme.Potential.StructuralContinuous.SpatialLagRegression")
+require ("luccme.Potential.StructuralContinuous.MaximumEntropyLike")

@@ -170,13 +170,77 @@ function MaximumEntropyLike(component)
         end
       end
     end
-
-    -- Calculaete the potential    
-    for k, cell in pairs (cs.cells) do
-       
+    
+    print("\n", lu)
+    for i = 1, #min, 1 do
+      print("min["..i.."]",min[i])
     end
-  
-  
+    for i = 1, #max, 1 do
+      print("max["..i.."]",max[i])
+    end
+    for i = 1, #values, 1 do
+      for j = 1, #values[i], 1 do
+        print("values["..i.."]["..j.."]",values[i][j])
+      end
+    end
+    
+    -- Calculaete the potential
+    local percOK = 0
+    local valueOK = 0
+    countOne = 0
+    countZero = 0
+    for k, cell in pairs (cs.cells) do
+      if(#luData.attributesPerc > 0) then
+        for t, attribute in pairs (luData.attributesPerc) do
+          if (cell[attribute] >= min[t] and cell[attribute] <= max[t]) then
+            percOK = 1
+          else
+            percOK = 0
+          end
+        end
+      else
+        percOK = 1
+      end
+      
+      if(#luData.attributesClass > 0) then
+        for t, attribute in pairs (luData.attributesClass) do
+          for w, value in pairs (values) do
+             valueOK = 0
+             if (cell[attribute] == values[t][w]) then
+                valueOK = 1
+                break;
+             end
+          end
+        end
+      else
+        valueOK = 1
+      end
+      
+      
+      if (percOK == 1 and valueOK == 1) then
+        cell[pot] = 1
+      else
+        cell[pot] = 0
+      end
+      
+      if(#luData.attributesPerc == 0 and #luData.attributesClass == 0) then
+        cell[pot] = 0 
+      end
+      
+      percOK = 0
+      valueOK = 0
+      
+      if(cell[pot] == 1) then
+        countOne = countOne + 1
+      else
+        countZero = countZero + 1
+      end
+    end
+      
+    print("\n", lu)
+    print("cell[pot] = 1:", countOne)
+    print("cell[pot] = 0:", countZero)
+      
     if (luIndex == 3) then
       error("Sair")
     end

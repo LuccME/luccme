@@ -109,7 +109,7 @@ function MaximumEntropyLike(component)
     local activeRegionNumber = 0
     local countSample = 1
     local countClass = 0
-    local class = {{}}
+    local class = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
     local sample = {}
     
     -- Search on the CS for samples of the LU
@@ -123,22 +123,28 @@ function MaximumEntropyLike(component)
            countSample = countSample + 1
          end
          
-         -- Copy the categoric values to process it later
-         for t, attribute in pairs (luData.attributesClass) do
-            class[t][k] = cell[attribute] 
-         end      
+         if (#luData.attributesPerc == 0 and #luData.attributesClass == 0) then
+           cell[pot] = 0
+         end
       end 
     end
-    
+
+    -- Copy the categoric values to process it later
+    for t, attribute in pairs (luData.attributesClass) do
+      for k, cell in pairs (cs.cells) do
+         class[t][k] = cell[attribute]
+      end 
+    end
+
     -- Create the range, and store the categoric values
     local min = {}
     local max = {}
-    local values = {{}}
+    local values = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
    
     -- Initialize the range "arrays"
     for i = 1, #luData.attributesPerc, 1 do
-      min[i] = 1
-      max[i] = 0
+      min[i] = 1000000000
+      max[i] = -1000000000
     end
     
     -- Store the categoric values on a table (simplifying to unique values)
@@ -171,12 +177,13 @@ function MaximumEntropyLike(component)
       end
     end
     
-    print("\n", lu)
+    print("\n")
+    print(lu)
+    print("Cell number", #sample)
+    
     for i = 1, #min, 1 do
       print("min["..i.."]",min[i])
-    end
-    for i = 1, #max, 1 do
-      print("max["..i.."]",max[i])
+      print("max["..i.."]",max[i], "\n")
     end
     for i = 1, #values, 1 do
       for j = 1, #values[i], 1 do
@@ -185,64 +192,84 @@ function MaximumEntropyLike(component)
     end
     
     -- Calculaete the potential
-    local percOK = 0
-    local valueOK = 0
+    local percOK = {}
+    local valueOK = {}
+    
     countOne = 0
     countZero = 0
+    
     for k, cell in pairs (cs.cells) do
       if(#luData.attributesPerc > 0) then
         for t, attribute in pairs (luData.attributesPerc) do
           if (cell[attribute] >= min[t] and cell[attribute] <= max[t]) then
-            percOK = 1
+            percOK[t] = 1
           else
-            percOK = 0
+            percOK[t] = 0
           end
         end
-      else
-        percOK = 1
       end
-      
+
       if(#luData.attributesClass > 0) then
         for t, attribute in pairs (luData.attributesClass) do
           for w, value in pairs (values) do
-             valueOK = 0
+             valueOK[t] = 0
              if (cell[attribute] == values[t][w]) then
-                valueOK = 1
+                valueOK[t] = 1
                 break;
              end
           end
         end
+      end
+      
+      local auxPerc = 1
+      local auxValue = 1
+      
+      if (#percOK == 0 and #valueOK == 0) then
+        auxPerc = 0
       else
-        valueOK = 1
+        if(#percOK > 0) then
+          auxPerc = 1
+          for i = 1, #percOK, 1 do
+            if (percOK[i] == 0) then
+              auxPerc = 0
+              break
+            end
+          end
+        end
+        
+        if (#valueOK > 0) then
+          auxValue = 1
+          for i = 1, #valueOK, 1 do
+            if (valueOK[i] == 0) then
+              auxValue = 0
+              break
+            end
+          end
+        end
+        
+        if (auxPerc == 1 and auxValue == 1) then
+          cell[pot] = 1
+        else
+          cell[pot] = 0
+        end
       end
-      
-      
-      if (percOK == 1 and valueOK == 1) then
-        cell[pot] = 1
-      else
-        cell[pot] = 0
-      end
-      
-      if(#luData.attributesPerc == 0 and #luData.attributesClass == 0) then
-        cell[pot] = 0 
-      end
-      
-      percOK = 0
-      valueOK = 0
-      
-      if(cell[pot] == 1) then
+    
+      if (cell[pot] == 1) then
         countOne = countOne + 1
-      else
+      elseif (cell[pot] == 0) then
         countZero = countZero + 1
       end
-    end
       
-    print("\n", lu)
-    print("cell[pot] = 1:", countOne)
-    print("cell[pot] = 0:", countZero)
+    end
+    
+
+    print("\n")
+    print(lu, "pot = 1", "\tpot = 0")
+    print(pot, countOne, "\t"..countZero)
       
     if (luIndex == 3) then
-      error("Sair")
+--      error("Sair")
+        io.read()
     end
             
     if (activeRegionNumber == 0) then
@@ -250,5 +277,6 @@ function MaximumEntropyLike(component)
     end
   end
   
+  print("\n")
   return component
 end

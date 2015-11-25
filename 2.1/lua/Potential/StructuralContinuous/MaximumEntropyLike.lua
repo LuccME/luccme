@@ -68,6 +68,9 @@ function MaximumEntropyLike(component)
         
         for j = 1, regressionNumber, 1 do
           -- check betas within database
+          if (self.potentialData[i][j].cellUsePercentage == nil) then
+            error("cellUsePercentage on Region "..i.." LandUseType number "..j.." is missinge", 2)
+          end 
           for k, lu in pairs (self.potentialData[i][j].attributesPerc) do
             if (luccMEModel.cs.cells[1][lu] == nil) then
               error("AttributePerc "..lu.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
@@ -94,6 +97,29 @@ function MaximumEntropyLike(component)
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
   end
   
+  --- Modify potencial for an protected area.
+  -- @arg complementarLU Land use name.
+  -- @arg attrProtection The protetion attribute name.
+  -- @arg rate A rate for potencial multiplier.
+  -- @arg event A representation of a time instant when the simulation engine must execute.
+  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
+    local regionsNumber = #luccMEModel.potential.potentialData
+    local luTypes = luccMEModel.landUseTypes
+    local luIndex = 1
+    
+    for i, complementarLU in pairs (luTypes) do
+      if (complementarLU == luTypes[i]) then
+        luIndex = i
+        break
+      end
+    end
+    
+    for i = 1, regionsNumber, 1 do
+      self:computePotential(luccMEModel, i, luIndex)
+    end
+  end
+  
   --- Handles with the compute potential method of a LinearRegression component.
   -- @arg self A LinearRegression component.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
@@ -118,7 +144,7 @@ function MaximumEntropyLike(component)
          activeRegionNumber = rNumber
          
          -- Check the LU % on the cell to consider a sample
-         if (cell[lu] > 0.5) then
+         if (cell[lu] > (luData.cellUsePercentage/100)) then
            sample[countSample] = cell
            countSample = countSample + 1
          end
@@ -249,6 +275,7 @@ function MaximumEntropyLike(component)
         
         if (auxPerc == 1 and auxValue == 1) then
           cell[pot] = 1
+          --cell[pot] = 1 * cell[lu]
         else
           cell[pot] = 0
         end
@@ -269,7 +296,7 @@ function MaximumEntropyLike(component)
       
     if (luIndex == 3) then
 --      error("Sair")
-        io.read()
+        --io.read()
     end
             
     if (activeRegionNumber == 0) then

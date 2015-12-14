@@ -165,12 +165,14 @@ function MaximumEntropyLike(component)
     -- Create the range, and store the categoric values
     local min = {}
     local max = {}
+    local avg = {}
     local values = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
    
     -- Initialize the range "arrays"
     for i = 1, #luData.attributesPerc, 1 do
       min[i] = 1000000000
       max[i] = -1000000000
+      avg[i] = 0
     end
     
     -- Store the categoric values on a table (simplifying to unique values)
@@ -190,9 +192,10 @@ function MaximumEntropyLike(component)
       end
     end
     
-    -- Search the min and max values for the LU        
+    -- Search the min and max values, and sum all the vlaues for the LU        
     for k = 1, #sample, 1 do
       for t, attribute in pairs (luData.attributesPerc) do
+        avg[t] = avg[t] + sample[k][attribute]
         if(min[t] > sample[k][attribute]) then
           min[t] = sample[k][attribute]
         end
@@ -203,23 +206,39 @@ function MaximumEntropyLike(component)
       end
     end
     
+    -- Generate the average
+    for i = 1, #luData.attributesPerc, 1 do
+      avg[i] = avg[i] / countSample
+    end
+    
     print("\n")
     print(lu)
     print("Cell number", #sample)
     
     for i = 1, #min, 1 do
       print("min["..i.."]",min[i])
-      print("max["..i.."]",max[i], "\n")
+      print("max["..i.."]",max[i])
+      print("avg["..i.."]",avg[i], "\n")
     end
     for i = 1, #values, 1 do
       for j = 1, #values[i], 1 do
         print("values["..i.."]["..j.."]",values[i][j])
       end
     end
-    
+
     -- Calculaete the potential
     local percOK = {}
     local valueOK = {}
+    local avgCompare = {}
+    local avgCompareIn = {}
+    
+    for i = 1, #luData.attributesPerc, 1 do
+      avgCompareIn[i] = 0
+    end
+    
+    for i = 1, #cs, 1 do
+      avgCompare[i] = avgCompareIn
+    end 
     
     countOne = 0
     countZero = 0
@@ -229,6 +248,11 @@ function MaximumEntropyLike(component)
         for t, attribute in pairs (luData.attributesPerc) do
           if (cell[attribute] >= min[t] and cell[attribute] <= max[t]) then
             percOK[t] = 1
+            if(avg[t] > 0) then
+              avgCompare[k][t] = math.abs(1 - (math.abs((avg[t] - cell[attribute])) / avg[t]))
+            else
+              avgCompare[k][t] = math.abs(1 - (math.abs((avg[t] - cell[attribute])) / 000000000000000000.1))
+            end
           else
             percOK[t] = 0
           end
@@ -249,7 +273,18 @@ function MaximumEntropyLike(component)
       
       local auxPerc = 1
       local auxValue = 1
+      local auxAvg = 0
+      local auxCount = 0
       
+      for t, attribute in pairs (luData.attributesPerc) do
+        if(avgCompare[k][t] > 0) then
+          auxAvg = auxAvg + avgCompare[k][t]
+          auxCount = auxCount + 1
+        end
+      end
+
+      auxAvg = auxAvg / auxCount
+
       if (#percOK == 0 and #valueOK == 0) then
         auxPerc = 0
       else
@@ -274,14 +309,17 @@ function MaximumEntropyLike(component)
         end
         
         if (auxPerc == 1 and auxValue == 1) then
-          cell[pot] = 1
-          --cell[pot] = 1 * cell[lu]
+          if(auxAvg <= 1) then
+            cell[pot] = auxAvg
+          else
+            cell[pot] = 1
+          end
         else
           cell[pot] = 0
         end
       end
-    
-      if (cell[pot] == 1) then
+      
+      if (cell[pot] > 0) then
         countOne = countOne + 1
       elseif (cell[pot] == 0) then
         countZero = countZero + 1
@@ -291,8 +329,9 @@ function MaximumEntropyLike(component)
     
 
     print("\n")
-    print(lu, "pot = 1", "\tpot = 0")
+    print(lu, "pot > 0", "\tpot = 0")
     print(pot, countOne, "\t"..countZero)
+    --io.read()
       
     if (luIndex == 3) then
 --      error("Sair")

@@ -195,8 +195,9 @@ namespace LuccME {
 			// 
 			// D_CIThreeDM
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
+			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 535);
 			this->Controls->Add(this->lYearInterpolation);
 			this->Controls->Add(this->tMiddleYear);

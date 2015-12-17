@@ -351,8 +351,9 @@ namespace LuccME {
 			// 
 			// A_Continuous
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
+			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(923, 591);
 			this->Controls->Add(this->lLegend);
 			this->Controls->Add(this->tAttrProtection);

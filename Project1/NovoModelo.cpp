@@ -1897,7 +1897,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 				sw->WriteLine("\tsave  =");
 				sw->WriteLine("\t{");
-				sw->WriteLine("\t\toutputTheme = \"" + tOutputTheme->Text + "_\",");
+				sw->WriteLine("\t\toutputTheme = \"" + tOutputTheme->Text + "\",");
+				sw->WriteLine("\t\tmode = \"multiple\",");
 				if (cSaveYearly->Checked) {
 					sw->WriteLine("\t\tyearly = true,");
 
@@ -1907,7 +1908,6 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				}
 
 				if (lAttrToSave->Text != "") {
-					sw->WriteLine("\t\tmode = \"multiple\",");
 					sw->WriteLine("\t\tsaveAttrs = ");
 					sw->WriteLine("\t\t{");
 					String^ aux = "";

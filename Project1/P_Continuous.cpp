@@ -70,8 +70,8 @@ System::Void LuccME::P_Continuous::P_Continuous_Shown(System::Object ^ sender, S
 		bSalvar->Location = Point(219, 526);
 		bCancel->Location = Point(261, 526);
 		bAddBetas->Location = Point(365, 526);
-		lBetas->Location = Point(328, 214);
-		this->dgBetas->Location = Point(231, 243);
+		lBetas->Location = Point(328, 228);
+		this->dgBetas->Location = Point(231, 257);
 		this->dgBetas->Height = 246;
 	}
 

@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1F80FBB1-2C18-4FC0-85FB-E82346A23938}
 AppName=LuccME
-AppVersion=1.0.2.1
+AppVersion=1.1.2.1
 ;AppVerName=LuccME 1.0.2.1
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
@@ -19,7 +19,7 @@ DefaultGroupName=LuccME
 DisableProgramGroupPage=yes
 LicenseFile=D:\_SVN\LuccME\branches\Project1\Project1\Resources\comment.txt
 OutputDir=D:\Diego Melo\Desktop
-OutputBaseFilename=LuccME_1.0.2.1
+OutputBaseFilename=LuccME_1.1.2.1
 SetupIconFile=D:\_SVN\LuccME\branches\Project1\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes

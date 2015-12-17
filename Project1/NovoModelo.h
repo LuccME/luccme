@@ -672,7 +672,7 @@ public:
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(732, 455);
+			this->tabPage2->Size = System::Drawing::Size(717, 455);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Definições Espaciais";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -834,7 +834,7 @@ public:
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
 			this->tabPage3->Name = L"tabPage3";
 			this->tabPage3->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage3->Size = System::Drawing::Size(732, 455);
+			this->tabPage3->Size = System::Drawing::Size(717, 455);
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Tipos de Uso da Terra";
 			this->tabPage3->UseVisualStyleBackColor = true;
@@ -931,7 +931,7 @@ public:
 			this->tabPage4->Controls->Add(this->lComponentes);
 			this->tabPage4->Location = System::Drawing::Point(4, 22);
 			this->tabPage4->Name = L"tabPage4";
-			this->tabPage4->Size = System::Drawing::Size(732, 455);
+			this->tabPage4->Size = System::Drawing::Size(717, 455);
 			this->tabPage4->TabIndex = 3;
 			this->tabPage4->Text = L"Componentes";
 			this->tabPage4->UseVisualStyleBackColor = true;
@@ -1111,7 +1111,7 @@ public:
 			this->tabPage5->Location = System::Drawing::Point(4, 22);
 			this->tabPage5->Name = L"tabPage5";
 			this->tabPage5->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage5->Size = System::Drawing::Size(732, 455);
+			this->tabPage5->Size = System::Drawing::Size(717, 455);
 			this->tabPage5->TabIndex = 4;
 			this->tabPage5->Text = L"Salvar Parâmetros";
 			this->tabPage5->UseVisualStyleBackColor = true;
@@ -1270,7 +1270,7 @@ public:
 			this->tabPage6->Location = System::Drawing::Point(4, 22);
 			this->tabPage6->Name = L"tabPage6";
 			this->tabPage6->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage6->Size = System::Drawing::Size(732, 455);
+			this->tabPage6->Size = System::Drawing::Size(717, 455);
 			this->tabPage6->TabIndex = 5;
 			this->tabPage6->Text = L"Gerar Arquivo";
 			this->tabPage6->UseVisualStyleBackColor = true;
@@ -1337,7 +1337,7 @@ public:
 			this->tabPage7->Location = System::Drawing::Point(4, 22);
 			this->tabPage7->Name = L"tabPage7";
 			this->tabPage7->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage7->Size = System::Drawing::Size(732, 455);
+			this->tabPage7->Size = System::Drawing::Size(717, 455);
 			this->tabPage7->TabIndex = 6;
 			this->tabPage7->Text = L"Recursos Avançados";
 			this->tabPage7->UseVisualStyleBackColor = true;
@@ -1487,7 +1487,7 @@ public:
 			this->tabPage8->Location = System::Drawing::Point(4, 22);
 			this->tabPage8->Name = L"tabPage8";
 			this->tabPage8->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage8->Size = System::Drawing::Size(732, 455);
+			this->tabPage8->Size = System::Drawing::Size(717, 455);
 			this->tabPage8->TabIndex = 7;
 			this->tabPage8->Text = L"Validação";
 			this->tabPage8->UseVisualStyleBackColor = true;
@@ -1613,9 +1613,10 @@ public:
 			// 
 			// NovoModelo
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
+			this->AutoSize = true;
 			this->ClientSize = System::Drawing::Size(745, 677);
 			this->Controls->Add(this->statusStrip1);
 			this->Controls->Add(this->tNovoModelo);

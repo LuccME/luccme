@@ -56,15 +56,15 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		ajudaToolStripMenuItem->Text = "Help";
 		sobreToolStripMenuItem->Text = "About";
 		//Tabs
-		tabPage1->Text = "Model Definitions";
-		tabPage2->Text = "Spatial Definitions";
-		tabPage3->Text = "Land Use Types";
-		tabPage4->Text = "Components";
-		tabPage5->Text = "Parameters to Save";
-		tabPage6->Text = "Files Maker";
-		tabPage7->Text = "Advanced Resources";
-		tabPage8->Text = "Validation";
-		//tabPage1
+		tabDefModel->Text = "Model Definitions";
+		tabDefSpatial->Text = "Spatial Definitions";
+		tabLUT->Text = "Land Use Types";
+		tabComponent->Text = "Components";
+		tabSaveParam->Text = "Parameters to Save";
+		tabFileMaker->Text = "Files Maker";
+		tabAdvRes->Text = "Advanced Resources";
+		tabValidation->Text = "Validation";
+		//tabDefModel
 		lArquivos->Text = "     Files";
 		lDirProj->Text = "Folder to Save the Model";
 		bSelectFolder->Text = "Select";
@@ -72,20 +72,20 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lModelName->Text = "Model Name";
 		lStartTime->Text = "Start Time";
 		lEndTime->Text = "End Time";
-		//tabPage2
+		//tabDefSpatial
 		lSpacialDimensions->Text = " Spatial Definitions";
 		lDatabase->Text = "Database File";
 		bSelectDatabase->Text = "Select";
 		bMySQL->Text = "Configure";
 		lThemeName->Text = "Theme Name";
 		lCellArea->Text = "Cell Area";
-		//tabPage3
+		//tabLUT
 		lLUTLarge->Text = "     Land Use Types";
 		lLUTMedium->Text = "Land Use Types";
 		bLUTManager->Text = "Manager";
 		lLUND->Text = "Land Use No Data";
 		bLUNDManager->Text = "Manager";
-		//tabPage4
+		//tabComponent
 		lComponentes->Text = "   Select the Components";
 		lDemand->Text = "Demand ";
 		lPotential->Text = "Potential";
@@ -94,7 +94,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bPotContinuous->Text = "Continuous Components";
 		bAllocDiscrete->Text = "Discrete Components";
 		bAllocContinuous->Text = "Continuous Components";
-		//tabPage5
+		//tabSaveParam
 		lSalvar->Text = "Save";
 		lOutputTheme->Text = "Ouput Theme Name";
 		cSaveYearly->Text = "Yearly Save";
@@ -102,12 +102,12 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bSelectedYears->Text = "Select";
 		lSaveAttr->Text = "      Attributes to Save";
 		bSelectedAttr->Text = "Select";
-		//tabPage6
+		//tabFileMaker
 		lFileMaker->Text = "       Files Maker";
 		bGerarArquivos->Text = "Make Files";
 		lRunModel->Text = "       Run Model";
 		bRun->Text = "Run Model";
-		//tabPage7
+		//tabAdvRes
 		cDynamicVariables->Text = "Dynamic Variables";
 		lAnosVariaveis->Text = "Years with variables";
 		lAtualizaveis->Text = "     to be Updated";
@@ -115,14 +115,19 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cScenario->Text = "Scenario";
 		lScenariosStartTime->Text = "    Scenario Start Time";
 		lScenarioName->Text = "  Scenario Name";
-		//tabPage8
+		//tabValidation
+		lValidationMethod->Text = "Validation/Calibration Method";
 		lInputThemeName->Text = "  Theme Name";
 		lAttributeForValidation->Text = "Attribute for Validation";
 		lAttributeFinalValidation->Text = "Real Final Attribute";
 		lAttributeInitValidation->Text = "Initial Attribute";
+		lRange->Text = "   % Allowed Error per Cell";
+		lNumbWindows->Text = "Number of Windows";
+		lSimResult->Text = "   Simulated Result";
+		lThemeHelp->Text = "Output Model Theme Name";
+		cValidationSave->Location = Point(267, 320);
+		cValidationSave->Text = "Save into Database";
 		bValidate->Text = "Validate";
-		cDynamicVariables->Text = "Dynamic Variables";
-		cScenario->Text = "Scenarios";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -209,6 +214,11 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSScenNameTitle = "Error - Scenario Name";
 		gSScenST = "The start time of the scenarios must be informed.";
 		gSScenSTTitle = "Error - Scenario Start Time";
+		gSValSectMet = "A Validation/Calibration must be selected.";
+		gSValSectMetTitle = "Error - Validation/Calibration Method Not Selected";
+		cbValidationMethod->Items->Clear();
+		cbValidationMethod->Items->Add("Multiresolution for Whole Area (ext)");
+		cbValidationMethod->Items->Add("Multiresolution for Modified Area (diff)");
 	}
 	else {
 		//Form
@@ -223,14 +233,14 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		ajudaToolStripMenuItem->Text = "Ajuda";
 		sobreToolStripMenuItem->Text = "Sobre";
 		//Tabs
-		tabPage1->Text = "Definições do Modelo";
-		tabPage2->Text = "Definições Espaciais";
-		tabPage3->Text = "Tipos de Uso da Terra";
-		tabPage4->Text = "Componentes";
-		tabPage5->Text = "Salvar Parâmetros";
-		tabPage6->Text = "Gerar Arquivos";
-		tabPage7->Text = "Recursos Avançados";
-		//tabPage1
+		tabDefModel->Text = "Definições do Modelo";
+		tabDefSpatial->Text = "Definições Espaciais";
+		tabLUT->Text = "Tipos de Uso da Terra";
+		tabComponent->Text = "Componentes";
+		tabSaveParam->Text = "Salvar Parâmetros";
+		tabFileMaker->Text = "Gerar Arquivos";
+		tabAdvRes->Text = "Recursos Avançados";
+		//tabDefModel
 		lArquivos->Text = "Arquivos";
 		lDirProj->Text = "Pasta para Salvar o Modelo";
 		bSelectFolder->Text = "Selecionar";
@@ -238,20 +248,20 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lModelName->Text = "Nome do Modelo";
 		lStartTime->Text = "Ano de Início";
 		lEndTime->Text = "Ano de Término";
-		//tabPage2
+		//tabDefSpatial
 		lSpacialDimensions->Text = "Definições Espaciais";
 		lDatabase->Text = "Arquivo do Banco de Dados";
 		bSelectDatabase->Text = "Selecionar";
 		bMySQL->Text = "Configurar";
 		lThemeName->Text = "Nome do Tema";
 		lCellArea->Text = "Tamanho da Célula";
-		//tabPage3
+		//tabLUT
 		lLUTLarge->Text = "Tipos de Uso da Terra";
 		lLUTMedium->Text = "Tipos de Uso da Terra";
 		bLUTManager->Text = "Gerenciar";
 		lLUND->Text = "Tipo de Uso com \"No Data\"";
 		bLUNDManager->Text = "Gerenciar";
-		//tabPage4
+		//tabComponent
 		lComponentes->Text = "Selecione os Componentes";
 		lDemand->Text = "Demanda";
 		lPotential->Text = "Potencial";
@@ -260,7 +270,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bPotContinuous->Text = "Componentes Contínuos";
 		bAllocDiscrete->Text = "Componentes Discretos";
 		bAllocContinuous->Text = "Componentes Contínuos";
-		//tabPage5
+		//tabSaveParam
 		lSalvar->Text = "Salvar";
 		lOutputTheme->Text = "Nome do Tema de Saída";
 		cSaveYearly->Text = "Salvar Anualmente";
@@ -268,12 +278,12 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bSelectedYears->Text = "Selecionar";
 		lSaveAttr->Text = "Atributos a serem Salvos";
 		bSelectedAttr->Text = "Selecionar";
-		//tabPage6
+		//tabFileMaker
 		lFileMaker->Text = "Gerar os Arquivos";
 		bGerarArquivos->Text = "Gerar Arquivos";
 		lRunModel->Text = "Rodar o Modelo";
 		bRun->Text = "Rodar Modelo";
-		//tabPage7
+		//tabAdvRes
 		cDynamicVariables->Text = "Variáveis Dinamicas";
 		lAnosVariaveis->Text = "Anos com Variáveis";
 		lAtualizaveis->Text = "a serem Atualizadas";
@@ -281,14 +291,19 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cScenario->Text = "Cenário";
 		lScenariosStartTime->Text = "Ano de Início do Cenário";
 		lScenarioName->Text = "Nome de Cenário";
-		//tabPage8
+		//tabValidation
+		lValidationMethod->Text = "Método de Validação/Calibração";
 		lInputThemeName->Text = "Nome do Tema";
 		lAttributeForValidation->Text = "Atributo a ser Validado";
 		lAttributeFinalValidation->Text = "Atributo Real Final";
 		lAttributeInitValidation->Text = "Atributo Inicial";
+		lRange->Text = "% Erro Permitido por Célula";
+		lNumbWindows->Text = " Número de Janelas";
+		lSimResult->Text = "Resultado Simulado";
+		lThemeHelp->Text = "Tema de Saída do Modelo";
+		cValidationSave->Location = Point(242, 320);
+		cValidationSave->Text = "Salvar no Banco de Dados";
 		bValidate->Text = "Validar";
-		cDynamicVariables->Text = "Variáveis Dinâmicas";
-		cScenario->Text = "Cenários";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";
@@ -375,6 +390,12 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSUnauthorizedTitle = "Erro - Permissão de escrita";
 		gSScenName = "O nomde do cenário deve ser preenchido.";
 		gSScenNameTitle = "Erro - Nome do Cenário";
+		gSValSectMet = "Um Método de Validação/Calibração deve ser selecionado.";
+		gSValSectMetTitle = "Erro - Nenhum Método de Validação/Calibração selecionado";
+		//Combo Box
+		cbValidationMethod->Items->Clear();
+		cbValidationMethod->Items->Add("Multiresolução de Toda a Área (ext)");
+		cbValidationMethod->Items->Add("Multiresolução das Áreas onde Houveram Mudanças (dif)");
 	}
 }
 
@@ -500,17 +521,13 @@ System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, Syst
 System::Void LuccME::NovoModelo::bLUNDManager_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	cReturn^ lLandUsesNoData = gcnew cReturn();
-	//if (gLandUseNoData == "" && gLandUseTypes != "") {
+
 	if (gLandUseTypes != "") {
 		gLandUseNoData = gLandUseTypes;
 	}
 	lLandUsesNoData->Return = gLandUseNoData;
 	lLandUsesNoData->Language = lLanguage;
 	
-	//LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUsesNoData);
-	//landUseTypeForm->Text = gSLUTManager;
-	//landUseTypeForm->ShowDialog();
-
 	LuccME::LUND^ landUseTypeForm = gcnew LUND(lLandUsesNoData);
 	landUseTypeForm->ShowDialog();
 	
@@ -808,9 +825,10 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 
 		array<String^>^ lines = { "" };
 		array<String^>^ lines2 = gcnew array<String^>(count);
-		lines2[0] = "InverseDistanceRule";
 		array<String^>^ lines3 = gcnew array<String^>(count + 1);
 		array<String^>^ lines4 = gcnew array<String^>(count + 2);
+		
+		lines2[0] = "InverseDistanceRule";
 
 		switch (lPotential->Component)
 		{
@@ -1649,15 +1667,13 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 	}
 	
 	if (tNovoModelo->SelectedIndex == 7) {
+		if (tOutputTheme->ForeColor == System::Drawing::Color::Black && tInputThemeName->ForeColor != System::Drawing::Color::Black) {
+			tInputThemeName->Text = tOutputTheme->Text + tEndTime->Text;
+		}
+		if (tAttributeFinalValidation->ForeColor != System::Drawing::Color::Black) {
+			tAttributeFinalValidation->Text = tAttributeInitValidation->Text + tEndTime->Text;
+		}
 		if (runnable == true) {
-			lInputThemeName->Visible = true;
-			tInputThemeName->Visible = true;
-			lAttributeForValidation->Visible = true;
-			tAttributeForValidation->Visible = true;
-			lAttributeFinalValidation->Visible = true;
-			tAttributeFinalValidation->Visible = true;
-			lAttributeInitValidation->Visible = true;
-			tAttributeInitValidation->Visible = true;
 			bValidate->Visible = true;
 		}
 	}
@@ -2105,7 +2121,6 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 						for (int i = 1; i < tbPotential->Lines->Length; i++) {
 							if (tbPotential->Lines[i]->ToString() != "") {
-								//sw->WriteLine("\t\t\t{ " + tbPotential->Lines[i] + " },\t\t-- " + tempLUTs[i - 1]);
 								sw->WriteLine("\t\t\t-- " + tempLUTs[i - 1]);
 								sw->WriteLine("\t\t\t{");
 								aux = tbPotential->Lines[i]->ToString()->Replace("betas", "$betas");
@@ -2517,8 +2532,8 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 
 System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System::EventArgs ^ e)
 {
-	validation = tabPage8;
-    tNovoModelo->TabPages->RemoveAt(7);
+	//validation = tabValidation;
+    //tNovoModelo->TabPages->RemoveAt(7);
 
 	checkLanguage();
 	NovoModelo::Update();
@@ -5628,139 +5643,299 @@ System::Void LuccME::NovoModelo::cScenario_CheckedChanged(System::Object ^ sende
 
 System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	String^ path = "validation.lua";
-	StreamWriter^ sw = File::CreateText(path);
+	if (cbValidationMethod->SelectedItem) {
+		String^ path = "validation.lua";
+		StreamWriter^ sw = File::CreateText(path);
 
-	sw->WriteLine("error = function(message, code)");
-	sw->WriteLine("print(message)");
-	sw->WriteLine("local answer");
-	sw->WriteLine("repeat");
-	sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
-	sw->WriteLine("io.flush()");
-	sw->WriteLine("answer = io.read()");
-	sw->WriteLine("until answer ~= \"`\"");
-	sw->WriteLine("os.exit()");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("numberOfWindows = 20");
-	sw->WriteLine("");
-	sw->WriteLine("input_theme_name = \"" + tInputThemeName->Text + "\"");
-	sw->WriteLine("last_sim = \"" + tAttributeForValidation->Text + "\"");
-	sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
-	sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
-	sw->WriteLine("");
-	if (access) {
-		sw->WriteLine("cs = CellularSpace {database = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\", theme = input_theme_name}");
+		//Function to hold the cmd open when catch an error
+		sw->WriteLine("error = function(message, code)");
+		sw->WriteLine("\tprint(message)");
+		sw->WriteLine("\tlocal answer");
+		sw->WriteLine("\trepeat");
+		sw->WriteLine("\t\tio.write(\"\\nPress enter key to exit...\")");
+		sw->WriteLine("\t\tio.flush()");
+		sw->WriteLine("\t\tanswer = io.read()");
+		sw->WriteLine("\tuntil answer ~= \"`\"");
+		sw->WriteLine("\tos.exit()");
+		sw->WriteLine("end");
+		sw->WriteLine("");
+
+		//Input parameters
+		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
+		sw->WriteLine("range = " + tRange->Text);
+		if (cValidationSave->Checked) {
+			sw->WriteLine("flag_save = true");
+		}
+		else {
+			sw->WriteLine("flag_save = false");
+		}
+		sw->WriteLine("final_year = " + tEndTime->Text);
+		sw->WriteLine("");
+		sw->WriteLine("input_theme_name = \"" + tInputThemeName->Text + "\"");
+		sw->WriteLine("last_sim = \"" + tAttributeForValidation->Text + "\"");
+		sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
+		sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
+		sw->WriteLine("");
+		if (access) {
+			sw->WriteLine("cs = CellularSpace {");
+			sw->WriteLine("\t\tdatabase = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+			sw->WriteLine("\t\ttheme = input_theme_name");
+			sw->WriteLine("}");
+		}
+		else {
+			sw->WriteLine("cs = CellularSpace {" + tbSelectedBatabase->Lines[1]->ToString() + ",");
+			sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[2]->ToString() + ",");
+			sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[3]->ToString() + ",");
+			sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[4]->ToString() + ",");
+			sw->WriteLine("\t\t" + "theme = input_theme_name");
+			sw->WriteLine("}");
+		}
+		sw->WriteLine("");
+		
+		switch (cbValidationMethod->SelectedIndex)
+		{
+			//Ext Method
+			case 0:
+				sw->WriteLine("output_theme = \"validation_ext_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text +"_\"");
+				sw->WriteLine("");
+				sw->WriteLine("attribute1 = \"sim\"");
+				sw->WriteLine("attribute2 = \"diff\"");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][init_real] == nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
+				sw->WriteLine("if cs.cells[1][last_real] == nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
+				sw->WriteLine("if cs.cells[1][last_sim] == nil then error(\"Attribute: \"..last_sim..\". Does not exist in the theme.\") end");
+				sw->WriteLine("");
+				sw->WriteLine("forEachCell(cs, function(cell) ");
+				sw->WriteLine("\tcell[attribute1] = cell[last_sim]");
+				sw->WriteLine("\tcell[attribute2] = cell[last_real]");
+				sw->WriteLine("end)");
+				sw->WriteLine("");
+				sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+				sw->WriteLine("\tforEachCell(cs2, function(cell) cell.flag = 0 end)");
+				sw->WriteLine("");
+				sw->WriteLine("\tlocal count = 0");
+				sw->WriteLine("\tlocal diff = 0");
+				sw->WriteLine("\tlocal sum = 0");
+				sw->WriteLine("\tlocal cc1 = {}");
+				sw->WriteLine("\tlocal cc2 = {}");
+				sw->WriteLine("\tlocal internalcount = 0");
+				sw->WriteLine("");
+				sw->WriteLine("\tforEachCell(cs2, function(cell)");
+				sw->WriteLine("\t\tinternalcount = 0");
+				sw->WriteLine("\t\tsumcc1 = 0");
+				sw->WriteLine("\t\tsumcc2 = 0");
+				sw->WriteLine("");
+				sw->WriteLine("\t\tif cell.flag == 0 then");
+				sw->WriteLine("\t\t\tfor xx = 0, (window - 1) do");
+				sw->WriteLine("\t\t\t\tfor yy = 0,(window - 1) do");
+				sw->WriteLine("\t\t\t\t\tif cs1:getCell(cell.x + xx, cell.y + yy) ~= nil then");
+				sw->WriteLine("\t\t\t\t\t\tinternalcount = internalcount + 1");
+				sw->WriteLine("\t\t\t\t\t\tcc1[internalcount] = cs1:getCell(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\t\tcc2[internalcount] = cs2:getCell(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\tend");
+				sw->WriteLine("\t\t\t\tend");
+				sw->WriteLine("\t\t\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tfor j = 1, internalcount do");
+				sw->WriteLine("\t\t\t\tsumcc1 = sumcc1 + cc1[j][attribute1]");
+				sw->WriteLine("\t\t\t\tsumcc2 = sumcc2 + cc2[j][attribute2]");
+				sw->WriteLine("\t\t\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tif math.abs((sumcc2 - sumcc1)/internalcount) < range then sumcc1 = sumcc2 end");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tdiffcell = (sumcc2 - sumcc1)");
+				sw->WriteLine("\t\t\tcount = count + internalcount");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tfor i = 1, internalcount do");
+				sw->WriteLine("\t\t\t\tcc2[i][\"diff\"..window] = diffcell");
+				sw->WriteLine("\t\t\t\tcc2[i].flag = 1");
+				sw->WriteLine("\t\t\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tsum = sum + math.abs(sumcc2)");
+				sw->WriteLine("\t\t\tdiff = diff + math.abs(diffcell)");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\treturn true");
+				sw->WriteLine("\t\tend");
+				sw->WriteLine("\tend)");
+				sw->WriteLine("");
+				sw->WriteLine("\treturn count, diff, sum");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("print(\"======================================================\\n\")");
+				if (gAllocationComponent > 2) {
+					sw->WriteLine("print(\"Metrica de Validacao para Dados Continuos - versao 1.0\\n\")");
+				}
+				else {
+					sw->WriteLine("print(\"Metrica de Validacao para Dados Discretos - versao 1.0\\n\")");
+				}
+				sw->WriteLine("print(\"input theme : \", input_theme_name)");
+				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
+				sw->WriteLine("print(\"attr REAL final  :\", last_real)");
+				sw->WriteLine("print(\"attr SIM  final  :\", last_sim)");
+				sw->WriteLine("print(\"Accepted error   :\", math.floor(range * 100)..\"%\")");
+				sw->WriteLine("print(\"======================================================\\n\")");
+				sw->WriteLine("");
+				sw->WriteLine("print(\"Porcentagem de acertos CONSIDERANDO O PADRAO RESULTANTE em cada janela:\")");
+				sw->WriteLine("io.flush()");
+				sw->WriteLine("attrs = {}");
+				sw->WriteLine("");
+				sw->WriteLine("for i = 1, numberOfWindows do");
+				sw->WriteLine("\tattrs[i]=\"diff\"..i");
+				sw->WriteLine("");
+				sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+				sw->WriteLine("");
+				sw->WriteLine("\tif (sum < diff) then total, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i) end");
+				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
+				sw->WriteLine("");
+				sw->WriteLine("\tprint(i, 1 - diff/(2*sum))");
+				sw->WriteLine("\tio.flush()");
+				sw->WriteLine("");
+				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / 2 * sum end)");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
+				sw->WriteLine("attrs[numberOfWindows+2] = attribute2");
+				sw->WriteLine("");
+				sw->WriteLine("if (flag_save) then cs:save(final_year, output_theme, attrs) end");
+				sw->WriteLine("");
+				break;
+
+			//Diff Method
+			case 1:
+				sw->WriteLine("output_theme = \"validation_diff_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text + "_\"");
+				sw->WriteLine("");
+				sw->WriteLine("attribute1 = \"diff_sim\"");
+				sw->WriteLine("attribute2 = \"diff_real\"");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][init_real] == nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
+				sw->WriteLine("if cs.cells[1][last_real] == nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
+				sw->WriteLine("if cs.cells[1][last_sim] == nil then error(\"Attribute: \"..last_sim..\". Does not exist in the theme.\") end");
+				sw->WriteLine("");
+				sw->WriteLine("forEachCell(cs, function(cell) ");
+				sw->WriteLine("\tcell[attribute1] = cell[last_sim] - cell[init_real]");
+				sw->WriteLine("\tcell[attribute2] = cell[last_real] - cell[init_real]");
+				sw->WriteLine("end)");
+				sw->WriteLine("");
+				sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+				sw->WriteLine("\tforEachCell(cs2, function(cell) cell.flag = 0 end)");
+				sw->WriteLine("");
+				sw->WriteLine("\tlocal count = 0");
+				sw->WriteLine("\tlocal diff = 0");
+				sw->WriteLine("\tlocal sum = 0");
+				sw->WriteLine("\tlocal cc1 = {}");
+				sw->WriteLine("\tlocal cc2 = {}");
+				sw->WriteLine("\tlocal internalcount = 0");
+				sw->WriteLine("");
+				sw->WriteLine("\tforEachCell(cs2, function(cell)");
+				sw->WriteLine("\t\tinternalcount = 0");
+				sw->WriteLine("\t\tsumcc1 = 0");
+				sw->WriteLine("\t\tsumcc2 = 0");
+				sw->WriteLine("");
+				sw->WriteLine("\t\tif cell.flag == 0 then");
+				sw->WriteLine("\t\t\tfor xx = 0, (window - 1) do");
+				sw->WriteLine("\t\t\t\tfor yy = 0, (window - 1) do");
+				sw->WriteLine("\t\t\t\t\tif cs1:getCell(cell.x + xx, cell.y + yy) ~= nil then");
+				sw->WriteLine("\t\t\t\t\t\tinternalcount = internalcount + 1");
+				sw->WriteLine("\t\t\t\t\t\tcc1[internalcount] = cs1:getCell(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\t\tcc2[internalcount] = cs2:getCell(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\tend");
+				sw->WriteLine("\t\t\t\tend");
+				sw->WriteLine("\t\t\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tfor j = 1, internalcount do");
+				sw->WriteLine("\t\t\t\tsumcc1 = sumcc1 + cc1[j][attribute1]");
+				sw->WriteLine("\t\t\t\tsumcc2 = sumcc2 + cc2[j][attribute2]");
+				sw->WriteLine("\t\t\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tif math.abs((sumcc2 - sumcc1)/internalcount) < range then sumcc1 = sumcc2 end");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tdiffcell = (sumcc2 - sumcc1)");
+				sw->WriteLine("\t\t\tcount = count + 1");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tfor i = 1, internalcount do");
+				sw->WriteLine("\t\t\t\tcc2[i][\"diff\"..window] = diffcell");
+				sw->WriteLine("\t\t\t\tcc2[i].flag = 1");
+				sw->WriteLine("\t\t\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\tsum = sum + math.abs(sumcc2)");
+				sw->WriteLine("\t\t\tdiff = diff + math.abs(diffcell)");
+				sw->WriteLine("");
+				sw->WriteLine("\t\t\treturn true");
+				sw->WriteLine("\t\tend");
+				sw->WriteLine("\tend)");
+				sw->WriteLine("");
+				sw->WriteLine("\treturn count * window * window, diff, sum");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("print(\"======================================================\\n\")");
+				if (gAllocationComponent > 2) {
+					sw->WriteLine("print(\"Metrica de Validacao para Dados Continuos - versao 1.0\\n\")");
+				}
+				else {
+					sw->WriteLine("print(\"Metrica de Validacao para Dados Discretos - versao 1.0\\n\")");
+				}
+				sw->WriteLine("print(\"input theme : \", input_theme_name)");
+				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
+				sw->WriteLine("print(\"attr REAL final  :\", last_real)");
+				sw->WriteLine("print(\"attr SIM  final  :\", last_sim)");
+				sw->WriteLine("print(\"Accepted error   :\", math.floor(range * 100)..\"%\")");
+				sw->WriteLine("print(\"======================================================\\n\")");
+				sw->WriteLine("");
+				sw->WriteLine("print(\"Porcentagem de acertos DE MUDANCA em cada janela:\")");
+				sw->WriteLine("io.flush()");
+				sw->WriteLine("attrs = {}");
+				sw->WriteLine("");
+				sw->WriteLine("for i = 1, numberOfWindows do");
+				sw->WriteLine("\tattrs[i]=\"diff\"..i");
+				sw->WriteLine("");
+				sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+				sw->WriteLine("");
+				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
+				sw->WriteLine("");
+				sw->WriteLine("\tif ((i == 1) or (i%1 == 0)) then print(i, 1 - diff / sum) end");
+				sw->WriteLine("\tio.flush()");
+				sw->WriteLine("");
+				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / sum end)");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
+				sw->WriteLine("attrs[numberOfWindows+2] = attribute2");
+				sw->WriteLine("");
+				sw->WriteLine("if (flag_save) then cs:save(final_year, output_theme, attrs) end");
+				sw->WriteLine("");
+				break;
+			default:
+				break;
+		}
+
+		//Hold cmd open
+		sw->WriteLine("print(\"\\nEnd of Validation\")");
+		sw->WriteLine("");
+		sw->WriteLine("local answer");
+		sw->WriteLine("repeat");
+		sw->WriteLine("\tio.write(\"\\nPress enter key to exit...\")");
+		sw->WriteLine("\tio.flush()");
+		sw->WriteLine("\tanswer = io.read()");
+		sw->WriteLine("until answer ~= \"`\"");
+
+		sw->Close();
+
+		String^ arguments = "validation.lua";
+		System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
+
+		cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+		cmd->StartInfo->Arguments = arguments;
+		cmd->Start();
+		cmd->WaitForExit();
+		cmd->Close();
+
+		//Delete file after cmd closes
+		if (File::Exists(path))
+		{
+			File::Delete(path);
+		}
 	}
-	else {
-		sw->WriteLine("cs = CellularSpace {" + tbSelectedBatabase->Lines[1]->ToString() + ",");
-		sw->WriteLine(tbSelectedBatabase->Lines[2]->ToString() + ",");
-		sw->WriteLine(tbSelectedBatabase->Lines[3]->ToString() + ",");
-		sw->WriteLine(tbSelectedBatabase->Lines[4]->ToString() + ",");
-		sw->WriteLine("theme = input_theme_name\n}");
-	}
-	sw->WriteLine("");
-	sw->WriteLine("flag_save = true");
-	sw->WriteLine("output_theme = \"validation\"");
-	sw->WriteLine("attribute1 = \"sim\"");
-	sw->WriteLine("attribute2 = \"real\"");
-	sw->WriteLine("");
-	sw->WriteLine("if cs.cells[1][init_real] == nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
-	sw->WriteLine("if cs.cells[1][last_real] == nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
-	sw->WriteLine("if cs.cells[1][last_sim] == nil then error(\"Attribute: \"..last_sim..\". Does not exist in the theme.\") end");
-	sw->WriteLine("");
-	sw->WriteLine("forEachCell(cs, function(cell) ");
-	sw->WriteLine("cell[attribute1] = math.abs(cell[last_sim] - cell[init_real])");
-	sw->WriteLine("cell[attribute2] = math.abs(cell[last_real]- cell[init_real])");
-	sw->WriteLine("end)");
-	sw->WriteLine("");
-	sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
-	sw->WriteLine("forEachCell(cs2, function(cell)	cell.flag = 0 end)");
-	sw->WriteLine("local count = 0");
-	sw->WriteLine("local diff = 0");
-	sw->WriteLine("local sum = 0");
-	sw->WriteLine("local cc1 = {}");
-	sw->WriteLine("local cc2 = {}");
-	sw->WriteLine("local internalcount = 0");
-	sw->WriteLine("");
-	sw->WriteLine("forEachCell(cs2, function(cell)");
-	sw->WriteLine("internalcount = 0");
-	sw->WriteLine("sumcc1 = 0");
-	sw->WriteLine("sumcc2 = 0");
-	sw->WriteLine("");
-	sw->WriteLine("if cell.flag == 0 then");
-	sw->WriteLine("for xx = 0, (window - 1) do");
-	sw->WriteLine("for yy = 0, (window - 1) do");
-	sw->WriteLine("if cs1:getCell(cell.x+xx, cell.y+yy) ~= nil then");
-	sw->WriteLine("internalcount = internalcount + 1");
-	sw->WriteLine("cc1[internalcount] = cs1:getCell(cell.x+xx, cell.y+yy)");
-	sw->WriteLine("cc2[internalcount] = cs2:getCell(cell.x+xx, cell.y+yy)");
-	sw->WriteLine("end");
-	sw->WriteLine("end");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("for j = 1, internalcount do");
-	sw->WriteLine("sumcc1 = sumcc1 + cc1[j][attribute1]");
-	sw->WriteLine("sumcc2 = sumcc2 + cc2[j][attribute2]");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("diffcell = (sumcc2 - sumcc1)");
-	sw->WriteLine("count = count + internalcount");
-	sw->WriteLine("");
-	sw->WriteLine("for i = 1, internalcount do");
-	sw->WriteLine("cc2[i][\"diff\"..window] = diffcell");
-	sw->WriteLine("cc2[i].flag = 1");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("sum = sum + sumcc2");
-	sw->WriteLine("diff = diff + math.abs(diffcell)");
-	sw->WriteLine("return true");
-	sw->WriteLine("end");
-	sw->WriteLine("end)");
-	sw->WriteLine("return count, diff, sum");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("print(\"\\nSimulation Results - Sucess Allocated Cells (%):\\n\")");
-	sw->WriteLine("io.flush()");
-	sw->WriteLine("attrs = {}");
-	sw->WriteLine("");
-	sw->WriteLine("for i = 1, numberOfWindows do");
-	sw->WriteLine("attrs[i]=\"diff\"..i");
-	sw->WriteLine("total,diff,sum = MultiRes(cs, attribute1, cs, attribute2, i)");
-	sw->WriteLine("");
-	sw->WriteLine("if (sum < diff) then");
-	sw->WriteLine("total,diff,sum = MultiRes(cs, attribute2, cs, attribute1, i)");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("if (sum == 0) then sum = 0.00001 end");
-	sw->WriteLine("print (i, 1 - (diff/(2*sum)))");
-	sw->WriteLine("io.flush()");
-	sw->WriteLine("end");
-	sw->WriteLine("");
-	sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
-	sw->WriteLine("attrs[numberOfWindows+2] = attribute2");
-	sw->WriteLine("");
-	sw->WriteLine("if (flag_save) then cs:save(1, output_theme, attrs ) end");
-	sw->WriteLine("print(\"\\nEnd of Validation\")");
-	sw->WriteLine("local answer");
-	sw->WriteLine("repeat");
-	sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
-	sw->WriteLine("io.flush()");
-	sw->WriteLine("answer = io.read()");
-	sw->WriteLine("until answer ~= \"`\"");
-
-	sw->Close();
-
-	String^ arguments = "validation.lua";
-	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
-	cmd->StartInfo->Arguments = arguments;
-	cmd->Start();
-	cmd->WaitForExit();
-	cmd->Close();
-
-	if (File::Exists(path))
-	{
-		File::Delete(path);
-	}
+ else {
+	 MessageBox::Show(gSValSectMet, gSValSectMetTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+ }
 }

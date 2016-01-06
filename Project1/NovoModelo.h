@@ -107,8 +107,20 @@ namespace LuccME {
 		String^ gSMFETitle = "";
 		String^ gSSMFE = "";
 		String^ gSFE = "";
+		String^ gSValSectMet = "";
+		String^ gSValSectMetTitle = "";
 
 	public:
+		bool closing = false;
+		bool forceWriting = false;
+		bool runnable = false;
+		bool access = false;
+		bool lOpen = false;
+		int gDemandComponent = 0;
+		int gPotentialComponent = 0;
+		int gAllocationComponent = 0;
+		int gAttrTime = 0;
+		int gDynTime = 0;
 		String^ gLandUseTypes = "";
 		String^ gLandUseNoData = "";
 		String^ gSelectedDatabase = "";
@@ -116,19 +128,12 @@ namespace LuccME {
 		String^ gDemandLUT = "";
 		String^ gDemandFinalYear = "";
 		String^ gDemandMiddleYear = "";
-		int gDemandComponent = 0;
 		String^ gPotential = "";
 		String^ gPotentialLUT = "";
-		int gPotentialComponent = 0;
-		int gAllocationComponent = 0;
 		String^ gAllocation = "";
 		String^ gAllocationLUT = "";
 		String^ gAttrLUT = "";
-		int gAttrTime = 0;
-		int gDynTime = 0;
-		bool closing = false;
-		bool forceWriting = false;
-		bool runnable = false;
+		String^ lLanguage;
 		TabPage^ validation = gcnew TabPage();
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
@@ -140,7 +145,7 @@ namespace LuccME {
 	private: System::Windows::Forms::Button^  bAllocContinuous;
 	private: System::Windows::Forms::Button^  bAllocDiscrete;
 	private: System::Windows::Forms::Label^  lAllocation;
-	private: System::Windows::Forms::TabPage^  tabPage5;
+	private: System::Windows::Forms::TabPage^  tabSaveParam;
 	private: System::Windows::Forms::Label^  lSalvar;
 	private: System::Windows::Forms::TextBox^  tOutputTheme;
 	private: System::Windows::Forms::Label^  lOutputTheme;
@@ -153,45 +158,49 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lYearsToSave;
 	private: System::Windows::Forms::Label^  lAttrToSave;
 	private: System::Windows::Forms::Button^  bSelectedAttr;
-	private: System::Windows::Forms::TabPage^  tabPage6;
+	private: System::Windows::Forms::TabPage^  tabFileMaker;
 	private: System::Windows::Forms::Label^  lFileMaker;
 	private: System::Windows::Forms::Button^  bGerarArquivos;
 	private: System::Windows::Forms::CheckBox^  cIsCoupled;
 	private: System::Windows::Forms::Button^  bRun;
 	private: System::Windows::Forms::Label^  lRunModel;
 	private: System::Windows::Forms::ToolStripMenuItem^  sairToolStripMenuItem;
+	private: System::Windows::Forms::TabPage^  tabAdvRes;
+	private: System::Windows::Forms::CheckBox^  cDynamicVariables;
+	private: System::Windows::Forms::Label^  lAtualizaveis;
+	private: System::Windows::Forms::Button^  bDynamicSelect;
+	private: System::Windows::Forms::Label^  lDynamicConfirm;
+	private: System::Windows::Forms::Label^  lAnosVariaveis;
+	private: System::Windows::Forms::ListView^  lvYearsDynamic;
+	private: System::Windows::Forms::CheckBox^  cScenario;
+	private: System::Windows::Forms::TextBox^  tScenariosStartTime;
+	private: System::Windows::Forms::Label^  lScenariosStartTime;
+	private: System::Windows::Forms::TextBox^  tScenarioName;
+	private: System::Windows::Forms::Label^  lScenarioName;
+	private: System::Windows::Forms::TabPage^  tabValidation;
+	private: System::Windows::Forms::Button^  bValidate;
+	private: System::Windows::Forms::TextBox^  tAttributeFinalValidation;
+	private: System::Windows::Forms::Label^  lAttributeFinalValidation;
+	private: System::Windows::Forms::TextBox^  tAttributeInitValidation;
+	private: System::Windows::Forms::Label^  lAttributeInitValidation;
+	private: System::Windows::Forms::TextBox^  tAttributeForValidation;
+	private: System::Windows::Forms::Label^  lAttributeForValidation;
+	private: System::Windows::Forms::TextBox^  tInputThemeName;
+	private: System::Windows::Forms::Label^  lInputThemeName;
+	private: System::Windows::Forms::ComboBox^  cbValidationMethod;
+	private: System::Windows::Forms::Label^  lValidationMethod;
+	private: System::Windows::Forms::TextBox^  tNumberWindows;
+	private: System::Windows::Forms::Label^  lNumbWindows;
+	private: System::Windows::Forms::TextBox^  tRange;
+	private: System::Windows::Forms::Label^  lRange;
+	private: System::Windows::Forms::Label^  lSimResult;
+private: System::Windows::Forms::Label^  lThemeHelp;
+private: System::Windows::Forms::CheckBox^  cValidationSave;
+
+
 
 	public:
-		bool access = false;
-		bool lOpen = false;
-		String^ lLanguage;
-private: System::Windows::Forms::TabPage^  tabPage7;
-private: System::Windows::Forms::CheckBox^  cDynamicVariables;
-private: System::Windows::Forms::Label^  lAtualizaveis;
-private: System::Windows::Forms::Button^  bDynamicSelect;
-private: System::Windows::Forms::Label^  lDynamicConfirm;
-private: System::Windows::Forms::Label^  lAnosVariaveis;
-private: System::Windows::Forms::ListView^  lvYearsDynamic;
-private: System::Windows::Forms::CheckBox^  cScenario;
-private: System::Windows::Forms::TextBox^  tScenariosStartTime;
-
-private: System::Windows::Forms::Label^  lScenariosStartTime;
-private: System::Windows::Forms::TextBox^  tScenarioName;
-private: System::Windows::Forms::Label^  lScenarioName;
-private: System::Windows::Forms::TabPage^  tabPage8;
-private: System::Windows::Forms::Button^  bValidate;
-private: System::Windows::Forms::TextBox^  tAttributeFinalValidation;
-private: System::Windows::Forms::Label^  lAttributeFinalValidation;
-private: System::Windows::Forms::TextBox^  tAttributeInitValidation;
-private: System::Windows::Forms::Label^  lAttributeInitValidation;
-private: System::Windows::Forms::TextBox^  tAttributeForValidation;
-private: System::Windows::Forms::Label^  lAttributeForValidation;
-private: System::Windows::Forms::TextBox^  tInputThemeName;
-private: System::Windows::Forms::Label^  lInputThemeName;
-
-
-public:
-	int lReturn;
+		int lReturn;
 		NovoModelo(String^ pLanguage, bool pOpen, int pReturn)
 		{
 			InitializeComponent();
@@ -214,6 +223,7 @@ public:
 				delete components;
 			}
 		}
+	
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  arquivoToolStripMenuItem;
@@ -225,7 +235,7 @@ public:
 	private: System::Windows::Forms::ToolStripMenuItem^  preferênciasToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  idiomaToolStripMenuItem;
 	private: System::Windows::Forms::TabControl^  tNovoModelo;
-	private: System::Windows::Forms::TabPage^  tabPage1;
+	private: System::Windows::Forms::TabPage^  tabDefModel;
 	private: System::Windows::Forms::TextBox^  tEndTime;
 	private: System::Windows::Forms::Label^  lEndTime;
 	private: System::Windows::Forms::Label^  lDefinicoesModelo;
@@ -237,13 +247,11 @@ public:
 	private: System::Windows::Forms::Label^  lSelectedFolder;
 	private: System::Windows::Forms::Button^  bSelectFolder;
 	private: System::Windows::Forms::Label^  lDirProj;
-	private: System::Windows::Forms::TabPage^  tabPage2;
+	private: System::Windows::Forms::TabPage^  tabDefSpatial;
 	private: System::Windows::Forms::Button^  bSelectDatabase;
 	private: System::Windows::Forms::Button^  bMySQL;
 	private: System::Windows::Forms::Label^  lOu;
-
 	private: System::Windows::Forms::Label^  lMySQL;
-
 	private: System::Windows::Forms::Label^  lAccess;
 	private: System::Windows::Forms::TextBox^  tCellArea;
 	private: System::Windows::Forms::Label^  lCellArea;
@@ -252,7 +260,7 @@ public:
 	private: System::Windows::Forms::Label^  lSpacialDimensions;
 	private: System::Windows::Forms::Label^  lSelectedBatabase;
 	private: System::Windows::Forms::Label^  lDatabase;
-	private: System::Windows::Forms::TabPage^  tabPage3;
+	private: System::Windows::Forms::TabPage^  tabLUT;
 	private: System::Windows::Forms::Label^  lLUNDShow;
 	private: System::Windows::Forms::Button^  bLUNDManager;
 	private: System::Windows::Forms::Label^  lLUND;
@@ -261,13 +269,12 @@ public:
 	private: System::Windows::Forms::Label^  lLUTMedium;
 	private: System::Windows::Forms::Label^  lLUTLarge;
 	private: System::Windows::Forms::StatusStrip^  statusStrip1;
-	private: System::Windows::Forms::TabPage^  tabPage4;
+	private: System::Windows::Forms::TabPage^  tabComponent;
 	private: System::Windows::Forms::Button^  bD_CIThreeDM;
 	private: System::Windows::Forms::Button^  bD_CITwoDM;
 	private: System::Windows::Forms::Button^  bD_PCVINPE;
 	private: System::Windows::Forms::Label^  lDemand;
 	private: System::Windows::Forms::Label^  lComponentes;
-	protected:
 
 	private:
 		/// <summary>
@@ -295,7 +302,7 @@ public:
 			this->luccMEToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sobreToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tNovoModelo = (gcnew System::Windows::Forms::TabControl());
-			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->tabDefModel = (gcnew System::Windows::Forms::TabPage());
 			this->tEndTime = (gcnew System::Windows::Forms::TextBox());
 			this->lEndTime = (gcnew System::Windows::Forms::Label());
 			this->lDefinicoesModelo = (gcnew System::Windows::Forms::Label());
@@ -307,7 +314,7 @@ public:
 			this->lSelectedFolder = (gcnew System::Windows::Forms::Label());
 			this->bSelectFolder = (gcnew System::Windows::Forms::Button());
 			this->lDirProj = (gcnew System::Windows::Forms::Label());
-			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->tabDefSpatial = (gcnew System::Windows::Forms::TabPage());
 			this->tbSelectedBatabase = (gcnew System::Windows::Forms::TextBox());
 			this->bSelectDatabase = (gcnew System::Windows::Forms::Button());
 			this->bMySQL = (gcnew System::Windows::Forms::Button());
@@ -321,7 +328,7 @@ public:
 			this->lSpacialDimensions = (gcnew System::Windows::Forms::Label());
 			this->lSelectedBatabase = (gcnew System::Windows::Forms::Label());
 			this->lDatabase = (gcnew System::Windows::Forms::Label());
-			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->tabLUT = (gcnew System::Windows::Forms::TabPage());
 			this->lLUNDShow = (gcnew System::Windows::Forms::Label());
 			this->bLUNDManager = (gcnew System::Windows::Forms::Button());
 			this->lLUND = (gcnew System::Windows::Forms::Label());
@@ -329,7 +336,7 @@ public:
 			this->bLUTManager = (gcnew System::Windows::Forms::Button());
 			this->lLUTMedium = (gcnew System::Windows::Forms::Label());
 			this->lLUTLarge = (gcnew System::Windows::Forms::Label());
-			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->tabComponent = (gcnew System::Windows::Forms::TabPage());
 			this->tbAllocation = (gcnew System::Windows::Forms::TextBox());
 			this->bAllocContinuous = (gcnew System::Windows::Forms::Button());
 			this->bAllocDiscrete = (gcnew System::Windows::Forms::Button());
@@ -344,7 +351,7 @@ public:
 			this->bD_PCVINPE = (gcnew System::Windows::Forms::Button());
 			this->lDemand = (gcnew System::Windows::Forms::Label());
 			this->lComponentes = (gcnew System::Windows::Forms::Label());
-			this->tabPage5 = (gcnew System::Windows::Forms::TabPage());
+			this->tabSaveParam = (gcnew System::Windows::Forms::TabPage());
 			this->cIsCoupled = (gcnew System::Windows::Forms::CheckBox());
 			this->bSelectedAttr = (gcnew System::Windows::Forms::Button());
 			this->lAttrToSave = (gcnew System::Windows::Forms::Label());
@@ -358,12 +365,12 @@ public:
 			this->lSalvar = (gcnew System::Windows::Forms::Label());
 			this->tOutputTheme = (gcnew System::Windows::Forms::TextBox());
 			this->lOutputTheme = (gcnew System::Windows::Forms::Label());
-			this->tabPage6 = (gcnew System::Windows::Forms::TabPage());
+			this->tabFileMaker = (gcnew System::Windows::Forms::TabPage());
 			this->bRun = (gcnew System::Windows::Forms::Button());
 			this->lRunModel = (gcnew System::Windows::Forms::Label());
 			this->bGerarArquivos = (gcnew System::Windows::Forms::Button());
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
-			this->tabPage7 = (gcnew System::Windows::Forms::TabPage());
+			this->tabAdvRes = (gcnew System::Windows::Forms::TabPage());
 			this->tScenarioName = (gcnew System::Windows::Forms::TextBox());
 			this->lScenarioName = (gcnew System::Windows::Forms::Label());
 			this->tScenariosStartTime = (gcnew System::Windows::Forms::TextBox());
@@ -375,7 +382,15 @@ public:
 			this->lAnosVariaveis = (gcnew System::Windows::Forms::Label());
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
-			this->tabPage8 = (gcnew System::Windows::Forms::TabPage());
+			this->tabValidation = (gcnew System::Windows::Forms::TabPage());
+			this->lThemeHelp = (gcnew System::Windows::Forms::Label());
+			this->lSimResult = (gcnew System::Windows::Forms::Label());
+			this->tNumberWindows = (gcnew System::Windows::Forms::TextBox());
+			this->lNumbWindows = (gcnew System::Windows::Forms::Label());
+			this->tRange = (gcnew System::Windows::Forms::TextBox());
+			this->lRange = (gcnew System::Windows::Forms::Label());
+			this->lValidationMethod = (gcnew System::Windows::Forms::Label());
+			this->cbValidationMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->bValidate = (gcnew System::Windows::Forms::Button());
 			this->tAttributeFinalValidation = (gcnew System::Windows::Forms::TextBox());
 			this->lAttributeFinalValidation = (gcnew System::Windows::Forms::Label());
@@ -386,17 +401,18 @@ public:
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->cValidationSave = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
-			this->tabPage1->SuspendLayout();
-			this->tabPage2->SuspendLayout();
-			this->tabPage3->SuspendLayout();
-			this->tabPage4->SuspendLayout();
-			this->tabPage5->SuspendLayout();
-			this->tabPage6->SuspendLayout();
-			this->tabPage7->SuspendLayout();
-			this->tabPage8->SuspendLayout();
+			this->tabDefModel->SuspendLayout();
+			this->tabDefSpatial->SuspendLayout();
+			this->tabLUT->SuspendLayout();
+			this->tabComponent->SuspendLayout();
+			this->tabSaveParam->SuspendLayout();
+			this->tabFileMaker->SuspendLayout();
+			this->tabAdvRes->SuspendLayout();
+			this->tabValidation->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pbLogo1
@@ -493,14 +509,14 @@ public:
 			// 
 			// tNovoModelo
 			// 
-			this->tNovoModelo->Controls->Add(this->tabPage1);
-			this->tNovoModelo->Controls->Add(this->tabPage2);
-			this->tNovoModelo->Controls->Add(this->tabPage3);
-			this->tNovoModelo->Controls->Add(this->tabPage4);
-			this->tNovoModelo->Controls->Add(this->tabPage5);
-			this->tNovoModelo->Controls->Add(this->tabPage6);
-			this->tNovoModelo->Controls->Add(this->tabPage7);
-			this->tNovoModelo->Controls->Add(this->tabPage8);
+			this->tNovoModelo->Controls->Add(this->tabDefModel);
+			this->tNovoModelo->Controls->Add(this->tabDefSpatial);
+			this->tNovoModelo->Controls->Add(this->tabLUT);
+			this->tNovoModelo->Controls->Add(this->tabComponent);
+			this->tNovoModelo->Controls->Add(this->tabSaveParam);
+			this->tNovoModelo->Controls->Add(this->tabFileMaker);
+			this->tNovoModelo->Controls->Add(this->tabAdvRes);
+			this->tNovoModelo->Controls->Add(this->tabValidation);
 			this->tNovoModelo->Location = System::Drawing::Point(12, 173);
 			this->tNovoModelo->Name = L"tNovoModelo";
 			this->tNovoModelo->SelectedIndex = 0;
@@ -508,26 +524,26 @@ public:
 			this->tNovoModelo->TabIndex = 18;
 			this->tNovoModelo->SelectedIndexChanged += gcnew System::EventHandler(this, &NovoModelo::tNovoModelo_SelectedIndexChanged);
 			// 
-			// tabPage1
+			// tabDefModel
 			// 
-			this->tabPage1->Controls->Add(this->tEndTime);
-			this->tabPage1->Controls->Add(this->lEndTime);
-			this->tabPage1->Controls->Add(this->lDefinicoesModelo);
-			this->tabPage1->Controls->Add(this->lArquivos);
-			this->tabPage1->Controls->Add(this->tStartTime);
-			this->tabPage1->Controls->Add(this->lStartTime);
-			this->tabPage1->Controls->Add(this->tModelName);
-			this->tabPage1->Controls->Add(this->lModelName);
-			this->tabPage1->Controls->Add(this->lSelectedFolder);
-			this->tabPage1->Controls->Add(this->bSelectFolder);
-			this->tabPage1->Controls->Add(this->lDirProj);
-			this->tabPage1->Location = System::Drawing::Point(4, 22);
-			this->tabPage1->Name = L"tabPage1";
-			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(717, 455);
-			this->tabPage1->TabIndex = 0;
-			this->tabPage1->Text = L"Definições do Modelo";
-			this->tabPage1->UseVisualStyleBackColor = true;
+			this->tabDefModel->Controls->Add(this->tEndTime);
+			this->tabDefModel->Controls->Add(this->lEndTime);
+			this->tabDefModel->Controls->Add(this->lDefinicoesModelo);
+			this->tabDefModel->Controls->Add(this->lArquivos);
+			this->tabDefModel->Controls->Add(this->tStartTime);
+			this->tabDefModel->Controls->Add(this->lStartTime);
+			this->tabDefModel->Controls->Add(this->tModelName);
+			this->tabDefModel->Controls->Add(this->lModelName);
+			this->tabDefModel->Controls->Add(this->lSelectedFolder);
+			this->tabDefModel->Controls->Add(this->bSelectFolder);
+			this->tabDefModel->Controls->Add(this->lDirProj);
+			this->tabDefModel->Location = System::Drawing::Point(4, 22);
+			this->tabDefModel->Name = L"tabDefModel";
+			this->tabDefModel->Padding = System::Windows::Forms::Padding(3);
+			this->tabDefModel->Size = System::Drawing::Size(717, 455);
+			this->tabDefModel->TabIndex = 0;
+			this->tabDefModel->Text = L"Definições do Modelo";
+			this->tabDefModel->UseVisualStyleBackColor = true;
 			// 
 			// tEndTime
 			// 
@@ -654,28 +670,28 @@ public:
 			this->lDirProj->Text = L"Pasta para Salvar o Modelo";
 			this->lDirProj->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
-			// tabPage2
+			// tabDefSpatial
 			// 
-			this->tabPage2->Controls->Add(this->tbSelectedBatabase);
-			this->tabPage2->Controls->Add(this->bSelectDatabase);
-			this->tabPage2->Controls->Add(this->bMySQL);
-			this->tabPage2->Controls->Add(this->lOu);
-			this->tabPage2->Controls->Add(this->lMySQL);
-			this->tabPage2->Controls->Add(this->lAccess);
-			this->tabPage2->Controls->Add(this->tCellArea);
-			this->tabPage2->Controls->Add(this->lCellArea);
-			this->tabPage2->Controls->Add(this->tThemeName);
-			this->tabPage2->Controls->Add(this->lThemeName);
-			this->tabPage2->Controls->Add(this->lSpacialDimensions);
-			this->tabPage2->Controls->Add(this->lSelectedBatabase);
-			this->tabPage2->Controls->Add(this->lDatabase);
-			this->tabPage2->Location = System::Drawing::Point(4, 22);
-			this->tabPage2->Name = L"tabPage2";
-			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(717, 455);
-			this->tabPage2->TabIndex = 1;
-			this->tabPage2->Text = L"Definições Espaciais";
-			this->tabPage2->UseVisualStyleBackColor = true;
+			this->tabDefSpatial->Controls->Add(this->tbSelectedBatabase);
+			this->tabDefSpatial->Controls->Add(this->bSelectDatabase);
+			this->tabDefSpatial->Controls->Add(this->bMySQL);
+			this->tabDefSpatial->Controls->Add(this->lOu);
+			this->tabDefSpatial->Controls->Add(this->lMySQL);
+			this->tabDefSpatial->Controls->Add(this->lAccess);
+			this->tabDefSpatial->Controls->Add(this->tCellArea);
+			this->tabDefSpatial->Controls->Add(this->lCellArea);
+			this->tabDefSpatial->Controls->Add(this->tThemeName);
+			this->tabDefSpatial->Controls->Add(this->lThemeName);
+			this->tabDefSpatial->Controls->Add(this->lSpacialDimensions);
+			this->tabDefSpatial->Controls->Add(this->lSelectedBatabase);
+			this->tabDefSpatial->Controls->Add(this->lDatabase);
+			this->tabDefSpatial->Location = System::Drawing::Point(4, 22);
+			this->tabDefSpatial->Name = L"tabDefSpatial";
+			this->tabDefSpatial->Padding = System::Windows::Forms::Padding(3);
+			this->tabDefSpatial->Size = System::Drawing::Size(717, 455);
+			this->tabDefSpatial->TabIndex = 1;
+			this->tabDefSpatial->Text = L"Definições Espaciais";
+			this->tabDefSpatial->UseVisualStyleBackColor = true;
 			// 
 			// tbSelectedBatabase
 			// 
@@ -822,22 +838,22 @@ public:
 			this->lDatabase->Text = L"Arquivo do Banco de Dados";
 			this->lDatabase->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
-			// tabPage3
+			// tabLUT
 			// 
-			this->tabPage3->Controls->Add(this->lLUNDShow);
-			this->tabPage3->Controls->Add(this->bLUNDManager);
-			this->tabPage3->Controls->Add(this->lLUND);
-			this->tabPage3->Controls->Add(this->lLUTShow);
-			this->tabPage3->Controls->Add(this->bLUTManager);
-			this->tabPage3->Controls->Add(this->lLUTMedium);
-			this->tabPage3->Controls->Add(this->lLUTLarge);
-			this->tabPage3->Location = System::Drawing::Point(4, 22);
-			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage3->Size = System::Drawing::Size(717, 455);
-			this->tabPage3->TabIndex = 2;
-			this->tabPage3->Text = L"Tipos de Uso da Terra";
-			this->tabPage3->UseVisualStyleBackColor = true;
+			this->tabLUT->Controls->Add(this->lLUNDShow);
+			this->tabLUT->Controls->Add(this->bLUNDManager);
+			this->tabLUT->Controls->Add(this->lLUND);
+			this->tabLUT->Controls->Add(this->lLUTShow);
+			this->tabLUT->Controls->Add(this->bLUTManager);
+			this->tabLUT->Controls->Add(this->lLUTMedium);
+			this->tabLUT->Controls->Add(this->lLUTLarge);
+			this->tabLUT->Location = System::Drawing::Point(4, 22);
+			this->tabLUT->Name = L"tabLUT";
+			this->tabLUT->Padding = System::Windows::Forms::Padding(3);
+			this->tabLUT->Size = System::Drawing::Size(717, 455);
+			this->tabLUT->TabIndex = 2;
+			this->tabLUT->Text = L"Tipos de Uso da Terra";
+			this->tabLUT->UseVisualStyleBackColor = true;
 			// 
 			// lLUNDShow
 			// 
@@ -913,28 +929,28 @@ public:
 			this->lLUTLarge->Text = L"Tipos de Uso da Terra";
 			this->lLUTLarge->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// tabPage4
+			// tabComponent
 			// 
-			this->tabPage4->Controls->Add(this->tbAllocation);
-			this->tabPage4->Controls->Add(this->bAllocContinuous);
-			this->tabPage4->Controls->Add(this->bAllocDiscrete);
-			this->tabPage4->Controls->Add(this->lAllocation);
-			this->tabPage4->Controls->Add(this->bPotContinuous);
-			this->tabPage4->Controls->Add(this->bPotDiscrete);
-			this->tabPage4->Controls->Add(this->tbPotential);
-			this->tabPage4->Controls->Add(this->lPotential);
-			this->tabPage4->Controls->Add(this->tbDemand);
-			this->tabPage4->Controls->Add(this->bD_CIThreeDM);
-			this->tabPage4->Controls->Add(this->bD_CITwoDM);
-			this->tabPage4->Controls->Add(this->bD_PCVINPE);
-			this->tabPage4->Controls->Add(this->lDemand);
-			this->tabPage4->Controls->Add(this->lComponentes);
-			this->tabPage4->Location = System::Drawing::Point(4, 22);
-			this->tabPage4->Name = L"tabPage4";
-			this->tabPage4->Size = System::Drawing::Size(717, 455);
-			this->tabPage4->TabIndex = 3;
-			this->tabPage4->Text = L"Componentes";
-			this->tabPage4->UseVisualStyleBackColor = true;
+			this->tabComponent->Controls->Add(this->tbAllocation);
+			this->tabComponent->Controls->Add(this->bAllocContinuous);
+			this->tabComponent->Controls->Add(this->bAllocDiscrete);
+			this->tabComponent->Controls->Add(this->lAllocation);
+			this->tabComponent->Controls->Add(this->bPotContinuous);
+			this->tabComponent->Controls->Add(this->bPotDiscrete);
+			this->tabComponent->Controls->Add(this->tbPotential);
+			this->tabComponent->Controls->Add(this->lPotential);
+			this->tabComponent->Controls->Add(this->tbDemand);
+			this->tabComponent->Controls->Add(this->bD_CIThreeDM);
+			this->tabComponent->Controls->Add(this->bD_CITwoDM);
+			this->tabComponent->Controls->Add(this->bD_PCVINPE);
+			this->tabComponent->Controls->Add(this->lDemand);
+			this->tabComponent->Controls->Add(this->lComponentes);
+			this->tabComponent->Location = System::Drawing::Point(4, 22);
+			this->tabComponent->Name = L"tabComponent";
+			this->tabComponent->Size = System::Drawing::Size(717, 455);
+			this->tabComponent->TabIndex = 3;
+			this->tabComponent->Text = L"Componentes";
+			this->tabComponent->UseVisualStyleBackColor = true;
 			// 
 			// tbAllocation
 			// 
@@ -1093,34 +1109,34 @@ public:
 			this->lComponentes->Text = L"Selecione os Componentes";
 			this->lComponentes->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// tabPage5
+			// tabSaveParam
 			// 
-			this->tabPage5->Controls->Add(this->cIsCoupled);
-			this->tabPage5->Controls->Add(this->bSelectedAttr);
-			this->tabPage5->Controls->Add(this->lAttrToSave);
-			this->tabPage5->Controls->Add(this->bSelectedYears);
-			this->tabPage5->Controls->Add(this->lYearsToSave);
-			this->tabPage5->Controls->Add(this->lSaveAttr);
-			this->tabPage5->Controls->Add(this->lvSaveAttr);
-			this->tabPage5->Controls->Add(this->lSelectYears);
-			this->tabPage5->Controls->Add(this->lvYearsToSave);
-			this->tabPage5->Controls->Add(this->cSaveYearly);
-			this->tabPage5->Controls->Add(this->lSalvar);
-			this->tabPage5->Controls->Add(this->tOutputTheme);
-			this->tabPage5->Controls->Add(this->lOutputTheme);
-			this->tabPage5->Location = System::Drawing::Point(4, 22);
-			this->tabPage5->Name = L"tabPage5";
-			this->tabPage5->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage5->Size = System::Drawing::Size(717, 455);
-			this->tabPage5->TabIndex = 4;
-			this->tabPage5->Text = L"Salvar Parâmetros";
-			this->tabPage5->UseVisualStyleBackColor = true;
+			this->tabSaveParam->Controls->Add(this->cIsCoupled);
+			this->tabSaveParam->Controls->Add(this->bSelectedAttr);
+			this->tabSaveParam->Controls->Add(this->lAttrToSave);
+			this->tabSaveParam->Controls->Add(this->bSelectedYears);
+			this->tabSaveParam->Controls->Add(this->lYearsToSave);
+			this->tabSaveParam->Controls->Add(this->lSaveAttr);
+			this->tabSaveParam->Controls->Add(this->lvSaveAttr);
+			this->tabSaveParam->Controls->Add(this->lSelectYears);
+			this->tabSaveParam->Controls->Add(this->lvYearsToSave);
+			this->tabSaveParam->Controls->Add(this->cSaveYearly);
+			this->tabSaveParam->Controls->Add(this->lSalvar);
+			this->tabSaveParam->Controls->Add(this->tOutputTheme);
+			this->tabSaveParam->Controls->Add(this->lOutputTheme);
+			this->tabSaveParam->Location = System::Drawing::Point(4, 22);
+			this->tabSaveParam->Name = L"tabSaveParam";
+			this->tabSaveParam->Padding = System::Windows::Forms::Padding(3);
+			this->tabSaveParam->Size = System::Drawing::Size(717, 455);
+			this->tabSaveParam->TabIndex = 4;
+			this->tabSaveParam->Text = L"Salvar Parâmetros";
+			this->tabSaveParam->UseVisualStyleBackColor = true;
 			// 
 			// cIsCoupled
 			// 
 			this->cIsCoupled->AutoSize = true;
 			this->cIsCoupled->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
-			this->cIsCoupled->Location = System::Drawing::Point(492, 76);
+			this->cIsCoupled->Location = System::Drawing::Point(499, 82);
 			this->cIsCoupled->Name = L"cIsCoupled";
 			this->cIsCoupled->Size = System::Drawing::Size(107, 27);
 			this->cIsCoupled->TabIndex = 96;
@@ -1261,19 +1277,19 @@ public:
 			this->lOutputTheme->Text = L"Nome do Tema de Saída";
 			this->lOutputTheme->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			// 
-			// tabPage6
+			// tabFileMaker
 			// 
-			this->tabPage6->Controls->Add(this->bRun);
-			this->tabPage6->Controls->Add(this->lRunModel);
-			this->tabPage6->Controls->Add(this->bGerarArquivos);
-			this->tabPage6->Controls->Add(this->lFileMaker);
-			this->tabPage6->Location = System::Drawing::Point(4, 22);
-			this->tabPage6->Name = L"tabPage6";
-			this->tabPage6->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage6->Size = System::Drawing::Size(717, 455);
-			this->tabPage6->TabIndex = 5;
-			this->tabPage6->Text = L"Gerar Arquivo";
-			this->tabPage6->UseVisualStyleBackColor = true;
+			this->tabFileMaker->Controls->Add(this->bRun);
+			this->tabFileMaker->Controls->Add(this->lRunModel);
+			this->tabFileMaker->Controls->Add(this->bGerarArquivos);
+			this->tabFileMaker->Controls->Add(this->lFileMaker);
+			this->tabFileMaker->Location = System::Drawing::Point(4, 22);
+			this->tabFileMaker->Name = L"tabFileMaker";
+			this->tabFileMaker->Padding = System::Windows::Forms::Padding(3);
+			this->tabFileMaker->Size = System::Drawing::Size(717, 455);
+			this->tabFileMaker->TabIndex = 5;
+			this->tabFileMaker->Text = L"Gerar Arquivo";
+			this->tabFileMaker->UseVisualStyleBackColor = true;
 			// 
 			// bRun
 			// 
@@ -1321,26 +1337,26 @@ public:
 			this->lFileMaker->Text = L"Gerar os Arquivos";
 			this->lFileMaker->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// tabPage7
+			// tabAdvRes
 			// 
-			this->tabPage7->Controls->Add(this->tScenarioName);
-			this->tabPage7->Controls->Add(this->lScenarioName);
-			this->tabPage7->Controls->Add(this->tScenariosStartTime);
-			this->tabPage7->Controls->Add(this->lScenariosStartTime);
-			this->tabPage7->Controls->Add(this->cScenario);
-			this->tabPage7->Controls->Add(this->lAtualizaveis);
-			this->tabPage7->Controls->Add(this->bDynamicSelect);
-			this->tabPage7->Controls->Add(this->lDynamicConfirm);
-			this->tabPage7->Controls->Add(this->lAnosVariaveis);
-			this->tabPage7->Controls->Add(this->lvYearsDynamic);
-			this->tabPage7->Controls->Add(this->cDynamicVariables);
-			this->tabPage7->Location = System::Drawing::Point(4, 22);
-			this->tabPage7->Name = L"tabPage7";
-			this->tabPage7->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage7->Size = System::Drawing::Size(717, 455);
-			this->tabPage7->TabIndex = 6;
-			this->tabPage7->Text = L"Recursos Avançados";
-			this->tabPage7->UseVisualStyleBackColor = true;
+			this->tabAdvRes->Controls->Add(this->tScenarioName);
+			this->tabAdvRes->Controls->Add(this->lScenarioName);
+			this->tabAdvRes->Controls->Add(this->tScenariosStartTime);
+			this->tabAdvRes->Controls->Add(this->lScenariosStartTime);
+			this->tabAdvRes->Controls->Add(this->cScenario);
+			this->tabAdvRes->Controls->Add(this->lAtualizaveis);
+			this->tabAdvRes->Controls->Add(this->bDynamicSelect);
+			this->tabAdvRes->Controls->Add(this->lDynamicConfirm);
+			this->tabAdvRes->Controls->Add(this->lAnosVariaveis);
+			this->tabAdvRes->Controls->Add(this->lvYearsDynamic);
+			this->tabAdvRes->Controls->Add(this->cDynamicVariables);
+			this->tabAdvRes->Location = System::Drawing::Point(4, 22);
+			this->tabAdvRes->Name = L"tabAdvRes";
+			this->tabAdvRes->Padding = System::Windows::Forms::Padding(3);
+			this->tabAdvRes->Size = System::Drawing::Size(717, 455);
+			this->tabAdvRes->TabIndex = 6;
+			this->tabAdvRes->Text = L"Recursos Avançados";
+			this->tabAdvRes->UseVisualStyleBackColor = true;
 			// 
 			// tScenarioName
 			// 
@@ -1473,28 +1489,128 @@ public:
 			this->cDynamicVariables->UseVisualStyleBackColor = true;
 			this->cDynamicVariables->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cDynamicVariables_CheckedChanged);
 			// 
-			// tabPage8
+			// tabValidation
 			// 
-			this->tabPage8->Controls->Add(this->bValidate);
-			this->tabPage8->Controls->Add(this->tAttributeFinalValidation);
-			this->tabPage8->Controls->Add(this->lAttributeFinalValidation);
-			this->tabPage8->Controls->Add(this->tAttributeInitValidation);
-			this->tabPage8->Controls->Add(this->lAttributeInitValidation);
-			this->tabPage8->Controls->Add(this->tAttributeForValidation);
-			this->tabPage8->Controls->Add(this->lAttributeForValidation);
-			this->tabPage8->Controls->Add(this->tInputThemeName);
-			this->tabPage8->Controls->Add(this->lInputThemeName);
-			this->tabPage8->Location = System::Drawing::Point(4, 22);
-			this->tabPage8->Name = L"tabPage8";
-			this->tabPage8->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage8->Size = System::Drawing::Size(717, 455);
-			this->tabPage8->TabIndex = 7;
-			this->tabPage8->Text = L"Validação";
-			this->tabPage8->UseVisualStyleBackColor = true;
+			this->tabValidation->Controls->Add(this->cValidationSave);
+			this->tabValidation->Controls->Add(this->lThemeHelp);
+			this->tabValidation->Controls->Add(this->lSimResult);
+			this->tabValidation->Controls->Add(this->tNumberWindows);
+			this->tabValidation->Controls->Add(this->lNumbWindows);
+			this->tabValidation->Controls->Add(this->tRange);
+			this->tabValidation->Controls->Add(this->lRange);
+			this->tabValidation->Controls->Add(this->lValidationMethod);
+			this->tabValidation->Controls->Add(this->cbValidationMethod);
+			this->tabValidation->Controls->Add(this->bValidate);
+			this->tabValidation->Controls->Add(this->tAttributeFinalValidation);
+			this->tabValidation->Controls->Add(this->lAttributeFinalValidation);
+			this->tabValidation->Controls->Add(this->tAttributeInitValidation);
+			this->tabValidation->Controls->Add(this->lAttributeInitValidation);
+			this->tabValidation->Controls->Add(this->tAttributeForValidation);
+			this->tabValidation->Controls->Add(this->lAttributeForValidation);
+			this->tabValidation->Controls->Add(this->tInputThemeName);
+			this->tabValidation->Controls->Add(this->lInputThemeName);
+			this->tabValidation->Location = System::Drawing::Point(4, 22);
+			this->tabValidation->Name = L"tabValidation";
+			this->tabValidation->Padding = System::Windows::Forms::Padding(3);
+			this->tabValidation->Size = System::Drawing::Size(717, 455);
+			this->tabValidation->TabIndex = 7;
+			this->tabValidation->Text = L"Validação";
+			this->tabValidation->UseVisualStyleBackColor = true;
+			// 
+			// lThemeHelp
+			// 
+			this->lThemeHelp->AutoSize = true;
+			this->lThemeHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lThemeHelp->Location = System::Drawing::Point(52, 185);
+			this->lThemeHelp->Name = L"lThemeHelp";
+			this->lThemeHelp->Size = System::Drawing::Size(124, 13);
+			this->lThemeHelp->TabIndex = 118;
+			this->lThemeHelp->Text = L"Tema de Saída do Modelo";
+			this->lThemeHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
+			// lSimResult
+			// 
+			this->lSimResult->AutoSize = true;
+			this->lSimResult->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lSimResult->Location = System::Drawing::Point(65, 281);
+			this->lSimResult->Name = L"lSimResult";
+			this->lSimResult->Size = System::Drawing::Size(98, 13);
+			this->lSimResult->TabIndex = 117;
+			this->lSimResult->Text = L"Resultado Simulado";
+			this->lSimResult->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
+			// tNumberWindows
+			// 
+			this->tNumberWindows->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tNumberWindows->Location = System::Drawing::Point(506, 258);
+			this->tNumberWindows->Name = L"tNumberWindows";
+			this->tNumberWindows->Size = System::Drawing::Size(162, 20);
+			this->tNumberWindows->TabIndex = 116;
+			this->tNumberWindows->Text = L"10";
+			this->tNumberWindows->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tNumberWindows->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lNumbWindows
+			// 
+			this->lNumbWindows->AutoSize = true;
+			this->lNumbWindows->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lNumbWindows->Location = System::Drawing::Point(502, 232);
+			this->lNumbWindows->Name = L"lNumbWindows";
+			this->lNumbWindows->Size = System::Drawing::Size(173, 23);
+			this->lNumbWindows->TabIndex = 115;
+			this->lNumbWindows->Text = L"Number of Windows";
+			this->lNumbWindows->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
+			// tRange
+			// 
+			this->tRange->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tRange->Location = System::Drawing::Point(506, 162);
+			this->tRange->Name = L"tRange";
+			this->tRange->Size = System::Drawing::Size(162, 20);
+			this->tRange->TabIndex = 114;
+			this->tRange->Text = L"0.00";
+			this->tRange->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tRange->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lRange
+			// 
+			this->lRange->AutoSize = true;
+			this->lRange->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lRange->Location = System::Drawing::Point(472, 136);
+			this->lRange->Name = L"lRange";
+			this->lRange->Size = System::Drawing::Size(227, 23);
+			this->lRange->TabIndex = 113;
+			this->lRange->Text = L"% Erro Permitido por Célula";
+			this->lRange->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
+			// lValidationMethod
+			// 
+			this->lValidationMethod->AutoSize = true;
+			this->lValidationMethod->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lValidationMethod->Location = System::Drawing::Point(227, 42);
+			this->lValidationMethod->Name = L"lValidationMethod";
+			this->lValidationMethod->Size = System::Drawing::Size(267, 23);
+			this->lValidationMethod->TabIndex = 112;
+			this->lValidationMethod->Text = L"Método de Validação/Calibração";
+			this->lValidationMethod->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// cbValidationMethod
+			// 
+			this->cbValidationMethod->BackColor = System::Drawing::SystemColors::Window;
+			this->cbValidationMethod->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbValidationMethod->Location = System::Drawing::Point(195, 68);
+			this->cbValidationMethod->Name = L"cbValidationMethod";
+			this->cbValidationMethod->Size = System::Drawing::Size(316, 21);
+			this->cbValidationMethod->TabIndex = 111;
 			// 
 			// bValidate
 			// 
-			this->bValidate->Location = System::Drawing::Point(259, 370);
+			this->bValidate->Location = System::Drawing::Point(266, 383);
 			this->bValidate->Name = L"bValidate";
 			this->bValidate->Size = System::Drawing::Size(185, 47);
 			this->bValidate->TabIndex = 110;
@@ -1506,13 +1622,12 @@ public:
 			// tAttributeFinalValidation
 			// 
 			this->tAttributeFinalValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tAttributeFinalValidation->Location = System::Drawing::Point(270, 311);
+			this->tAttributeFinalValidation->Location = System::Drawing::Point(275, 258);
 			this->tAttributeFinalValidation->Name = L"tAttributeFinalValidation";
 			this->tAttributeFinalValidation->Size = System::Drawing::Size(162, 20);
 			this->tAttributeFinalValidation->TabIndex = 109;
 			this->tAttributeFinalValidation->Text = L"Floresta";
 			this->tAttributeFinalValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tAttributeFinalValidation->Visible = false;
 			this->tAttributeFinalValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lAttributeFinalValidation
@@ -1520,24 +1635,22 @@ public:
 			this->lAttributeFinalValidation->AutoSize = true;
 			this->lAttributeFinalValidation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttributeFinalValidation->Location = System::Drawing::Point(272, 285);
+			this->lAttributeFinalValidation->Location = System::Drawing::Point(277, 232);
 			this->lAttributeFinalValidation->Name = L"lAttributeFinalValidation";
 			this->lAttributeFinalValidation->Size = System::Drawing::Size(158, 23);
 			this->lAttributeFinalValidation->TabIndex = 108;
 			this->lAttributeFinalValidation->Text = L"Atributo Real Final";
 			this->lAttributeFinalValidation->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lAttributeFinalValidation->Visible = false;
 			// 
 			// tAttributeInitValidation
 			// 
 			this->tAttributeInitValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tAttributeInitValidation->Location = System::Drawing::Point(270, 226);
+			this->tAttributeInitValidation->Location = System::Drawing::Point(275, 162);
 			this->tAttributeInitValidation->Name = L"tAttributeInitValidation";
 			this->tAttributeInitValidation->Size = System::Drawing::Size(162, 20);
 			this->tAttributeInitValidation->TabIndex = 107;
-			this->tAttributeInitValidation->Text = L"Floresta";
+			this->tAttributeInitValidation->Text = L"Desmatamento";
 			this->tAttributeInitValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tAttributeInitValidation->Visible = false;
 			this->tAttributeInitValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lAttributeInitValidation
@@ -1545,24 +1658,22 @@ public:
 			this->lAttributeInitValidation->AutoSize = true;
 			this->lAttributeInitValidation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttributeInitValidation->Location = System::Drawing::Point(287, 200);
+			this->lAttributeInitValidation->Location = System::Drawing::Point(292, 136);
 			this->lAttributeInitValidation->Name = L"lAttributeInitValidation";
 			this->lAttributeInitValidation->Size = System::Drawing::Size(128, 23);
 			this->lAttributeInitValidation->TabIndex = 106;
 			this->lAttributeInitValidation->Text = L"Atributo Inicial";
 			this->lAttributeInitValidation->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lAttributeInitValidation->Visible = false;
 			// 
 			// tAttributeForValidation
 			// 
 			this->tAttributeForValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tAttributeForValidation->Location = System::Drawing::Point(270, 141);
+			this->tAttributeForValidation->Location = System::Drawing::Point(33, 258);
 			this->tAttributeForValidation->Name = L"tAttributeForValidation";
 			this->tAttributeForValidation->Size = System::Drawing::Size(162, 20);
 			this->tAttributeForValidation->TabIndex = 105;
-			this->tAttributeForValidation->Text = L"Floresta_out";
+			this->tAttributeForValidation->Text = L"Desmatamento_out";
 			this->tAttributeForValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tAttributeForValidation->Visible = false;
 			this->tAttributeForValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lAttributeForValidation
@@ -1570,24 +1681,22 @@ public:
 			this->lAttributeForValidation->AutoSize = true;
 			this->lAttributeForValidation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttributeForValidation->Location = System::Drawing::Point(256, 115);
+			this->lAttributeForValidation->Location = System::Drawing::Point(19, 232);
 			this->lAttributeForValidation->Name = L"lAttributeForValidation";
 			this->lAttributeForValidation->Size = System::Drawing::Size(191, 23);
 			this->lAttributeForValidation->TabIndex = 104;
 			this->lAttributeForValidation->Text = L"Atributo a ser Validado";
 			this->lAttributeForValidation->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lAttributeForValidation->Visible = false;
 			// 
 			// tInputThemeName
 			// 
 			this->tInputThemeName->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tInputThemeName->Location = System::Drawing::Point(270, 56);
+			this->tInputThemeName->Location = System::Drawing::Point(33, 162);
 			this->tInputThemeName->Name = L"tInputThemeName";
 			this->tInputThemeName->Size = System::Drawing::Size(162, 20);
 			this->tInputThemeName->TabIndex = 103;
 			this->tInputThemeName->Text = L"theme_name";
 			this->tInputThemeName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tInputThemeName->Visible = false;
 			this->tInputThemeName->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lInputThemeName
@@ -1595,13 +1704,12 @@ public:
 			this->lInputThemeName->AutoSize = true;
 			this->lInputThemeName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lInputThemeName->Location = System::Drawing::Point(288, 30);
+			this->lInputThemeName->Location = System::Drawing::Point(51, 136);
 			this->lInputThemeName->Name = L"lInputThemeName";
 			this->lInputThemeName->Size = System::Drawing::Size(127, 23);
 			this->lInputThemeName->TabIndex = 102;
 			this->lInputThemeName->Text = L"Nome do Tema";
 			this->lInputThemeName->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lInputThemeName->Visible = false;
 			// 
 			// statusStrip1
 			// 
@@ -1610,6 +1718,17 @@ public:
 			this->statusStrip1->Size = System::Drawing::Size(745, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
+			// 
+			// cValidationSave
+			// 
+			this->cValidationSave->AutoSize = true;
+			this->cValidationSave->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
+			this->cValidationSave->Location = System::Drawing::Point(242, 320);
+			this->cValidationSave->Name = L"cValidationSave";
+			this->cValidationSave->Size = System::Drawing::Size(232, 27);
+			this->cValidationSave->TabIndex = 119;
+			this->cValidationSave->Text = L"Salvar no Bando de Dados";
+			this->cValidationSave->UseVisualStyleBackColor = true;
 			// 
 			// NovoModelo
 			// 
@@ -1631,22 +1750,22 @@ public:
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->tNovoModelo->ResumeLayout(false);
-			this->tabPage1->ResumeLayout(false);
-			this->tabPage1->PerformLayout();
-			this->tabPage2->ResumeLayout(false);
-			this->tabPage2->PerformLayout();
-			this->tabPage3->ResumeLayout(false);
-			this->tabPage3->PerformLayout();
-			this->tabPage4->ResumeLayout(false);
-			this->tabPage4->PerformLayout();
-			this->tabPage5->ResumeLayout(false);
-			this->tabPage5->PerformLayout();
-			this->tabPage6->ResumeLayout(false);
-			this->tabPage6->PerformLayout();
-			this->tabPage7->ResumeLayout(false);
-			this->tabPage7->PerformLayout();
-			this->tabPage8->ResumeLayout(false);
-			this->tabPage8->PerformLayout();
+			this->tabDefModel->ResumeLayout(false);
+			this->tabDefModel->PerformLayout();
+			this->tabDefSpatial->ResumeLayout(false);
+			this->tabDefSpatial->PerformLayout();
+			this->tabLUT->ResumeLayout(false);
+			this->tabLUT->PerformLayout();
+			this->tabComponent->ResumeLayout(false);
+			this->tabComponent->PerformLayout();
+			this->tabSaveParam->ResumeLayout(false);
+			this->tabSaveParam->PerformLayout();
+			this->tabFileMaker->ResumeLayout(false);
+			this->tabFileMaker->PerformLayout();
+			this->tabAdvRes->ResumeLayout(false);
+			this->tabAdvRes->PerformLayout();
+			this->tabValidation->ResumeLayout(false);
+			this->tabValidation->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

@@ -159,6 +159,16 @@ Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(System.String, Boolean, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    Boolean closing : Public
+    Boolean forceWriting : Public
+    Boolean runnable : Public
+    Boolean access : Public
+    Boolean lOpen : Public
+    Int32 gDemandComponent : Public
+    Int32 gPotentialComponent : Public
+    Int32 gAllocationComponent : Public
+    Int32 gAttrTime : Public
+    Int32 gDynTime : Public
     System.String gLandUseTypes : Public
     System.String gLandUseNoData : Public
     System.String gSelectedDatabase : Public
@@ -166,23 +176,13 @@ Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     System.String gDemandLUT : Public
     System.String gDemandFinalYear : Public
     System.String gDemandMiddleYear : Public
-    Int32 gDemandComponent : Public
     System.String gPotential : Public
     System.String gPotentialLUT : Public
-    Int32 gPotentialComponent : Public
-    Int32 gAllocationComponent : Public
     System.String gAllocation : Public
     System.String gAllocationLUT : Public
     System.String gAttrLUT : Public
-    Int32 gAttrTime : Public
-    Int32 gDynTime : Public
-    Boolean closing : Public
-    Boolean forceWriting : Public
-    Boolean runnable : Public
-    System.Windows.Forms.TabPage validation : Public
-    Boolean access : Public
-    Boolean lOpen : Public
     System.String lLanguage : Public
+    System.Windows.Forms.TabPage validation : Public
     Int32 lReturn : Public
 Class LuccME.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form

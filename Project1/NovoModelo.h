@@ -383,6 +383,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
 			this->tabValidation = (gcnew System::Windows::Forms::TabPage());
+			this->cValidationSave = (gcnew System::Windows::Forms::CheckBox());
 			this->lThemeHelp = (gcnew System::Windows::Forms::Label());
 			this->lSimResult = (gcnew System::Windows::Forms::Label());
 			this->tNumberWindows = (gcnew System::Windows::Forms::TextBox());
@@ -401,7 +402,6 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
-			this->cValidationSave = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -1261,7 +1261,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tOutputTheme->Name = L"tOutputTheme";
 			this->tOutputTheme->Size = System::Drawing::Size(162, 20);
 			this->tOutputTheme->TabIndex = 85;
-			this->tOutputTheme->Text = L"LuccMe_Model";
+			this->tOutputTheme->Text = L"LuccMe_Model_";
 			this->tOutputTheme->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tOutputTheme->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
@@ -1491,6 +1491,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			// 
 			// tabValidation
 			// 
+			this->tabValidation->Controls->Add(this->cbValidationMethod);
 			this->tabValidation->Controls->Add(this->cValidationSave);
 			this->tabValidation->Controls->Add(this->lThemeHelp);
 			this->tabValidation->Controls->Add(this->lSimResult);
@@ -1499,7 +1500,6 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tabValidation->Controls->Add(this->tRange);
 			this->tabValidation->Controls->Add(this->lRange);
 			this->tabValidation->Controls->Add(this->lValidationMethod);
-			this->tabValidation->Controls->Add(this->cbValidationMethod);
 			this->tabValidation->Controls->Add(this->bValidate);
 			this->tabValidation->Controls->Add(this->tAttributeFinalValidation);
 			this->tabValidation->Controls->Add(this->lAttributeFinalValidation);
@@ -1516,6 +1516,17 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tabValidation->TabIndex = 7;
 			this->tabValidation->Text = L"Validação";
 			this->tabValidation->UseVisualStyleBackColor = true;
+			// 
+			// cValidationSave
+			// 
+			this->cValidationSave->AutoSize = true;
+			this->cValidationSave->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
+			this->cValidationSave->Location = System::Drawing::Point(240, 320);
+			this->cValidationSave->Name = L"cValidationSave";
+			this->cValidationSave->Size = System::Drawing::Size(232, 27);
+			this->cValidationSave->TabIndex = 119;
+			this->cValidationSave->Text = L"Salvar no Bando de Dados";
+			this->cValidationSave->UseVisualStyleBackColor = true;
 			// 
 			// lThemeHelp
 			// 
@@ -1571,7 +1582,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tRange->Name = L"tRange";
 			this->tRange->Size = System::Drawing::Size(162, 20);
 			this->tRange->TabIndex = 114;
-			this->tRange->Text = L"0.00";
+			this->tRange->Text = L"0";
 			this->tRange->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tRange->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
@@ -1610,7 +1621,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			// 
 			// bValidate
 			// 
-			this->bValidate->Location = System::Drawing::Point(266, 383);
+			this->bValidate->Location = System::Drawing::Point(264, 383);
 			this->bValidate->Name = L"bValidate";
 			this->bValidate->Size = System::Drawing::Size(185, 47);
 			this->bValidate->TabIndex = 110;
@@ -1718,17 +1729,6 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->statusStrip1->Size = System::Drawing::Size(745, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
-			// 
-			// cValidationSave
-			// 
-			this->cValidationSave->AutoSize = true;
-			this->cValidationSave->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
-			this->cValidationSave->Location = System::Drawing::Point(242, 320);
-			this->cValidationSave->Name = L"cValidationSave";
-			this->cValidationSave->Size = System::Drawing::Size(232, 27);
-			this->cValidationSave->TabIndex = 119;
-			this->cValidationSave->Text = L"Salvar no Bando de Dados";
-			this->cValidationSave->UseVisualStyleBackColor = true;
 			// 
 			// NovoModelo
 			// 

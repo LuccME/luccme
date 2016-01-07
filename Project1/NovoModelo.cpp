@@ -125,7 +125,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lNumbWindows->Text = "Number of Windows";
 		lSimResult->Text = "   Simulated Result";
 		lThemeHelp->Text = "Output Model Theme Name";
-		cValidationSave->Location = Point(267, 320);
+		cValidationSave->Location = Point(265, 320);
 		cValidationSave->Text = "Save into Database";
 		bValidate->Text = "Validate";
 		//Strings
@@ -301,7 +301,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lNumbWindows->Text = " Número de Janelas";
 		lSimResult->Text = "Resultado Simulado";
 		lThemeHelp->Text = "Tema de Saída do Modelo";
-		cValidationSave->Location = Point(242, 320);
+		cValidationSave->Location = Point(240, 320);
 		cValidationSave->Text = "Salvar no Banco de Dados";
 		bValidate->Text = "Validar";
 		//Strings
@@ -1645,6 +1645,10 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		}
 		else {
 			bSelectedAttr->Visible = false;
+		}
+
+		if (tOutputTheme->ForeColor != System::Drawing::Color::Black) {
+			tOutputTheme->Text = tModelName->Text + "_";
 		}
 	}
 
@@ -5662,7 +5666,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 
 		//Input parameters
 		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
-		sw->WriteLine("range = " + tRange->Text);
+		sw->WriteLine("range = " + tRange->Text + " / 100");
 		if (cValidationSave->Checked) {
 			sw->WriteLine("flag_save = true");
 		}

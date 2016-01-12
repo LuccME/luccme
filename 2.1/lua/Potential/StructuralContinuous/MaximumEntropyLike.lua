@@ -319,12 +319,14 @@ function MaximumEntropyLike(component)
         end
       end
       
-      if (cell[pot] > 0) then
-        countOne = countOne + 1
-      elseif (cell[pot] == 0) then
-        countZero = countZero + 1
-      end
-      
+	  if (#sample > 0) then
+		  if (cell[pot] > 0) then
+			countOne = countOne + 1
+		  elseif (cell[pot] == 0) then
+			countZero = countZero + 1
+		  end
+	  end
+
     end
     
 

@@ -216,6 +216,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSScenSTTitle = "Error - Scenario Start Time";
 		gSValSectMet = "A Validation/Calibration must be selected.";
 		gSValSectMetTitle = "Error - Validation/Calibration Method Not Selected";
+		gSValExt = "print(\"Hit percentage CONSIDERING THE STANDARD ARISING in each window:\\n\")";
+		gSValDiff = "print(\"Hit percentage CONSIDERING THE CHANGES in each window:\\n\")";
+		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolution for Whole Area (ext)");
 		cbValidationMethod->Items->Add("Multiresolution for Modified Area (diff)");
@@ -392,6 +395,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSScenNameTitle = "Erro - Nome do Cenário";
 		gSValSectMet = "Um Método de Validação/Calibração deve ser selecionado.";
 		gSValSectMetTitle = "Erro - Nenhum Método de Validação/Calibração selecionado";
+		gSValExt = "print(\"Porcentagem de acertos CONSIDERANDO O PADRAO RESULTANTE em cada janela:\\n\")";
+		gSValDiff = "print(\"Porcentagem de acertos DE MUDANCA em cada janela:\\n\")";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolução de Toda a Área (ext)");
@@ -2447,6 +2452,25 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					lRunModel->Visible = true;
 					bRun->Visible = true;
 					runnable = true;
+
+					gParametersValues[0] = lSelectedFolder->Text;
+					gParametersValues[1] = tModelName->Text;
+					gParametersValues[2] = tStartTime->Text;
+					gParametersValues[3] = tEndTime->Text;
+					gParametersValues[4] = tThemeName->Text;
+					gParametersValues[5] = tbSelectedBatabase->Lines[1]->ToString();
+					gParametersValues[6] = tCellArea->Text;
+					gParametersValues[7] = lDynamicConfirm->Text;
+					gParametersValues[8] = tScenariosStartTime->Text;
+					gParametersValues[9] = tScenarioName->Text;
+					gParametersValues[10] = lLUTShow->Text;
+					gParametersValues[11] = lLUNDShow->Text;
+					gParametersValues[12] = tOutputTheme->Text;
+					gParametersValues[13] = lYearsToSave->Text;
+					gParametersValues[14] = lAttrToSave->Text;
+					gParametersValues[15] = tbDemand->Lines[0]->ToString();
+					gParametersValues[16] = tbPotential->Lines[0]->ToString();
+					gParametersValues[17] = tbAllocation->Lines[0]->ToString();
 				}
 				else {
 					if (!mainFile) {
@@ -2601,7 +2625,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 					lSelectedFolder->Text = tempLine->Substring(0, lastSlash - j);
 				}
-
+				
+				gParametersValues[0] = lSelectedFolder->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -2663,6 +2688,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				gParametersValues[1] = tModelName->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -2702,6 +2728,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tStartTime->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[2] = tStartTime->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -2741,6 +2768,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tEndTime->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[3] = tEndTime->Text;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
 
@@ -2918,6 +2946,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tThemeName->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[4] = tThemeName->Text;
+				gParametersValues[5] = tbSelectedBatabase->Lines[1]->ToString();
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -2956,6 +2986,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tCellArea->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[6] = tCellArea->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -2985,9 +3016,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					cDynamicVariables->Checked = true;
 					lDynamicConfirm->Text = tempLine;
 					gDynTime = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
-
 				}
 
+				gParametersValues[7] = lDynamicConfirm->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3027,6 +3058,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tScenariosStartTime->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[8] = tScenariosStartTime->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3063,6 +3095,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tScenarioName->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[9] = tScenarioName->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3108,6 +3141,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gLandUseTypes = lLUTShow->Text;
 				}
 
+				gParametersValues[10] = lLUTShow->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3144,6 +3178,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gLandUseNoData = lLUNDShow->Text;
 				}
 
+				gParametersValues[11] = lLUNDShow->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3181,6 +3216,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tOutputTheme->ForeColor = System::Drawing::Color::Black;
 				}
 
+				gParametersValues[12] = tOutputTheme->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3222,6 +3258,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				gParametersValues[13] = lYearsToSave->Text;
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -3304,6 +3341,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gAttrLUT = gLandUseTypes;
 					}
 				}
+
+				gParametersValues[14] = lAttrToSave->Text;
 				sw->Close();
 				main = true;
 				MessageBox::Show(gSMainImport, gSMainImportTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -3586,6 +3625,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gDemandComponent = 3;
 					}
 				}
+
+				gParametersValues[15] = tbDemand->Lines[0]->ToString();
 
 				//Potencial
 				line = sw->ReadLine();
@@ -4754,6 +4795,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 			
+				gParametersValues[16] = tbPotential->Lines[0]->ToString();
+
 				//Allocation
 				gAllocationLUT = gLandUseTypes;
 
@@ -5496,9 +5539,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						}
 						tbAllocation->Lines = lines;
 					}
-
 				}
 
+				gParametersValues[17] = tbAllocation->Lines[0]->ToString();
 				sw->Close();
 				submodel = true;
 			}
@@ -5584,12 +5627,25 @@ System::Void LuccME::NovoModelo::luccMEToolStripMenuItem_Click(System::Object ^ 
 
 System::Void LuccME::NovoModelo::NovoModelo_FormClosing(System::Object ^ sender, System::Windows::Forms::FormClosingEventArgs ^ e)
 {
-	if (!closing) {
+	if (!closing && !runnable) {
 		if (tModelName->ForeColor == System::Drawing::Color::Black || tStartTime->ForeColor == System::Drawing::Color::Black ||
 			tEndTime->ForeColor == System::Drawing::Color::Black || tThemeName->ForeColor == System::Drawing::Color::Black ||
 			tCellArea->ForeColor == System::Drawing::Color::Black || tOutputTheme->ForeColor == System::Drawing::Color::Black ||
 			lSelectedFolder->Text != "" || lLUNDShow->Text != "" || lLUTShow->Text != "" || lYearsToSave->Text != "" || lAttrToSave->Text != "" ||
 			tbSelectedBatabase->Lines->Length > 0 || tbDemand->Lines->Length > 0 || tbPotential->Lines->Length > 0 || tbAllocation->Lines->Length > 0) {
+			if (MessageBox::Show(gSExit, gSExitTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
+				e->Cancel = true;
+			}
+		}
+	}
+	else if (!closing && runnable) {
+		if (gParametersValues[0] != lSelectedFolder->Text || gParametersValues[1] != tModelName->Text || gParametersValues[2] != tStartTime->Text ||
+			gParametersValues[3] != tEndTime->Text || gParametersValues[4] != tThemeName->Text || gParametersValues[5] != tbSelectedBatabase->Lines[1]->ToString() ||
+			gParametersValues[6] != tCellArea->Text || gParametersValues[7] != lDynamicConfirm->Text || gParametersValues[8] != tScenariosStartTime->Text ||
+			gParametersValues[9] != tScenarioName->Text || gParametersValues[10] != lLUTShow->Text || gParametersValues[11] != lLUNDShow->Text ||
+			gParametersValues[12] != tOutputTheme->Text || gParametersValues[13] != lYearsToSave->Text || gParametersValues[14] != lAttrToSave->Text ||
+			gParametersValues[15] != tbDemand->Lines[0]->ToString() || gParametersValues[16] != tbPotential->Lines[0]->ToString() ||
+			gParametersValues[17] != tbAllocation->Lines[0]->ToString()) {
 			if (MessageBox::Show(gSExit, gSExitTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 				e->Cancel = true;
 			}
@@ -5765,12 +5821,12 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\treturn count, diff, sum");
 				sw->WriteLine("end");
 				sw->WriteLine("");
-				sw->WriteLine("print(\"======================================================\\n\")");
+				sw->WriteLine("print(\"======================================================\")");
 				if (gAllocationComponent > 2) {
-					sw->WriteLine("print(\"Metrica de Validacao para Dados Continuos - versao 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 				}
 				else {
-					sw->WriteLine("print(\"Metrica de Validacao para Dados Discretos - versao 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
 				sw->WriteLine("print(\"input theme : \", input_theme_name)");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
@@ -5779,7 +5835,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"Accepted error   :\", math.floor(range * 100)..\"%\")");
 				sw->WriteLine("print(\"======================================================\\n\")");
 				sw->WriteLine("");
-				sw->WriteLine("print(\"Porcentagem de acertos CONSIDERANDO O PADRAO RESULTANTE em cada janela:\")");
+				sw->WriteLine(gSValExt);
 				sw->WriteLine("io.flush()");
 				sw->WriteLine("attrs = {}");
 				sw->WriteLine("");
@@ -5871,12 +5927,12 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\treturn count * window * window, diff, sum");
 				sw->WriteLine("end");
 				sw->WriteLine("");
-				sw->WriteLine("print(\"======================================================\\n\")");
+				sw->WriteLine("print(\"======================================================\")");
 				if (gAllocationComponent > 2) {
-					sw->WriteLine("print(\"Metrica de Validacao para Dados Continuos - versao 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 				}
 				else {
-					sw->WriteLine("print(\"Metrica de Validacao para Dados Discretos - versao 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
 				sw->WriteLine("print(\"input theme : \", input_theme_name)");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
@@ -5885,7 +5941,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"Accepted error   :\", math.floor(range * 100)..\"%\")");
 				sw->WriteLine("print(\"======================================================\\n\")");
 				sw->WriteLine("");
-				sw->WriteLine("print(\"Porcentagem de acertos DE MUDANCA em cada janela:\")");
+				sw->WriteLine(gSValDiff);
 				sw->WriteLine("io.flush()");
 				sw->WriteLine("attrs = {}");
 				sw->WriteLine("");

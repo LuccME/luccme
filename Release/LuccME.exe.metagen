@@ -183,6 +183,7 @@ Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     System.String gAttrLUT : Public
     System.String lLanguage : Public
     System.Windows.Forms.TabPage validation : Public
+    System.String[] gParametersValues : Public
     Int32 lReturn : Public
 Class LuccME.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form

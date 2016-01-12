@@ -109,6 +109,8 @@ namespace LuccME {
 		String^ gSFE = "";
 		String^ gSValSectMet = "";
 		String^ gSValSectMetTitle = "";
+		String^ gSValExt = "";
+		String^ gSValDiff = "";
 
 	public:
 		bool closing = false;
@@ -135,6 +137,7 @@ namespace LuccME {
 		String^ gAttrLUT = "";
 		String^ lLanguage;
 		TabPage^ validation = gcnew TabPage();
+		array<String^>^ gParametersValues = gcnew array<String^>(21);
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;

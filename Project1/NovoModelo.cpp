@@ -23,6 +23,7 @@ using namespace System::Drawing;
 
 System::Void LuccME::NovoModelo::checkLanguage()
 {
+	//Handles with Discrete or Continuous Component selection (enable or disable buttons)
 	if (gPotentialComponent > 5 || gAllocationComponent > 2) {
 		bPotDiscrete->Enabled = false;
 		bAllocDiscrete->Enabled = false;
@@ -42,7 +43,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bAllocContinuous->Enabled = true;
 	}
 
-
+	//Select Strings according to the selected language
 	if (lLanguage == "en") {
 		//Form
 		this->Text = "LuccME - Creating a new model";
@@ -406,6 +407,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 
 System::Void LuccME::NovoModelo::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
+	//Create the efect of a edited TextBox (must select this function on focus->enter property of a TextBox)
 	System::Windows::Forms::TextBox^ thisTextBox = safe_cast<System::Windows::Forms::TextBox^>(sender);
 	if (thisTextBox->ForeColor != System::Drawing::Color::Black) {
 		thisTextBox->Text = "";
@@ -415,6 +417,7 @@ System::Void LuccME::NovoModelo::textBox_Enter(System::Object ^ sender, System::
 
 System::Void LuccME::NovoModelo::bSelectFolder_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	//Open the dialog to select a folder and return the path
 	LuccME::FolderBrowserDialog^ modelFolder = gcnew FolderBrowserDialog();
 
 	if (modelFolder->ShowDialog() == System::Windows::Forms::DialogResult::OK)
@@ -425,6 +428,7 @@ System::Void LuccME::NovoModelo::bSelectFolder_Click(System::Object ^ sender, Sy
 
 System::Void LuccME::NovoModelo::bSelectDatabase_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	//Open the dialog to select the access database and return the path
 	LuccME::OpenFileDialog^ bdFile = gcnew OpenFileDialog;
 	bdFile->Title = gSDBTitle;
 	bdFile->Multiselect = false;
@@ -442,6 +446,7 @@ System::Void LuccME::NovoModelo::bSelectDatabase_Click(System::Object ^ sender, 
 
 System::Void LuccME::NovoModelo::bMySQL_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	// Handle with the MySQL database
 	cReturn^ lDatabase = gcnew cReturn();
 	if (access)
 	{
@@ -1823,6 +1828,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		StreamWriter^ sw = nullptr;
 
 		try {
+			//Sometimes Widows got and error to access the file, this force to retry
 			try
 			{
 				if (File::Exists(path))
@@ -2560,6 +2566,7 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 
 System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System::EventArgs ^ e)
 {
+	//Remove Validation tab
 	//validation = tabValidation;
     //tNovoModelo->TabPages->RemoveAt(7);
 

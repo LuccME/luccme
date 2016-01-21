@@ -25,8 +25,6 @@ function AllocationBySimpleOrdering(component)
 		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
-		local totarea = (numofcells * cellarea)
-		local maxdiffarea = (self.maxDifference * totarea)
 		local luTypes = model.landUseTypes
 		local dem = {}
 		local differences = {}
@@ -43,7 +41,7 @@ function AllocationBySimpleOrdering(component)
 			print("-------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
-			print("Max diff area "..maxdiffarea)
+			print("Max diff area "..self.maxDifference)
 
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
@@ -110,7 +108,7 @@ function AllocationBySimpleOrdering(component)
 			end
 		end
 		
-		if (diff < maxdiffarea) then
+		if (diff < self.maxDifference) then
 			allocation_ok = true
 		end
  		

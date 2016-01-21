@@ -32,8 +32,6 @@ function AllocationClueSLike(component)
 		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
-		local totarea = (numofcells * cellarea)
-		local maxdiffarea = (self.maxDifference * totarea)
 		local luTypes = model.landUseTypes
 		local max_iteration = self.maxIteration
 		local area = 0 
@@ -48,7 +46,7 @@ function AllocationClueSLike(component)
 			print("-------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
-			print("Max diff area "..maxdiffarea)
+			print("Max diff area "..self.maxDifference)
 			----------------------------------------------------
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
@@ -108,7 +106,7 @@ function AllocationClueSLike(component)
 								  	
 			local diff = self:calcDifferences(event, model)
 			
-			allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
+			allocation_ok = self:convergency(diff, luTypes, self.maxDifference)
 			
 			self:adjustIteration(diff, luTypes, self.factorIteration, iteration)
 			
@@ -209,14 +207,14 @@ function AllocationClueSLike(component)
   -- @arg luTypes A set of land uses types.
   -- @arg interationFactor Interation factor
   -- @arg iter The modifier (value) that changes the potential of each cell according to the difference to demand
-  -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, maxdiffarea)
+  -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, self.maxDifference)
   component.adjustIteration = function(self, diff, luTypes, interationFactor, iter) 
     for luind, land in pairs (luTypes) do
       iter[land] = iter[land] + (diff[land] * interationFactor)
     end
   end
 
-  --- Handles with the allocation convergence based on maxdiffarea.
+  --- Handles with the allocation convergence based on self.maxDifference.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg diff The demand area difference
   -- @arg luTypes A set of land uses types.

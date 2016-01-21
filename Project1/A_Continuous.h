@@ -208,7 +208,7 @@ namespace LuccME {
 			this->tMaxDifference->Name = L"tMaxDifference";
 			this->tMaxDifference->Size = System::Drawing::Size(194, 20);
 			this->tMaxDifference->TabIndex = 2;
-			this->tMaxDifference->Text = L"0.01";
+			this->tMaxDifference->Text = L"150";
 			this->tMaxDifference->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tMaxDifference->Enter += gcnew System::EventHandler(this, &A_Continuous::textBox_Enter);
 			// 

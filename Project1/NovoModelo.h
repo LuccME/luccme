@@ -199,6 +199,7 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lSimResult;
 private: System::Windows::Forms::Label^  lThemeHelp;
 private: System::Windows::Forms::CheckBox^  cValidationSave;
+private: System::Windows::Forms::Label^  lRangeHelp;
 
 
 
@@ -386,6 +387,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
 			this->tabValidation = (gcnew System::Windows::Forms::TabPage());
+			this->cbValidationMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->cValidationSave = (gcnew System::Windows::Forms::CheckBox());
 			this->lThemeHelp = (gcnew System::Windows::Forms::Label());
 			this->lSimResult = (gcnew System::Windows::Forms::Label());
@@ -394,7 +396,6 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tRange = (gcnew System::Windows::Forms::TextBox());
 			this->lRange = (gcnew System::Windows::Forms::Label());
 			this->lValidationMethod = (gcnew System::Windows::Forms::Label());
-			this->cbValidationMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->bValidate = (gcnew System::Windows::Forms::Button());
 			this->tAttributeFinalValidation = (gcnew System::Windows::Forms::TextBox());
 			this->lAttributeFinalValidation = (gcnew System::Windows::Forms::Label());
@@ -405,6 +406,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->lRangeHelp = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -1494,6 +1496,7 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			// 
 			// tabValidation
 			// 
+			this->tabValidation->Controls->Add(this->lRangeHelp);
 			this->tabValidation->Controls->Add(this->cbValidationMethod);
 			this->tabValidation->Controls->Add(this->cValidationSave);
 			this->tabValidation->Controls->Add(this->lThemeHelp);
@@ -1519,6 +1522,16 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->tabValidation->TabIndex = 7;
 			this->tabValidation->Text = L"Validação";
 			this->tabValidation->UseVisualStyleBackColor = true;
+			// 
+			// cbValidationMethod
+			// 
+			this->cbValidationMethod->BackColor = System::Drawing::SystemColors::Window;
+			this->cbValidationMethod->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbValidationMethod->Location = System::Drawing::Point(195, 68);
+			this->cbValidationMethod->Name = L"cbValidationMethod";
+			this->cbValidationMethod->Size = System::Drawing::Size(316, 21);
+			this->cbValidationMethod->TabIndex = 111;
+			this->cbValidationMethod->SelectedIndexChanged += gcnew System::EventHandler(this, &NovoModelo::cbValidationMethod_SelectedIndexChanged);
 			// 
 			// cValidationSave
 			// 
@@ -1612,15 +1625,6 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->lValidationMethod->TabIndex = 112;
 			this->lValidationMethod->Text = L"Método de Validação/Calibração";
 			this->lValidationMethod->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			// 
-			// cbValidationMethod
-			// 
-			this->cbValidationMethod->BackColor = System::Drawing::SystemColors::Window;
-			this->cbValidationMethod->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->cbValidationMethod->Location = System::Drawing::Point(195, 68);
-			this->cbValidationMethod->Name = L"cbValidationMethod";
-			this->cbValidationMethod->Size = System::Drawing::Size(316, 21);
-			this->cbValidationMethod->TabIndex = 111;
 			// 
 			// bValidate
 			// 
@@ -1733,6 +1737,18 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
 			// 
+			// lRangeHelp
+			// 
+			this->lRangeHelp->AutoSize = true;
+			this->lRangeHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lRangeHelp->Location = System::Drawing::Point(568, 185);
+			this->lRangeHelp->Name = L"lRangeHelp";
+			this->lRangeHelp->Size = System::Drawing::Size(38, 13);
+			this->lRangeHelp->TabIndex = 120;
+			this->lRangeHelp->Text = L"0 - 100";
+			this->lRangeHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
 			// NovoModelo
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
@@ -1806,5 +1822,6 @@ private: System::Windows::Forms::CheckBox^  cValidationSave;
 	private: System::Void bDynamicSelect_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cScenario_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bValidate_Click(System::Object^  sender, System::EventArgs^  e);
-	};
+	private: System::Void cbValidationMethod_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
+};
 }

@@ -434,6 +434,7 @@ System::Void LuccME::NovoModelo::bSelectDatabase_Click(System::Object ^ sender, 
 	bdFile->Multiselect = false;
 	bdFile->Filter = gSDBFilter;
 	bdFile->FilterIndex = 1;
+	bdFile->ShowHelp = true;
 
 	if (bdFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
@@ -2587,6 +2588,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			mainFile->Multiselect = false;
 			mainFile->Filter = gSLuaFile;
 			mainFile->FilterIndex = 1;
+			mainFile->ShowHelp = true;
 
 			if (mainFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 			{
@@ -3360,6 +3362,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			submodelFile->Multiselect = false;
 			submodelFile->Filter = gSLuaFile;
 			submodelFile->FilterIndex = 1;
+			submodelFile->ShowHelp = true;
 
 			if (submodelFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 			{
@@ -5729,7 +5732,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 
 		//Input parameters
 		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
-		sw->WriteLine("range = " + tRange->Text + " / 100");
 		if (cValidationSave->Checked) {
 			sw->WriteLine("flag_save = true");
 		}
@@ -5763,6 +5765,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		{
 			//Ext Method
 			case 0:
+				sw->WriteLine("range = " + tRange->Text + " / 100");
 				sw->WriteLine("output_theme = \"validation_ext_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text +"_\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"sim\"");
@@ -5854,10 +5857,10 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tif (sum < diff) then total, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i) end");
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
-				sw->WriteLine("\tprint(i, 1 - diff/(2*sum))");
+				sw->WriteLine("\tprint(i, 1 - diff / (2 * sum))");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("");
-				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / 2 * sum end)");
+				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
@@ -5869,6 +5872,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 
 			//Diff Method
 			case 1:
+				sw->WriteLine("range = 0");
 				sw->WriteLine("output_theme = \"validation_diff_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text + "_\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"diff_sim\"");
@@ -5959,10 +5963,13 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
-				sw->WriteLine("\tif ((i == 1) or (i%1 == 0)) then print(i, 1 - diff / sum) end");
+				sw->WriteLine("\tif ((i == 1) or (i % 1 == 0)) then");
+				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then print(i, 1 - diff / (2 * sum))");
+				sw->WriteLine("\t\telse print(i, 0) end");
+				sw->WriteLine("\tend");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("");
-				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / sum end)");
+				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
@@ -6005,4 +6012,18 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
  else {
 	 MessageBox::Show(gSValSectMet, gSValSectMetTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
  }
+}
+
+System::Void LuccME::NovoModelo::cbValidationMethod_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	switch (cbValidationMethod->SelectedIndex)
+	{
+		case 1:
+			tRange->Text = "0";
+			tRange->Enabled = false;
+			break;
+		default:
+			tRange->Enabled = true;
+			break;
+	}
 }

@@ -32,8 +32,6 @@ function AllocationClueSLike(component)
 		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
-		local totarea = (numofcells * cellarea)
-		local maxdiffarea = (self.maxDifference * totarea)
 		local luTypes = model.landUseTypes
 		local max_iteration = self.maxIteration
 		local area = 0 
@@ -42,13 +40,13 @@ function AllocationClueSLike(component)
 		local possibleTransitions = 0
 
 		print("\nTime : ", event:getTime())
-  	print("Step : ", step)
+    print("Step : ", step)
 
 		if useLog == true then
 			print("-------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
-			print("Max diff area "..maxdiffarea)
+			print("Max diff area "..self.maxDifference)
 			----------------------------------------------------
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
@@ -75,6 +73,7 @@ function AllocationClueSLike(component)
 				local lu_maior = lu_past
 				local probMaior = -999999999
 				local maxLuNeigh
+				
 				if (cell.region == nil) then
 					cell.region = 1
 				end
@@ -107,11 +106,11 @@ function AllocationClueSLike(component)
 								  	
 			local diff = self:calcDifferences(event, model)
 			
-			allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
+			allocation_ok = self:convergency(diff, luTypes, self.maxDifference)
 			
 			self:adjustIteration(diff, luTypes, self.factorIteration, iteration)
 			
-			nIter= nIter + 1
+			nIter = nIter + 1
 	      		
 			if (allocation_ok == true) then 
   			print("Demand allocated correctly in this time step:", step)
@@ -208,14 +207,14 @@ function AllocationClueSLike(component)
   -- @arg luTypes A set of land uses types.
   -- @arg interationFactor Interation factor
   -- @arg iter The modifier (value) that changes the potential of each cell according to the difference to demand
-  -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, maxdiffarea)
+  -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, self.maxDifference)
   component.adjustIteration = function(self, diff, luTypes, interationFactor, iter) 
     for luind, land in pairs (luTypes) do
       iter[land] = iter[land] + (diff[land] * interationFactor)
     end
   end
 
-  --- Handles with the allocation convergence based on maxdiffarea.
+  --- Handles with the allocation convergence based on self.maxDifference.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg diff The demand area difference
   -- @arg luTypes A set of land uses types.
@@ -250,12 +249,12 @@ function AllocationClueSLike(component)
   component.areaAllocated = function(self, cs, cellarea, field, attr)
     local count = 0
     forEachCell(cs, function(cell)
-              if (cell[field] == attr) then
-                count = count + 1
-              end
-            end
-          )
-          
+                      if (cell[field] == attr) then
+                        count = count + 1
+                      end
+                    end
+                )
+    print("\n\n",count, cellarea, field)          
     return (count * cellarea)
   end
   
@@ -299,7 +298,8 @@ function AllocationClueSLike(component)
     cell[higher_use.."_out"] = 1
   
     cell[higher_use.."_change"] = 0
-    cell[cur_use.."_change"] = 0  
+    cell[cur_use.."_change"] = 0 
+     
     if (cur_use ~= higher_use) then
            cell[higher_use.."_change"] = 1
            cell[cur_use.."_change"] = -1 

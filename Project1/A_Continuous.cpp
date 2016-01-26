@@ -15,10 +15,12 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 	if (lReturn->Language == "en") {
 		bSalvar->Text = "Save";
 		lLegend->Text = "* -1 - Unidirectional, 0 - Bidirectional, 1 - Static";
+		lMaxDiffHelp->Text = "Absolute Value";
 	}
 	else {
 		bSalvar->Text = "Salvar";
 		lLegend->Text = "* -1 - Unidirecional, 0 - Bidirecional, 1 - Estático";
+		lMaxDiffHelp->Text = "Valor Absoluto";
 	}
 
 	if (lReturn->Return != "") {

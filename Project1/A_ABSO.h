@@ -41,6 +41,7 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lMaxDifference;
 	private: System::Windows::Forms::TextBox^  tMAxDifference;
 	private: System::Windows::Forms::Button^  bSalvar;
+	private: System::Windows::Forms::Label^  lMaxDiffHelp;
 
 
 	protected:
@@ -63,6 +64,7 @@ namespace LuccME {
 			this->lMaxDifference = (gcnew System::Windows::Forms::Label());
 			this->tMAxDifference = (gcnew System::Windows::Forms::TextBox());
 			this->bSalvar = (gcnew System::Windows::Forms::Button());
+			this->lMaxDiffHelp = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -109,12 +111,25 @@ namespace LuccME {
 			this->bSalvar->UseVisualStyleBackColor = true;
 			this->bSalvar->Click += gcnew System::EventHandler(this, &A_ABSO::bSalvar_Click);
 			// 
+			// lMaxDiffHelp
+			// 
+			this->lMaxDiffHelp->AutoSize = true;
+			this->lMaxDiffHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxDiffHelp->Location = System::Drawing::Point(287, 302);
+			this->lMaxDiffHelp->Name = L"lMaxDiffHelp";
+			this->lMaxDiffHelp->Size = System::Drawing::Size(75, 13);
+			this->lMaxDiffHelp->TabIndex = 121;
+			this->lMaxDiffHelp->Text = L"Valor Absoluto";
+			this->lMaxDiffHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
 			// A_ABSO
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->lMaxDiffHelp);
 			this->Controls->Add(this->bSalvar);
 			this->Controls->Add(this->tMAxDifference);
 			this->Controls->Add(this->lMaxDifference);

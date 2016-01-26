@@ -17,6 +17,8 @@ namespace LuccME {
 	{
 	public:
 		bool intialize = true;
+	private: System::Windows::Forms::Label^  lMaxDiffHelp;
+	public:
 		cReturnAllocation^ lReturn;
 		A_Continuous(cReturnAllocation^ pAllocation)
 		{
@@ -100,6 +102,7 @@ namespace LuccME {
 			this->tAttrProtection = (gcnew System::Windows::Forms::TextBox());
 			this->lAttrProtection = (gcnew System::Windows::Forms::Label());
 			this->lLegend = (gcnew System::Windows::Forms::Label());
+			this->lMaxDiffHelp = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAllocationData))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
@@ -349,12 +352,25 @@ namespace LuccME {
 			this->lLegend->TabIndex = 131;
 			this->lLegend->Text = L"* -1 - Unidirecional, 0 - Bidirecional, 1 - Estático";
 			// 
+			// lMaxDiffHelp
+			// 
+			this->lMaxDiffHelp->AutoSize = true;
+			this->lMaxDiffHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxDiffHelp->Location = System::Drawing::Point(249, 170);
+			this->lMaxDiffHelp->Name = L"lMaxDiffHelp";
+			this->lMaxDiffHelp->Size = System::Drawing::Size(75, 13);
+			this->lMaxDiffHelp->TabIndex = 132;
+			this->lMaxDiffHelp->Text = L"Valor Absoluto";
+			this->lMaxDiffHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
 			// A_Continuous
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(923, 591);
+			this->Controls->Add(this->lMaxDiffHelp);
 			this->Controls->Add(this->lLegend);
 			this->Controls->Add(this->tAttrProtection);
 			this->Controls->Add(this->lAttrProtection);

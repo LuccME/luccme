@@ -20,10 +20,12 @@ System::Void LuccME::A_ABSO::A_ABSO_Shown(System::Object ^ sender, System::Event
 	if (lReturn->Language == "en") {
 		this->Text = "Allocation - Allocation By Simple Ordering";
 		bSalvar->Text = "Save";
+		lMaxDiffHelp->Text = "Absolute Value";
 	}
 	else {
 		this->Text = "Allocação - Allocation By Simple Ordering";
 		bSalvar->Text = "Salvar";
+		lMaxDiffHelp->Text = "Valor Absoluto";
 	}
 	
 	if (lReturn->Return != "") {

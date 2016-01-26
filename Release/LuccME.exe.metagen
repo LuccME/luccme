@@ -164,6 +164,8 @@ Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Boolean runnable : Public
     Boolean access : Public
     Boolean lOpen : Public
+    Int32 gNumDiscPotComp : Public
+    Int32 gNumDiscAllocComp : Public
     Int32 gDemandComponent : Public
     Int32 gPotentialComponent : Public
     Int32 gAllocationComponent : Public

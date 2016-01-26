@@ -118,6 +118,8 @@ namespace LuccME {
 		bool runnable = false;
 		bool access = false;
 		bool lOpen = false;
+		int gNumDiscPotComp = 5;
+		int gNumDiscAllocComp = 2;
 		int gDemandComponent = 0;
 		int gPotentialComponent = 0;
 		int gAllocationComponent = 0;
@@ -387,6 +389,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
 			this->tabValidation = (gcnew System::Windows::Forms::TabPage());
+			this->lRangeHelp = (gcnew System::Windows::Forms::Label());
 			this->cbValidationMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->cValidationSave = (gcnew System::Windows::Forms::CheckBox());
 			this->lThemeHelp = (gcnew System::Windows::Forms::Label());
@@ -406,7 +409,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
-			this->lRangeHelp = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -578,7 +580,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lDefinicoesModelo->AutoSize = true;
 			this->lDefinicoesModelo->Font = (gcnew System::Drawing::Font(L"Calibri", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lDefinicoesModelo->Location = System::Drawing::Point(249, 171);
+			this->lDefinicoesModelo->Location = System::Drawing::Point(244, 171);
 			this->lDefinicoesModelo->Name = L"lDefinicoesModelo";
 			this->lDefinicoesModelo->Size = System::Drawing::Size(202, 26);
 			this->lDefinicoesModelo->TabIndex = 70;
@@ -590,7 +592,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lArquivos->AutoSize = true;
 			this->lArquivos->Font = (gcnew System::Drawing::Font(L"Calibri", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lArquivos->Location = System::Drawing::Point(302, 26);
+			this->lArquivos->Location = System::Drawing::Point(301, 26);
 			this->lArquivos->Name = L"lArquivos";
 			this->lArquivos->Size = System::Drawing::Size(88, 26);
 			this->lArquivos->TabIndex = 69;
@@ -702,7 +704,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			this->tbSelectedBatabase->BackColor = System::Drawing::SystemColors::Control;
 			this->tbSelectedBatabase->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->tbSelectedBatabase->Location = System::Drawing::Point(19, 124);
+			this->tbSelectedBatabase->Location = System::Drawing::Point(14, 128);
 			this->tbSelectedBatabase->Multiline = true;
 			this->tbSelectedBatabase->Name = L"tbSelectedBatabase";
 			this->tbSelectedBatabase->Size = System::Drawing::Size(496, 98);
@@ -1298,7 +1300,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			// bRun
 			// 
-			this->bRun->Location = System::Drawing::Point(256, 260);
+			this->bRun->Location = System::Drawing::Point(264, 260);
 			this->bRun->Name = L"bRun";
 			this->bRun->Size = System::Drawing::Size(185, 47);
 			this->bRun->TabIndex = 91;
@@ -1312,7 +1314,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lRunModel->AutoSize = true;
 			this->lRunModel->Font = (gcnew System::Drawing::Font(L"Calibri", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRunModel->Location = System::Drawing::Point(274, 207);
+			this->lRunModel->Location = System::Drawing::Point(281, 213);
 			this->lRunModel->Name = L"lRunModel";
 			this->lRunModel->Size = System::Drawing::Size(151, 26);
 			this->lRunModel->TabIndex = 90;
@@ -1322,7 +1324,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			// bGerarArquivos
 			// 
-			this->bGerarArquivos->Location = System::Drawing::Point(256, 78);
+			this->bGerarArquivos->Location = System::Drawing::Point(264, 78);
 			this->bGerarArquivos->Name = L"bGerarArquivos";
 			this->bGerarArquivos->Size = System::Drawing::Size(185, 47);
 			this->bGerarArquivos->TabIndex = 89;
@@ -1335,7 +1337,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lFileMaker->AutoSize = true;
 			this->lFileMaker->Font = (gcnew System::Drawing::Font(L"Calibri", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lFileMaker->Location = System::Drawing::Point(268, 26);
+			this->lFileMaker->Location = System::Drawing::Point(274, 29);
 			this->lFileMaker->Name = L"lFileMaker";
 			this->lFileMaker->Size = System::Drawing::Size(165, 26);
 			this->lFileMaker->TabIndex = 87;
@@ -1366,7 +1368,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// tScenarioName
 			// 
 			this->tScenarioName->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tScenarioName->Location = System::Drawing::Point(254, 186);
+			this->tScenarioName->Location = System::Drawing::Point(432, 193);
 			this->tScenarioName->Name = L"tScenarioName";
 			this->tScenarioName->Size = System::Drawing::Size(162, 20);
 			this->tScenarioName->TabIndex = 103;
@@ -1380,7 +1382,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lScenarioName->AutoSize = true;
 			this->lScenarioName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lScenarioName->Location = System::Drawing::Point(262, 157);
+			this->lScenarioName->Location = System::Drawing::Point(440, 164);
 			this->lScenarioName->Name = L"lScenarioName";
 			this->lScenarioName->Size = System::Drawing::Size(147, 23);
 			this->lScenarioName->TabIndex = 102;
@@ -1391,7 +1393,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// tScenariosStartTime
 			// 
 			this->tScenariosStartTime->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tScenariosStartTime->Location = System::Drawing::Point(254, 104);
+			this->tScenariosStartTime->Location = System::Drawing::Point(432, 111);
 			this->tScenariosStartTime->Name = L"tScenariosStartTime";
 			this->tScenariosStartTime->Size = System::Drawing::Size(162, 20);
 			this->tScenariosStartTime->TabIndex = 101;
@@ -1405,7 +1407,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lScenariosStartTime->AutoSize = true;
 			this->lScenariosStartTime->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lScenariosStartTime->Location = System::Drawing::Point(235, 75);
+			this->lScenariosStartTime->Location = System::Drawing::Point(413, 82);
 			this->lScenariosStartTime->Name = L"lScenariosStartTime";
 			this->lScenariosStartTime->Size = System::Drawing::Size(202, 23);
 			this->lScenariosStartTime->TabIndex = 100;
@@ -1417,7 +1419,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			this->cScenario->AutoSize = true;
 			this->cScenario->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
-			this->cScenario->Location = System::Drawing::Point(289, 17);
+			this->cScenario->Location = System::Drawing::Point(467, 21);
 			this->cScenario->Name = L"cScenario";
 			this->cScenario->Size = System::Drawing::Size(98, 27);
 			this->cScenario->TabIndex = 99;
@@ -1430,7 +1432,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lAtualizaveis->AutoSize = true;
 			this->lAtualizaveis->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAtualizaveis->Location = System::Drawing::Point(19, 82);
+			this->lAtualizaveis->Location = System::Drawing::Point(86, 86);
 			this->lAtualizaveis->Name = L"lAtualizaveis";
 			this->lAtualizaveis->Size = System::Drawing::Size(168, 23);
 			this->lAtualizaveis->TabIndex = 98;
@@ -1440,7 +1442,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			// bDynamicSelect
 			// 
-			this->bDynamicSelect->Location = System::Drawing::Point(60, 286);
+			this->bDynamicSelect->Location = System::Drawing::Point(127, 290);
 			this->bDynamicSelect->Name = L"bDynamicSelect";
 			this->bDynamicSelect->Size = System::Drawing::Size(75, 23);
 			this->bDynamicSelect->TabIndex = 97;
@@ -1454,7 +1456,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lDynamicConfirm->AutoSize = true;
 			this->lDynamicConfirm->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lDynamicConfirm->Location = System::Drawing::Point(14, 331);
+			this->lDynamicConfirm->Location = System::Drawing::Point(79, 327);
 			this->lDynamicConfirm->Name = L"lDynamicConfirm";
 			this->lDynamicConfirm->Size = System::Drawing::Size(0, 19);
 			this->lDynamicConfirm->TabIndex = 96;
@@ -1465,7 +1467,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->lAnosVariaveis->AutoSize = true;
 			this->lAnosVariaveis->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAnosVariaveis->Location = System::Drawing::Point(22, 60);
+			this->lAnosVariaveis->Location = System::Drawing::Point(89, 64);
 			this->lAnosVariaveis->Name = L"lAnosVariaveis";
 			this->lAnosVariaveis->Size = System::Drawing::Size(163, 23);
 			this->lAnosVariaveis->TabIndex = 95;
@@ -1475,7 +1477,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			// lvYearsDynamic
 			// 
-			this->lvYearsDynamic->Location = System::Drawing::Point(16, 108);
+			this->lvYearsDynamic->Location = System::Drawing::Point(83, 112);
 			this->lvYearsDynamic->Name = L"lvYearsDynamic";
 			this->lvYearsDynamic->Size = System::Drawing::Size(171, 166);
 			this->lvYearsDynamic->TabIndex = 94;
@@ -1486,7 +1488,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			this->cDynamicVariables->AutoSize = true;
 			this->cDynamicVariables->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
-			this->cDynamicVariables->Location = System::Drawing::Point(16, 17);
+			this->cDynamicVariables->Location = System::Drawing::Point(83, 21);
 			this->cDynamicVariables->Name = L"cDynamicVariables";
 			this->cDynamicVariables->Size = System::Drawing::Size(186, 27);
 			this->cDynamicVariables->TabIndex = 88;
@@ -1523,6 +1525,18 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tabValidation->Text = L"Validação";
 			this->tabValidation->UseVisualStyleBackColor = true;
 			// 
+			// lRangeHelp
+			// 
+			this->lRangeHelp->AutoSize = true;
+			this->lRangeHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lRangeHelp->Location = System::Drawing::Point(568, 185);
+			this->lRangeHelp->Name = L"lRangeHelp";
+			this->lRangeHelp->Size = System::Drawing::Size(38, 13);
+			this->lRangeHelp->TabIndex = 120;
+			this->lRangeHelp->Text = L"0 - 100";
+			this->lRangeHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
 			// cbValidationMethod
 			// 
 			this->cbValidationMethod->BackColor = System::Drawing::SystemColors::Window;
@@ -1531,7 +1545,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->cbValidationMethod->Name = L"cbValidationMethod";
 			this->cbValidationMethod->Size = System::Drawing::Size(316, 21);
 			this->cbValidationMethod->TabIndex = 111;
-			this->cbValidationMethod->SelectedIndexChanged += gcnew System::EventHandler(this, &NovoModelo::cbValidationMethod_SelectedIndexChanged);
 			// 
 			// cValidationSave
 			// 
@@ -1634,7 +1647,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->bValidate->TabIndex = 110;
 			this->bValidate->Text = L"Validar";
 			this->bValidate->UseVisualStyleBackColor = true;
-			this->bValidate->Visible = false;
 			this->bValidate->Click += gcnew System::EventHandler(this, &NovoModelo::bValidate_Click);
 			// 
 			// tAttributeFinalValidation
@@ -1737,18 +1749,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
 			// 
-			// lRangeHelp
-			// 
-			this->lRangeHelp->AutoSize = true;
-			this->lRangeHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lRangeHelp->Location = System::Drawing::Point(568, 185);
-			this->lRangeHelp->Name = L"lRangeHelp";
-			this->lRangeHelp->Size = System::Drawing::Size(38, 13);
-			this->lRangeHelp->TabIndex = 120;
-			this->lRangeHelp->Text = L"0 - 100";
-			this->lRangeHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			// 
 			// NovoModelo
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
@@ -1822,6 +1822,5 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 	private: System::Void bDynamicSelect_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cScenario_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bValidate_Click(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void cbValidationMethod_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
-};
+	};
 }

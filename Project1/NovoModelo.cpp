@@ -24,13 +24,13 @@ using namespace System::Drawing;
 System::Void LuccME::NovoModelo::checkLanguage()
 {
 	//Handles with Discrete or Continuous Component selection (enable or disable buttons)
-	if (gPotentialComponent > 5 || gAllocationComponent > 2) {
+	if (gPotentialComponent > gNumDiscPotComp || gAllocationComponent > gNumDiscAllocComp) {
 		bPotDiscrete->Enabled = false;
 		bAllocDiscrete->Enabled = false;
 		bPotContinuous->Enabled = true;
 		bAllocContinuous->Enabled = true;
 	}
-	else if ((gPotentialComponent > 0 && gPotentialComponent < 6) || (gAllocationComponent > 0 && gAllocationComponent < 3)) {
+	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscAllocComp) || (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
 		bPotDiscrete->Enabled = true;
 		bAllocDiscrete->Enabled = true;
 		bPotContinuous->Enabled = false;
@@ -1265,7 +1265,7 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 {
 	bool check = true;
 
-	if (gPotentialComponent > 5) {
+	if (gPotentialComponent > gNumDiscPotComp) {
 		if (MessageBox::Show(gSPotCont, gSAllocDiscTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -1369,7 +1369,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 {
 	bool check = true;
 
-	if (gPotentialComponent != 0 && gPotentialComponent < 6) {
+	if (gPotentialComponent != 0 && gPotentialComponent <= gNumDiscAllocComp) {
 		if (MessageBox::Show(gSPotDisc, gSAllocContTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -1682,12 +1682,22 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 	}
 	
 	if (tNovoModelo->SelectedIndex == 7) {
+		if (gAllocationComponent > gNumDiscAllocComp || gPotentialComponent > gNumDiscPotComp) {
+			tRange->Enabled = true;
+		}
+		else {
+			tRange->Text = "0";
+			tRange->Enabled = false;
+		}
+		
 		if (tOutputTheme->ForeColor == System::Drawing::Color::Black && tInputThemeName->ForeColor != System::Drawing::Color::Black) {
 			tInputThemeName->Text = tOutputTheme->Text + tEndTime->Text;
 		}
+	
 		if (tAttributeFinalValidation->ForeColor != System::Drawing::Color::Black) {
 			tAttributeFinalValidation->Text = tAttributeInitValidation->Text + tEndTime->Text;
 		}
+		
 		if (runnable == true) {
 			bValidate->Visible = true;
 		}
@@ -1782,12 +1792,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		checked = false;
 	}
 
-	else if (gPotentialComponent > 5 && (gAllocationComponent > 0 && gAllocationComponent < 3)) {
+	else if (gPotentialComponent > gNumDiscPotComp && (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
 		MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
-	else if ((gPotentialComponent > 0 && gPotentialComponent < 6) && gAllocationComponent > 2) {
+	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) && gAllocationComponent > gNumDiscAllocComp) {
 		MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
@@ -1847,7 +1857,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 			if (checked) {
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("-- This file contains a LUCCME APPLICATION MODEL definition --");
-				sw->WriteLine("--               Compatible with LuccME 2.1                 --");
+				sw->WriteLine("--               Compatible with LuccME 2.2                 --");
 				sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
@@ -2026,7 +2036,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("--       This file contains the COMPONENTS definition       --");
-				sw->WriteLine("--               Compatible with LuccME 2.1                 --");
+				sw->WriteLine("--               Compatible with LuccME 2.2                 --");
 				sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
@@ -2955,8 +2965,15 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tThemeName->ForeColor = System::Drawing::Color::Black;
 				}
 
-				gParametersValues[4] = tThemeName->Text;
-				gParametersValues[5] = tbSelectedBatabase->Lines[1]->ToString();
+				if (imported) {
+					gParametersValues[4] = tThemeName->Text;
+					gParametersValues[5] = tbSelectedBatabase->Lines[1]->ToString();
+				}
+				else {
+					gParametersValues[4] = "";
+					gParametersValues[5] = "";
+				}
+				
 				found = false;
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
@@ -5557,10 +5574,10 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			}
 		
 			if (main && submodel && imported) {
-				if (gPotentialComponent > 5 && (gAllocationComponent > 0 && gAllocationComponent < 3)) {
+				if (gPotentialComponent > gNumDiscPotComp && (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
 					MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
-				else if ((gPotentialComponent > 0 && gPotentialComponent < 6) && gAllocationComponent > 2) {
+				else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) && gAllocationComponent > gNumDiscAllocComp) {
 					MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 				else {
@@ -5759,13 +5776,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			sw->WriteLine("\t\t" + "theme = input_theme_name");
 			sw->WriteLine("}");
 		}
+
 		sw->WriteLine("");
+		sw->WriteLine("range = " + tRange->Text + " / 100");
 		
 		switch (cbValidationMethod->SelectedIndex)
 		{
 			//Ext Method
 			case 0:
-				sw->WriteLine("range = " + tRange->Text + " / 100");
 				sw->WriteLine("output_theme = \"validation_ext_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text +"_\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"sim\"");
@@ -5872,7 +5890,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 
 			//Diff Method
 			case 1:
-				sw->WriteLine("range = 0");
 				sw->WriteLine("output_theme = \"validation_diff_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text + "_\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"diff_sim\"");
@@ -6012,18 +6029,4 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
  else {
 	 MessageBox::Show(gSValSectMet, gSValSectMetTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
  }
-}
-
-System::Void LuccME::NovoModelo::cbValidationMethod_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
-{
-	switch (cbValidationMethod->SelectedIndex)
-	{
-		case 1:
-			tRange->Text = "0";
-			tRange->Enabled = false;
-			break;
-		default:
-			tRange->Enabled = true;
-			break;
-	}
 }

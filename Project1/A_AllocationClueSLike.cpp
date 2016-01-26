@@ -18,6 +18,7 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 		gSCells = "All the cells must be fullfilled.";
 		gSCellsTitle = "Error - Empty Cells";
 		lLegend->Text = "0 - Not Allowable Trasition; 1 - Allowable Transition";
+		lMaxDiffHelp->Text = "Absolute Value";
 	}
 	else {
 		this->Text = "Alocação - Allocation ClueS Like";
@@ -25,6 +26,7 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 		gSCells = "Todas as células devem ser preenchidas.";
 		gSCellsTitle = "Erro - Células Vazias";
 		lLegend->Text = "0 - Transição não Permitida; 1 - Transição Permitida";
+		lMaxDiffHelp->Text = "Valor Absoluto";
 	}
 
 	if (lReturn->Return != "") {

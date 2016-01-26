@@ -19,6 +19,7 @@ namespace LuccME {
 		String^ gSCells = "";
 		String^ gSCellsTitle = "";
 	private: System::Windows::Forms::Label^  lLegend;
+	private: System::Windows::Forms::Label^  lMaxDiffHelp;
 
 	public:
 		cReturnAllocation^ lReturn;
@@ -80,6 +81,7 @@ namespace LuccME {
 			this->lTransitionMatrix = (gcnew System::Windows::Forms::Label());
 			this->dgTransitionMatrix = (gcnew System::Windows::Forms::DataGridView());
 			this->lLegend = (gcnew System::Windows::Forms::Label());
+			this->lMaxDiffHelp = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgTransitionMatrix))->BeginInit();
 			this->SuspendLayout();
@@ -107,7 +109,7 @@ namespace LuccME {
 			// tMaxIteration
 			// 
 			this->tMaxIteration->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxIteration->Location = System::Drawing::Point(207, 166);
+			this->tMaxIteration->Location = System::Drawing::Point(203, 166);
 			this->tMaxIteration->Name = L"tMaxIteration";
 			this->tMaxIteration->Size = System::Drawing::Size(194, 20);
 			this->tMaxIteration->TabIndex = 88;
@@ -130,7 +132,7 @@ namespace LuccME {
 			// tFactorInteration
 			// 
 			this->tFactorInteration->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tFactorInteration->Location = System::Drawing::Point(207, 210);
+			this->tFactorInteration->Location = System::Drawing::Point(203, 209);
 			this->tFactorInteration->Name = L"tFactorInteration";
 			this->tFactorInteration->Size = System::Drawing::Size(194, 20);
 			this->tFactorInteration->TabIndex = 90;
@@ -143,7 +145,7 @@ namespace LuccME {
 			this->lFactorInteration->AutoSize = true;
 			this->lFactorInteration->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lFactorInteration->Location = System::Drawing::Point(72, 207);
+			this->lFactorInteration->Location = System::Drawing::Point(72, 206);
 			this->lFactorInteration->Name = L"lFactorInteration";
 			this->lFactorInteration->Size = System::Drawing::Size(126, 23);
 			this->lFactorInteration->TabIndex = 91;
@@ -153,7 +155,7 @@ namespace LuccME {
 			// tMaxDifference
 			// 
 			this->tMaxDifference->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxDifference->Location = System::Drawing::Point(207, 252);
+			this->tMaxDifference->Location = System::Drawing::Point(203, 252);
 			this->tMaxDifference->Name = L"tMaxDifference";
 			this->tMaxDifference->Size = System::Drawing::Size(194, 20);
 			this->tMaxDifference->TabIndex = 92;
@@ -166,7 +168,7 @@ namespace LuccME {
 			this->lMaxDifference->AutoSize = true;
 			this->lMaxDifference->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lMaxDifference->Location = System::Drawing::Point(72, 251);
+			this->lMaxDifference->Location = System::Drawing::Point(72, 249);
 			this->lMaxDifference->Name = L"lMaxDifference";
 			this->lMaxDifference->Size = System::Drawing::Size(126, 23);
 			this->lMaxDifference->TabIndex = 93;
@@ -209,12 +211,25 @@ namespace LuccME {
 			this->lLegend->TabIndex = 96;
 			this->lLegend->Text = L"label";
 			// 
+			// lMaxDiffHelp
+			// 
+			this->lMaxDiffHelp->AutoSize = true;
+			this->lMaxDiffHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxDiffHelp->Location = System::Drawing::Point(263, 275);
+			this->lMaxDiffHelp->Name = L"lMaxDiffHelp";
+			this->lMaxDiffHelp->Size = System::Drawing::Size(75, 13);
+			this->lMaxDiffHelp->TabIndex = 122;
+			this->lMaxDiffHelp->Text = L"Valor Absoluto";
+			this->lMaxDiffHelp->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
 			// A_AllocationClueSLike
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->lMaxDiffHelp);
 			this->Controls->Add(this->lLegend);
 			this->Controls->Add(this->lTransitionMatrix);
 			this->Controls->Add(this->dgTransitionMatrix);

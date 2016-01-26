@@ -5730,7 +5730,27 @@ System::Void LuccME::NovoModelo::cScenario_CheckedChanged(System::Object ^ sende
 
 System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	if (cbValidationMethod->SelectedItem) {
+	bool checked = true;
+
+	if (tbSelectedBatabase->Text == "") {
+		MessageBox::Show(gSDBSave, gSDBSaveTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
+	else if (tThemeName->Text == "") {
+		MessageBox::Show(gSThemeName, gSThemeNameTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
+	else if (tCellArea->Text == "") {
+		MessageBox::Show(gSCellArea, gSCellAreaTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+	else if (!cbValidationMethod->SelectedItem) {
+		MessageBox::Show(gSValSectMet, gSValSectMetTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+	else if (checked) {
 		String^ path = "validation.lua";
 		StreamWriter^ sw = File::CreateText(path);
 
@@ -5860,7 +5880,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
 				sw->WriteLine("print(\"attr REAL final  :\", last_real)");
 				sw->WriteLine("print(\"attr SIM  final  :\", last_sim)");
-				sw->WriteLine("print(\"Accepted error   :\", math.floor(range * 100)..\"%\")");
+				sw->WriteLine("print(\"Accepted error   :\", (range * 100)..\"%\")");
 				sw->WriteLine("print(\"======================================================\\n\")");
 				sw->WriteLine("");
 				sw->WriteLine(gSValExt);
@@ -5875,7 +5895,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tif (sum < diff) then total, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i) end");
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
-				sw->WriteLine("\tprint(i, 1 - diff / (2 * sum))");
+				sw->WriteLine("\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("");
 				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
@@ -5966,7 +5986,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
 				sw->WriteLine("print(\"attr REAL final  :\", last_real)");
 				sw->WriteLine("print(\"attr SIM  final  :\", last_sim)");
-				sw->WriteLine("print(\"Accepted error   :\", math.floor(range * 100)..\"%\")");
+				sw->WriteLine("print(\"Accepted error   :\", (range * 100)..\"%\")");
 				sw->WriteLine("print(\"======================================================\\n\")");
 				sw->WriteLine("");
 				sw->WriteLine(gSValDiff);
@@ -5981,8 +6001,8 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
 				sw->WriteLine("\tif ((i == 1) or (i % 1 == 0)) then");
-				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then print(i, 1 - diff / (2 * sum))");
-				sw->WriteLine("\t\telse print(i, 0) end");
+				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then print(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\t\telse print(i, \"0.00 %\") end");
 				sw->WriteLine("\tend");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("");
@@ -6026,7 +6046,4 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			File::Delete(path);
 		}
 	}
- else {
-	 MessageBox::Show(gSValSectMet, gSValSectMetTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
- }
 }

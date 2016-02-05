@@ -299,5 +299,7 @@ namespace LuccME {
 	private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(System::Windows::Forms::DataGridView^ dgView);
 	private: System::Void dgBetas_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
+	private: System::Void CopyToClipboard();
+	private: System::Void PasteClipboardValue();
 	};
 }

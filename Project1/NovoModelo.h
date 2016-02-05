@@ -111,6 +111,8 @@ namespace LuccME {
 		String^ gSValSectMetTitle = "";
 		String^ gSValExt = "";
 		String^ gSValDiff = "";
+		String^ gSAttribToSave = "";
+		String^ gSAttribToSaveTitle = "";
 
 	public:
 		bool closing = false;

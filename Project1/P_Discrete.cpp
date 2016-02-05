@@ -325,6 +325,8 @@ System::Void LuccME::P_Discrete::bSalvar_Click(System::Object ^ sender, System::
 		for (int i = 0; i < lvLUT->Items->Count; i++) {
 			this->lReturn->Return += lTempBetas[i];
 			if (i + 1 < lvLUT->Items->Count) {
+				this->lReturn->Return = this->lReturn->Return->Replace("\n", "");
+				this->lReturn->Return = this->lReturn->Return->Replace("\r", "");
 				this->lReturn->Return += "#";
 			}
 		}
@@ -342,7 +344,7 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_Discrete::GetStartCell(Syst
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;
-	int colIndex = dgView->Columns->Count - 1;
+	int colIndex = dgView->Columns->Count - 2;
 
 	for each(DataGridViewCell^ dgvCell in dgView->SelectedCells)
 	{
@@ -357,22 +359,108 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_Discrete::GetStartCell(Syst
 
 System::Void LuccME::P_Discrete::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
-	switch (e->KeyCode)
+	try
 	{
-	case Keys::Delete:
-		if (dgBetas->SelectedCells->Count != 0)
+		if (e->Modifiers == Keys::Control)
 		{
-			DataGridViewCell^ startCell = GetStartCell(dgBetas);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgBetas->RowCount; i++) {
-				for (int j = column; j < dgBetas->ColumnCount; j++) {
-					if (dgBetas->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgBetas->Rows[i]->Cells[j]->Value = "";
-					}
-				}
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboard();
+				break;
+
+			case Keys::V:
+				PasteClipboardValue();
+				break;
 			}
 		}
-		break;
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgBetas->SelectedCells->Count != 0)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgBetas);
+					int row = startCell->RowIndex;
+					int column = startCell->ColumnIndex;
+					for (int i = row; i < dgBetas->RowCount; i++) {
+						for (int j = column; j < dgBetas->ColumnCount; j++) {
+							if (dgBetas->Rows[i]->Cells[j]->Selected == true && j != 0) {
+								dgBetas->Rows[i]->Cells[j]->Value = "";
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+}
+
+System::Void LuccME::P_Discrete::CopyToClipboard()
+{
+	//Copy to clipboard
+	DataObject^ dataObj = dgBetas->GetClipboardContent();
+	if (dataObj != nullptr)
+		Clipboard::SetDataObject(dataObj);
+}
+
+System::Void LuccME::P_Discrete::PasteClipboardValue()
+{
+	//Show Error if no cell is selected
+	if (dgBetas->SelectedCells->Count == 0)
+	{
+		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
+	}
+
+	//Get the satring Cell
+	DataGridViewCell^ startCell = GetStartCell(dgBetas);
+
+	//Get the clipboard value in a dictionary
+	String^ aux = Clipboard::GetText();
+
+	if (aux != "") {
+		array<String^>^ lines = aux->Split('\n');
+		array<String^>^ tempColumns = lines[0]->Split('\t');
+		array<String^>^ content = gcnew array<String^>((lines->Length - 1) * (tempColumns->Length));
+
+		int count = 0;
+		for (int i = 0; i < lines->Length - 1; i++) {
+			array<String^>^ temp = lines[i]->Split('\t');
+			for (int j = 0; j < temp->Length; j++) {
+				content[count] = temp[j];
+				count++;
+			}
+		}
+
+		int row = startCell->RowIndex;
+		int column = startCell->ColumnIndex;
+		int columnNumber = tempColumns->Length - 1;
+
+		if (tempColumns->Length == 2) {
+			if ((content->Length / dgBetas->ColumnCount) > dgBetas->RowCount) {
+				dgBetas->RowCount = content->Length / dgBetas->ColumnCount + 1;
+			}
+		}
+		else {
+			if (content->Length > dgBetas->RowCount) {
+				dgBetas->RowCount = content->Length + 1;
+			}
+		}
+
+
+		for (int i = 0; i < content->Length; i++) {
+			dgBetas->Rows[row]->Cells[column]->Value = content[i];
+			column++;
+			if (column > columnNumber) {
+				row++;
+				column = startCell->ColumnIndex;
+			}
+		}
 	}
 }

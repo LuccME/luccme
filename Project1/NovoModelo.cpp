@@ -219,6 +219,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSValSectMetTitle = "Error - Validation/Calibration Method Not Selected";
 		gSValExt = "print(\"Hit percentage CONSIDERING THE STANDARD ARISING in each window:\\n\")";
 		gSValDiff = "print(\"Hit percentage CONSIDERING THE CHANGES in each window:\\n\")";
+		gSAttribToSave = "Attribute to be save not defined in Save.\nSelect one of the options.";
+		gSAttribToSaveTitle = "Error - Attribute to be save not defined";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolution for Whole Area (ext)");
@@ -398,6 +400,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSValSectMetTitle = "Erro - Nenhum Método de Validação/Calibração selecionado";
 		gSValExt = "print(\"Porcentagem de acertos CONSIDERANDO O PADRAO RESULTANTE em cada janela:\\n\")";
 		gSValDiff = "print(\"Porcentagem de acertos DE MUDANCA em cada janela:\\n\")";
+		gSAttribToSave = "Os atributos a serem salvos não foram definidos em Salva Parâmetros.\nSelecione uma das opções.";
+		gSAttribToSaveTitle = "Error - Atributos a serem salvos não definidos";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolução de Toda a Área (ext)");
@@ -823,6 +827,8 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		PotDiscreteForm^ potDiscreteForm = gcnew PotDiscreteForm(lPotential);
 		potDiscreteForm->ShowDialog();
 		gPotential = lPotential->Return;
+		gPotential = gPotential->Replace("\n", "");
+		gPotential = gPotential->Replace("\r", "");
 		gPotentialComponent = lPotential->Component;
 		gPotentialLUT = gLandUseTypes;
 
@@ -905,6 +911,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 						lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
 						lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
 						lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}");
+						lines3[lineCount] = lines3[lineCount]->Replace("\n","");
 						lineCount++;
 						first = true;
 					}
@@ -916,6 +923,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 					lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
 					lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
 					lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}");
+					lines3[lineCount] = lines3[lineCount]->Replace("\n", "");
 				}
 				tbPotential->Lines = lines3;
 			}
@@ -1792,6 +1800,11 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		checked = false;
 	}
 
+	else if ((lYearsToSave->Text != "" || cSaveYearly->Checked == true) && (lAttrToSave->Text == "")) {
+		MessageBox::Show(gSAttribToSave, gSAttribToSaveTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
 	else if (gPotentialComponent > gNumDiscPotComp && (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
 		MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
@@ -2643,6 +2656,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					lSelectedFolder->Text = tempLine->Substring(0, lastSlash - j);
+					if (lSelectedFolder->Text->Length == 2) {
+						lSelectedFolder->Text += "\\";
+					}
 				}
 				
 				gParametersValues[0] = lSelectedFolder->Text;
@@ -2652,7 +2668,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("name") != 1) {
+					if (line->Contains("name =") != 1) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2700,6 +2716,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 
 					tempLine = tempLine->Substring(0, lastSlash);
+					if (tempLine->Length == 2) {
+						tempLine += "\\";
+					}
 
 					if (lSelectedFolder->Text != tempLine) {
 						lSelectedFolder->Text = "";
@@ -5593,7 +5612,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				MessageBox::Show(gSImportError, gSImportErrorTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				closing = true;
 				this->Close();
-			}
+			}//
 		}
 	}
 }
@@ -5766,7 +5785,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("\tos.exit()");
 		sw->WriteLine("end");
 		sw->WriteLine("");
-
+		
 		//Input parameters
 		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
 		if (cValidationSave->Checked) {
@@ -5800,10 +5819,19 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("");
 		sw->WriteLine("range = " + tRange->Text + " / 100");
 		
+		String^ folderAux = "";
+
 		switch (cbValidationMethod->SelectedIndex)
 		{
 			//Ext Method
 			case 0:
+				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
+				if (folderAux->Length > 4) {
+					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+				}
+				else {
+					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+				}
 				sw->WriteLine("output_theme = \"validation_ext_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text +"_\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"sim\"");
@@ -5869,20 +5897,40 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\treturn count, diff, sum");
 				sw->WriteLine("end");
 				sw->WriteLine("");
+				sw->WriteLine("file:write(\"======================================================\")");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\")");
 				if (gAllocationComponent > 2) {
+					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 				}
 				else {
+					sw->WriteLine("file:write(\"Validation Metric for Discrete Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
+				sw->WriteLine("file:write(\"input theme : \", input_theme_name)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"input theme : \", input_theme_name)");
+				sw->WriteLine("file:write(\"attr REAL initial:\", init_real)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
+				sw->WriteLine("file:write(\"attr REAL final  :\", last_real)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL final  :\", last_real)");
+				sw->WriteLine("file:write(\"attr SIM  final  :\", last_sim)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr SIM  final  :\", last_sim)");
+				sw->WriteLine("file:write(\"Accepted error   :\", (range * 100)..\"%\")");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"Accepted error   :\", (range * 100)..\"%\")");
+				sw->WriteLine("file:write(\"======================================================\\n\")");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\\n\")");
 				sw->WriteLine("");
+				sw->WriteLine("file:write(\"" + gSValExt->Replace("print(\"",""));
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine(gSValExt);
 				sw->WriteLine("io.flush()");
 				sw->WriteLine("attrs = {}");
@@ -5895,6 +5943,8 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tif (sum < diff) then total, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i) end");
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
+				sw->WriteLine("\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\tfile:write(\"\\n\")");
 				sw->WriteLine("\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("");
@@ -5906,10 +5956,18 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("if (flag_save) then cs:save(final_year, output_theme, attrs) end");
 				sw->WriteLine("");
+				sw->WriteLine("file:close()");
 				break;
 
 			//Diff Method
 			case 1:
+				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
+				if (folderAux->Length > 4) {
+					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+				}
+				else {
+					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+				}
 				sw->WriteLine("output_theme = \"validation_diff_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text + "_\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"diff_sim\"");
@@ -5975,20 +6033,40 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\treturn count * window * window, diff, sum");
 				sw->WriteLine("end");
 				sw->WriteLine("");
+				sw->WriteLine("file:write(\"======================================================\")");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\")");
 				if (gAllocationComponent > 2) {
+					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 				}
 				else {
+					sw->WriteLine("file:write(\"Validation Metric for Discrete Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
+				sw->WriteLine("file:write(\"input theme : \", input_theme_name)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"input theme : \", input_theme_name)");
+				sw->WriteLine("file:write(\"attr REAL initial:\", init_real)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
+				sw->WriteLine("file:write(\"attr REAL final  :\", last_real)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL final  :\", last_real)");
+				sw->WriteLine("file:write(\"attr SIM  final  :\", last_sim)");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr SIM  final  :\", last_sim)");
+				sw->WriteLine("file:write(\"Accepted error   :\", (range * 100)..\"%\")");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"Accepted error   :\", (range * 100)..\"%\")");
+				sw->WriteLine("file:write(\"======================================================\\n\")");
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\\n\")");
 				sw->WriteLine("");
+				sw->WriteLine("file:write(\"" + gSValDiff->Replace("print(\"", ""));
+				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine(gSValDiff);
 				sw->WriteLine("io.flush()");
 				sw->WriteLine("attrs = {}");
@@ -6001,8 +6079,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
 				sw->WriteLine("\tif ((i == 1) or (i % 1 == 0)) then");
-				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then print(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
-				sw->WriteLine("\t\telse print(i, \"0.00 %\") end");
+				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then");
+				sw->WriteLine("\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("file:write(\"\\n\")");
+				sw->WriteLine("\t\t\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\t\telse");
+				sw->WriteLine("\t\t\tfile:write(i..\"\\t\",\"0.00 %\")");
+				sw->WriteLine("\t\t\tprint(i, \"0.00 %\")");
+				sw->WriteLine("\t\tend");
 				sw->WriteLine("\tend");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("");
@@ -6014,6 +6098,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("if (flag_save) then cs:save(final_year, output_theme, attrs) end");
 				sw->WriteLine("");
+				sw->WriteLine("file:close()");
 				break;
 			default:
 				break;

@@ -47,11 +47,12 @@ function AllocationClueSLike(component)
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
 			print("Max diff area "..self.maxDifference)
-			----------------------------------------------------
+			
 			for landuse, ivalues in pairs (luTypes) do        
 				area = self:areaAllocated(cs, cellarea, luTypes[landuse], 1)
 				print("Initial area for land use : "..luTypes[landuse].." -> " ..area)
 			end		
+			
 			print("-------------------------------------------------------------------------------")
    	end
 		
@@ -63,7 +64,7 @@ function AllocationClueSLike(component)
 				cell[lu.."_out"] = cell[lu]
 			end
 		end
-	   	
+	  
 		while ((nIter <= max_iteration) and (allocation_ok == false)) do	
 			if useLog == true then
 				print("\nStep -> "..step.." Iteration -> "..nIter)
@@ -194,7 +195,7 @@ function AllocationClueSLike(component)
       --dem = demand.currentDemand[luind]
       differences[land] = (dem - (areaAlloc))
       if component.useLog == true then
-        print(land.." -> " ..areaAlloc.."\t\tdemanda -> "..dem.." diferença -> "..differences[land])
+        print(land.." -> " ..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
       end
     end
     
@@ -254,7 +255,7 @@ function AllocationClueSLike(component)
                       end
                     end
                 )
-    print("\n\n",count, cellarea, field)          
+    --print("\n\n"..count, cellarea, field, "\n")          
     return (count * cellarea)
   end
   

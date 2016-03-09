@@ -15,12 +15,16 @@ function MaximumEntropyLike(component)
     local luTypes = luccMEModel.landUseTypes
     local demand = luccMEModel.demand
     local regionsNumber = #self.potentialData
+  
+    file = io.open(luccMEModel.name.."Console.txt", "w")
     
     for rNumber = 1, regionsNumber, 1 do
       for i = 1, #luTypes, 1 do                         
         self:computePotential(luccMEModel, rNumber, i)
       end
     end
+    
+    file:close()
   end  -- function execute
   
   --- Handles with the verify method of a MaximumEntropyLike component.
@@ -135,7 +139,7 @@ function MaximumEntropyLike(component)
     local activeRegionNumber = 0
     local countSample = 1
     local countClass = 0
-    local class = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
+    local class = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
     local sample = {}
     
     -- Search on the CS for samples of the LU
@@ -161,23 +165,24 @@ function MaximumEntropyLike(component)
          class[t][k] = cell[attribute]
       end 
     end
-
+    
     -- Create the range, and store the categoric values
     local min = {}
     local max = {}
     local avg = {}
-    local values = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
-   
+    local values = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
+    
     -- Initialize the range "arrays"
     for i = 1, #luData.attributesPerc, 1 do
       min[i] = 1000000000
       max[i] = -1000000000
       avg[i] = 0
     end
-    
+   
     -- Store the categoric values on a table (simplifying to unique values)
     local countDiff = 1
-    for i = 1, #class, 1 do
+        
+    for i = 1, #luData.attributesClass, 1 do
       values[i][1] = class[i][1]
       for j = 1, #class[i], 1 do
         for w = 1, #values[i], 1 do
@@ -215,14 +220,24 @@ function MaximumEntropyLike(component)
     print(lu)
     print("Cell number", #sample)
     
+    file:write(lu.."\n")
+    file:write("Cell number: "..#sample.."\n")
+    
     for i = 1, #min, 1 do
-      print("min["..i.."]",min[i])
-      print("max["..i.."]",max[i])
-      print("avg["..i.."]",avg[i], "\n")
+      print("min["..i.."]", min[i])
+      print("max["..i.."]", max[i])
+      print("avg["..i.."]", avg[i], "\n")
+      
+      file:write("min["..i.."] "..min[i].."\n")
+      file:write("max["..i.."] "..max[i].."\n")
+      file:write("avg["..i.."] "..avg[i].."\n\n")
     end
+    
     for i = 1, #values, 1 do
       for j = 1, #values[i], 1 do
         print("values["..i.."]["..j.."]",values[i][j])
+        
+        file:write("values["..i.."]["..j.."] "..values[i][j].."\n")
       end
     end
 
@@ -333,13 +348,12 @@ function MaximumEntropyLike(component)
     print("\n")
     print(lu, "pot > 0", "\tpot = 0")
     print(pot, countOne, "\t"..countZero)
-    --io.read()
-      
-    if (luIndex == 3) then
---      error("Sair")
-        --io.read()
-    end
-            
+    
+    file:write("\n")
+    file:write(lu.." \t\tpot > 0 \tpot = 0\n")
+    file:write(pot.." \t"..countOne.." \t\t"..countZero)
+    file:write("\r\n\r\n")
+
     if (activeRegionNumber == 0) then
       error("Region ".. rNumber.." is not set into database.")  
     end

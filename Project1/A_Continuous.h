@@ -110,7 +110,7 @@ namespace LuccME {
 			// tComplementarLU
 			// 
 			this->tComplementarLU->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tComplementarLU->Location = System::Drawing::Point(199, 293);
+			this->tComplementarLU->Location = System::Drawing::Point(200, 293);
 			this->tComplementarLU->Name = L"tComplementarLU";
 			this->tComplementarLU->Size = System::Drawing::Size(183, 20);
 			this->tComplementarLU->TabIndex = 7;
@@ -123,7 +123,7 @@ namespace LuccME {
 			this->lComplementarLU->AutoSize = true;
 			this->lComplementarLU->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lComplementarLU->Location = System::Drawing::Point(47, 292);
+			this->lComplementarLU->Location = System::Drawing::Point(54, 292);
 			this->lComplementarLU->Name = L"lComplementarLU";
 			this->lComplementarLU->Size = System::Drawing::Size(146, 23);
 			this->lComplementarLU->TabIndex = 126;
@@ -132,8 +132,9 @@ namespace LuccME {
 			// 
 			// tMaxElasticity
 			// 
+			this->tMaxElasticity->Enabled = false;
 			this->tMaxElasticity->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxElasticity->Location = System::Drawing::Point(638, 230);
+			this->tMaxElasticity->Location = System::Drawing::Point(659, 260);
 			this->tMaxElasticity->Name = L"tMaxElasticity";
 			this->tMaxElasticity->Size = System::Drawing::Size(194, 20);
 			this->tMaxElasticity->TabIndex = 6;
@@ -146,7 +147,7 @@ namespace LuccME {
 			this->lMaxElasticity->AutoSize = true;
 			this->lMaxElasticity->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lMaxElasticity->Location = System::Drawing::Point(503, 228);
+			this->lMaxElasticity->Location = System::Drawing::Point(535, 258);
 			this->lMaxElasticity->Name = L"lMaxElasticity";
 			this->lMaxElasticity->Size = System::Drawing::Size(114, 23);
 			this->lMaxElasticity->TabIndex = 124;
@@ -155,8 +156,9 @@ namespace LuccME {
 			// 
 			// tMinElasticity
 			// 
+			this->tMinElasticity->Enabled = false;
 			this->tMinElasticity->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinElasticity->Location = System::Drawing::Point(637, 200);
+			this->tMinElasticity->Location = System::Drawing::Point(658, 230);
 			this->tMinElasticity->Name = L"tMinElasticity";
 			this->tMinElasticity->Size = System::Drawing::Size(194, 20);
 			this->tMinElasticity->TabIndex = 5;
@@ -169,7 +171,7 @@ namespace LuccME {
 			this->lMinElasticity->AutoSize = true;
 			this->lMinElasticity->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lMinElasticity->Location = System::Drawing::Point(502, 198);
+			this->lMinElasticity->Location = System::Drawing::Point(538, 228);
 			this->lMinElasticity->Name = L"lMinElasticity";
 			this->lMinElasticity->Size = System::Drawing::Size(111, 23);
 			this->lMinElasticity->TabIndex = 122;
@@ -229,8 +231,9 @@ namespace LuccME {
 			// 
 			// tInitialElasticity
 			// 
+			this->tInitialElasticity->Enabled = false;
 			this->tInitialElasticity->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tInitialElasticity->Location = System::Drawing::Point(637, 170);
+			this->tInitialElasticity->Location = System::Drawing::Point(658, 200);
 			this->tInitialElasticity->Name = L"tInitialElasticity";
 			this->tInitialElasticity->Size = System::Drawing::Size(194, 20);
 			this->tInitialElasticity->TabIndex = 4;
@@ -243,7 +246,7 @@ namespace LuccME {
 			this->lInitialElasticity->AutoSize = true;
 			this->lInitialElasticity->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lInitialElasticity->Location = System::Drawing::Point(502, 168);
+			this->lInitialElasticity->Location = System::Drawing::Point(523, 198);
 			this->lInitialElasticity->Name = L"lInitialElasticity";
 			this->lInitialElasticity->Size = System::Drawing::Size(126, 23);
 			this->lInitialElasticity->TabIndex = 116;
@@ -263,7 +266,7 @@ namespace LuccME {
 			// tMaxIteration
 			// 
 			this->tMaxIteration->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxIteration->Location = System::Drawing::Point(188, 218);
+			this->tMaxIteration->Location = System::Drawing::Point(189, 218);
 			this->tMaxIteration->Name = L"tMaxIteration";
 			this->tMaxIteration->Size = System::Drawing::Size(194, 20);
 			this->tMaxIteration->TabIndex = 3;
@@ -295,10 +298,11 @@ namespace LuccME {
 			// 
 			// tSaturationIndicator
 			// 
+			this->tSaturationIndicator->Enabled = false;
 			this->tSaturationIndicator->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tSaturationIndicator->Location = System::Drawing::Point(649, 294);
+			this->tSaturationIndicator->Location = System::Drawing::Point(659, 290);
 			this->tSaturationIndicator->Name = L"tSaturationIndicator";
-			this->tSaturationIndicator->Size = System::Drawing::Size(183, 20);
+			this->tSaturationIndicator->Size = System::Drawing::Size(194, 20);
 			this->tSaturationIndicator->TabIndex = 8;
 			this->tSaturationIndicator->Text = L"saturationLimiar";
 			this->tSaturationIndicator->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -310,7 +314,7 @@ namespace LuccME {
 			this->lSaturationIndicator->AutoSize = true;
 			this->lSaturationIndicator->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lSaturationIndicator->Location = System::Drawing::Point(484, 293);
+			this->lSaturationIndicator->Location = System::Drawing::Point(487, 290);
 			this->lSaturationIndicator->Name = L"lSaturationIndicator";
 			this->lSaturationIndicator->Size = System::Drawing::Size(162, 23);
 			this->lSaturationIndicator->TabIndex = 128;
@@ -321,7 +325,7 @@ namespace LuccME {
 			// tAttrProtection
 			// 
 			this->tAttrProtection->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tAttrProtection->Location = System::Drawing::Point(649, 327);
+			this->tAttrProtection->Location = System::Drawing::Point(200, 324);
 			this->tAttrProtection->Name = L"tAttrProtection";
 			this->tAttrProtection->Size = System::Drawing::Size(183, 20);
 			this->tAttrProtection->TabIndex = 9;
@@ -335,7 +339,7 @@ namespace LuccME {
 			this->lAttrProtection->AutoSize = true;
 			this->lAttrProtection->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttrProtection->Location = System::Drawing::Point(500, 326);
+			this->lAttrProtection->Location = System::Drawing::Point(54, 323);
 			this->lAttrProtection->Name = L"lAttrProtection";
 			this->lAttrProtection->Size = System::Drawing::Size(121, 23);
 			this->lAttrProtection->TabIndex = 130;

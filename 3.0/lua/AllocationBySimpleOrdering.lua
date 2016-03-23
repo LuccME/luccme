@@ -14,14 +14,13 @@ function AllocationBySimpleOrdering(component)
 	-- @arg model AllocationBySimpleOrdering model.
 	-- @usage self.allocation:run(event, model)
 	component.run = function(self, event, model)
-	  ------Global and Local Variables and Constants------
 		local useLog = model.useLog
 		local cs = model.cs
 		local potential = model.potential		
 		local cellarea = cs.cellArea
 		local step = event:getTime() - model.startTime + 1	
 		local start = model.startTime		
-	  local demand = model.demand
+		local demand = model.demand
 		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
@@ -30,12 +29,12 @@ function AllocationBySimpleOrdering(component)
 		local differences = {}
 		
 		--Inicialização das demandas
-   	for ind, lu in  pairs (luTypes) do	
+		for ind, lu in  pairs (luTypes) do	
  			dem[lu] = -1
  		end
   		
 		print("\nTime : ", event:getTime())
-  	print("Step : ", step)
+		print("Step : ", step)
 
 		if (useLog == true) then
 			print("-------------------------------------------------------------------------------")
@@ -48,7 +47,7 @@ function AllocationBySimpleOrdering(component)
 				print("Initial area for land use : "..luTypes[landuse].." -> "..area)
 			end		
 			print("-------------------------------------------------------------------------------")
-   	end
+		end
 	   	
 		for k, cell in pairs (cs.cells) do
 			for luind, lu in  pairs (luTypes) do
@@ -57,7 +56,7 @@ function AllocationBySimpleOrdering(component)
 			end
 			cell.alloc = 0
 			cell.simUse = self:currentUse(cell, luTypes)
-    end
+		end
 
 		local diff = 0
 		local ord = {}
@@ -67,14 +66,14 @@ function AllocationBySimpleOrdering(component)
 			if (lu ~= model.landUseNoData) then 
 				ord = Trajectory { target = cs,
         								   select = function(cell)
-        												      return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
-        											      end,
+														return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
+													end,
         								   greater = function(c, d)
-        												       return c[lu.."_pot"] > d[lu.."_pot"]
-        											       end
-        								 }
+														return c[lu.."_pot"] > d[lu.."_pot"]
+													 end
+								 }
 
-			 --Seleção de tantas células quanto forem necessárias na demanda
+				--Seleção de tantas células quanto forem necessárias na demanda
 				local j = 1
 				if (dem[lu] == -1) then
 					--dem[lu] = demand:getCurrentDemand(model)
@@ -84,7 +83,6 @@ function AllocationBySimpleOrdering(component)
 				local cs_size = #cs.cells
 				local trj_size = #ord.cells	
 				print("demand", lu, dem[lu], "trajectory size", trj_size)
-				--table.foreach(ord.cells, print)
 		
 				while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do 
 					-- Este atributo irá me indicar se a célula já teve seu uso alocado ou não
@@ -118,72 +116,72 @@ function AllocationBySimpleOrdering(component)
  				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
-  		print("Demand allocated correctly in this time step:", step)
+			print("Demand allocated correctly in this time step:", step)
  			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
-    else
-    	error("Demand not allocated correctly in this time step: "..step)
-    end      	
+		else
+			error("Demand not allocated correctly in this time step: "..step)
+		end      	
  	end -- end of 'run' function
  	
 	--- Handles with the parameters verification.
 	-- @arg self An AllocationBySimpleOrdering component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @usage self.allocation:verify(event, self)
-  component.verify = function(self, event)
-    print("Verifying Allocation parameters")
-    if (self.maxDifference == nil) then
-      error("maxDifference variable is missing", 2)
-    end
+	component.verify = function(self, event)
+		print("Verifying Allocation parameters")
+		if (self.maxDifference == nil) then
+		  error("maxDifference variable is missing", 2)
+		end
 	end
 
-  --- Count the number of allocated areas.
-  -- @arg cs A multivalued set of Cells (Cell Space).
-  -- @arg cellarea A cell area.
-  -- @arg field The field to be checked (Columns name).
-  -- @arg attr The attribute to be checked.
-  -- @usage areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
-  component.areaAllocated = function(self, cs, cellarea, field, attr)
-    local c = 0
-    forEachCell(cs, function(cell)
-                      if (cell[field] == attr) then
-                        c = c + 1   
-                      end
-                    end
-                )
-                
-    return (c * cellarea)
-  end
+	--- Count the number of allocated areas.
+	-- @arg cs A multivalued set of Cells (Cell Space).
+	-- @arg cellarea A cell area.
+	-- @arg field The field to be checked (Columns name).
+	-- @arg attr The attribute to be checked.
+	-- @usage areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
+	component.areaAllocated = function(self, cs, cellarea, field, attr)
+		local c = 0
+		forEachCell(cs, function(cell)
+						  if (cell[field] == attr) then
+							c = c + 1   
+						  end
+						end
+					)
+					
+		return (c * cellarea)
+	end
 
-  --- Handles with the change of an use for a cell area.
-  -- @arg cell A cell area.
-  -- @arg cur_use The current use.
-  -- @arg higher_use The biggest cell value
-  -- @usage self:changeUse(cell, currentUse(cell, luTypes), cell.simUse))
-  component.changeUse = function(self, cell, cur_use, higher_use)
-    cell[cur_use] = 0
-    cell[cur_use.."_out"] = 0
-    cell[higher_use] = 1
-    cell[higher_use.."_out"] = 1
-  
-    cell[higher_use.."_change"] = 0
-    cell[cur_use.."_change"] = 0  
-    if (cur_use ~= higher_use) then
-      cell[higher_use.."_change"] = 1
-      cell[cur_use.."_change"] = -1 
-     end
-  end
+	--- Handles with the change of an use for a cell area.
+	-- @arg cell A cell area.
+	-- @arg cur_use The current use.
+	-- @arg higher_use The biggest cell value
+	-- @usage self:changeUse(cell, currentUse(cell, luTypes), cell.simUse))
+	component.changeUse = function(self, cell, cur_use, higher_use)
+		cell[cur_use] = 0
+		cell[cur_use.."_out"] = 0
+		cell[higher_use] = 1
+		cell[higher_use.."_out"] = 1
+	  
+		cell[higher_use.."_change"] = 0
+		cell[cur_use.."_change"] = 0  
+		if (cur_use ~= higher_use) then
+		  cell[higher_use.."_change"] = 1
+		  cell[cur_use.."_change"] = -1 
+		 end
+	end
 
-  --- Return the current use for a cell area.
-  -- @arg cell A cell area.
-  -- @arg landuses A set of land use types.
-  -- @usage self:currentUse(cell, luTypes)
-  component.currentUse = function(self, cell, landuses)
-    for i, land  in pairs (landuses) do
-      if (cell[land] == 1) then
-        return land
-      end
-    end
-  end
+	--- Return the current use for a cell area.
+	-- @arg cell A cell area.
+	-- @arg landuses A set of land use types.
+	-- @usage self:currentUse(cell, luTypes)
+	component.currentUse = function(self, cell, landuses)
+		for i, land  in pairs (landuses) do
+		  if (cell[land] == 1) then
+			return land
+		  end
+		end
+	end
 
 	return component
 end -- end of AllocationCluesLike

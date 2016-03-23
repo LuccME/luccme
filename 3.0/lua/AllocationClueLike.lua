@@ -47,11 +47,11 @@ function AllocationClueLike(component)
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @usage self.allocation:run(event, model)
-  component.run = function(self, event, luccMEModel)  	 
+  component.run = function(self, event, luccMEModel)
     -- Synchronize cellular space in the first year
     local luTypes = luccMEModel.landUseTypes
     local cs = luccMEModel.cs
-
+	
     --Init demandDirection and elasticity (internal component variables)
     self:initElasticity(luccMEModel, self.initialElasticity) 
     
@@ -62,7 +62,7 @@ function AllocationClueLike(component)
     local maxdiff = self.maxDifference * 1000 -- Used to have a large number of iterations
     local flagFlex = false
 
-    -- Loop until maxdiff is achieved
+	-- Loop until maxdiff is achieved
     repeat
       -- compute tentative allocation
       self:computeChange(luccMEModel)
@@ -564,14 +564,12 @@ function AllocationClueLike(component)
     local cellarea = cs.cellArea
    
     for i, lu in pairs (luTypes) do
-      local area = 0
-      
-      for k,cell in pairs (cs.cells) do
-        local temp = cell[lu]
-       
-        if (temp > 0) then
-          area = area + temp
-        end
+      local area = 0.0
+	  
+      for k, cell in pairs (cs.cells) do
+		--if (cell[lu] > 0) then
+          area = area + cell[lu]
+        --end
       end
       areas[i] = area * cellarea
     end

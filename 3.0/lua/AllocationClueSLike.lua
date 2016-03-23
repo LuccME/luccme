@@ -24,7 +24,6 @@ function AllocationClueSLike(component)
 	-- @arg component A AllocationClueSLike component with all data.
 	-- @usage self.allocation:run(event, model)
 	component.run = function(self, event, model)
-		------Global and Local Variables and Constants------
 		local useLog = model.useLog
 		local cs = model.cs
 		local cellarea = cs.cellArea
@@ -40,7 +39,7 @@ function AllocationClueSLike(component)
 		local possibleTransitions = 0
 
 		print("\nTime : ", event:getTime())
-    print("Step : ", step)
+		print("Step : ", step)
 
 		if useLog == true then
 			print("-------------------------------------------------------------------------------")
@@ -54,9 +53,9 @@ function AllocationClueSLike(component)
 			end		
 			
 			print("-------------------------------------------------------------------------------")
-   	end
+		end
 		
-   	local iteration = self:initIteration(luTypes)
+		local iteration = self:initIteration(luTypes)
 	   	
 		for k, cell in pairs (cs.cells) do
 			for luind, lu in  pairs (luTypes) do
@@ -114,12 +113,12 @@ function AllocationClueSLike(component)
 			nIter = nIter + 1
 	      		
 			if (allocation_ok == true) then 
-  			print("Demand allocated correctly in this time step:", step)
+				print("Demand allocated correctly in this time step:", step)
 			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
-   		elseif	(nIter >= max_iteration) then
-   			error("Demand not allocated correctly in this time step: "..step)
-   		end      		
-  	end -- end of 'while do'
+			elseif	(nIter >= max_iteration) then
+				error("Demand not allocated correctly in this time step: "..step)
+			end      		
+		end -- end of 'while do'
  	end -- end of 'run'
  	
 	--- Handles with the parameters verification.
@@ -128,196 +127,196 @@ function AllocationClueSLike(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.allocation:verify(event, self)
  	component.verify = function(self, event, modelParameters)
- 	  print("Verifying Allocation parameters")
-    -- check maxIteration
-    if (self.maxIteration == nil) then
-      error("maxIteration variable is missing", 2)
-    end 
-    
-    -- check factorIteration
-    if (self.factorIteration == nil) then
-      error("factorIteration variable is missing", 2)
-    end  
-    
-    -- check maxDifference
-    if (self.maxDifference == nil) then
-      error("maxDifference variable is missing", 2)
-    end 
-    
-    -- check transitionMatrix
-    if (self.transitionMatrix == nil) then
-      error("transitionMatrix is missing", 2)
-    end    
-    
-    local regionsNumber = #self.transitionMatrix
+		print("Verifying Allocation parameters")
+		-- check maxIteration
+		if (self.maxIteration == nil) then
+		  error("maxIteration variable is missing", 2)
+		end 
+		
+		-- check factorIteration
+		if (self.factorIteration == nil) then
+		  error("factorIteration variable is missing", 2)
+		end  
+		
+		-- check maxDifference
+		if (self.maxDifference == nil) then
+		  error("maxDifference variable is missing", 2)
+		end 
+		
+		-- check transitionMatrix
+		if (self.transitionMatrix == nil) then
+		  error("transitionMatrix is missing", 2)
+		end    
+		
+		local regionsNumber = #self.transitionMatrix
 
-    -- check number of Regions
-    if (regionsNumber == nil or regionsNumber == 0) then
-      error("The model must have at least One region", 2)
-    else
-      for i = 1, regionsNumber, 1 do
-        local transitionNumber = #self.transitionMatrix[i]
-        local lutNumber = #modelParameters.landUseTypes
-        
-        -- check the number of transitions
-        if (transitionNumber ~= lutNumber) then
-          error("Invalid number of transitions on Region number "..i..". Transitions: "..transitionNumber.." LandUseTypes: "..lutNumber, 2)
-        end
-        
-        for j = 1, transitionNumber, 1 do
-          for k = 1, lutNumber, 1 do  
-            -- check the matrix values
-            if(self.transitionMatrix[i][j][k] ~= 0 and self.transitionMatrix[i][j][k] ~= 1) then
-              error("Invalid data on transitionMatrix: "..self.transitionMatrix[i][j][k]..". Region: "..i.. " Position: "..j.."x"..k..". The acceptable values are 0 or 1", 2)
-            end
-          end -- for k
-        end -- for j
-      end -- for i
-    end -- else
+		-- check number of Regions
+		if (regionsNumber == nil or regionsNumber == 0) then
+		  error("The model must have at least One region", 2)
+		else
+		  for i = 1, regionsNumber, 1 do
+			local transitionNumber = #self.transitionMatrix[i]
+			local lutNumber = #modelParameters.landUseTypes
+			
+			-- check the number of transitions
+			if (transitionNumber ~= lutNumber) then
+			  error("Invalid number of transitions on Region number "..i..". Transitions: "..transitionNumber.." LandUseTypes: "..lutNumber, 2)
+			end
+			
+			for j = 1, transitionNumber, 1 do
+			  for k = 1, lutNumber, 1 do  
+				-- check the matrix values
+				if(self.transitionMatrix[i][j][k] ~= 0 and self.transitionMatrix[i][j][k] ~= 1) then
+				  error("Invalid data on transitionMatrix: "..self.transitionMatrix[i][j][k]..". Region: "..i.. " Position: "..j.."x"..k..". The acceptable values are 0 or 1", 2)
+				end
+			  end -- for k
+			end -- for j
+		  end -- for i
+		end -- else
 	end -- verify
 
-  --- Calculate the difference between the value of the demand and the value to be allocate.
-  -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg component A AllocationClueSLike component with all data.
-  -- @usage diff = self.calcDifferences(event, model)
-  component.calcDifferences = function(self, event, component)
-    local cs = component.cs
-    local luTypes = component.landUseTypes
-    local demand = component.demand
-    local cellarea = cs.cellArea      
-    local differences = {}
-    local areaAlloc = 0
-    local dem = 0
-    
-    for luind, land in pairs (luTypes) do
-      areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
-      dem = demand:getCurrentLuDemand(luind)
-      --dem = demand.currentDemand[luind]
-      differences[land] = (dem - (areaAlloc))
-      if component.useLog == true then
-        print(land.." -> " ..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
-      end
-    end
-    
-    return differences
-  end
+	--- Calculate the difference between the value of the demand and the value to be allocate.
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg component A AllocationClueSLike component with all data.
+	-- @usage diff = self.calcDifferences(event, model)
+	component.calcDifferences = function(self, event, component)
+		local cs = component.cs
+		local luTypes = component.landUseTypes
+		local demand = component.demand
+		local cellarea = cs.cellArea      
+		local differences = {}
+		local areaAlloc = 0
+		local dem = 0
+		
+		for luind, land in pairs (luTypes) do
+		  areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
+		  dem = demand:getCurrentLuDemand(luind)
+		  --dem = demand.currentDemand[luind]
+		  differences[land] = (dem - (areaAlloc))
+		  if component.useLog == true then
+			print(land.." -> " ..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
+		  end
+		end
+		
+		return differences
+	end
 
-  --- Modify for each land use the value of the cell area for an iteration.
-  -- @arg cs A multivalued set of Cells (Cell Space).
-  -- @arg diff The demand area difference
-  -- @arg luTypes A set of land uses types.
-  -- @arg interationFactor Interation factor
-  -- @arg iter The modifier (value) that changes the potential of each cell according to the difference to demand
-  -- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, self.maxDifference)
-  component.adjustIteration = function(self, diff, luTypes, interationFactor, iter) 
-    for luind, land in pairs (luTypes) do
-      iter[land] = iter[land] + (diff[land] * interationFactor)
-    end
-  end
+	--- Modify for each land use the value of the cell area for an iteration.
+	-- @arg cs A multivalued set of Cells (Cell Space).
+	-- @arg diff The demand area difference
+	-- @arg luTypes A set of land uses types.
+	-- @arg interationFactor Interation factor
+	-- @arg iter The modifier (value) that changes the potential of each cell according to the difference to demand
+	-- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, self.maxDifference)
+	component.adjustIteration = function(self, diff, luTypes, interationFactor, iter) 
+		for luind, land in pairs (luTypes) do
+		  iter[land] = iter[land] + (diff[land] * interationFactor)
+		end
+	end
 
-  --- Handles with the allocation convergence based on self.maxDifference.
-  -- @arg cs A multivalued set of Cells (Cell Space).
-  -- @arg diff The demand area difference
-  -- @arg luTypes A set of land uses types.
-  -- @arg maxdiffarea The limit between the demand and the allocated area
-  -- @usage allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
-  component.convergency = function(self, diff, luTypes, maxdiffarea)
-    local tot_diff = 0.0
-    local maxdiff = 0.0
-    
-    for luind, land in pairs (luTypes) do
-      if ((math.abs(diff[land])) > maxdiff) then
-        maxdiff = (math.abs(diff[land]))
-      end
-    end
-    if (useLog == true) then
-      print("\n  Maximum error of allocation (area): ", maxdiff, "\nMaximum permited error (area): ", maxdiffarea)
-      print("-------------------------------------------------------------------------------")
-    end
-    if (maxdiff <= maxdiffarea) then
-      return true
-    else
-      return false
-    end
-  end
+	--- Handles with the allocation convergence based on self.maxDifference.
+	-- @arg cs A multivalued set of Cells (Cell Space).
+	-- @arg diff The demand area difference
+	-- @arg luTypes A set of land uses types.
+	-- @arg maxdiffarea The limit between the demand and the allocated area
+	-- @usage allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
+	component.convergency = function(self, diff, luTypes, maxdiffarea)
+		local tot_diff = 0.0
+		local maxdiff = 0.0
+		
+		for luind, land in pairs (luTypes) do
+		  if ((math.abs(diff[land])) > maxdiff) then
+			maxdiff = (math.abs(diff[land]))
+		  end
+		end
+		if (useLog == true) then
+		  print("\n  Maximum error of allocation (area): ", maxdiff, "\nMaximum permited error (area): ", maxdiffarea)
+		  print("-------------------------------------------------------------------------------")
+		end
+		if (maxdiff <= maxdiffarea) then
+		  return true
+		else
+		  return false
+		end
+	end
   
-  --- Count the number of allocated areas.
-  -- @arg cs A multivalued set of Cells (Cell Space).
-  -- @arg cellarea A cell area.
-  -- @arg field The field to be checked (Columns name).
-  -- @arg attr The attribute to be checked.
-  -- @usage areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
-  component.areaAllocated = function(self, cs, cellarea, field, attr)
-    local count = 0
-    forEachCell(cs, function(cell)
-                      if (cell[field] == attr) then
-                        count = count + 1
-                      end
-                    end
-                )
-    --print("\n\n"..count, cellarea, field, "\n")          
-    return (count * cellarea)
-  end
+	--- Count the number of allocated areas.
+	-- @arg cs A multivalued set of Cells (Cell Space).
+	-- @arg cellarea A cell area.
+	-- @arg field The field to be checked (Columns name).
+	-- @arg attr The attribute to be checked.
+	-- @usage areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
+	component.areaAllocated = function(self, cs, cellarea, field, attr)
+		local count = 0
+		forEachCell(cs, function(cell)
+						  if (cell[field] == attr) then
+							count = count + 1
+						  end
+						end
+					)
+		--print("\n\n"..count, cellarea, field, "\n")          
+		return (count * cellarea)
+	end
   
-  --- Return an Index for a land use type in a set of land use types.
-  -- @arg lu A land use type.
-  -- @arg usetypes A set of land use type.
-  -- @usage luind = self:toIndex(lu, luTypes)
-  component.toIndex = function(self, lu, usetypes)
-    local index = 0
-    for i, value in  pairs (usetypes) do
-      if (value == lu) then
-        index = i
-        break
-      end   
-    end
-    
-    return index
-  end
+	--- Return an Index for a land use type in a set of land use types.
+	-- @arg lu A land use type.
+	-- @arg usetypes A set of land use type.
+	-- @usage luind = self:toIndex(lu, luTypes)
+	component.toIndex = function(self, lu, usetypes)
+		local index = 0
+		for i, value in  pairs (usetypes) do
+		  if (value == lu) then
+			index = i
+			break
+		  end   
+		end
+		
+		return index
+	end
   
-  --- Initialise the iteration vector for each land use type.
-  -- @arg lutype A set of land uses type.  
-  -- @usage iteration = self:initIteration(luTypes)
-  component.initIteration = function(self, lutypes)
-    local iteration = {}  
-    for k, lu in pairs (lutypes) do
-      iteration[lu] = 0
-    end
-    
-    return iteration
-  end
+	--- Initialise the iteration vector for each land use type.
+	-- @arg lutype A set of land uses type.  
+	-- @usage iteration = self:initIteration(luTypes)
+	component.initIteration = function(self, lutypes)
+		local iteration = {}  
+		for k, lu in pairs (lutypes) do
+		  iteration[lu] = 0
+		end
+		
+		return iteration
+	end
 
-  --- Handles with the change of an use for a cell area.
-  -- @arg cell A cell area.
-  -- @arg cur_use The current use.
-  -- @arg higher_use The new land use attributed to the cell
-  -- @usage self:changeUse(cell, lu_past, lu_maior)
-  component.changeUse = function(self, cell, cur_use, higher_use)
-    cell[cur_use] = 0
-    cell[cur_use.."_out"] = 0
-    cell[higher_use] = 1
-    cell[higher_use.."_out"] = 1
+	--- Handles with the change of an use for a cell area.
+	-- @arg cell A cell area.
+	-- @arg cur_use The current use.
+	-- @arg higher_use The new land use attributed to the cell
+	-- @usage self:changeUse(cell, lu_past, lu_maior)
+	component.changeUse = function(self, cell, cur_use, higher_use)
+		cell[cur_use] = 0
+		cell[cur_use.."_out"] = 0
+		cell[higher_use] = 1
+		cell[higher_use.."_out"] = 1
+	  
+		cell[higher_use.."_change"] = 0
+		cell[cur_use.."_change"] = 0 
+		 
+		if (cur_use ~= higher_use) then
+			   cell[higher_use.."_change"] = 1
+			   cell[cur_use.."_change"] = -1 
+		end
+	end
   
-    cell[higher_use.."_change"] = 0
-    cell[cur_use.."_change"] = 0 
-     
-    if (cur_use ~= higher_use) then
-           cell[higher_use.."_change"] = 1
-           cell[cur_use.."_change"] = -1 
-    end
-  end
-  
-  --- Return the current use for a cell area.
-  -- @arg cell A cell area.
-  -- @arg landuses A set of land use types.
-  -- @usage lu_past = self:currentUse(cell, luTypes)
-  component.currentUse = function(self, cell, landuses)
-    for i, land  in pairs (landuses) do
-      if (cell[land] == 1) then
-        return land
-      end
-    end
-  end  
+	--- Return the current use for a cell area.
+	-- @arg cell A cell area.
+	-- @arg landuses A set of land use types.
+	-- @usage lu_past = self:currentUse(cell, luTypes)
+	component.currentUse = function(self, cell, landuses)
+		for i, land  in pairs (landuses) do
+		  if (cell[land] == 1) then
+			return land
+		  end
+		end
+	end  
 
 	return component
 end -- end of AllocationCluesLike

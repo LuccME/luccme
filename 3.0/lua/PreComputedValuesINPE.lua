@@ -21,9 +21,9 @@
 -- @return the modified component.
 -- @usage demand = PreComputedValuesINPE {
 -- annualDemand = {	{	205	,	5706	,	3	},
---					        {	253	,	5658	,	3	},
---					        {	300	,	5611	,	3	},
---					        {	348	,	5563	,	3	}}
+--					{	253	,	5658	,	3	},
+--					{	300	,	5611	,	3	},
+--					{	348	,	5563	,	3	}}
 -- }
 function PreComputedValuesINPE(component)
 	--- Handles with the rules of the component execution.
@@ -73,7 +73,7 @@ function PreComputedValuesINPE(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @usage self.demand:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
-	  print("Verifying Demand parameters")
+		print("Verifying Demand parameters")
 		local yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
 		
 		-- Check if the demand is proper to the number of years to simulate
@@ -84,22 +84,22 @@ function PreComputedValuesINPE(component)
 		-- Check the number of years to simulate
 		if (yearsSimulated == 0) then
 			error("The simulation time is zero", 5)
-    end
+		end
 
 		-- Check the land use types
-    self.demandDirection = {}
+		self.demandDirection = {}
 		local luTypes = luccMEModel.landUseTypes
 		self.numLU = 0
 
-    for k, lu in pairs (luTypes) do
-        self.demandDirection[k] = 0
-        if (self.annualDemand[1][k] == nil) then
-		      error("Invalid number of land use in the demand table", 5)
-        end
-        self.numLU = self.numLU + 1
-    end
+		for k, lu in pairs (luTypes) do
+			self.demandDirection[k] = 0
+			if (self.annualDemand[1][k] == nil) then
+				error("Invalid number of land use in the demand table", 5)
+			end
+			self.numLU = self.numLU + 1
+		end
 		
-    self.currentDemand = self.annualDemand[1]	
+		self.currentDemand = self.annualDemand[1]	
 		self.previousDemand = self.annualDemand[1]
 	end
 
@@ -110,15 +110,15 @@ function PreComputedValuesINPE(component)
 	-- @usage currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
-  end
+	end
 
 	--- Return the previous demand of the specified component.
 	-- @arg self A PreComputedValuesINPE component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage previousDemand = demand:getPreviousDemand(i)
-  component.getPreviousDemand = function(self)	
+	component.getPreviousDemand = function(self)	
 		return self.previousDemand
-  end
+	end
 
 	--- Return the current demand for an specific luIndex.
 	-- Used on allocation and continuous potential components.
@@ -126,13 +126,13 @@ function PreComputedValuesINPE(component)
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand for an specific luIndex.
 	-- @usage model:getCurrentLuDemand(luIndex)
-  component.getCurrentLuDemand = function(self, luIndex)		
+	component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
 		end
 		
 		return self.currentDemand[luIndex]
-  end
+	end
 
 	--- Return the previous demand for an specific luIndex.
 	-- Used on continuous pontencial component.
@@ -146,7 +146,7 @@ function PreComputedValuesINPE(component)
 		end	
 
 		return self.previousDemand[luIndex]
-  end
+	end
 
 	--- Return the current demand direction for an specific luIndex.
 	-- Used on continuous allocation component.
@@ -160,7 +160,7 @@ function PreComputedValuesINPE(component)
 		end	
 
 		return self.demandDirection[luIndex]
-  end	
+	end	
 
 	--- Invert the demand direction for an specific luIndex.
 	-- Used on continuous allocation component.
@@ -168,7 +168,7 @@ function PreComputedValuesINPE(component)
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
 	-- @usage model:changeLuDirection(luIndex)
-  component.changeLuDirection = function(self, luIndex)
+	component.changeLuDirection = function(self, luIndex)
 		local oppositeDirection = -1
 		
 		if (luIndex > self.numLU) then
@@ -178,7 +178,7 @@ function PreComputedValuesINPE(component)
 		self.demandDirection[luIndex] = self.demandDirection[luIndex] * oppositeDirection
 		
 		return self.demandDirection[luIndex]
-  end		
+	end		
 
 	return component
 end -- ScenariosDemand

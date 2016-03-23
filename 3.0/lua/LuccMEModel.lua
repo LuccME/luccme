@@ -69,43 +69,43 @@ function LuccMEModel(model)
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage luccMeModel:verify(event)
 	model.verify = function(self, event)
-	  print("\nVerifying Model parameters")
-	  -- Verify the model name
+		print("\nVerifying Model parameters")
+		-- Verify the model name
 		if (model.name == nil) then
 			error("Model name not defined", 2)
 		end
-	
-	  -- Verify the scenario name
+
+		-- Verify the scenario name
 		if (self.name == nil) then
 			error("A scenario name is required", 2)
 		end
-	 
-	  -- Verify the scenario start time
+
+		-- Verify the scenario start time
 		if (self.startTime == nil) then
 			error("A scenario start time is required", 2)
 		end
-	
-	  -- Verify the scenario stop time
-    if (self.endTime == nil) then
-      error("A scenario end time is required", 2)
-    end
-    
-    -- Verify the scenario date
-    if (self.endTime <= self.startTime) then
-      error("The scenario end time must be higher than the scenario start time", 2)
-    end
+		
+		  -- Verify the scenario stop time
+		if (self.endTime == nil) then
+		  error("A scenario end time is required", 2)
+		end
+		
+		-- Verify the scenario date
+		if (self.endTime <= self.startTime) then
+		  error("The scenario end time must be higher than the scenario start time", 2)
+		end
 
-    -- Verify the cellular space
-    if (not self.cs) then
-      error("A Cellular Space must be defined", 2)
-    end
+		-- Verify the cellular space
+		if (not self.cs) then
+		  error("A Cellular Space must be defined", 2)
+		end
 
-    -- Verify whether the land use no data is declared and its valid
-    if(self.landUseNoData == nil) then
-      error("Land use no data type is missing", 2)
-    elseif(self.cs.cells[1][self.landUseNoData] == nil) then
-      error("landUseNoData: "..self.landUseNoData.." not found within database", 2)
-    end
+		-- Verify whether the land use no data is declared and its valid
+		if(self.landUseNoData == nil) then
+		  error("Land use no data type is missing", 2)
+		elseif(self.cs.cells[1][self.landUseNoData] == nil) then
+		  error("landUseNoData: "..self.landUseNoData.." not found within database", 2)
+		end
     
 		self.result = {}
 
@@ -141,22 +141,22 @@ function LuccMEModel(model)
 		io.flush()
 		
 		-- Verify wheter the demand compontent was declared
-    if (not self.demand) then
-        error("A demand component must be specified", 2)
-    end
-    
-    -- Verify wheter the potential compontent was declared
-    if (not self.potential) then
-      error("A potential component must be specified", 2)     
-    end
+		if (not self.demand) then
+			error("A demand component must be specified", 2)
+		end
 		
-		-- Verify wheter the allocation compontent was declared
-    if (not self.allocation) then
-      error("An allocation component must be specified", 2)     
-    end
+		-- Verify wheter the potential compontent was declared
+		if (not self.potential) then
+		  error("A potential component must be specified", 2)     
+		end
+			
+			-- Verify wheter the allocation compontent was declared
+		if (not self.allocation) then
+		  error("An allocation component must be specified", 2)     
+		end
     
-    -- Verify the dates to be saved
-    -- This verification is done on Save.lua, because it necessary to execute before here.
+		-- Verify the dates to be saved
+		-- This verification is done on Save.lua, because it necessary to execute before here.
 
 		-- Verify the components
 		self.demand:verify(event, self)
@@ -177,41 +177,39 @@ function LuccMEModel(model)
 			-- If current year needs to update variables
 			if (currentTime == updtYear) then
 				print("Updating dynamic variables...")
-
+				
 				if ((self.scenarioStartTime ~= nil) and (currentTime >= self.scenarioStartTime)) then
-			    cs_temp = CellularSpace {	host = self.cs.host, user = self.cs.user, password = self.cs.password,
-            												database = self.cs.database,
-            												theme = self.cs.theme.."_"..self.scenarioName.."_"..updtYear
-										              }
-					print(self.cs.theme.."_"..self.scenarioName.."_"..updtYear)
+					cs_temp = CellularSpace {	project = self.cs.project, 
+												layer = self.cs.layer.."_"..self.scenarioName.."_"..updtYear
+											}
+					print(self.cs.layer.."_"..self.scenarioName.."_"..updtYear)
 				else
-					cs_temp = CellularSpace {	host = self.cs.host, user = self.cs.user, password = self.cs.password,
-				      							        database = self.cs.database,
-												            theme = self.cs.theme.."_"..updtYear
-											            }
-					print(self.cs.theme.."_"..updtYear)
+					cs_temp = CellularSpace {	project = self.cs.project,
+												layer = self.cs.theme.."_"..updtYear
+											}
+					print(self.cs.layer.."_"..updtYear)
 				end
 
 				-- For each cell in the original cs, variables are contained in cs_temp is updated
 				local flag = false
 			       		
-		    forEachCellPair(cs, cs_temp, function(cell, cell_temp)
-              													for var, value in pairs (cell_temp) do
-              														if (var ~= "cObj_" and var ~= "objectId_" and
-              															var ~= "y" and var ~= "x" and var ~= "past" and
-              															var ~= "agents" and var ~= "agents_" and
-              															var ~= "object_id_") then
-              																if (cell[var] ~= nil) then
-              																	cell[var] = cell_temp[var]
-              																	if (flag == false) then
-              																		print("          ", var, cell[var])
-              																	end		          					
-              																end
-              														end -- 1st inner if
-              													end -- for var
-              													flag = true
-              											 end -- function
-							          )
+				forEachCellPair(cs, cs_temp, function(cell, cell_temp)
+													for var, value in pairs (cell_temp) do
+														if (var ~= "cObj_" and var ~= "objectId_" and
+															var ~= "y" and var ~= "x" and var ~= "past" and
+															var ~= "agents" and var ~= "agents_" and
+															var ~= "object_id_") then
+																if (cell[var] ~= nil) then
+																	cell[var] = cell_temp[var]
+																	if (flag == false) then
+																		print("          ", var, cell[var])
+																	end		          					
+																end
+														end -- 1st inner if
+													end -- for var
+													flag = true
+											 end -- function
+								)
 			end -- if currentTime
 		end -- for				
 	end -- dinamicVars
@@ -221,12 +219,9 @@ end
 
 -- Override the error function to hold the screen.
 error = function(message, code)
-          print(message)
-          local answer
-          repeat
-             io.write("\nPress enter key to exit...")
-             io.flush()
-             answer = io.read()
-          until answer ~= "`"
-          os.exit()
+			print("\n[Error] "..message)
+            io.write("\nPress enter key to exit...")
+            io.flush()
+            io.read()
+			os.exit()
         end

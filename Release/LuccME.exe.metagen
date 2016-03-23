@@ -1,0 +1,231 @@
+  LuccME.AboutForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.AllocContinuousForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.AllocDiscreteForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.A_ABSO.resources - Embedded, ContainedInManifestFile, 
+  LuccME.A_Continuous.resources - Embedded, ContainedInManifestFile, 
+  LuccME.A_AllocationClueSLike.resources - Embedded, ContainedInManifestFile, 
+  LuccME.D_CIThreeDM.resources - Embedded, ContainedInManifestFile, 
+  LuccME.D_CITwoDM.resources - Embedded, ContainedInManifestFile, 
+  LuccME.D_PCVINPEForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.LanguageForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.LUND.resources - Embedded, ContainedInManifestFile, 
+  LuccME.LUTForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.MyForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.MySQLForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.NovoModelo.resources - Embedded, ContainedInManifestFile, 
+  LuccME.PotContinuousForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.PotDiscreteForm.resources - Embedded, ContainedInManifestFile, 
+  LuccME.P_Continuous.resources - Embedded, ContainedInManifestFile, 
+  LuccME.P_Discrete.resources - Embedded, ContainedInManifestFile, 
+  LuccME.P_SpatialLagLinearRoads.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly LuccME, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class LuccME.AboutForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String lLanguage : Public
+Class cReturn: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Return : Public
+    System.String Language : Public
+Class cReturnPCVINPE: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Return : Public
+    Int32 YearsForSimulation : Public
+    Boolean Empty : Public
+    Boolean ActiveComponent : Public
+    System.String StartTime : Public
+    System.String LUT : Public
+    System.String Language : Public
+Class cReturnCITwoMP: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Return : Public
+    Int32 FinalYear : Public
+    Boolean Empty : Public
+    Boolean ActiveComponent : Public
+    System.String LUT : Public
+    System.String Language : Public
+Class cReturnCIThreeMP: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Return : Public
+    Int32 MiddleYear : Public
+    Int32 FinalYear : Public
+    Boolean Empty : Public
+    Boolean ActiveComponent : Public
+    System.String LUT : Public
+    System.String Language : Public
+Class cReturnPotential: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Return : Public
+    System.String LUT : Public
+    Int32 Component : Public
+    System.String Language : Public
+Class cReturnAllocation: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Return : Public
+    System.String LUT : Public
+    Int32 Component : Public
+    System.String Language : Public
+Class LuccME.AllocContinuousForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnAllocation): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnAllocation lReturn : Public
+Class LuccME.A_Continuous: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnAllocation): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Boolean intialize : Public
+    cReturnAllocation lReturn : Public
+Class LuccME.AllocDiscreteForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnAllocation): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnAllocation lReturn : Public
+Class LuccME.A_ABSO: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnAllocation): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnAllocation lReturn : Public
+Class LuccME.A_AllocationClueSLike: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnAllocation): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnAllocation lReturn : Public
+Class LuccME.D_CIThreeDM: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnCIThreeMP): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnCIThreeMP lReturn : Public
+    Boolean changed : Public
+    Boolean close : Public
+    Boolean managed : Public
+Class LuccME.D_CITwoDM: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnCITwoMP): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnCITwoMP lReturn : Public
+    Boolean changed : Public
+    Boolean close : Public
+    Boolean managed : Public
+Class LuccME.D_PCVINPEForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnPCVINPE): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnPCVINPE lReturn : Public
+    Boolean changed : Public
+    Boolean close : Public
+    Boolean managed : Public
+Class LuccME.LanguageForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String lLanguage : Public
+Class LuccME.LUND: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturn): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturn lReturn : Public
+    System.String aux : Public
+    Boolean close : Public
+Class LuccME.LUTForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturn): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturn lReturn : Public
+    System.String aux : Public
+    Boolean close : Public
+Class LuccME.NovoModelo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(System.String, Boolean, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Boolean closing : Public
+    Boolean forceWriting : Public
+    Boolean runnable : Public
+    Boolean access : Public
+    Boolean lOpen : Public
+    Int32 gNumDiscPotComp : Public
+    Int32 gNumDiscAllocComp : Public
+    Int32 gDemandComponent : Public
+    Int32 gPotentialComponent : Public
+    Int32 gAllocationComponent : Public
+    Int32 gAttrTime : Public
+    Int32 gDynTime : Public
+    System.String gLandUseTypes : Public
+    System.String gLandUseNoData : Public
+    System.String gSelectedDatabase : Public
+    System.String gDemand : Public
+    System.String gDemandLUT : Public
+    System.String gDemandFinalYear : Public
+    System.String gDemandMiddleYear : Public
+    System.String gPotential : Public
+    System.String gPotentialLUT : Public
+    System.String gAllocation : Public
+    System.String gAllocationLUT : Public
+    System.String gAttrLUT : Public
+    System.String lLanguage : Public
+    System.Windows.Forms.TabPage validation : Public
+    System.String[] gParametersValues : Public
+    Int32 lReturn : Public
+Class LuccME.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String lLanguage : Public
+Class LuccME.MySQLForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturn): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturn lReturn : Public
+    System.String aux : Public
+    Boolean close : Public
+Class LuccME.PotDiscreteForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnPotential): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnPotential lReturn : Public
+Class LuccME.PotContinuousForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnPotential): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnPotential lReturn : Public
+Class LuccME.P_Continuous: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnPotential): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnPotential lReturn : Public
+    System.String[] lTempBetas : Public
+Class LuccME.P_SpatialLagLinearRoads: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnPotential): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnPotential lReturn : Public
+    System.String[] lTempBetas : Public
+    System.String[] lTempBetasRM : Public
+    System.String[] lTempAttributes : Public
+Class LuccME.P_Discrete: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(cReturnPotential): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    cReturnPotential lReturn : Public
+    System.String[] lTempBetas : Public

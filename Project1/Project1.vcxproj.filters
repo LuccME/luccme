@@ -27,9 +27,6 @@
     <ClCompile Include="LUTForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MySQLForm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="D_PCVINPEForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Function.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MySQLForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D_PCVINPEForm.h">

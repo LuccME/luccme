@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "NovoModelo.h"
 #include "LUTForm.h"
-#include "MySQLForm.h"
 #include "D_PCVINPEForm.h"
 #include "D_CITwoDM.h"
 #include "D_CIThreeDM.h"
@@ -75,10 +74,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lEndTime->Text = "End Time";
 		//tabDefSpatial
 		lSpacialDimensions->Text = " Spatial Definitions";
-		lDatabase->Text = "Database File";
+		lDatabase->Text = "Project File";
 		bSelectDatabase->Text = "Select";
-		bMySQL->Text = "Configure";
-		lThemeName->Text = "Theme Name";
+		lThemeName->Text = "Layer Name";
 		lCellArea->Text = "Cell Area";
 		//tabLUT
 		lLUTLarge->Text = "     Land Use Types";
@@ -145,10 +143,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSMainFile = "Select Main File";
 		gSSubmodelFile = "Select Submodel File";
 		gSLuaFile = "Lua File(*.lua)|*.lua";
-		gSAccess = "Access Database";
+		gSProject = "Project File";
 		gSDBTitle = "Select a Database File";
-		gSDBFilter = "Access Database (*.mdb)|*.mdb";
-		gSMySQL = "MySQL Database";
+		gSDBFilter = "Terraview Project (*.tview)|*.tview";
 		gSLUTManager = "Land Use no Data Manager";
 		gSDemand1Info = "Another demand component was modified.\nThe demand values will be erased.\nDo you want to proceed?";
 		gSDemand1Title = "Another demand component already in use";
@@ -256,10 +253,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lEndTime->Text = "Ano de Término";
 		//tabDefSpatial
 		lSpacialDimensions->Text = "Definições Espaciais";
-		lDatabase->Text = "Arquivo do Banco de Dados";
+		lDatabase->Text = "Arquivo do Projeto";
 		bSelectDatabase->Text = "Selecionar";
-		bMySQL->Text = "Configurar";
-		lThemeName->Text = "Nome do Tema";
+		lThemeName->Text = "Nome da Camada";
 		lCellArea->Text = "Tamanho da Célula";
 		//tabLUT
 		lLUTLarge->Text = "Tipos de Uso da Terra";
@@ -339,10 +335,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSMainFile = "Selecione o arquivo Main";
 		gSSubmodelFile = "Selecione o arquivo Submodel";
 		gSLuaFile = "Arquivo Lua (*.lua)|*.lua";
-		gSAccess = "Banco de dados Access";
+		gSProject = "Arquivo do Projeto";
 		gSDBTitle = "Escolha o arquivo do Bando de Dados";
-		gSDBFilter = "Banco Access (*.mdb)|*.mdb";
-		gSMySQL = "Banco de dados MySQL";
+		gSDBFilter = "Projeto Terraview (*.tview)|*.tview";
 		gSLUTManager = "Gerenciador de Tipo de Uso da Terra sem Dados";
 		gSDemand1Info = "Outro componente de demanda foi modificado anteriormente.\nOs valores de demanda serão apagados.\nDeseja continuar?";
 		gSDemand1Title = "Outro componente de Demanda já utilizado";
@@ -443,80 +438,9 @@ System::Void LuccME::NovoModelo::bSelectDatabase_Click(System::Object ^ sender, 
 	if (bdFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
 		gSelectedDatabase = bdFile->FileName;
-		array<String^>^ lines = { gSAccess, bdFile->FileName };
+		array<String^>^ lines = { gSProject, bdFile->FileName };
 		tbSelectedBatabase->Lines = lines;
 		access = true;
-	}
-}
-
-System::Void LuccME::NovoModelo::bMySQL_Click(System::Object ^ sender, System::EventArgs ^ e)
-{
-	// Handle with the MySQL database
-	cReturn^ lDatabase = gcnew cReturn();
-	if (access)
-	{
-		lDatabase->Return = "";
-	}
-	else {
-		if (tbSelectedBatabase->Text != "") {
-			array<String^>^ auxLines = tbSelectedBatabase->Lines;
-			String^ auxLine = "";
-
-			auxLine += auxLines[1]->Substring(gSHost->Length);
-			auxLine += ",";
-			auxLine += auxLines[2]->Substring(gSUser->Length);
-			auxLine += ",";
-			auxLine += auxLines[3]->Substring(gSPassword->Length);
-			auxLine += ",";
-			auxLine += auxLines[4]->Substring(gSDatabase->Length);
-		}
-		lDatabase->Return = gSelectedDatabase;
-	}
-	
-	lDatabase->Language = lLanguage;
-
-	LuccME::MySQLForm^ mySQLForm = gcnew MySQLForm(lDatabase);
-	mySQLForm->ShowDialog();
-	
-	gSelectedDatabase = lDatabase->Return;
-
-	if (gSelectedDatabase != "") {
-		array<String^>^ lines = { gSMySQL, "", "", "", "" };
-
-		if (gSelectedDatabase->Length > 0) {
-			String^ aux = "";
-			int count = 1;
-			for (int i = 0; i < gSelectedDatabase->Length; i++) {
-				if (gSelectedDatabase[i] != ',') {
-					aux += gSelectedDatabase[i];
-				}
-				else {
-					switch (count) {
-					case 1:
-						lines[1] = String::Concat(gSHost, aux);
-						count++;
-						break;
-					case 2:
-						lines[2] = String::Concat(gSUser, aux);
-						count++;
-						break;
-					case 3:
-						lines[3] = String::Concat(gSPassword, aux);
-						count++;
-						break;
-					default:
-						break;
-					}
-					aux = "";
-				}
-			}
-
-			if (aux != "") {
-				lines[4] = String::Concat(gSDatabase, aux);
-			}
-		}
-		tbSelectedBatabase->Lines = lines;
-		access = false;
 	}
 }
 
@@ -1870,18 +1794,18 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 			if (checked) {
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("-- This file contains a LUCCME APPLICATION MODEL definition --");
-				sw->WriteLine("--               Compatible with LuccME 2.2                 --");
+				sw->WriteLine("--               Compatible with LuccME 3.0                 --");
 				sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
 
-				sw->WriteLine("require (\"luccme\")\n");
+				sw->WriteLine("import(\"luccme\")\n");
 				String^ folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > 4) {
-					sw->WriteLine("dofile (\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_submodel.lua\")\n");
+					sw->WriteLine("dofile(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_submodel.lua\")\n");
 				}
 				else {
-					sw->WriteLine("dofile (\"" + folderAux + tModelName->Text->ToLower() + "_submodel.lua\")\n");
+					sw->WriteLine("dofile(\"" + folderAux + tModelName->Text->ToLower() + "_submodel.lua\")\n");
 				}
 				sw->WriteLine();
 
@@ -1904,18 +1828,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\t-----------------------------------------------------");
 				sw->WriteLine("\tcs = CellularSpace");
 				sw->WriteLine("\t{");
-				if (tbSelectedBatabase->Lines->Length > 0) {
-					if (tbSelectedBatabase->Lines[0]->ToString() == gSAccess) {
-						sw->WriteLine("\t\tdatabase = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
-					}
-					else {
-						sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[1]->ToString() + ",");
-						sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[2]->ToString() + ",");
-						sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[3]->ToString() + ",");
-						sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[4]->ToString() + ",\n");
-					}
-				}
-				sw->WriteLine("\t\ttheme = \"" + tThemeName->Text + "\",");
+				sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+				sw->WriteLine("\t\tlayer = \"" + tThemeName->Text + "\",");
 				sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
 				sw->WriteLine("\t},");
 
@@ -2007,11 +1921,9 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("{");
 				sw->WriteLine("\tEvent");
 				sw->WriteLine("\t{");
-				sw->WriteLine("\t\ttime = " + tModelName->Text + ".startTime,");
-				sw->WriteLine("\t\tperiod = 1,");
-				sw->WriteLine("\t\tpriority = 1,");
+				sw->WriteLine("\t\tstart = " + tModelName->Text + ".startTime,");
 				sw->WriteLine("\t\taction = function(event)");
-				sw->WriteLine("\t\t\t\t\t\t" + tModelName->Text + ":execute(event)");
+				sw->WriteLine("\t\t\t\t\t\t" + tModelName->Text + ":run(event)");
 				sw->WriteLine("\t\t\t\t  end");
 				sw->WriteLine("\t}");
 				sw->WriteLine("}\n");
@@ -2025,7 +1937,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("if " + tModelName->Text + ".isCoupled == false then");
 				sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
-				sw->WriteLine("\tenv_" + tModelName->Text + ":execute(" + tModelName->Text + ".endTime)");
+				sw->WriteLine("\tenv_" + tModelName->Text + ":run(" + tModelName->Text + ".endTime)");
 				sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
 				sw->WriteLine("end");
 
@@ -2049,7 +1961,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("--       This file contains the COMPONENTS definition       --");
-				sw->WriteLine("--               Compatible with LuccME 2.2                 --");
+				sw->WriteLine("--               Compatible with LuccME 3.0                 --");
 				sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
@@ -2572,14 +2484,17 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin\\");
+
 	String^ arguments = "";
+
 	if (lSelectedFolder->Text[lSelectedFolder->Text->Length - 1] != '\\') {
 		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tModelName->Text->ToLower() + "_main.lua\"";
 	}
 	else {
 		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tModelName->Text->ToLower() + "_main.lua\"";
 	}
-	
+
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
 	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
 	cmd->StartInfo->Arguments = arguments;
@@ -2822,7 +2737,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("theme") != 1) {
+					if (line->Contains("layer") != 1) {
 						tempDB += line;
 						line = sw->ReadLine();
 					}
@@ -2836,134 +2751,49 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tempDB = tempDB->Replace("\n", "");
 					tempDB = tempDB->Replace("\t", "");
 					String^ dbAux = "";
-
-					if (tempDB->Contains("host")) {
-						j = 0;
-						while (tempDB[j] != '{') {
-							j++;
-						}
-
-						tempDB = tempDB->Substring(j + 1)->Replace(" ", "");
-
-						array<String^>^ tempBd = gcnew array<String^>(5);
-						tempBd[0] = gSMySQL;
-						gSelectedDatabase = "";
-
-						j = 0;
-						while (tempDB[j] != '=') {
-							j++;
-						}
-
-						tempDB = tempDB->Substring(j + 1);
-
-						j = 0;
-						dbAux = "";
-						while (tempDB[j] != ',') {
-							dbAux += tempDB[j];
-							j++;
-						}
-
-						tempBd[1] = "host = " + dbAux;
-						gSelectedDatabase += dbAux;
-
-						j = 0;
-						while (tempDB[j] != '=') {
-							j++;
-						}
-
-						tempDB = tempDB->Substring(j + 1);
-
-						j = 0;
-						dbAux = "";
-						while (tempDB[j] != ',') {
-							dbAux += tempDB[j];
-							j++;
-						}
-
-						tempBd[2] = "user = " + dbAux;
-						gSelectedDatabase += "," + dbAux;
-
-						j = 0;
-						while (tempDB[j] != '=') {
-							j++;
-						}
-
-						tempDB = tempDB->Substring(j + 1);
-
-						j = 0;
-						dbAux = "";
-						while (tempDB[j] != ',') {
-							dbAux += tempDB[j];
-							j++;
-						}
-
-						tempBd[3] = "password = " + dbAux;
-						gSelectedDatabase += "," + dbAux;
-
-						j = 0;
-						while (tempDB[j] != '=') {
-							j++;
-						}
-
-						tempDB = tempDB->Substring(j + 1);
-
-						j = 0;
-						dbAux = "";
-						while (tempDB[j] != ',') {
-							dbAux += tempDB[j];
-							j++;
-						}
-
-						tempBd[4] = "database = " + dbAux;
-						gSelectedDatabase += "," + dbAux;
-
-						tbSelectedBatabase->Lines = tempBd;
-						access = false;
-					}
-					else {
-						j = 0;
-						while (tempDB[j] != '{') {
-							j++;
-						}
-
-						tempDB = tempDB->Substring(j + 1);
-
-						j = 0;
-						while (tempDB[j] != '\"') {
-							j++;
-						}
-
+					
+					j = 0;
+					while (tempDB[j] != '{') {
 						j++;
-						dbAux = "";
+					}
 
-						for (int i = j; i < tempDB->Length - 2; i++) {
-							if (tempDB[j] != '\"') {
-								dbAux += tempDB[i];
-							}
-							else {
-								break;
-							}
+					tempDB = tempDB->Substring(j + 1);
+
+					j = 0;
+					while (tempDB[j] != '\"') {
+						j++;
+					}
+
+					j++;
+					dbAux = "";
+
+					for (int i = j; i < tempDB->Length - 2; i++) {
+						if (tempDB[j] != '\"') {
+							dbAux += tempDB[i];
 						}
-
-						dbAux = dbAux->Replace("\\\\", "\\");
-
-						{
-							array<String^>^ tempBd = gcnew array<String^>(2);
-							String^ path = dbAux;
-
-							if (File::Exists(path))
-							{
-								tempBd[0] = gSAccess;
-								tempBd[1] = dbAux;
-								tbSelectedBatabase->Lines = tempBd;
-								access = true;
-							}
-							else {
-								imported = false;
-							}
+						else {
+							break;
 						}
 					}
 
+					dbAux = dbAux->Replace("\\\\", "\\");
+
+					{
+						array<String^>^ tempBd = gcnew array<String^>(2);
+						String^ path = dbAux;
+
+						if (File::Exists(path))
+						{
+							tempBd[0] = gSProject;
+							tempBd[1] = dbAux;
+							tbSelectedBatabase->Lines = tempBd;
+							access = true;
+						}
+						else {
+							imported = false;
+						}
+					}
+					
 					j = 0;
 					while (line[j] != '\"') {
 						j++;
@@ -5612,7 +5442,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				MessageBox::Show(gSImportError, gSImportErrorTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				closing = true;
 				this->Close();
-			}//
+			}
 		}
 	}
 }
@@ -5801,21 +5631,10 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
 		sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
 		sw->WriteLine("");
-		if (access) {
-			sw->WriteLine("cs = CellularSpace {");
-			sw->WriteLine("\t\tdatabase = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
-			sw->WriteLine("\t\ttheme = input_theme_name");
-			sw->WriteLine("}");
-		}
-		else {
-			sw->WriteLine("cs = CellularSpace {" + tbSelectedBatabase->Lines[1]->ToString() + ",");
-			sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[2]->ToString() + ",");
-			sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[3]->ToString() + ",");
-			sw->WriteLine("\t\t" + tbSelectedBatabase->Lines[4]->ToString() + ",");
-			sw->WriteLine("\t\t" + "theme = input_theme_name");
-			sw->WriteLine("}");
-		}
-
+		sw->WriteLine("cs = CellularSpace {");
+		sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+		sw->WriteLine("\t\tlayer = input_theme_name");
+		sw->WriteLine("}");
 		sw->WriteLine("");
 		sw->WriteLine("range = " + tRange->Text + " / 100");
 		

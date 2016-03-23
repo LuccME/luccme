@@ -43,7 +43,7 @@ namespace LuccME {
 		String^ gSNewModel = "";
 		String^ gSNewModelTitle = "";
 		String^ gSOpenModelTitle = "";
-		String^ gSAccess = "";
+		String^ gSProject = "";
 		String^ gSMainImport = "";
 		String^ gSMainImportTitle = "";
 		String^ gSMainLoad = "";
@@ -53,7 +53,6 @@ namespace LuccME {
 		String^ gSLuaFile = "";
 		String^ gSDBTitle = "";
 		String^ gSDBFilter = "";
-		String^ gSMySQL = "";
 		String^ gSLUTManager = ""; 
 		String^ gSDemand1Info = ""; 
 		String^ gSDemand1Title = "";
@@ -257,9 +256,9 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 	private: System::Windows::Forms::Label^  lDirProj;
 	private: System::Windows::Forms::TabPage^  tabDefSpatial;
 	private: System::Windows::Forms::Button^  bSelectDatabase;
-	private: System::Windows::Forms::Button^  bMySQL;
-	private: System::Windows::Forms::Label^  lOu;
-	private: System::Windows::Forms::Label^  lMySQL;
+
+
+
 	private: System::Windows::Forms::Label^  lAccess;
 	private: System::Windows::Forms::TextBox^  tCellArea;
 	private: System::Windows::Forms::Label^  lCellArea;
@@ -325,9 +324,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tabDefSpatial = (gcnew System::Windows::Forms::TabPage());
 			this->tbSelectedBatabase = (gcnew System::Windows::Forms::TextBox());
 			this->bSelectDatabase = (gcnew System::Windows::Forms::Button());
-			this->bMySQL = (gcnew System::Windows::Forms::Button());
-			this->lOu = (gcnew System::Windows::Forms::Label());
-			this->lMySQL = (gcnew System::Windows::Forms::Label());
 			this->lAccess = (gcnew System::Windows::Forms::Label());
 			this->tCellArea = (gcnew System::Windows::Forms::TextBox());
 			this->lCellArea = (gcnew System::Windows::Forms::Label());
@@ -683,9 +679,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			this->tabDefSpatial->Controls->Add(this->tbSelectedBatabase);
 			this->tabDefSpatial->Controls->Add(this->bSelectDatabase);
-			this->tabDefSpatial->Controls->Add(this->bMySQL);
-			this->tabDefSpatial->Controls->Add(this->lOu);
-			this->tabDefSpatial->Controls->Add(this->lMySQL);
 			this->tabDefSpatial->Controls->Add(this->lAccess);
 			this->tabDefSpatial->Controls->Add(this->tCellArea);
 			this->tabDefSpatial->Controls->Add(this->lCellArea);
@@ -721,38 +714,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->bSelectDatabase->Text = L"Selecionar";
 			this->bSelectDatabase->UseVisualStyleBackColor = true;
 			this->bSelectDatabase->Click += gcnew System::EventHandler(this, &NovoModelo::bSelectDatabase_Click);
-			// 
-			// bMySQL
-			// 
-			this->bMySQL->Location = System::Drawing::Point(440, 94);
-			this->bMySQL->Name = L"bMySQL";
-			this->bMySQL->Size = System::Drawing::Size(75, 23);
-			this->bMySQL->TabIndex = 87;
-			this->bMySQL->Text = L"Configurar";
-			this->bMySQL->UseVisualStyleBackColor = true;
-			this->bMySQL->Click += gcnew System::EventHandler(this, &NovoModelo::bMySQL_Click);
-			// 
-			// lOu
-			// 
-			this->lOu->AutoSize = true;
-			this->lOu->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold));
-			this->lOu->Location = System::Drawing::Point(399, 100);
-			this->lOu->Name = L"lOu";
-			this->lOu->Size = System::Drawing::Size(19, 13);
-			this->lOu->TabIndex = 89;
-			this->lOu->Text = L"ou";
-			this->lOu->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			// 
-			// lMySQL
-			// 
-			this->lMySQL->AutoSize = true;
-			this->lMySQL->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold));
-			this->lMySQL->Location = System::Drawing::Point(456, 78);
-			this->lMySQL->Name = L"lMySQL";
-			this->lMySQL->Size = System::Drawing::Size(40, 13);
-			this->lMySQL->TabIndex = 88;
-			this->lMySQL->Text = L"MySQL";
-			this->lMySQL->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			// 
 			// lAccess
 			// 
@@ -1798,7 +1759,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 	private: System::Void bSelectDatabase_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bLUTManager_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bLUNDManager_Click(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void bMySQL_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bD_PCVINPE_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bD_CITwoDM_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bD_CIThreeDM_Click(System::Object^  sender, System::EventArgs^  e);

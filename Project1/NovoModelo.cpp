@@ -5683,10 +5683,10 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tif cell.flag == 0 then");
 				sw->WriteLine("\t\t\tfor xx = 0, (window - 1) do");
 				sw->WriteLine("\t\t\t\tfor yy = 0,(window - 1) do");
-				sw->WriteLine("\t\t\t\t\tif cs1:getCell(cell.x + xx, cell.y + yy) ~= nil then");
+				sw->WriteLine("\t\t\t\t\tif cs1:get(cell.x + xx, cell.y + yy) ~= nil then");
 				sw->WriteLine("\t\t\t\t\t\tinternalcount = internalcount + 1");
-				sw->WriteLine("\t\t\t\t\t\tcc1[internalcount] = cs1:getCell(cell.x + xx, cell.y + yy)");
-				sw->WriteLine("\t\t\t\t\t\tcc2[internalcount] = cs2:getCell(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\t\tcc1[internalcount] = cs1:get(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\t\tcc2[internalcount] = cs2:get(cell.x + xx, cell.y + yy)");
 				sw->WriteLine("\t\t\t\t\tend");
 				sw->WriteLine("\t\t\t\tend");
 				sw->WriteLine("\t\t\tend");
@@ -5766,14 +5766,18 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tfile:write(\"\\n\")");
 				sw->WriteLine("\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\tio.flush()");
-				sw->WriteLine("");
-				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
-				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
-				sw->WriteLine("attrs[numberOfWindows+2] = attribute2");
+				sw->WriteLine("forEachCell(cs, function(cell)");
+				sw->WriteLine("\t\t\t\t for i = 1, #attrs do");
+				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then	cell[attrs[i]] = 0 end");
+				sw->WriteLine("\t\t\t\tend");
+				sw->WriteLine("end)");
 				sw->WriteLine("");
-				sw->WriteLine("if (flag_save) then cs:save(final_year, output_theme, attrs) end");
+				sw->WriteLine("if (flag_save) then");
+				sw->WriteLine("\tprint(\"\\nSaving \"..output_theme..\" into database.\")");
+				sw->WriteLine("\tcs:save(output_theme, attrs)");
+				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("file:close()");
 				break;
@@ -5819,10 +5823,10 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tif cell.flag == 0 then");
 				sw->WriteLine("\t\t\tfor xx = 0, (window - 1) do");
 				sw->WriteLine("\t\t\t\tfor yy = 0, (window - 1) do");
-				sw->WriteLine("\t\t\t\t\tif cs1:getCell(cell.x + xx, cell.y + yy) ~= nil then");
+				sw->WriteLine("\t\t\t\t\tif cs1:get(cell.x + xx, cell.y + yy) ~= nil then");
 				sw->WriteLine("\t\t\t\t\t\tinternalcount = internalcount + 1");
-				sw->WriteLine("\t\t\t\t\t\tcc1[internalcount] = cs1:getCell(cell.x + xx, cell.y + yy)");
-				sw->WriteLine("\t\t\t\t\t\tcc2[internalcount] = cs2:getCell(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\t\tcc1[internalcount] = cs1:get(cell.x + xx, cell.y + yy)");
+				sw->WriteLine("\t\t\t\t\t\tcc2[internalcount] = cs2:get(cell.x + xx, cell.y + yy)");
 				sw->WriteLine("\t\t\t\t\tend");
 				sw->WriteLine("\t\t\t\tend");
 				sw->WriteLine("\t\t\tend");
@@ -5899,8 +5903,8 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("\tif ((i == 1) or (i % 1 == 0)) then");
 				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then");
-				sw->WriteLine("\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
-				sw->WriteLine("file:write(\"\\n\")");
+				sw->WriteLine("\t\t\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\t\t\tfile:write(\"\\n\")");
 				sw->WriteLine("\t\t\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\t\telse");
 				sw->WriteLine("\t\t\tfile:write(i..\"\\t\",\"0.00 %\")");
@@ -5908,14 +5912,18 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tend");
 				sw->WriteLine("\tend");
 				sw->WriteLine("\tio.flush()");
-				sw->WriteLine("");
-				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
-				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
-				sw->WriteLine("attrs[numberOfWindows+2] = attribute2");
-				sw->WriteLine("");
-				sw->WriteLine("if (flag_save) then cs:save(final_year, output_theme, attrs) end");
+				sw->WriteLine("forEachCell(cs, function(cell)");
+				sw->WriteLine("\t\t\t\t for i = 1, #attrs do");
+				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then	cell[attrs[i]] = 0 end");
+				sw->WriteLine("\t\t\t\tend");
+				sw->WriteLine("end)");
+				sw->WriteLine(""); 
+				sw->WriteLine("if (flag_save) then");
+				sw->WriteLine("\tprint(\"\\nSaving \"..output_theme..\" into database.\")");
+				sw->WriteLine("\tcs:save(output_theme, attrs)");
+				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("file:close()");
 				break;
@@ -5934,6 +5942,8 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("until answer ~= \"`\"");
 
 		sw->Close();
+
+		Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin\\");
 
 		String^ arguments = "validation.lua";
 		System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;

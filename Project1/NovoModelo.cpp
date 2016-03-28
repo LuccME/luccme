@@ -447,13 +447,13 @@ System::Void LuccME::NovoModelo::bSelectDatabase_Click(System::Object ^ sender, 
 System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	cReturn^ lLandUses = gcnew cReturn();
-	lLandUses->Return = gLandUseTypes;
+	lLandUses->Return = gLandUseTypes->ToLower();
 	lLandUses->Language = lLanguage;
 
 	LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUses);
 	landUseTypeForm->ShowDialog();
 
-	gLandUseTypes = lLandUses->Return;
+	gLandUseTypes = lLandUses->Return->ToLower();
 	lLUTShow->Text = gLandUseTypes;
 }
 
@@ -1624,6 +1624,26 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		
 		if (tOutputTheme->ForeColor == System::Drawing::Color::Black && tInputThemeName->ForeColor != System::Drawing::Color::Black) {
 			tInputThemeName->Text = tOutputTheme->Text + tEndTime->Text;
+		}
+
+		if (tAttributeInitValidation->ForeColor != System::Drawing::Color::Black) {
+			String^ auxAttributeName = "";
+			if (gLandUseTypes != "") {
+				for (int i = 0; i < gLandUseTypes->Length-1; i++) {
+					if (gLandUseTypes[i] != ',') {
+						auxAttributeName += gLandUseTypes[i];
+					}
+					else {
+						break;
+					}
+				}
+				
+				tAttributeInitValidation->Text = auxAttributeName->Replace("\"", "");
+			}
+		}
+
+		if (tAttributeForValidation->ForeColor != System::Drawing::Color::Black) {
+			tAttributeForValidation->Text = tAttributeInitValidation->Text + "_out";
 		}
 	
 		if (tAttributeFinalValidation->ForeColor != System::Drawing::Color::Black) {
@@ -5959,5 +5979,15 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		{
 			File::Delete(path);
 		}
+	}
+}
+
+System::Void LuccME::NovoModelo::tAttributeInitValidation_Leave(System::Object^  sender, System::EventArgs^  e) {
+	if (tAttributeForValidation->ForeColor != System::Drawing::Color::Black) {
+		tAttributeForValidation->Text = tAttributeInitValidation->Text + "_out";
+	}
+
+	if (tAttributeFinalValidation->ForeColor != System::Drawing::Color::Black) {
+		tAttributeFinalValidation->Text = tAttributeInitValidation->Text + tEndTime->Text;
 	}
 }

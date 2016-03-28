@@ -101,7 +101,7 @@ namespace LuccME {
 			this->tLUT->Name = L"tLUT";
 			this->tLUT->Size = System::Drawing::Size(194, 20);
 			this->tLUT->TabIndex = 36;
-			this->tLUT->Text = L"Floresta";
+			this->tLUT->Text = L"floresta";
 			this->tLUT->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tLUT->Enter += gcnew System::EventHandler(this, &LUTForm::tLUT_Enter);
 			// 

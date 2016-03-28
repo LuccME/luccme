@@ -400,7 +400,7 @@ System::Void LuccME::P_Continuous::dgBetas_KeyDown(System::Object ^ sender, Syst
 					int column = startCell->ColumnIndex;
 					for (int i = row; i < dgBetas->RowCount; i++) {
 						for (int j = column; j < dgBetas->ColumnCount; j++) {
-							if (dgBetas->Rows[i]->Cells[j]->Selected == true && j != 0) {
+							if (dgBetas->Rows[i]->Cells[j]->Selected == true) {
 								dgBetas->Rows[i]->Cells[j]->Value = "";
 							}
 						}

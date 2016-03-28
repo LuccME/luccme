@@ -200,9 +200,9 @@ namespace LuccME {
 	private: System::Windows::Forms::TextBox^  tRange;
 	private: System::Windows::Forms::Label^  lRange;
 	private: System::Windows::Forms::Label^  lSimResult;
-private: System::Windows::Forms::Label^  lThemeHelp;
-private: System::Windows::Forms::CheckBox^  cValidationSave;
-private: System::Windows::Forms::Label^  lRangeHelp;
+	private: System::Windows::Forms::Label^  lThemeHelp;
+	private: System::Windows::Forms::CheckBox^  cValidationSave;
+	private: System::Windows::Forms::Label^  lRangeHelp;
 
 
 
@@ -257,9 +257,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 	private: System::Windows::Forms::TabPage^  tabDefSpatial;
 	private: System::Windows::Forms::Button^  bSelectDatabase;
 
-
-
-	private: System::Windows::Forms::Label^  lAccess;
 	private: System::Windows::Forms::TextBox^  tCellArea;
 	private: System::Windows::Forms::Label^  lCellArea;
 	private: System::Windows::Forms::TextBox^  tThemeName;
@@ -324,7 +321,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tabDefSpatial = (gcnew System::Windows::Forms::TabPage());
 			this->tbSelectedBatabase = (gcnew System::Windows::Forms::TextBox());
 			this->bSelectDatabase = (gcnew System::Windows::Forms::Button());
-			this->lAccess = (gcnew System::Windows::Forms::Label());
 			this->tCellArea = (gcnew System::Windows::Forms::TextBox());
 			this->lCellArea = (gcnew System::Windows::Forms::Label());
 			this->tThemeName = (gcnew System::Windows::Forms::TextBox());
@@ -679,7 +675,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			// 
 			this->tabDefSpatial->Controls->Add(this->tbSelectedBatabase);
 			this->tabDefSpatial->Controls->Add(this->bSelectDatabase);
-			this->tabDefSpatial->Controls->Add(this->lAccess);
 			this->tabDefSpatial->Controls->Add(this->tCellArea);
 			this->tabDefSpatial->Controls->Add(this->lCellArea);
 			this->tabDefSpatial->Controls->Add(this->tThemeName);
@@ -714,17 +709,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->bSelectDatabase->Text = L"Selecionar";
 			this->bSelectDatabase->UseVisualStyleBackColor = true;
 			this->bSelectDatabase->Click += gcnew System::EventHandler(this, &NovoModelo::bSelectDatabase_Click);
-			// 
-			// lAccess
-			// 
-			this->lAccess->AutoSize = true;
-			this->lAccess->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold));
-			this->lAccess->Location = System::Drawing::Point(322, 78);
-			this->lAccess->Name = L"lAccess";
-			this->lAccess->Size = System::Drawing::Size(38, 13);
-			this->lAccess->TabIndex = 86;
-			this->lAccess->Text = L"Access";
-			this->lAccess->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			// 
 			// tCellArea
 			// 
@@ -1507,7 +1491,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->cbValidationMethod->Location = System::Drawing::Point(195, 68);
 			this->cbValidationMethod->Name = L"cbValidationMethod";
 			this->cbValidationMethod->Size = System::Drawing::Size(316, 21);
-			this->cbValidationMethod->TabIndex = 111;
+			this->cbValidationMethod->TabIndex = 105;
 			// 
 			// cValidationSave
 			// 
@@ -1573,7 +1557,7 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tRange->Location = System::Drawing::Point(506, 162);
 			this->tRange->Name = L"tRange";
 			this->tRange->Size = System::Drawing::Size(162, 20);
-			this->tRange->TabIndex = 114;
+			this->tRange->TabIndex = 105;
 			this->tRange->Text = L"0";
 			this->tRange->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tRange->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
@@ -1618,8 +1602,8 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tAttributeFinalValidation->Location = System::Drawing::Point(275, 258);
 			this->tAttributeFinalValidation->Name = L"tAttributeFinalValidation";
 			this->tAttributeFinalValidation->Size = System::Drawing::Size(162, 20);
-			this->tAttributeFinalValidation->TabIndex = 109;
-			this->tAttributeFinalValidation->Text = L"Floresta";
+			this->tAttributeFinalValidation->TabIndex = 107;
+			this->tAttributeFinalValidation->Text = L"desmatamento";
 			this->tAttributeFinalValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tAttributeFinalValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
@@ -1641,10 +1625,11 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tAttributeInitValidation->Location = System::Drawing::Point(275, 162);
 			this->tAttributeInitValidation->Name = L"tAttributeInitValidation";
 			this->tAttributeInitValidation->Size = System::Drawing::Size(162, 20);
-			this->tAttributeInitValidation->TabIndex = 107;
-			this->tAttributeInitValidation->Text = L"Desmatamento";
+			this->tAttributeInitValidation->TabIndex = 104;
+			this->tAttributeInitValidation->Text = L"desmatamento";
 			this->tAttributeInitValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tAttributeInitValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			this->tAttributeInitValidation->Leave += gcnew System::EventHandler(this, &NovoModelo::tAttributeInitValidation_Leave);
 			// 
 			// lAttributeInitValidation
 			// 
@@ -1664,8 +1649,8 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 			this->tAttributeForValidation->Location = System::Drawing::Point(33, 258);
 			this->tAttributeForValidation->Name = L"tAttributeForValidation";
 			this->tAttributeForValidation->Size = System::Drawing::Size(162, 20);
-			this->tAttributeForValidation->TabIndex = 105;
-			this->tAttributeForValidation->Text = L"Desmatamento_out";
+			this->tAttributeForValidation->TabIndex = 106;
+			this->tAttributeForValidation->Text = L"desmatamento_out";
 			this->tAttributeForValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tAttributeForValidation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
@@ -1784,5 +1769,6 @@ private: System::Windows::Forms::Label^  lRangeHelp;
 	private: System::Void bDynamicSelect_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cScenario_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bValidate_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void tAttributeInitValidation_Leave(System::Object^  sender, System::EventArgs^  e);
 	};
 }

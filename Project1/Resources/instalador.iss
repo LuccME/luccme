@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1F80FBB1-2C18-4FC0-85FB-E82346A23938}
 AppName=LuccME
-AppVersion=1.1.2.2
+AppVersion=2.0.3.0
 ;AppVerName=LuccME 1.0.2.1
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
@@ -17,14 +17,15 @@ DefaultDirName=C:\LuccME
 DisableDirPage=yes
 DefaultGroupName=LuccME
 DisableProgramGroupPage=yes
-LicenseFile=D:\_SVN\LuccME\branches\Project1\Project1\Resources\comment.txt
+LicenseFile=D:\_SVN\LuccME\branches\Project2\Project1\Resources\comment.txt
 OutputDir=D:\Diego Melo\Desktop
-OutputBaseFilename=LuccME_1.1.2.2
-SetupIconFile=D:\_SVN\LuccME\branches\Project1\Project1\Resources\icon.ico
+OutputBaseFilename=LuccME_2.0.3.0
+SetupIconFile=D:\_SVN\LuccME\branches\Project2\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes
 UninstallFilesDir=C:\LuccME
-ChangesEnvironment=yes
+;ChangesEnvironment=yes
+UninstallDisplayIcon={app}\icon.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -43,6 +44,7 @@ Name: "{group}\LuccME"; Filename: "C:\LuccME\LuccME.exe"
 Name: "{group}\{cm:UninstallProgram,LuccME}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\LuccME"; Filename: "C:\LuccME\LuccME.exe"; Tasks: desktopicon
 
-[Registry]
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "TME_PATH_1_3_1"; ValueData: "C:\LuccME\TerraME"; Flags: uninsdeletevalue
+
+;[Registry]
+;Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "TME_PATH_1_3_1"; ValueData: "C:\LuccME\TerraME"; Flags: uninsdeletevalue
 ;Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};C:\LuccME\TerraME";

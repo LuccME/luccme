@@ -30,7 +30,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bPotContinuous->Enabled = true;
 		bAllocContinuous->Enabled = true;
 	}
-	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscAllocComp) || (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
+	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) || (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
 		bPotDiscrete->Enabled = true;
 		bAllocDiscrete->Enabled = true;
 		bPotContinuous->Enabled = false;
@@ -5947,8 +5947,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\tfile:write(\"\\n\")");
 				sw->WriteLine("\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\tio.flush()");
-				sw->WriteLine("");
-				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");
@@ -6089,8 +6087,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tend");
 				sw->WriteLine("\tend");
 				sw->WriteLine("\tio.flush()");
-				sw->WriteLine("");
-				sw->WriteLine("\tforEachCell(cs, function(cell) cell[\"diff\"..i] = cell[\"diff\"..i] / (2 * sum) end)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("attrs[numberOfWindows+1] = attribute1");

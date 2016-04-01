@@ -141,7 +141,7 @@ namespace LuccME {
 			this->lVersion->Name = L"lVersion";
 			this->lVersion->Size = System::Drawing::Size(87, 22);
 			this->lVersion->TabIndex = 18;
-			this->lVersion->Text = L"Versão 1.0";
+			this->lVersion->Text = L"Versão 1.3";
 			// 
 			// lProgram
 			// 
@@ -161,7 +161,7 @@ namespace LuccME {
 			this->lCompatible->Name = L"lCompatible";
 			this->lCompatible->Size = System::Drawing::Size(191, 19);
 			this->lCompatible->TabIndex = 21;
-			this->lCompatible->Text = L"Compatível com LuccME 2.1";
+			this->lCompatible->Text = L"Compatível com LuccME 2.2";
 			// 
 			// linkLabel1
 			// 

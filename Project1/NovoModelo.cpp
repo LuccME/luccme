@@ -29,7 +29,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bPotContinuous->Enabled = true;
 		bAllocContinuous->Enabled = true;
 	}
-	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscAllocComp) || (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
+	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) || (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
 		bPotDiscrete->Enabled = true;
 		bAllocDiscrete->Enabled = true;
 		bPotContinuous->Enabled = false;
@@ -2537,7 +2537,6 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			bool main = false;
 			bool submodel = false;
 			bool imported = true;
-			this->Text = gSEditing;
 
 			MessageBox::Show(gSMainLoad, gSMainLoadTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
 
@@ -5454,6 +5453,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					bRun->Visible = true;
 					runnable = true;
 					checkLanguage();
+					this->Text = gSEditing;
 				}
 			}
 		} 
@@ -5489,26 +5489,14 @@ System::Void LuccME::NovoModelo::sobreToolStripMenuItem_Click(System::Object ^ s
 
 System::Void LuccME::NovoModelo::novoToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	bool check = true;
-	if (MessageBox::Show(gSNewModel, gSNewModelTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
-		check = false;
-	}
-	if (check) {
-		lReturn = 1;
-		this->Close();
-	}
+	lReturn = 1;
+	this->Close();
 }
 
 System::Void LuccME::NovoModelo::abrirToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	bool check = true;
-	if (MessageBox::Show(gSNewModel, gSOpenModelTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
-		check = false;
-	}
-	if (check) {
-		lReturn = 2;
-		this->Close();
-	}
+	lReturn = 2;
+	this->Close();
 }
 
 System::Void LuccME::NovoModelo::luccMEToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -5749,9 +5737,9 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
-				sw->WriteLine("file:write(\"input theme : \", input_theme_name)");
+				sw->WriteLine("file:write(\"layer\t\t : \", input_theme_name)");
 				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine("print(\"input theme : \", input_theme_name)");
+				sw->WriteLine("print(\"layer\t\t : \", input_theme_name)");
 				sw->WriteLine("file:write(\"attr REAL initial:\", init_real)");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
@@ -5889,9 +5877,9 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
-				sw->WriteLine("file:write(\"input theme : \", input_theme_name)");
+				sw->WriteLine("file:write(\"layer\t\t : \", input_theme_name)");
 				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine("print(\"input theme : \", input_theme_name)");
+				sw->WriteLine("print(\"layer\t\t : \", input_theme_name)");
 				sw->WriteLine("file:write(\"attr REAL initial:\", init_real)");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");

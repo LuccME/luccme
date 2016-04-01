@@ -741,7 +741,7 @@ namespace LuccME {
 			this->tThemeName->Name = L"tThemeName";
 			this->tThemeName->Size = System::Drawing::Size(194, 20);
 			this->tThemeName->TabIndex = 83;
-			this->tThemeName->Text = L"theme_name";
+			this->tThemeName->Text = L"layer_name";
 			this->tThemeName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tThemeName->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 

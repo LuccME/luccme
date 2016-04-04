@@ -2,6 +2,7 @@
 #include "PotContinuousForm.h"
 #include "P_Continuous.h"
 #include "P_SpatialLagLinearRoads.h"
+#include "P_ContinuousR.h"
 
 System::Void LuccME::PotContinuousForm::PotContinuousForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
@@ -32,7 +33,10 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 	}
 	if (check) {
 		lReturn->Component = 6;
-		P_Continuous^ potentialForm = gcnew P_Continuous(lReturn);
+		//P_Continuous^ potentialForm = gcnew P_Continuous(lReturn);
+
+		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
+
 		potentialForm->Text = gSPot + "Linear Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {

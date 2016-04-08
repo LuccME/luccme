@@ -22,6 +22,7 @@ namespace LuccME {
 		String^ gSEmptyComponentTitle = "";
 		String^ gSEmptyBetaTitle = "";
 		String^ gSEmptyBeta = "";
+		String^ gSAttributes = "";
 
 	public:
 		cReturnPotential^ lReturn;

@@ -17,7 +17,8 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		bCancel->Text = "Cancel";
 		bSalvar->Text = "Save";
 		gSLUT = "Land Use Types";
-		gSValues = "Values";
+		gSValues = "Coefficient";
+		gSAttributes = "Attributes";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
 		copyToolStripMenuItem->Text = "Copy";
@@ -30,7 +31,8 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		bCancel->Text = "Cancelar";
 		bSalvar->Text = "Salvar";
 		gSLUT = "Tipos de Uso da Terra";
-		gSValues = "Valores";
+		gSValues = "Coeficientes";
+		gSAttributes = "Atributos";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
 		copyToolStripMenuItem->Text = "Copiar";
@@ -118,7 +120,7 @@ System::Void LuccME::P_Discrete::lvLUT_SelectedIndexChanged(System::Object ^ sen
 {
 	if (bAddBetas->Visible == false) {
 		dgBetas->ColumnCount = 2;
-		dgBetas->Columns[0]->Name = "Betas";
+		dgBetas->Columns[0]->Name = gSAttributes;
 		dgBetas->Columns[1]->Name = gSValues;
 
 		for (int i = 0; i < lvLUT->Items->Count; i++) {

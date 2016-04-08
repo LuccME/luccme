@@ -21,6 +21,7 @@ namespace LuccME {
 		String^ gSEmptyComponentTitle = "";
 		String^ gSEmptyBetaTitle = "";
 		String^ gSEmptyBeta = "";
+		String^ gSAttributes = "";
 
 	private: System::Windows::Forms::TextBox^  tLUT;
 	private: System::Windows::Forms::Button^  bCancel;

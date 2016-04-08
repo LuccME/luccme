@@ -17,7 +17,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown(Syst
 		bCancel->Text = "Cancel";
 		bSalvar->Text = "Save";
 		gSLUT = "Land Use Types";
-		gSValues = "Values";
+		gSValues = "Coefficient";
 		gSAttributes = "Attributes";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
@@ -38,7 +38,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown(Syst
 		bCancel->Text = "Cancelar";
 		bSalvar->Text = "Salvar";
 		gSLUT = "Tipos de Uso da Terra";
-		gSValues = "Valores";
+		gSValues = "Coeficientes";
 		gSAttributes = "Atributos";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
@@ -105,7 +105,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::lvLUT_SelectedIndexChanged(System:
 {
 	if (bRoadsModel->Visible == false) {
 		dgBetas->ColumnCount = 2;
-		dgBetas->Columns[0]->Name = "Betas";
+		dgBetas->Columns[0]->Name = gSAttributes;
 		dgBetas->Columns[1]->Name = gSValues;
 
 		for (int i = 0; i < lvLUT->Items->Count; i++) {
@@ -234,7 +234,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::bRoadsModel_Click(System::Object ^
 		dgAttr->Columns[0]->Name = gSAttributes;
 
 		dgBetasRM->ColumnCount = 2;
-		dgBetasRM->Columns[0]->Name = "Betas";
+		dgBetasRM->Columns[0]->Name = gSAttributes;
 		dgBetasRM->Columns[1]->Name = gSValues;
 
 		for (int i = 0; i < lvLUT->Items->Count; i++) {

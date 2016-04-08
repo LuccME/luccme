@@ -20,6 +20,10 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		gSValues = "Values";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
+		copyToolStripMenuItem->Text = "Copy";
+		pasteToolStripMenuItem->Text = "Paste";
+		gSEmptyBetaTitle = "Beta data missing";
+		gSEmptyBeta = "The data of the beta must be fulfilled.";
 	}
 	else {
 		bAddBetas->Text = "Adicionar";
@@ -29,6 +33,10 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		gSValues = "Valores";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
+		copyToolStripMenuItem->Text = "Copiar";
+		pasteToolStripMenuItem->Text = "Colar";
+		gSEmptyBetaTitle = "Faltando preencher os betas";
+		gSEmptyBeta = "Os dados dos betas devem ser preenchidos.";
 	}
 
 	this->lvLUT->View = View::Details;
@@ -240,29 +248,36 @@ System::Void LuccME::P_Discrete::bCancel_Click(System::Object ^ sender, System::
 
 System::Void LuccME::P_Discrete::bAddBetas_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	bool check = true;
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
 		if (lvLUT->Items[i]->Selected == true) {
 			lTempBetas[i] = "";
-			lTempBetas[i] += tConst->Text;
+			lTempBetas[i] += tConst->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
 
 			if (this->lReturn->Component >= 4) {
-				lTempBetas[i] += tElasticy->Text;
+				lTempBetas[i] += tElasticy->Text->Replace(',', '.');
 				lTempBetas[i] += ";";
 			}
 			
 			if (this->lReturn->Component == 5) {
-				lTempBetas[i] += tPercNeighborsUse->Text;
+				lTempBetas[i] += tPercNeighborsUse->Text->Replace(',', '.');
 				lTempBetas[i] += ";";
 			}
 
 			for (int j = 0; j < dgBetas->Rows->Count; j++) {
+				if (((dgBetas->Rows[j]->Cells[0]->Value != nullptr) && (dgBetas->Rows[j]->Cells[1]->Value == nullptr))
+					|| (dgBetas->Rows[j]->Cells[0]->Value == nullptr) && (dgBetas->Rows[j]->Cells[1]->Value != nullptr)) {
+					MessageBox::Show(gSEmptyBeta, gSEmptyBetaTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+					check = false;
+					break;
+				}
 				if (dgBetas->Rows[j]->Cells[0]->Value != nullptr) {
 					lTempBetas[i] += dgBetas->Rows[j]->Cells[0]->Value;
 					lTempBetas[i] += "=";
 				}
 				if (dgBetas->Rows[j]->Cells[1]->Value != nullptr) {
-					lTempBetas[i] += dgBetas->Rows[j]->Cells[1]->Value;
+					lTempBetas[i] += dgBetas->Rows[j]->Cells[1]->Value->ToString()->Replace(',', '.');
 					if (j + 1 < dgBetas->Rows->Count) {
 						if (dgBetas->Rows[j+1]->Cells[0]->Value != nullptr) {
 							lTempBetas[i] += ",";
@@ -271,40 +286,44 @@ System::Void LuccME::P_Discrete::bAddBetas_Click(System::Object ^ sender, System
 				}
 			}
 
-			lvLUT->Items[i]->SubItems->Add("OK");
+			if (check) {
+				lvLUT->Items[i]->SubItems->Add("OK");
+			}
 			break;
 		}
 	}
 
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		lvLUT->Items[i]->Selected = false;
-	}
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			lvLUT->Items[i]->Selected = false;
+		}
 
-	dgBetas->ColumnCount = 0;
-	tConst->Text = "0.01";
-	tConst->ForeColor = System::Drawing::Color::LightGray;
-	tConst->Visible = false;
-	bSalvar->Visible = true;
-	lConst->Visible = false;
-	lBetas->Visible = false;
-	dgBetas->Visible = false;
-	bAddBetas->Visible = false;
-	bCancel->Visible = false;
-	tLUT->Visible = false;
-	lvLUT->Visible = true;
+		dgBetas->ColumnCount = 0;
+		tConst->Text = "0.01";
+		tConst->ForeColor = System::Drawing::Color::LightGray;
+		tConst->Visible = false;
+		bSalvar->Visible = true;
+		lConst->Visible = false;
+		lBetas->Visible = false;
+		dgBetas->Visible = false;
+		bAddBetas->Visible = false;
+		bCancel->Visible = false;
+		tLUT->Visible = false;
+		lvLUT->Visible = true;
 
-	if (this->lReturn->Component >= 4) {
-		tElasticy->Text = "0.5";
-		tElasticy->ForeColor = System::Drawing::Color::LightGray;
-		lElasticy->Visible = false;
-		tElasticy->Visible = false;
-	}
+		if (this->lReturn->Component >= 4) {
+			tElasticy->Text = "0.5";
+			tElasticy->ForeColor = System::Drawing::Color::LightGray;
+			lElasticy->Visible = false;
+			tElasticy->Visible = false;
+		}
 
-	if (this->lReturn->Component == 5) {
-		tPercNeighborsUse->Text = "0.5";
-		tPercNeighborsUse->ForeColor = System::Drawing::Color::LightGray;
-		lPercNeighborsUse->Visible = false;
-		tPercNeighborsUse->Visible = false;
+		if (this->lReturn->Component == 5) {
+			tPercNeighborsUse->Text = "0.5";
+			tPercNeighborsUse->ForeColor = System::Drawing::Color::LightGray;
+			lPercNeighborsUse->Visible = false;
+			tPercNeighborsUse->Visible = false;
+		}
 	}
 }
 
@@ -405,8 +424,9 @@ System::Void LuccME::P_Discrete::CopyToClipboard()
 {
 	//Copy to clipboard
 	DataObject^ dataObj = dgBetas->GetClipboardContent();
-	if (dataObj != nullptr)
+	if (dataObj != nullptr) {
 		Clipboard::SetDataObject(dataObj);
+	}
 }
 
 System::Void LuccME::P_Discrete::PasteClipboardValue()
@@ -463,4 +483,12 @@ System::Void LuccME::P_Discrete::PasteClipboardValue()
 			}
 		}
 	}
+}
+
+System::Void LuccME::P_Discrete::copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard();
+}
+
+System::Void LuccME::P_Discrete::pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue();
 }

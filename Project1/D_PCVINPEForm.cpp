@@ -138,7 +138,7 @@ System::Void LuccME::D_PCVINPEForm::bSalvar_Click(System::Object ^ sender, Syste
 				if (j != 1) {
 					temp += ",";
 				}
-				temp += dgDemand->Rows[i]->Cells[j]->Value;
+				temp += dgDemand->Rows[i]->Cells[j]->Value->ToString()->Replace(',','.');
 			}
 		}
 		if (i + 1 < dgDemand->RowCount) {
@@ -233,8 +233,9 @@ System::Void LuccME::D_PCVINPEForm::CopyToClipboard()
 {
 	//Copy to clipboard
 	DataObject^ dataObj = dgDemand->GetClipboardContent();
-	if (dataObj != nullptr)
+	if (dataObj != nullptr) {
 		Clipboard::SetDataObject(dataObj);
+	}
 }
 
 System::Void LuccME::D_PCVINPEForm::PasteClipboardValue()

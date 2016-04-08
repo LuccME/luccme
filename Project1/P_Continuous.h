@@ -20,9 +20,18 @@ namespace LuccME {
 		String^ gSValues = "";
 		String^ gSEmptyComponent = "";
 		String^ gSEmptyComponentTitle = "";
+		String^ gSEmptyBetaTitle = "";
+		String^ gSEmptyBeta = "";
 
 	public:
 		cReturnPotential^ lReturn;
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous;
+	public:
+
+	private: System::Windows::Forms::ToolStripMenuItem^  copyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteToolStripMenuItem;
+
+	public:
 		array<String^>^ lTempBetas = gcnew array<String^>(50);
 		P_Continuous(cReturnPotential^ pPotencial)
 		{
@@ -61,12 +70,13 @@ namespace LuccME {
 	private: System::Windows::Forms::Button^  bSalvar;
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::CheckBox^  cIsLog;
+	private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -75,6 +85,7 @@ namespace LuccME {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(P_Continuous::typeid));
 			this->tRo = (gcnew System::Windows::Forms::TextBox());
 			this->lRo = (gcnew System::Windows::Forms::Label());
@@ -84,6 +95,9 @@ namespace LuccME {
 			this->tLUT = (gcnew System::Windows::Forms::TextBox());
 			this->lBetas = (gcnew System::Windows::Forms::Label());
 			this->dgBetas = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tConst = (gcnew System::Windows::Forms::TextBox());
 			this->lConst = (gcnew System::Windows::Forms::Label());
 			this->bAddBetas = (gcnew System::Windows::Forms::Button());
@@ -94,6 +108,7 @@ namespace LuccME {
 			this->tMaxReg = (gcnew System::Windows::Forms::TextBox());
 			this->lMaxReg = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->BeginInit();
+			this->cMSP_continuous->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -187,6 +202,7 @@ namespace LuccME {
 			this->dgBetas->AllowUserToResizeColumns = false;
 			this->dgBetas->AllowUserToResizeRows = false;
 			this->dgBetas->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas->Location = System::Drawing::Point(229, 262);
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -194,6 +210,29 @@ namespace LuccME {
 			this->dgBetas->TabIndex = 7;
 			this->dgBetas->Visible = false;
 			this->dgBetas->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_Continuous::dgBetas_KeyDown);
+			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(153, 70);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_Continuous::copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
+			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_Continuous::pasteToolStripMenuItem_Click);
 			// 
 			// tConst
 			// 
@@ -327,6 +366,7 @@ namespace LuccME {
 			this->Text = L"Potencial - Continuous";
 			this->Shown += gcnew System::EventHandler(this, &P_Continuous::P_Continuous_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();
+			this->cMSP_continuous->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -343,5 +383,7 @@ namespace LuccME {
 	private: System::Void dgBetas_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 	private: System::Void CopyToClipboard();
 	private: System::Void PasteClipboardValue();
+	private: System::Void copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

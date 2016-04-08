@@ -21,12 +21,33 @@ namespace LuccME {
 		String^ gSAttributes = "";
 		String^ gSEmptyComponent = "";
 		String^ gSEmptyComponentTitle = "";
+		String^ gSEmptyBetaTitle = "";
+		String^ gSEmptyBeta = "";
+		String^ gSEmptyBetaRMTitle = "";
+		String^ gSEmptyBetaRM = "";
 
 	public:
 		cReturnPotential^ lReturn;
 		array<String^>^ lTempBetas = gcnew array<String^>(50);
 		array<String^>^ lTempBetasRM = gcnew array<String^>(50);
-		array<String^>^ lTempAttributes = gcnew array<String^>(50);
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_sllr_Betas;
+	public:
+
+	public:
+	private: System::Windows::Forms::ToolStripMenuItem^  copyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteToolStripMenuItem;
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_sllr_BetasRM;
+	private: System::Windows::Forms::ToolStripMenuItem^  copyBetasRM;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteBetasRM;
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_sllr_Attr;
+	private: System::Windows::Forms::ToolStripMenuItem^  copyAttr;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteAttr;
+
+
+	public:
+
+
+			 array<String^>^ lTempAttributes = gcnew array<String^>(50);
 		P_SpatialLagLinearRoads(cReturnPotential^ pPotencial)
 		{
 			InitializeComponent();
@@ -75,13 +96,14 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lChangeRM;
 	private: System::Windows::Forms::Label^  lAttributesRM;
 	private: System::Windows::Forms::DataGridView^  dgAttr;
+	private: System::ComponentModel::IContainer^  components;
 
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -90,6 +112,7 @@ namespace LuccME {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(P_SpatialLagLinearRoads::typeid));
 			this->tMinReg = (gcnew System::Windows::Forms::TextBox());
 			this->tMaxReg = (gcnew System::Windows::Forms::TextBox());
@@ -100,6 +123,9 @@ namespace LuccME {
 			this->tLUT = (gcnew System::Windows::Forms::TextBox());
 			this->lBetas = (gcnew System::Windows::Forms::Label());
 			this->dgBetas = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_sllr_Betas = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tConst = (gcnew System::Windows::Forms::TextBox());
 			this->lConst = (gcnew System::Windows::Forms::Label());
 			this->bAddData = (gcnew System::Windows::Forms::Button());
@@ -110,6 +136,9 @@ namespace LuccME {
 			this->lMinReg = (gcnew System::Windows::Forms::Label());
 			this->bRoadsModel = (gcnew System::Windows::Forms::Button());
 			this->dgBetasRM = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_sllr_BetasRM = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyBetasRM = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteBetasRM = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->lBetasRM = (gcnew System::Windows::Forms::Label());
 			this->tConstRM = (gcnew System::Windows::Forms::TextBox());
 			this->lConstRM = (gcnew System::Windows::Forms::Label());
@@ -117,10 +146,16 @@ namespace LuccME {
 			this->lChangeRM = (gcnew System::Windows::Forms::Label());
 			this->lAttributesRM = (gcnew System::Windows::Forms::Label());
 			this->dgAttr = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_sllr_Attr = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyAttr = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteAttr = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->BeginInit();
+			this->cMSP_sllr_Betas->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetasRM))->BeginInit();
+			this->cMSP_sllr_BetasRM->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->BeginInit();
+			this->cMSP_sllr_Attr->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tMinReg
@@ -223,6 +258,7 @@ namespace LuccME {
 			this->dgBetas->AllowUserToResizeColumns = false;
 			this->dgBetas->AllowUserToResizeRows = false;
 			this->dgBetas->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas->ContextMenuStrip = this->cMSP_sllr_Betas;
 			this->dgBetas->Location = System::Drawing::Point(226, 359);
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -230,6 +266,29 @@ namespace LuccME {
 			this->dgBetas->TabIndex = 7;
 			this->dgBetas->Visible = false;
 			this->dgBetas->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgBetas_KeyDown);
+			// 
+			// cMSP_sllr_Betas
+			// 
+			this->cMSP_sllr_Betas->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_sllr_Betas->Name = L"cMSP_sllr";
+			this->cMSP_sllr_Betas->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
+			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::pasteToolStripMenuItem_Click);
 			// 
 			// tConst
 			// 
@@ -341,6 +400,7 @@ namespace LuccME {
 			this->dgBetasRM->AllowUserToResizeColumns = false;
 			this->dgBetasRM->AllowUserToResizeRows = false;
 			this->dgBetasRM->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetasRM->ContextMenuStrip = this->cMSP_sllr_BetasRM;
 			this->dgBetasRM->Location = System::Drawing::Point(567, 386);
 			this->dgBetasRM->Name = L"dgBetasRM";
 			this->dgBetasRM->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -348,6 +408,29 @@ namespace LuccME {
 			this->dgBetasRM->TabIndex = 13;
 			this->dgBetasRM->Visible = false;
 			this->dgBetasRM->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgBetasRM_KeyDown);
+			// 
+			// cMSP_sllr_BetasRM
+			// 
+			this->cMSP_sllr_BetasRM->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyBetasRM,
+					this->pasteBetasRM
+			});
+			this->cMSP_sllr_BetasRM->Name = L"cMSP_sllr_BetasRM";
+			this->cMSP_sllr_BetasRM->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyBetasRM
+			// 
+			this->copyBetasRM->Name = L"copyBetasRM";
+			this->copyBetasRM->Size = System::Drawing::Size(102, 22);
+			this->copyBetasRM->Text = L"Copy";
+			this->copyBetasRM->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::copyBetasRM_Click);
+			// 
+			// pasteBetasRM
+			// 
+			this->pasteBetasRM->Name = L"pasteBetasRM";
+			this->pasteBetasRM->Size = System::Drawing::Size(102, 22);
+			this->pasteBetasRM->Text = L"Paste";
+			this->pasteBetasRM->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::pasteBetasRM_Click);
 			// 
 			// lBetasRM
 			// 
@@ -430,6 +513,7 @@ namespace LuccME {
 			this->dgAttr->AllowUserToResizeColumns = false;
 			this->dgAttr->AllowUserToResizeRows = false;
 			this->dgAttr->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgAttr->ContextMenuStrip = this->cMSP_sllr_Attr;
 			this->dgAttr->Location = System::Drawing::Point(568, 182);
 			this->dgAttr->Name = L"dgAttr";
 			this->dgAttr->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -437,6 +521,26 @@ namespace LuccME {
 			this->dgAttr->TabIndex = 10;
 			this->dgAttr->Visible = false;
 			this->dgAttr->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgAttr_KeyDown);
+			// 
+			// cMSP_sllr_Attr
+			// 
+			this->cMSP_sllr_Attr->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->copyAttr, this->pasteAttr });
+			this->cMSP_sllr_Attr->Name = L"cMSP_sllr_Attr";
+			this->cMSP_sllr_Attr->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyAttr
+			// 
+			this->copyAttr->Name = L"copyAttr";
+			this->copyAttr->Size = System::Drawing::Size(102, 22);
+			this->copyAttr->Text = L"Copy";
+			this->copyAttr->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::copyAttr_Click);
+			// 
+			// pasteAttr
+			// 
+			this->pasteAttr->Name = L"pasteAttr";
+			this->pasteAttr->Size = System::Drawing::Size(102, 22);
+			this->pasteAttr->Text = L"Paste";
+			this->pasteAttr->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::pasteAttr_Click);
 			// 
 			// P_SpatialLagLinearRoads
 			// 
@@ -475,9 +579,12 @@ namespace LuccME {
 			this->Text = L"Potencial - Spatial Lag Linear Roads";
 			this->Shown += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();
+			this->cMSP_sllr_Betas->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetasRM))->EndInit();
+			this->cMSP_sllr_BetasRM->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->EndInit();
+			this->cMSP_sllr_Attr->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -494,5 +601,13 @@ namespace LuccME {
 	private: System::Void dgBetas_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 	private: System::Void dgAttr_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 	private: System::Void dgBetasRM_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
-	};
+	private: System::Void CopyToClipboard(System::Windows::Forms::DataGridView ^ dgView);
+	private: System::Void PasteClipboardValue(System::Windows::Forms::DataGridView ^ dgView);
+	private: System::Void copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void copyBetasRM_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteBetasRM_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void copyAttr_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteAttr_Click(System::Object^  sender, System::EventArgs^  e);
+};
 }

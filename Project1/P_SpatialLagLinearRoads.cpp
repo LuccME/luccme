@@ -21,6 +21,17 @@ System::Void LuccME::P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown(Syst
 		gSAttributes = "Attributes";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
+		copyToolStripMenuItem->Text = "Copy";
+		copyAttr->Text = "Copy";
+		copyBetasRM->Text = "Copy";
+		pasteToolStripMenuItem->Text = "Paste";
+		pasteAttr->Text = "Paste";
+		pasteBetasRM->Text = "Paste";
+		gSEmptyBetaTitle = "Beta data missing";
+		gSEmptyBeta = "The beat data must be fulfilled.";
+		gSEmptyBetaTitle = "Beta data missing";
+		gSEmptyBetaRM = "The beta data of the Road Model must be fulfilled.";
+		gSEmptyBetaRMTitle = "Beta data of Road Model missing";
 	}
 	else {
 		bAddData->Text = "Adicionar Dados";
@@ -31,6 +42,16 @@ System::Void LuccME::P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown(Syst
 		gSAttributes = "Atributos";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
+		copyToolStripMenuItem->Text = "Copiar";
+		copyAttr->Text = "Copiar";
+		copyBetasRM->Text = "Copiar";
+		pasteToolStripMenuItem->Text = "Colar";
+		pasteAttr->Text = "Colar";
+		pasteBetasRM->Text = "Colar";
+		gSEmptyBetaTitle = "Faltando preencher os betas";
+		gSEmptyBeta = "Os dados dos betas devem ser preenchidos.";
+		gSEmptyBetaRMTitle = "Faltando preencher os betas do Road Model";
+		gSEmptyBetaRM = "Os dados dos betas do Road Model devem ser preenchidos.";
 	}
 
 	this->lvLUT->View = View::Details;
@@ -374,6 +395,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::bCancel_Click(System::Object ^ sen
 
 System::Void LuccME::P_SpatialLagLinearRoads::bAddData_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	bool check = true;
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
 		if (lvLUT->Items[i]->Selected == true) {
 			lTempBetas[i] = "";
@@ -386,22 +408,28 @@ System::Void LuccME::P_SpatialLagLinearRoads::bAddData_Click(System::Object ^ se
 				lTempBetas[i] += ";";
 			}
 
-			lTempBetas[i] += tConst->Text;
+			lTempBetas[i] += tConst->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tMinReg->Text;
+			lTempBetas[i] += tMinReg->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tMaxReg->Text;
+			lTempBetas[i] += tMaxReg->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tRo->Text;
+			lTempBetas[i] += tRo->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
 
 			for (int j = 0; j < dgBetas->Rows->Count; j++) {
+				if (((dgBetas->Rows[j]->Cells[0]->Value != nullptr) && (dgBetas->Rows[j]->Cells[1]->Value == nullptr))
+					|| (dgBetas->Rows[j]->Cells[0]->Value == nullptr) && (dgBetas->Rows[j]->Cells[1]->Value != nullptr)) {
+					MessageBox::Show(gSEmptyBeta, gSEmptyBetaTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+					check = false;
+					break;
+				}
 				if (dgBetas->Rows[j]->Cells[0]->Value != nullptr) {
 					lTempBetas[i] += dgBetas->Rows[j]->Cells[0]->Value;
 					lTempBetas[i] += "=";
 				}
 				if (dgBetas->Rows[j]->Cells[1]->Value != nullptr) {
-					lTempBetas[i] += dgBetas->Rows[j]->Cells[1]->Value;
+					lTempBetas[i] += dgBetas->Rows[j]->Cells[1]->Value->ToString()->Replace(',', '.');
 					if (j + 1 < dgBetas->Rows->Count) {
 						if (dgBetas->Rows[j + 1]->Cells[0]->Value != nullptr) {
 								lTempBetas[i] += ",";
@@ -426,18 +454,24 @@ System::Void LuccME::P_SpatialLagLinearRoads::bAddData_Click(System::Object ^ se
 			}
 
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tConstRM->Text;
+			lTempBetas[i] += tConstRM->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tChangeRM->Text;
+			lTempBetas[i] += tChangeRM->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
 
 			for (int j = 0; j < dgBetasRM->Rows->Count; j++) {
+				if (((dgBetasRM->Rows[j]->Cells[0]->Value != nullptr) && (dgBetasRM->Rows[j]->Cells[1]->Value == nullptr))
+					|| (dgBetasRM->Rows[j]->Cells[0]->Value == nullptr) && (dgBetasRM->Rows[j]->Cells[1]->Value != nullptr)) {
+					MessageBox::Show(gSEmptyBetaRM, gSEmptyBetaRMTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+					check = false;
+					break;
+				}
 				if (dgBetasRM->Rows[j]->Cells[0]->Value != nullptr) {
 					lTempBetas[i] += dgBetasRM->Rows[j]->Cells[0]->Value;
 					lTempBetas[i] += "=";
 				}
 				if (dgBetasRM->Rows[j]->Cells[1]->Value != nullptr) {
-					lTempBetas[i] += dgBetasRM->Rows[j]->Cells[1]->Value;
+					lTempBetas[i] += dgBetasRM->Rows[j]->Cells[1]->Value->ToString()->Replace(',', '.');
 					if (j + 1 < dgBetasRM->Rows->Count) {
 						if (dgBetasRM->Rows[j + 1]->Cells[0]->Value != nullptr) {
 							lTempBetas[i] += ",";
@@ -446,71 +480,75 @@ System::Void LuccME::P_SpatialLagLinearRoads::bAddData_Click(System::Object ^ se
 				}
 			}
 
-			lvLUT->Items[i]->SubItems->Add("OK");
+			if (check) {
+				lvLUT->Items[i]->SubItems->Add("OK");
+			}
 			break;
 		}
 	}
 
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		lvLUT->Items[i]->Selected = false;
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			lvLUT->Items[i]->Selected = false;
+		}
+
+		tLUT->Visible = false;
+		bCancel->Location = Point(226, 526);
+
+		lBetas->Visible = false;
+		dgBetas->ColumnCount = 0;
+		dgBetas->Visible = false;
+
+		lBetasRM->Visible = false;
+		dgBetasRM->ColumnCount = 0;
+		dgBetasRM->Visible = false;
+
+		lAttributesRM->Visible = false;
+		dgAttr->ColumnCount = 0;
+		dgAttr->Visible = false;
+
+		cIsLog->Checked = false;
+		cIsLog->Visible = false;
+
+		bRoadsModel->Visible = false;
+		bCancel->Visible = false;
+
+		tConst->Text = "0.01";
+		tConst->ForeColor = System::Drawing::Color::LightGray;
+		lConst->Visible = false;
+		tConst->Visible = false;
+
+		tMinReg->Text = "0";
+		tMinReg->ForeColor = System::Drawing::Color::LightGray;
+		lMinReg->Visible = false;
+		tMinReg->Visible = false;
+
+		tMaxReg->Text = "1";
+		tMaxReg->ForeColor = System::Drawing::Color::LightGray;
+		lMaxReg->Visible = false;
+		tMaxReg->Visible = false;
+
+		tRo->Text = "0.5";
+		tRo->ForeColor = System::Drawing::Color::LightGray;
+		lRo->Visible = false;
+		tRo->Visible = false;
+
+		tConstRM->Text = "0.01";
+		tConstRM->ForeColor = System::Drawing::Color::LightGray;
+		lConstRM->Visible = false;
+		tConstRM->Visible = false;
+
+		tChangeRM->Text = "-1.5";
+		tChangeRM->ForeColor = System::Drawing::Color::LightGray;
+		lChangeRM->Visible = false;
+		tChangeRM->Visible = false;
+
+		lvLUT->Visible = true;
+		bSalvar->Visible = true;
+
+		pbLogo1->Location = Point(58, 12);
+		this->Width = 511;
 	}
-
-	tLUT->Visible = false;
-	bCancel->Location = Point(226, 526);
-
-	lBetas->Visible = false;
-	dgBetas->ColumnCount = 0;
-	dgBetas->Visible = false;
-
-	lBetasRM->Visible = false;
-	dgBetasRM->ColumnCount = 0;
-	dgBetasRM->Visible = false;
-
-	lAttributesRM->Visible = false;
-	dgAttr->ColumnCount = 0;
-	dgAttr->Visible = false;
-
-	cIsLog->Checked = false;
-	cIsLog->Visible = false;
-
-	bRoadsModel->Visible = false;
-	bCancel->Visible = false;
-
-	tConst->Text = "0.01";
-	tConst->ForeColor = System::Drawing::Color::LightGray;
-	lConst->Visible = false;
-	tConst->Visible = false;
-
-	tMinReg->Text = "0";
-	tMinReg->ForeColor = System::Drawing::Color::LightGray;
-	lMinReg->Visible = false;
-	tMinReg->Visible = false;
-
-	tMaxReg->Text = "1";
-	tMaxReg->ForeColor = System::Drawing::Color::LightGray;
-	lMaxReg->Visible = false;
-	tMaxReg->Visible = false;
-
-	tRo->Text = "0.5";
-	tRo->ForeColor = System::Drawing::Color::LightGray;
-	lRo->Visible = false;
-	tRo->Visible = false;
-
-	tConstRM->Text = "0.01";
-	tConstRM->ForeColor = System::Drawing::Color::LightGray;
-	lConstRM->Visible = false;
-	tConstRM->Visible = false;
-
-	tChangeRM->Text = "-1.5";
-	tChangeRM->ForeColor = System::Drawing::Color::LightGray;
-	lChangeRM->Visible = false;
-	tChangeRM->Visible = false;
-
-	lvLUT->Visible = true;
-	bSalvar->Visible = true;
-
-	pbLogo1->Location = Point(58, 12);
-	this->Width = 511;
 }
 
 System::Void LuccME::P_SpatialLagLinearRoads::bSalvar_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -562,66 +600,268 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_SpatialLagLinearRoads::GetS
 
 System::Void LuccME::P_SpatialLagLinearRoads::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
-	switch (e->KeyCode)
+	try
 	{
-	case Keys::Delete:
-		if (dgBetas->SelectedCells->Count != 0)
+		if (e->Modifiers == Keys::Control)
 		{
-			DataGridViewCell^ startCell = GetStartCell(dgBetas);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgBetas->RowCount; i++) {
-				for (int j = column; j < dgBetas->ColumnCount; j++) {
-					if (dgBetas->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgBetas->Rows[i]->Cells[j]->Value = "";
-					}
-				}
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboard(dgBetas);
+				break;
+
+			case Keys::V:
+				PasteClipboardValue(dgBetas);
+				break;
 			}
 		}
-		break;
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgBetas->SelectedCells->Count != 0)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgBetas);
+					int row = startCell->RowIndex;
+					int column = startCell->ColumnIndex;
+					for (int i = row; i < dgBetas->RowCount; i++) {
+						for (int j = column; j < dgBetas->ColumnCount; j++) {
+							if (dgBetas->Rows[i]->Cells[j]->Selected == true) {
+								dgBetas->Rows[i]->Cells[j]->Value = "";
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
 System::Void LuccME::P_SpatialLagLinearRoads::dgAttr_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
-	switch (e->KeyCode)
+	try
 	{
-	case Keys::Delete:
-		if (dgAttr->SelectedCells->Count != 0)
+		if (e->Modifiers == Keys::Control)
 		{
-			DataGridViewCell^ startCell = GetStartCell(dgAttr);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgAttr->RowCount; i++) {
-				for (int j = column; j < dgAttr->ColumnCount; j++) {
-					if (dgAttr->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgAttr->Rows[i]->Cells[j]->Value = "";
-					}
-				}
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboard(dgAttr);
+				break;
+
+			case Keys::V:
+				PasteClipboardValue(dgAttr);
+				break;
 			}
 		}
-		break;
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgAttr->SelectedCells->Count != 0)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgAttr);
+					int row = startCell->RowIndex;
+					int column = startCell->ColumnIndex;
+					for (int i = row; i < dgAttr->RowCount; i++) {
+						for (int j = column; j < dgAttr->ColumnCount; j++) {
+							if (dgAttr->Rows[i]->Cells[j]->Selected == true) {
+								dgAttr->Rows[i]->Cells[j]->Value = "";
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
 System::Void LuccME::P_SpatialLagLinearRoads::dgBetasRM_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
-	switch (e->KeyCode)
+	try
 	{
-	case Keys::Delete:
-		if (dgBetasRM->SelectedCells->Count != 0)
+		if (e->Modifiers == Keys::Control)
 		{
-			DataGridViewCell^ startCell = GetStartCell(dgBetasRM);
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboard(dgBetasRM);
+				break;
+
+			case Keys::V:
+				PasteClipboardValue(dgBetasRM);
+				break;
+			}
+		}
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgBetasRM->SelectedCells->Count != 0)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgBetasRM);
+					int row = startCell->RowIndex;
+					int column = startCell->ColumnIndex;
+					for (int i = row; i < dgBetasRM->RowCount; i++) {
+						for (int j = column; j < dgBetasRM->ColumnCount; j++) {
+							if (dgBetasRM->Rows[i]->Cells[j]->Selected == true) {
+								dgBetasRM->Rows[i]->Cells[j]->Value = "";
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::CopyToClipboard(System::Windows::Forms::DataGridView ^ dgView)
+{
+	//Copy to clipboard
+	DataObject^ dataObj = dgView->GetClipboardContent();
+	if (dataObj != nullptr) {
+		Clipboard::SetDataObject(dataObj);
+	}
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::PasteClipboardValue(System::Windows::Forms::DataGridView ^ dgView)
+{
+	if (dgView->Name != "dgAttr") {
+		//Show Error if no cell is selected
+		if (dgView->SelectedCells->Count == 0)
+		{
+			MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		//Get the satring Cell
+		DataGridViewCell^ startCell = GetStartCell(dgView);
+
+		//Get the clipboard value in a dictionary
+		String^ aux = Clipboard::GetText();
+
+		if (aux != "") {
+			array<String^>^ lines = aux->Split('\n');
+			array<String^>^ tempColumns = lines[0]->Split('\t');
+			array<String^>^ content = gcnew array<String^>((lines->Length - 1) * (tempColumns->Length));
+
+			int count = 0;
+			for (int i = 0; i < lines->Length - 1; i++) {
+				array<String^>^ temp = lines[i]->Split('\t');
+				for (int j = 0; j < temp->Length; j++) {
+					content[count] = temp[j];
+					count++;
+				}
+			}
+
 			int row = startCell->RowIndex;
 			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgBetasRM->RowCount; i++) {
-				for (int j = column; j < dgBetasRM->ColumnCount; j++) {
-					if (dgBetasRM->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgBetasRM->Rows[i]->Cells[j]->Value = "";
-					}
+			int columnNumber = tempColumns->Length - 1;
+
+			if (tempColumns->Length == 2) {
+				if ((content->Length / dgView->ColumnCount) > dgView->RowCount) {
+					dgView->RowCount = content->Length / dgView->ColumnCount + 1;
+				}
+			}
+			else {
+				if (content->Length > dgView->RowCount) {
+					dgView->RowCount = content->Length + 1;
+				}
+			}
+
+
+			for (int i = 0; i < content->Length; i++) {
+				dgView->Rows[row]->Cells[column]->Value = content[i];
+				column++;
+				if (column > columnNumber) {
+					row++;
+					column = startCell->ColumnIndex;
 				}
 			}
 		}
-		break;
 	}
+	else {
+		//Show Error if no cell is selected
+		if (dgView->SelectedCells->Count == 0)
+		{
+			MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		//Get the satring Cell
+		DataGridViewCell^ startCell = GetStartCell(dgView);
+
+		//Get the clipboard value in a dictionary
+		String^ aux = Clipboard::GetText();
+
+		if (aux != "") {
+			array<String^>^ lines = aux->Split('\n');
+			array<String^>^ tempColumns = lines[0]->Split('\t');
+			array<String^>^ content = gcnew array<String^>((lines->Length - 1) * (tempColumns->Length));
+
+			int count = 0;
+			for (int i = 0; i < lines->Length - 1; i++) {
+				array<String^>^ temp = lines[i]->Split('\t');
+				for (int j = 0; j < temp->Length; j++) {
+					content[count] = temp[j];
+					count++;
+				}
+			}
+
+			int row = startCell->RowIndex;
+			int column = startCell->ColumnIndex;
+			int columnNumber = tempColumns->Length;
+			
+			
+			if (content->Length > dgView->RowCount) {
+				dgView->RowCount = (content->Length/columnNumber) + 1;
+			}
+			
+			for (int i = 0; i < content->Length; i++) {
+				if (i%columnNumber == 0) {
+					dgView->Rows[row]->Cells[column]->Value = content[i];
+					row++;
+				}
+			}
+		}
+	}
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgBetas);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgBetas);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::copyBetasRM_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgBetasRM);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::pasteBetasRM_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgBetasRM);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::copyAttr_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgAttr);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::pasteAttr_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgAttr);
 }

@@ -26,7 +26,13 @@ namespace LuccME {
 		cReturnPCVINPE^ lReturn;
 		bool changed;
 		bool close;
-		bool managed;
+
+	public:
+
+	public:
+
+
+			 bool managed;
 		D_PCVINPEForm(cReturnPCVINPE^ pDemand)
 		{
 			InitializeComponent();
@@ -55,6 +61,7 @@ namespace LuccME {
 
 	private: System::Windows::Forms::DataGridView^  dgDemand;
 	private: System::Windows::Forms::Button^  bSalvar;
+	private: System::ComponentModel::IContainer^  components;
 
 
 
@@ -67,7 +74,7 @@ namespace LuccME {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -162,5 +169,5 @@ namespace LuccME {
 	private: System::Void CopyToClipboard();
 	private: System::Void PasteClipboardValue();
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(DataGridView^ dgView);
-};
+	};
 }

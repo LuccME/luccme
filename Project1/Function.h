@@ -83,14 +83,17 @@ public ref class cReturnPotential
 public:
 	String^ Return;
 	String^ LUT;
-	int Component;
 	String^ Language;
+	int Component;
+	int Regression;
+
 	cReturnPotential()
 	{
 		Return = "";
 		LUT = "";
-		Component = 0;
 		Language = "";
+		Component = 0;
+		Regression = 1;
 	}
 };
 

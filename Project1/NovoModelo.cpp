@@ -929,11 +929,14 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		lPotential->LUT = gLandUseTypes;
 		lPotential->Component = gPotentialComponent;
 		lPotential->Language = lLanguage;
+		lPotential->Regression = gPotentialRegression;
 		PotContinuousForm^ potDiscreteForm = gcnew PotContinuousForm(lPotential);
 		potDiscreteForm->ShowDialog();
 		gPotential = lPotential->Return;
 		gPotentialComponent = lPotential->Component;
+		gPotentialRegression = lPotential->Regression;
 		gPotentialLUT = gLandUseTypes;
+		
 
 		int count = 2;
 		int lineCount = 0;

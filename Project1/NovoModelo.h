@@ -126,6 +126,8 @@ namespace LuccME {
 		int gAllocationComponent = 0;
 		int gAttrTime = 0;
 		int gDynTime = 0;
+		int gPotentialRegression = 1;
+
 		String^ gLandUseTypes = "";
 		String^ gLandUseNoData = "";
 		String^ gSelectedDatabase = "";

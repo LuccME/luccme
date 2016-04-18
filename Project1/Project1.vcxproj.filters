@@ -82,7 +82,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="P_ContinuousR.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +212,9 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="LUND.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="P_ContinuousR.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>

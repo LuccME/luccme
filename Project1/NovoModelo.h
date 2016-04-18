@@ -112,6 +112,8 @@ namespace LuccME {
 		String^ gSValDiff = "";
 		String^ gSAttribToSave = "";
 		String^ gSAttribToSaveTitle = "";
+		String^ gSPotCont2Info = "";
+		String^ gSPotCont2Title = "";
 
 	public:
 		bool closing = false;
@@ -143,6 +145,24 @@ namespace LuccME {
 		String^ lLanguage;
 		TabPage^ validation = gcnew TabPage();
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
+		//[0] = lSelectedFolder->Text;
+		//[1] = tModelName->Text;
+		//[2] = tStartTime->Text;
+		//[3] = tEndTime->Text;
+		//[4] = tThemeName->Text;
+		//[5] = tbSelectedBatabase->Lines[1]->ToString();
+		//[6] = tCellArea->Text;
+		//[7] = lDynamicConfirm->Text;
+		//[8] = tScenariosStartTime->Text;
+		//[9] = tScenarioName->Text;
+		//[10] = lLUTShow->Text;
+		//[11] = lLUNDShow->Text;
+		//[12] = tOutputTheme->Text;
+		//[13] = lYearsToSave->Text;
+		//[14] = lAttrToSave->Text;
+		//[15] = tbDemand->Lines[0]->ToString();
+		//[16] = tbPotential->Lines[0]->ToString();
+		//[17] = tbAllocation->Lines[0]->ToString();
 
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;
@@ -1772,5 +1792,6 @@ namespace LuccME {
 	private: System::Void cScenario_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bValidate_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void tAttributeInitValidation_Leave(System::Object^  sender, System::EventArgs^  e);
+	private: System::Int16 countCaracter(String^ source, char caracter);
 	};
 }

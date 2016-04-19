@@ -44,13 +44,9 @@ System::Void LuccME::D_CITwoDM::D_CITwoDM_Shown(System::Object ^ sender, System:
 					}
 				}
 				else {
-					switch (count) {
-					default:
-						dgDemand->ColumnCount = count;
-						dgDemand->Columns[count - 1]->Name = aux;
-						count++;
-						break;
-					}
+					dgDemand->ColumnCount = count;
+					dgDemand->Columns[count - 1]->Name = aux;
+					count++;
 					aux = "";
 				}
 			}
@@ -74,13 +70,9 @@ System::Void LuccME::D_CITwoDM::D_CITwoDM_Shown(System::Object ^ sender, System:
 					}
 				}
 				else {
-					switch (count) {
-					default:
-						dgDemand->ColumnCount = count;
-						dgDemand->Columns[count - 1]->Name = aux;
-						count++;
-						break;
-					}
+					dgDemand->ColumnCount = count;
+					dgDemand->Columns[count - 1]->Name = aux;
+					count++;
 					aux = "";
 				}
 				i++;

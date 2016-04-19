@@ -2039,12 +2039,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\t\t-- " + tbDemand->Lines[1]->ToString()->Replace(",", ", "));
 						tempYear = Convert::ToInt16(tStartTime->Text);
 						for (int i = 2; i < tbDemand->Lines->Length; i++) {
-							if (i == 2) {
-								sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
-							}
-							else {
-								sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
-							}
+							sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
 						}
 						sw->WriteLine("\t}");
 						sw->WriteLine("}\n");

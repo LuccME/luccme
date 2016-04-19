@@ -51,13 +51,9 @@ System::Void LuccME::D_CIThreeDM::D_CIThreeDM_Shown(System::Object ^ sender, Sys
 					}
 				}
 				else {
-					switch (count) {
-					default:
-						dgDemand->ColumnCount = count;
-						dgDemand->Columns[count - 1]->Name = aux;
-						count++;
-						break;
-					}
+					dgDemand->ColumnCount = count;
+					dgDemand->Columns[count - 1]->Name = aux;
+					count++;
 					aux = "";
 				}
 			}
@@ -83,13 +79,9 @@ System::Void LuccME::D_CIThreeDM::D_CIThreeDM_Shown(System::Object ^ sender, Sys
 					}
 				}
 				else {
-					switch (count) {
-					default:
-						dgDemand->ColumnCount = count;
-						dgDemand->Columns[count - 1]->Name = aux;
-						count++;
-						break;
-					}
+					dgDemand->ColumnCount = count;
+					dgDemand->Columns[count - 1]->Name = aux;
+					count++;
 					aux = "";
 				}
 				i++;

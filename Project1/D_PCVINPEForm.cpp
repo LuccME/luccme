@@ -45,13 +45,9 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 					}
 				}
 				else {
-					switch (count) {
-						default:
-							dgDemand->ColumnCount = count;
-							dgDemand->Columns[count-1]->Name = aux;
-							count++;
-							break;
-					}
+					dgDemand->ColumnCount = count;
+					dgDemand->Columns[count-1]->Name = aux;
+					count++;
 					aux = "";
 				}
 			}
@@ -74,13 +70,9 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 					}
 				}
 				else {
-					switch (count) {
-					default:
-						dgDemand->ColumnCount = count;
-						dgDemand->Columns[count - 1]->Name = aux;
-						count++;
-						break;
-					}
+					dgDemand->ColumnCount = count;
+					dgDemand->Columns[count - 1]->Name = aux;
+					count++;
 					aux = "";
 				}
 				i++;

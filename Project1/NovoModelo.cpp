@@ -2166,7 +2166,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 											else {
 												sw->WriteLine("\t\t\t\t\t" + tempBetas->Replace("=", " = "));
 												sw->WriteLine("\t\t\t\t}");
-												sw->WriteLine("\t\t\t},\n");
+												if (activeLUT != nLut) {
+													sw->WriteLine("\t\t\t},\n");
+												}
+												else {
+													sw->WriteLine("\t\t\t}");
+												}
 												tempBetas = "";
 												break;
 											}
@@ -2180,8 +2185,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							}
 							activeRegion++;
 							activeLUT = 0;
-							if (activeRegion != gPotentialRegression - 1) {
-								sw->WriteLine("\t\t},");
+							if (activeRegion <= gPotentialRegression) {
+								sw->WriteLine("\t\t},\n");
 							}
 							else {
 								sw->WriteLine("\t\t}");

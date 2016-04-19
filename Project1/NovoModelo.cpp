@@ -2127,7 +2127,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						for (int k = 1; k < tbPotential->Lines->Length; k += nLut) {
 							sw->WriteLine("\t\t--Region " + activeRegion.ToString());
 							sw->WriteLine("\t\t{");
-							endRegion = ((tbPotential->Lines->Length - 1) / nLut)*activeRegion;
+							if(gPotentialRegression == 1){
+								endRegion = (tbPotential->Lines->Length - 1);
+							}
+							else {
+								endRegion = ((tbPotential->Lines->Length - 1) / gPotentialRegression)*activeRegion;
+							}
 							for (int i = k; i <= endRegion; i++) {
 								if (tbPotential->Lines[i]->ToString() != "") {
 									sw->WriteLine("\t\t\t-- " + tempLUTs[activeLUT]);

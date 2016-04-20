@@ -545,9 +545,6 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 
 	this->lvLUT->Columns->Add("Status", 47, HorizontalAlignment::Left);
 
-	
-	int nLut = countCaracter(lReturn->LUT, ',');
-
 	// Coping the data from the NovoModeloForm
 	if (this->lReturn->Return != "") {
 		int rowCount = 0;
@@ -556,7 +553,10 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 				lTempBetas[rowCount] += this->lReturn->Return[i];
 			}
 			else {
-				lvLUT->Items[rowCount]->SubItems->Add("OK");
+				int fulfilledRegions = countCaracter(lTempBetas[rowCount], '*');
+				if (fulfilledRegions == lReturn->Regression) {
+					lvLUT->Items[rowCount]->SubItems->Add("OK");
+				}
 				rowCount++;
 			}
 		}
@@ -658,6 +658,21 @@ System::Void LuccME::P_ContinuousR::lvLUT_SelectedIndexChanged(System::Object^  
 			tRo->Visible = true;
 		}
 	}
+
+	//if (this->lReturn->Return != "") {
+	//	for (int i = 0; i < lTempBetas->Length; i++) {
+	//		if (lTempBetas[i] == nullptr) {
+	//			break;
+	//		}
+	//		else {
+	//			int fulfilledRegions = countCaracter(lTempBetas[i], '*');
+
+	//			if (fulfilledRegions == lReturn->Regression) {
+	//				lvLUT->Items[i]->SubItems->Add("OK");
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 System::Void LuccME::P_ContinuousR::tcRegions_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 

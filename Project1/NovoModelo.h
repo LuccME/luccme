@@ -1794,5 +1794,6 @@ namespace LuccME {
 	private: System::Void tAttributeInitValidation_Leave(System::Object^  sender, System::EventArgs^  e);
 	private: System::Int16 countCaracter(String^ source, char caracter);
 	private: System::Void showReturnLinearRegression();
+	private: System::Void showReturnSpatialLagRegression();
 	};
 }

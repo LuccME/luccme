@@ -488,7 +488,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo
 			// 
 			this->tRo->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo->Location = System::Drawing::Point(91, 141);
+			this->tRo->Location = System::Drawing::Point(86, 141);
 			this->tRo->Name = L"tRo";
 			this->tRo->Size = System::Drawing::Size(161, 20);
 			this->tRo->TabIndex = 86;
@@ -502,7 +502,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo->AutoSize = true;
 			this->lRo->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo->Location = System::Drawing::Point(58, 138);
+			this->lRo->Location = System::Drawing::Point(53, 138);
 			this->lRo->Name = L"lRo";
 			this->lRo->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo->Size = System::Drawing::Size(27, 23);
@@ -592,17 +592,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion2
 			// 
-			this->tRegion2->Controls->Add(this->tRo2);
-			this->tRegion2->Controls->Add(this->lRo2);
 			this->tRegion2->Controls->Add(this->tMaxReg2);
 			this->tRegion2->Controls->Add(this->tMinReg2);
-			this->tRegion2->Controls->Add(this->lMaxReg2);
-			this->tRegion2->Controls->Add(this->lMinReg2);
+			this->tRegion2->Controls->Add(this->tRo2);
+			this->tRegion2->Controls->Add(this->lRo2);
 			this->tRegion2->Controls->Add(this->dgBetas2);
 			this->tRegion2->Controls->Add(this->lBetas2);
 			this->tRegion2->Controls->Add(this->tConst2);
 			this->tRegion2->Controls->Add(this->lConst2);
 			this->tRegion2->Controls->Add(this->cIsLog2);
+			this->tRegion2->Controls->Add(this->lMaxReg2);
+			this->tRegion2->Controls->Add(this->lMinReg2);
 			this->tRegion2->Location = System::Drawing::Point(4, 22);
 			this->tRegion2->Name = L"tRegion2";
 			this->tRegion2->Padding = System::Windows::Forms::Padding(3);
@@ -614,7 +614,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo2
 			// 
 			this->tRo2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo2->Location = System::Drawing::Point(91, 141);
+			this->tRo2->Location = System::Drawing::Point(86, 141);
 			this->tRo2->Name = L"tRo2";
 			this->tRo2->Size = System::Drawing::Size(161, 20);
 			this->tRo2->TabIndex = 98;
@@ -628,7 +628,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo2->AutoSize = true;
 			this->lRo2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo2->Location = System::Drawing::Point(58, 138);
+			this->lRo2->Location = System::Drawing::Point(53, 138);
 			this->lRo2->Name = L"lRo2";
 			this->lRo2->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo2->Size = System::Drawing::Size(27, 23);
@@ -754,17 +754,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion3
 			// 
-			this->tRegion3->Controls->Add(this->tRo3);
-			this->tRegion3->Controls->Add(this->lRo3);
 			this->tRegion3->Controls->Add(this->tMaxReg3);
 			this->tRegion3->Controls->Add(this->tMinReg3);
-			this->tRegion3->Controls->Add(this->lMaxReg3);
-			this->tRegion3->Controls->Add(this->lMinReg3);
+			this->tRegion3->Controls->Add(this->tRo3);
+			this->tRegion3->Controls->Add(this->lRo3);
 			this->tRegion3->Controls->Add(this->dgBetas3);
 			this->tRegion3->Controls->Add(this->lBetas3);
 			this->tRegion3->Controls->Add(this->tConst3);
 			this->tRegion3->Controls->Add(this->lConst3);
 			this->tRegion3->Controls->Add(this->cIsLog3);
+			this->tRegion3->Controls->Add(this->lMaxReg3);
+			this->tRegion3->Controls->Add(this->lMinReg3);
 			this->tRegion3->Location = System::Drawing::Point(4, 22);
 			this->tRegion3->Name = L"tRegion3";
 			this->tRegion3->Size = System::Drawing::Size(288, 363);
@@ -775,7 +775,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo3
 			// 
 			this->tRo3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo3->Location = System::Drawing::Point(91, 141);
+			this->tRo3->Location = System::Drawing::Point(86, 141);
 			this->tRo3->Name = L"tRo3";
 			this->tRo3->Size = System::Drawing::Size(161, 20);
 			this->tRo3->TabIndex = 98;
@@ -789,7 +789,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo3->AutoSize = true;
 			this->lRo3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo3->Location = System::Drawing::Point(58, 138);
+			this->lRo3->Location = System::Drawing::Point(53, 138);
 			this->lRo3->Name = L"lRo3";
 			this->lRo3->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo3->Size = System::Drawing::Size(27, 23);
@@ -915,17 +915,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion4
 			// 
-			this->tRegion4->Controls->Add(this->tRo4);
-			this->tRegion4->Controls->Add(this->lRo4);
 			this->tRegion4->Controls->Add(this->tMaxReg4);
 			this->tRegion4->Controls->Add(this->tMinReg4);
-			this->tRegion4->Controls->Add(this->lMaxReg4);
-			this->tRegion4->Controls->Add(this->lMinReg4);
+			this->tRegion4->Controls->Add(this->tRo4);
+			this->tRegion4->Controls->Add(this->lRo4);
 			this->tRegion4->Controls->Add(this->dgBetas4);
 			this->tRegion4->Controls->Add(this->lBetas4);
 			this->tRegion4->Controls->Add(this->tConst4);
 			this->tRegion4->Controls->Add(this->lConst4);
 			this->tRegion4->Controls->Add(this->cIsLog4);
+			this->tRegion4->Controls->Add(this->lMaxReg4);
+			this->tRegion4->Controls->Add(this->lMinReg4);
 			this->tRegion4->Location = System::Drawing::Point(4, 22);
 			this->tRegion4->Name = L"tRegion4";
 			this->tRegion4->Size = System::Drawing::Size(288, 363);
@@ -936,7 +936,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo4
 			// 
 			this->tRo4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo4->Location = System::Drawing::Point(91, 141);
+			this->tRo4->Location = System::Drawing::Point(86, 141);
 			this->tRo4->Name = L"tRo4";
 			this->tRo4->Size = System::Drawing::Size(161, 20);
 			this->tRo4->TabIndex = 98;
@@ -950,7 +950,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo4->AutoSize = true;
 			this->lRo4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo4->Location = System::Drawing::Point(58, 138);
+			this->lRo4->Location = System::Drawing::Point(53, 138);
 			this->lRo4->Name = L"lRo4";
 			this->lRo4->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo4->Size = System::Drawing::Size(27, 23);
@@ -1076,17 +1076,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion5
 			// 
-			this->tRegion5->Controls->Add(this->tRo5);
-			this->tRegion5->Controls->Add(this->lRo5);
 			this->tRegion5->Controls->Add(this->tMaxReg5);
 			this->tRegion5->Controls->Add(this->tMinReg5);
-			this->tRegion5->Controls->Add(this->lMaxReg5);
-			this->tRegion5->Controls->Add(this->lMinReg5);
+			this->tRegion5->Controls->Add(this->tRo5);
+			this->tRegion5->Controls->Add(this->lRo5);
 			this->tRegion5->Controls->Add(this->dgBetas5);
 			this->tRegion5->Controls->Add(this->lBetas5);
 			this->tRegion5->Controls->Add(this->tConst5);
 			this->tRegion5->Controls->Add(this->lConst5);
 			this->tRegion5->Controls->Add(this->cIsLog5);
+			this->tRegion5->Controls->Add(this->lMaxReg5);
+			this->tRegion5->Controls->Add(this->lMinReg5);
 			this->tRegion5->Location = System::Drawing::Point(4, 22);
 			this->tRegion5->Name = L"tRegion5";
 			this->tRegion5->Size = System::Drawing::Size(288, 363);
@@ -1097,7 +1097,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo5
 			// 
 			this->tRo5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo5->Location = System::Drawing::Point(91, 141);
+			this->tRo5->Location = System::Drawing::Point(86, 141);
 			this->tRo5->Name = L"tRo5";
 			this->tRo5->Size = System::Drawing::Size(161, 20);
 			this->tRo5->TabIndex = 98;
@@ -1111,7 +1111,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo5->AutoSize = true;
 			this->lRo5->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo5->Location = System::Drawing::Point(58, 138);
+			this->lRo5->Location = System::Drawing::Point(53, 138);
 			this->lRo5->Name = L"lRo5";
 			this->lRo5->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo5->Size = System::Drawing::Size(27, 23);
@@ -1237,17 +1237,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion6
 			// 
-			this->tRegion6->Controls->Add(this->tRo6);
-			this->tRegion6->Controls->Add(this->lRo6);
 			this->tRegion6->Controls->Add(this->tMaxReg6);
 			this->tRegion6->Controls->Add(this->tMinReg6);
-			this->tRegion6->Controls->Add(this->lMaxReg6);
-			this->tRegion6->Controls->Add(this->lMinReg6);
+			this->tRegion6->Controls->Add(this->tRo6);
+			this->tRegion6->Controls->Add(this->lRo6);
 			this->tRegion6->Controls->Add(this->dgBetas6);
 			this->tRegion6->Controls->Add(this->lBetas6);
 			this->tRegion6->Controls->Add(this->tConst6);
 			this->tRegion6->Controls->Add(this->lConst6);
 			this->tRegion6->Controls->Add(this->cIsLog6);
+			this->tRegion6->Controls->Add(this->lMaxReg6);
+			this->tRegion6->Controls->Add(this->lMinReg6);
 			this->tRegion6->Location = System::Drawing::Point(4, 22);
 			this->tRegion6->Name = L"tRegion6";
 			this->tRegion6->Size = System::Drawing::Size(288, 363);
@@ -1258,7 +1258,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo6
 			// 
 			this->tRo6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo6->Location = System::Drawing::Point(91, 141);
+			this->tRo6->Location = System::Drawing::Point(86, 141);
 			this->tRo6->Name = L"tRo6";
 			this->tRo6->Size = System::Drawing::Size(161, 20);
 			this->tRo6->TabIndex = 98;
@@ -1272,7 +1272,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo6->AutoSize = true;
 			this->lRo6->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo6->Location = System::Drawing::Point(58, 138);
+			this->lRo6->Location = System::Drawing::Point(53, 138);
 			this->lRo6->Name = L"lRo6";
 			this->lRo6->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo6->Size = System::Drawing::Size(27, 23);
@@ -1398,17 +1398,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion7
 			// 
-			this->tRegion7->Controls->Add(this->tRo7);
-			this->tRegion7->Controls->Add(this->lRo7);
 			this->tRegion7->Controls->Add(this->tMaxReg7);
 			this->tRegion7->Controls->Add(this->tMinReg7);
-			this->tRegion7->Controls->Add(this->lMaxReg7);
-			this->tRegion7->Controls->Add(this->lMinReg7);
+			this->tRegion7->Controls->Add(this->tRo7);
+			this->tRegion7->Controls->Add(this->lRo7);
 			this->tRegion7->Controls->Add(this->dgBetas7);
 			this->tRegion7->Controls->Add(this->lBetas7);
 			this->tRegion7->Controls->Add(this->tConst7);
 			this->tRegion7->Controls->Add(this->lConst7);
 			this->tRegion7->Controls->Add(this->cIsLog7);
+			this->tRegion7->Controls->Add(this->lMaxReg7);
+			this->tRegion7->Controls->Add(this->lMinReg7);
 			this->tRegion7->Location = System::Drawing::Point(4, 22);
 			this->tRegion7->Name = L"tRegion7";
 			this->tRegion7->Size = System::Drawing::Size(288, 363);
@@ -1419,7 +1419,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo7
 			// 
 			this->tRo7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo7->Location = System::Drawing::Point(91, 141);
+			this->tRo7->Location = System::Drawing::Point(86, 141);
 			this->tRo7->Name = L"tRo7";
 			this->tRo7->Size = System::Drawing::Size(161, 20);
 			this->tRo7->TabIndex = 98;
@@ -1433,7 +1433,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo7->AutoSize = true;
 			this->lRo7->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo7->Location = System::Drawing::Point(58, 138);
+			this->lRo7->Location = System::Drawing::Point(53, 138);
 			this->lRo7->Name = L"lRo7";
 			this->lRo7->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo7->Size = System::Drawing::Size(27, 23);
@@ -1559,17 +1559,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion8
 			// 
-			this->tRegion8->Controls->Add(this->tRo8);
-			this->tRegion8->Controls->Add(this->lRo8);
 			this->tRegion8->Controls->Add(this->tMaxReg8);
 			this->tRegion8->Controls->Add(this->tMinReg8);
-			this->tRegion8->Controls->Add(this->lMaxReg8);
-			this->tRegion8->Controls->Add(this->lMinReg8);
+			this->tRegion8->Controls->Add(this->tRo8);
+			this->tRegion8->Controls->Add(this->lRo8);
 			this->tRegion8->Controls->Add(this->dgBetas8);
 			this->tRegion8->Controls->Add(this->lBetas8);
 			this->tRegion8->Controls->Add(this->tConst8);
 			this->tRegion8->Controls->Add(this->lConst8);
 			this->tRegion8->Controls->Add(this->cIsLog8);
+			this->tRegion8->Controls->Add(this->lMaxReg8);
+			this->tRegion8->Controls->Add(this->lMinReg8);
 			this->tRegion8->Location = System::Drawing::Point(4, 22);
 			this->tRegion8->Name = L"tRegion8";
 			this->tRegion8->Size = System::Drawing::Size(288, 363);
@@ -1580,7 +1580,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo8
 			// 
 			this->tRo8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo8->Location = System::Drawing::Point(91, 141);
+			this->tRo8->Location = System::Drawing::Point(86, 141);
 			this->tRo8->Name = L"tRo8";
 			this->tRo8->Size = System::Drawing::Size(161, 20);
 			this->tRo8->TabIndex = 98;
@@ -1594,7 +1594,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo8->AutoSize = true;
 			this->lRo8->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo8->Location = System::Drawing::Point(58, 138);
+			this->lRo8->Location = System::Drawing::Point(53, 138);
 			this->lRo8->Name = L"lRo8";
 			this->lRo8->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo8->Size = System::Drawing::Size(27, 23);
@@ -1720,17 +1720,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion9
 			// 
-			this->tRegion9->Controls->Add(this->tRo9);
-			this->tRegion9->Controls->Add(this->lRo9);
 			this->tRegion9->Controls->Add(this->tMaxReg9);
 			this->tRegion9->Controls->Add(this->tMinReg9);
-			this->tRegion9->Controls->Add(this->lMaxReg9);
-			this->tRegion9->Controls->Add(this->lMinReg9);
+			this->tRegion9->Controls->Add(this->tRo9);
+			this->tRegion9->Controls->Add(this->lRo9);
 			this->tRegion9->Controls->Add(this->dgBetas9);
 			this->tRegion9->Controls->Add(this->lBetas9);
 			this->tRegion9->Controls->Add(this->tConst9);
 			this->tRegion9->Controls->Add(this->lConst9);
 			this->tRegion9->Controls->Add(this->cIsLog9);
+			this->tRegion9->Controls->Add(this->lMaxReg9);
+			this->tRegion9->Controls->Add(this->lMinReg9);
 			this->tRegion9->Location = System::Drawing::Point(4, 22);
 			this->tRegion9->Name = L"tRegion9";
 			this->tRegion9->Size = System::Drawing::Size(288, 363);
@@ -1741,7 +1741,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo9
 			// 
 			this->tRo9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo9->Location = System::Drawing::Point(91, 141);
+			this->tRo9->Location = System::Drawing::Point(86, 141);
 			this->tRo9->Name = L"tRo9";
 			this->tRo9->Size = System::Drawing::Size(161, 20);
 			this->tRo9->TabIndex = 98;
@@ -1755,7 +1755,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo9->AutoSize = true;
 			this->lRo9->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo9->Location = System::Drawing::Point(58, 138);
+			this->lRo9->Location = System::Drawing::Point(53, 138);
 			this->lRo9->Name = L"lRo9";
 			this->lRo9->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo9->Size = System::Drawing::Size(27, 23);
@@ -1881,17 +1881,17 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// tRegion10
 			// 
-			this->tRegion10->Controls->Add(this->tRo10);
-			this->tRegion10->Controls->Add(this->lRo10);
 			this->tRegion10->Controls->Add(this->tMaxReg10);
 			this->tRegion10->Controls->Add(this->tMinReg10);
-			this->tRegion10->Controls->Add(this->lMaxReg10);
-			this->tRegion10->Controls->Add(this->lMinReg10);
+			this->tRegion10->Controls->Add(this->tRo10);
+			this->tRegion10->Controls->Add(this->lRo10);
 			this->tRegion10->Controls->Add(this->dgBetas10);
 			this->tRegion10->Controls->Add(this->lBetas10);
 			this->tRegion10->Controls->Add(this->tConst10);
 			this->tRegion10->Controls->Add(this->lConst10);
 			this->tRegion10->Controls->Add(this->cIsLog10);
+			this->tRegion10->Controls->Add(this->lMaxReg10);
+			this->tRegion10->Controls->Add(this->lMinReg10);
 			this->tRegion10->Location = System::Drawing::Point(4, 22);
 			this->tRegion10->Name = L"tRegion10";
 			this->tRegion10->Size = System::Drawing::Size(288, 363);
@@ -1902,7 +1902,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// tRo10
 			// 
 			this->tRo10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tRo10->Location = System::Drawing::Point(91, 141);
+			this->tRo10->Location = System::Drawing::Point(86, 141);
 			this->tRo10->Name = L"tRo10";
 			this->tRo10->Size = System::Drawing::Size(161, 20);
 			this->tRo10->TabIndex = 98;
@@ -1916,7 +1916,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo10->AutoSize = true;
 			this->lRo10->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lRo10->Location = System::Drawing::Point(58, 138);
+			this->lRo10->Location = System::Drawing::Point(53, 138);
 			this->lRo10->Name = L"lRo10";
 			this->lRo10->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
 			this->lRo10->Size = System::Drawing::Size(27, 23);
@@ -2053,8 +2053,9 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// 
 			// P_ContinuousR
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
+			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(543, 585);
 			this->Controls->Add(this->bDeleteRegression);
 			this->Controls->Add(this->tcRegions);
@@ -2065,6 +2066,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->Controls->Add(this->bSalvar);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"P_ContinuousR";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"P_ContinuousR";
 			this->Shown += gcnew System::EventHandler(this, &P_ContinuousR::P_ContinuousR_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

@@ -33,7 +33,6 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 	}
 	if (check) {
 		lReturn->Component = 6;
-		//P_Continuous^ potentialForm = gcnew P_Continuous(lReturn);
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
 		potentialForm->Text = gSPot + "Linear Regression";
 		potentialForm->ShowDialog();
@@ -57,7 +56,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Obje
 	}
 	if (check) {
 		lReturn->Component = 7;
-		P_Continuous^ potentialForm = gcnew P_Continuous(lReturn);
+		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
 		potentialForm->Text = gSPot + "Spatial Lag Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {

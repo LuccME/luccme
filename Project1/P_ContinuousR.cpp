@@ -36,7 +36,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg->Text = "0";
 		tMinReg->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg->Text = "0";
+		tMaxReg->Text = "1";
 		tMaxReg->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo->Text = "0.5";
 		tRo->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -52,7 +52,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg2->Text = "0";
 		tMinReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg2->Text = "0";
+		tMaxReg2->Text = "1";
 		tMaxReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo2->Text = "0.5";
 		tRo2->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -68,7 +68,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg3->Text = "0";
 		tMinReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg3->Text = "0";
+		tMaxReg3->Text = "1";
 		tMaxReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo3->Text = "0.5";
 		tRo3->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -84,7 +84,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg4->Text = "0";
 		tMinReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg4->Text = "0";
+		tMaxReg4->Text = "1";
 		tMaxReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo4->Text = "0.5";
 		tRo4->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -100,7 +100,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg5->Text = "0";
 		tMinReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg5->Text = "0";
+		tMaxReg5->Text = "1";
 		tMaxReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo5->Text = "0.5";
 		tRo5->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -116,7 +116,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg6->Text = "0";
 		tMinReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg6->Text = "0";
+		tMaxReg6->Text = "1";
 		tMaxReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo6->Text = "0.5";
 		tRo6->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -132,7 +132,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg7->Text = "0";
 		tMinReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg7->Text = "0";
+		tMaxReg7->Text = "1";
 		tMaxReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo7->Text = "0.5";
 		tRo7->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -148,7 +148,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg8->Text = "0";
 		tMinReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg8->Text = "0";
+		tMaxReg8->Text = "1";
 		tMaxReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo8->Text = "0.5";
 		tRo8->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -164,7 +164,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg9->Text = "0";
 		tMinReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg9->Text = "0";
+		tMaxReg9->Text = "1";
 		tMaxReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo9->Text = "0.5";
 		tRo9->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -180,7 +180,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	if (lReturn->Component == 7) {
 		tMinReg10->Text = "0";
 		tMinReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tMaxReg10->Text = "0";
+		tMaxReg10->Text = "1";
 		tMaxReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tRo10->Text = "0.5";
 		tRo10->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -533,14 +533,43 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 	}
 
 	if (this->lReturn->Component == 7) {
-		this->Height = 645;
-		this->lvLUT->Height = 371;
-		bSalvar->Location = Point(221, 568);
-		bCancel->Location = Point(263, 568);
-		bAddBetas->Location = Point(367, 568);
-		lBetas->Location = Point(328, 334);
-		this->dgBetas->Location = Point(231, 363);
-		this->dgBetas->Height = this->dgBetas->Height - 80;
+		this->Height = 674;
+		this->lvLUT->Height = 430;
+		this->tcRegions->Height = 429;
+		bSalvar->Location = Point(238, 600);
+		bCancel->Location = Point(271, 600);
+		bAddBetas->Location = Point(375, 600);
+		
+		lBetas->Location = Point(117, 178);
+		dgBetas->Location = Point(20, 207);
+		dgBetas->Height = this->dgBetas->Height - 60;
+		lBetas2->Location = Point(117, 178);
+		dgBetas2->Location = Point(20, 207);
+		dgBetas2->Height = this->dgBetas2->Height - 60;
+		lBetas3->Location = Point(117, 178);
+		dgBetas3->Location = Point(20, 207);
+		dgBetas3->Height = this->dgBetas3->Height - 60;
+		lBetas4->Location = Point(117, 178);
+		dgBetas4->Location = Point(20, 207);
+		dgBetas4->Height = this->dgBetas4->Height - 60;
+		lBetas5->Location = Point(117, 178);
+		dgBetas5->Location = Point(20, 207);
+		dgBetas5->Height = this->dgBetas5->Height - 60;
+		lBetas6->Location = Point(117, 178);
+		dgBetas6->Location = Point(20, 207);
+		dgBetas6->Height = this->dgBetas6->Height - 60;
+		lBetas7->Location = Point(117, 178);
+		dgBetas7->Location = Point(20, 207);
+		dgBetas7->Height = this->dgBetas7->Height - 60;
+		lBetas8->Location = Point(117, 178);
+		dgBetas8->Location = Point(20, 207);
+		dgBetas8->Height = this->dgBetas8->Height - 60;
+		lBetas9->Location = Point(117, 178);
+		dgBetas9->Location = Point(20, 207);
+		dgBetas9->Height = this->dgBetas9->Height - 60;
+		lBetas10->Location = Point(117, 178);
+		dgBetas10->Location = Point(20, 207);
+		dgBetas10->Height = this->dgBetas10->Height - 60;
 	}
 
 	this->lvLUT->Columns->Add("Status", 47, HorizontalAlignment::Left);
@@ -658,21 +687,6 @@ System::Void LuccME::P_ContinuousR::lvLUT_SelectedIndexChanged(System::Object^  
 			tRo->Visible = true;
 		}
 	}
-
-	//if (this->lReturn->Return != "") {
-	//	for (int i = 0; i < lTempBetas->Length; i++) {
-	//		if (lTempBetas[i] == nullptr) {
-	//			break;
-	//		}
-	//		else {
-	//			int fulfilledRegions = countCaracter(lTempBetas[i], '*');
-
-	//			if (fulfilledRegions == lReturn->Regression) {
-	//				lvLUT->Items[i]->SubItems->Add("OK");
-	//			}
-	//		}
-	//	}
-	//}
 }
 
 System::Void LuccME::P_ContinuousR::tcRegions_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 

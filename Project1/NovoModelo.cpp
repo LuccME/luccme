@@ -935,8 +935,8 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		lPotential->Component = gPotentialComponent;
 		lPotential->Language = lLanguage;
 		lPotential->Regression = gPotentialRegression;
-		PotContinuousForm^ potDiscreteForm = gcnew PotContinuousForm(lPotential);
-		potDiscreteForm->ShowDialog();
+		PotContinuousForm^ potContinuousForm = gcnew PotContinuousForm(lPotential);
+		potContinuousForm->ShowDialog();
 		gPotential = lPotential->Return;
 		gPotentialComponent = lPotential->Component;
 		gPotentialRegression = lPotential->Regression;
@@ -963,81 +963,7 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 
 		case 7:
 			if (gPotential != "") {
-				lines2[0] = "SpatialLagRegression";
-				lineCount = 1;
-				int change = 0;
-
-				for (int i = 0; i < gPotential->Length; i++) {
-					if (gPotential[i] != '#') {
-						if (gPotential[i] != ';') {
-							lines2[lineCount] += gPotential[i];
-						}
-						else {
-							switch (change)
-							{
-							case 0:
-								lines2[lineCount] += "$";
-								change++;
-								break;
-
-							case 1:
-								lines2[lineCount] += "@";
-								change++;
-								break;
-
-							case 2:
-								lines2[lineCount] += "%";
-								change++;
-								break;
-
-							case 3:
-								lines2[lineCount] += "&";
-								change++;
-								break;
-							default:
-								lines2[lineCount] += gPotential[i];
-								break;
-							}
-						}
-					}
-					else {
-						if (lines2[lineCount][0] == '0') {
-							lines2[lineCount] = String::Concat("false", lines2[lineCount]->Substring(1));
-						}
-						else {
-							lines2[lineCount] = String::Concat("true", lines2[lineCount]->Substring(1));
-						}
-						lines2[lineCount] = String::Concat("isLog = ", lines2[lineCount]);
-						lines2[lineCount] = lines2[lineCount]->Replace("$", ",const=");
-						lines2[lineCount] = lines2[lineCount]->Replace("@", ",minReg=");
-						lines2[lineCount] = lines2[lineCount]->Replace("%", ",maxReg=");
-						lines2[lineCount] = lines2[lineCount]->Replace("&", ",ro=");
-						lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-						lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-						lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-						lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-						lineCount++;
-						change = 0;
-					}
-				}
-				if (lines2[lineCount] != "") {
-					if (lines2[lineCount][0] == '0') {
-						lines2[lineCount] = String::Concat("false", lines2[lineCount]->Substring(1));
-					}
-					else {
-						lines2[lineCount] = String::Concat("true", lines2[lineCount]->Substring(1));
-					}
-					lines2[lineCount] = String::Concat("isLog = ", lines2[lineCount]);
-					lines2[lineCount] = lines2[lineCount]->Replace("$", ",const=");
-					lines2[lineCount] = lines2[lineCount]->Replace("@", ",minReg=");
-					lines2[lineCount] = lines2[lineCount]->Replace("%", ",maxReg=");
-					lines2[lineCount] = lines2[lineCount]->Replace("&", ",ro=");
-					lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-					lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-					lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-					lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-				}
-				tbPotential->Lines = lines2;
+				showReturnSpatialLagRegression();
 			}
 			break;
 
@@ -2040,7 +1966,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\tpotentialData =");
 						sw->WriteLine("\t{");
 						for (int k = 1; k < tbPotential->Lines->Length; k += nLut) {
-							sw->WriteLine("\t\t--Region " + activeRegion.ToString());
+							sw->WriteLine("\t\t-- Region " + activeRegion.ToString());
 							sw->WriteLine("\t\t{");
 							if(gPotentialRegression == 1){
 								endRegion = (tbPotential->Lines->Length - 1);
@@ -2117,7 +2043,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
 						sw->WriteLine("\t{");
-						sw->WriteLine("\t\t--Region 1");
+						sw->WriteLine("\t\t-- Region 1");
 						sw->WriteLine("\t\t{");
 
 						for (int i = 1; i < tbPotential->Lines->Length; i++) {
@@ -4104,192 +4030,155 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						line = sw->ReadLine();
 					}
 
-					for (int k = 0; k < count - 1; k++) {
+					int countBraces = 0;
+					while (line->Contains("Allocation") != 1) {
 						line = sw->ReadLine();
-						while (line->Contains("isLog") != 1) { 
-							line = sw->ReadLine();
+						if (line->Contains("{")) {
+							countBraces++;
 						}
+					}
 
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("isLog=", "");
-						line = line->Replace(",", "");
-						if (line == "true") {
-							line = "1;";
-						}
-						else {
-							line = "0;";
-						}
+					countBraces -= 1; //To remove the potencialData brace
 
-						gPotential += line;
+					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
+					int bracesForLUT = 2;
+					int nRegions = countBraces / (bracesForLUT*nLUT);
+					int activeRegion = 0;
+					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
+					gPotentialRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (line->Contains("potentialData") != 1) {
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						for (int k = 0; k < count - 1; k++) {
+							int position = k + (nLUT*activeRegion);
 							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("const=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("minReg") != 1) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("minReg=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("maxReg") != 1) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("maxReg=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("ro") != 1) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("ro=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { 
-							line = sw->ReadLine();
-						}
-
-						tempLine = "";
-						while (line->Contains("}") != 1) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						String^ tempAux = "";
-						bool enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
+							while (line->Contains("isLog") != 1) {
+								line = sw->ReadLine();
 							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("isLog=", "");
+							line = line->Replace(",", "");
+							if (line == "true") {
+								line = "1;";
+							}
+							else {
+								line = "0;";
+							}
+
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("const") != 1) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("const=", "");
+							line = line->Replace(",", ";");
+							
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("minReg") != 1) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("minReg=", "");
+							line = line->Replace(",", ";");
+							
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("maxReg") != 1) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("maxReg=", "");
+							line = line->Replace(",", ";");
+							
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("ro") != 1) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("ro=", "");
+							line = line->Replace(",", ";");
+							
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("betas") != 1) {
+								line = sw->ReadLine();
+							}
+
+							tempLine = "";
+							while (line->Contains("}") != 1) {
+								tempLine += line;
+								line = sw->ReadLine();
+							}
+
+							tempLine += "}";
+							tempLine = tempLine->Replace("\n", "");
+							tempLine = tempLine->Replace("\t", "");
+							tempLine = tempLine->Replace(" ", "");
+
+							String^ tempAux = "";
+							bool enter = true;
+							for (int i = 0; i < tempLine->Length; i++) {
+								while (tempLine[i] != '{') {
+									if (i == tempLine->Length - 1) {
+										enter = false;
+										break;
+									}
 									i++;
 								}
+								if (enter) {
+									while (tempLine[i] != '}') {
+										tempAux += tempLine[i];
+										i++;
+									}
+								}
 							}
+							tempAux = tempAux->Replace("{", "");
+							auxPotData[position] += tempAux + "*";
 						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + "#";
+						activeRegion++;
+					}
+
+					for (int i = 0; i < nLUT; i++) {
+						for (int j = i; j < auxPotData->Length; j += nLUT) {
+							gPotential += auxPotData[j];
+						}
+						gPotential += "#";
 					}
 
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
-					array<String^>^ lines2 = gcnew array<String^>(count + 4);
-					lines2[0] = "SpatialLagRegression";
-
 					if (gPotential != "") {
-						int lineCount = 1;
-						int change = 0;
-
-						for (int i = 0; i < gPotential->Length; i++) {
-							if (gPotential[i] != '#') {
-								if (gPotential[i] != ';') {
-									lines2[lineCount] += gPotential[i];
-								}
-								else {
-									switch (change)
-									{
-									case 0:
-										lines2[lineCount] += "$";
-										change++;
-										break;
-
-									case 1:
-										lines2[lineCount] += "@";
-										change++;
-										break;
-
-									case 2:
-										lines2[lineCount] += "%";
-										change++;
-										break;
-
-									case 3:
-										lines2[lineCount] += "&";
-										change++;
-										break;
-									default:
-										lines2[lineCount] += gPotential[i];
-										break;
-									}
-								}
-							}
-							else {
-								if (lines2[lineCount][0] == '0') {
-									lines2[lineCount] = String::Concat("false", lines2[lineCount]->Substring(1));
-								}
-								else {
-									lines2[lineCount] = String::Concat("true", lines2[lineCount]->Substring(1));
-								}
-								lines2[lineCount] = String::Concat("isLog = ", lines2[lineCount]);
-								lines2[lineCount] = lines2[lineCount]->Replace("$", ",const=");
-								lines2[lineCount] = lines2[lineCount]->Replace("@", ",minReg=");
-								lines2[lineCount] = lines2[lineCount]->Replace("%", ",maxReg=");
-								lines2[lineCount] = lines2[lineCount]->Replace("&", ",ro=");
-								lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-								lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-								lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-								lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-								lineCount++;
-								change = 0;
-							}
-						}
-						if (lines2[lineCount] != "") {
-							if (lines2[lineCount][0] == '0') {
-								lines2[lineCount] = String::Concat("false", lines2[lineCount]->Substring(1));
-							}
-							else {
-								lines2[lineCount] = String::Concat("true", lines2[lineCount]->Substring(1));
-							}
-							lines2[lineCount] = String::Concat("isLog = ", lines2[lineCount]);
-							lines2[lineCount] = lines2[lineCount]->Replace("$", ",const=");
-							lines2[lineCount] = lines2[lineCount]->Replace("@", ",minReg=");
-							lines2[lineCount] = lines2[lineCount]->Replace("%", ",maxReg=");
-							lines2[lineCount] = lines2[lineCount]->Replace("&", ",ro=");
-							lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-							lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-							lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-							lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-						}
-
-						tbPotential->Lines = lines2;
+						showReturnSpatialLagRegression();
 					}
 				}
 
@@ -6002,6 +5891,127 @@ System::Void LuccME::NovoModelo::showReturnLinearRegression()
 			}
 			lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
 			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+
+	tbPotential->Lines = lines;
+}
+
+System::Void LuccME::NovoModelo::showReturnSpatialLagRegression()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "SpatialLagRegression";
+	lineCount = 1;
+	regression = 0;
+	int change = 0;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				if (gPotential[i] != ';') {
+					lines[lineCount + regression] += gPotential[i];
+				}
+				else {
+					switch (change)
+					{
+					case 0:
+						lines[lineCount + regression] += "$";
+						change++;
+						break;
+
+					case 1:
+						lines[lineCount + regression] += "@";
+						change++;
+						break;
+
+					case 2:
+						lines[lineCount + regression] += "%";
+						change++;
+						break;
+
+					case 3:
+						lines[lineCount + regression] += "&";
+						change++;
+						break;
+					default:
+						lines[lineCount + regression] += gPotential[i];
+						break;
+					}
+				}
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+						change = 0;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				if (lines[lineCount + j][0] == '0') {
+					lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
+				}
+				else {
+					lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
+				}
+				lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",minReg=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("%", ",maxReg=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("&", ",ro=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+				change = 0;
+			}
+			regression = 0;
+			lineCount++;
+		}
+
+	}
+
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			if (lines[lineCount + j][0] == '0') {
+				lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
+			}
+			else {
+				lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
+			}
+			lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",minReg=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("%", ",maxReg=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("&", ",ro=");
 			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
 			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
 			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");

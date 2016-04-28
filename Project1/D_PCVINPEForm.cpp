@@ -232,7 +232,7 @@ System::Void LuccME::D_PCVINPEForm::CopyToClipboard()
 System::Void LuccME::D_PCVINPEForm::PasteClipboardValue()
 {
 	//Show Error if no cell is selected
-	if (dgDemand->SelectedCells->Count == 0)
+	if (dgDemand->SelectedCells->Count == NONE)
 	{
 		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
@@ -275,7 +275,7 @@ System::Void LuccME::D_PCVINPEForm::PasteClipboardValue()
 System::Windows::Forms::DataGridViewCell^ LuccME::D_PCVINPEForm::GetStartCell(System::Windows::Forms::DataGridView^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;

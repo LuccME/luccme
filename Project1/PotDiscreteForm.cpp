@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PotDiscreteForm.h"
 #include "P_Discrete.h"
+#include "P_DiscreteR.h"
 
 System::Void LuccME::PotDiscreteForm::PotDiscreteForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
@@ -29,7 +30,7 @@ System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ se
 		check = false;
 	}
 
-	if (this->lReturn->Component != 1 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != NEIGHSIMPLERULE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -38,7 +39,7 @@ System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ se
 
 	if (check) {
 		lReturn->Return = "";
-		lReturn->Component = 1;
+		lReturn->Component = NEIGHSIMPLERULE;
 		this->Close();
 	}
 }
@@ -46,7 +47,7 @@ System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ se
 System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 2 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != NEIGHINVERSEDISTANCERULE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -56,11 +57,11 @@ System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Ob
 
 	}
 	if (check) {
-		P_Discrete^ potentialForm = gcnew P_Discrete(lReturn);
+		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
 		potentialForm->Text = gSPot + "Neigh Inverse Distance Rule";
 		potentialForm->ShowDialog();
 		if (lReturn->Return != "") {
-			lReturn->Component = 2;
+			lReturn->Component = NEIGHINVERSEDISTANCERULE;
 		}
 		this->Close();
 	}
@@ -69,7 +70,7 @@ System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Ob
 System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 3 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != INVERSEDISTANCERULE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -78,11 +79,11 @@ System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object 
 		}
 	}
 	if (check) {
-		P_Discrete^ potentialForm = gcnew P_Discrete(lReturn);
+		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
 		potentialForm->Text = gSPot + "Inverse Distance Rule";
 		potentialForm->ShowDialog();
 		if (lReturn->Return != "") {
-			lReturn->Component = 3;
+			lReturn->Component = INVERSEDISTANCERULE;
 		}
 		this->Close();
 	}
@@ -91,7 +92,7 @@ System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object 
 System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 4 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != LOGISTICREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -100,12 +101,12 @@ System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^
 		}
 	}
 	if (check) {
-		lReturn->Component = 4;
-		P_Discrete^ potentialForm = gcnew P_Discrete(lReturn);
+		lReturn->Component = LOGISTICREGRESSION;
+		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
 		potentialForm->Text = gSPot + "Logistic Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		} 
 		this->Close();
 	}
@@ -114,7 +115,7 @@ System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^
 System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 5 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != NEIGHATTRACTIONLOGISTICREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -123,12 +124,12 @@ System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, Syste
 		}
 	}
 	if (check) {
-		lReturn->Component = 5;
-		P_Discrete^ potentialForm = gcnew P_Discrete(lReturn);
+		lReturn->Component = NEIGHATTRACTIONLOGISTICREGRESSION;
+		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
 		potentialForm->Text = gSPot + "Neigh Attraction Logistic Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		}
 		this->Close();
 	}

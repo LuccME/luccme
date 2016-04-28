@@ -221,7 +221,7 @@ System::Void LuccME::A_AllocationClueSLike::dgTransitionMatrix_KeyDown(System::O
 	switch (e->KeyCode)
 	{
 	case Keys::Delete:
-		if (dgTransitionMatrix->SelectedCells->Count != 0)
+		if (dgTransitionMatrix->SelectedCells->Count != NONE)
 		{
 			DataGridViewCell^ startCell = GetStartCell(dgTransitionMatrix);
 			int row = startCell->RowIndex;
@@ -241,7 +241,7 @@ System::Void LuccME::A_AllocationClueSLike::dgTransitionMatrix_KeyDown(System::O
 System::Windows::Forms::DataGridViewCell ^ LuccME::A_AllocationClueSLike::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;

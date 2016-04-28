@@ -1,7 +1,5 @@
 #pragma once
 
-#define DEFAULTLANGUAGE "br"
-
 namespace LuccME {
 
 	using namespace System;

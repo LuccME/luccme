@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "PotContinuousForm.h"
-#include "P_Continuous.h"
 #include "P_SpatialLagLinearRoads.h"
 #include "P_ContinuousR.h"
 
@@ -23,7 +22,7 @@ System::Void LuccME::PotContinuousForm::PotContinuousForm_Shown(System::Object ^
 System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 6 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != LINEARREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -32,12 +31,12 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 		}
 	}
 	if (check) {
-		lReturn->Component = 6;
+		lReturn->Component = LINEARREGRESSION;
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
 		potentialForm->Text = gSPot + "Linear Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		}
 		this->Close();
 	}
@@ -46,7 +45,7 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 7 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != SPATIALLAGREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -55,12 +54,12 @@ System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Obje
 		}
 	}
 	if (check) {
-		lReturn->Component = 7;
+		lReturn->Component = SPATIALLAGREGRESSION;
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
 		potentialForm->Text = gSPot + "Spatial Lag Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		}
 		this->Close();
 	}
@@ -69,7 +68,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Obje
 System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 8 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != SPATIALLAGLINEARROADS && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -78,12 +77,12 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 		}
 	}
 	if (check) {
-		lReturn->Component = 8;
+		lReturn->Component = SPATIALLAGLINEARROADS;
 		P_SpatialLagLinearRoads^ potentialForm = gcnew P_SpatialLagLinearRoads(lReturn);
 		potentialForm->Text = gSPot + "Spatial Lag Linear Roads";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		}
 		this->Close();
 	}

@@ -91,7 +91,6 @@
     <ClCompile Include="AllocContinuousForm.cpp" />
     <ClCompile Include="AllocDiscreteForm.cpp" />
     <ClCompile Include="A_ABSO.cpp" />
-    <ClCompile Include="A_AllocationClueLike.cpp" />
     <ClCompile Include="A_AllocationClueSLike.cpp" />
     <ClCompile Include="A_Continuous.cpp" />
     <ClCompile Include="D_CIThreeDM.cpp" />
@@ -104,9 +103,9 @@
     <ClCompile Include="NovoModelo.cpp" />
     <ClCompile Include="PotContinuousForm.cpp" />
     <ClCompile Include="PotDiscreteForm.cpp" />
-    <ClCompile Include="P_Continuous.cpp" />
     <ClCompile Include="P_ContinuousR.cpp" />
     <ClCompile Include="P_Discrete.cpp" />
+    <ClCompile Include="P_DiscreteR.cpp" />
     <ClCompile Include="P_SpatialLagLinearRoads.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -161,13 +160,13 @@
     <ClInclude Include="PotDiscreteForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="P_Continuous.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
     <ClInclude Include="P_ContinuousR.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="P_Discrete.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="P_DiscreteR.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="P_SpatialLagLinearRoads.h">
@@ -227,14 +226,14 @@
     <EmbeddedResource Include="PotDiscreteForm.resx">
       <DependentUpon>PotDiscreteForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="P_Continuous.resx">
-      <DependentUpon>P_Continuous.h</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="P_ContinuousR.resx">
       <DependentUpon>P_ContinuousR.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="P_Discrete.resx">
       <DependentUpon>P_Discrete.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="P_DiscreteR.resx">
+      <DependentUpon>P_DiscreteR.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="P_SpatialLagLinearRoads.resx">
       <DependentUpon>P_SpatialLagLinearRoads.h</DependentUpon>

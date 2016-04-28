@@ -121,8 +121,8 @@ namespace LuccME {
 		bool runnable = false;
 		bool access = false;
 		bool lOpen = false;
-		int gNumDiscPotComp = 5;
-		int gNumDiscAllocComp = 2;
+		//int gNumDiscPotComp = 5;
+		//int gNumDiscAllocComp = 2;
 		int gDemandComponent = 0;
 		int gPotentialComponent = 0;
 		int gAllocationComponent = 0;
@@ -1794,6 +1794,9 @@ namespace LuccME {
 	private: System::Void tAttributeInitValidation_Leave(System::Object^  sender, System::EventArgs^  e);
 	private: System::Int16 countCaracter(String^ source, char caracter);
 	private: System::Void showReturnLinearRegression();
-	private: System::Void showReturnSpatialLagRegression();
+	private: System::Void showReturnSpatialLagRegression(); 
+	private: System::Void showReturnSpatialLagLinearRoads();
+	private: System::Void showReturnDistanceRule(String^ componentName); 
+	private: System::Void showReturnLogisticRegression();
 	};
 }

@@ -4,6 +4,9 @@
 
 using namespace System::Windows::Forms;
 
+/*
+Count the number of a caracter on a string
+*/
 System::Int16 LuccME::P_ContinuousR::countCaracter(String^ source, char caracter)
 {
 	int count = 0;
@@ -15,6 +18,9 @@ System::Int16 LuccME::P_ContinuousR::countCaracter(String^ source, char caracter
 	return count;
 }
 
+/*
+Used on the enter focus to change default values and colors
+*/
 System::Void LuccME::P_ContinuousR::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	System::Windows::Forms::TextBox^ thisTextBox = safe_cast<System::Windows::Forms::TextBox^>(sender);
@@ -24,6 +30,9 @@ System::Void LuccME::P_ContinuousR::textBox_Enter(System::Object ^ sender, Syste
 	}
 }
 
+/*
+Initialized all the regions on tcRegions for the default values
+*/
 System::Void LuccME::P_ContinuousR::initializeRegions()
 {
 	dgBetas->ColumnCount = 2;
@@ -188,6 +197,9 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	tcRegions->SelectedIndex = 0;
 }
 
+/*
+Make the components of a tRagion visible or not
+*/
 System::Void LuccME::P_ContinuousR::setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, CheckBox^ cIsLog, Label^ lConst, TextBox^ tConst, Label^ lMinReg, TextBox^ tMinReg, Label^ lMaxReg, TextBox^ tMaxReg, Label^ lRo, TextBox^ tRo, bool status)
 {
 	lBetas->Visible = status;
@@ -208,6 +220,9 @@ System::Void LuccME::P_ContinuousR::setVisibleONorOFF(Label^ lBetas, DataGridVie
 	}
 }
 
+/*
+Used when a tRegion is deleted, it copies the data from the tRegions higher than the deleted one.
+*/
 System::Void LuccME::P_ContinuousR::moveData(DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, DataGridView^ dgBetas2, CheckBox^ cIsLog2, TextBox^ tConst2, TextBox^ tMinReg2, TextBox^ tMaxReg2, TextBox^ tRo2)
 {
 	dgBetas->Rows->Clear();
@@ -225,6 +240,9 @@ System::Void LuccME::P_ContinuousR::moveData(DataGridView^ dgBetas, CheckBox^ cI
 	}
 }
 
+/*
+Used to set the tRegions data from lReturn->Return, it copies the lTempBetas data to tRegion
+*/
 System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, cReturnPotential^ lReturn, DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, int i, int j)
 {
 	bool isLog = false;
@@ -306,6 +324,9 @@ System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, c
 	return j;
 }
 
+/*
+Used to save the tRegions data to lReturn->Return, it copies the tRegion data to lTempBetas
+*/
 System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, int i, int j)
 {
 	if (cIsLog->Checked) {
@@ -349,11 +370,13 @@ System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBo
 	lReturn->Regression += 1;
 }
 
-
+/*
+Locate the initial cell for copying or pasting
+*/
 System::Windows::Forms::DataGridViewCell ^ LuccME::P_ContinuousR::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;
@@ -370,6 +393,9 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_ContinuousR::GetStartCell(S
 	return dgView[colIndex, rowIndex];
 }
 
+/*
+Capture the keys press
+*/
 System::Void LuccME::P_ContinuousR::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
 	DataGridView^ dgView = (DataGridView^)sender;
@@ -415,19 +441,25 @@ System::Void LuccME::P_ContinuousR::dgBetas_KeyDown(System::Object ^ sender, Sys
 	}
 }
 
+/*
+Copy the clipboard data
+*/
 System::Void LuccME::P_ContinuousR::CopyToClipboard(DataGridView^ dgView)
 {
-	//Copy to clipboard
 	DataObject^ dataObj = dgView->GetClipboardContent();
 	if (dataObj != nullptr) {
 		Clipboard::SetDataObject(dataObj);
 	}
 }
 
+
+/*
+Paste the clipboard data
+*/
 System::Void LuccME::P_ContinuousR::PasteClipboardValue(DataGridView^ dgView)
 {
 	//Show Error if no cell is selected
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 	{
 		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;

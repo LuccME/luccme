@@ -25,10 +25,10 @@ System::Void LuccME::MyForm::bNovoModelo_Click(System::Object ^ sender, System::
 	lLanguage = novoModelo->lLanguage;
 	checkLanguage();
 	MyForm::Update();
-	if (novoModelo->lReturn == 1) {
+	if (novoModelo->lReturn == NEWMODEL) {
 		bNovoModelo_Click(sender, e);
 	}
-	if (novoModelo->lReturn == 2) {
+	if (novoModelo->lReturn == OPENMODEL) {
 		bAbrirModelo_Click(sender, e);
 	}
 }
@@ -114,10 +114,10 @@ System::Void LuccME::MyForm::bAbrirModelo_Click(System::Object ^ sender, System:
 	lLanguage = novoModelo->lLanguage;
 	checkLanguage();
 	MyForm::Update();
-	if (novoModelo->lReturn == 1) {
+	if (novoModelo->lReturn == NEWMODEL) {
 		bNovoModelo_Click(sender, e);
 	}
-	if (novoModelo->lReturn == 2) {
+	if (novoModelo->lReturn == OPENMODEL) {
 		bAbrirModelo_Click(sender, e);
 	}
 }

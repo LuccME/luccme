@@ -169,7 +169,7 @@ System::Void LuccME::D_CITwoDM::dgDemand_CellValueChanged(System::Object ^ sende
 System::Windows::Forms::DataGridViewCell ^ LuccME::D_CITwoDM::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;
@@ -191,7 +191,7 @@ System::Void LuccME::D_CITwoDM::dgDemand_KeyDown(System::Object ^ sender, System
 	switch (e->KeyCode)
 	{
 	case Keys::Delete:
-		if (dgDemand->SelectedCells->Count != 0)
+		if (dgDemand->SelectedCells->Count != NONE)
 		{
 			DataGridViewCell^ startCell = GetStartCell(dgDemand);
 			int row = startCell->RowIndex;

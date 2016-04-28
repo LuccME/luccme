@@ -22,7 +22,7 @@ System::Void LuccME::AllocContinuousForm::AllocContinuousForm_Shown(System::Obje
 System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 3 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != ALLOCATIONCLUELIKE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -31,12 +31,12 @@ System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Obje
 		}
 	}
 	if (check) {
-		lReturn->Component = 3;
+		lReturn->Component = ALLOCATIONCLUELIKE;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
 		allocationForm->Text = gSAlloc + "Allocation Clue Like";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		}
 		this->Close();
 	}
@@ -45,7 +45,7 @@ System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Obje
 System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != 4 && this->lReturn->Component != 0) {
+	if (this->lReturn->Component != ALLOCATIONCLUELIKESATURATION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -54,12 +54,12 @@ System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ 
 		}
 	}
 	if (check) {
-		lReturn->Component = 4;
+		lReturn->Component = ALLOCATIONCLUELIKESATURATION;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
 		allocationForm->Text = gSAlloc + "Allocation Clue Like Saturation";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
-			lReturn->Component = 0;
+			lReturn->Component = NONE;
 		}
 		this->Close();
 	}

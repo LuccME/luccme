@@ -55,7 +55,7 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		}
 	}
 
-	if (this->lReturn->Component == 4) {
+	if (this->lReturn->Component == LOGISTICREGRESSION) {
 		this->Height = 574;
 		this->lvLUT->Height = 291;
 		bSalvar->Location = Point(221, 488);
@@ -65,7 +65,7 @@ System::Void LuccME::P_Discrete::P_Discrete_Shown(System::Object ^ sender, Syste
 		this->dgBetas->Location = Point(231,283);
 		this->dgBetas->Height = this->dgBetas->Height - 40;
 	}
-	else if (this->lReturn->Component == 5) {
+	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
 		this->Height = this->Height + 40;
 		this->lvLUT->Height = this->lvLUT->Height + 40;
 		bSalvar->Location = Point(221, 528);
@@ -340,7 +340,7 @@ System::Void LuccME::P_Discrete::bSalvar_Click(System::Object ^ sender, System::
 System::Windows::Forms::DataGridViewCell ^ LuccME::P_Discrete::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;
@@ -412,7 +412,7 @@ System::Void LuccME::P_Discrete::CopyToClipboard()
 System::Void LuccME::P_Discrete::PasteClipboardValue()
 {
 	//Show Error if no cell is selected
-	if (dgBetas->SelectedCells->Count == 0)
+	if (dgBetas->SelectedCells->Count == NONE)
 	{
 		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;

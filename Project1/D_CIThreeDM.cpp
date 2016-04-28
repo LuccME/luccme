@@ -215,7 +215,7 @@ System::Void LuccME::D_CIThreeDM::dgDemand_CellValueChanged(System::Object ^ sen
 System::Windows::Forms::DataGridViewCell ^ LuccME::D_CIThreeDM::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;

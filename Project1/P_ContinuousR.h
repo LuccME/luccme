@@ -1,9 +1,6 @@
 #pragma once
 #include "Function.h"
 
-#define REGRESSIONNUMBER 9		 //Starts in 0
-#define INITIALREGRESSIONSHOW 2  //Absolute value
-
 namespace LuccME {
 
 	using namespace System;
@@ -215,113 +212,113 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lMaxReg = (gcnew System::Windows::Forms::Label());
 			this->lMinReg = (gcnew System::Windows::Forms::Label());
 			this->tRegion2 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo2 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo2 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg2 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg2 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg2 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg2 = (gcnew System::Windows::Forms::Label());
+			this->tRo2 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo2 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas2 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas2 = (gcnew System::Windows::Forms::Label());
 			this->tConst2 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst2 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog2 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg2 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg2 = (gcnew System::Windows::Forms::Label());
 			this->tRegion3 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo3 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo3 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg3 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg3 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg3 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg3 = (gcnew System::Windows::Forms::Label());
+			this->tRo3 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo3 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas3 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas3 = (gcnew System::Windows::Forms::Label());
 			this->tConst3 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst3 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog3 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg3 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg3 = (gcnew System::Windows::Forms::Label());
 			this->tRegion4 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo4 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo4 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg4 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg4 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg4 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg4 = (gcnew System::Windows::Forms::Label());
+			this->tRo4 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo4 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas4 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas4 = (gcnew System::Windows::Forms::Label());
 			this->tConst4 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst4 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog4 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg4 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg4 = (gcnew System::Windows::Forms::Label());
 			this->tRegion5 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo5 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo5 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg5 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg5 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg5 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg5 = (gcnew System::Windows::Forms::Label());
+			this->tRo5 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo5 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas5 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas5 = (gcnew System::Windows::Forms::Label());
 			this->tConst5 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst5 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog5 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg5 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg5 = (gcnew System::Windows::Forms::Label());
 			this->tRegion6 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo6 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo6 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg6 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg6 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg6 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg6 = (gcnew System::Windows::Forms::Label());
+			this->tRo6 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo6 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas6 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas6 = (gcnew System::Windows::Forms::Label());
 			this->tConst6 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst6 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog6 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg6 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg6 = (gcnew System::Windows::Forms::Label());
 			this->tRegion7 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo7 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo7 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg7 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg7 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg7 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg7 = (gcnew System::Windows::Forms::Label());
+			this->tRo7 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo7 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas7 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas7 = (gcnew System::Windows::Forms::Label());
 			this->tConst7 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst7 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog7 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg7 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg7 = (gcnew System::Windows::Forms::Label());
 			this->tRegion8 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo8 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo8 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg8 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg8 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg8 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg8 = (gcnew System::Windows::Forms::Label());
+			this->tRo8 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo8 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas8 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas8 = (gcnew System::Windows::Forms::Label());
 			this->tConst8 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst8 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog8 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg8 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg8 = (gcnew System::Windows::Forms::Label());
 			this->tRegion9 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo9 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo9 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg9 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg9 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg9 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg9 = (gcnew System::Windows::Forms::Label());
+			this->tRo9 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo9 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas9 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas9 = (gcnew System::Windows::Forms::Label());
 			this->tConst9 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst9 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog9 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg9 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg9 = (gcnew System::Windows::Forms::Label());
 			this->tRegion10 = (gcnew System::Windows::Forms::TabPage());
-			this->tRo10 = (gcnew System::Windows::Forms::TextBox());
-			this->lRo10 = (gcnew System::Windows::Forms::Label());
 			this->tMaxReg10 = (gcnew System::Windows::Forms::TextBox());
 			this->tMinReg10 = (gcnew System::Windows::Forms::TextBox());
-			this->lMaxReg10 = (gcnew System::Windows::Forms::Label());
-			this->lMinReg10 = (gcnew System::Windows::Forms::Label());
+			this->tRo10 = (gcnew System::Windows::Forms::TextBox());
+			this->lRo10 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas10 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas10 = (gcnew System::Windows::Forms::Label());
 			this->tConst10 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst10 = (gcnew System::Windows::Forms::Label());
 			this->cIsLog10 = (gcnew System::Windows::Forms::CheckBox());
+			this->lMaxReg10 = (gcnew System::Windows::Forms::Label());
+			this->lMinReg10 = (gcnew System::Windows::Forms::Label());
 			this->bDeleteRegression = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->tcRegions->SuspendLayout();
@@ -401,7 +398,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			// pbLogo1
 			// 
 			this->pbLogo1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbLogo1.Image")));
-			this->pbLogo1->Location = System::Drawing::Point(50, 12);
+			this->pbLogo1->Location = System::Drawing::Point(92, 12);
 			this->pbLogo1->Name = L"pbLogo1";
 			this->pbLogo1->Size = System::Drawing::Size(367, 134);
 			this->pbLogo1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -611,6 +608,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion2->Text = L"+";
 			this->tRegion2->UseVisualStyleBackColor = true;
 			// 
+			// tMaxReg2
+			// 
+			this->tMaxReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg2->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg2->Name = L"tMaxReg2";
+			this->tMaxReg2->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg2->TabIndex = 96;
+			this->tMaxReg2->Text = L"1";
+			this->tMaxReg2->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg2->Visible = false;
+			this->tMaxReg2->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg2
+			// 
+			this->tMinReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg2->Location = System::Drawing::Point(70, 102);
+			this->tMinReg2->Name = L"tMinReg2";
+			this->tMinReg2->Size = System::Drawing::Size(56, 20);
+			this->tMinReg2->TabIndex = 95;
+			this->tMinReg2->Text = L"0";
+			this->tMinReg2->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg2->Visible = false;
+			this->tMinReg2->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
 			// tRo2
 			// 
 			this->tRo2->ForeColor = System::Drawing::SystemColors::ScrollBar;
@@ -636,58 +657,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo2->Text = L"ro";
 			this->lRo2->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo2->Visible = false;
-			// 
-			// tMaxReg2
-			// 
-			this->tMaxReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg2->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg2->Name = L"tMaxReg2";
-			this->tMaxReg2->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg2->TabIndex = 96;
-			this->tMaxReg2->Text = L"1";
-			this->tMaxReg2->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg2->Visible = false;
-			this->tMaxReg2->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg2
-			// 
-			this->tMinReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg2->Location = System::Drawing::Point(70, 102);
-			this->tMinReg2->Name = L"tMinReg2";
-			this->tMinReg2->Size = System::Drawing::Size(56, 20);
-			this->tMinReg2->TabIndex = 95;
-			this->tMinReg2->Text = L"0";
-			this->tMinReg2->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg2->Visible = false;
-			this->tMinReg2->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg2
-			// 
-			this->lMaxReg2->AutoSize = true;
-			this->lMaxReg2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg2->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg2->Name = L"lMaxReg2";
-			this->lMaxReg2->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg2->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg2->TabIndex = 94;
-			this->lMaxReg2->Text = L"maxReg";
-			this->lMaxReg2->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg2->Visible = false;
-			// 
-			// lMinReg2
-			// 
-			this->lMinReg2->AutoSize = true;
-			this->lMinReg2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg2->Location = System::Drawing::Point(61, 77);
-			this->lMinReg2->Name = L"lMinReg2";
-			this->lMinReg2->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg2->Size = System::Drawing::Size(70, 23);
-			this->lMinReg2->TabIndex = 93;
-			this->lMinReg2->Text = L"minReg";
-			this->lMinReg2->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg2->Visible = false;
 			// 
 			// dgBetas2
 			// 
@@ -752,6 +721,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog2->UseVisualStyleBackColor = true;
 			this->cIsLog2->Visible = false;
 			// 
+			// lMaxReg2
+			// 
+			this->lMaxReg2->AutoSize = true;
+			this->lMaxReg2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg2->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg2->Name = L"lMaxReg2";
+			this->lMaxReg2->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg2->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg2->TabIndex = 94;
+			this->lMaxReg2->Text = L"maxReg";
+			this->lMaxReg2->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg2->Visible = false;
+			// 
+			// lMinReg2
+			// 
+			this->lMinReg2->AutoSize = true;
+			this->lMinReg2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg2->Location = System::Drawing::Point(61, 77);
+			this->lMinReg2->Name = L"lMinReg2";
+			this->lMinReg2->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg2->Size = System::Drawing::Size(70, 23);
+			this->lMinReg2->TabIndex = 93;
+			this->lMinReg2->Text = L"minReg";
+			this->lMinReg2->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg2->Visible = false;
+			// 
 			// tRegion3
 			// 
 			this->tRegion3->Controls->Add(this->tMaxReg3);
@@ -771,6 +768,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion3->TabIndex = 2;
 			this->tRegion3->Text = L"+";
 			this->tRegion3->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg3
+			// 
+			this->tMaxReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg3->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg3->Name = L"tMaxReg3";
+			this->tMaxReg3->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg3->TabIndex = 96;
+			this->tMaxReg3->Text = L"1";
+			this->tMaxReg3->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg3->Visible = false;
+			this->tMaxReg3->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg3
+			// 
+			this->tMinReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg3->Location = System::Drawing::Point(70, 102);
+			this->tMinReg3->Name = L"tMinReg3";
+			this->tMinReg3->Size = System::Drawing::Size(56, 20);
+			this->tMinReg3->TabIndex = 95;
+			this->tMinReg3->Text = L"0";
+			this->tMinReg3->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg3->Visible = false;
+			this->tMinReg3->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo3
 			// 
@@ -797,58 +818,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo3->Text = L"ro";
 			this->lRo3->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo3->Visible = false;
-			// 
-			// tMaxReg3
-			// 
-			this->tMaxReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg3->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg3->Name = L"tMaxReg3";
-			this->tMaxReg3->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg3->TabIndex = 96;
-			this->tMaxReg3->Text = L"1";
-			this->tMaxReg3->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg3->Visible = false;
-			this->tMaxReg3->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg3
-			// 
-			this->tMinReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg3->Location = System::Drawing::Point(70, 102);
-			this->tMinReg3->Name = L"tMinReg3";
-			this->tMinReg3->Size = System::Drawing::Size(56, 20);
-			this->tMinReg3->TabIndex = 95;
-			this->tMinReg3->Text = L"0";
-			this->tMinReg3->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg3->Visible = false;
-			this->tMinReg3->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg3
-			// 
-			this->lMaxReg3->AutoSize = true;
-			this->lMaxReg3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg3->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg3->Name = L"lMaxReg3";
-			this->lMaxReg3->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg3->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg3->TabIndex = 94;
-			this->lMaxReg3->Text = L"maxReg";
-			this->lMaxReg3->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg3->Visible = false;
-			// 
-			// lMinReg3
-			// 
-			this->lMinReg3->AutoSize = true;
-			this->lMinReg3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg3->Location = System::Drawing::Point(61, 77);
-			this->lMinReg3->Name = L"lMinReg3";
-			this->lMinReg3->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg3->Size = System::Drawing::Size(70, 23);
-			this->lMinReg3->TabIndex = 93;
-			this->lMinReg3->Text = L"minReg";
-			this->lMinReg3->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg3->Visible = false;
 			// 
 			// dgBetas3
 			// 
@@ -913,6 +882,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog3->UseVisualStyleBackColor = true;
 			this->cIsLog3->Visible = false;
 			// 
+			// lMaxReg3
+			// 
+			this->lMaxReg3->AutoSize = true;
+			this->lMaxReg3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg3->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg3->Name = L"lMaxReg3";
+			this->lMaxReg3->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg3->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg3->TabIndex = 94;
+			this->lMaxReg3->Text = L"maxReg";
+			this->lMaxReg3->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg3->Visible = false;
+			// 
+			// lMinReg3
+			// 
+			this->lMinReg3->AutoSize = true;
+			this->lMinReg3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg3->Location = System::Drawing::Point(61, 77);
+			this->lMinReg3->Name = L"lMinReg3";
+			this->lMinReg3->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg3->Size = System::Drawing::Size(70, 23);
+			this->lMinReg3->TabIndex = 93;
+			this->lMinReg3->Text = L"minReg";
+			this->lMinReg3->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg3->Visible = false;
+			// 
 			// tRegion4
 			// 
 			this->tRegion4->Controls->Add(this->tMaxReg4);
@@ -932,6 +929,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion4->TabIndex = 3;
 			this->tRegion4->Text = L"+";
 			this->tRegion4->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg4
+			// 
+			this->tMaxReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg4->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg4->Name = L"tMaxReg4";
+			this->tMaxReg4->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg4->TabIndex = 96;
+			this->tMaxReg4->Text = L"1";
+			this->tMaxReg4->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg4->Visible = false;
+			this->tMaxReg4->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg4
+			// 
+			this->tMinReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg4->Location = System::Drawing::Point(70, 102);
+			this->tMinReg4->Name = L"tMinReg4";
+			this->tMinReg4->Size = System::Drawing::Size(56, 20);
+			this->tMinReg4->TabIndex = 95;
+			this->tMinReg4->Text = L"0";
+			this->tMinReg4->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg4->Visible = false;
+			this->tMinReg4->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo4
 			// 
@@ -958,58 +979,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo4->Text = L"ro";
 			this->lRo4->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo4->Visible = false;
-			// 
-			// tMaxReg4
-			// 
-			this->tMaxReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg4->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg4->Name = L"tMaxReg4";
-			this->tMaxReg4->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg4->TabIndex = 96;
-			this->tMaxReg4->Text = L"1";
-			this->tMaxReg4->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg4->Visible = false;
-			this->tMaxReg4->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg4
-			// 
-			this->tMinReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg4->Location = System::Drawing::Point(70, 102);
-			this->tMinReg4->Name = L"tMinReg4";
-			this->tMinReg4->Size = System::Drawing::Size(56, 20);
-			this->tMinReg4->TabIndex = 95;
-			this->tMinReg4->Text = L"0";
-			this->tMinReg4->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg4->Visible = false;
-			this->tMinReg4->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg4
-			// 
-			this->lMaxReg4->AutoSize = true;
-			this->lMaxReg4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg4->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg4->Name = L"lMaxReg4";
-			this->lMaxReg4->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg4->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg4->TabIndex = 94;
-			this->lMaxReg4->Text = L"maxReg";
-			this->lMaxReg4->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg4->Visible = false;
-			// 
-			// lMinReg4
-			// 
-			this->lMinReg4->AutoSize = true;
-			this->lMinReg4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg4->Location = System::Drawing::Point(61, 77);
-			this->lMinReg4->Name = L"lMinReg4";
-			this->lMinReg4->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg4->Size = System::Drawing::Size(70, 23);
-			this->lMinReg4->TabIndex = 93;
-			this->lMinReg4->Text = L"minReg";
-			this->lMinReg4->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg4->Visible = false;
 			// 
 			// dgBetas4
 			// 
@@ -1074,6 +1043,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog4->UseVisualStyleBackColor = true;
 			this->cIsLog4->Visible = false;
 			// 
+			// lMaxReg4
+			// 
+			this->lMaxReg4->AutoSize = true;
+			this->lMaxReg4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg4->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg4->Name = L"lMaxReg4";
+			this->lMaxReg4->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg4->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg4->TabIndex = 94;
+			this->lMaxReg4->Text = L"maxReg";
+			this->lMaxReg4->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg4->Visible = false;
+			// 
+			// lMinReg4
+			// 
+			this->lMinReg4->AutoSize = true;
+			this->lMinReg4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg4->Location = System::Drawing::Point(61, 77);
+			this->lMinReg4->Name = L"lMinReg4";
+			this->lMinReg4->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg4->Size = System::Drawing::Size(70, 23);
+			this->lMinReg4->TabIndex = 93;
+			this->lMinReg4->Text = L"minReg";
+			this->lMinReg4->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg4->Visible = false;
+			// 
 			// tRegion5
 			// 
 			this->tRegion5->Controls->Add(this->tMaxReg5);
@@ -1093,6 +1090,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion5->TabIndex = 4;
 			this->tRegion5->Text = L"+";
 			this->tRegion5->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg5
+			// 
+			this->tMaxReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg5->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg5->Name = L"tMaxReg5";
+			this->tMaxReg5->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg5->TabIndex = 96;
+			this->tMaxReg5->Text = L"1";
+			this->tMaxReg5->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg5->Visible = false;
+			this->tMaxReg5->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg5
+			// 
+			this->tMinReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg5->Location = System::Drawing::Point(70, 102);
+			this->tMinReg5->Name = L"tMinReg5";
+			this->tMinReg5->Size = System::Drawing::Size(56, 20);
+			this->tMinReg5->TabIndex = 95;
+			this->tMinReg5->Text = L"0";
+			this->tMinReg5->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg5->Visible = false;
+			this->tMinReg5->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo5
 			// 
@@ -1119,58 +1140,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo5->Text = L"ro";
 			this->lRo5->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo5->Visible = false;
-			// 
-			// tMaxReg5
-			// 
-			this->tMaxReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg5->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg5->Name = L"tMaxReg5";
-			this->tMaxReg5->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg5->TabIndex = 96;
-			this->tMaxReg5->Text = L"1";
-			this->tMaxReg5->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg5->Visible = false;
-			this->tMaxReg5->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg5
-			// 
-			this->tMinReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg5->Location = System::Drawing::Point(70, 102);
-			this->tMinReg5->Name = L"tMinReg5";
-			this->tMinReg5->Size = System::Drawing::Size(56, 20);
-			this->tMinReg5->TabIndex = 95;
-			this->tMinReg5->Text = L"0";
-			this->tMinReg5->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg5->Visible = false;
-			this->tMinReg5->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg5
-			// 
-			this->lMaxReg5->AutoSize = true;
-			this->lMaxReg5->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg5->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg5->Name = L"lMaxReg5";
-			this->lMaxReg5->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg5->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg5->TabIndex = 94;
-			this->lMaxReg5->Text = L"maxReg";
-			this->lMaxReg5->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg5->Visible = false;
-			// 
-			// lMinReg5
-			// 
-			this->lMinReg5->AutoSize = true;
-			this->lMinReg5->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg5->Location = System::Drawing::Point(61, 77);
-			this->lMinReg5->Name = L"lMinReg5";
-			this->lMinReg5->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg5->Size = System::Drawing::Size(70, 23);
-			this->lMinReg5->TabIndex = 93;
-			this->lMinReg5->Text = L"minReg";
-			this->lMinReg5->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg5->Visible = false;
 			// 
 			// dgBetas5
 			// 
@@ -1235,6 +1204,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog5->UseVisualStyleBackColor = true;
 			this->cIsLog5->Visible = false;
 			// 
+			// lMaxReg5
+			// 
+			this->lMaxReg5->AutoSize = true;
+			this->lMaxReg5->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg5->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg5->Name = L"lMaxReg5";
+			this->lMaxReg5->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg5->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg5->TabIndex = 94;
+			this->lMaxReg5->Text = L"maxReg";
+			this->lMaxReg5->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg5->Visible = false;
+			// 
+			// lMinReg5
+			// 
+			this->lMinReg5->AutoSize = true;
+			this->lMinReg5->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg5->Location = System::Drawing::Point(61, 77);
+			this->lMinReg5->Name = L"lMinReg5";
+			this->lMinReg5->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg5->Size = System::Drawing::Size(70, 23);
+			this->lMinReg5->TabIndex = 93;
+			this->lMinReg5->Text = L"minReg";
+			this->lMinReg5->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg5->Visible = false;
+			// 
 			// tRegion6
 			// 
 			this->tRegion6->Controls->Add(this->tMaxReg6);
@@ -1254,6 +1251,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion6->TabIndex = 5;
 			this->tRegion6->Text = L"+";
 			this->tRegion6->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg6
+			// 
+			this->tMaxReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg6->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg6->Name = L"tMaxReg6";
+			this->tMaxReg6->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg6->TabIndex = 96;
+			this->tMaxReg6->Text = L"1";
+			this->tMaxReg6->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg6->Visible = false;
+			this->tMaxReg6->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg6
+			// 
+			this->tMinReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg6->Location = System::Drawing::Point(70, 102);
+			this->tMinReg6->Name = L"tMinReg6";
+			this->tMinReg6->Size = System::Drawing::Size(56, 20);
+			this->tMinReg6->TabIndex = 95;
+			this->tMinReg6->Text = L"0";
+			this->tMinReg6->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg6->Visible = false;
+			this->tMinReg6->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo6
 			// 
@@ -1280,58 +1301,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo6->Text = L"ro";
 			this->lRo6->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo6->Visible = false;
-			// 
-			// tMaxReg6
-			// 
-			this->tMaxReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg6->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg6->Name = L"tMaxReg6";
-			this->tMaxReg6->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg6->TabIndex = 96;
-			this->tMaxReg6->Text = L"1";
-			this->tMaxReg6->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg6->Visible = false;
-			this->tMaxReg6->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg6
-			// 
-			this->tMinReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg6->Location = System::Drawing::Point(70, 102);
-			this->tMinReg6->Name = L"tMinReg6";
-			this->tMinReg6->Size = System::Drawing::Size(56, 20);
-			this->tMinReg6->TabIndex = 95;
-			this->tMinReg6->Text = L"0";
-			this->tMinReg6->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg6->Visible = false;
-			this->tMinReg6->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg6
-			// 
-			this->lMaxReg6->AutoSize = true;
-			this->lMaxReg6->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg6->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg6->Name = L"lMaxReg6";
-			this->lMaxReg6->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg6->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg6->TabIndex = 94;
-			this->lMaxReg6->Text = L"maxReg";
-			this->lMaxReg6->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg6->Visible = false;
-			// 
-			// lMinReg6
-			// 
-			this->lMinReg6->AutoSize = true;
-			this->lMinReg6->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg6->Location = System::Drawing::Point(61, 77);
-			this->lMinReg6->Name = L"lMinReg6";
-			this->lMinReg6->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg6->Size = System::Drawing::Size(70, 23);
-			this->lMinReg6->TabIndex = 93;
-			this->lMinReg6->Text = L"minReg";
-			this->lMinReg6->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg6->Visible = false;
 			// 
 			// dgBetas6
 			// 
@@ -1396,6 +1365,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog6->UseVisualStyleBackColor = true;
 			this->cIsLog6->Visible = false;
 			// 
+			// lMaxReg6
+			// 
+			this->lMaxReg6->AutoSize = true;
+			this->lMaxReg6->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg6->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg6->Name = L"lMaxReg6";
+			this->lMaxReg6->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg6->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg6->TabIndex = 94;
+			this->lMaxReg6->Text = L"maxReg";
+			this->lMaxReg6->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg6->Visible = false;
+			// 
+			// lMinReg6
+			// 
+			this->lMinReg6->AutoSize = true;
+			this->lMinReg6->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg6->Location = System::Drawing::Point(61, 77);
+			this->lMinReg6->Name = L"lMinReg6";
+			this->lMinReg6->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg6->Size = System::Drawing::Size(70, 23);
+			this->lMinReg6->TabIndex = 93;
+			this->lMinReg6->Text = L"minReg";
+			this->lMinReg6->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg6->Visible = false;
+			// 
 			// tRegion7
 			// 
 			this->tRegion7->Controls->Add(this->tMaxReg7);
@@ -1415,6 +1412,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion7->TabIndex = 6;
 			this->tRegion7->Text = L"+";
 			this->tRegion7->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg7
+			// 
+			this->tMaxReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg7->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg7->Name = L"tMaxReg7";
+			this->tMaxReg7->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg7->TabIndex = 96;
+			this->tMaxReg7->Text = L"1";
+			this->tMaxReg7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg7->Visible = false;
+			this->tMaxReg7->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg7
+			// 
+			this->tMinReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg7->Location = System::Drawing::Point(70, 102);
+			this->tMinReg7->Name = L"tMinReg7";
+			this->tMinReg7->Size = System::Drawing::Size(56, 20);
+			this->tMinReg7->TabIndex = 95;
+			this->tMinReg7->Text = L"0";
+			this->tMinReg7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg7->Visible = false;
+			this->tMinReg7->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo7
 			// 
@@ -1441,58 +1462,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo7->Text = L"ro";
 			this->lRo7->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo7->Visible = false;
-			// 
-			// tMaxReg7
-			// 
-			this->tMaxReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg7->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg7->Name = L"tMaxReg7";
-			this->tMaxReg7->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg7->TabIndex = 96;
-			this->tMaxReg7->Text = L"1";
-			this->tMaxReg7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg7->Visible = false;
-			this->tMaxReg7->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg7
-			// 
-			this->tMinReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg7->Location = System::Drawing::Point(70, 102);
-			this->tMinReg7->Name = L"tMinReg7";
-			this->tMinReg7->Size = System::Drawing::Size(56, 20);
-			this->tMinReg7->TabIndex = 95;
-			this->tMinReg7->Text = L"0";
-			this->tMinReg7->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg7->Visible = false;
-			this->tMinReg7->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg7
-			// 
-			this->lMaxReg7->AutoSize = true;
-			this->lMaxReg7->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg7->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg7->Name = L"lMaxReg7";
-			this->lMaxReg7->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg7->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg7->TabIndex = 94;
-			this->lMaxReg7->Text = L"maxReg";
-			this->lMaxReg7->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg7->Visible = false;
-			// 
-			// lMinReg7
-			// 
-			this->lMinReg7->AutoSize = true;
-			this->lMinReg7->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg7->Location = System::Drawing::Point(61, 77);
-			this->lMinReg7->Name = L"lMinReg7";
-			this->lMinReg7->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg7->Size = System::Drawing::Size(70, 23);
-			this->lMinReg7->TabIndex = 93;
-			this->lMinReg7->Text = L"minReg";
-			this->lMinReg7->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg7->Visible = false;
 			// 
 			// dgBetas7
 			// 
@@ -1557,6 +1526,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog7->UseVisualStyleBackColor = true;
 			this->cIsLog7->Visible = false;
 			// 
+			// lMaxReg7
+			// 
+			this->lMaxReg7->AutoSize = true;
+			this->lMaxReg7->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg7->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg7->Name = L"lMaxReg7";
+			this->lMaxReg7->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg7->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg7->TabIndex = 94;
+			this->lMaxReg7->Text = L"maxReg";
+			this->lMaxReg7->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg7->Visible = false;
+			// 
+			// lMinReg7
+			// 
+			this->lMinReg7->AutoSize = true;
+			this->lMinReg7->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg7->Location = System::Drawing::Point(61, 77);
+			this->lMinReg7->Name = L"lMinReg7";
+			this->lMinReg7->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg7->Size = System::Drawing::Size(70, 23);
+			this->lMinReg7->TabIndex = 93;
+			this->lMinReg7->Text = L"minReg";
+			this->lMinReg7->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg7->Visible = false;
+			// 
 			// tRegion8
 			// 
 			this->tRegion8->Controls->Add(this->tMaxReg8);
@@ -1576,6 +1573,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion8->TabIndex = 7;
 			this->tRegion8->Text = L"+";
 			this->tRegion8->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg8
+			// 
+			this->tMaxReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg8->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg8->Name = L"tMaxReg8";
+			this->tMaxReg8->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg8->TabIndex = 96;
+			this->tMaxReg8->Text = L"1";
+			this->tMaxReg8->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg8->Visible = false;
+			this->tMaxReg8->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg8
+			// 
+			this->tMinReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg8->Location = System::Drawing::Point(70, 102);
+			this->tMinReg8->Name = L"tMinReg8";
+			this->tMinReg8->Size = System::Drawing::Size(56, 20);
+			this->tMinReg8->TabIndex = 95;
+			this->tMinReg8->Text = L"0";
+			this->tMinReg8->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg8->Visible = false;
+			this->tMinReg8->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo8
 			// 
@@ -1602,58 +1623,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo8->Text = L"ro";
 			this->lRo8->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo8->Visible = false;
-			// 
-			// tMaxReg8
-			// 
-			this->tMaxReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg8->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg8->Name = L"tMaxReg8";
-			this->tMaxReg8->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg8->TabIndex = 96;
-			this->tMaxReg8->Text = L"1";
-			this->tMaxReg8->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg8->Visible = false;
-			this->tMaxReg8->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg8
-			// 
-			this->tMinReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg8->Location = System::Drawing::Point(70, 102);
-			this->tMinReg8->Name = L"tMinReg8";
-			this->tMinReg8->Size = System::Drawing::Size(56, 20);
-			this->tMinReg8->TabIndex = 95;
-			this->tMinReg8->Text = L"0";
-			this->tMinReg8->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg8->Visible = false;
-			this->tMinReg8->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg8
-			// 
-			this->lMaxReg8->AutoSize = true;
-			this->lMaxReg8->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg8->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg8->Name = L"lMaxReg8";
-			this->lMaxReg8->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg8->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg8->TabIndex = 94;
-			this->lMaxReg8->Text = L"maxReg";
-			this->lMaxReg8->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg8->Visible = false;
-			// 
-			// lMinReg8
-			// 
-			this->lMinReg8->AutoSize = true;
-			this->lMinReg8->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg8->Location = System::Drawing::Point(61, 77);
-			this->lMinReg8->Name = L"lMinReg8";
-			this->lMinReg8->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg8->Size = System::Drawing::Size(70, 23);
-			this->lMinReg8->TabIndex = 93;
-			this->lMinReg8->Text = L"minReg";
-			this->lMinReg8->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg8->Visible = false;
 			// 
 			// dgBetas8
 			// 
@@ -1718,6 +1687,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog8->UseVisualStyleBackColor = true;
 			this->cIsLog8->Visible = false;
 			// 
+			// lMaxReg8
+			// 
+			this->lMaxReg8->AutoSize = true;
+			this->lMaxReg8->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg8->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg8->Name = L"lMaxReg8";
+			this->lMaxReg8->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg8->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg8->TabIndex = 94;
+			this->lMaxReg8->Text = L"maxReg";
+			this->lMaxReg8->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg8->Visible = false;
+			// 
+			// lMinReg8
+			// 
+			this->lMinReg8->AutoSize = true;
+			this->lMinReg8->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg8->Location = System::Drawing::Point(61, 77);
+			this->lMinReg8->Name = L"lMinReg8";
+			this->lMinReg8->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg8->Size = System::Drawing::Size(70, 23);
+			this->lMinReg8->TabIndex = 93;
+			this->lMinReg8->Text = L"minReg";
+			this->lMinReg8->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg8->Visible = false;
+			// 
 			// tRegion9
 			// 
 			this->tRegion9->Controls->Add(this->tMaxReg9);
@@ -1737,6 +1734,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion9->TabIndex = 8;
 			this->tRegion9->Text = L"+";
 			this->tRegion9->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg9
+			// 
+			this->tMaxReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg9->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg9->Name = L"tMaxReg9";
+			this->tMaxReg9->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg9->TabIndex = 96;
+			this->tMaxReg9->Text = L"1";
+			this->tMaxReg9->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg9->Visible = false;
+			this->tMaxReg9->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg9
+			// 
+			this->tMinReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg9->Location = System::Drawing::Point(70, 102);
+			this->tMinReg9->Name = L"tMinReg9";
+			this->tMinReg9->Size = System::Drawing::Size(56, 20);
+			this->tMinReg9->TabIndex = 95;
+			this->tMinReg9->Text = L"0";
+			this->tMinReg9->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg9->Visible = false;
+			this->tMinReg9->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo9
 			// 
@@ -1763,58 +1784,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo9->Text = L"ro";
 			this->lRo9->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo9->Visible = false;
-			// 
-			// tMaxReg9
-			// 
-			this->tMaxReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg9->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg9->Name = L"tMaxReg9";
-			this->tMaxReg9->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg9->TabIndex = 96;
-			this->tMaxReg9->Text = L"1";
-			this->tMaxReg9->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg9->Visible = false;
-			this->tMaxReg9->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg9
-			// 
-			this->tMinReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg9->Location = System::Drawing::Point(70, 102);
-			this->tMinReg9->Name = L"tMinReg9";
-			this->tMinReg9->Size = System::Drawing::Size(56, 20);
-			this->tMinReg9->TabIndex = 95;
-			this->tMinReg9->Text = L"0";
-			this->tMinReg9->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg9->Visible = false;
-			this->tMinReg9->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg9
-			// 
-			this->lMaxReg9->AutoSize = true;
-			this->lMaxReg9->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg9->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg9->Name = L"lMaxReg9";
-			this->lMaxReg9->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg9->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg9->TabIndex = 94;
-			this->lMaxReg9->Text = L"maxReg";
-			this->lMaxReg9->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg9->Visible = false;
-			// 
-			// lMinReg9
-			// 
-			this->lMinReg9->AutoSize = true;
-			this->lMinReg9->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg9->Location = System::Drawing::Point(61, 77);
-			this->lMinReg9->Name = L"lMinReg9";
-			this->lMinReg9->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg9->Size = System::Drawing::Size(70, 23);
-			this->lMinReg9->TabIndex = 93;
-			this->lMinReg9->Text = L"minReg";
-			this->lMinReg9->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg9->Visible = false;
 			// 
 			// dgBetas9
 			// 
@@ -1879,6 +1848,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog9->UseVisualStyleBackColor = true;
 			this->cIsLog9->Visible = false;
 			// 
+			// lMaxReg9
+			// 
+			this->lMaxReg9->AutoSize = true;
+			this->lMaxReg9->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg9->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg9->Name = L"lMaxReg9";
+			this->lMaxReg9->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg9->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg9->TabIndex = 94;
+			this->lMaxReg9->Text = L"maxReg";
+			this->lMaxReg9->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg9->Visible = false;
+			// 
+			// lMinReg9
+			// 
+			this->lMinReg9->AutoSize = true;
+			this->lMinReg9->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg9->Location = System::Drawing::Point(61, 77);
+			this->lMinReg9->Name = L"lMinReg9";
+			this->lMinReg9->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg9->Size = System::Drawing::Size(70, 23);
+			this->lMinReg9->TabIndex = 93;
+			this->lMinReg9->Text = L"minReg";
+			this->lMinReg9->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg9->Visible = false;
+			// 
 			// tRegion10
 			// 
 			this->tRegion10->Controls->Add(this->tMaxReg10);
@@ -1898,6 +1895,30 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->tRegion10->TabIndex = 9;
 			this->tRegion10->Text = L"+";
 			this->tRegion10->UseVisualStyleBackColor = true;
+			// 
+			// tMaxReg10
+			// 
+			this->tMaxReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMaxReg10->Location = System::Drawing::Point(172, 102);
+			this->tMaxReg10->Name = L"tMaxReg10";
+			this->tMaxReg10->Size = System::Drawing::Size(56, 20);
+			this->tMaxReg10->TabIndex = 96;
+			this->tMaxReg10->Text = L"1";
+			this->tMaxReg10->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMaxReg10->Visible = false;
+			this->tMaxReg10->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
+			// 
+			// tMinReg10
+			// 
+			this->tMinReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tMinReg10->Location = System::Drawing::Point(70, 102);
+			this->tMinReg10->Name = L"tMinReg10";
+			this->tMinReg10->Size = System::Drawing::Size(56, 20);
+			this->tMinReg10->TabIndex = 95;
+			this->tMinReg10->Text = L"0";
+			this->tMinReg10->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tMinReg10->Visible = false;
+			this->tMinReg10->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
 			// 
 			// tRo10
 			// 
@@ -1924,58 +1945,6 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->lRo10->Text = L"ro";
 			this->lRo10->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lRo10->Visible = false;
-			// 
-			// tMaxReg10
-			// 
-			this->tMaxReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxReg10->Location = System::Drawing::Point(172, 102);
-			this->tMaxReg10->Name = L"tMaxReg10";
-			this->tMaxReg10->Size = System::Drawing::Size(56, 20);
-			this->tMaxReg10->TabIndex = 96;
-			this->tMaxReg10->Text = L"1";
-			this->tMaxReg10->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMaxReg10->Visible = false;
-			this->tMaxReg10->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// tMinReg10
-			// 
-			this->tMinReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMinReg10->Location = System::Drawing::Point(70, 102);
-			this->tMinReg10->Name = L"tMinReg10";
-			this->tMinReg10->Size = System::Drawing::Size(56, 20);
-			this->tMinReg10->TabIndex = 95;
-			this->tMinReg10->Text = L"0";
-			this->tMinReg10->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tMinReg10->Visible = false;
-			this->tMinReg10->Enter += gcnew System::EventHandler(this, &P_ContinuousR::textBox_Enter);
-			// 
-			// lMaxReg10
-			// 
-			this->lMaxReg10->AutoSize = true;
-			this->lMaxReg10->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMaxReg10->Location = System::Drawing::Point(163, 77);
-			this->lMaxReg10->Name = L"lMaxReg10";
-			this->lMaxReg10->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMaxReg10->Size = System::Drawing::Size(73, 23);
-			this->lMaxReg10->TabIndex = 94;
-			this->lMaxReg10->Text = L"maxReg";
-			this->lMaxReg10->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMaxReg10->Visible = false;
-			// 
-			// lMinReg10
-			// 
-			this->lMinReg10->AutoSize = true;
-			this->lMinReg10->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lMinReg10->Location = System::Drawing::Point(61, 77);
-			this->lMinReg10->Name = L"lMinReg10";
-			this->lMinReg10->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->lMinReg10->Size = System::Drawing::Size(70, 23);
-			this->lMinReg10->TabIndex = 93;
-			this->lMinReg10->Text = L"minReg";
-			this->lMinReg10->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lMinReg10->Visible = false;
 			// 
 			// dgBetas10
 			// 
@@ -2039,6 +2008,34 @@ private: System::Windows::Forms::TextBox^  tRo10;
 			this->cIsLog10->Text = L"isLog";
 			this->cIsLog10->UseVisualStyleBackColor = true;
 			this->cIsLog10->Visible = false;
+			// 
+			// lMaxReg10
+			// 
+			this->lMaxReg10->AutoSize = true;
+			this->lMaxReg10->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMaxReg10->Location = System::Drawing::Point(163, 77);
+			this->lMaxReg10->Name = L"lMaxReg10";
+			this->lMaxReg10->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMaxReg10->Size = System::Drawing::Size(73, 23);
+			this->lMaxReg10->TabIndex = 94;
+			this->lMaxReg10->Text = L"maxReg";
+			this->lMaxReg10->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMaxReg10->Visible = false;
+			// 
+			// lMinReg10
+			// 
+			this->lMinReg10->AutoSize = true;
+			this->lMinReg10->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lMinReg10->Location = System::Drawing::Point(61, 77);
+			this->lMinReg10->Name = L"lMinReg10";
+			this->lMinReg10->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->lMinReg10->Size = System::Drawing::Size(70, 23);
+			this->lMinReg10->TabIndex = 93;
+			this->lMinReg10->Text = L"minReg";
+			this->lMinReg10->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lMinReg10->Visible = false;
 			// 
 			// bDeleteRegression
 			// 
@@ -2109,7 +2106,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 	private: System::Void textBox_Enter(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void P_ContinuousR_Shown(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
-	private: System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, cReturnPotential^ lReturn, DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, int y, int z);
+	private: System::Int16 getRegionData(array<String^>^ lTempBetas, cReturnPotential^ lReturn, DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, int y, int z);
 	private: System::Void tcRegions_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, CheckBox^ cIsLog, Label^ lConst, TextBox^ tConst, Label^ lMinReg, TextBox^ tMinReg, Label^ lMaxReg, TextBox^ tMaxReg, Label^ lRo, TextBox^ tRo, bool status);
 	private: System::Void bDeleteRegression_Click(System::Object^  sender, System::EventArgs^  e);
@@ -2117,7 +2114,7 @@ private: System::Windows::Forms::TextBox^  tRo10;
 	private: System::Void bCancel_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void initializeRegions();
 	private: System::Void bAddBetas_Click(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, int i, int j);
+	private: System::Void setRegionData(DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, int i, int j);
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(System::Windows::Forms::DataGridView^ dgView);
 	private: System::Void dgBetas_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 	private: System::Void CopyToClipboard(DataGridView^ dgView);

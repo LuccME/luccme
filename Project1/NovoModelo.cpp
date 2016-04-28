@@ -20,16 +20,19 @@ using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
 
+/*
+Define all the used Strings, for portuguese and english.
+*/
 System::Void LuccME::NovoModelo::checkLanguage()
 {
 	//Handles with Discrete or Continuous Component selection (enable or disable buttons)
-	if (gPotentialComponent > gNumDiscPotComp || gAllocationComponent > gNumDiscAllocComp) {
+	if (gPotentialComponent > NUMDISCPOTCOMP || gAllocationComponent > NUMDISCALLOCCOMP) {
 		bPotDiscrete->Enabled = false;
 		bAllocDiscrete->Enabled = false;
 		bPotContinuous->Enabled = true;
 		bAllocContinuous->Enabled = true;
 	}
-	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) || (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
+	else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) || (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 		bPotDiscrete->Enabled = true;
 		bAllocDiscrete->Enabled = true;
 		bPotContinuous->Enabled = false;
@@ -487,8 +490,8 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 	bool check = true;
 	String^ rTempAux = "";
 
-	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != 1) {
-		if (gDemandComponent != 1 && gDemandComponent != 0 ) {
+	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != PCVINPE) {
+		if (gDemandComponent != PCVINPE && gDemandComponent != 0 ) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 				rTempAux = gDemand;
 				lDemand->Return = gLandUseTypes;
@@ -574,7 +577,7 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 				lines[count] = auxLine;
 			}
 			tbDemand->Lines = lines;
-			gDemandComponent = 1;
+			gDemandComponent = PCVINPE;
 		}
 		else {
 			gDemand = rTempAux;
@@ -588,8 +591,8 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 	bool check = true;
 	String^ rTempAux = "";
 
-	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != 2) {
-		if (gDemandComponent != 2 && gDemandComponent != 0) {
+	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != CITWODM) {
+		if (gDemandComponent != CITWODM && gDemandComponent != 0) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 				rTempAux = gDemand;
 				lDemand->Return = gLandUseTypes;
@@ -641,7 +644,7 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 			lines[3] = gDemand;
 
 			tbDemand->Lines = lines;
-			gDemandComponent = 2;
+			gDemandComponent = CITWODM;
 		}
 		else {
 			gDemand = rTempAux;
@@ -655,8 +658,8 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 	bool check = true;
 	String^ rTempAux = "";
 
-	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != 3) {
-		if (gDemandComponent != 3 && gDemandComponent != 0) {
+	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != CITHREEDM) {
+		if (gDemandComponent != CITHREEDM && gDemandComponent != 0) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 				rTempAux = gDemand;
 				lDemand->Return = gLandUseTypes;
@@ -719,7 +722,7 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 			lines[5] = gDemand->Substring(i + 1);
 
 			tbDemand->Lines = lines;
-			gDemandComponent = 3;
+			gDemandComponent = CITHREEDM;
 		}
 		else {
 			gDemand = rTempAux;
@@ -747,12 +750,14 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		lPotential->LUT = gLandUseTypes;
 		lPotential->Component = gPotentialComponent;
 		lPotential->Language = lLanguage;
+		lPotential->Regression = gPotentialRegression;
 		PotDiscreteForm^ potDiscreteForm = gcnew PotDiscreteForm(lPotential);
 		potDiscreteForm->ShowDialog();
 		gPotential = lPotential->Return;
 		gPotential = gPotential->Replace("\n", "");
 		gPotential = gPotential->Replace("\r", "");
 		gPotentialComponent = lPotential->Component;
+		gPotentialRegression = lPotential->Regression;
 		gPotentialLUT = gLandUseTypes;
 
 		int count = 2;
@@ -765,91 +770,32 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		array<String^>^ lines3 = gcnew array<String^>(count + 1);
 		array<String^>^ lines4 = gcnew array<String^>(count + 2);
 		
-		lines2[0] = "InverseDistanceRule";
-
 		switch (lPotential->Component)
 		{
-		case 1:
+		case NEIGHSIMPLERULE:
 			lines[0] = "NeighSimpleRule{}";
 			tbPotential->Lines = lines;
 			break;
 
-		case 2:
-			lines2[0] = "NeighInverseDistanceRule";
-
-		case 3:
+		case NEIGHINVERSEDISTANCERULE:
 			if (gPotential != "") {
-				lineCount = 1;
-				for (int i = 0; i < gPotential->Length; i++) {
-					if (gPotential[i] != '#') {
-						lines2[lineCount] += gPotential[i];
-					}
-					else {
-						lines2[lineCount] = String::Concat("const=", lines2[lineCount]);
-						lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-						lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-						lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-						lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-						lineCount++;
-					}
-				}
-				if (lines2[lineCount] != "") {
-					lines2[lineCount] = String::Concat("const=", lines2[lineCount]);
-					lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-					lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-					lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-					lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-				}
-				tbPotential->Lines = lines2;
+				showReturnDistanceRule("NeighInverseDistanceRule");
 			}
 			break;
 
-		case 4:
+		case INVERSEDISTANCERULE:
 			if (gPotential != "") {
-				lines3[0] = "LogisticRegression";
-				lineCount = 1;
-				bool first = true;
-				for (int i = 0; i < gPotential->Length; i++) {
-					if (gPotential[i] != '#') {
-						if (gPotential[i] != ';') {
-							lines3[lineCount] += gPotential[i];
-						}
-						else {
-							if (first) {
-								lines3[lineCount] += "$";
-								first = false;
-							}
-							else {
-								lines3[lineCount] += gPotential[i];
-							}
-						}
-					}
-					else {
-						lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-						lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
-						lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-						lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-						lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-						lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}");
-						lines3[lineCount] = lines3[lineCount]->Replace("\n","");
-						lineCount++;
-						first = true;
-					}
-				}
-				if (lines3[lineCount] != "") {
-					lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-					lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
-					lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-					lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-					lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-					lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}");
-					lines3[lineCount] = lines3[lineCount]->Replace("\n", "");
-				}
-				tbPotential->Lines = lines3;
+				showReturnDistanceRule("InverseDistanceRule");
 			}
 			break;
 
-		case 5:
+		case LOGISTICREGRESSION:
+			if (gPotential != "") {
+				showReturnLogisticRegression();
+			}
+			break;
+
+		case NEIGHATTRACTIONLOGISTICREGRESSION:
 			if (gPotential != "") {
 				lines4[0] = "NeighAttractionLogisticRegression";
 				lineCount = 1;
@@ -942,133 +888,27 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		gPotentialRegression = lPotential->Regression;
 		gPotentialLUT = gLandUseTypes;
 		
-		//Will be delete
 		int count = countCaracter(gPotential, '*');
 		int lineCount = 0;
-		int regression = 0;
-		int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-		array<String^>^ lines = gcnew array<String^>(count + 1); 
-		// until here
-		array<String^>^ lines2 = gcnew array<String^>(count + 4);
-		array<String^>^ lines3 = gcnew array<String^>(count + 10);
+		array<String^>^ lines3 = gcnew array<String^>(count + 1);
 
 		switch (lPotential->Component)
 		{
-		case 6:
+		case LINEARREGRESSION:
 			if (gPotential != "") {
 				showReturnLinearRegression();
 			}
 			break;
 
-		case 7:
+		case SPATIALLAGREGRESSION:
 			if (gPotential != "") {
 				showReturnSpatialLagRegression();
 			}
 			break;
 
-		case 8:
+		case SPATIALLAGLINEARROADS:
 			if (gPotential != "") {
-				lines3[0] = "SpatialLagLinearRoads";
-				lineCount = 1;
-				int change = 0;
-
-				for (int i = 0; i < gPotential->Length; i++) {
-					if (gPotential[i] != '#') {
-						if (gPotential[i] != ';') {
-							lines3[lineCount] += gPotential[i];
-						}
-						else {
-							switch (change)
-							{
-							case 0:
-								lines3[lineCount] += "$";
-								change++;
-								break;
-
-							case 1:
-								lines3[lineCount] += "@";
-								change++;
-								break;
-
-							case 2:
-								lines3[lineCount] += "%";
-								change++;
-								break;
-
-							case 3:
-								lines3[lineCount] += "&";
-								change++;
-								break;
-
-							case 4:
-								lines3[lineCount] += "!";
-								change++;
-								break;
-
-							case 5:
-								lines3[lineCount] += "£";
-								change++;
-								break;
-
-							case 6:
-								lines3[lineCount] += "¢";
-								change++;
-								break;
-
-							default:
-								lines3[lineCount] += gPotential[i];
-								break;
-							}
-						}
-
-					}
-					else {
-						if (lines3[lineCount][0] == '0') {
-							lines3[lineCount] = String::Concat("false", lines3[lineCount]->Substring(1));
-						}
-						else {
-							lines3[lineCount] = String::Concat("true", lines3[lineCount]->Substring(1));
-						}
-						lines3[lineCount] = String::Concat("isLog = ", lines3[lineCount]);
-						lines3[lineCount] = lines3[lineCount]->Replace("$", ",const=");
-						lines3[lineCount] = lines3[lineCount]->Replace("@", ",minReg=");
-						lines3[lineCount] = lines3[lineCount]->Replace("%", ",maxReg=");
-						lines3[lineCount] = lines3[lineCount]->Replace("&", ",ro=");
-						lines3[lineCount] = lines3[lineCount]->Replace("!", ",betas = {");
-						lines3[lineCount] = lines3[lineCount]->Replace("*", "},roadsModel={ attrs={");;
-						lines3[lineCount] = lines3[lineCount]->Replace("£", "},const=");
-						lines3[lineCount] = lines3[lineCount]->Replace("¢", ",change=");
-						lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-						lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-						lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-						lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}}");
-						lineCount++;
-						change = 0;
-					}
-				}
-				if (lines3[lineCount] != "") {
-					if (lines3[lineCount][0] == '0') {
-						lines3[lineCount] = String::Concat("false", lines3[lineCount]->Substring(1));
-					}
-					else {
-						lines3[lineCount] = String::Concat("true", lines3[lineCount]->Substring(1));
-					}
-					lines3[lineCount] = String::Concat("isLog = ", lines3[lineCount]);
-					lines3[lineCount] = lines3[lineCount]->Replace("$", ",const=");
-					lines3[lineCount] = lines3[lineCount]->Replace("@", ",minReg=");
-					lines3[lineCount] = lines3[lineCount]->Replace("%", ",maxReg=");
-					lines3[lineCount] = lines3[lineCount]->Replace("&", ",ro=");
-					lines3[lineCount] = lines3[lineCount]->Replace("!", ",betas = {");
-					lines3[lineCount] = lines3[lineCount]->Replace("*", "},roadsModel={ attrs={");;
-					lines3[lineCount] = lines3[lineCount]->Replace("£", "},const=");
-					lines3[lineCount] = lines3[lineCount]->Replace("¢", ",change=");
-					lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-					lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-					lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-					lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}}");
-				}
-				tbPotential->Lines = lines3;
+				showReturnSpatialLagLinearRoads();
 			}
 			break;
 		}
@@ -1080,7 +920,7 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 {
 	bool check = true;
 
-	if (gPotentialComponent > gNumDiscPotComp) {
+	if (gPotentialComponent > NUMDISCPOTCOMP) {
 		if (MessageBox::Show(gSPotCont, gSAllocDiscTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -1117,7 +957,7 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 
 		switch (lAllocation->Component)
 		{
-		case 1:
+		case ALLOCATIONBYSIMPLEORDERING:
 			if (gAllocation != "") {
 				lines[0] = "AllocationBySimpleOrdering";
 				lines[1] = "maxDifference = " + lAllocation->Return;
@@ -1125,7 +965,7 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 			}
 			break;
 
-		case 2:
+		case ALLOCATIONCLUESLIKE:
 			if (gAllocation != "") {
 				lines2[0] = "AllocationClueSLike";
 				int lineCount = 1;
@@ -1184,7 +1024,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 {
 	bool check = true;
 
-	if (gPotentialComponent != 0 && gPotentialComponent <= gNumDiscAllocComp) {
+	if (gPotentialComponent != 0 && gPotentialComponent <= NUMDISCALLOCCOMP) {
 		if (MessageBox::Show(gSPotDisc, gSAllocContTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -1279,13 +1119,13 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 
 			array<String^>^ lines = gcnew array<String^>(count + 10);
 
-			if (gAllocationComponent == 3)
+			if (gAllocationComponent == ALLOCATIONCLUELIKE)
 			{
 				lines[0] = "AllocationClueLike";
 				lines[7] = "allocationData";
 				count = 8;
 			}
-			else {
+			else if(gAllocationComponent == ALLOCATIONCLUELIKESATURATION) {
 				lines[0] = "AllocationClueLikeSaturation";
 				lines[7] = "saturationIndicator = " + saturationIndicator;
 				lines[8] = "attrProtection = " + attrProtection;
@@ -1425,7 +1265,7 @@ System::Void LuccME::NovoModelo::bSelectedYears_Click(System::Object ^ sender, S
 
 System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
 {
-	if (tNovoModelo->SelectedIndex == 4) {
+	if (tNovoModelo->SelectedIndex == SAVEPARAM) {
 		if (gAttrLUT != gLandUseTypes) {
 			lAttrToSave->Text = "";
 		}
@@ -1478,7 +1318,7 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		}
 	}
 
-	if (tNovoModelo->SelectedIndex == 6) {
+	if (tNovoModelo->SelectedIndex == ADVRES) {
 		int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
 		int tempTime = Convert::ToInt16(tStartTime->Text);
 
@@ -1496,8 +1336,8 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		}
 	}
 	
-	if (tNovoModelo->SelectedIndex == 7) {
-		if (gAllocationComponent > gNumDiscAllocComp || gPotentialComponent > gNumDiscPotComp) {
+	if (tNovoModelo->SelectedIndex == VALIDATION) {
+		if (gAllocationComponent > NUMDISCALLOCCOMP || gPotentialComponent > NUMDISCPOTCOMP) {
 			tRange->Enabled = true;
 		}
 		else {
@@ -1602,17 +1442,17 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		checked = false;
 	}
 
-	else if (gDemandComponent == 0) {
+	else if (gDemandComponent == NONE) {
 		MessageBox::Show(gSDemandnS, gSDemandnSTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
-	else if (gPotentialComponent == 0) {
+	else if (gPotentialComponent == NONE) {
 		MessageBox::Show(gSPotentialnS, gSPotentialnSTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
-	else if (gAllocationComponent == 0) {
+	else if (gAllocationComponent == NONE) {
 		MessageBox::Show(gSAllocationnS, gSAllocationnSTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
@@ -1632,12 +1472,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		checked = false;
 	}
 
-	else if (gPotentialComponent > gNumDiscPotComp && (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
+	else if (gPotentialComponent > NUMDISCPOTCOMP && (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 		MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
-	else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) && gAllocationComponent > gNumDiscAllocComp) {
+	else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) && gAllocationComponent > NUMDISCALLOCCOMP) {
 		MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
@@ -2423,10 +2263,6 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 
 System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System::EventArgs ^ e)
 {
-	//Remove Validation tab
-	//validation = tabValidation;
-    //tNovoModelo->TabPages->RemoveAt(7);
-
 	checkLanguage();
 	NovoModelo::Update();
 	
@@ -2454,7 +2290,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				String^ line = sw->ReadLine();
 			
 				while (sw->EndOfStream == false) {
-					if (line->Contains("dofile") != 1) {
+					if (line->Contains("dofile") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2500,7 +2336,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("name =") != 1) {
+					if (line->Contains("name =") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2565,7 +2401,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("startTime") != 1) {
+					if (line->Contains("startTime") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2605,7 +2441,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("endTime") != 1) {
+					if (line->Contains("endTime") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2644,7 +2480,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (found) {
 					line = sw->ReadLine();
-					while (line->Contains("endTime") != 1) {
+					while (line->Contains("endTime") != TRUE) {
 						line = sw->ReadLine();
 					}
 				}
@@ -2654,7 +2490,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("layer") != 1) {
+					if (line->Contains("layer") != TRUE) {
 						tempDB += line;
 						line = sw->ReadLine();
 					}
@@ -2746,7 +2582,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("cellArea") != 1) {
+					if (line->Contains("cellArea") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2785,7 +2621,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("updateYears") != 1) {
+					if (line->Contains("updateYears") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2817,7 +2653,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("scenarioStartTime") != 1) {
+					if (line->Contains("scenarioStartTime") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2857,7 +2693,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("scenarioName") != 1) {
+					if (line->Contains("scenarioName") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2894,7 +2730,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("landUseTypes") != 1) {
+					if (line->Contains("landUseTypes") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2907,7 +2743,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (found) {
 					tempLine = "";
-					while (line->Contains("},") != 1) {
+					while (line->Contains("},") != TRUE) {
 						tempLine += line;
 						line = sw->ReadLine();
 					}
@@ -2940,7 +2776,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("landUseNoData") != 1) {
+					if (line->Contains("landUseNoData") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -2977,7 +2813,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("outputTheme") != 1) {
+					if (line->Contains("outputTheme") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -3016,7 +2852,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				line = sw->ReadLine();
 
 				while (sw->EndOfStream == false) {
-					if (line->Contains("yearly") != 1) {
+					if (line->Contains("yearly") != TRUE) {
 						if (line->Contains("saveYears") == 1) {
 							found = true;
 							break;
@@ -3057,7 +2893,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				line = sw->ReadLine();
 				while (sw->EndOfStream == false) {
-					if (line->Contains("saveAttrs") != 1) {
+					if (line->Contains("saveAttrs") != TRUE) {
 						line = sw->ReadLine();
 					}
 					else {
@@ -3068,7 +2904,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (found) {
 					tempLine = "";
-					while (line->Contains("},") != 1) {
+					while (line->Contains("},") != TRUE) {
 						tempLine += line;
 						line = sw->ReadLine();
 					}
@@ -3153,7 +2989,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				System::IO::StreamReader^ sw = gcnew System::IO::StreamReader(fileName);
 
 				String^ line = sw->ReadLine();
-				while (line->Contains("=") != 1) {
+				while (line->Contains("=") != TRUE) {
 					line = sw->ReadLine();
 				}
 
@@ -3172,14 +3008,14 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					j = 0;
 					line = sw->ReadLine();
 					j++;
-					while (line->Contains("=") != 1) {
+					while (line->Contains("=") != TRUE) {
 						line = sw->ReadLine();
 						j++;
 					}
 					tempLine = "";
 					line = sw->ReadLine();
 					j++;
-					while (line->Length != 1) {
+					while (line->Length != TRUE) {
 						line = sw->ReadLine();
 						tempLine += line;
 						j++;
@@ -3234,14 +3070,14 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							lines[count] = auxLine;
 						}
 						tbDemand->Lines = lines;
-						gDemandComponent = 1;
+						gDemandComponent = PCVINPE;
 					}
 				}
 
 				if (tempLine == "ComputeInputTwoDateMaps") {
 					tempLine = "";
 					gDemandLUT = gLandUseTypes;
-					while (line->Contains("finalYearForInterpolation") != 1) {
+					while (line->Contains("finalYearForInterpolation") != TRUE) {
 						line = sw->ReadLine();
 					}
 					for (int i = 0; i < line->Length; i++) {
@@ -3259,7 +3095,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gDemandFinalYear = tempLine;
 				
 					tempLine = "";
-					while (line->Contains("finalLandUseTypesForInterpolation") != 1) {
+					while (line->Contains("finalLandUseTypesForInterpolation") != TRUE) {
 						line = sw->ReadLine();
 					}
 					bool enter = true;
@@ -3297,7 +3133,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						lines[3] = gDemand;
 
 						tbDemand->Lines = lines;
-						gDemandComponent = 2;
+						gDemandComponent = CITWODM;
 					}
 				}
 
@@ -3305,7 +3141,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					tempLine = "";
 					gDemandLUT = gLandUseTypes;
 
-					while (line->Contains("middleYearForInterpolation") != 1) {
+					while (line->Contains("middleYearForInterpolation") != TRUE) {
 						line = sw->ReadLine();
 					}
 					for (int i = 0; i < line->Length; i++) {
@@ -3323,7 +3159,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gDemandMiddleYear = tempLine;
 				
 					tempLine = "";
-					while (line->Contains("middleLandUseTypesForInterpolation") != 1) {
+					while (line->Contains("middleLandUseTypesForInterpolation") != TRUE) {
 						line = sw->ReadLine();
 					}
 					bool enter = true;
@@ -3350,7 +3186,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gDemand = tempLine + ";";
 
 					tempLine = "";
-					while (line->Contains("finalYearForInterpolation") != 1) {
+					while (line->Contains("finalYearForInterpolation") != TRUE) {
 						line = sw->ReadLine();
 					}
 					for (int i = 0; i < line->Length; i++) {
@@ -3368,7 +3204,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gDemandFinalYear = tempLine;
 				
 					tempLine = "";
-					while (line->Contains("finalLandUseTypesForInterpolation") != 1) {
+					while (line->Contains("finalLandUseTypesForInterpolation") != TRUE) {
 						line = sw->ReadLine();
 					}
 					enter = true;
@@ -3410,7 +3246,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						lines[5] = gDemand->Substring(i + 1);
 
 						tbDemand->Lines = lines;
-						gDemandComponent = 3;
+						gDemandComponent = CITHREEDM;
 					}
 				}
 
@@ -3418,7 +3254,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				//Potencial
 				line = sw->ReadLine();
-				while (line->Contains("=") != 1) {
+				while (line->Contains("=") != TRUE) {
 					line = sw->ReadLine();
 				}
 
@@ -3435,337 +3271,364 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				if (tempLine == "NeighSimpleRule{}") {
 					array<String^>^ lines = { "NeighSimpleRule{}" };
 					tbPotential->Lines = lines;
-					gPotentialComponent = 1;
+					gPotentialComponent = NEIGHSIMPLERULE;
 					gPotentialLUT = gLandUseTypes;
 				}
 
 				if (tempLine == "NeighInverseDistanceRule") {
 					gPotential = "";
-					gPotentialComponent = 2;
+					gPotentialComponent = NEIGHINVERSEDISTANCERULE;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 					
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potencialData
+					while (line->Contains("=") != TRUE) { //potentialData
 						line = sw->ReadLine();
 					}
 
-					for (int k = 0; k < count - 1; k++) {
+					int countBraces = 0;
+					while (line->Contains("Allocation") != TRUE) {
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
-							line = sw->ReadLine();
+						if (line->Contains("{")) {
+							countBraces++;
 						}
+					}
 
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("const=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
+					countBraces -= 1; //To remove the potencialData brace
 
+					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
+					int bracesForLUT = 2;
+					int nRegions = countBraces / (bracesForLUT*nLUT);
+					int activeRegion = 0;
+					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
+
+					gPotentialRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (line->Contains("potentialData") != TRUE) {
 						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { 
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						for (int k = 0; k < count - 1; k++) {
+							int position = k + (nLUT*activeRegion);
+
 							line = sw->ReadLine();
-						}
-
-						tempLine = "";
-						while (line->Contains("}") != 1) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						String^ tempAux = "";
-						bool enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
+							while (line->Contains("const") != TRUE) {
+								line = sw->ReadLine();
 							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("const=", "");
+							line = line->Replace(",", ";");
+							
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("betas") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							tempLine = "";
+							while (line->Contains("}") != TRUE) {
+								tempLine += line;
+								line = sw->ReadLine();
+							}
+
+							tempLine += "}";
+							tempLine = tempLine->Replace("\n", "");
+							tempLine = tempLine->Replace("\t", "");
+							tempLine = tempLine->Replace(" ", "");
+
+							String^ tempAux = "";
+							bool enter = true;
+							for (int i = 0; i < tempLine->Length; i++) {
+								while (tempLine[i] != '{') {
+									if (i == tempLine->Length - 1) {
+										enter = false;
+										break;
+									}
 									i++;
 								}
+								if (enter) {
+									while (tempLine[i] != '}') {
+										tempAux += tempLine[i];
+										i++;
+									}
+								}
 							}
+							tempAux = tempAux->Replace("{", "");
+							auxPotData[position] += tempAux + "#";
 						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + "#";
+						activeRegion++;
 					}
+
+					for (int i = 0; i < nLUT; i++) {
+						for (int j = i; j < auxPotData->Length; j += nLUT) {
+							gPotential += auxPotData[j];
+						}
+						gPotential += "#";
+					}
+
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
-					array<String^>^ lines2 = gcnew array<String^>(count);
-
-					lines2[0] = "NeighInverseDistanceRule";
-
 					if (gPotential != "") {
-						int lineCount = 1;
-						for (int i = 0; i < gPotential->Length; i++) {
-							if (gPotential[i] != '#') {
-								lines2[lineCount] += gPotential[i];
-							}
-							else {
-								lines2[lineCount] = String::Concat("const=", lines2[lineCount]);
-								lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-								lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-								lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-								lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-								lineCount++;
-							}
-						}
-						if (lines2[lineCount] != "") {
-							lines2[lineCount] = String::Concat("const=", lines2[lineCount]);
-							lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-							lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-							lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-							lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-						}
-						tbPotential->Lines = lines2;
+						showReturnDistanceRule("NeighInverseDistanceRule");
 					}
-					
 				}
 
 				if (tempLine == "InverseDistanceRule") {
 					gPotential = "";
-					gPotentialComponent = 3;
+					gPotentialComponent = INVERSEDISTANCERULE;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potencialData
+					while (line->Contains("=") != TRUE) { //potentialData
 						line = sw->ReadLine();
 					}
 
-					for (int k = 0; k < count - 1; k++) {
+					int countBraces = 0;
+					while (line->Contains("Allocation") != TRUE) {
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
-							line = sw->ReadLine();
+						if (line->Contains("{")) {
+							countBraces++;
 						}
+					}
 
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("const=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
+					countBraces -= 1; //To remove the potencialData brace
 
+					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
+					int bracesForLUT = 2;
+					int nRegions = countBraces / (bracesForLUT*nLUT);
+					int activeRegion = 0;
+					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
+
+					gPotentialRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (line->Contains("potentialData") != TRUE) {
 						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { 
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						for (int k = 0; k < count - 1; k++) {
+							int position = k + (nLUT*activeRegion);
+
 							line = sw->ReadLine();
-						}
-
-						tempLine = "";
-						while (line->Contains("}") != 1) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						String^ tempAux = "";
-						bool enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
+							while (line->Contains("const") != TRUE) {
+								line = sw->ReadLine();
 							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("const=", "");
+							line = line->Replace(",", ";");
+							
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("betas") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							tempLine = "";
+							while (line->Contains("}") != TRUE) {
+								tempLine += line;
+								line = sw->ReadLine();
+							}
+
+							tempLine += "}";
+							tempLine = tempLine->Replace("\n", "");
+							tempLine = tempLine->Replace("\t", "");
+							tempLine = tempLine->Replace(" ", "");
+
+							String^ tempAux = "";
+							bool enter = true;
+							for (int i = 0; i < tempLine->Length; i++) {
+								while (tempLine[i] != '{') {
+									if (i == tempLine->Length - 1) {
+										enter = false;
+										break;
+									}
 									i++;
 								}
+								if (enter) {
+									while (tempLine[i] != '}') {
+										tempAux += tempLine[i];
+										i++;
+									}
+								}
 							}
+							tempAux = tempAux->Replace("{", "");
+							auxPotData[position] += tempAux + "#";
 						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + "#";
+						activeRegion++;
 					}
+
+					for (int i = 0; i < nLUT; i++) {
+						for (int j = i; j < auxPotData->Length; j += nLUT) {
+							gPotential += auxPotData[j];
+						}
+						gPotential += "#";
+					}
+
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
-					array<String^>^ lines2 = gcnew array<String^>(count);
-
-					lines2[0] = "InverseDistanceRule";
-
 					if (gPotential != "") {
-						int lineCount = 1;
-						for (int i = 0; i < gPotential->Length; i++) {
-							if (gPotential[i] != '#') {
-								lines2[lineCount] += gPotential[i];
-							}
-							else {
-								lines2[lineCount] = String::Concat("const=", lines2[lineCount]);
-								lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-								lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-								lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-								lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-								lineCount++;
-							}
-						}
-						if (lines2[lineCount] != "") {
-							lines2[lineCount] = String::Concat("const=", lines2[lineCount]);
-							lines2[lineCount] = lines2[lineCount]->Replace(";", ",betas={");
-							lines2[lineCount] = lines2[lineCount]->Replace("=", " = ");
-							lines2[lineCount] = lines2[lineCount]->Replace(",", ", ");
-							lines2[lineCount] = lines2[lineCount] = String::Concat(lines2[lineCount], "}");
-						}
-						tbPotential->Lines = lines2;
+						showReturnDistanceRule("InverseDistanceRule");
 					}
-
 				}
 
 				if (tempLine == "LogisticRegression") {
 					gPotential = "";
-					gPotentialComponent = 4;
+					gPotentialComponent = LOGISTICREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potencialData
+					while (line->Contains("=") != TRUE) { //potentialData
 						line = sw->ReadLine();
 					}
 
-					for (int k = 0; k < count - 1; k++) {
+					int countBraces = 0;
+					while (line->Contains("Allocation") != TRUE) {
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
-							line = sw->ReadLine();
+						if (line->Contains("{")) {
+							countBraces++;
 						}
+					}
 
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("const=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
+					countBraces -= 1; //To remove the potencialData brace
 
+					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
+					int bracesForLUT = 2;
+					int nRegions = countBraces / (bracesForLUT*nLUT);
+					int activeRegion = 0;
+					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
+
+					gPotentialRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (line->Contains("potentialData") != TRUE) {
 						line = sw->ReadLine();
-						while (line->Contains("elasticity") != 1) { 
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						for (int k = 0; k < count - 1; k++) {
+							int position = k + (nLUT*activeRegion);
+
 							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("elasticity=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { 
-							line = sw->ReadLine();
-						}
-
-						tempLine = "";
-						while (line->Contains("}") != 1) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						String^ tempAux = "";
-						bool enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
+							while (line->Contains("const") != TRUE) {
+								line = sw->ReadLine();
 							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("const=", "");
+							line = line->Replace(",", ";");
+
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("elasticity") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("elasticity=", "");
+							line = line->Replace(",", ";");
+
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("betas") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							tempLine = "";
+							while (line->Contains("}") != TRUE) {
+								tempLine += line;
+								line = sw->ReadLine();
+							}
+
+							tempLine += "}";
+							tempLine = tempLine->Replace("\n", "");
+							tempLine = tempLine->Replace("\t", "");
+							tempLine = tempLine->Replace(" ", "");
+
+							String^ tempAux = "";
+							bool enter = true;
+							for (int i = 0; i < tempLine->Length; i++) {
+								while (tempLine[i] != '{') {
+									if (i == tempLine->Length - 1) {
+										enter = false;
+										break;
+									}
 									i++;
 								}
+								if (enter) {
+									while (tempLine[i] != '}') {
+										tempAux += tempLine[i];
+										i++;
+									}
+								}
 							}
+							tempAux = tempAux->Replace("{", "");
+							auxPotData[position] += tempAux + "#";
 						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + "#";
+						activeRegion++;
 					}
-	
+
+					for (int i = 0; i < nLUT; i++) {
+						for (int j = i; j < auxPotData->Length; j += nLUT) {
+							gPotential += auxPotData[j];
+						}
+						gPotential += "#";
+					}
+
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
-					array<String^>^ lines3 = gcnew array<String^>(count + 1);
-					lines3[0] = "LogisticRegression";
 
 					if (gPotential != "") {
-							int lineCount = 1;
-						bool first = true;
-						for (int i = 0; i < gPotential->Length; i++) {
-							if (gPotential[i] != '#') {
-								if (gPotential[i] != ';') {
-									lines3[lineCount] += gPotential[i];
-								}
-								else {
-									if (first) {
-										lines3[lineCount] += "$";
-										first = false;
-									}
-									else {
-										lines3[lineCount] += gPotential[i];
-									}
-								}
-							}
-							else {
-								lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-								lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
-								lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-								lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-								lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-								lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}");
-								lineCount++;
-								first = true;
-							}
-						}
-						if (lines3[lineCount] != "") {
-							lines3[lineCount] = String::Concat("const=", lines3[lineCount]);
-							lines3[lineCount] = lines3[lineCount]->Replace("$", ",elasticity=");
-							lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-							lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-							lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-							lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}");
-						}
-						tbPotential->Lines = lines3;
+						showReturnLogisticRegression();
 					}
-
 				}
+	
 
 				if (tempLine == "NeighAttractionLogisticRegression") {
 					gPotential = "";
-					gPotentialComponent = 5;
+					gPotentialComponent = NEIGHATTRACTIONLOGISTICREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potencialData
+					while (line->Contains("=") != TRUE) { //potencialData
 						line = sw->ReadLine();
 					}
 
 					for (int k = 0; k < count - 1; k++) {
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
+						while (line->Contains("const") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -3777,7 +3640,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("elasticity") != 1) { 
+						while (line->Contains("elasticity") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -3789,7 +3652,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("percNeighborsUse") != 1) { 
+						while (line->Contains("percNeighborsUse") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -3801,12 +3664,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { 
+						while (line->Contains("betas") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
 						tempLine = "";
-						while (line->Contains("}") != 1) {
+						while (line->Contains("}") != TRUE) {
 							tempLine += line;
 							line = sw->ReadLine();
 						}
@@ -3891,21 +3754,22 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				}
 
+				//Countiuous Potential Components
 				if (tempLine == "LinearRegression") {
 					gPotential = "";
-					gPotentialComponent = 6;
+					gPotentialComponent = LINEARREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potentialData
+					while (line->Contains("=") != TRUE) { //potentialData
 						line = sw->ReadLine();
 					}
 					
 					int countBraces = 0;
-					while (line->Contains("Allocation") != 1) {
+					while (line->Contains("Allocation") != TRUE) {
 						line = sw->ReadLine();
 						if (line->Contains("{")) {
 							countBraces++;
@@ -3925,7 +3789,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					sw->Close();
 					sw = gcnew System::IO::StreamReader(fileName);
 
-					while (line->Contains("potentialData") != 1) {
+					while (line->Contains("potentialData") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -3933,7 +3797,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						for (int k = 0; k < count - 1; k++) {
 							int position = k + (nLUT*activeRegion);
 							line = sw->ReadLine();
-							while (line->Contains("isLog") != 1) {
+							while (line->Contains("isLog") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -3952,7 +3816,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("const") != 1) {
+							while (line->Contains("const") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -3965,12 +3829,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("betas") != 1) {
+							while (line->Contains("betas") != TRUE) {
 								line = sw->ReadLine();
 							}
 
 							tempLine = "";
-							while (line->Contains("}") != 1) {
+							while (line->Contains("}") != TRUE) {
 								tempLine += line;
 								line = sw->ReadLine();
 							}
@@ -4019,19 +3883,19 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (tempLine == "SpatialLagRegression") {
 					gPotential = "";
-					gPotentialComponent = 7;
+					gPotentialComponent = SPATIALLAGREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potentialData
+					while (line->Contains("=") != TRUE) { //potentialData
 						line = sw->ReadLine();
 					}
 
 					int countBraces = 0;
-					while (line->Contains("Allocation") != 1) {
+					while (line->Contains("Allocation") != TRUE) {
 						line = sw->ReadLine();
 						if (line->Contains("{")) {
 							countBraces++;
@@ -4051,7 +3915,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					sw->Close();
 					sw = gcnew System::IO::StreamReader(fileName);
 
-					while (line->Contains("potentialData") != 1) {
+					while (line->Contains("potentialData") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4059,7 +3923,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						for (int k = 0; k < count - 1; k++) {
 							int position = k + (nLUT*activeRegion);
 							line = sw->ReadLine();
-							while (line->Contains("isLog") != 1) {
+							while (line->Contains("isLog") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -4078,7 +3942,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("const") != 1) {
+							while (line->Contains("const") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -4091,7 +3955,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("minReg") != 1) {
+							while (line->Contains("minReg") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -4104,7 +3968,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("maxReg") != 1) {
+							while (line->Contains("maxReg") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -4117,7 +3981,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("ro") != 1) {
+							while (line->Contains("ro") != TRUE) {
 								line = sw->ReadLine();
 							}
 
@@ -4130,12 +3994,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							auxPotData[position] += line;
 
 							line = sw->ReadLine();
-							while (line->Contains("betas") != 1) {
+							while (line->Contains("betas") != TRUE) {
 								line = sw->ReadLine();
 							}
 
 							tempLine = "";
-							while (line->Contains("}") != 1) {
+							while (line->Contains("}") != TRUE) {
 								tempLine += line;
 								line = sw->ReadLine();
 							}
@@ -4184,20 +4048,20 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (tempLine == "SpatialLagLinearRoads") {
 					gPotential = "";
-					gPotentialComponent = 8;
+					gPotentialComponent = SPATIALLAGLINEARROADS;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != 1) { //potentialData
+					while (line->Contains("=") != TRUE) { //potentialData
 						line = sw->ReadLine();
 					}
 
 					for (int k = 0; k < count - 1; k++) {
 						line = sw->ReadLine();
-						while (line->Contains("isLog") != 1) { 
+						while (line->Contains("isLog") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4216,7 +4080,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
+						while (line->Contains("const") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4228,7 +4092,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("minReg") != 1) { 
+						while (line->Contains("minReg") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4240,7 +4104,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("maxReg") != 1) { 
+						while (line->Contains("maxReg") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4252,7 +4116,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("ro") != 1) { 
+						while (line->Contains("ro") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4264,12 +4128,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { 
+						while (line->Contains("betas") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
 						tempLine = "";
-						while (line->Contains("}") != 1) {
+						while (line->Contains("}") != TRUE) {
 							tempLine += line;
 							line = sw->ReadLine();
 						}
@@ -4300,17 +4164,17 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += tempAux + "*";
 				
 						line = sw->ReadLine();
-						while (line->Contains("=") != 1) { //roadsModel
+						while (line->Contains("=") != TRUE) { //roadsModel
 							line = sw->ReadLine();
 						}
 
 						line = sw->ReadLine();
-						while (line->Contains("attrs") != 1) {  
+						while (line->Contains("attrs") != TRUE) {  
 							line = sw->ReadLine();
 						}
 
 						tempLine = "";
-						while (line->Contains("}") != 1) {
+						while (line->Contains("}") != TRUE) {
 							tempLine += line;
 							line = sw->ReadLine();
 						}
@@ -4341,7 +4205,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += tempAux + ";";
 
 						line = sw->ReadLine();
-						while (line->Contains("const") != 1) { 
+						while (line->Contains("const") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4353,7 +4217,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						gPotential += line;
 
 						line = sw->ReadLine();
-						while (line->Contains("change") != 1) { 
+						while (line->Contains("change") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
@@ -4366,12 +4230,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 
 						line = sw->ReadLine();
-						while (line->Contains("betas") != 1) { //betas roadmodel
+						while (line->Contains("betas") != TRUE) { //betas roadmodel
 							line = sw->ReadLine();
 						}
 
 						tempLine = "";
-						while (line->Contains("}") != 1) {
+						while (line->Contains("}") != TRUE) {
 							tempLine += line;
 							line = sw->ReadLine();
 						}
@@ -4404,109 +4268,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
-					array<String^>^ lines3 = gcnew array<String^>(count + 10);
-					lines3[0] = "SpatialLagLinearRoads";
-
 					if (gPotential != "") {
-						int lineCount = 1;
-						int change = 0;
-
-						for (int i = 0; i < gPotential->Length; i++) {
-							if (gPotential[i] != '#') {
-								if (gPotential[i] != ';') {
-									lines3[lineCount] += gPotential[i];
-								}
-								else {
-									switch (change)
-									{
-									case 0:
-										lines3[lineCount] += "$";
-										change++;
-										break;
-
-									case 1:
-										lines3[lineCount] += "@";
-										change++;
-										break;
-
-									case 2:
-										lines3[lineCount] += "%";
-										change++;
-										break;
-
-									case 3:
-										lines3[lineCount] += "&";
-										change++;
-										break;
-
-									case 4:
-										lines3[lineCount] += "!";
-										change++;
-										break;
-
-									case 5:
-										lines3[lineCount] += "£";
-										change++;
-										break;
-
-									case 6:
-										lines3[lineCount] += "¢";
-										change++;
-										break;
-
-									default:
-										lines3[lineCount] += gPotential[i];
-										break;
-									}
-								}
-
-							}
-							else {
-								if (lines3[lineCount][0] == '0') {
-									lines3[lineCount] = String::Concat("false", lines3[lineCount]->Substring(1));
-								}
-								else {
-									lines3[lineCount] = String::Concat("true", lines3[lineCount]->Substring(1));
-								}
-								lines3[lineCount] = String::Concat("isLog = ", lines3[lineCount]);
-								lines3[lineCount] = lines3[lineCount]->Replace("$", ",const=");
-								lines3[lineCount] = lines3[lineCount]->Replace("@", ",minReg=");
-								lines3[lineCount] = lines3[lineCount]->Replace("%", ",maxReg=");
-								lines3[lineCount] = lines3[lineCount]->Replace("&", ",ro=");
-								lines3[lineCount] = lines3[lineCount]->Replace("!", ",betas = {");
-								lines3[lineCount] = lines3[lineCount]->Replace("*", "},roadsModel={ attrs={");;
-								lines3[lineCount] = lines3[lineCount]->Replace("£", "},const=");
-								lines3[lineCount] = lines3[lineCount]->Replace("¢", ",change=");
-								lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-								lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-								lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-								lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}}");
-								lineCount++;
-								change = 0;
-							}
-						}
-						if (lines3[lineCount] != "") {
-							if (lines3[lineCount][0] == '0') {
-								lines3[lineCount] = String::Concat("false", lines3[lineCount]->Substring(1));
-							}
-							else {
-								lines3[lineCount] = String::Concat("true", lines3[lineCount]->Substring(1));
-							}
-							lines3[lineCount] = String::Concat("isLog = ", lines3[lineCount]);
-							lines3[lineCount] = lines3[lineCount]->Replace("$", ",const=");
-							lines3[lineCount] = lines3[lineCount]->Replace("@", ",minReg=");
-							lines3[lineCount] = lines3[lineCount]->Replace("%", ",maxReg=");
-							lines3[lineCount] = lines3[lineCount]->Replace("&", ",ro=");
-							lines3[lineCount] = lines3[lineCount]->Replace("!", ",betas = {");
-							lines3[lineCount] = lines3[lineCount]->Replace("*", "},roadsModel={ attrs={");;
-							lines3[lineCount] = lines3[lineCount]->Replace("£", "},const=");
-							lines3[lineCount] = lines3[lineCount]->Replace("¢", ",change=");
-							lines3[lineCount] = lines3[lineCount]->Replace(";", ",betas={");
-							lines3[lineCount] = lines3[lineCount]->Replace("=", " = ");
-							lines3[lineCount] = lines3[lineCount]->Replace(",", ", ");
-							lines3[lineCount] = lines3[lineCount] = String::Concat(lines3[lineCount], "}}");
-						}
-						tbPotential->Lines = lines3;
+						showReturnSpatialLagLinearRoads();
 					}
 				}
 			
@@ -4520,7 +4283,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				count += countCaracter(gAllocationLUT, ',');
 
 				line = sw->ReadLine();
-				while (line->Contains("=") != 1) {
+				while (line->Contains("=") != TRUE) {
 					line = sw->ReadLine();
 				}
 
@@ -4536,10 +4299,10 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (tempLine == "AllocationBySimpleOrdering") {
 					gAllocation = "";
-					gAllocationComponent = 1;
+					gAllocationComponent = ALLOCATIONBYSIMPLEORDERING;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxDifference") != 1) {
+					while (line->Contains("maxDifference") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4561,11 +4324,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (tempLine == "AllocationClueSLike") {
 					gAllocation = "";
-					gAllocationComponent = 2;
+					gAllocationComponent = ALLOCATIONCLUESLIKE;
 					gAllocationLUT = gLandUseTypes;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxIteration") != 1) {
+					while (line->Contains("maxIteration") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4577,7 +4340,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("factorIteration") != 1) {
+					while (line->Contains("factorIteration") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4589,7 +4352,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 		
 					line = sw->ReadLine();
-					while (line->Contains("maxDifference") != 1) {
+					while (line->Contains("maxDifference") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4601,7 +4364,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 				
 					line = sw->ReadLine();
-					while (line->Contains("transitionMatrix") != 1) {
+					while (line->Contains("transitionMatrix") != TRUE) {
 						line = sw->ReadLine();
 						j++;
 					}
@@ -4682,13 +4445,14 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//Contiouos Allocation Components
 				if (tempLine == "AllocationClueLike") {
 					gAllocation = "";
-					gAllocationComponent = 3;
+					gAllocationComponent = ALLOCATIONCLUELIKE;
 					gAllocationLUT = gLandUseTypes;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxDifference") != 1) {
+					while (line->Contains("maxDifference") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4700,7 +4464,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxIteration") != 1) {
+					while (line->Contains("maxIteration") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4712,7 +4476,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("initialElasticity") != 1) {
+					while (line->Contains("initialElasticity") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4724,7 +4488,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("minElasticity") != 1) {
+					while (line->Contains("minElasticity") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4736,7 +4500,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxElasticity") != 1) {
+					while (line->Contains("maxElasticity") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4748,7 +4512,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("complementarLU") != 1) {
+					while (line->Contains("complementarLU") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4761,7 +4525,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("allocationData") != 1) {
+					while (line->Contains("allocationData") != TRUE) {
 						line = sw->ReadLine();
 						j++;
 					}
@@ -4945,11 +4709,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				if (tempLine == "AllocationClueLikeSaturation") {
 					gAllocation = "";
-					gAllocationComponent = 4;
+					gAllocationComponent = ALLOCATIONCLUELIKESATURATION;
 					gAllocationLUT = gLandUseTypes;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxDifference") != 1) {
+					while (line->Contains("maxDifference") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4961,7 +4725,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxIteration") != 1) {
+					while (line->Contains("maxIteration") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4973,7 +4737,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("initialElasticity") != 1) {
+					while (line->Contains("initialElasticity") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4985,7 +4749,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("minElasticity") != 1) {
+					while (line->Contains("minElasticity") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -4997,7 +4761,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("maxElasticity") != 1) {
+					while (line->Contains("maxElasticity") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -5009,7 +4773,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("complementarLU") != 1) {
+					while (line->Contains("complementarLU") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -5022,7 +4786,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("saturationIndicator") != 1) {
+					while (line->Contains("saturationIndicator") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -5035,7 +4799,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("attrProtection") != 1) {
+					while (line->Contains("attrProtection") != TRUE) {
 						line = sw->ReadLine();
 					}
 
@@ -5048,7 +4812,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gAllocation += line;
 
 					line = sw->ReadLine();
-					while (line->Contains("allocationData") != 1) {
+					while (line->Contains("allocationData") != TRUE) {
 						line = sw->ReadLine();
 						j++;
 					}
@@ -5256,10 +5020,10 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			}
 		
 			if (main && submodel && imported) {
-				if (gPotentialComponent > gNumDiscPotComp && (gAllocationComponent > 0 && gAllocationComponent <= gNumDiscAllocComp)) {
+				if (gPotentialComponent > NUMDISCPOTCOMP && (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 					MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
-				else if ((gPotentialComponent > 0 && gPotentialComponent <= gNumDiscPotComp) && gAllocationComponent > gNumDiscAllocComp) {
+				else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) && gAllocationComponent > NUMDISCALLOCCOMP) {
 					MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 				else {
@@ -5794,6 +5558,9 @@ System::Void LuccME::NovoModelo::tAttributeInitValidation_Leave(System::Object^ 
 	}
 }
 
+/*
+Count a number of a caracter on a String
+*/
 System::Int16 LuccME::NovoModelo::countCaracter(String^ source, char caracter)
 {
 	int count = 0;
@@ -5805,6 +5572,9 @@ System::Int16 LuccME::NovoModelo::countCaracter(String^ source, char caracter)
 	return count;
 }
 
+/*
+This funtion create the visual return on the multiline textbox for the Linear Regression component
+*/
 System::Void LuccME::NovoModelo::showReturnLinearRegression()
 {
 	int count = countCaracter(gPotential, '*');
@@ -5901,6 +5671,9 @@ System::Void LuccME::NovoModelo::showReturnLinearRegression()
 	tbPotential->Lines = lines;
 }
 
+/*
+This funtion create the visual return on the multiline textbox for the SpatialLag Regression component
+*/
 System::Void LuccME::NovoModelo::showReturnSpatialLagRegression()
 {
 	int count = countCaracter(gPotential, '*');
@@ -6019,5 +5792,266 @@ System::Void LuccME::NovoModelo::showReturnSpatialLagRegression()
 		}
 	}
 
+	tbPotential->Lines = lines;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the SpatialLag Linear Roads component
+*/
+System::Void LuccME::NovoModelo::showReturnSpatialLagLinearRoads()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "SpatialLagLinearRoads";
+	lineCount = 1;
+	int change = 0;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != ';') {
+				lines[lineCount] += gPotential[i];
+			}
+			else {
+				switch (change)
+				{
+				case 0:
+					lines[lineCount] += "$";
+					change++;
+					break;
+
+				case 1:
+					lines[lineCount] += "@";
+					change++;
+					break;
+
+				case 2:
+					lines[lineCount] += "%";
+					change++;
+					break;
+
+				case 3:
+					lines[lineCount] += "&";
+					change++;
+					break;
+
+				case 4:
+					lines[lineCount] += "!";
+					change++;
+					break;
+
+				case 5:
+					lines[lineCount] += "£";
+					change++;
+					break;
+
+				case 6:
+					lines[lineCount] += "¢";
+					change++;
+					break;
+
+				default:
+					lines[lineCount] += gPotential[i];
+					break;
+				}
+			}
+		}
+		else {
+			if (lines[lineCount][0] == '0') {
+				lines[lineCount] = String::Concat("false", lines[lineCount]->Substring(1));
+			}
+			else {
+				lines[lineCount] = String::Concat("true", lines[lineCount]->Substring(1));
+			}
+			lines[lineCount] = String::Concat("isLog = ", lines[lineCount]);
+			lines[lineCount] = lines[lineCount]->Replace("$", ",const=");
+			lines[lineCount] = lines[lineCount]->Replace("@", ",minReg=");
+			lines[lineCount] = lines[lineCount]->Replace("%", ",maxReg=");
+			lines[lineCount] = lines[lineCount]->Replace("&", ",ro=");
+			lines[lineCount] = lines[lineCount]->Replace("!", ",betas = {");
+			lines[lineCount] = lines[lineCount]->Replace("*", "},roadsModel={ attrs={");;
+			lines[lineCount] = lines[lineCount]->Replace("£", "},const=");
+			lines[lineCount] = lines[lineCount]->Replace("¢", ",change=");
+			lines[lineCount] = lines[lineCount]->Replace(";", ",betas={");
+			lines[lineCount] = lines[lineCount]->Replace("=", " = ");
+			lines[lineCount] = lines[lineCount]->Replace(",", ", ");
+			lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
+			lineCount++;
+			change = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		if (lines[lineCount][0] == '0') {
+			lines[lineCount] = String::Concat("false", lines[lineCount]->Substring(1));
+		}
+		else {
+			lines[lineCount] = String::Concat("true", lines[lineCount]->Substring(1));
+		}
+		lines[lineCount] = String::Concat("isLog = ", lines[lineCount]);
+		lines[lineCount] = lines[lineCount]->Replace("$", ",const=");
+		lines[lineCount] = lines[lineCount]->Replace("@", ",minReg=");
+		lines[lineCount] = lines[lineCount]->Replace("%", ",maxReg=");
+		lines[lineCount] = lines[lineCount]->Replace("&", ",ro=");
+		lines[lineCount] = lines[lineCount]->Replace("!", ",betas = {");
+		lines[lineCount] = lines[lineCount]->Replace("*", "},roadsModel={ attrs={");;
+		lines[lineCount] = lines[lineCount]->Replace("£", "},const=");
+		lines[lineCount] = lines[lineCount]->Replace("¢", ",change=");
+		lines[lineCount] = lines[lineCount]->Replace(";", ",betas={");
+		lines[lineCount] = lines[lineCount]->Replace("=", " = ");
+		lines[lineCount] = lines[lineCount]->Replace(",", ", ");
+		lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
+	}
+	tbPotential->Lines = lines;
+}
+
+System::Void LuccME::NovoModelo::showReturnDistanceRule(String^ componentName)
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = componentName;
+
+	lineCount = 1;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				lines[lineCount + regression] += gPotential[i];
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+			}
+			lineCount++;
+			regression = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+	tbPotential->Lines = lines;
+}
+
+System::Void LuccME::NovoModelo::showReturnLogisticRegression()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "LogisticRegression";
+
+	lineCount = 1;
+	bool first = true;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				if (gPotential[i] != ';') {
+					lines[lineCount + regression] += gPotential[i];
+				}
+				else {
+					if (first) {
+						lines[lineCount + regression] += "$";
+						first = false;
+					}
+					else {
+						lines[lineCount + regression] += gPotential[i];
+					}
+				}
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+						first = true;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+			}
+			lineCount++;
+			first = true;
+			regression = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
 	tbPotential->Lines = lines;
 }

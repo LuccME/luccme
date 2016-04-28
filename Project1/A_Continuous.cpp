@@ -292,7 +292,7 @@ System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System
 System::Windows::Forms::DataGridViewCell ^ LuccME::A_Continuous::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
-	if (dgView->SelectedCells->Count == 0)
+	if (dgView->SelectedCells->Count == NONE)
 		return nullptr;
 
 	int rowIndex = dgView->Rows->Count - 1;

@@ -1798,5 +1798,6 @@ namespace LuccME {
 	private: System::Void showReturnSpatialLagLinearRoads();
 	private: System::Void showReturnDistanceRule(String^ componentName); 
 	private: System::Void showReturnLogisticRegression();
+	private: System::Void showReturnNeighAttractionLogisticRegression();
 	};
 }

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "PotDiscreteForm.h"
-#include "P_Discrete.h"
 #include "P_DiscreteR.h"
 
 System::Void LuccME::PotDiscreteForm::PotDiscreteForm_Shown(System::Object ^ sender, System::EventArgs ^ e)

@@ -39,9 +39,6 @@
     <ClCompile Include="PotDiscreteForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="P_Discrete.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PotContinuousForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PotDiscreteForm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="P_Discrete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PotContinuousForm.h">

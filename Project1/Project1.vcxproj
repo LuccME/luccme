@@ -104,7 +104,6 @@
     <ClCompile Include="PotContinuousForm.cpp" />
     <ClCompile Include="PotDiscreteForm.cpp" />
     <ClCompile Include="P_ContinuousR.cpp" />
-    <ClCompile Include="P_Discrete.cpp" />
     <ClCompile Include="P_DiscreteR.cpp" />
     <ClCompile Include="P_SpatialLagLinearRoads.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -161,9 +160,6 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="P_ContinuousR.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="P_Discrete.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="P_DiscreteR.h">
@@ -228,9 +224,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="P_ContinuousR.resx">
       <DependentUpon>P_ContinuousR.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="P_Discrete.resx">
-      <DependentUpon>P_Discrete.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="P_DiscreteR.resx">
       <DependentUpon>P_DiscreteR.h</DependentUpon>

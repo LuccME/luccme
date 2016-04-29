@@ -278,7 +278,6 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lDirProj;
 	private: System::Windows::Forms::TabPage^  tabDefSpatial;
 	private: System::Windows::Forms::Button^  bSelectDatabase;
-
 	private: System::Windows::Forms::TextBox^  tCellArea;
 	private: System::Windows::Forms::Label^  lCellArea;
 	private: System::Windows::Forms::TextBox^  tThemeName;

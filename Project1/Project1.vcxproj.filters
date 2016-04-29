@@ -78,6 +78,9 @@
     <ClCompile Include="P_DiscreteR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="P_MaxEntLike.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyForm.h">
@@ -146,6 +149,9 @@
     <ClInclude Include="P_DiscreteR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="P_MaxEntLike.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
@@ -167,9 +173,6 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="PotDiscreteForm.resx">
-      <Filter>Resource Files</Filter>
-    </EmbeddedResource>
-    <EmbeddedResource Include="P_Discrete.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="PotContinuousForm.resx">

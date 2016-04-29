@@ -67,7 +67,6 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lMinReg;
 	private: System::Windows::Forms::Button^  bRoadsModel;
 	private: System::Windows::Forms::DataGridView^  dgBetasRM;
-
 	private: System::Windows::Forms::Label^  lBetasRM;
 	private: System::Windows::Forms::TextBox^  tConstRM;
 	private: System::Windows::Forms::Label^  lConstRM;
@@ -75,7 +74,6 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lChangeRM;
 	private: System::Windows::Forms::Label^  lAttributesRM;
 	private: System::Windows::Forms::DataGridView^  dgAttr;
-
 
 	private:
 		/// <summary>

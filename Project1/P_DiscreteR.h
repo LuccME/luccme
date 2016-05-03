@@ -46,7 +46,6 @@ namespace LuccME {
 			}
 		}
 	private: System::Windows::Forms::Button^  bCancel;
-	protected:
 	private: System::Windows::Forms::TextBox^  tLUT;
 	private: System::Windows::Forms::Button^  bAddBetas;
 	private: System::Windows::Forms::ListView^  lvLUT;

@@ -21,9 +21,11 @@
 #define INVERSEDISTANCERULE					3
 #define LOGISTICREGRESSION					4
 #define NEIGHATTRACTIONLOGISTICREGRESSION	5
-#define LINEARREGRESSION					6
-#define SPATIALLAGREGRESSION				7
-#define SPATIALLAGLINEARROADS				8
+#define DMAXENTLIKE							6
+#define LINEARREGRESSION					7
+#define SPATIALLAGREGRESSION				8
+#define SPATIALLAGLINEARROADS				9
+#define CMAXENTLIKE							10
 
 //Allocation Components
 #define ALLOCATIONBYSIMPLEORDERING		1
@@ -46,7 +48,7 @@
 #define INITIALREGRESSIONSHOW 2  //Absolute value
 
 //Components Number
-#define NUMDISCPOTCOMP 5
+#define NUMDISCPOTCOMP 6
 #define NUMDISCALLOCCOMP 2
 
 // TODO: reference additional headers your program requires here

@@ -2,6 +2,7 @@
 #include "PotContinuousForm.h"
 #include "P_SpatialLagLinearRoads.h"
 #include "P_ContinuousR.h"
+#include "P_MaxEntLike.h"
 
 System::Void LuccME::PotContinuousForm::PotContinuousForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
@@ -80,6 +81,29 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 		lReturn->Component = SPATIALLAGLINEARROADS;
 		P_SpatialLagLinearRoads^ potentialForm = gcnew P_SpatialLagLinearRoads(lReturn);
 		potentialForm->Text = gSPot + "Spatial Lag Linear Roads";
+		potentialForm->ShowDialog();
+		if (lReturn->Return == "") {
+			lReturn->Component = NONE;
+		}
+		this->Close();
+	}
+}
+
+System::Void LuccME::PotContinuousForm::bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	bool check = true;
+	if (this->lReturn->Component != CMAXENTLIKE && this->lReturn->Component != NONE) {
+		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
+			check = false;
+		}
+		else {
+			lReturn->Return = "";
+		}
+	}
+	if (check) {
+		lReturn->Component = CMAXENTLIKE;
+		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
+		potentialForm->Text = gSPot + "MaxEnt Like - Continuous";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

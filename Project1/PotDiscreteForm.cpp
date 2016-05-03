@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PotDiscreteForm.h"
 #include "P_DiscreteR.h"
+#include "P_MaxEntLike.h"
 
 System::Void LuccME::PotDiscreteForm::PotDiscreteForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
@@ -134,3 +135,26 @@ System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, Syste
 	}
 }
 
+System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	bool check = true;
+	if (this->lReturn->Component != DMAXENTLIKE && this->lReturn->Component != NONE) {
+		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
+			check = false;
+		}
+		else {
+			lReturn->Return = "";
+		}
+	}
+	if (check) {
+		lReturn->Component = DMAXENTLIKE;
+		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
+		potentialForm->Text = gSPot + "MaxEnt Like - Discrete";
+		potentialForm->ShowDialog();
+		if (lReturn->Return == "") {
+			lReturn->Component = NONE;
+		}
+		this->Close();
+	}
+
+}

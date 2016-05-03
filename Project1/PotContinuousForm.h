@@ -19,6 +19,9 @@ namespace LuccME {
 		String^ gSPotMod = "";
 		String^ gSPotModTitle = "";
 		String^ gSPot = "";
+	private: System::Windows::Forms::Button^  bMaxEntLike;
+
+
 
 	public:
 		cReturnPotential^ lReturn;
@@ -72,12 +75,13 @@ namespace LuccME {
 			this->bSpatialLagRegression = (gcnew System::Windows::Forms::Button());
 			this->bLinearRegression = (gcnew System::Windows::Forms::Button());
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
+			this->bMaxEntLike = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// bSpatialLagLinearRoads
 			// 
-			this->bSpatialLagLinearRoads->Location = System::Drawing::Point(147, 397);
+			this->bSpatialLagLinearRoads->Location = System::Drawing::Point(147, 360);
 			this->bSpatialLagLinearRoads->Name = L"bSpatialLagLinearRoads";
 			this->bSpatialLagLinearRoads->Size = System::Drawing::Size(185, 39);
 			this->bSpatialLagLinearRoads->TabIndex = 93;
@@ -87,7 +91,7 @@ namespace LuccME {
 			// 
 			// bSpatialLagRegression
 			// 
-			this->bSpatialLagRegression->Location = System::Drawing::Point(147, 305);
+			this->bSpatialLagRegression->Location = System::Drawing::Point(147, 271);
 			this->bSpatialLagRegression->Name = L"bSpatialLagRegression";
 			this->bSpatialLagRegression->Size = System::Drawing::Size(185, 39);
 			this->bSpatialLagRegression->TabIndex = 92;
@@ -97,7 +101,7 @@ namespace LuccME {
 			// 
 			// bLinearRegression
 			// 
-			this->bLinearRegression->Location = System::Drawing::Point(147, 213);
+			this->bLinearRegression->Location = System::Drawing::Point(147, 182);
 			this->bLinearRegression->Name = L"bLinearRegression";
 			this->bLinearRegression->Size = System::Drawing::Size(185, 39);
 			this->bLinearRegression->TabIndex = 91;
@@ -115,12 +119,23 @@ namespace LuccME {
 			this->pbLogo1->TabIndex = 90;
 			this->pbLogo1->TabStop = false;
 			// 
+			// bMaxEntLike
+			// 
+			this->bMaxEntLike->Location = System::Drawing::Point(147, 449);
+			this->bMaxEntLike->Name = L"bMaxEntLike";
+			this->bMaxEntLike->Size = System::Drawing::Size(185, 39);
+			this->bMaxEntLike->TabIndex = 94;
+			this->bMaxEntLike->Text = L"MaxEnt Like";
+			this->bMaxEntLike->UseVisualStyleBackColor = true;
+			this->bMaxEntLike->Click += gcnew System::EventHandler(this, &PotContinuousForm::bMaxEntLike_Click);
+			// 
 			// PotContinuousForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->bMaxEntLike);
 			this->Controls->Add(this->bSpatialLagLinearRoads);
 			this->Controls->Add(this->bSpatialLagRegression);
 			this->Controls->Add(this->bLinearRegression);
@@ -138,5 +153,6 @@ namespace LuccME {
 	private: System::Void bSpatialLagRegression_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bSpatialLagLinearRoads_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void PotContinuousForm_Shown(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

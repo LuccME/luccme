@@ -733,7 +733,7 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (gAllocationComponent > 2) {
+	if (gAllocationComponent > NUMDISCALLOCCOMP) {
 		if (MessageBox::Show(gSAlloCont, gSPotDiscTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -766,9 +766,6 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		count += countCaracter(gPotentialLUT, ',');
 
 		array<String^>^ lines = { "" };
-		array<String^>^ lines2 = gcnew array<String^>(count);
-		array<String^>^ lines3 = gcnew array<String^>(count + 1);
-		array<String^>^ lines4 = gcnew array<String^>(count + 2);
 		
 		switch (lPotential->Component)
 		{
@@ -798,6 +795,12 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		case NEIGHATTRACTIONLOGISTICREGRESSION:
 			if (gPotential != "") {
 				showReturnNeighAttractionLogisticRegression();
+			}
+			break;
+
+		case DMAXENTLIKE:
+			if (gPotential != "") {
+				showReturnMaxEntLike();
 			}
 			break;
 		}
@@ -6094,4 +6097,16 @@ System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
 		}
 	}
 	tbPotential->Lines = lines;
+}
+
+System::Void LuccME::NovoModelo::showReturnMaxEntLike()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "NeighAttractionLogisticRegression";
 }

@@ -17,9 +17,15 @@ namespace LuccME {
 	{
 	private:
 		String^ gSAttributes = "";
+		String^ gSEmptyUsePerc = "";
+		String^ gSEmptyUsePercTitle = "";
+		String^ gSEmptyDG = "";
+		String^ gSEmptyDGTitle = ""; 
+		String^ gSLUT = "";
 
 	public:
 		cReturnPotential^ lReturn;
+		array<String^>^ lTempAttr = gcnew array<String^>(50);
 		P_MaxEntLike(cReturnPotential^ pPotencial)
 		{
 			InitializeComponent();
@@ -40,17 +46,18 @@ namespace LuccME {
 				delete components;
 			}
 		}
+
+	private: System::Windows::Forms::TextBox^  tLUT;
+	private: System::Windows::Forms::ListView^  lvLUT;
+	private: System::Windows::Forms::Button^  bAddBetas;
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::DataGridView^  dgAttrPerc;
-
 	private: System::Windows::Forms::Label^  lAttrPerc;
-
 	private: System::Windows::Forms::Button^  bSalvar;
 	private: System::Windows::Forms::TextBox^  tUsePerc;
 	private: System::Windows::Forms::Label^  lUsePerc;
 	private: System::Windows::Forms::DataGridView^  dgAttrClass;
 	private: System::Windows::Forms::Label^  lAttrClass;
-	protected:
 
 	private:
 		/// <summary>
@@ -74,6 +81,9 @@ namespace LuccME {
 			this->lUsePerc = (gcnew System::Windows::Forms::Label());
 			this->dgAttrClass = (gcnew System::Windows::Forms::DataGridView());
 			this->lAttrClass = (gcnew System::Windows::Forms::Label());
+			this->tLUT = (gcnew System::Windows::Forms::TextBox());
+			this->lvLUT = (gcnew System::Windows::Forms::ListView());
+			this->bAddBetas = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttrPerc))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttrClass))->BeginInit();
@@ -94,10 +104,10 @@ namespace LuccME {
 			this->dgAttrPerc->AllowUserToResizeColumns = false;
 			this->dgAttrPerc->AllowUserToResizeRows = false;
 			this->dgAttrPerc->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgAttrPerc->Location = System::Drawing::Point(27, 240);
+			this->dgAttrPerc->Location = System::Drawing::Point(241, 236);
 			this->dgAttrPerc->Name = L"dgAttrPerc";
 			this->dgAttrPerc->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
-			this->dgAttrPerc->Size = System::Drawing::Size(204, 242);
+			this->dgAttrPerc->Size = System::Drawing::Size(204, 104);
 			this->dgAttrPerc->TabIndex = 108;
 			this->dgAttrPerc->Visible = false;
 			// 
@@ -106,27 +116,28 @@ namespace LuccME {
 			this->lAttrPerc->AutoSize = true;
 			this->lAttrPerc->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttrPerc->Location = System::Drawing::Point(38, 214);
+			this->lAttrPerc->Location = System::Drawing::Point(266, 210);
 			this->lAttrPerc->Name = L"lAttrPerc";
-			this->lAttrPerc->Size = System::Drawing::Size(183, 23);
+			this->lAttrPerc->Size = System::Drawing::Size(155, 23);
 			this->lAttrPerc->TabIndex = 109;
-			this->lAttrPerc->Text = L"Atributos Percentuais";
+			this->lAttrPerc->Text = L"Attributes (Range)";
 			this->lAttrPerc->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->lAttrPerc->Visible = false;
 			// 
 			// bSalvar
 			// 
-			this->bSalvar->Location = System::Drawing::Point(210, 500);
+			this->bSalvar->Location = System::Drawing::Point(210, 502);
 			this->bSalvar->Name = L"bSalvar";
 			this->bSalvar->Size = System::Drawing::Size(75, 23);
 			this->bSalvar->TabIndex = 110;
 			this->bSalvar->Text = L"Salvar";
 			this->bSalvar->UseVisualStyleBackColor = true;
+			this->bSalvar->Click += gcnew System::EventHandler(this, &P_MaxEntLike::bSalvar_Click);
 			// 
 			// tUsePerc
 			// 
 			this->tUsePerc->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tUsePerc->Location = System::Drawing::Point(286, 175);
+			this->tUsePerc->Location = System::Drawing::Point(308, 180);
 			this->tUsePerc->Name = L"tUsePerc";
 			this->tUsePerc->Size = System::Drawing::Size(67, 20);
 			this->tUsePerc->TabIndex = 111;
@@ -140,11 +151,11 @@ namespace LuccME {
 			this->lUsePerc->AutoSize = true;
 			this->lUsePerc->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lUsePerc->Location = System::Drawing::Point(140, 173);
+			this->lUsePerc->Location = System::Drawing::Point(210, 154);
 			this->lUsePerc->Name = L"lUsePerc";
-			this->lUsePerc->Size = System::Drawing::Size(140, 23);
+			this->lUsePerc->Size = System::Drawing::Size(270, 23);
 			this->lUsePerc->TabIndex = 112;
-			this->lUsePerc->Text = L"% Uso por célula";
+			this->lUsePerc->Text = L"% Uso a ser considerado amostra";
 			this->lUsePerc->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lUsePerc->Visible = false;
 			// 
@@ -153,10 +164,10 @@ namespace LuccME {
 			this->dgAttrClass->AllowUserToResizeColumns = false;
 			this->dgAttrClass->AllowUserToResizeRows = false;
 			this->dgAttrClass->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgAttrClass->Location = System::Drawing::Point(265, 240);
+			this->dgAttrClass->Location = System::Drawing::Point(241, 379);
 			this->dgAttrClass->Name = L"dgAttrClass";
 			this->dgAttrClass->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
-			this->dgAttrClass->Size = System::Drawing::Size(204, 242);
+			this->dgAttrClass->Size = System::Drawing::Size(204, 104);
 			this->dgAttrClass->TabIndex = 113;
 			this->dgAttrClass->Visible = false;
 			// 
@@ -165,19 +176,52 @@ namespace LuccME {
 			this->lAttrClass->AutoSize = true;
 			this->lAttrClass->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttrClass->Location = System::Drawing::Point(278, 214);
+			this->lAttrClass->Location = System::Drawing::Point(245, 353);
 			this->lAttrClass->Name = L"lAttrClass";
-			this->lAttrClass->Size = System::Drawing::Size(182, 23);
+			this->lAttrClass->Size = System::Drawing::Size(195, 23);
 			this->lAttrClass->TabIndex = 114;
-			this->lAttrClass->Text = L"Atributos Categóricos";
+			this->lAttrClass->Text = L"Attributes (Categorical)";
 			this->lAttrClass->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->lAttrClass->Visible = false;
+			// 
+			// tLUT
+			// 
+			this->tLUT->ForeColor = System::Drawing::Color::Black;
+			this->tLUT->Location = System::Drawing::Point(12, 154);
+			this->tLUT->Name = L"tLUT";
+			this->tLUT->Size = System::Drawing::Size(161, 20);
+			this->tLUT->TabIndex = 116;
+			this->tLUT->Visible = false;
+			// 
+			// lvLUT
+			// 
+			this->lvLUT->Location = System::Drawing::Point(12, 154);
+			this->lvLUT->MultiSelect = false;
+			this->lvLUT->Name = L"lvLUT";
+			this->lvLUT->Size = System::Drawing::Size(171, 329);
+			this->lvLUT->TabIndex = 115;
+			this->lvLUT->UseCompatibleStateImageBehavior = false;
+			this->lvLUT->SelectedIndexChanged += gcnew System::EventHandler(this, &P_MaxEntLike::lvLUT_SelectedIndexChanged);
+			// 
+			// bAddBetas
+			// 
+			this->bAddBetas->Location = System::Drawing::Point(308, 500);
+			this->bAddBetas->Name = L"bAddBetas";
+			this->bAddBetas->Size = System::Drawing::Size(75, 23);
+			this->bAddBetas->TabIndex = 117;
+			this->bAddBetas->Text = L"Adicionar";
+			this->bAddBetas->UseVisualStyleBackColor = true;
+			this->bAddBetas->Visible = false;
+			this->bAddBetas->Click += gcnew System::EventHandler(this, &P_MaxEntLike::bAddBetas_Click);
 			// 
 			// P_MaxEntLike
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->bAddBetas);
+			this->Controls->Add(this->tLUT);
+			this->Controls->Add(this->lvLUT);
 			this->Controls->Add(this->lAttrClass);
 			this->Controls->Add(this->dgAttrClass);
 			this->Controls->Add(this->tUsePerc);
@@ -187,6 +231,7 @@ namespace LuccME {
 			this->Controls->Add(this->lAttrPerc);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"P_MaxEntLike";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"MaxEnt Like";
 			this->Shown += gcnew System::EventHandler(this, &P_MaxEntLike::P_MaxEntLike_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
@@ -199,5 +244,10 @@ namespace LuccME {
 #pragma endregion
 	private: System::Void textBox_Enter(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void P_MaxEntLike_Shown(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bAddBetas_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void setData(String^ dataSource); 
+	private: System::Void initializeForm();
 };
 }

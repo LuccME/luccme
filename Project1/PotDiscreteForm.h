@@ -21,6 +21,7 @@ namespace LuccME {
 		String^ gSPot = "";
 		String^ gSNSR = "";
 		String^ gSNSRTitle = "";
+	private: System::Windows::Forms::Button^  bMaxEntLike;
 
 	public:
 		cReturnPotential^ lReturn;
@@ -73,6 +74,7 @@ namespace LuccME {
 			this->bInverseDistanceRule = (gcnew System::Windows::Forms::Button());
 			this->bLogisticRegression = (gcnew System::Windows::Forms::Button());
 			this->bNALR = (gcnew System::Windows::Forms::Button());
+			this->bMaxEntLike = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -88,7 +90,7 @@ namespace LuccME {
 			// 
 			// bNeighSimpleRule
 			// 
-			this->bNeighSimpleRule->Location = System::Drawing::Point(154, 180);
+			this->bNeighSimpleRule->Location = System::Drawing::Point(43, 226);
 			this->bNeighSimpleRule->Name = L"bNeighSimpleRule";
 			this->bNeighSimpleRule->Size = System::Drawing::Size(185, 39);
 			this->bNeighSimpleRule->TabIndex = 85;
@@ -98,7 +100,7 @@ namespace LuccME {
 			// 
 			// bNeighInverseDistanceRule
 			// 
-			this->bNeighInverseDistanceRule->Location = System::Drawing::Point(154, 245);
+			this->bNeighInverseDistanceRule->Location = System::Drawing::Point(43, 317);
 			this->bNeighInverseDistanceRule->Name = L"bNeighInverseDistanceRule";
 			this->bNeighInverseDistanceRule->Size = System::Drawing::Size(185, 39);
 			this->bNeighInverseDistanceRule->TabIndex = 86;
@@ -108,7 +110,7 @@ namespace LuccME {
 			// 
 			// bInverseDistanceRule
 			// 
-			this->bInverseDistanceRule->Location = System::Drawing::Point(154, 310);
+			this->bInverseDistanceRule->Location = System::Drawing::Point(43, 408);
 			this->bInverseDistanceRule->Name = L"bInverseDistanceRule";
 			this->bInverseDistanceRule->Size = System::Drawing::Size(185, 39);
 			this->bInverseDistanceRule->TabIndex = 87;
@@ -118,7 +120,7 @@ namespace LuccME {
 			// 
 			// bLogisticRegression
 			// 
-			this->bLogisticRegression->Location = System::Drawing::Point(154, 375);
+			this->bLogisticRegression->Location = System::Drawing::Point(251, 226);
 			this->bLogisticRegression->Name = L"bLogisticRegression";
 			this->bLogisticRegression->Size = System::Drawing::Size(185, 39);
 			this->bLogisticRegression->TabIndex = 88;
@@ -128,7 +130,7 @@ namespace LuccME {
 			// 
 			// bNALR
 			// 
-			this->bNALR->Location = System::Drawing::Point(154, 440);
+			this->bNALR->Location = System::Drawing::Point(251, 317);
 			this->bNALR->Name = L"bNALR";
 			this->bNALR->Size = System::Drawing::Size(185, 39);
 			this->bNALR->TabIndex = 89;
@@ -136,12 +138,23 @@ namespace LuccME {
 			this->bNALR->UseVisualStyleBackColor = true;
 			this->bNALR->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bNALR_Click);
 			// 
+			// bMaxEntLike
+			// 
+			this->bMaxEntLike->Location = System::Drawing::Point(251, 408);
+			this->bMaxEntLike->Name = L"bMaxEntLike";
+			this->bMaxEntLike->Size = System::Drawing::Size(185, 39);
+			this->bMaxEntLike->TabIndex = 95;
+			this->bMaxEntLike->Text = L"MaxEnt Like";
+			this->bMaxEntLike->UseVisualStyleBackColor = true;
+			this->bMaxEntLike->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bMaxEntLike_Click);
+			// 
 			// PotDiscreteForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->bMaxEntLike);
 			this->Controls->Add(this->bNALR);
 			this->Controls->Add(this->bLogisticRegression);
 			this->Controls->Add(this->bInverseDistanceRule);
@@ -163,5 +176,6 @@ namespace LuccME {
 	private: System::Void bLogisticRegression_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bNALR_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void PotDiscreteForm_Shown(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

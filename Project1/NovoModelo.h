@@ -17,7 +17,6 @@ namespace LuccME {
 	public ref class NovoModelo : public System::Windows::Forms::Form
 	{
 	private: 
-		System::Windows::Forms::TextBox^  tbSelectedBatabase;
 		String^ gSScenST = "";
 		String^ gSScenSTTitle = "";
 		String^ gSScenName = "";
@@ -121,8 +120,7 @@ namespace LuccME {
 		bool runnable = false;
 		bool access = false;
 		bool lOpen = false;
-		//int gNumDiscPotComp = 5;
-		//int gNumDiscAllocComp = 2;
+
 		int gDemandComponent = 0;
 		int gPotentialComponent = 0;
 		int gAllocationComponent = 0;
@@ -143,7 +141,7 @@ namespace LuccME {
 		String^ gAllocationLUT = "";
 		String^ gAttrLUT = "";
 		String^ lLanguage;
-		TabPage^ validation = gcnew TabPage();
+		
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
 		//[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
@@ -164,6 +162,32 @@ namespace LuccME {
 		//[16] = tbPotential->Lines[0]->ToString();
 		//[17] = tbAllocation->Lines[0]->ToString();
 
+	public:
+		int lReturn;
+		NovoModelo(String^ pLanguage, bool pOpen, int pReturn)
+		{
+			InitializeComponent();
+			lLanguage = pLanguage;
+			lOpen = pOpen;
+			lReturn = pReturn;
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+
+	protected:
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		~NovoModelo()
+		{
+			if (components)
+			{
+				delete components;
+			}
+		}
+
+	private: System::Windows::Forms::TextBox^  tbSelectedBatabase;
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;
 	private: System::Windows::Forms::Button^  bPotDiscrete;
@@ -225,34 +249,6 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lThemeHelp;
 	private: System::Windows::Forms::CheckBox^  cValidationSave;
 	private: System::Windows::Forms::Label^  lRangeHelp;
-
-
-
-	public:
-		int lReturn;
-		NovoModelo(String^ pLanguage, bool pOpen, int pReturn)
-		{
-			InitializeComponent();
-			lLanguage = pLanguage;
-			lOpen = pOpen;
-			lReturn = pReturn;
-			//
-			//TODO: Add the constructor code here
-			//
-		}
-
-	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		~NovoModelo()
-		{
-			if (components)
-			{
-				delete components;
-			}
-		}
-	
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  arquivoToolStripMenuItem;
@@ -1798,5 +1794,6 @@ namespace LuccME {
 	private: System::Void showReturnDistanceRule(String^ componentName); 
 	private: System::Void showReturnLogisticRegression();
 	private: System::Void showReturnNeighAttractionLogisticRegression();
+	private: System::Void showReturnMaxEntLike();
 	};
 }

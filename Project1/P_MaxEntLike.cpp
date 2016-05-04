@@ -86,28 +86,13 @@ System::Void LuccME::P_MaxEntLike::P_MaxEntLike_Shown(System::Object^  sender, S
 
 System::Void LuccME::P_MaxEntLike::bSalvar_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	bool check = true;
-
 	lReturn->Return = "";
 
-	if (tUsePerc->Text == "")
-	{
-		MessageBox::Show(gSEmptyUsePerc, gSEmptyUsePercTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
-		check = false;
-	}
-	else if (dgAttrPerc->Rows->Count == 1 && dgAttrClass->Rows->Count == 1)
-	{
-		MessageBox::Show(gSEmptyDG, gSEmptyDGTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
-		check = false;
-	}
-
-	if (check) {
-		for (int i = 0; i < lTempAttr->Length; i++) {
-			if (lTempAttr[i] == nullptr) {
-				break;
-			}
-			lReturn->Return += lTempAttr[i] + "#";
+	for (int i = 0; i < lTempAttr->Length; i++) {
+		if (lTempAttr[i] == nullptr) {
+			break;
 		}
+		lReturn->Return += lTempAttr[i] + "#";
 	}
 	
 	this->Close();
@@ -115,55 +100,65 @@ System::Void LuccME::P_MaxEntLike::bSalvar_Click(System::Object^  sender, System
 
 System::Void LuccME::P_MaxEntLike::bAddBetas_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		if (lvLUT->Items[i]->Selected == true) {
-			lTempAttr[i] = "";
+	bool check = true;
 
-			lTempAttr[i] += tUsePerc->Text + ";";
-
-			for (int j = 0; j < dgAttrPerc->Rows->Count; j++) {
-				if (dgAttrPerc->Rows[j]->Cells[0]->Value != nullptr) {
-					lTempAttr[i] += "\"";
-					lTempAttr[i] += dgAttrPerc->Rows[j]->Cells[0]->Value;
-					if (dgAttrPerc->Rows[j + 1]->Cells[0]->Value != nullptr) {
-						lTempAttr[i] += "\",";
-					}
-					else {
-						lTempAttr[i] += "\"";
-					}
-				}
-			}
-
-			lTempAttr[i] += "*";
-
-			for (int j = 0; j < dgAttrClass->Rows->Count; j++) {
-				if (dgAttrClass->Rows[j]->Cells[0]->Value != nullptr) {
-					lTempAttr[i] += "\"";
-					lTempAttr[i] += dgAttrClass->Rows[j]->Cells[0]->Value;
-					if (dgAttrClass->Rows[j + 1]->Cells[0]->Value != nullptr) {
-						lTempAttr[i] += "\",";
-					}
-					else {
-						lTempAttr[i] += "\"";
-					}
-				}
-			}
-
-			lTempAttr[i] += "*";
-			lvLUT->Items[i]->SubItems->Add("OK");
-		}
+	if (tUsePerc->Text == "")
+	{
+		MessageBox::Show(gSEmptyUsePerc, gSEmptyUsePercTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		check = false;
 	}
-	
-	lvLUT->Visible = true;
-	bSalvar->Visible = true;
-	tLUT->Visible = false;
-	lUsePerc->Visible = false;
-	tUsePerc->Visible = false;
-	lAttrPerc->Visible = false;
-	dgAttrPerc->Visible = false;
-	lAttrClass->Visible = false;
-	dgAttrClass->Visible = false;
-	bAddBetas->Visible = false;
+
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			if (lvLUT->Items[i]->Selected == true) {
+				lTempAttr[i] = "";
+
+				lTempAttr[i] += tUsePerc->Text + ";";
+
+				for (int j = 0; j < dgAttrPerc->Rows->Count; j++) {
+					if (dgAttrPerc->Rows[j]->Cells[0]->Value != nullptr) {
+						lTempAttr[i] += "\"";
+						lTempAttr[i] += dgAttrPerc->Rows[j]->Cells[0]->Value;
+						if (dgAttrPerc->Rows[j + 1]->Cells[0]->Value != nullptr) {
+							lTempAttr[i] += "\",";
+						}
+						else {
+							lTempAttr[i] += "\"";
+						}
+					}
+				}
+
+				lTempAttr[i] += ";";
+
+				for (int j = 0; j < dgAttrClass->Rows->Count; j++) {
+					if (dgAttrClass->Rows[j]->Cells[0]->Value != nullptr) {
+						lTempAttr[i] += "\"";
+						lTempAttr[i] += dgAttrClass->Rows[j]->Cells[0]->Value;
+						if (dgAttrClass->Rows[j + 1]->Cells[0]->Value != nullptr) {
+							lTempAttr[i] += "\",";
+						}
+						else {
+							lTempAttr[i] += "\"";
+						}
+					}
+				}
+
+				lvLUT->Items[i]->SubItems->Add("OK");
+				lvLUT->Items[i]->Selected = false;
+			}
+		}
+
+		tLUT->Visible = false;
+		lUsePerc->Visible = false;
+		tUsePerc->Visible = false;
+		lAttrPerc->Visible = false;
+		dgAttrPerc->Visible = false;
+		lAttrClass->Visible = false;
+		dgAttrClass->Visible = false;
+		bAddBetas->Visible = false;
+		lvLUT->Visible = true;
+		bSalvar->Visible = true;
+	}
 }
 
 System::Void LuccME::P_MaxEntLike::lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
@@ -210,7 +205,7 @@ System::Void LuccME::P_MaxEntLike::setData(String^ dataSource)
 	}
 
 	j++;
-	while (dataSource[j] != '*')
+	while (dataSource[j] != ';')
 	{
 		if (dataSource[j] != ',') {
 			if (dataSource[j] != '\"') {
@@ -232,7 +227,7 @@ System::Void LuccME::P_MaxEntLike::setData(String^ dataSource)
 	j++;
 	tempAttr = "";
 
-	while (dataSource[j] != '*')
+	while (j < dataSource->Length)
 	{
 		if (dataSource[j] != ',') {
 			if (dataSource[j] != '\"') {

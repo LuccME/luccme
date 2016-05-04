@@ -812,7 +812,7 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 {
 	bool check = true;
 
-	if (gAllocationComponent != 0 && gAllocationComponent < 3) {
+	if (gAllocationComponent != NONE && gAllocationComponent <= NUMDISCALLOCCOMP) {
 		if (MessageBox::Show(gSAlloDisc, gSPotContTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -846,10 +846,6 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		gPotentialRegression = lPotential->Regression;
 		gPotentialLUT = gLandUseTypes;
 		
-		int count = countCaracter(gPotential, '*');
-		int lineCount = 0;
-		array<String^>^ lines3 = gcnew array<String^>(count + 1);
-
 		switch (lPotential->Component)
 		{
 		case LINEARREGRESSION:
@@ -867,6 +863,12 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		case SPATIALLAGLINEARROADS:
 			if (gPotential != "") {
 				showReturnSpatialLagLinearRoads();
+			}
+			break;
+
+		case CMAXENTLIKE:
+			if (gPotential != "") {
+				showReturnMaxEntLike();
 			}
 			break;
 		}
@@ -1958,6 +1960,127 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 									}
 								}
 
+							}
+						}
+
+						sw->WriteLine("\t\t}");
+						sw->WriteLine("\t}");
+						sw->WriteLine("}\n");
+						break;
+
+					case DMAXENTLIKE:
+					case CMAXENTLIKE:
+						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
+						sw->WriteLine("{");
+						sw->WriteLine("\tpotentialData =");
+						sw->WriteLine("\t{");
+						sw->WriteLine("\t\t-- Region 1");
+						sw->WriteLine("\t\t{");
+
+						for (int i = 1; i < tbPotential->Lines->Length; i++) {
+							if (tbPotential->Lines[i]->ToString() != "") {
+								sw->WriteLine("\t\t\t-- " + tempLUTs[i - 1]);
+								sw->WriteLine("\t\t\t{");
+
+								aux = tbPotential->Lines[i]->ToString()->Replace("attributesPerc", "$attributesPerc");
+								aux = aux->Replace(", attributesClass", "attributesClass");
+
+								int j = 0;
+								String^ auxAttributes = "";
+
+								//cellUsePercentage
+								while (aux[j] != '$') {
+									auxAttributes += aux[j];
+									j++;
+								}
+
+								sw->WriteLine("\t\t\t\t" + auxAttributes);
+								sw->WriteLine("");
+								auxAttributes = "";
+								j++;
+
+
+								//attributesPerc
+								while (aux[j] != '{') {
+									auxAttributes += aux[j];
+									j++;
+								}
+
+								sw->WriteLine("\t\t\t\t" + auxAttributes);
+								sw->WriteLine("\t\t\t\t{");
+								auxAttributes = "";
+								j++;
+
+								while (aux[j] != '}') {
+									if (aux[j] != ',') {
+										auxAttributes += aux[j];
+									}
+									else {
+										if (aux[j + 1] != '}') {
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes + ",");
+										}
+										else {
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+										}
+										auxAttributes = "";
+									}
+									j++;
+								}
+
+								if (auxAttributes != "") {
+									sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+								}
+
+								sw->WriteLine("\t\t\t\t},");
+								sw->WriteLine("");
+								auxAttributes = "";
+								j++;
+
+								//attributesClass
+								while (aux[j] != '{') {
+									auxAttributes += aux[j];
+									j++;
+								}
+
+								sw->WriteLine("\t\t\t\t" + auxAttributes);
+								sw->WriteLine("\t\t\t\t{");
+								auxAttributes = "";
+								j++;
+
+								while (aux[j] != '}') {
+									if (aux[j] != ',') {
+										auxAttributes += aux[j];
+									}
+									else {
+										if (aux[j + 1] != '}') {
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes + ",");
+										}
+										else {
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+										}
+										auxAttributes = "";
+									}
+									j++;
+								}
+
+								if (auxAttributes != "") {
+									sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+								}
+
+								if (aux[j + 1] != '}') {
+									sw->WriteLine("\t\t\t\t},");
+								} else {
+									sw->WriteLine("\t\t\t\t}");
+								}
+								auxAttributes = "";
+								j++;
+
+								if (i + 1 < tbPotential->Lines->Length) {
+									sw->WriteLine("\t\t\t},");
+									sw->WriteLine("");
+								} else {
+									sw->WriteLine("\t\t\t}");
+								}
 							}
 						}
 
@@ -6101,12 +6224,50 @@ System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
 
 System::Void LuccME::NovoModelo::showReturnMaxEntLike()
 {
-	int count = countCaracter(gPotential, '*');
+	int count = countCaracter(gPotential, '#');
 	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "NeighAttractionLogisticRegression";
+	lines[lineCount] = "MaximumEntropyLike";
+
+	lineCount = 1;
+	int change = 0;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != ';') {
+				lines[lineCount] += gPotential[i];
+			}
+			else {
+				switch (change)
+				{
+				case 0:
+					lines[lineCount] += "$";
+					change++;
+					break;
+
+				case 1:
+					lines[lineCount] += "@";
+					change++;
+					break;
+
+				default:
+					lines[lineCount] += gPotential[i];
+					break;
+				}
+			}
+		}
+		else {
+			lines[lineCount] = String::Concat("cellUsePercentage=", lines[lineCount]);
+			lines[lineCount] = lines[lineCount]->Replace("$", ",attributesPerc={");
+			lines[lineCount] = lines[lineCount]->Replace("@", "},attributesClass={");
+			lines[lineCount] = lines[lineCount]->Replace("=", " = ");
+			lines[lineCount] = lines[lineCount]->Replace(",", ", ");
+			lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
+			lineCount++;
+			change = 0;
+		}
+	}
+	tbPotential->Lines = lines;
 }

@@ -800,7 +800,7 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 
 		case DMAXENTLIKE:
 			if (gPotential != "") {
-				showReturnMaxEntLike();
+				showReturnMaxEntLike("MaximumEntropyLikeD");
 			}
 			break;
 		}
@@ -868,7 +868,7 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 
 		case CMAXENTLIKE:
 			if (gPotential != "") {
-				showReturnMaxEntLike();
+				showReturnMaxEntLike("MaximumEntropyLikeC");
 			}
 			break;
 		}
@@ -2017,10 +2017,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 									}
 									else {
 										if (aux[j + 1] != '}') {
-											sw->WriteLine("\t\t\t\t\t" + auxAttributes + ",");
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes->Replace(" \"","\"") + ",");
 										}
 										else {
-											sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes->Replace(" \"", "\""));
 										}
 										auxAttributes = "";
 									}
@@ -2028,7 +2028,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 								}
 
 								if (auxAttributes != "") {
-									sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+									sw->WriteLine("\t\t\t\t\t" + auxAttributes->Replace(" \"", "\""));
 								}
 
 								sw->WriteLine("\t\t\t\t},");
@@ -2053,10 +2053,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 									}
 									else {
 										if (aux[j + 1] != '}') {
-											sw->WriteLine("\t\t\t\t\t" + auxAttributes + ",");
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes->Replace(" \"", "\"") + ",");
 										}
 										else {
-											sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+											sw->WriteLine("\t\t\t\t\t" + auxAttributes->Replace(" \"", "\""));
 										}
 										auxAttributes = "";
 									}
@@ -2064,7 +2064,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 								}
 
 								if (auxAttributes != "") {
-									sw->WriteLine("\t\t\t\t\t" + auxAttributes);
+									sw->WriteLine("\t\t\t\t\t" + auxAttributes->Replace(" \"", "\""));
 								}
 
 								if (aux[j + 1] != '}') {
@@ -3827,7 +3827,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 				
-				//Countiuous Potential Components
+				//Contiuous Potential Components
 				if (tempLine == "LinearRegression") {
 					gPotential = "";
 					gPotentialComponent = LINEARREGRESSION;
@@ -4119,233 +4119,76 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "SpatialLagLinearRoads") {
+				if (tempLine == "MaximumEntropyLikeD" || tempLine == "MaximumEntropyLikeC") {
 					gPotential = "";
-					gPotentialComponent = SPATIALLAGLINEARROADS;
+					if (tempLine == "MaximumEntropyLikeD") {
+						gPotentialComponent = DMAXENTLIKE;
+					} 	
+					else {
+						gPotentialComponent = CMAXENTLIKE;
+					}
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
 					count += countCaracter(gPotentialLUT, ',');
 
 					line = sw->ReadLine();
-					while (line->Contains("=") != TRUE) { //potentialData
+					while (line->Contains("potentialData") != TRUE) {
 						line = sw->ReadLine();
 					}
 
 					for (int k = 0; k < count - 1; k++) {
 						line = sw->ReadLine();
-						while (line->Contains("isLog") != TRUE) { 
+						while (line->Contains("cellUsePercentage") != TRUE) { 
 							line = sw->ReadLine();
 						}
 
 						line = line->Replace("\n", "");
 						line = line->Replace("\t", "");
 						line = line->Replace(" ", "");
-						line = line->Replace("isLog=", "");
-						line = line->Replace(",", "");
-						if (line == "true") {
-							line = "1;";
-						}
-						else {
-							line = "0;";
-						}
-
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("const") != TRUE) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("const=", "");
+						line = line->Replace("cellUsePercentage=", "");
 						line = line->Replace(",", ";");
+
 						gPotential += line;
 
-						line = sw->ReadLine();
-						while (line->Contains("minReg") != TRUE) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("minReg=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("maxReg") != TRUE) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("maxReg=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("ro") != TRUE) { 
-							line = sw->ReadLine();
-						}
-
-						line = line->Replace("\n", "");
-						line = line->Replace("\t", "");
-						line = line->Replace(" ", "");
-						line = line->Replace("ro=", "");
-						line = line->Replace(",", ";");
-						gPotential += line;
-
-						line = sw->ReadLine();
-						while (line->Contains("betas") != TRUE) { 
-							line = sw->ReadLine();
-						}
-
-						tempLine = "";
+						line = "";
 						while (line->Contains("}") != TRUE) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						String^ tempAux = "";
-						bool enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
-							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
-									i++;
-								}
-							}
-						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + "*";
-				
-						line = sw->ReadLine();
-						while (line->Contains("=") != TRUE) { //roadsModel
-							line = sw->ReadLine();
-						}
-
-						line = sw->ReadLine();
-						while (line->Contains("attrs") != TRUE) {  
-							line = sw->ReadLine();
-						}
-
-						tempLine = "";
-						while (line->Contains("}") != TRUE) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						tempAux = "";
-						enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
-							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
-									i++;
-								}
-							}
-						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + ";";
-
-						line = sw->ReadLine();
-						while (line->Contains("const") != TRUE) { 
-							line = sw->ReadLine();
+							line += sw->ReadLine();
 						}
 
 						line = line->Replace("\n", "");
 						line = line->Replace("\t", "");
 						line = line->Replace(" ", "");
-						line = line->Replace("const=", "");
-						line = line->Replace(",", ";");
+						line = line->Replace("attributesPerc={", "");
+						line = line->Replace("},", ";");
+						
 						gPotential += line;
 
-						line = sw->ReadLine();
-						while (line->Contains("change") != TRUE) { 
-							line = sw->ReadLine();
+
+						line = "";
+						while (line->Contains("}") != TRUE) {
+							line += sw->ReadLine();
 						}
 
 						line = line->Replace("\n", "");
 						line = line->Replace("\t", "");
 						line = line->Replace(" ", "");
-						line = line->Replace("change=", "");
-						line = line->Replace(",", ";");
+						line = line->Replace("attributesClass={", "");
+						line = line->Replace("}", "#");
+
 						gPotential += line;
-
-
-						line = sw->ReadLine();
-						while (line->Contains("betas") != TRUE) { //betas roadmodel
-							line = sw->ReadLine();
-						}
-
-						tempLine = "";
-						while (line->Contains("}") != TRUE) {
-							tempLine += line;
-							line = sw->ReadLine();
-						}
-
-						tempLine += "}";
-						tempLine = tempLine->Replace("\n", "");
-						tempLine = tempLine->Replace("\t", "");
-						tempLine = tempLine->Replace(" ", "");
-
-						tempAux = "";
-						enter = true;
-						for (int i = 0; i < tempLine->Length; i++) {
-							while (tempLine[i] != '{') {
-								if (i == tempLine->Length - 1) {
-									enter = false;
-									break;
-								}
-								i++;
-							}
-							if (enter) {
-								while (tempLine[i] != '}') {
-									tempAux += tempLine[i];
-									i++;
-								}
-							}
-						}
-						tempAux = tempAux->Replace("{", "");
-						gPotential += tempAux + "#";
 					}
-
-					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
 					if (gPotential != "") {
-						showReturnSpatialLagLinearRoads();
+						if (gPotentialComponent == DMAXENTLIKE) {
+							showReturnMaxEntLike("MaximumEntropyLikeD");
+						}
+						else {
+							showReturnMaxEntLike("MaximumEntropyLikeC");
+						}
 					}
 				}
-			
+
 				gParametersValues[16] = tbPotential->Lines[0]->ToString();
 
 				//Allocation
@@ -5981,6 +5824,10 @@ System::Void LuccME::NovoModelo::showReturnSpatialLagLinearRoads()
 	tbPotential->Lines = lines;
 }
 
+
+/*
+This funtion create the visual return on the multiline textbox for the "Distance Rule" components
+*/
 System::Void LuccME::NovoModelo::showReturnDistanceRule(String^ componentName)
 {
 	int count = countCaracter(gPotential, '*');
@@ -6047,6 +5894,9 @@ System::Void LuccME::NovoModelo::showReturnDistanceRule(String^ componentName)
 	tbPotential->Lines = lines;
 }
 
+/*
+This funtion create the visual return on the multiline textbox for the Logistic Regression component
+*/
 System::Void LuccME::NovoModelo::showReturnLogisticRegression()
 {
 	int count = countCaracter(gPotential, '*');
@@ -6129,7 +5979,9 @@ System::Void LuccME::NovoModelo::showReturnLogisticRegression()
 	tbPotential->Lines = lines;
 }
 
-
+/*
+This funtion create the visual return on the multiline textbox for the Neigh Attraction Logistic Regression component
+*/
 System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
 {
 	int count = countCaracter(gPotential, '*');
@@ -6222,14 +6074,17 @@ System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
 	tbPotential->Lines = lines;
 }
 
-System::Void LuccME::NovoModelo::showReturnMaxEntLike()
+/*
+This funtion create the visual return on the multiline textbox for the Maximum Entropy Like component
+*/
+System::Void LuccME::NovoModelo::showReturnMaxEntLike(String^ component)
 {
 	int count = countCaracter(gPotential, '#');
 	int lineCount = 0;
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "MaximumEntropyLike";
+	lines[lineCount] = component;
 
 	lineCount = 1;
 	int change = 0;

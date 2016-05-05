@@ -78,9 +78,6 @@ System::Void LuccME::P_MaxEntLike::P_MaxEntLike_Shown(System::Object^  sender, S
 				rowCount++;
 			}
 		}
-		if (lTempAttr[rowCount] != "") {
-			lvLUT->Items[rowCount]->SubItems->Add("OK");
-		}
 	}
 }
 

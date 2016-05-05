@@ -1794,6 +1794,6 @@ namespace LuccME {
 	private: System::Void showReturnDistanceRule(String^ componentName); 
 	private: System::Void showReturnLogisticRegression();
 	private: System::Void showReturnNeighAttractionLogisticRegression();
-	private: System::Void showReturnMaxEntLike();
+	private: System::Void showReturnMaxEntLike(String^ component);
 	};
 }

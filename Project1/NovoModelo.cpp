@@ -421,6 +421,659 @@ System::Void LuccME::NovoModelo::textBox_Enter(System::Object ^ sender, System::
 	}
 }
 
+/*
+Count a number of a caracter on a String
+*/
+System::Int16 LuccME::NovoModelo::countCaracter(String^ source, char caracter)
+{
+	int count = 0;
+	for (int i = 0; i < source->Length; i++) {
+		if (source[i] == caracter) {
+			count++;
+		}
+	}
+	return count;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the Linear Regression component
+*/
+System::Void LuccME::NovoModelo::showReturnLinearRegression()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "LinearRegression";
+	lineCount = 1;
+	regression = 0;
+	bool first = true;
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				if (gPotential[i] != ';') {
+					lines[lineCount + regression] += gPotential[i];
+				}
+				else {
+					if (first) {
+						lines[lineCount + regression] += "$";
+						first = false;
+					}
+					else {
+						lines[lineCount + regression] += gPotential[i];
+					}
+				}
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+						first = true;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				if (lines[lineCount + j][0] == '0') {
+					lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
+				}
+				else {
+					lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
+				}
+				lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+			}
+			regression = 0;
+			lineCount++;
+			first = true;
+		}
+
+	}
+
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			if (lines[lineCount + j][0] == '0') {
+				lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
+			}
+			else {
+				lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
+			}
+			lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+
+	tbPotential->Lines = lines;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the SpatialLag Regression component
+*/
+System::Void LuccME::NovoModelo::showReturnSpatialLagRegression()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "SpatialLagRegression";
+	lineCount = 1;
+	regression = 0;
+	int change = 0;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				if (gPotential[i] != ';') {
+					lines[lineCount + regression] += gPotential[i];
+				}
+				else {
+					switch (change)
+					{
+					case 0:
+						lines[lineCount + regression] += "$";
+						change++;
+						break;
+
+					case 1:
+						lines[lineCount + regression] += "@";
+						change++;
+						break;
+
+					case 2:
+						lines[lineCount + regression] += "%";
+						change++;
+						break;
+
+					case 3:
+						lines[lineCount + regression] += "&";
+						change++;
+						break;
+					default:
+						lines[lineCount + regression] += gPotential[i];
+						break;
+					}
+				}
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+						change = 0;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				if (lines[lineCount + j][0] == '0') {
+					lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
+				}
+				else {
+					lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
+				}
+				lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",minReg=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("%", ",maxReg=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("&", ",ro=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+				change = 0;
+			}
+			regression = 0;
+			lineCount++;
+		}
+
+	}
+
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			if (lines[lineCount + j][0] == '0') {
+				lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
+			}
+			else {
+				lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
+			}
+			lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",minReg=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("%", ",maxReg=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("&", ",ro=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+
+	tbPotential->Lines = lines;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the SpatialLag Linear Roads component
+*/
+System::Void LuccME::NovoModelo::showReturnSpatialLagLinearRoads()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "SpatialLagLinearRoads";
+	lineCount = 1;
+	int change = 0;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != ';') {
+				lines[lineCount] += gPotential[i];
+			}
+			else {
+				switch (change)
+				{
+				case 0:
+					lines[lineCount] += "$";
+					change++;
+					break;
+
+				case 1:
+					lines[lineCount] += "@";
+					change++;
+					break;
+
+				case 2:
+					lines[lineCount] += "%";
+					change++;
+					break;
+
+				case 3:
+					lines[lineCount] += "&";
+					change++;
+					break;
+
+				case 4:
+					lines[lineCount] += "!";
+					change++;
+					break;
+
+				case 5:
+					lines[lineCount] += "£";
+					change++;
+					break;
+
+				case 6:
+					lines[lineCount] += "¢";
+					change++;
+					break;
+
+				default:
+					lines[lineCount] += gPotential[i];
+					break;
+				}
+			}
+		}
+		else {
+			if (lines[lineCount][0] == '0') {
+				lines[lineCount] = String::Concat("false", lines[lineCount]->Substring(1));
+			}
+			else {
+				lines[lineCount] = String::Concat("true", lines[lineCount]->Substring(1));
+			}
+			lines[lineCount] = String::Concat("isLog = ", lines[lineCount]);
+			lines[lineCount] = lines[lineCount]->Replace("$", ",const=");
+			lines[lineCount] = lines[lineCount]->Replace("@", ",minReg=");
+			lines[lineCount] = lines[lineCount]->Replace("%", ",maxReg=");
+			lines[lineCount] = lines[lineCount]->Replace("&", ",ro=");
+			lines[lineCount] = lines[lineCount]->Replace("!", ",betas = {");
+			lines[lineCount] = lines[lineCount]->Replace("*", "},roadsModel={ attrs={");;
+			lines[lineCount] = lines[lineCount]->Replace("£", "},const=");
+			lines[lineCount] = lines[lineCount]->Replace("¢", ",change=");
+			lines[lineCount] = lines[lineCount]->Replace(";", ",betas={");
+			lines[lineCount] = lines[lineCount]->Replace("=", " = ");
+			lines[lineCount] = lines[lineCount]->Replace(",", ", ");
+			lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
+			lineCount++;
+			change = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		if (lines[lineCount][0] == '0') {
+			lines[lineCount] = String::Concat("false", lines[lineCount]->Substring(1));
+		}
+		else {
+			lines[lineCount] = String::Concat("true", lines[lineCount]->Substring(1));
+		}
+		lines[lineCount] = String::Concat("isLog = ", lines[lineCount]);
+		lines[lineCount] = lines[lineCount]->Replace("$", ",const=");
+		lines[lineCount] = lines[lineCount]->Replace("@", ",minReg=");
+		lines[lineCount] = lines[lineCount]->Replace("%", ",maxReg=");
+		lines[lineCount] = lines[lineCount]->Replace("&", ",ro=");
+		lines[lineCount] = lines[lineCount]->Replace("!", ",betas = {");
+		lines[lineCount] = lines[lineCount]->Replace("*", "},roadsModel={ attrs={");;
+		lines[lineCount] = lines[lineCount]->Replace("£", "},const=");
+		lines[lineCount] = lines[lineCount]->Replace("¢", ",change=");
+		lines[lineCount] = lines[lineCount]->Replace(";", ",betas={");
+		lines[lineCount] = lines[lineCount]->Replace("=", " = ");
+		lines[lineCount] = lines[lineCount]->Replace(",", ", ");
+		lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
+	}
+	tbPotential->Lines = lines;
+}
+
+
+/*
+This funtion create the visual return on the multiline textbox for the "Distance Rule" components
+*/
+System::Void LuccME::NovoModelo::showReturnDistanceRule(String^ componentName)
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = componentName;
+
+	lineCount = 1;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				lines[lineCount + regression] += gPotential[i];
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+			}
+			lineCount++;
+			regression = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+	tbPotential->Lines = lines;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the Logistic Regression component
+*/
+System::Void LuccME::NovoModelo::showReturnLogisticRegression()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "LogisticRegression";
+
+	lineCount = 1;
+	bool first = true;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				if (gPotential[i] != ';') {
+					lines[lineCount + regression] += gPotential[i];
+				}
+				else {
+					if (first) {
+						lines[lineCount + regression] += "$";
+						first = false;
+					}
+					else {
+						lines[lineCount + regression] += gPotential[i];
+					}
+				}
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+						first = true;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+			}
+			lineCount++;
+			first = true;
+			regression = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+	tbPotential->Lines = lines;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the Neigh Attraction Logistic Regression component
+*/
+System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
+{
+	int count = countCaracter(gPotential, '*');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = "NeighAttractionLogisticRegression";
+
+	lineCount = 1;
+
+	bool first = true;
+	bool second = true;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != '*') {
+				if (gPotential[i] != ';') {
+					lines[lineCount + regression] += gPotential[i];
+				}
+				else {
+					if (first) {
+						lines[lineCount + regression] += "$";
+						first = false;
+					}
+					else if (second) {
+						lines[lineCount + regression] += "@";
+						second = false;
+					}
+					else {
+						lines[lineCount + regression] += gPotential[i];
+					}
+				}
+			}
+			else {
+				if ((i + 1) <  gPotential->Length) {
+					if (gPotential[i + 1] != '#') {
+						regression += nLut;
+						first = true;
+						second = true;
+					}
+				}
+			}
+		}
+		else {
+			int controlLoop;
+			if (gPotentialRegression == 1) {
+				controlLoop = 1;
+			}
+			else {
+				controlLoop = gPotentialRegression * nLut;
+			}
+
+			for (int j = 0; j < controlLoop; j += nLut) {
+				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",percNeighborsUse=");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+			}
+			lineCount++;
+			first = true;
+			second = true;
+			regression = 0;
+		}
+	}
+	if (lines[lineCount] != "") {
+		int controlLoop;
+		if (gPotentialRegression == 1) {
+			controlLoop = 1;
+		}
+		else {
+			controlLoop = gPotentialRegression * nLut;
+		}
+
+		for (int j = 0; j < controlLoop; j += nLut) {
+			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",percNeighborsUse=");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+		}
+	}
+	tbPotential->Lines = lines;
+}
+
+/*
+This funtion create the visual return on the multiline textbox for the Maximum Entropy Like component
+*/
+System::Void LuccME::NovoModelo::showReturnMaxEntLike(String^ component)
+{
+	int count = countCaracter(gPotential, '#');
+	int lineCount = 0;
+
+	array<String^>^ lines = gcnew array<String^>(count + 1);
+
+	lines[lineCount] = component;
+
+	lineCount = 1;
+	int change = 0;
+
+	for (int i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '#') {
+			if (gPotential[i] != ';') {
+				lines[lineCount] += gPotential[i];
+			}
+			else {
+				switch (change)
+				{
+				case 0:
+					lines[lineCount] += "$";
+					change++;
+					break;
+
+				case 1:
+					lines[lineCount] += "@";
+					change++;
+					break;
+
+				default:
+					lines[lineCount] += gPotential[i];
+					break;
+				}
+			}
+		}
+		else {
+			lines[lineCount] = String::Concat("cellUsePercentage=", lines[lineCount]);
+			lines[lineCount] = lines[lineCount]->Replace("$", ",attributesPerc={");
+			lines[lineCount] = lines[lineCount]->Replace("@", "},attributesClass={");
+			lines[lineCount] = lines[lineCount]->Replace("=", " = ");
+			lines[lineCount] = lines[lineCount]->Replace(",", ", ");
+			lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
+			lineCount++;
+			change = 0;
+		}
+	}
+	tbPotential->Lines = lines;
+}
+
 System::Void LuccME::NovoModelo::bSelectFolder_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	//Open the dialog to select a folder and return the path
@@ -1432,12 +2085,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		checked = false;
 	}
 
-	else if (gPotentialComponent > NUMDISCPOTCOMP && (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
+	else if (gPotentialComponent > NUMDISCPOTCOMP && (gAllocationComponent > NONE && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 		MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
-	else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) && gAllocationComponent > NUMDISCALLOCCOMP) {
+	else if ((gPotentialComponent > NONE && gPotentialComponent <= NUMDISCPOTCOMP) && gAllocationComponent > NUMDISCALLOCCOMP) {
 		MessageBox::Show(gSPotDiscAlocCont, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
@@ -1765,6 +2418,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
 						sw->WriteLine("\t{");
+						if (gPotentialRegression > 1) {
+							sw->WriteLine("\t\tregionAttr = \"region\",");
+							sw->WriteLine("");
+						}
 						for (int k = 1; k < tbPotential->Lines->Length; k += nLut) {
 							sw->WriteLine("\t\t-- Region " + activeRegion.ToString());
 							sw->WriteLine("\t\t{");
@@ -2219,7 +2876,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				}
 
 				if (mainFile && subFile) {
-					if (lSelectedFolder->Text->Length > 4) {
+					if (lSelectedFolder->Text->Length > ROOTDIR) {
 						MessageBox::Show(gSSuccess + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_main.lua" +
 							"\n" + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_submodel.lua", gSSuccessTitle,
 							MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -2273,7 +2930,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					this->Close();
 				}
 				else {
-					System::Threading::Thread::Sleep(1000);
+					System::Threading::Thread::Sleep(SECOND);
 					if (File::Exists(path))
 					{
 						File::Delete(path);
@@ -2290,7 +2947,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					this->Close();
 				}
 				else {
-					System::Threading::Thread::Sleep(1000);
+					System::Threading::Thread::Sleep(SECOND);
 					if (File::Exists(path))
 					{
 						File::Delete(path);
@@ -2307,7 +2964,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					this->Close();
 				}
 				else {
-					System::Threading::Thread::Sleep(1000);
+					System::Threading::Thread::Sleep(SECOND);
 					if (File::Exists(path))
 					{
 						File::Delete(path);
@@ -3203,11 +3860,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gDemand = tempLine;
 
 					if (gDemand != "") {
-						int count = 0;
-
-						count += countCaracter(gDemand, ',');
-
 						array<String^>^ lines = gcnew array<String^>(4);
+
 						lines[0] = "ComputeInputTwoDateMaps";
 						lines[1] = "finalYearForInterpolation = " + gDemandFinalYear;
 						lines[2] = gDemandLUT;
@@ -5474,655 +6128,7 @@ System::Void LuccME::NovoModelo::tAttributeInitValidation_Leave(System::Object^ 
 	}
 }
 
-/*
-Count a number of a caracter on a String
-*/
-System::Int16 LuccME::NovoModelo::countCaracter(String^ source, char caracter)
+System::Void LuccME::NovoModelo::tModelName_Leave(System::Object^  sender, System::EventArgs^  e)
 {
-	int count = 0;
-	for (int i = 0; i < source->Length; i++) {
-		if (source[i] == caracter) {
-			count++;
-		}
-	}
-	return count;
-}
-
-/*
-This funtion create the visual return on the multiline textbox for the Linear Regression component
-*/
-System::Void LuccME::NovoModelo::showReturnLinearRegression()
-{
-	int count = countCaracter(gPotential, '*');
-	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = "LinearRegression";
-	lineCount = 1;
-	regression = 0;
-	bool first = true;
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != '*') {
-				if (gPotential[i] != ';') {
-					lines[lineCount + regression] += gPotential[i];
-				}
-				else {
-					if (first) {
-						lines[lineCount + regression] += "$";
-						first = false;
-					}
-					else {
-						lines[lineCount + regression] += gPotential[i];
-					}
-				}
-			}
-			else {
-				if ((i + 1) <  gPotential->Length) {
-					if (gPotential[i + 1] != '#') {
-						regression += nLut;
-						first = true;
-					}
-				}
-			}
-		}
-		else {
-			int controlLoop;
-			if (gPotentialRegression == 1) {
-				controlLoop = 1;
-			}
-			else {
-				controlLoop = gPotentialRegression * nLut;
-			}
-
-			for (int j = 0; j < controlLoop; j += nLut) {
-				if (lines[lineCount + j][0] == '0') {
-					lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
-				}
-				else {
-					lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
-				}
-				lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
-				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-			}
-			regression = 0;
-			lineCount++;
-			first = true;
-		}
-
-	}
-
-	if (lines[lineCount] != "") {
-		int controlLoop;
-		if (gPotentialRegression == 1) {
-			controlLoop = 1;
-		}
-		else {
-			controlLoop = gPotentialRegression * nLut;
-		}
-
-		for (int j = 0; j < controlLoop; j += nLut) {
-			if (lines[lineCount + j][0] == '0') {
-				lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
-			}
-			else {
-				lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
-			}
-			lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
-			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-		}
-	}
-
-	tbPotential->Lines = lines;
-}
-
-/*
-This funtion create the visual return on the multiline textbox for the SpatialLag Regression component
-*/
-System::Void LuccME::NovoModelo::showReturnSpatialLagRegression()
-{
-	int count = countCaracter(gPotential, '*');
-	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = "SpatialLagRegression";
-	lineCount = 1;
-	regression = 0;
-	int change = 0;
-
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != '*') {
-				if (gPotential[i] != ';') {
-					lines[lineCount + regression] += gPotential[i];
-				}
-				else {
-					switch (change)
-					{
-					case 0:
-						lines[lineCount + regression] += "$";
-						change++;
-						break;
-
-					case 1:
-						lines[lineCount + regression] += "@";
-						change++;
-						break;
-
-					case 2:
-						lines[lineCount + regression] += "%";
-						change++;
-						break;
-
-					case 3:
-						lines[lineCount + regression] += "&";
-						change++;
-						break;
-					default:
-						lines[lineCount + regression] += gPotential[i];
-						break;
-					}
-				}
-			}
-			else {
-				if ((i + 1) <  gPotential->Length) {
-					if (gPotential[i + 1] != '#') {
-						regression += nLut;
-						change = 0;
-					}
-				}
-			}
-		}
-		else {
-			int controlLoop;
-			if (gPotentialRegression == 1) {
-				controlLoop = 1;
-			}
-			else {
-				controlLoop = gPotentialRegression * nLut;
-			}
-
-			for (int j = 0; j < controlLoop; j += nLut) {
-				if (lines[lineCount + j][0] == '0') {
-					lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
-				}
-				else {
-					lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
-				}
-				lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
-				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",minReg=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("%", ",maxReg=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("&", ",ro=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-				change = 0;
-			}
-			regression = 0;
-			lineCount++;
-		}
-
-	}
-
-	if (lines[lineCount] != "") {
-		int controlLoop;
-		if (gPotentialRegression == 1) {
-			controlLoop = 1;
-		}
-		else {
-			controlLoop = gPotentialRegression * nLut;
-		}
-
-		for (int j = 0; j < controlLoop; j += nLut) {
-			if (lines[lineCount + j][0] == '0') {
-				lines[lineCount + j] = String::Concat("false", lines[lineCount + j]->Substring(1));
-			}
-			else {
-				lines[lineCount + j] = String::Concat("true", lines[lineCount + j]->Substring(1));
-			}
-			lines[lineCount + j] = String::Concat("isLog=", lines[lineCount + j]);
-			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",const=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",minReg=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("%", ",maxReg=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("&", ",ro=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-		}
-	}
-
-	tbPotential->Lines = lines;
-}
-
-/*
-This funtion create the visual return on the multiline textbox for the SpatialLag Linear Roads component
-*/
-System::Void LuccME::NovoModelo::showReturnSpatialLagLinearRoads()
-{
-	int count = countCaracter(gPotential, '*');
-	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = "SpatialLagLinearRoads";
-	lineCount = 1;
-	int change = 0;
-
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != ';') {
-				lines[lineCount] += gPotential[i];
-			}
-			else {
-				switch (change)
-				{
-				case 0:
-					lines[lineCount] += "$";
-					change++;
-					break;
-
-				case 1:
-					lines[lineCount] += "@";
-					change++;
-					break;
-
-				case 2:
-					lines[lineCount] += "%";
-					change++;
-					break;
-
-				case 3:
-					lines[lineCount] += "&";
-					change++;
-					break;
-
-				case 4:
-					lines[lineCount] += "!";
-					change++;
-					break;
-
-				case 5:
-					lines[lineCount] += "£";
-					change++;
-					break;
-
-				case 6:
-					lines[lineCount] += "¢";
-					change++;
-					break;
-
-				default:
-					lines[lineCount] += gPotential[i];
-					break;
-				}
-			}
-		}
-		else {
-			if (lines[lineCount][0] == '0') {
-				lines[lineCount] = String::Concat("false", lines[lineCount]->Substring(1));
-			}
-			else {
-				lines[lineCount] = String::Concat("true", lines[lineCount]->Substring(1));
-			}
-			lines[lineCount] = String::Concat("isLog = ", lines[lineCount]);
-			lines[lineCount] = lines[lineCount]->Replace("$", ",const=");
-			lines[lineCount] = lines[lineCount]->Replace("@", ",minReg=");
-			lines[lineCount] = lines[lineCount]->Replace("%", ",maxReg=");
-			lines[lineCount] = lines[lineCount]->Replace("&", ",ro=");
-			lines[lineCount] = lines[lineCount]->Replace("!", ",betas = {");
-			lines[lineCount] = lines[lineCount]->Replace("*", "},roadsModel={ attrs={");;
-			lines[lineCount] = lines[lineCount]->Replace("£", "},const=");
-			lines[lineCount] = lines[lineCount]->Replace("¢", ",change=");
-			lines[lineCount] = lines[lineCount]->Replace(";", ",betas={");
-			lines[lineCount] = lines[lineCount]->Replace("=", " = ");
-			lines[lineCount] = lines[lineCount]->Replace(",", ", ");
-			lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
-			lineCount++;
-			change = 0;
-		}
-	}
-	if (lines[lineCount] != "") {
-		if (lines[lineCount][0] == '0') {
-			lines[lineCount] = String::Concat("false", lines[lineCount]->Substring(1));
-		}
-		else {
-			lines[lineCount] = String::Concat("true", lines[lineCount]->Substring(1));
-		}
-		lines[lineCount] = String::Concat("isLog = ", lines[lineCount]);
-		lines[lineCount] = lines[lineCount]->Replace("$", ",const=");
-		lines[lineCount] = lines[lineCount]->Replace("@", ",minReg=");
-		lines[lineCount] = lines[lineCount]->Replace("%", ",maxReg=");
-		lines[lineCount] = lines[lineCount]->Replace("&", ",ro=");
-		lines[lineCount] = lines[lineCount]->Replace("!", ",betas = {");
-		lines[lineCount] = lines[lineCount]->Replace("*", "},roadsModel={ attrs={");;
-		lines[lineCount] = lines[lineCount]->Replace("£", "},const=");
-		lines[lineCount] = lines[lineCount]->Replace("¢", ",change=");
-		lines[lineCount] = lines[lineCount]->Replace(";", ",betas={");
-		lines[lineCount] = lines[lineCount]->Replace("=", " = ");
-		lines[lineCount] = lines[lineCount]->Replace(",", ", ");
-		lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
-	}
-	tbPotential->Lines = lines;
-}
-
-
-/*
-This funtion create the visual return on the multiline textbox for the "Distance Rule" components
-*/
-System::Void LuccME::NovoModelo::showReturnDistanceRule(String^ componentName)
-{
-	int count = countCaracter(gPotential, '*');
-	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = componentName;
-
-	lineCount = 1;
-
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != '*') {
-				lines[lineCount + regression] += gPotential[i];
-			}
-			else {
-				if ((i + 1) <  gPotential->Length) {
-					if (gPotential[i + 1] != '#') {
-						regression += nLut;
-					}
-				}
-			}
-		}
-		else {
-			int controlLoop;
-			if (gPotentialRegression == 1) {
-				controlLoop = 1;
-			}
-			else {
-				controlLoop = gPotentialRegression * nLut;
-			}
-
-			for (int j = 0; j < controlLoop; j += nLut) {
-				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
-				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-			}
-			lineCount++;
-			regression = 0;
-		}
-	}
-	if (lines[lineCount] != "") {
-		int controlLoop;
-		if (gPotentialRegression == 1) {
-			controlLoop = 1;
-		}
-		else {
-			controlLoop = gPotentialRegression * nLut;
-		}
-
-		for (int j = 0; j < controlLoop; j += nLut) {
-			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
-			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-		}
-	}
-	tbPotential->Lines = lines;
-}
-
-/*
-This funtion create the visual return on the multiline textbox for the Logistic Regression component
-*/
-System::Void LuccME::NovoModelo::showReturnLogisticRegression()
-{
-	int count = countCaracter(gPotential, '*');
-	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = "LogisticRegression";
-
-	lineCount = 1;
-	bool first = true;
-
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != '*') {
-				if (gPotential[i] != ';') {
-					lines[lineCount + regression] += gPotential[i];
-				}
-				else {
-					if (first) {
-						lines[lineCount + regression] += "$";
-						first = false;
-					}
-					else {
-						lines[lineCount + regression] += gPotential[i];
-					}
-				}
-			}
-			else {
-				if ((i + 1) <  gPotential->Length) {
-					if (gPotential[i + 1] != '#') {
-						regression += nLut;
-						first = true;
-					}
-				}
-			}
-		}
-		else {
-			int controlLoop;
-			if (gPotentialRegression == 1) {
-				controlLoop = 1;
-			}
-			else {
-				controlLoop = gPotentialRegression * nLut;
-			}
-
-			for (int j = 0; j < controlLoop; j += nLut) {
-				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
-				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-			}
-			lineCount++;
-			first = true;
-			regression = 0;
-		}
-	}
-	if (lines[lineCount] != "") {
-		int controlLoop;
-		if (gPotentialRegression == 1) {
-			controlLoop = 1;
-		}
-		else {
-			controlLoop = gPotentialRegression * nLut;
-		}
-
-		for (int j = 0; j < controlLoop; j += nLut) {
-			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
-			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-		}
-	}
-	tbPotential->Lines = lines;
-}
-
-/*
-This funtion create the visual return on the multiline textbox for the Neigh Attraction Logistic Regression component
-*/
-System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
-{
-	int count = countCaracter(gPotential, '*');
-	int lineCount = 0;
-	int regression = 0;
-	int nLut = countCaracter(gPotentialLUT, ',') + 1;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = "NeighAttractionLogisticRegression";
-
-	lineCount = 1;
-
-	bool first = true;
-	bool second = true;
-
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != '*') {
-				if (gPotential[i] != ';') {
-					lines[lineCount + regression] += gPotential[i];
-				}
-				else {
-					if (first) {
-						lines[lineCount + regression] += "$";
-						first = false;
-					}
-					else if (second) {
-						lines[lineCount + regression] += "@";
-						second = false;
-					}
-					else {
-						lines[lineCount + regression] += gPotential[i];
-					}
-				}
-			}
-			else {
-				if ((i + 1) <  gPotential->Length) {
-					if (gPotential[i + 1] != '#') {
-						regression += nLut;
-						first = true;
-						second = true;
-					}
-				}
-			}
-		}
-		else {
-			int controlLoop;
-			if (gPotentialRegression == 1) {
-				controlLoop = 1;
-			}
-			else {
-				controlLoop = gPotentialRegression * nLut;
-			}
-
-			for (int j = 0; j < controlLoop; j += nLut) {
-				lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
-				lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",percNeighborsUse=");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-				lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-				lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-				lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-			}
-			lineCount++;
-			first = true;
-			second = true;
-			regression = 0;
-		}
-	}
-	if (lines[lineCount] != "") {
-		int controlLoop;
-		if (gPotentialRegression == 1) {
-			controlLoop = 1;
-		}
-		else {
-			controlLoop = gPotentialRegression * nLut;
-		}
-
-		for (int j = 0; j < controlLoop; j += nLut) {
-			lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
-			lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",percNeighborsUse=");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
-			lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
-			lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
-			lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
-		}
-	}
-	tbPotential->Lines = lines;
-}
-
-/*
-This funtion create the visual return on the multiline textbox for the Maximum Entropy Like component
-*/
-System::Void LuccME::NovoModelo::showReturnMaxEntLike(String^ component)
-{
-	int count = countCaracter(gPotential, '#');
-	int lineCount = 0;
-
-	array<String^>^ lines = gcnew array<String^>(count + 1);
-
-	lines[lineCount] = component;
-
-	lineCount = 1;
-	int change = 0;
-
-	for (int i = 0; i < gPotential->Length; i++) {
-		if (gPotential[i] != '#') {
-			if (gPotential[i] != ';') {
-				lines[lineCount] += gPotential[i];
-			}
-			else {
-				switch (change)
-				{
-				case 0:
-					lines[lineCount] += "$";
-					change++;
-					break;
-
-				case 1:
-					lines[lineCount] += "@";
-					change++;
-					break;
-
-				default:
-					lines[lineCount] += gPotential[i];
-					break;
-				}
-			}
-		}
-		else {
-			lines[lineCount] = String::Concat("cellUsePercentage=", lines[lineCount]);
-			lines[lineCount] = lines[lineCount]->Replace("$", ",attributesPerc={");
-			lines[lineCount] = lines[lineCount]->Replace("@", "},attributesClass={");
-			lines[lineCount] = lines[lineCount]->Replace("=", " = ");
-			lines[lineCount] = lines[lineCount]->Replace(",", ", ");
-			lines[lineCount] = lines[lineCount] = String::Concat(lines[lineCount], "}}");
-			lineCount++;
-			change = 0;
-		}
-	}
-	tbPotential->Lines = lines;
+	tModelName->Text = tModelName->Text->Replace(" ", "");
 }

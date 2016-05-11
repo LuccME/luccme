@@ -429,7 +429,7 @@ System::Void LuccME::P_DiscreteR::dgBetas_KeyDown(System::Object ^ sender, Syste
 			switch (e->KeyCode)
 			{
 			case Keys::Delete:
-				if (dgView->SelectedCells->Count != 0)
+				if (dgView->SelectedCells->Count != NONE)
 				{
 					DataGridViewCell^ startCell = GetStartCell(dgView);
 					int row = startCell->RowIndex;
@@ -666,68 +666,68 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 	if (this->lReturn->Component == LOGISTICREGRESSION) {
 		logisticRegressionON();
 		lBetas->Location = Point(117, 80);
-		dgBetas->Location = Point(20, 110);
-		dgBetas->Height = this->dgBetas->Height - 60;
+		dgBetas->Location = Point(25, 110);
+		dgBetas->Height = 246;
 		lBetas2->Location = Point(117, 80);
-		dgBetas2->Location = Point(20, 110);
-		dgBetas2->Height = this->dgBetas2->Height - 60;
+		dgBetas2->Location = Point(25, 110);
+		dgBetas2->Height = 246;
 		lBetas3->Location = Point(117, 80);
-		dgBetas3->Location = Point(20, 110);
-		dgBetas3->Height = this->dgBetas3->Height - 60;
+		dgBetas3->Location = Point(25, 110);
+		dgBetas3->Height = 246;
 		lBetas4->Location = Point(117, 80);
-		dgBetas4->Location = Point(20, 110);
-		dgBetas4->Height = this->dgBetas4->Height - 60;
+		dgBetas4->Location = Point(25, 110);
+		dgBetas4->Height = 246;
 		lBetas5->Location = Point(117, 80);
-		dgBetas5->Location = Point(20, 110);
-		dgBetas5->Height = this->dgBetas5->Height - 60;
+		dgBetas5->Location = Point(25, 110);
+		dgBetas5->Height = 246;
 		lBetas6->Location = Point(117, 80);
-		dgBetas6->Location = Point(20, 110);
-		dgBetas6->Height = this->dgBetas6->Height - 60;
+		dgBetas6->Location = Point(25, 110);
+		dgBetas6->Height = 246;
 		lBetas7->Location = Point(117, 80);
-		dgBetas7->Location = Point(20, 110);
-		dgBetas7->Height = this->dgBetas7->Height - 60;
+		dgBetas7->Location = Point(25, 110);
+		dgBetas7->Height = 246;
 		lBetas8->Location = Point(117, 80);
-		dgBetas8->Location = Point(20, 110);
-		dgBetas8->Height = this->dgBetas8->Height - 60;
+		dgBetas8->Location = Point(25, 110);
+		dgBetas8->Height = 246;
 		lBetas9->Location = Point(117, 80);
-		dgBetas9->Location = Point(20, 110);
-		dgBetas9->Height = this->dgBetas9->Height - 60;
+		dgBetas9->Location = Point(25, 110);
+		dgBetas9->Height = 246;
 		lBetas10->Location = Point(117, 80);
-		dgBetas10->Location = Point(20, 110);
-		dgBetas10->Height = this->dgBetas10->Height - 60;
+		dgBetas10->Location = Point(25, 110);
+		dgBetas10->Height = 246;
 	}
 	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
 		neighAttractionLogisticRegressionON();
 		lBetas->Location = Point(117, 110);
-		dgBetas->Location = Point(20, 140);
-		dgBetas->Height = this->dgBetas->Height - 80;
+		dgBetas->Location = Point(25, 140);
+		dgBetas->Height = 216;
 		lBetas2->Location = Point(117, 110);
-		dgBetas2->Location = Point(20, 140);
-		dgBetas2->Height = this->dgBetas2->Height - 80;
+		dgBetas2->Location = Point(25, 140);
+		dgBetas2->Height = 216;
 		lBetas3->Location = Point(117, 110);
-		dgBetas3->Location = Point(20, 140);
-		dgBetas3->Height = this->dgBetas3->Height - 80;
+		dgBetas3->Location = Point(25, 140);
+		dgBetas3->Height = 216;
 		lBetas4->Location = Point(117, 110);
-		dgBetas4->Location = Point(20, 140);
-		dgBetas4->Height = this->dgBetas4->Height - 80;
+		dgBetas4->Location = Point(25, 140);
+		dgBetas4->Height = 216;
 		lBetas5->Location = Point(117, 110);
-		dgBetas5->Location = Point(20, 140);
-		dgBetas5->Height = this->dgBetas5->Height - 80;
+		dgBetas5->Location = Point(25, 140);
+		dgBetas5->Height = 216;
 		lBetas6->Location = Point(117, 110);
-		dgBetas6->Location = Point(20, 140);
-		dgBetas6->Height = this->dgBetas6->Height - 80;
+		dgBetas6->Location = Point(25, 140);
+		dgBetas6->Height = 216;
 		lBetas7->Location = Point(117, 110);
-		dgBetas7->Location = Point(20, 140);
-		dgBetas7->Height = this->dgBetas7->Height - 80;
+		dgBetas7->Location = Point(25, 140);
+		dgBetas7->Height = 216;
 		lBetas8->Location = Point(117, 110);
-		dgBetas8->Location = Point(20, 140);
-		dgBetas8->Height = this->dgBetas8->Height - 80;
+		dgBetas8->Location = Point(25, 140);
+		dgBetas8->Height = 216;
 		lBetas9->Location = Point(117, 110);
-		dgBetas9->Location = Point(20, 140);
-		dgBetas9->Height = this->dgBetas9->Height - 80;
+		dgBetas9->Location = Point(25, 140);
+		dgBetas9->Height = 216;
 		lBetas10->Location = Point(117, 110);
-		dgBetas10->Location = Point(20, 140);
-		dgBetas10->Height = this->dgBetas10->Height - 80;
+		dgBetas10->Location = Point(25, 140);
+		dgBetas10->Height = 216;
 	}
 
 	this->lvLUT->Columns->Add("Status", 47, HorizontalAlignment::Left);
@@ -758,7 +758,7 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		tcRegions->Visible = false;
 	}
 
-	tcRegions->SelectedIndex = 0;
+	tcRegions->SelectedIndex = NONE;
 }
 
 System::Void  LuccME::P_DiscreteR::lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
@@ -961,7 +961,7 @@ System::Void LuccME::P_DiscreteR::bDeleteRegression_Click(System::Object^  sende
 		}
 		tcRegions->TabPages->RemoveAt(tcRegions->TabCount - 1);
 		tcRegions->TabPages[tcRegions->TabCount - 1]->Text = "+";
-		tcRegions->SelectedIndex = 0;
+		tcRegions->SelectedIndex = NONE;
 
 		for (int i = 0; i < lvLUT->Items->Count; i++) {
 			if (lTempBetas[i] != nullptr) {

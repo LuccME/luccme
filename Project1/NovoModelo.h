@@ -643,6 +643,7 @@ namespace LuccME {
 			this->tModelName->Text = L"LuccMe_model";
 			this->tModelName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tModelName->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			this->tModelName->Leave += gcnew System::EventHandler(this, &NovoModelo::tModelName_Leave);
 			// 
 			// lModelName
 			// 
@@ -1795,5 +1796,6 @@ namespace LuccME {
 	private: System::Void showReturnLogisticRegression();
 	private: System::Void showReturnNeighAttractionLogisticRegression();
 	private: System::Void showReturnMaxEntLike(String^ component);
+	private: System::Void tModelName_Leave(System::Object^  sender, System::EventArgs^  e);
 	};
 }

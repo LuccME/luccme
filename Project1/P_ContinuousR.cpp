@@ -42,7 +42,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog->Checked = false;
 	tConst->Text = "0.01";
 	tConst->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg->Text = "0";
 		tMinReg->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg->Text = "1";
@@ -58,7 +58,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog2->Checked = false;
 	tConst2->Text = "0.01";
 	tConst2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg2->Text = "0";
 		tMinReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg2->Text = "1";
@@ -74,7 +74,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog3->Checked = false;
 	tConst3->Text = "0.01";
 	tConst3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg3->Text = "0";
 		tMinReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg3->Text = "1";
@@ -90,7 +90,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog4->Checked = false;
 	tConst4->Text = "0.01";
 	tConst4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg4->Text = "0";
 		tMinReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg4->Text = "1";
@@ -106,7 +106,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog5->Checked = false;
 	tConst5->Text = "0.01";
 	tConst5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg5->Text = "0";
 		tMinReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg5->Text = "1";
@@ -122,7 +122,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog6->Checked = false;
 	tConst6->Text = "0.01";
 	tConst6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg6->Text = "0";
 		tMinReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg6->Text = "1";
@@ -138,7 +138,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog7->Checked = false;
 	tConst7->Text = "0.01";
 	tConst7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg7->Text = "0";
 		tMinReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg7->Text = "1";
@@ -154,7 +154,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog8->Checked = false;
 	tConst8->Text = "0.01";
 	tConst8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg8->Text = "0";
 		tMinReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg8->Text = "1";
@@ -170,7 +170,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog9->Checked = false;
 	tConst9->Text = "0.01";
 	tConst9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg9->Text = "0";
 		tMinReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg9->Text = "1";
@@ -186,7 +186,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog10->Checked = false;
 	tConst10->Text = "0.01";
 	tConst10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg10->Text = "0";
 		tMinReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg10->Text = "1";
@@ -210,13 +210,8 @@ System::Void LuccME::P_ContinuousR::setVisibleONorOFF(Label^ lBetas, DataGridVie
 	cIsLog->Visible = status;
 	lConst->Visible = status;
 	tConst->Visible = status;
-	if (lReturn->Component == 7) {
-		lMinReg->Visible = status;
-		tMinReg->Visible = status;
-		lMaxReg->Visible = status;
-		tMaxReg->Visible = status;
-		lRo->Visible = status;
-		tRo->Visible = status;
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
+		spatialLagRegressionONOFF(status);
 	}
 }
 
@@ -233,7 +228,7 @@ System::Void LuccME::P_ContinuousR::moveData(DataGridView^ dgBetas, CheckBox^ cI
 	}
 	cIsLog->Checked = cIsLog2->Checked;
 	tConst->Text = tConst2->Text;
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg->Text = tMinReg2->Text;
 		tMaxReg->Text = tMaxReg2->Text;
 		tRo->Text = tRo2->Text;
@@ -261,7 +256,7 @@ System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, c
 	String^ tempMinReg = "";
 	String^ tempMaxReg = "";
 	String^ tempRo = "";
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		while (lTempBetas[i][j] != ';') {
 			tempMinReg += lTempBetas[i][j];
 			j++;
@@ -312,7 +307,7 @@ System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, c
 	tConst->Text = tempConst;
 	tConst->ForeColor = System::Drawing::Color::Black;
 
-	if (lReturn->Component == 7) {
+	if (lReturn->Component == SPATIALLAGREGRESSION) {
 		tMinReg->Text = tempMinReg;
 		tMinReg->ForeColor = System::Drawing::Color::Black;
 		tMaxReg->Text = tempMaxReg;
@@ -341,7 +336,7 @@ System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBo
 	lTempBetas[i] += tConst->Text;
 	lTempBetas[i] += ";";
 
-	if (this->lReturn->Component == 7) {
+	if (this->lReturn->Component == SPATIALLAGREGRESSION) {
 		lTempBetas[i] += tMinReg->Text;
 		lTempBetas[i] += ";";
 
@@ -512,6 +507,112 @@ System::Void LuccME::P_ContinuousR::PasteClipboardValue(DataGridView^ dgView)
 	}
 }
 
+System::Void LuccME::P_ContinuousR::spatialLagRegressionONOFF(bool status)
+{
+	this->Height = 674;
+	this->lvLUT->Height = 430;
+	this->tcRegions->Height = 429;
+	bSalvar->Location = Point(238, 600);
+	bCancel->Location = Point(271, 600);
+	bAddBetas->Location = Point(375, 600);
+
+	lMinReg->Visible = status;
+	tMinReg->Visible = status;
+	lMinReg2->Visible = status;
+	tMinReg2->Visible = status;
+	lMinReg3->Visible = status;
+	tMinReg3->Visible = status;
+	lMinReg4->Visible = status;
+	tMinReg4->Visible = status;
+	lMinReg5->Visible = status;
+	tMinReg5->Visible = status;
+	lMinReg6->Visible = status;
+	tMinReg6->Visible = status;
+	lMinReg7->Visible = status;
+	tMinReg7->Visible = status;
+	lMinReg8->Visible = status;
+	tMinReg8->Visible = status;
+	lMinReg9->Visible = status;
+	tMinReg9->Visible = status;
+	lMinReg10->Visible = status;
+	tMinReg10->Visible = status;
+
+	lMaxReg->Visible = status;
+	tMaxReg->Visible = status;
+	lMaxReg2->Visible = status;
+	tMaxReg2->Visible = status;
+	lMaxReg3->Visible = status;
+	tMaxReg3->Visible = status;
+	lMaxReg4->Visible = status;
+	tMaxReg4->Visible = status;
+	lMaxReg5->Visible = status;
+	tMaxReg5->Visible = status;
+	lMaxReg6->Visible = status;
+	tMaxReg6->Visible = status;
+	lMaxReg7->Visible = status;
+	tMaxReg7->Visible = status;
+	lMaxReg8->Visible = status;
+	tMaxReg8->Visible = status;
+	lMaxReg9->Visible = status;
+	tMaxReg9->Visible = status;
+	lMaxReg10->Visible = status;
+	tMaxReg10->Visible = status;
+
+	lRo->Visible = status;
+	tRo->Visible = status;
+	lRo2->Visible = status;
+	tRo2->Visible = status;
+	lRo3->Visible = status;
+	tRo3->Visible = status;
+	lRo4->Visible = status;
+	tRo4->Visible = status;
+	lRo5->Visible = status;
+	tRo5->Visible = status;
+	lRo6->Visible = status;
+	tRo6->Visible = status;
+	lRo7->Visible = status;
+	tRo7->Visible = status;
+	lRo8->Visible = status;
+	tRo8->Visible = status;
+	lRo9->Visible = status;
+	tRo9->Visible = status;
+	lRo10->Visible = status;
+	tRo10->Visible = status;
+
+	lBetas->Location = Point(117, 178);
+	dgBetas->Location = Point(20, 207);
+	dgBetas->Height = 186;
+	lBetas2->Location = Point(117, 178);
+	dgBetas2->Location = Point(20, 207);
+	dgBetas2->Height = 186;
+	lBetas3->Location = Point(117, 178);
+	dgBetas3->Location = Point(20, 207);
+	dgBetas3->Height = 186;
+	lBetas4->Location = Point(117, 178);
+	dgBetas4->Location = Point(20, 207);
+	dgBetas4->Height = 186;
+	lBetas5->Location = Point(117, 178);
+	dgBetas5->Location = Point(20, 207);
+	dgBetas5->Height = 186;
+	lBetas6->Location = Point(117, 178);
+	dgBetas6->Location = Point(20, 207);
+	dgBetas6->Height = 186;
+	lBetas7->Location = Point(117, 178);
+	dgBetas7->Location = Point(20, 207);
+	dgBetas7->Height = 186;
+	lBetas8->Location = Point(117, 178);
+	dgBetas8->Location = Point(20, 207);
+	dgBetas8->Height = 186;
+	lBetas9->Location = Point(117, 178);
+	dgBetas9->Location = Point(20, 207);
+	dgBetas9->Height = 186;
+	lBetas10->Location = Point(117, 178);
+	dgBetas10->Location = Point(20, 207);
+	dgBetas10->Height = 186;
+}
+
+
+
 System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender, System::EventArgs^  e)
 {
 	if (lReturn->Language == "en") {
@@ -564,44 +665,8 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 		}
 	}
 
-	if (this->lReturn->Component == 7) {
-		this->Height = 674;
-		this->lvLUT->Height = 430;
-		this->tcRegions->Height = 429;
-		bSalvar->Location = Point(238, 600);
-		bCancel->Location = Point(271, 600);
-		bAddBetas->Location = Point(375, 600);
-		
-		lBetas->Location = Point(117, 178);
-		dgBetas->Location = Point(20, 207);
-		dgBetas->Height = this->dgBetas->Height - 60;
-		lBetas2->Location = Point(117, 178);
-		dgBetas2->Location = Point(20, 207);
-		dgBetas2->Height = this->dgBetas2->Height - 60;
-		lBetas3->Location = Point(117, 178);
-		dgBetas3->Location = Point(20, 207);
-		dgBetas3->Height = this->dgBetas3->Height - 60;
-		lBetas4->Location = Point(117, 178);
-		dgBetas4->Location = Point(20, 207);
-		dgBetas4->Height = this->dgBetas4->Height - 60;
-		lBetas5->Location = Point(117, 178);
-		dgBetas5->Location = Point(20, 207);
-		dgBetas5->Height = this->dgBetas5->Height - 60;
-		lBetas6->Location = Point(117, 178);
-		dgBetas6->Location = Point(20, 207);
-		dgBetas6->Height = this->dgBetas6->Height - 60;
-		lBetas7->Location = Point(117, 178);
-		dgBetas7->Location = Point(20, 207);
-		dgBetas7->Height = this->dgBetas7->Height - 60;
-		lBetas8->Location = Point(117, 178);
-		dgBetas8->Location = Point(20, 207);
-		dgBetas8->Height = this->dgBetas8->Height - 60;
-		lBetas9->Location = Point(117, 178);
-		dgBetas9->Location = Point(20, 207);
-		dgBetas9->Height = this->dgBetas9->Height - 60;
-		lBetas10->Location = Point(117, 178);
-		dgBetas10->Location = Point(20, 207);
-		dgBetas10->Height = this->dgBetas10->Height - 60;
+	if (this->lReturn->Component == SPATIALLAGREGRESSION) {
+		spatialLagRegressionONOFF(true);
 	}
 
 	this->lvLUT->Columns->Add("Status", 47, HorizontalAlignment::Left);
@@ -710,13 +775,8 @@ System::Void LuccME::P_ContinuousR::lvLUT_SelectedIndexChanged(System::Object^  
 		bAddBetas->Visible = true;
 		bCancel->Visible = true;
 
-		if (lReturn->Component == 7) {
-			lMinReg->Visible = true;
-			tMinReg->Visible = true;
-			lMaxReg->Visible = true;
-			tMaxReg->Visible = true;
-			lRo->Visible = true;
-			tRo->Visible = true;
+		if (lReturn->Component == SPATIALLAGREGRESSION) {
+			spatialLagRegressionONOFF(true);
 		}
 	}
 }

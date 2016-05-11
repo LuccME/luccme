@@ -211,6 +211,9 @@
     <EmbeddedResource Include="P_DiscreteR.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="P_MaxEntLike.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\icon.ico">

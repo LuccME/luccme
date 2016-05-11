@@ -51,4 +51,8 @@
 #define NUMDISCPOTCOMP 6
 #define NUMDISCALLOCCOMP 2
 
+//Miscellaneous
+#define ROOTDIR	4
+#define SECOND	1000
+
 // TODO: reference additional headers your program requires here

@@ -2120,5 +2120,6 @@ namespace LuccME {
 	private: System::Void PasteClipboardValue(DataGridView^ dgView);
 	private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Int16 countCaracter(String^ source, char caracter);
+	private: System::Void spatialLagRegressionONOFF(bool status);
 	};
 }

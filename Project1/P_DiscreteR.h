@@ -447,7 +447,7 @@ namespace LuccME {
 			this->dgBetas->AllowUserToResizeColumns = false;
 			this->dgBetas->AllowUserToResizeRows = false;
 			this->dgBetas->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas->Location = System::Drawing::Point(20, 70);
+			this->dgBetas->Location = System::Drawing::Point(23, 70);
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas->Size = System::Drawing::Size(245, 286);
@@ -567,7 +567,7 @@ namespace LuccME {
 			this->dgBetas2->AllowUserToResizeColumns = false;
 			this->dgBetas2->AllowUserToResizeRows = false;
 			this->dgBetas2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas2->Location = System::Drawing::Point(20, 70);
+			this->dgBetas2->Location = System::Drawing::Point(23, 70);
 			this->dgBetas2->Name = L"dgBetas2";
 			this->dgBetas2->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas2->Size = System::Drawing::Size(245, 286);
@@ -686,7 +686,7 @@ namespace LuccME {
 			this->dgBetas3->AllowUserToResizeColumns = false;
 			this->dgBetas3->AllowUserToResizeRows = false;
 			this->dgBetas3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas3->Location = System::Drawing::Point(20, 70);
+			this->dgBetas3->Location = System::Drawing::Point(23, 70);
 			this->dgBetas3->Name = L"dgBetas3";
 			this->dgBetas3->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas3->Size = System::Drawing::Size(245, 286);
@@ -805,7 +805,7 @@ namespace LuccME {
 			this->dgBetas4->AllowUserToResizeColumns = false;
 			this->dgBetas4->AllowUserToResizeRows = false;
 			this->dgBetas4->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas4->Location = System::Drawing::Point(20, 70);
+			this->dgBetas4->Location = System::Drawing::Point(23, 70);
 			this->dgBetas4->Name = L"dgBetas4";
 			this->dgBetas4->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas4->Size = System::Drawing::Size(245, 286);
@@ -924,7 +924,7 @@ namespace LuccME {
 			this->dgBetas5->AllowUserToResizeColumns = false;
 			this->dgBetas5->AllowUserToResizeRows = false;
 			this->dgBetas5->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas5->Location = System::Drawing::Point(20, 70);
+			this->dgBetas5->Location = System::Drawing::Point(23, 70);
 			this->dgBetas5->Name = L"dgBetas5";
 			this->dgBetas5->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas5->Size = System::Drawing::Size(245, 286);
@@ -1043,7 +1043,7 @@ namespace LuccME {
 			this->dgBetas6->AllowUserToResizeColumns = false;
 			this->dgBetas6->AllowUserToResizeRows = false;
 			this->dgBetas6->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas6->Location = System::Drawing::Point(20, 70);
+			this->dgBetas6->Location = System::Drawing::Point(23, 70);
 			this->dgBetas6->Name = L"dgBetas6";
 			this->dgBetas6->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas6->Size = System::Drawing::Size(245, 286);
@@ -1162,7 +1162,7 @@ namespace LuccME {
 			this->dgBetas7->AllowUserToResizeColumns = false;
 			this->dgBetas7->AllowUserToResizeRows = false;
 			this->dgBetas7->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas7->Location = System::Drawing::Point(20, 70);
+			this->dgBetas7->Location = System::Drawing::Point(23, 70);
 			this->dgBetas7->Name = L"dgBetas7";
 			this->dgBetas7->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas7->Size = System::Drawing::Size(245, 286);
@@ -1281,7 +1281,7 @@ namespace LuccME {
 			this->dgBetas8->AllowUserToResizeColumns = false;
 			this->dgBetas8->AllowUserToResizeRows = false;
 			this->dgBetas8->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas8->Location = System::Drawing::Point(20, 70);
+			this->dgBetas8->Location = System::Drawing::Point(23, 70);
 			this->dgBetas8->Name = L"dgBetas8";
 			this->dgBetas8->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas8->Size = System::Drawing::Size(245, 286);
@@ -1400,7 +1400,7 @@ namespace LuccME {
 			this->dgBetas9->AllowUserToResizeColumns = false;
 			this->dgBetas9->AllowUserToResizeRows = false;
 			this->dgBetas9->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas9->Location = System::Drawing::Point(20, 70);
+			this->dgBetas9->Location = System::Drawing::Point(23, 70);
 			this->dgBetas9->Name = L"dgBetas9";
 			this->dgBetas9->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas9->Size = System::Drawing::Size(245, 286);
@@ -1519,7 +1519,7 @@ namespace LuccME {
 			this->dgBetas10->AllowUserToResizeColumns = false;
 			this->dgBetas10->AllowUserToResizeRows = false;
 			this->dgBetas10->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgBetas10->Location = System::Drawing::Point(20, 70);
+			this->dgBetas10->Location = System::Drawing::Point(23, 70);
 			this->dgBetas10->Name = L"dgBetas10";
 			this->dgBetas10->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas10->Size = System::Drawing::Size(245, 286);

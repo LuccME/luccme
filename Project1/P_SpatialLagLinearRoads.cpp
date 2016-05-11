@@ -565,7 +565,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgBetas_KeyDown(System::Object ^ s
 	switch (e->KeyCode)
 	{
 	case Keys::Delete:
-		if (dgBetas->SelectedCells->Count != 0)
+		if (dgBetas->SelectedCells->Count != NONE)
 		{
 			DataGridViewCell^ startCell = GetStartCell(dgBetas);
 			int row = startCell->RowIndex;
@@ -587,7 +587,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgAttr_KeyDown(System::Object ^ se
 	switch (e->KeyCode)
 	{
 	case Keys::Delete:
-		if (dgAttr->SelectedCells->Count != 0)
+		if (dgAttr->SelectedCells->Count != NONE)
 		{
 			DataGridViewCell^ startCell = GetStartCell(dgAttr);
 			int row = startCell->RowIndex;
@@ -609,7 +609,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgBetasRM_KeyDown(System::Object ^
 	switch (e->KeyCode)
 	{
 	case Keys::Delete:
-		if (dgBetasRM->SelectedCells->Count != 0)
+		if (dgBetasRM->SelectedCells->Count != NONE)
 		{
 			DataGridViewCell^ startCell = GetStartCell(dgBetasRM);
 			int row = startCell->RowIndex;

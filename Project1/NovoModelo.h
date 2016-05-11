@@ -113,6 +113,8 @@ namespace LuccME {
 		String^ gSAttribToSaveTitle = "";
 		String^ gSPotCont2Info = "";
 		String^ gSPotCont2Title = "";
+		String^ gSMainImportOld = "";
+		String^ gSMainImportOldtTitle = "";
 
 	public:
 		bool closing = false;

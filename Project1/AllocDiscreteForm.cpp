@@ -60,4 +60,3 @@ System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Objec
 		this->Close();
 	}
 }
-

@@ -89,9 +89,6 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 
 		dgTransitionMatrix->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
 		dgTransitionMatrix->Columns[0]->ReadOnly = true;
-		//for (int i = 0; i < count; i++) {
-		//	dgTransitionMatrix->Rows->Add();
-		//}
 
 		int row = 0;
 		int column = 1;
@@ -149,9 +146,6 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 
 			dgTransitionMatrix->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
 			dgTransitionMatrix->Columns[0]->ReadOnly = true;
-			//for (int i = 0; i < count; i++) {
-			//	dgTransitionMatrix->Rows->Add();
-			//}
 		}
 	}
 }
@@ -199,21 +193,6 @@ System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sende
 	else {
 		this->Close();
 	}
-}
-
-System::Void LuccME::A_AllocationClueSLike::dgTransitionMatrix_CellValidating(System::Object ^ sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs ^ e)
-{
-	//int newInteger;
-
-	//if (dgTransitionMatrix->Rows[e->RowIndex]->IsNewRow)
-	//{
-	//	return;
-	//}
-	//if (!Int32::TryParse(e->FormattedValue->ToString(),
-	//	newInteger) || (newInteger < 0) || (newInteger > 1))
-	//{
-	//	e->Cancel = true;
-	//}
 }
 
 System::Void LuccME::A_AllocationClueSLike::dgTransitionMatrix_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)

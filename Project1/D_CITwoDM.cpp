@@ -33,6 +33,7 @@ System::Void LuccME::D_CITwoDM::D_CITwoDM_Shown(System::Object ^ sender, System:
 	}
 
 	tFinalYear->Text = Convert::ToString(lReturn->FinalYear);
+
 	if (this->lReturn->Empty) {
 		if (this->lReturn->Return->Length > 0) {
 			String^ aux = "";

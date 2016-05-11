@@ -28,12 +28,16 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 	dgDemand->Columns[0]->Name = gSYear;
 	dgDemand->Columns[0]->Width = dgDemand->Columns[0]->Width / 2;
 	dgDemand->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+	
 	int time = Convert::ToInt16(lReturn->StartTime);
+	
 	for (int i = 0; i < lReturn->YearsForSimulation; i++) {
 		dgDemand->Rows->Add(Convert::ToString(time));
 		time++;
 	}
+	
 	dgDemand->Columns[0]->ReadOnly = true;
+	
 	if (this->lReturn->Empty) {
 		if (this->lReturn->Return->Length > 0) {
 			String^ aux = "";
@@ -198,7 +202,7 @@ System::Void LuccME::D_PCVINPEForm::dgDemand_KeyDown(System::Object ^ sender, Sy
 			switch (e->KeyCode)
 			{
 				case Keys::Delete:
-					if (dgDemand->SelectedCells->Count != 0)
+					if (dgDemand->SelectedCells->Count != NONE)
 					{
 						DataGridViewCell^ startCell = GetStartCell(dgDemand);
 						int row = startCell->RowIndex;

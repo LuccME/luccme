@@ -199,7 +199,6 @@ namespace LuccME {
 			this->dgTransitionMatrix->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgTransitionMatrix->Size = System::Drawing::Size(459, 135);
 			this->dgTransitionMatrix->TabIndex = 94;
-			this->dgTransitionMatrix->CellValidating += gcnew System::Windows::Forms::DataGridViewCellValidatingEventHandler(this, &A_AllocationClueSLike::dgTransitionMatrix_CellValidating);
 			this->dgTransitionMatrix->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &A_AllocationClueSLike::dgTransitionMatrix_KeyDown);
 			// 
 			// lLegend
@@ -255,7 +254,6 @@ namespace LuccME {
 	private: System::Void textBox_Enter(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void A_AllocationClueSLike_Shown(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void dgTransitionMatrix_CellValidating(System::Object^  sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs^  e);
 	private: System::Void dgTransitionMatrix_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(System::Windows::Forms::DataGridView^ dgView);
 };

@@ -64,4 +64,3 @@ System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ 
 		this->Close();
 	}
 }
-

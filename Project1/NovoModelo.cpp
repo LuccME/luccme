@@ -223,6 +223,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSAttribToSaveTitle = "Error - Attribute to be save not defined";
 		gSPotCont2Info = "The Land Uses Types changes.\nAll the data will be erased.\nDo you want to proceed?";
 		gSPotCont2Title = "Warning - Land Use Changes";
+		gSMainImportOld = "Main file vesrion 2.x imported with sucess.\nSelect the Submodel File.";
+		gSMainImportOldtTitle = "Main File v2.x Loaded, Select Submodel";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolution for Whole Area (ext)");
@@ -404,6 +406,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSAttribToSaveTitle = "Error - Atributos a serem salvos não definidos";
 		gSPotCont2Info = "Os Tipos de Uso da Terra mudaram.\nTodos os dados serão apagados.\nDeseja continuar?";
 		gSPotCont2Title = "Aviso - Mudança dos Tipos de Uso da Terra";
+		gSMainImportOld = "Arquivo Main versão 2.x importado com sucesso.\nSelecione o Arquivo do Submodelo.";
+		gSMainImportOldtTitle = "Arquivo Main v2.x Carregado, Selecione o Submodelo";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolução de Toda a Área (ext)");
@@ -3216,6 +3220,22 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
 
+				bool oldModel = false;
+				line = sw->ReadLine();
+				while (sw->EndOfStream == false) {
+					if (line->Contains("theme") != 1) {
+						line = sw->ReadLine();
+					}
+					else {
+						oldModel = true;
+						imported = false;
+						break;
+					}
+				}
+
+				sw->Close();
+				sw = gcnew System::IO::StreamReader(fileName);
+
 				if (found) {
 					line = sw->ReadLine();
 					while (line->Contains("endTime") != TRUE) {
@@ -3226,15 +3246,17 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				found = false;
 				String^ tempDB = "";
 
-				line = sw->ReadLine();
-				while (sw->EndOfStream == false) {
-					if (line->Contains("layer") != TRUE) {
-						tempDB += line;
-						line = sw->ReadLine();
-					}
-					else {
-						found = true;
-						break;
+				if (!oldModel) {
+					line = sw->ReadLine();
+					while (sw->EndOfStream == false) {
+						if (line->Contains("layer") != TRUE) {
+							tempDB += line;
+							line = sw->ReadLine();
+						}
+						else {
+							found = true;
+							break;
+						}
 					}
 				}
 
@@ -3711,7 +3733,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				gParametersValues[14] = lAttrToSave->Text;
 				sw->Close();
 				main = true;
-				MessageBox::Show(gSMainImport, gSMainImportTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
+				if (!oldModel) {
+					MessageBox::Show(gSMainImport, gSMainImportTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					MessageBox::Show(gSMainImportOld, gSMainImportOldtTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
 			}
 
 			LuccME::OpenFileDialog^ submodelFile = gcnew OpenFileDialog;

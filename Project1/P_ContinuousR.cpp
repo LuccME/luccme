@@ -194,7 +194,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 		tRo10->Text = "0.5";
 		tRo10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	tcRegions->SelectedIndex = 0;
+	tcRegions->SelectedIndex = NONE;
 }
 
 /*

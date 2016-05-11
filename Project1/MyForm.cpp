@@ -131,5 +131,3 @@ System::Void LuccME::MyForm::luccMEToolStripMenuItem_Click(System::Object ^ send
 		Help::ShowHelp(this, "ajuda.chm");
 	}
 }
-
-

@@ -31,4 +31,3 @@ System::Void LuccME::LanguageForm::bSelectLanguage_Click(System::Object ^ sender
 
 	this->Close();
 }
-

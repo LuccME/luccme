@@ -102,7 +102,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		tComplementarLU->Text = complementarLU;
 		tComplementarLU->ForeColor = System::Drawing::Color::Black;
 		
-		if (lReturn->Component == 4) {
+		if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
 			tSaturationIndicator->Text = saturationIndicator;
 			tSaturationIndicator->ForeColor = System::Drawing::Color::Black;
 
@@ -220,7 +220,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		}
 		dgAllocationData->Columns[0]->ReadOnly = true;
 	}
-	if (lReturn->Component == 4) {
+	if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
 		lSaturationIndicator->Visible = true;
 		tSaturationIndicator->Visible = true;
 		lAttrProtection->Visible = true;
@@ -253,7 +253,7 @@ System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System
 	lReturn->Return += tComplementarLU->Text;
 	lReturn->Return += ";";
 	
-	if (lReturn->Component == 4) {
+	if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
 		lReturn->Return += tSaturationIndicator->Text;
 		lReturn->Return += ";";
 		lReturn->Return += tAttrProtection->Text;
@@ -314,7 +314,7 @@ System::Void LuccME::A_Continuous::dgAllocationData_KeyDown(System::Object ^ sen
 	switch (e->KeyCode)
 	{
 		case Keys::Delete:
-			if (dgAllocationData->SelectedCells->Count != 0)
+			if (dgAllocationData->SelectedCells->Count != NONE)
 			{
 				DataGridViewCell^ startCell = GetStartCell(dgAllocationData);
 				int row = startCell->RowIndex;

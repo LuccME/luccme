@@ -152,7 +152,9 @@ System::Void LuccME::D_CIThreeDM::bSalvar_Click(System::Object ^ sender, System:
 
 		}
 	}
+
 	temp += ";";
+
 	for (int j = 0; j < dgDemand->ColumnCount; j++) {
 		if (dgDemand->Rows[1]->Cells[j]->Value == nullptr) {
 			MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -237,7 +239,7 @@ System::Void LuccME::D_CIThreeDM::dgDemand_KeyDown(System::Object ^ sender, Syst
 	switch (e->KeyCode)
 	{
 	case Keys::Delete:
-		if (dgDemand->SelectedCells->Count != 0)
+		if (dgDemand->SelectedCells->Count != NONE)
 		{
 			DataGridViewCell^ startCell = GetStartCell(dgDemand);
 			int row = startCell->RowIndex;
@@ -253,4 +255,3 @@ System::Void LuccME::D_CIThreeDM::dgDemand_KeyDown(System::Object ^ sender, Syst
 		break;
 	}
 }
-

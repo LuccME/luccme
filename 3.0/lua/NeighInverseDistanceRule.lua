@@ -31,14 +31,16 @@ function NeighInverseDistanceRule(component)
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
-			cs:createNeighborhood()		
+      if(event:getTime() == luccMEModel.startTime) then
+        cs:createNeighborhood()   
+      end
 		end
  		
 		local totalNeigh = 0
   		
 		for k, cell in pairs (cs.cells) do
       for rNumber = 1, nRegions, 1 do
-  			totalNeigh = cell:getNeighborhood():size()
+  			totalNeigh = #cell:getNeighborhood()
   		 	if (cell.region == rNumber) then  
     			for i, lu in pairs (luTypes) do 
     				cell[lu.."_pot"] = 0

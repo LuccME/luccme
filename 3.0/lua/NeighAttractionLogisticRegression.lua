@@ -52,13 +52,15 @@ function NeighAttractionLogisticRegression(component)
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
-			cs:createNeighborhood()		
+      if(event:getTime() == luccMEModel.startTime) then
+        cs:createNeighborhood()   
+      end
 		end
  		
 		local totalNeigh = 0
   		
 		for k, cell in pairs (cs.cells) do
-			totalNeigh = cell:getNeighborhood():size()
+			totalNeigh = #cell:getNeighborhood()
   		
 			for luind, inputValues in pairs (potentialData[cell.region]) do
 				local lu = luTypes[luind]

@@ -21,13 +21,15 @@ function NeighSimpleRule(component)
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
-			cs:createNeighborhood()		
+    	if(event:getTime() == luccMEModel.startTime) then
+    		cs:createNeighborhood()		
+    	end
 		end
  		
 		local totalNeigh = 0
   		
 		for k, cell in pairs (cs.cells) do
-			totalNeigh = cell:getNeighborhood():size()
+			totalNeigh = #cell:getNeighborhood()
 		 	
 		 	if (cell.region == nil) then
 				  cell.region = 1

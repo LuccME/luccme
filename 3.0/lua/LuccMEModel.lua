@@ -19,14 +19,14 @@
 -- name = "MyModel_1",
 -- startTime = 2013,
 -- endTime = 2015,
--- cs = CellularSpace {database = "myDatabase.mdb", theme = "myTheme", cellArea = 1},
+-- cs = CellularSpace {database = "myDatabase.mdb", layer = "mylayer", cellArea = 1},
 -- landUseTypes = {"Deforest", "Forest", "Others"},
 -- landUseNoData = "Border",
 -- potential = NeighSimpleRule {},
 -- allocation = AllocationByOrdering {maxDifference = 0.001},
 -- demand  = PreComputedValuesAutoDemand {finalYearForInterpolation = 2015,
 --										  landUseTypesForInterpolation = {"D", "F", "O"}},					
--- save = {outputTheme = "myTheme_", yearly = true},
+-- save = {outputTheme = "mylayer_", yearly = true},
 -- isCoupled = false
 --}
 -- -- ENVIROMMENT DEFINITION
@@ -39,7 +39,7 @@
 -- 	saveResults = databaseSave(MyModel)
 -- 	envMymodel:add(saveResults)
 -- 	envMymodel:execute(MyModel.endTime)
--- 	saveSingleTheme(MyModel, true)
+-- 	saveSinglelayer(MyModel, true)
 -- end
 function LuccMEModel(model)
 	--- Implements the execution method of a LuccMe model.
@@ -176,7 +176,7 @@ function LuccMEModel(model)
 		for i, updtYear in pairs (self.updateYears) do
 			-- If current year needs to update variables
 			if (currentTime == updtYear) then
-				print("Updating dynamic variables...")
+				print("\nUpdating dynamic variables...")
 				
 				if ((self.scenarioStartTime ~= nil) and (currentTime >= self.scenarioStartTime)) then
 					cs_temp = CellularSpace {	project = self.cs.project, 
@@ -185,7 +185,7 @@ function LuccMEModel(model)
 					print(self.cs.layer.."_"..self.scenarioName.."_"..updtYear)
 				else
 					cs_temp = CellularSpace {	project = self.cs.project,
-												layer = self.cs.theme.."_"..updtYear
+												layer = self.cs.layer.."_"..updtYear
 											}
 					print(self.cs.layer.."_"..updtYear)
 				end

@@ -244,10 +244,10 @@ function AllocationClueLikeSaturation (component)
       end
     end
         
-    luccMEModel.cs:createNeighborhood{  name = "10x10",
+    luccMEModel.cs:createNeighborhood{  name = "11x11",
                                         strategy = "mxn",
-                                        m = 10,
-                                        n = 10
+                                        m = 11,
+                                        n = 11
                                      }
   end
 
@@ -280,7 +280,7 @@ function AllocationClueLikeSaturation (component)
                 if (perc_def_original > 1) then
                   perc_def_original = 1
                 end
-                forEachNeighbor (cell, "10x10", function(cell, neigh, weight)
+                forEachNeighbor (cell, "11x11", function(cell, neigh)
                                                   local prot_t = 0
                                                   local original = 1
                                                   if (self.attrProtection ~= nil) then

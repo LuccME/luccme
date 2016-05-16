@@ -164,10 +164,10 @@ function MaximumEntropyLikeD(component)
     -- Copy the categoric values to process it later
     for t, attribute in pairs (luData.attributesClass) do
       for k = 1, #sample, 1 do
-    class[t][k] = sample[k][attribute]
-    if(k == 1) then
-      attributesClassNames[t] = attribute
-    end
+        class[t][k] = sample[k][attribute]
+        if(k == 1) then
+          attributesClassNames[t] = attribute
+        end
       end 
     end
 
@@ -216,9 +216,9 @@ function MaximumEntropyLikeD(component)
           max[t] = sample[k][attribute]
         end
     
-    if(k==1) then
-      attributesPercNames[t] = attribute
-    end
+        if(k==1) then
+          attributesPercNames[t] = attribute
+        end
       end
     end
     

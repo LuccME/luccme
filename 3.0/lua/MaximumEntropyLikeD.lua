@@ -216,9 +216,9 @@ function MaximumEntropyLikeD(component)
           max[t] = sample[k][attribute]
         end
     
-    if(k==1) then
-      attributesPercNames[t] = attribute
-    end
+        if(k==1) then
+          attributesPercNames[t] = attribute
+        end
       end
     end
     
@@ -236,7 +236,7 @@ function MaximumEntropyLikeD(component)
     file:write("")
     
     for i = 1, #min, 1 do
-    print(attributesPercNames[i])
+      print(attributesPercNames[i])
       print("min", min[i])
       print("max", max[i])
       print("avg", avg[i], "\n")

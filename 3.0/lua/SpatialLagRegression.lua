@@ -284,7 +284,7 @@ function SpatialLagRegression(component)
   			local neighSum = 0
   			local count = 0
   
-  			forEachNeighbor(cell, function (cell, neigh, weight)
+  			forEachNeighbor(cell, function (cell, neigh)
                           				Y = cell.past[lu]
                           				neighY = neigh.past[lu]
                           			   

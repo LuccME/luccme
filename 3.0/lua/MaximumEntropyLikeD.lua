@@ -140,7 +140,7 @@ function MaximumEntropyLikeD(component)
     local countSample = 1
     local countClass = 0
     local class = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},
-				   {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
+                   {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
     local sample = {}
     
     -- Search on the CS for samples of the LU
@@ -149,7 +149,7 @@ function MaximumEntropyLikeD(component)
          activeRegionNumber = rNumber
          
          -- Check the LU % on the cell to consider a sample
-         if (cell[lu] > (luData.cellUsePercentage/100)) then
+         if (cell[lu] == 1) then
            sample[countSample] = cell
            countSample = countSample + 1
          end
@@ -160,19 +160,23 @@ function MaximumEntropyLikeD(component)
       end 
     end
 
+  local attributesClassNames = {}
     -- Copy the categoric values to process it later
     for t, attribute in pairs (luData.attributesClass) do
-      for k, cell in pairs (cs.cells) do
-         class[t][k] = cell[attribute]
+      for k = 1, #sample, 1 do
+    class[t][k] = sample[k][attribute]
+    if(k == 1) then
+      attributesClassNames[t] = attribute
+    end
       end 
     end
-    
+
     -- Create the range, and store the categoric values
     local min = {}
     local max = {}
     local avg = {}
     local values = {{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},
-					{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
+                    {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}}
     
     -- Initialize the range "arrays"
     for i = 1, #luData.attributesPerc, 1 do
@@ -183,7 +187,7 @@ function MaximumEntropyLikeD(component)
    
     -- Store the categoric values on a table (simplifying to unique values)
     local countDiff = 1
-        
+
     for i = 1, #luData.attributesClass, 1 do
       values[i][1] = class[i][1]
       for j = 1, #class[i], 1 do
@@ -199,6 +203,7 @@ function MaximumEntropyLikeD(component)
       end
     end
     
+  local attributesPercNames = {}
     -- Search the min and max values, and sum all the vlaues for the LU        
     for k = 1, #sample, 1 do
       for t, attribute in pairs (luData.attributesPerc) do
@@ -210,6 +215,10 @@ function MaximumEntropyLikeD(component)
         if(max[t] < sample[k][attribute]) then
           max[t] = sample[k][attribute]
         end
+    
+    if(k==1) then
+      attributesPercNames[t] = attribute
+    end
       end
     end
     
@@ -224,23 +233,30 @@ function MaximumEntropyLikeD(component)
     
     file:write(lu.."\n")
     file:write("Cell number: "..#sample.."\n")
+    file:write("")
     
     for i = 1, #min, 1 do
-      print("min["..i.."]", min[i])
-      print("max["..i.."]", max[i])
-      print("avg["..i.."]", avg[i], "\n")
+    print(attributesPercNames[i])
+      print("min", min[i])
+      print("max", max[i])
+      print("avg", avg[i], "\n")
       
-      file:write("min["..i.."] "..min[i].."\n")
-      file:write("max["..i.."] "..max[i].."\n")
-      file:write("avg["..i.."] "..avg[i].."\n\n")
+      file:write(attributesPercNames[i].."\n")
+      file:write("min "..min[i].."\n")
+      file:write("max "..max[i].."\n")
+      file:write("avg "..avg[i].."\n\n")
     end
     
     for i = 1, #values, 1 do
-      for j = 1, #values[i], 1 do
-        print("values["..i.."]["..j.."]",values[i][j])
-        
-        file:write("values["..i.."]["..j.."] "..values[i][j].."\n")
-      end
+    if(attributesClassNames[i] ~= nil) then
+      print("\n"..attributesClassNames[i])
+      file:write("\n")
+      file:write(attributesClassNames[i].."\n")
+    end
+    for j = 1, #values[i], 1 do
+      print("values["..j.."]",values[i][j])
+      file:write("values["..j.."] "..values[i][j].."\n")
+    end
     end
 
     -- Calculaete the potential
@@ -257,8 +273,8 @@ function MaximumEntropyLikeD(component)
       avgCompare[i] = avgCompareIn
     end 
     
-    countOne = 0
-    countZero = 0
+    local countOne = 0
+    local countZero = 0
     
     for k, cell in pairs (cs.cells) do
       if(#luData.attributesPerc > 0) then
@@ -336,13 +352,13 @@ function MaximumEntropyLikeD(component)
         end
       end
       
-	  if (#sample > 0) then
-		  if (cell[pot] > 0) then
-			countOne = countOne + 1
-		  elseif (cell[pot] == 0) then
-			countZero = countZero + 1
-		  end
-	  end
+    if (#sample > 0) then
+      if (cell[pot] > 0) then
+        countOne = countOne + 1
+      elseif (cell[pot] == 0) then
+        countZero = countZero + 1
+      end
+    end
 
     end
     

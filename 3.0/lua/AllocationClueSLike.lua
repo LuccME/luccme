@@ -8,21 +8,28 @@
 -- Must have at least one region.
 -- @arg component.run Handles with the rules of the component execution.
 -- @arg component.verify Handles with the parameters verification.
--- @usage allocation = AllocationClueSLike {
--- maxIteration = 1000,
--- factorIteration = 0.00001,
--- maxDifference = 0.01,
--- transitionMatrix = {	{ -- Region 1
---							{1, 0, 0},
---							{1, 1, 0},
---							{0, 0, 1}} -- end Region 1
--- }}
+-- @usage --DONTRUN 
+--A1 = AllocationClueSLike
+--{
+--  maxIteration = 1000,
+--  factorIteration = 0.000001,
+--  maxDifference = 106,
+--  transitionMatrix =
+--  {
+--    --Region 1
+--    {
+--      {1, 1, 0},
+--      {0, 1, 0},
+--      {0, 0, 1}
+--    }
+--  }
+--}
 function AllocationClueSLike(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A AllocationClueSLike component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg component A AllocationClueSLike component with all data.
-	-- @usage self.allocation:run(event, model)
+	-- @usage --DONTRUN self.allocation:run(event, model)
 	component.run = function(self, event, model)
 		local useLog = model.useLog
 		local cs = model.cs
@@ -125,7 +132,7 @@ function AllocationClueSLike(component)
 	-- @arg self A allocationClueLike component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.allocation:verify(event, self)
+	-- @usage --DONTRUN self.allocation:verify(event, self)
  	component.verify = function(self, event, modelParameters)
 		print("Verifying Allocation parameters")
 		-- check maxIteration
@@ -178,7 +185,7 @@ function AllocationClueSLike(component)
 	--- Calculate the difference between the value of the demand and the value to be allocate.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg component A AllocationClueSLike component with all data.
-	-- @usage diff = self.calcDifferences(event, model)
+	-- @usage --DONTRUN diff = self.calcDifferences(event, model)
 	component.calcDifferences = function(self, event, component)
 		local cs = component.cs
 		local luTypes = component.landUseTypes
@@ -207,7 +214,7 @@ function AllocationClueSLike(component)
 	-- @arg luTypes A set of land uses types.
 	-- @arg interationFactor Interation factor
 	-- @arg iter The modifier (value) that changes the potential of each cell according to the difference to demand
-	-- @usage adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, self.maxDifference)
+	-- @usage --DONTRUN adjustIteration(cs, diff, luTypes, self.factorIteration, iteration, cellarea, self.maxDifference)
 	component.adjustIteration = function(self, diff, luTypes, interationFactor, iter) 
 		for luind, land in pairs (luTypes) do
 		  iter[land] = iter[land] + (diff[land] * interationFactor)
@@ -219,7 +226,7 @@ function AllocationClueSLike(component)
 	-- @arg diff The demand area difference
 	-- @arg luTypes A set of land uses types.
 	-- @arg maxdiffarea The limit between the demand and the allocated area
-	-- @usage allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
+	-- @usage --DONTRUN allocation_ok = self:convergency(diff, luTypes, maxdiffarea)
 	component.convergency = function(self, diff, luTypes, maxdiffarea)
 		local tot_diff = 0.0
 		local maxdiff = 0.0
@@ -245,7 +252,7 @@ function AllocationClueSLike(component)
 	-- @arg cellarea A cell area.
 	-- @arg field The field to be checked (Columns name).
 	-- @arg attr The attribute to be checked.
-	-- @usage areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
+	-- @usage --DONTRUN areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
 	component.areaAllocated = function(self, cs, cellarea, field, attr)
 		local count = 0
 		forEachCell(cs, function(cell)
@@ -261,7 +268,7 @@ function AllocationClueSLike(component)
 	--- Return an Index for a land use type in a set of land use types.
 	-- @arg lu A land use type.
 	-- @arg usetypes A set of land use type.
-	-- @usage luind = self:toIndex(lu, luTypes)
+	-- @usage --DONTRUN luind = self:toIndex(lu, luTypes)
 	component.toIndex = function(self, lu, usetypes)
 		local index = 0
 		for i, value in  pairs (usetypes) do
@@ -276,7 +283,7 @@ function AllocationClueSLike(component)
   
 	--- Initialise the iteration vector for each land use type.
 	-- @arg lutype A set of land uses type.  
-	-- @usage iteration = self:initIteration(luTypes)
+	-- @usage --DONTRUN iteration = self:initIteration(luTypes)
 	component.initIteration = function(self, lutypes)
 		local iteration = {}  
 		for k, lu in pairs (lutypes) do
@@ -290,7 +297,7 @@ function AllocationClueSLike(component)
 	-- @arg cell A cell area.
 	-- @arg cur_use The current use.
 	-- @arg higher_use The new land use attributed to the cell
-	-- @usage self:changeUse(cell, lu_past, lu_maior)
+	-- @usage --DONTRUN self:changeUse(cell, lu_past, lu_maior)
 	component.changeUse = function(self, cell, cur_use, higher_use)
 		cell[cur_use] = 0
 		cell[cur_use.."_out"] = 0
@@ -309,7 +316,7 @@ function AllocationClueSLike(component)
 	--- Return the current use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg landuses A set of land use types.
-	-- @usage lu_past = self:currentUse(cell, luTypes)
+	-- @usage --DONTRUN lu_past = self:currentUse(cell, luTypes)
 	component.currentUse = function(self, cell, landuses)
 		for i, land  in pairs (landuses) do
 		  if (cell[land] == 1) then

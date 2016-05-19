@@ -19,18 +19,27 @@
 -- @arg component.getCurrentLuDirection Return the current demand direction for an specific luIndex.
 -- @arg component.changeLuDirection Invert the demand direction for an specific luIndex.
 -- @return the modified component.
--- @usage demand = PreComputedValuesINPE {
--- annualDemand = {	{	205	,	5706	,	3	},
---					{	253	,	5658	,	3	},
---					{	300	,	5611	,	3	},
---					{	348	,	5563	,	3	}}
--- }
+-- @usage --DONTRUN 
+--D1 = PreComputedValuesINPE
+--{
+--  annualDemand =
+--  {
+--    -- "floresta", "desmatamento", "outros"
+--    {7771, 2829, 12},   -- 2008
+--    {7766, 2834, 12},   -- 2009
+--    {7762, 2838, 12},   -- 2010
+--    {7757, 2843, 12},   -- 2011
+--    {7754, 2846, 12},   -- 2012
+--    {7751, 2849, 12},   -- 2013
+--    {7748, 2852, 12}  -- 2014
+--  }
+--}
 function PreComputedValuesINPE(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A PreComputedValuesINPE component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.demand:run(event, model)
+	-- @usage --DONTRUN self.demand:run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local increasing = 1
 		local decreasing = -1
@@ -71,7 +80,7 @@ function PreComputedValuesINPE(component)
 	-- @arg self A PreComputedValuesINPE component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.demand:verify(event, self)
+	-- @usage --DONTRUN self.demand:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 		print("Verifying Demand parameters")
 		local yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
@@ -107,7 +116,7 @@ function PreComputedValuesINPE(component)
 	-- @arg self A PreComputedValuesINPE component.
 	-- Used on discrete allocation component
 	-- @return self.currentDemand the current demand of the component.
-	-- @usage currentDemand = demand:getCurrentDemand(i)
+	-- @usage --DONTRUN currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
 	end
@@ -115,7 +124,7 @@ function PreComputedValuesINPE(component)
 	--- Return the previous demand of the specified component.
 	-- @arg self A PreComputedValuesINPE component.
 	-- @return self.previousDemand the previous demand of the component.
-	-- @usage previousDemand = demand:getPreviousDemand(i)
+	-- @usage --DONTRUN previousDemand = demand:getPreviousDemand(i)
 	component.getPreviousDemand = function(self)	
 		return self.previousDemand
 	end
@@ -125,7 +134,7 @@ function PreComputedValuesINPE(component)
 	-- @arg self A PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand for an specific luIndex.
-	-- @usage model:getCurrentLuDemand(luIndex)
+	-- @usage --DONTRUN model:getCurrentLuDemand(luIndex)
 	component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -139,7 +148,7 @@ function PreComputedValuesINPE(component)
 	-- @arg self A PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The previous demand for an specific luIndex.
-	-- @usage model:getPreviousLuDemand(luIndex)
+	-- @usage --DONTRUN model:getPreviousLuDemand(luIndex)
 	component.getPreviousLuDemand = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -153,7 +162,7 @@ function PreComputedValuesINPE(component)
 	-- @arg self a PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
-	-- @usage model:getCurrentLuDirection(luIndex)
+	-- @usage --DONTRUN model:getCurrentLuDirection(luIndex)
 	component.getCurrentLuDirection = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -167,7 +176,7 @@ function PreComputedValuesINPE(component)
 	-- @arg self a PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
-	-- @usage model:changeLuDirection(luIndex)
+	-- @usage --DONTRUN model:changeLuDirection(luIndex)
 	component.changeLuDirection = function(self, luIndex)
 		local oppositeDirection = -1
 		

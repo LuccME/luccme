@@ -13,35 +13,63 @@
 -- @arg component.calcRegressionLogistic Handles with the calculation of the regression.
 -- @arg component.probability Compute the probability logistic method of a NeighAttractionLogisticRegression component.
 -- @return The modified component.
--- @usage potential  =  NeighAttractionLogisticRegression {
---    potentialData = { { --  Region 1
---                        -- D
---                        { const = -0.1004, 
---                          betas = {beta1 = 0.05814, beta2 = -0.97500, beta3 = -2.51651},                
---                          elasticity =  0.5, 
---                          percNeighborsUse = 0.5
---                        },
---                        -- F
---                        { const = -2.34188, 
---                          betas = {beta1 = -0.02727, beta2 = -4.30977, beta3 = -3.10320},                                                              
---                          elasticity =  0.5, 
---                          percNeighborsUse = 0.5
---                        },
---                        -- O
---                        { const = 0,
---                          betas = {beta1 = 1},  
---                          elasticity = 1,
---                          percNeighborsUse = 0.5
---                        }   
---                       }  --end region 1 
---                      } -- end potentialData
+-- @usage --DONTRUN 
+--P1 = NeighAttractionLogisticRegression
+--{
+--  potentialData =
+--  {
+--    -- region 1
+--    {
+--      -- floresta
+--      {
+--        const = -1.961,
+--        elasticity = 0.1,
+--        percNeighborsUse = 0.5,
+--
+--        betas =
+--        {
+--          dist_rodovias = 0.00008578,
+--          assentamentos = -0.2604,
+--          uc_us = 0.6064,
+--          fertilidadealtaoumedia = 0.4393
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        const = 1.978,
+--        elasticity = 0.1,
+--        percNeighborsUse = 0.5,
+--
+--        betas =
+--        {
+--          dist_rodovias = -0.00008651,
+--          assentamentos = 0.2676,
+--          uc_us = -0.6376,
+--          fertilidadealtaoumedia = -0.4565
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        const = 0,
+--        elasticity = 0,
+--        percNeighborsUse = 0,
+--
+--        betas =
+--        {
+--          
+--        }
+--      }
+--    }
 --  }
+--}
 function NeighAttractionLogisticRegression(component)
 	--- Handles with the execution method of a NeighAttractionLogisticRegression component.
 	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:run(event, model)
+	-- @usage --DONTRUN self.potential:run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -98,7 +126,7 @@ function NeighAttractionLogisticRegression(component)
 	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:verify(event, self)
+	-- @usage --DONTRUN self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
@@ -172,7 +200,7 @@ function NeighAttractionLogisticRegression(component)
 	-- @arg cell A spatial location with homogeneous internal content.
 	-- @arg inputValues A parameter component.
 	-- @arg component A NeighAttractionLogisticRegression component.
-	-- @usage component.calcRegressionLogistic(cell, inputValues, self)
+	-- @usage --DONTRUN component.calcRegressionLogistic(cell, inputValues, self)
 	component.calcRegressionLogistic = function(cell, inputValues, component)
 		local regrLogit = inputValues.const
 		local betas = inputValues.betas
@@ -187,7 +215,7 @@ function NeighAttractionLogisticRegression(component)
 	
 	--- Compute the probability.
 	-- @arg z A value used to calculate the probability (second parameter of a pow).
-	-- @usage component.probability(regrLogit)
+	-- @usage --DONTRUN component.probability(regrLogit)
 	component.probability = function(z)
 		local euler  = 2.718281828459045235360287
 		local zEuler = math.pow(euler, z)

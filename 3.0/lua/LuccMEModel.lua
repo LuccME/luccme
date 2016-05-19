@@ -14,38 +14,101 @@
 -- @arg model.execute Handles with the execution method of a LuccMe model.
 -- @arg model.verify Handles with the verify method of a LuccMe model.
 -- @arg model.dinamicVars Handles with the dinamicVars method of a LuccMe model.
--- @usage MyModel = LuccMEModel {
--- -- APPLICATION MODEL DEFINITION
--- name = "MyModel_1",
--- startTime = 2013,
--- endTime = 2015,
--- cs = CellularSpace {database = "myDatabase.mdb", layer = "mylayer", cellArea = 1},
--- landUseTypes = {"Deforest", "Forest", "Others"},
--- landUseNoData = "Border",
--- potential = NeighSimpleRule {},
--- allocation = AllocationByOrdering {maxDifference = 0.001},
--- demand  = PreComputedValuesAutoDemand {finalYearForInterpolation = 2015,
---										  landUseTypesForInterpolation = {"D", "F", "O"}},					
--- save = {outputTheme = "mylayer_", yearly = true},
--- isCoupled = false
+-- @usage --DONTRUN
+--import("luccme")
+--
+--dofile("D:\\Diego Melo\\Desktop\\lab1_submodel.lua")
+--
+--
+----------------------------------------------------------------
+----             LuccME APPLICATION MODEL DEFINITION          --
+----------------------------------------------------------------
+--Lab1 = LuccMEModel
+--{
+--  name = "Lab1",
+--
+--  -----------------------------------------------------
+--  -- Temporal dimension definition                   --
+--  -----------------------------------------------------
+--  startTime = 2008,
+--  endTime = 2014,
+--
+--  -----------------------------------------------------
+--  -- Spatial dimension definition                    --
+--  -----------------------------------------------------
+--  cs = CellularSpace
+--  {
+--    project = "D:\\cs_continuous.tview",
+--    layer = "csAC",
+--    cellArea = 25,
+--  },
+--
+--  -----------------------------------------------------
+--  -- Land use variables definition                   --
+--  -----------------------------------------------------
+--  landUseTypes =
+--  {
+--    "floresta", "desmatamento", "outros"
+--  },
+--
+--  landUseNoData = "outros",
+--
+--  -----------------------------------------------------
+--  -- Behaviour dimension definition:                 --
+--  -- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
+--  -----------------------------------------------------
+--  demand = D1,
+--  potential = P1,
+--  allocation = A1,
+--
+--  save  =
+--  {
+--    outputTheme = "Lab1_",
+--    mode = "multiple",
+--    saveYears = {2014},
+--    saveAttrs = 
+--    {
+--      "desmatamento_out",
+--      "desmatamento_change",
+--      "desmatamento_pot",
+--    },
+--
+--  },
+--
+--  isCoupled = false
+--}  -- END LuccME application model definition
+--
+-------------------------------------------------------
+---- ENVIROMMENT DEFINITION                          --
+-------------------------------------------------------
+--timer = Timer
+--{
+--  Event
+--  {
+--    start = Lab1.startTime,
+--    action = function(event)
+--            Lab1:run(event)
+--          end
+--  }
 --}
--- -- ENVIROMMENT DEFINITION
--- timer = Timer {Event { time = MyModel.startTime, period = 1, priority = 1,
---						  action = function(event) MyModel:execute(event) end }}
--- envMymodel = Environment{}
--- envMymodel:add(timer)
--- -- ENVIROMMENT EXECUTION
--- if MyModel.isCoupled == false then
--- 	saveResults = databaseSave(MyModel)
--- 	envMymodel:add(saveResults)
--- 	envMymodel:execute(MyModel.endTime)
--- 	saveSinglelayer(MyModel, true)
--- end
+--
+--env_Lab1 = Environment{}
+--env_Lab1:add(timer)
+--
+-------------------------------------------------------
+---- ENVIROMMENT EXECUTION                           --
+-------------------------------------------------------
+--if Lab1.isCoupled == false then
+--  tsave = databaseSave(Lab1)
+--  env_Lab1:add(tsave)
+--  env_Lab1:run(Lab1.endTime)
+--  saveSingleTheme (Lab1, true)
+--end
 function LuccMEModel(model)
 	--- Implements the execution method of a LuccMe model.
 	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
-	-- @usage luccMeModel:execute(event)
+	-- @usage --DONTRUN --DONTRUN luccMeModel:execute(event)
 	model.run = function(self, event)
 		if (event:getTime() == self.startTime) then
 			model:verify(event)
@@ -67,7 +130,7 @@ function LuccMEModel(model)
 	--- Implements the verify method of a LuccMe model.
 	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
-	-- @usage luccMeModel:verify(event)
+	-- @usage --DONTRUN --DONTRUN luccMeModel:verify(event)
 	model.verify = function(self, event)
 		print("\nVerifying Model parameters")
 		-- Verify the model name
@@ -167,7 +230,7 @@ function LuccMEModel(model)
 	--- Implements the variables dynamic method of a LuccMe model.
 	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
-	-- @usage luccMeModel:dinamicVars(event)
+	-- @usage --DONTRUN --DONTRUN luccMeModel:dinamicVars(event)
 	model.dinamicVars = function(self, event, model)
 		local currentTime = event:getTime()
 		local cs = model.cs

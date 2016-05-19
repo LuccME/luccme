@@ -1,6 +1,6 @@
 --- Save the generated data after the simulation into the database for each year a layer will be created.
 -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
--- @usage saveToDatabase = databaseSave(luccMeModel)
+-- @usage --DONTRUN saveToDatabase = databaseSave(luccMeModel)
 function databaseSave(luccmemodel)
 	local saveYears = {}
 	local e1 = {}
@@ -76,7 +76,7 @@ end
 
 --- Save the generated data after the simulation into the database all the data for each year will be created in a single layer.
 -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
--- @usage saveToDatabase = saveSingleTheme(luccMeModel)
+-- @usage --DONTRUN saveToDatabase = saveSingleTheme(luccMeModel)
 function saveSingleTheme(luccmemodel)
 	local n = 1
 	local attrs_inc = {}

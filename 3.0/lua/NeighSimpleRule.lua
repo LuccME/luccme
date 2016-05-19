@@ -4,7 +4,8 @@
 -- @arg component.run Handles with the execution method of a NeighSimpleRule component.
 -- @arg component.verify Handles with the verify method of a NeighSimpleRule component.
 -- @return The modified component.
--- @usage potential = NeighSimpleRule{}
+-- @usage -- DONTRUN
+-- P1 = NeighSimpleRule{}
 function NeighSimpleRule(component)
 	--- Handles with the execution method of a NeighSimpleRule component.
 	-- @arg self A NeighSimpleRule component.

@@ -17,28 +17,63 @@
 -- @arg component.modifyDriver Modify potencial for an protected area.
 -- @arg component.computePotential Handles with the modify method of a LinearRegression component.
 -- @return The modified component.
--- @usage myPontencial = LinearRegression {
--- potentialData = {
---                    -- Region 1
---                    {
---                      --Natural vegetation
---                      { isLog = false, error = 0.1, const  = -0.1,
---                        betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
---                      -- Deforestation
---                      { isLog = false, error = 0.3, const  = -0.3,
---                        betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
---                      -- Others
---                      { isLog = false, error = 0, const  = 0,
---                        betas = {beta1 =  0}}
---                    }
---                  }
+-- @usage --DONTRUN
+--P1 = LinearRegression
+--{
+--  potentialData =
+--  {
+--    -- Region 1
+--    {
+--      -- floresta
+--      {
+--        isLog = false,
+--        const = 0.7392,
+--
+--        betas =
+--        {
+--          assentamentos = -0.2193,
+--          uc_us = 0.1754,
+--          uc_pi = 0.09708,
+--          ti = 0.1207,
+--          dist_riobranco = 0.0000002388,
+--          fertilidadealtaoumedia = -0.1313
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        isLog = false,
+--        const = 0.267,
+--
+--        betas =
+--        {
+--          rodovias = -0.0000009922,
+--          assentamentos = 0.2294,
+--          uc_us = -0.09867,
+--          dist_riobranco = -0.0000003216,
+--          fertilidadealtaoumedia = 0.1281
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        isLog = false,
+--        const = 0,
+--
+--        betas =
+--        {
+--          
+--        }
+--      }
+--    }
+--  }
 --}
 function LinearRegression(component)
 	--- Handles with the execution method of a LinearRegression component.
 	-- @arg self A PreComputedValuesAutoDemand component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:run(event, model)
+	-- @usage --DONTRUN self.potential:run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luDrivers = self.landUseDrivers
@@ -69,7 +104,7 @@ function LinearRegression(component)
 	-- @arg self A LinearRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:verify(event, self)
+	-- @usage --DONTRUN self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 		print("Verifying Potential parameters")
 		local cs = luccMEModel.cs
@@ -142,7 +177,7 @@ function LinearRegression(component)
 	-- @arg rNumber The potential region number.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @arg direction The direction for the regression.
-	-- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect)
+	-- @usage --DONTRUN luccMEModel.potential:modify(luccMEModel, j, i, luDirect)
 	component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
 		local luData = self.potentialData[rNumber][luIndex] 
 			 
@@ -162,7 +197,7 @@ function LinearRegression(component)
 	-- @arg self A LinearRegression component.
 	-- @arg demand A demand to calculate the potential.
 	-- @arg rNumber The potential region number.
-	-- @usage self:adaptRegressionConstants(demand, rNumber)
+	-- @usage --DONTRUN self:adaptRegressionConstants(demand, rNumber)
 	component.adaptRegressionConstants = function(self, demand, rNumber)
 		for i, luData in pairs (self.potentialData[rNumber]) do			
 			local currentDemand = demand:getCurrentLuDemand(i)
@@ -221,7 +256,7 @@ function LinearRegression(component)
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
 	-- @arg rNumber The potential region number.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-	-- @usage self:computePotential(luccMEModel, luIndex)		
+	-- @usage --DONTRUN self:computePotential(luccMEModel, luIndex)		
 	component.computePotential = function(self, luccMEModel, rNumber, luIndex)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes

@@ -1,14 +1,74 @@
----  
--- @arg component A Spatial Lag Regression component.
+-- Component developed based on MaxEnt behaviour, considering the attributes values of the samples cells
+-- to calculate the potencial of the use on the whole cellular space.  
+--@arg component A Spatial Lag Regression component.
 -- @return The modified component.
--- @usage myPontencial = MaximumEntropyLike {
+-- @usage --DONTRUN 
+--P1 = MaximumEntropyLikeD
+--{
+--  potentialData =
+--  {
+--    -- Region 1
+--    {
+--      -- floresta
+--      {
+--        cellUsePercentage = 100, 
+--
+--        attributesPerc = 
+--        {
+--          "dist_rodovias",
+--          "dist_centrourbano",
+--        },
+--
+--        attributesClass = 
+--        {
+--          "uc_us",
+--          "fertilidadealtaoumedia",
+--          "assentamentos",
+--          "ti",
+--          "desmatamento"
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        cellUsePercentage = 100, 
+--
+--        attributesPerc = 
+--        {
+--          "dist_rodovias",
+--          "dist_centrourbano",
+--        },
+--
+--        attributesClass = 
+--        {
+--          "uc_us",
+--          "fertilidadealtaoumedia",
+--          "assentamentos",
+--          "ti",
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        cellUsePercentage = 100, 
+--
+--        attributesPerc = 
+--        {
+--        },
+--
+--        attributesClass = 
+--        {
+--        }
+--      }
+--    }
+--  }
 --}
 function MaximumEntropyLikeD(component)
   --- Handles with the execution method of a MaximumEntropyLike component.
   -- @arg self A MaximumEntropyLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self.potential:run(event, model)
+  -- @usage --DONTRUN self.potential:run(event, model)
   component.run = function(self, event, luccMEModel)
     local cs = luccMEModel.cs
     local luDrivers = self.landUseDrivers
@@ -31,7 +91,7 @@ function MaximumEntropyLikeD(component)
   -- @arg self A SpatialLagRegression component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self.potential:verify(event, self)
+  -- @usage --DONTRUN self.potential:verify(event, self)
   component.verify = function(self, event, luccMEModel)
    print("Verifying Potential parameters")
    local cs = luccMEModel.cs
@@ -97,7 +157,7 @@ function MaximumEntropyLikeD(component)
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
-  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
+  -- @usage --DONTRUN luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
   end
   
@@ -129,7 +189,7 @@ function MaximumEntropyLikeD(component)
   -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-  -- @usage self:computePotential(luccMEModel, luIndex)   
+  -- @usage --DONTRUN self:computePotential(luccMEModel, luIndex)   
   component.computePotential = function(self, luccMEModel, rNumber, luIndex)
     local cs = luccMEModel.cs 
     local luTypes = luccMEModel.landUseTypes

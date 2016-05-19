@@ -20,18 +20,20 @@
 -- @arg component.getCurrentLuDirection Return the current demand direction for an specific luIndex.
 -- @arg component.changeLuDirection Invert the demand direction for an specific luIndex.
 -- @return The modified component.
--- @usage demand = ComputeInputThreeDateMaps {
---  middleYearForInterpolation = 2002,
---  middleLandUseTypesForInterpolation = {"Dmiddle", "Fmiddle", "Omiddle"}
---  finalYearForInterpolation = 2004,
---  finalLandUseTypesForInterpolation = {"Dfinal", "Ffinal", "Ofinal"}
--- }
+-- @usage --DONTRUN 
+--D1 = ComputeInputThreeDateMaps
+--{
+--  middleYearForInterpolation = 2011,
+--  middleLandUseTypesForInterpolation = {"floresta2011", "desmatamento2011", "outros"},
+--  finalYearForInterpolation = 2014,
+--  finalLandUseTypesForInterpolation = {"floresta2014", "desmatamento2014", "outros"},
+--}
 function ComputeInputThreeDateMaps(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A ComputeInputThreeDateMaps component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.demand:run(event, model)
+	-- @usage --DONTRUN self.demand:run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local increasing = 1
 		local decreasing = -1
@@ -72,7 +74,7 @@ function ComputeInputThreeDateMaps(component)
 	-- @arg self A ComputeInputThreeDateMaps component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.demand:verify(event, self)
+	-- @usage --DONTRUN self.demand:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  print("Verifying Demand parameters")
 		local yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
@@ -331,7 +333,7 @@ function ComputeInputThreeDateMaps(component)
   
 	--- Print on screen the generated demand.
 	-- @arg self A ComputeInputThreeDateMaps component.
-	-- @usage self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
+	-- @usage --DONTRUN self:printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 	component.printDemand = function(self, initialDemand, middleDemandForInterpolation, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 		-- Print on screen the demands (for conference)
 		-- print the initial demand
@@ -381,7 +383,7 @@ function ComputeInputThreeDateMaps(component)
   -- @arg self A PreComputedValuesINPE component.
   -- Used on discrete allocation component
   -- @return self.currentDemand the current demand of the component.
-  -- @usage currentDemand = demand:getCurrentDemand(i)
+  -- @usage --DONTRUN currentDemand = demand:getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
   end
@@ -389,7 +391,7 @@ function ComputeInputThreeDateMaps(component)
 	--- Return the previous demand of the specified component.
 	-- @arg self A ComputeInputThreeDateMaps component.
 	-- @return self.previousDemand the previous demand of the component.
-	-- @usage previousDemand = demand:getPreviousDemand(i)
+	-- @usage --DONTRUN previousDemand = demand:getPreviousDemand(i)
   component.getPreviousDemand = function(self)	
 		return self.previousDemand
   end
@@ -399,7 +401,7 @@ function ComputeInputThreeDateMaps(component)
   -- @arg self A PreComputedValuesINPE component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand for an specific luIndex.
-  -- @usage model:getCurrentLuDemand(luIndex)
+  -- @usage --DONTRUN model:getCurrentLuDemand(luIndex)
   component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -413,7 +415,7 @@ function ComputeInputThreeDateMaps(component)
   -- @arg self A PreComputedValuesINPE component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The previous demand for an specific luIndex.
-  -- @usage model:getPreviousLuDemand(luIndex)
+  -- @usage --DONTRUN model:getPreviousLuDemand(luIndex)
 	component.getPreviousLuDemand = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -427,7 +429,7 @@ function ComputeInputThreeDateMaps(component)
   -- @arg self a PreComputedValuesINPE component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
-  -- @usage model:getCurrentLuDirection(luIndex)
+  -- @usage --DONTRUN model:getCurrentLuDirection(luIndex)
 	component.getCurrentLuDirection = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -441,7 +443,7 @@ function ComputeInputThreeDateMaps(component)
   -- @arg self a PreComputedValuesINPE component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
-  -- @usage model:changeLuDirection(luIndex)
+  -- @usage --DONTRUN model:changeLuDirection(luIndex)
   component.changeLuDirection = function(self, luIndex)
 		local oppositeDirection = -1
 		

@@ -3,16 +3,17 @@
 -- @arg component A AllocationBySimpleOrdering component.
 -- @arg component.run Handles with the rules of the component execution.
 -- @arg component.verify Handles with the parameters verification.
--- @usage allocation = AllocationBySimpleOrdering
---                     {	
---                          maxDifference = 0.001
---					           }   
+-- @usage --DONTRUN 
+--A1 = AllocationBySimpleOrdering
+--{
+--  maxDifference = 106
+--} 
 function AllocationBySimpleOrdering(component)
 	--- Handles with the rules of the component execution.
 	-- @arg self A allocationClueLike component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg model AllocationBySimpleOrdering model.
-	-- @usage self.allocation:run(event, model)
+	-- @usage --DONTRUN self.allocation:run(event, model)
 	component.run = function(self, event, model)
 		local useLog = model.useLog
 		local cs = model.cs
@@ -126,7 +127,7 @@ function AllocationBySimpleOrdering(component)
 	--- Handles with the parameters verification.
 	-- @arg self An AllocationBySimpleOrdering component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @usage self.allocation:verify(event, self)
+	-- @usage --DONTRUN self.allocation:verify(event, self)
 	component.verify = function(self, event)
 		print("Verifying Allocation parameters")
 		if (self.maxDifference == nil) then
@@ -139,7 +140,7 @@ function AllocationBySimpleOrdering(component)
 	-- @arg cellarea A cell area.
 	-- @arg field The field to be checked (Columns name).
 	-- @arg attr The attribute to be checked.
-	-- @usage areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
+	-- @usage --DONTRUN areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
 	component.areaAllocated = function(self, cs, cellarea, field, attr)
 		local c = 0
 		forEachCell(cs, function(cell)
@@ -156,7 +157,7 @@ function AllocationBySimpleOrdering(component)
 	-- @arg cell A cell area.
 	-- @arg cur_use The current use.
 	-- @arg higher_use The biggest cell value
-	-- @usage self:changeUse(cell, currentUse(cell, luTypes), cell.simUse))
+	-- @usage --DONTRUN self:changeUse(cell, currentUse(cell, luTypes), cell.simUse))
 	component.changeUse = function(self, cell, cur_use, higher_use)
 		cell[cur_use] = 0
 		cell[cur_use.."_out"] = 0
@@ -174,7 +175,7 @@ function AllocationBySimpleOrdering(component)
 	--- Return the current use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg landuses A set of land use types.
-	-- @usage self:currentUse(cell, luTypes)
+	-- @usage --DONTRUN self:currentUse(cell, luTypes)
 	component.currentUse = function(self, cell, landuses)
 		for i, land  in pairs (landuses) do
 		  if (cell[land] == 1) then

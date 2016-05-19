@@ -6,20 +6,57 @@
 -- @arg component.run Handles with the execution method of a NeighInverseDistanceRule component.
 -- @arg component.verify Handles with the verify method of a LogisticRegression component.
 -- @return The modified component.
--- @usage potential = NeighInverseDistanceRule{
---  potentialData = { 
---                    { -- Region 1            
---                      {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}},  --D
---					            {const = 0.01, betas = {dist_estradas = -0.5}},  				       --F
---					            {const = 0.000, betas = {dist_estradas = 0}}					         --O
---                    }
---					}}  					
+-- @usage --DONTRUN 
+--P1 = NeighInverseDistanceRule
+--{
+--  potentialData =
+--  {
+--    -- Region 1
+--    {
+--      -- floresta
+--      {
+--        const = -1.961,
+--
+--        betas =
+--        {
+--          dist_rodovias = 0.00008578,
+--          assentamentos = -0.2604,
+--          uc_us = 0.6064,
+--          fertilidadealtaoumedia = 0.4393
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        const = 1.978,
+--
+--        betas =
+--        {
+--          dist_rodovias = -0.00008651,
+--          assentamentos = 0.2676,
+--          uc_us = -0.6376,
+--          fertilidadealtaoumedia = 0.4565
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        const = 0,
+--
+--        betas =
+--        {
+--          
+--        }
+--      }
+--    }
+--  }
+--}				
 function NeighInverseDistanceRule(component)
 	--- Handles with the execution method of a NeighInverseDistanceRule component.
 	-- @arg self A NeighInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:run(event, model)
+	-- @usage --DONTRUN self.potential:run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -86,7 +123,7 @@ function NeighInverseDistanceRule(component)
 	-- @arg self A NeighInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:verify(event, self)
+	-- @usage --DONTRUN self.potential:verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")

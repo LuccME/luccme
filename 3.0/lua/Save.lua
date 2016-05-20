@@ -1,6 +1,7 @@
+local x = os.clock();
 --- Save the generated data after the simulation into the database for each year a layer will be created.
--- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
--- @usage --DONTRUN saveToDatabase = databaseSave(luccMeModel)
+-- @usage --DONTRUN 
+-- databaseSave(luccMeModel)
 function databaseSave(luccmemodel)
 	local saveYears = {}
 	local e1 = {}
@@ -75,8 +76,8 @@ function databaseSave(luccmemodel)
 end
 
 --- Save the generated data after the simulation into the database all the data for each year will be created in a single layer.
--- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
--- @usage --DONTRUN saveToDatabase = saveSingleTheme(luccMeModel)
+-- @usage --DONTRUN
+-- saveSingleTheme(luccMeModel)
 function saveSingleTheme(luccmemodel)
 	local n = 1
 	local attrs_inc = {}
@@ -113,6 +114,7 @@ function saveSingleTheme(luccmemodel)
 	print("Saving "..luccmemodel.save.outputTheme.."ext_area_"..luccmemodel.endTime.." into database.")
 	luccmemodel.cs:save(luccmemodel.save.outputTheme.."ext_area_"..luccmemodel.endTime, attrs_ext)
 	
+	print(string.format("\nElapsed time: %.2f\n", os.clock() - x))
 	print("\nEnd of Simulation")
 	
 	-- Hold the screen

@@ -13,9 +13,9 @@
 -- @arg component.allocationData A table with two allocation parameters for each land use.
 -- @arg component.allocationData.static Indicates if the variable can increase or decrease in each cell, or only change in the direction of the demand.
 -- @arg component.allocationData.minValue Minimum value allowed for the percentage of a given land use  in a cell (as a result of new changes -  the original 
--- value can be out of the limits )
+-- value can be out of the limits).
 -- @arg component.allocationData.maxValue Maximum value  allowed for the percentage of a given land use  in a cell (as a result of new changes - the original
--- value can be out of the limits )
+-- value can be out of the limits).
 -- @arg component.allocationData.minChange Minimum change in a given land use in a cell in a time step until (saturation) threshold.
 -- @arg component.allocationData.maxChange Maximum change in a given land use allowed in a cell in a time step until (saturation) threshold.
 -- @arg component.allocationData.changeLimiarValue Threshold (or limier) refers to a given amount of the land use in each cell.  After this limier, the speed
@@ -28,7 +28,7 @@
 -- @arg component.computeChange Compute the Allocation change based on the potential of the cell.
 -- @arg component.compareAllocationToDemand Compares the demand to the amount of allocated land
 -- use/cover, then adapts elasticity.
--- @arg component.correctCellChange Corrects total land use/cover types to 100 percent
+-- @arg component.correctCellChange Corrects total land use/cover types to 100 percent.
 -- @arg component.countAllocatedLandUseArea Calculates total area allocated by the regression
 -- equations for each land use/cover type.
 -- @arg component.printAllocatedArea Calculates and prints the allocated by the regression
@@ -51,10 +51,9 @@
 --}
 function AllocationClueLike(component)
   --- Handles with the rules of the component execution.
-  -- @arg self A AllocationClueLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN self.allocation:run(event, model)
+  -- @usage --DONTRUN 
+  -- component.run(event, model)
   component.run = function(self, event, luccMEModel)
     -- Synchronize cellular space in the first year
     local luTypes = luccMEModel.landUseTypes
@@ -126,10 +125,9 @@ function AllocationClueLike(component)
   end
 		
   --- Handles with the parameters verification.
-  -- @arg self A AllocationClueLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN self.allocation:verify(event, self)
+  -- @usage --DONTRUN 
+  -- component.verify(event, self)
   component.verify = function(self, event, luccMEModel)
     print("Verifying Allocation parameters")
     -- check maxDifference
@@ -232,10 +230,9 @@ function AllocationClueLike(component)
 	 
   --- Handles with the elasticity initialize considering a single elasticity for each land use (all cells).
   -- Similar to the coarse scale old clue.
-  -- @arg self A AllocationClueLike component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg value The elasticity value.
-  -- @usage --DONTRUN self:initElasticity(luccMEModel, self.initialElasticity)
+  -- @usage --DONTRUN 
+  -- component.initElasticity(luccMEModel, self.initialElasticity)
   component.initElasticity = function(self, luccMEModel, value)
     -- Init elasticity. In this version of the component, a single elasticity for each land use (all cells).
     -- Similar to the coarse scale old clue
@@ -247,9 +244,8 @@ function AllocationClueLike(component)
 	end
 
 	--- Compute the Allocation change based on the potential of the cell.
-  -- @arg self A AllocationClueLike component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN self:computeChange(luccMEModel)
+  -- @usage --DONTRUN 
+  -- component.computeChange(luccMEModel)
   component.computeChange = function(self, luccMEModel)
     local cs = luccMEModel.cs
     local luTypes = luccMEModel.landUseTypes
@@ -309,10 +305,9 @@ function AllocationClueLike(component)
   end -- computeChange
 
   --- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
-  -- @arg self A AllocationClueLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN maxdiff = self:compareAllocationToDemand(event, luccMEModel)
+  -- @usage --DONTRUN 
+  -- component.compareAllocationToDemand(event, luccMEModel)
   component.compareAllocationToDemand = function(self, event, luccMEModel)
     -- Compares the demand to the amount of allocated land use/cover, then adapts elasticity
     local cs = luccMEModel.cs
@@ -382,9 +377,8 @@ function AllocationClueLike(component)
   end
 		
   --- Corrects total land use/cover types to 100 percent.
-  -- @arg self A AllocationClueLike component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN self:correctCellChange(luccMEModel)
+  -- @usage --DONTRUN 
+  -- component.correctCellChange(luccMEModel)
   component.correctCellChange = function(self, luccMEModel)
   -- corrects total land use/cover types to 100 percent
     local cs = luccMEModel.cs
@@ -562,10 +556,10 @@ function AllocationClueLike(component)
   end -- correctCellChange
 	
   --- Calculates total area allocated by the regression equations for each land use/cover type.
-  -- @arg self A AllocationClueLike component.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg luTypes A set of land use types.
-  -- @usage --DONTRUN areas = self:countAllocatedLandUseArea(cs, luTypes)
+  -- @usage --DONTRUN 
+  -- component.countAllocatedLandUseArea(cs, luTypes)
   component.countAllocatedLandUseArea = function(self, cs, luTypes)
     -- Calculates total area allocated by the regression equations for each land use/cover type
     local areas = {}
@@ -586,11 +580,10 @@ function AllocationClueLike(component)
   end
   
   --- Calculates and prints the allocated by the regression equations for each land use/cover type.
-  -- @arg self A AllocationClueLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg nIter An iterator number.
-  -- @usage --DONTRUN self:printAllocatedArea(event, luccMEModel, nIter)
+  -- @usage --DONTRUN 
+  -- component.printAllocatedArea(event, luccMEModel, nIter)
   component.printAllocatedArea = function(self, event, luccMEModel, nIter)
     -- Calculates and prints the allocated by the regression equations for each land use/cover type
     local cs = luccMEModel.cs

@@ -54,10 +54,9 @@
 --}
 function InverseDistanceRule(component)
 	--- Handles with the execution method of a InverseDistanceRule component.
-	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage --DONTRUN self.potential:run(event, model)
+  -- @usage --DONTRUN
+	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -95,10 +94,9 @@ function InverseDistanceRule(component)
 	end -- end run
 	
 	--- Handles with the verify method of a InverseDistanceRule component.
-	-- @arg self A InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage --DONTRUN self.potential:verify(event, self)
+	-- @usage --DONTRUN
+	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs 
 	  print("Verifying Potential parameters")

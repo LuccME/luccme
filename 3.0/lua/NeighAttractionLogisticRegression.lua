@@ -66,10 +66,9 @@
 --}
 function NeighAttractionLogisticRegression(component)
 	--- Handles with the execution method of a NeighAttractionLogisticRegression component.
-	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage --DONTRUN self.potential:run(event, model)
+  -- @usage --DONTRUN
+	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -123,10 +122,9 @@ function NeighAttractionLogisticRegression(component)
 	end -- end run
 	
 	--- Handles with the verify method of a NeighAttractionLogisticRegression component.
-	-- @arg self A NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage --DONTRUN self.potential:verify(event, self)
+	-- @usage --DONTRUN
+	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
@@ -200,7 +198,8 @@ function NeighAttractionLogisticRegression(component)
 	-- @arg cell A spatial location with homogeneous internal content.
 	-- @arg inputValues A parameter component.
 	-- @arg component A NeighAttractionLogisticRegression component.
-	-- @usage --DONTRUN component.calcRegressionLogistic(cell, inputValues, self)
+	-- @usage --DONTRUN
+	-- component.calcRegressionLogistic(cell, inputValues, self)
 	component.calcRegressionLogistic = function(cell, inputValues, component)
 		local regrLogit = inputValues.const
 		local betas = inputValues.betas
@@ -215,7 +214,8 @@ function NeighAttractionLogisticRegression(component)
 	
 	--- Compute the probability.
 	-- @arg z A value used to calculate the probability (second parameter of a pow).
-	-- @usage --DONTRUN component.probability(regrLogit)
+	-- @usage --DONTRUN
+	-- component.probability(regrLogit)
 	component.probability = function(z)
 		local euler  = 2.718281828459045235360287
 		local zEuler = math.pow(euler, z)

@@ -10,22 +10,21 @@
 --} 
 function AllocationBySimpleOrdering(component)
 	--- Handles with the rules of the component execution.
-	-- @arg self A allocationClueLike component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg model AllocationBySimpleOrdering model.
-	-- @usage --DONTRUN self.allocation:run(event, model)
-	component.run = function(self, event, model)
-		local useLog = model.useLog
-		local cs = model.cs
-		local potential = model.potential		
+	-- @usage --DONTRUN 
+	-- component.run(event, model)
+	component.run = function(self, event, luccMEModel)
+		local useLog = luccMEModel.useLog
+		local cs = luccMEModel.cs
+		local potential = luccMEModel.potential		
 		local cellarea = cs.cellArea
-		local step = event:getTime() - model.startTime + 1	
-		local start = model.startTime		
-		local demand = model.demand
+		local step = event:getTime() - luccMEModel.startTime + 1	
+		local start = luccMEModel.startTime		
+		local demand = luccMEModel.demand
 		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
-		local luTypes = model.landUseTypes
+		local luTypes = luccMEModel.landUseTypes
 		local dem = {}
 		local differences = {}
 		
@@ -64,10 +63,10 @@ function AllocationBySimpleOrdering(component)
 
 		-- Ordenação dos vetores de uso de acordo com as maiores probabilidades
 		for ind, lu in  pairs (luTypes) do	
-			if (lu ~= model.landUseNoData) then 
+			if (lu ~= luccMEModel.landUseNoData) then 
 				ord = Trajectory { target = cs,
         								   select = function(cell)
-														return (cell.alloc ~= 1 and cell.simUse ~= model.landUseNoData)
+														return (cell.alloc ~= 1 and cell.simUse ~= luccMEModel.landUseNoData)
 													end,
         								   greater = function(c, d)
 														return c[lu.."_pot"] > d[lu.."_pot"]
@@ -125,9 +124,9 @@ function AllocationBySimpleOrdering(component)
  	end -- end of 'run' function
  	
 	--- Handles with the parameters verification.
-	-- @arg self An AllocationBySimpleOrdering component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @usage --DONTRUN self.allocation:verify(event, self)
+	-- @usage --DONTRUN 
+	-- component.verify(event, self)
 	component.verify = function(self, event)
 		print("Verifying Allocation parameters")
 		if (self.maxDifference == nil) then
@@ -140,7 +139,8 @@ function AllocationBySimpleOrdering(component)
 	-- @arg cellarea A cell area.
 	-- @arg field The field to be checked (Columns name).
 	-- @arg attr The attribute to be checked.
-	-- @usage --DONTRUN areaAlloc = areaAllocated(ord, cellarea, "alloc", 1)
+	-- @usage --DONTRUN 
+	-- component.areaAllocated(ord, cellarea, "alloc", 1)
 	component.areaAllocated = function(self, cs, cellarea, field, attr)
 		local c = 0
 		forEachCell(cs, function(cell)
@@ -156,8 +156,9 @@ function AllocationBySimpleOrdering(component)
 	--- Handles with the change of an use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg cur_use The current use.
-	-- @arg higher_use The biggest cell value
-	-- @usage --DONTRUN self:changeUse(cell, currentUse(cell, luTypes), cell.simUse))
+	-- @arg higher_use The biggest cell value.
+	-- @usage --DONTRUN 
+	-- component.changeUse(cell, currentUse(cell, luTypes), cell.simUse))
 	component.changeUse = function(self, cell, cur_use, higher_use)
 		cell[cur_use] = 0
 		cell[cur_use.."_out"] = 0
@@ -175,7 +176,8 @@ function AllocationBySimpleOrdering(component)
 	--- Return the current use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg landuses A set of land use types.
-	-- @usage --DONTRUN self:currentUse(cell, luTypes)
+	-- @usage --DONTRUN 
+	-- component.currentUse(cell, luTypes)
 	component.currentUse = function(self, cell, landuses)
 		for i, land  in pairs (landuses) do
 		  if (cell[land] == 1) then

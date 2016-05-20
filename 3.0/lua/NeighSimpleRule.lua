@@ -8,10 +8,9 @@
 -- P1 = NeighSimpleRule{}
 function NeighSimpleRule(component)
 	--- Handles with the execution method of a NeighSimpleRule component.
-	-- @arg self A NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:run(event, model)
+	-- @usage --DONTRUN 
+	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -57,9 +56,9 @@ function NeighSimpleRule(component)
 	end -- end run
 	
 	--- Handles with the verify method of a NeighSimpleRule component.
-	-- @arg self A NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @usage self.potential:verify(self, event)
+	-- @usage --DONTRUN 
+	-- component.verify(self, event)
 	component.verify = function(self, event)
 	  print("Verifying Potential parameters")
 	end

@@ -135,10 +135,9 @@
 --}
 function SpatialLagLinearRoads(component)
   --- Handles with the execution method of a SpatialLagRegression_region component.
-  -- @arg self A SpatialLagRegression_region component.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN self.potential:run(event, model)
+  -- @usage --DONTRUN
+  -- component.run(event, model)
   component.run = function(self, event, luccMEModel)
     local luTypes = luccMEModel.landUseTypes
     local demand = luccMEModel.demand
@@ -179,10 +178,9 @@ function SpatialLagLinearRoads(component)
   end  -- function run
 
   --- Handles with the verify method of a SpatialLagRegression_region component.
-  -- @arg self A SpatialLagRegression_region component.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage --DONTRUN self.potential:verify(event, self)
+  -- @usage --DONTRUN
+  -- component.verify(event, self)
   component.verify = function(self, event, luccMEModel)
     print("Verifying Potential parameters")
     local cs = luccMEModel.cs
@@ -267,12 +265,11 @@ function SpatialLagLinearRoads(component)
   end -- function verify
  
   --- Handles with the modify method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
-  -- @usage --DONTRUN luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
+  -- @usage --DONTRUN
+  -- luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local cs = luccMEModel.cs
     local luData = self.potentialData[rNumber][luIndex] 
@@ -294,12 +291,12 @@ function SpatialLagLinearRoads(component)
   end -- function modifyPotential 
 
   --- Handles with the modify regression method of a SpatialLagRegression_region component.
-  -- @arg self A SpatialLagRegression_region component.
   -- @arg roadsModel A road model.
   -- @arg cell A spatial location with homogeneous internal content.
-  -- @arg oldRegression The previous value of the regression
+  -- @arg oldRegression The previous value of the regression.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @usage --DONTRUN self:modifyRegression(luData.roadsModel, cell, regression)
+  -- @usage --DONTRUN
+  -- component.modifyRegression(luData.roadsModel, cell, regression)
   component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
     local currentTime = event:getTime()
     local regression = roadsModel.const
@@ -329,10 +326,10 @@ function SpatialLagLinearRoads(component)
   end -- function modifyRegression
 
   --- Handles with the constants regression method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
-  -- @usage --DONTRUN self:adaptRegressionConstants(demand, rNumber)
+  -- @usage --DONTRUN
+  -- component.adaptRegressionConstants(demand, rNumber)
   component.adaptRegressionConstants = function(self, demand, rNumber)
      for i, luData in pairs (self.potentialData[rNumber]) do      
       local currentDemand = demand:getCurrentLuDemand(i)
@@ -361,7 +358,8 @@ function SpatialLagLinearRoads(component)
   -- @arg attrProtection The protetion attribute name.
   -- @arg rate A rate for potencial multiplier.
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @usage --DONTRUN
+  -- luccMEModel.potential:modifyDriver(self.complementarLU, self.attrProtection, 0.5, event, luccMEModel)
   component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
     local regionsNumber = #luccMEModel.potential.potentialData
     local luTypes = luccMEModel.landUseTypes
@@ -388,12 +386,11 @@ function SpatialLagLinearRoads(component)
   end
 
   --- Handles with the compute potential method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg event A representation of a time instant when the simulation engine must run.
-  -- @usage --DONTRUN self:computePotential(luccMEModel, luIndex)    
+  -- @usage --DONTRUN
+  -- component.computePotential(luccMEModel, luIndex)    
   component.computePotential = function(self, luccMEModel, rNumber, luIndex, event)
     local cs = luccMEModel.cs 
     local luTypes = luccMEModel.landUseTypes

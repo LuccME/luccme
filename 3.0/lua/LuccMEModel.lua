@@ -106,9 +106,9 @@
 --end
 function LuccMEModel(model)
 	--- Implements the execution method of a LuccMe model.
-	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
-	-- @usage --DONTRUN --DONTRUN luccMeModel:execute(event)
+	-- @usage --DONTRUN
+  -- model.execute(event)
 	model.run = function(self, event)
 		if (event:getTime() == self.startTime) then
 			model:verify(event)
@@ -128,9 +128,9 @@ function LuccMEModel(model)
 	end
 
 	--- Implements the verify method of a LuccMe model.
-	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
-	-- @usage --DONTRUN --DONTRUN luccMeModel:verify(event)
+	-- @usage --DONTRUN 
+  -- luccMeModel:verify(event)
 	model.verify = function(self, event)
 		print("\nVerifying Model parameters")
 		-- Verify the model name
@@ -228,9 +228,9 @@ function LuccMEModel(model)
 	end
 	
 	--- Implements the variables dynamic method of a LuccMe model.
-	-- @arg self The LuccMe model itself.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
-	-- @usage --DONTRUN --DONTRUN luccMeModel:dinamicVars(event)
+	-- @usage --DONTRUN 
+  -- model.dinamicVars(event)
 	model.dinamicVars = function(self, event, model)
 		local currentTime = event:getTime()
 		local cs = model.cs
@@ -280,7 +280,7 @@ function LuccMEModel(model)
 	return model
 end
 
--- Override the error function to hold the screen.
+--- Override the error function to hold the screen.
 error = function(message, code)
 			print("\n[Error] "..message)
             io.write("\nPress enter key to exit...")

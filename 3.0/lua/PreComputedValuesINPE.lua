@@ -36,10 +36,9 @@
 --}
 function PreComputedValuesINPE(component)
 	--- Handles with the rules of the component execution.
-	-- @arg self A PreComputedValuesINPE component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage --DONTRUN self.demand:run(event, model)
+	-- @usage --DONTRUN
+	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local increasing = 1
 		local decreasing = -1
@@ -77,10 +76,9 @@ function PreComputedValuesINPE(component)
 	end -- run
 	
 	--- Handles with the parameters verification.
-	-- @arg self A PreComputedValuesINPE component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage --DONTRUN self.demand:verify(event, self)
+	-- @usage --DONTRUN
+	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 		print("Verifying Demand parameters")
 		local yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
@@ -113,28 +111,28 @@ function PreComputedValuesINPE(component)
 	end
 
 	--- Return the current demand of the specified component.
-	-- @arg self A PreComputedValuesINPE component.
-	-- Used on discrete allocation component
+	-- Used on discrete allocation component.
 	-- @return self.currentDemand the current demand of the component.
-	-- @usage --DONTRUN currentDemand = demand:getCurrentDemand(i)
+	-- @usage --DONTRUN
+	-- component.getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
 	end
 
 	--- Return the previous demand of the specified component.
-	-- @arg self A PreComputedValuesINPE component.
 	-- @return self.previousDemand the previous demand of the component.
-	-- @usage --DONTRUN previousDemand = demand:getPreviousDemand(i)
+	-- @usage --DONTRUN
+	-- component.getPreviousDemand(i)
 	component.getPreviousDemand = function(self)	
 		return self.previousDemand
 	end
 
 	--- Return the current demand for an specific luIndex.
 	-- Used on allocation and continuous potential components.
-	-- @arg self A PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand for an specific luIndex.
-	-- @usage --DONTRUN model:getCurrentLuDemand(luIndex)
+	-- @usage --DONTRUN
+	-- component.getCurrentLuDemand(luIndex)
 	component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -145,10 +143,10 @@ function PreComputedValuesINPE(component)
 
 	--- Return the previous demand for an specific luIndex.
 	-- Used on continuous pontencial component.
-	-- @arg self A PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The previous demand for an specific luIndex.
-	-- @usage --DONTRUN model:getPreviousLuDemand(luIndex)
+	-- @usage --DONTRUN
+	-- component.getPreviousLuDemand(luIndex)
 	component.getPreviousLuDemand = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -159,10 +157,10 @@ function PreComputedValuesINPE(component)
 
 	--- Return the current demand direction for an specific luIndex.
 	-- Used on continuous allocation component.
-	-- @arg self a PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
-	-- @usage --DONTRUN model:getCurrentLuDirection(luIndex)
+	-- @usage --DONTRUN
+	-- component.getCurrentLuDirection(luIndex)
 	component.getCurrentLuDirection = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -173,10 +171,10 @@ function PreComputedValuesINPE(component)
 
 	--- Invert the demand direction for an specific luIndex.
 	-- Used on continuous allocation component.
-	-- @arg self a PreComputedValuesINPE component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
-	-- @usage --DONTRUN model:changeLuDirection(luIndex)
+	-- @usage --DONTRUN
+	-- component.changeLuDirection(luIndex)
 	component.changeLuDirection = function(self, luIndex)
 		local oppositeDirection = -1
 		

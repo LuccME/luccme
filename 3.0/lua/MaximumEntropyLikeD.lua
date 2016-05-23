@@ -415,10 +415,12 @@ function MaximumEntropyLikeD(component)
       end
       
     if (#sample > 0) then
-      if (cell[pot] > 0) then
-        countOne = countOne + 1
-      elseif (cell[pot] == 0) then
-        countZero = countZero + 1
+      if (cell[pot] ~= nil) then
+        if (cell[pot] > 0) then
+          countOne = countOne + 1
+        elseif (cell[pot] == 0) then
+          countZero = countZero + 1
+        end
       end
     end
 

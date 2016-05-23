@@ -9,6 +9,7 @@
 function NeighSimpleRule(component)
 	--- Handles with the execution method of a NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN 
 	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)

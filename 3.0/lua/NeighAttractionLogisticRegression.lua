@@ -67,6 +67,7 @@
 function NeighAttractionLogisticRegression(component)
 	--- Handles with the execution method of a NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
 	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
@@ -123,6 +124,7 @@ function NeighAttractionLogisticRegression(component)
 	
 	--- Handles with the verify method of a NeighAttractionLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
 	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)

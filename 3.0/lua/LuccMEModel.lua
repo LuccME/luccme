@@ -108,7 +108,7 @@ function LuccMEModel(model)
 	--- Implements the execution method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage --DONTRUN
-  -- model.execute(event)
+  -- model.run(event)
 	model.run = function(self, event)
 		if (event:getTime() == self.startTime) then
 			model:verify(event)
@@ -130,7 +130,7 @@ function LuccMEModel(model)
 	--- Implements the verify method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage --DONTRUN 
-  -- luccMeModel:verify(event)
+  -- model.verify(event)
 	model.verify = function(self, event)
 		print("\nVerifying Model parameters")
 		-- Verify the model name
@@ -229,6 +229,7 @@ function LuccMEModel(model)
 	
 	--- Implements the variables dynamic method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
+	-- @arg model A luccME Model.
 	-- @usage --DONTRUN 
   -- model.dinamicVars(event)
 	model.dinamicVars = function(self, event, model)
@@ -281,10 +282,14 @@ function LuccMEModel(model)
 end
 
 --- Override the error function to hold the screen.
+-- @arg message The message to inform the user.
+-- @arg code The number of level that got the error.
+-- @usage --DONTRUN
+-- error("Missing something", 1)
 error = function(message, code)
-			print("\n[Error] "..message)
+			      print("\n[Error] "..message)
             io.write("\nPress enter key to exit...")
             io.flush()
             io.read()
-			os.exit()
+			      os.exit()
         end

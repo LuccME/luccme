@@ -11,6 +11,7 @@
 function AllocationBySimpleOrdering(component)
 	--- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
 	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)

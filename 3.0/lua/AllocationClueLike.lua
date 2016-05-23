@@ -52,6 +52,7 @@
 function AllocationClueLike(component)
   --- Handles with the rules of the component execution.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN 
   -- component.run(event, model)
   component.run = function(self, event, luccMEModel)
@@ -126,6 +127,7 @@ function AllocationClueLike(component)
 		
   --- Handles with the parameters verification.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN 
   -- component.verify(event, self)
   component.verify = function(self, event, luccMEModel)
@@ -230,6 +232,7 @@ function AllocationClueLike(component)
 	 
   --- Handles with the elasticity initialize considering a single elasticity for each land use (all cells).
   -- Similar to the coarse scale old clue.
+  -- @arg luccMEModel A LuccME model.
   -- @arg value The elasticity value.
   -- @usage --DONTRUN 
   -- component.initElasticity(luccMEModel, self.initialElasticity)
@@ -244,6 +247,7 @@ function AllocationClueLike(component)
 	end
 
 	--- Compute the Allocation change based on the potential of the cell.
+	-- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN 
   -- component.computeChange(luccMEModel)
   component.computeChange = function(self, luccMEModel)
@@ -306,6 +310,7 @@ function AllocationClueLike(component)
 
   --- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN 
   -- component.compareAllocationToDemand(event, luccMEModel)
   component.compareAllocationToDemand = function(self, event, luccMEModel)
@@ -377,6 +382,7 @@ function AllocationClueLike(component)
   end
 		
   --- Corrects total land use/cover types to 100 percent.
+  -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN 
   -- component.correctCellChange(luccMEModel)
   component.correctCellChange = function(self, luccMEModel)
@@ -581,6 +587,7 @@ function AllocationClueLike(component)
   
   --- Calculates and prints the allocated by the regression equations for each land use/cover type.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
   -- @arg nIter An iterator number.
   -- @usage --DONTRUN 
   -- component.printAllocatedArea(event, luccMEModel, nIter)

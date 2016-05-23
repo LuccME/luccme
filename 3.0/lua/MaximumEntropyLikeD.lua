@@ -66,6 +66,7 @@
 function MaximumEntropyLikeD(component)
   --- Handles with the execution method of a MaximumEntropyLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
   -- component.run(event, model)
   component.run = function(self, event, luccMEModel)
@@ -88,6 +89,7 @@ function MaximumEntropyLikeD(component)
   
   --- Handles with the verify method of a MaximumEntropyLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
   -- component.verify(event, self)
   component.verify = function(self, event, luccMEModel)
@@ -150,11 +152,12 @@ function MaximumEntropyLikeD(component)
   end
   
   --- Handles with the modify method of a MaximumEntropyLike component.
+  -- @arg luccMEModel A luccME Model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
   -- @usage --DONTRUN
-  -- luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
+  -- component.modify(luccMEModel, j, i, luDirect) 
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
   end
   
@@ -163,8 +166,9 @@ function MaximumEntropyLikeD(component)
   -- @arg attrProtection The protetion attribute name.
   -- @arg rate A rate for potencial multiplier.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
-  -- luccMEModel.potential:modifyDriver(self.complementarLU, self.attrProtection, 0.5, event, luccMEModel)
+  -- component.modifyDriver(self.complementarLU, self.attrProtection, 0.5, event, luccMEModel)
   component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
     local regionsNumber = #luccMEModel.potential.potentialData
     local luTypes = luccMEModel.landUseTypes
@@ -183,6 +187,7 @@ function MaximumEntropyLikeD(component)
   end
   
   --- Handles with the compute potential method of a LinearRegression component.
+  -- @arg luccMEModel A luccME Model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @usage --DONTRUN

@@ -29,6 +29,7 @@
 function ComputeInputTwoDateMaps(component)
 	--- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
 	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
@@ -69,6 +70,7 @@ function ComputeInputTwoDateMaps(component)
 	
 	--- Handles with the parameters verification and the generation for the Demand.
 	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
 	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
@@ -134,6 +136,7 @@ function ComputeInputTwoDateMaps(component)
 	
   --- Generate the annual demand based on the data provided by the user.
   -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A luccME Model.
   -- @return annualDemand The annual demand.
   -- @usage --DONTRUN
   -- component.generateDemand(event, luccMEModel)
@@ -246,6 +249,10 @@ function ComputeInputTwoDateMaps(component)
 	end -- generateDemand
 
 	--- Print on screen the generated demand.
+  -- @arg initialDemand The demand values for the first year of simulation.
+  -- @arg finalDemandForInterpolation The demand values of the end year of interpolatioin period.
+  -- @arg timeToGenerateDemand The number of years to generate the demand values.
+  -- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
 	-- component.printDemand(initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
 	component.printDemand = function(self, initialDemand, finalDemandForInterpolation, timeToGenerateDemand, luccMEModel)
@@ -287,14 +294,15 @@ function ComputeInputTwoDateMaps(component)
   -- Used on discrete allocation component.
   -- @return self.currentDemand the current demand of the component.
   -- @usage --DONTRUN
-  -- currentDemand = demand:getCurrentDemand(i)
+  -- component.getCurrentDemand(i)
 	component.getCurrentDemand = function(self)	
 		return self.currentDemand
   end
 
 	--- Return the previous demand of the specified component.
 	-- @return self.previousDemand the previous demand of the component.
-	-- @usage --DONTRUN previousDemand = demand:getPreviousDemand(i)
+	-- @usage --DONTRUN 
+	-- component.getPreviousDemand(i)
   component.getPreviousDemand = function(self)	
 		return self.previousDemand
   end
@@ -304,7 +312,7 @@ function ComputeInputTwoDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand for an specific luIndex.
   -- @usage --DONTRUN
-  -- model:getCurrentLuDemand(luIndex)
+  -- component.getCurrentLuDemand(luIndex)
   component.getCurrentLuDemand = function(self, luIndex)		
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -318,7 +326,7 @@ function ComputeInputTwoDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The previous demand for an specific luIndex.
   -- @usage --DONTRUN
-  -- model:getPreviousLuDemand(luIndex)
+  -- component.getPreviousLuDemand(luIndex)
 	component.getPreviousLuDemand = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -332,7 +340,7 @@ function ComputeInputTwoDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
   -- @usage --DONTRUN
-  -- model:getCurrentLuDirection(luIndex)
+  -- component.getCurrentLuDirection(luIndex)
 	component.getCurrentLuDirection = function(self, luIndex)	
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
@@ -346,7 +354,7 @@ function ComputeInputTwoDateMaps(component)
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
   -- @usage --DONTRUN
-  -- model:changeLuDirection(luIndex)
+  -- component.changeLuDirection(luIndex)
   component.changeLuDirection = function(self, luIndex)
   		local oppositeDirection = -1
   		

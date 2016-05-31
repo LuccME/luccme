@@ -64,5 +64,6 @@ function NeighSimpleRule(component)
 	  print("Verifying Potential parameters")
 	end
 
+  collectgarbage("collect")
 	return component
 end --close RegressionLogistcModelNeighbourhood

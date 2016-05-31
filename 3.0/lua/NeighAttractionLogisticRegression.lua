@@ -226,5 +226,6 @@ function NeighAttractionLogisticRegression(component)
 		return prob
 	end
 	
+	collectgarbage("collect")
 	return component
 end --close NeighAttractionLogisticRegression

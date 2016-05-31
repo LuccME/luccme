@@ -73,6 +73,7 @@ function databaseSave(luccMEModel)
 		tsave:add(e2)
 	end
 	
+	collectgarbage("collect")
 	return tsave
 end
 
@@ -120,8 +121,7 @@ function saveSingleTheme(luccMEModel)
 	print("\nEnd of Simulation")
 	
 	-- Hold the screen
-	local answer
 	io.write("\nPress enter key to exit...")
-    io.flush()
-    io.read()
+  io.flush()
+  io.read()
 end

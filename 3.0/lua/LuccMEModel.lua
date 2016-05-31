@@ -225,6 +225,7 @@ function LuccMEModel(model)
 		self.demand:verify(event, self)
 		self.potential:verify(event, self)
 		self.allocation:verify(event, self)
+		collectgarbage("collect")
 	end
 	
 	--- Implements the variables dynamic method of a LuccMe model.
@@ -278,6 +279,7 @@ function LuccMEModel(model)
 		end -- for				
 	end -- dinamicVars
 
+  collectgarbage("collect")
 	return model
 end
 

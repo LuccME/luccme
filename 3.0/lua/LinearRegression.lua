@@ -302,5 +302,6 @@ function LinearRegression(component)
 		end
 	end  -- function computePotential
 
+  collectgarbage("collect")
 	return component
 end -- component definition

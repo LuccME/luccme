@@ -467,6 +467,7 @@ function ComputeInputThreeDateMaps(component)
 		return self.demandDirection[luIndex]
   end		
 
+	collectgarbage("collect")
 	return component
 end -- ScenariosDemand
 		

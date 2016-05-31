@@ -331,5 +331,6 @@ function AllocationClueSLike(component)
 		end
 	end  
 
+	collectgarbage("collect")
 	return component
 end -- end of AllocationCluesLike

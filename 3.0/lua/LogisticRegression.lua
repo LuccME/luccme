@@ -193,5 +193,6 @@ function LogisticRegression(component)
 		return prob
 	end
 	
+	collectgarbage("collect")
 	return component
  end --close LogisticRegression	

@@ -706,5 +706,6 @@ function AllocationClueLikeSaturation (component)
     io.flush()
   end
 
+  collectgarbage("collect")
   return component
 end -- close Allocation Component

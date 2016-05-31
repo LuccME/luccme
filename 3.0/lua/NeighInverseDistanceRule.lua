@@ -183,5 +183,6 @@ function NeighInverseDistanceRule(component)
     end -- else
   end -- verify
 
+  collectgarbage("collect")
 	return component
 end --close RegressionLogistcModelNeighbourhood

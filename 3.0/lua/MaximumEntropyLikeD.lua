@@ -441,6 +441,6 @@ function MaximumEntropyLikeD(component)
     end
   end
   
-  print("\n")
+  collectgarbage("collect")
   return component
 end

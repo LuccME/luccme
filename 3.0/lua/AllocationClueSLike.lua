@@ -120,10 +120,10 @@ function AllocationClueSLike(component)
 			nIter = nIter + 1
 	      		
 			if (allocation_ok == true) then 
-				print("Demand allocated correctly in this time step:", step)
+				print("\nDemand allocated correctly in this time step:", step)
 			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
 			elseif	(nIter >= max_iteration) then
-				error("Demand not allocated correctly in this time step: "..step)
+				error("\nDemand not allocated correctly in this time step: "..step)
 			end      		
 		end -- end of 'while do'
  	end -- end of 'run'

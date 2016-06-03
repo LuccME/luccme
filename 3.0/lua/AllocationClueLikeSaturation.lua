@@ -89,7 +89,7 @@ function AllocationClueLikeSaturation (component)
         allocation_ok = true
         
         if (luccMEModel.useLog == true) then
-          print("Demand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
+          print("\nDemand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
         end
       else 
         nIter = nIter + 1
@@ -103,7 +103,7 @@ function AllocationClueLikeSaturation (component)
     until ((nIter >= self.maxIteration) or (allocation_ok == true))
 
     if (nIter == self.maxIteration) then
-      error("Demand not allocated correctly in this time step: "..nIter)
+      error("\nDemand not allocated correctly in this time step: "..nIter)
     end       
  
     forEachCell(cs, function(cell)

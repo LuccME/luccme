@@ -41,17 +41,18 @@ function AllocationCluesNeighborOrdering (component)
 	local luTypes = luccMEModel.landUseTypes
 	local max_iteration = self.maxIteration
 	local area = 0
-    local luind = 0
-    local lu_pastIndex = 0
-    local possibleTransitions = 0
-    local upCell = 0
-    local potentialCell = 0
-    local potentialupCell = 0
-    local aux = 0
-    local j = 0
+  local luind = 0
+  local lu_pastIndex = 0
+  local possibleTransitions = 0
+  local upCell = 0
+  local Cell = 0
+  local potentialCell = 0
+  local potentialupCell = 0
+  local aux = 0
+  local j = 0
   	
 	print("\nTime : ",event:getTime())
-  	print("Step : ",step)
+	print("Step : ",step)
 		
 	if useLog == true then
 		print("-------------------------------------------------------------------------------")
@@ -65,9 +66,9 @@ function AllocationCluesNeighborOrdering (component)
 		end		
 		
 		print("-------------------------------------------------------------------------------\n")
-   	end
+ 	end
 		
-   	local iteration = self:initIteration(luTypes)
+ 	local iteration = self:initIteration(luTypes)
 
 	for k,cell in pairs (cs.cells) do
 		for luind, lu in  pairs (luTypes) do
@@ -166,10 +167,10 @@ function AllocationCluesNeighborOrdering (component)
 		nIter= nIter + 1;
 		
 		if (allocation_ok == true) then  
-			print("Demand allocated correctly in this time step:",step)
+			print("\nDemand allocated correctly in this time step:",step)
 		-- If the number of iteractions is larger than or equal to the maximum number of iteractions allowed
 		elseif	(nIter >= max_iteration) then 
-			print("Demand not allocated correctly in this time step: "..step)
+			print("\nDemand not allocated correctly in this time step: "..step)
 		end      		
   	end 
   end 

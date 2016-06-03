@@ -117,10 +117,10 @@ function AllocationBySimpleOrdering(component)
  				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
-			print("Demand allocated correctly in this time step:", step)
+			print("\nDemand allocated correctly in this time step:", step)
  			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
 		else
-			error("Demand not allocated correctly in this time step: "..step)
+			error("\nDemand not allocated correctly in this time step: "..step)
 		end      	
  	end -- end of 'run' function
  	

@@ -4800,6 +4800,236 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				if (tempLine == "SpatialLagLinearRoads") {
+					gPotential = "";
+					gPotentialComponent = SPATIALLAGLINEARROADS;
+					gPotentialLUT = gLandUseTypes;
+					int count = 2;
+					for (int i = 0; i < gPotentialLUT->Length; i++) {
+						if (gPotentialLUT[i] == ',') {
+							count++;
+						}
+					}
+
+					line = sw->ReadLine();
+					while (line->Contains("=") != 1) { //potentialData
+						line = sw->ReadLine();
+					}
+
+					for (int k = 0; k < count - 1; k++) {
+						line = sw->ReadLine();
+						while (line->Contains("isLog") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("isLog=", "");
+						line = line->Replace(",", "");
+						if (line == "true") {
+							line = "1;";
+						}
+						else {
+							line = "0;";
+						}
+
+						gPotential += line;
+
+						line = sw->ReadLine();
+						while (line->Contains("const") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("const=", "");
+						line = line->Replace(",", ";");
+						gPotential += line;
+
+						line = sw->ReadLine();
+						while (line->Contains("minReg") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("minReg=", "");
+						line = line->Replace(",", ";");
+						gPotential += line;
+
+						line = sw->ReadLine();
+						while (line->Contains("maxReg") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("maxReg=", "");
+						line = line->Replace(",", ";");
+						gPotential += line;
+
+						line = sw->ReadLine();
+						while (line->Contains("ro") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("ro=", "");
+						line = line->Replace(",", ";");
+						gPotential += line;
+
+						line = sw->ReadLine();
+						while (line->Contains("betas") != 1) {
+							line = sw->ReadLine();
+						}
+
+						tempLine = "";
+						while (line->Contains("}") != 1) {
+							tempLine += line;
+							line = sw->ReadLine();
+						}
+
+						tempLine += "}";
+						tempLine = tempLine->Replace("\n", "");
+						tempLine = tempLine->Replace("\t", "");
+						tempLine = tempLine->Replace(" ", "");
+
+						String^ tempAux = "";
+						bool enter = true;
+						for (int i = 0; i < tempLine->Length; i++) {
+							while (tempLine[i] != '{') {
+								if (i == tempLine->Length - 1) {
+									enter = false;
+									break;
+								}
+								i++;
+							}
+							if (enter) {
+								while (tempLine[i] != '}') {
+									tempAux += tempLine[i];
+									i++;
+								}
+							}
+						}
+						tempAux = tempAux->Replace("{", "");
+						gPotential += tempAux + "*";
+
+						line = sw->ReadLine();
+						while (line->Contains("=") != 1) { //roadsModel
+							line = sw->ReadLine();
+						}
+
+						line = sw->ReadLine();
+						while (line->Contains("attrs") != 1) {
+							line = sw->ReadLine();
+						}
+
+						tempLine = "";
+						while (line->Contains("}") != 1) {
+							tempLine += line;
+							line = sw->ReadLine();
+						}
+
+						tempLine += "}";
+						tempLine = tempLine->Replace("\n", "");
+						tempLine = tempLine->Replace("\t", "");
+						tempLine = tempLine->Replace(" ", "");
+
+						tempAux = "";
+						enter = true;
+						for (int i = 0; i < tempLine->Length; i++) {
+							while (tempLine[i] != '{') {
+								if (i == tempLine->Length - 1) {
+									enter = false;
+									break;
+								}
+								i++;
+							}
+							if (enter) {
+								while (tempLine[i] != '}') {
+									tempAux += tempLine[i];
+									i++;
+								}
+							}
+						}
+						tempAux = tempAux->Replace("{", "");
+						gPotential += tempAux + ";";
+
+						line = sw->ReadLine();
+						while (line->Contains("const") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("const=", "");
+						line = line->Replace(",", ";");
+						gPotential += line;
+
+						line = sw->ReadLine();
+						while (line->Contains("change") != 1) {
+							line = sw->ReadLine();
+						}
+
+						line = line->Replace("\n", "");
+						line = line->Replace("\t", "");
+						line = line->Replace(" ", "");
+						line = line->Replace("change=", "");
+						line = line->Replace(",", ";");
+						gPotential += line;
+
+
+						line = sw->ReadLine();
+						while (line->Contains("betas") != 1) { //betas roadmodel
+							line = sw->ReadLine();
+						}
+
+						tempLine = "";
+						while (line->Contains("}") != 1) {
+							tempLine += line;
+							line = sw->ReadLine();
+						}
+
+						tempLine += "}";
+						tempLine = tempLine->Replace("\n", "");
+						tempLine = tempLine->Replace("\t", "");
+						tempLine = tempLine->Replace(" ", "");
+
+						tempAux = "";
+						enter = true;
+						for (int i = 0; i < tempLine->Length; i++) {
+							while (tempLine[i] != '{') {
+								if (i == tempLine->Length - 1) {
+									enter = false;
+									break;
+								}
+								i++;
+							}
+							if (enter) {
+								while (tempLine[i] != '}') {
+									tempAux += tempLine[i];
+									i++;
+								}
+							}
+						}
+						tempAux = tempAux->Replace("{", "");
+						gPotential += tempAux + "#";
+					}
+
+					gPotential = gPotential->Substring(0, gPotential->Length - 1);
+
+					if (gPotential != "") {
+						showReturnSpatialLagLinearRoads();
+					}
+				}
+
 				if (tempLine == "MaximumEntropyLikeD" || tempLine == "MaximumEntropyLikeC") {
 					gPotential = "";
 					if (tempLine == "MaximumEntropyLikeD") {

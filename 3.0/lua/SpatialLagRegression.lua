@@ -228,7 +228,9 @@ function SpatialLagRegression(component)
 		
 		if( luData.isLog ) then 
 				local const_unlog = math.pow (10, luData.newconst) + self.constChange * direction
-				if (const_unlog ~= 0) then luData.newconst = math.log (10, const_unlog) end	
+				if (const_unlog ~= 0) then 
+				  luData.newconst = math.log (10, const_unlog) 
+			  end	
 		else
 				luData.newconst = luData.newconst + self.constChange * direction
 		end
@@ -242,26 +244,26 @@ function SpatialLagRegression(component)
   -- @usage --DONTRUN
   -- component.adaptRegressionConstants(demand, rNumbers)
 	component.adaptRegressionConstants = function(self, demand, rNumber)
-    for i, luData in pairs (self.potentialData[rNumber]) do			
-    	local currentDemand = demand:getCurrentLuDemand(i)
-    	local previousDemand = demand:getPreviousLuDemand(i) 
-    	local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
-    					   
-    	luData.newconst = luData.const
-    	
-    	if (luData.isLog) then
-  			local const_unlog = math.pow (10, luData.newconst) + plus 
-  			if (const_unlog ~= 0) then 
-  			  luData.newconst = math.log (10, const_unlog) 
-  		  end
-      else 
-    		luData.newconst = luData.newconst + plus  
-      end    
-       
-      luData.newminReg = luData.newminReg + plus  
-      luData.newmaxReg = luData.newmaxReg + plus
-      luData.const = luData.newconst  
-    end
+		for i, luData in pairs (self.potentialData[rNumber]) do			
+			local currentDemand = demand:getCurrentLuDemand(i)
+			local previousDemand = demand:getPreviousLuDemand(i) 
+			local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
+							   
+			luData.newconst = luData.const
+			
+			if (luData.isLog) then
+				local const_unlog = math.pow (10, luData.newconst) + plus 
+				if (const_unlog ~= 0) then 
+				  luData.newconst = math.log (10, const_unlog) 
+			  end
+		  else 
+				luData.newconst = luData.newconst + plus  
+		  end    
+		   
+		  luData.newminReg = luData.newminReg + plus  
+		  luData.newmaxReg = luData.newmaxReg + plus
+		  luData.const = luData.newconst  
+		end
 	end	-- function adaptRegressionConstants
 	
   --- Modify potencial for an protected area.

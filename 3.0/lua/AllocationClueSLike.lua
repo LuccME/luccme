@@ -162,22 +162,22 @@ function AllocationClueSLike(component)
 		  error("The model must have at least One region", 2)
 		else
 		  for i = 1, regionsNumber, 1 do
-			local transitionNumber = #self.transitionMatrix[i]
-			local lutNumber = #luccMEModel.landUseTypes
-			
-			-- check the number of transitions
-			if (transitionNumber ~= lutNumber) then
-			  error("Invalid number of transitions on Region number "..i..". Transitions: "..transitionNumber.." LandUseTypes: "..lutNumber, 2)
-			end
-			
-			for j = 1, transitionNumber, 1 do
-			  for k = 1, lutNumber, 1 do  
-				-- check the matrix values
-				if(self.transitionMatrix[i][j][k] ~= 0 and self.transitionMatrix[i][j][k] ~= 1) then
-				  error("Invalid data on transitionMatrix: "..self.transitionMatrix[i][j][k]..". Region: "..i.. " Position: "..j.."x"..k..". The acceptable values are 0 or 1", 2)
-				end
-			  end -- for k
-			end -- for j
+  			local transitionNumber = #self.transitionMatrix[i]
+  			local lutNumber = #luccMEModel.landUseTypes
+  			
+  			-- check the number of transitions
+  			if (transitionNumber ~= lutNumber) then
+  			  error("Invalid number of transitions on Region number "..i..". Transitions: "..transitionNumber.." LandUseTypes: "..lutNumber, 2)
+  			end
+  			
+  			for j = 1, transitionNumber, 1 do
+  			  for k = 1, lutNumber, 1 do  
+    				-- check the matrix values
+    				if(self.transitionMatrix[i][j][k] ~= 0 and self.transitionMatrix[i][j][k] ~= 1) then
+    				  error("Invalid data on transitionMatrix: "..self.transitionMatrix[i][j][k]..". Region: "..i.. " Position: "..j.."x"..k..". The acceptable values are 0 or 1", 2)
+    				end
+  			  end -- for k
+  			end -- for j
 		  end -- for i
 		end -- else
 	end -- verify

@@ -9,7 +9,7 @@
 -- @arg component.run Handles with the rules of the component execution.
 -- @arg component.verify Handles with the parameters verification.
 -- @usage --DONTRUN 
---A1 = AllocationCluesNeighborOrdering
+--A1 = AllocationClueSNeighborOrdering
 --{
 --  maxIteration = 1000,
 --  factorIteration = 0.000001,
@@ -24,7 +24,7 @@
 --    }
 --  }
 --}
-function AllocationCluesNeighborOrdering (component)
+function AllocationClueSNeighborOrdering (component)
   --- Handles with the rules of the component execution.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
@@ -380,4 +380,4 @@ function AllocationCluesNeighborOrdering (component)
 
   collectgarbage("collect")
   return component
-end -- end of AllocationCluesLike
+end -- end of AllocationClueSNeighborOrdering

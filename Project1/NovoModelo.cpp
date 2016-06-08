@@ -1582,9 +1582,16 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 			}
 			break;
 
+		case ALLOCATIONCLUESNEIGHBORORDERING:
 		case ALLOCATIONCLUESLIKE:
 			if (gAllocation != "") {
-				lines2[0] = "AllocationClueSLike";
+				if (lAllocation->Component == ALLOCATIONCLUESLIKE) {
+					lines2[0] = "AllocationClueSLike";
+				}
+				else {
+					lines2[0] = "AllocationClueSNeighborOrdering";
+				}
+
 				int lineCount = 1;
 				int change = 0;
 				int j = 0;
@@ -2408,15 +2415,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						break;
 
 					case NEIGHINVERSEDISTANCERULE:
-
 					case INVERSEDISTANCERULE:
-
 					case LOGISTICREGRESSION:
-
 					case NEIGHATTRACTIONLOGISTICREGRESSION:
-
 					case LINEARREGRESSION:
-
 					case SPATIALLAGREGRESSION:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
@@ -2789,6 +2791,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
+					case ALLOCATIONCLUESNEIGHBORORDERING:
 					case ALLOCATIONCLUESLIKE:
 						sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 						sw->WriteLine("{");
@@ -5149,9 +5152,15 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "AllocationClueSLike") {
+				if (tempLine == "AllocationClueSLike" || tempLine == "AllocationClueSNeighborOrdering") {
 					gAllocation = "";
-					gAllocationComponent = ALLOCATIONCLUESLIKE;
+					if (tempLine == "AllocationClueSLike") {
+						gAllocationComponent = ALLOCATIONCLUESLIKE;
+					}
+					else {
+						gAllocationComponent = ALLOCATIONCLUESNEIGHBORORDERING;
+					}
+					
 					gAllocationLUT = gLandUseTypes;
 
 					line = sw->ReadLine();
@@ -5223,7 +5232,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					array<String^>^ lines2 = gcnew array<String^>(count + 5);
 
 					if (gAllocation != "") {
-						lines2[0] = "AllocationClueSLike";
+						if (gAllocationComponent == ALLOCATIONCLUESLIKE) {
+							lines2[0] = "AllocationClueSLike";
+						}
+						else {
+							lines2[0] = "AllocationClueSNeighborOrdering";
+						}
+
 						int lineCount = 1;
 						int change = 0;
 						int j = 0;
@@ -6356,7 +6371,8 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 
 		sw->Close();
 
-		Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin\\");
+		Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin");
+		Environment::SetEnvironmentVariable("PATH", "C:\\Luccme\\Terrame\\bin");
 
 		String^ arguments = "validation.lua";
 		System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;

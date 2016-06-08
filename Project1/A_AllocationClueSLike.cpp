@@ -13,7 +13,6 @@ System::Void LuccME::A_AllocationClueSLike::textBox_Enter(System::Object ^ sende
 System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lReturn->Language == "en") {
-		this->Text = "Allocation - Allocation ClueS Like";
 		bSalvar->Text = "Save";
 		gSCells = "All the cells must be fullfilled.";
 		gSCellsTitle = "Error - Empty Cells";
@@ -21,7 +20,6 @@ System::Void LuccME::A_AllocationClueSLike::A_AllocationClueSLike_Shown(System::
 		lMaxDiffHelp->Text = "Absolute Value";
 	}
 	else {
-		this->Text = "Alocação - Allocation ClueS Like";
 		bSalvar->Text = "Salvar";
 		gSCells = "Todas as células devem ser preenchidas.";
 		gSCellsTitle = "Erro - Células Vazias";

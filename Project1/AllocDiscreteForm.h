@@ -18,7 +18,8 @@ namespace LuccME {
 	private:
 		String^ gSAlloMod = "";
 		String^ gSAlloModTitle = "";
-
+		String^ sSAlloc = "";
+	
 	public:
 		cReturnAllocation^ lReturn;
 		AllocDiscreteForm(cReturnAllocation^ pAllocation)
@@ -41,6 +42,8 @@ namespace LuccME {
 				delete components;
 			}
 		}
+	
+	private: System::Windows::Forms::Button^  bACSNO;
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::Button^  bAllocationClueSLike;
 	private: System::Windows::Forms::Button^  bABSO;
@@ -63,6 +66,7 @@ namespace LuccME {
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->bAllocationClueSLike = (gcnew System::Windows::Forms::Button());
 			this->bABSO = (gcnew System::Windows::Forms::Button());
+			this->bACSNO = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -78,7 +82,7 @@ namespace LuccME {
 			// 
 			// bAllocationClueSLike
 			// 
-			this->bAllocationClueSLike->Location = System::Drawing::Point(155, 297);
+			this->bAllocationClueSLike->Location = System::Drawing::Point(155, 331);
 			this->bAllocationClueSLike->Name = L"bAllocationClueSLike";
 			this->bAllocationClueSLike->Size = System::Drawing::Size(185, 39);
 			this->bAllocationClueSLike->TabIndex = 88;
@@ -88,7 +92,7 @@ namespace LuccME {
 			// 
 			// bABSO
 			// 
-			this->bABSO->Location = System::Drawing::Point(155, 194);
+			this->bABSO->Location = System::Drawing::Point(155, 191);
 			this->bABSO->Name = L"bABSO";
 			this->bABSO->Size = System::Drawing::Size(185, 39);
 			this->bABSO->TabIndex = 87;
@@ -96,12 +100,23 @@ namespace LuccME {
 			this->bABSO->UseVisualStyleBackColor = true;
 			this->bABSO->Click += gcnew System::EventHandler(this, &AllocDiscreteForm::bABSO_Click);
 			// 
+			// bACSNO
+			// 
+			this->bACSNO->Location = System::Drawing::Point(155, 261);
+			this->bACSNO->Name = L"bACSNO";
+			this->bACSNO->Size = System::Drawing::Size(185, 39);
+			this->bACSNO->TabIndex = 89;
+			this->bACSNO->Text = L"Allocation ClueS Neighbor Ordering";
+			this->bACSNO->UseVisualStyleBackColor = true;
+			this->bACSNO->Click += gcnew System::EventHandler(this, &AllocDiscreteForm::bACSNO_Click);
+			// 
 			// AllocDiscreteForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 421);
+			this->Controls->Add(this->bACSNO);
 			this->Controls->Add(this->bAllocationClueSLike);
 			this->Controls->Add(this->bABSO);
 			this->Controls->Add(this->pbLogo1);
@@ -117,5 +132,6 @@ namespace LuccME {
 	private: System::Void bABSO_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bAllocationClueSLike_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void AllocDiscreteForm_Shown(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bACSNO_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

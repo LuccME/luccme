@@ -98,7 +98,7 @@ namespace LuccME {
 			// 
 			// bSalvar
 			// 
-			this->bSalvar->Location = System::Drawing::Point(203, 499);
+			this->bSalvar->Location = System::Drawing::Point(211, 499);
 			this->bSalvar->Name = L"bSalvar";
 			this->bSalvar->Size = System::Drawing::Size(75, 23);
 			this->bSalvar->TabIndex = 87;
@@ -109,7 +109,7 @@ namespace LuccME {
 			// tMaxIteration
 			// 
 			this->tMaxIteration->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxIteration->Location = System::Drawing::Point(203, 166);
+			this->tMaxIteration->Location = System::Drawing::Point(203, 160);
 			this->tMaxIteration->Name = L"tMaxIteration";
 			this->tMaxIteration->Size = System::Drawing::Size(194, 20);
 			this->tMaxIteration->TabIndex = 88;
@@ -122,7 +122,7 @@ namespace LuccME {
 			this->lMaxIteration->AutoSize = true;
 			this->lMaxIteration->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lMaxIteration->Location = System::Drawing::Point(73, 163);
+			this->lMaxIteration->Location = System::Drawing::Point(73, 157);
 			this->lMaxIteration->Name = L"lMaxIteration";
 			this->lMaxIteration->Size = System::Drawing::Size(112, 23);
 			this->lMaxIteration->TabIndex = 89;
@@ -132,7 +132,7 @@ namespace LuccME {
 			// tFactorInteration
 			// 
 			this->tFactorInteration->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tFactorInteration->Location = System::Drawing::Point(203, 209);
+			this->tFactorInteration->Location = System::Drawing::Point(203, 203);
 			this->tFactorInteration->Name = L"tFactorInteration";
 			this->tFactorInteration->Size = System::Drawing::Size(194, 20);
 			this->tFactorInteration->TabIndex = 90;
@@ -145,7 +145,7 @@ namespace LuccME {
 			this->lFactorInteration->AutoSize = true;
 			this->lFactorInteration->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lFactorInteration->Location = System::Drawing::Point(72, 206);
+			this->lFactorInteration->Location = System::Drawing::Point(72, 200);
 			this->lFactorInteration->Name = L"lFactorInteration";
 			this->lFactorInteration->Size = System::Drawing::Size(126, 23);
 			this->lFactorInteration->TabIndex = 91;
@@ -155,7 +155,7 @@ namespace LuccME {
 			// tMaxDifference
 			// 
 			this->tMaxDifference->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tMaxDifference->Location = System::Drawing::Point(203, 252);
+			this->tMaxDifference->Location = System::Drawing::Point(203, 246);
 			this->tMaxDifference->Name = L"tMaxDifference";
 			this->tMaxDifference->Size = System::Drawing::Size(194, 20);
 			this->tMaxDifference->TabIndex = 92;
@@ -168,7 +168,7 @@ namespace LuccME {
 			this->lMaxDifference->AutoSize = true;
 			this->lMaxDifference->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lMaxDifference->Location = System::Drawing::Point(72, 249);
+			this->lMaxDifference->Location = System::Drawing::Point(72, 243);
 			this->lMaxDifference->Name = L"lMaxDifference";
 			this->lMaxDifference->Size = System::Drawing::Size(126, 23);
 			this->lMaxDifference->TabIndex = 93;
@@ -180,7 +180,7 @@ namespace LuccME {
 			this->lTransitionMatrix->AutoSize = true;
 			this->lTransitionMatrix->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lTransitionMatrix->Location = System::Drawing::Point(169, 295);
+			this->lTransitionMatrix->Location = System::Drawing::Point(177, 300);
 			this->lTransitionMatrix->Name = L"lTransitionMatrix";
 			this->lTransitionMatrix->Size = System::Drawing::Size(146, 23);
 			this->lTransitionMatrix->TabIndex = 95;
@@ -204,7 +204,7 @@ namespace LuccME {
 			// lLegend
 			// 
 			this->lLegend->AutoSize = true;
-			this->lLegend->Location = System::Drawing::Point(24, 476);
+			this->lLegend->Location = System::Drawing::Point(24, 472);
 			this->lLegend->Name = L"lLegend";
 			this->lLegend->Size = System::Drawing::Size(29, 13);
 			this->lLegend->TabIndex = 96;
@@ -215,7 +215,7 @@ namespace LuccME {
 			this->lMaxDiffHelp->AutoSize = true;
 			this->lMaxDiffHelp->Font = (gcnew System::Drawing::Font(L"Calibri", 8, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lMaxDiffHelp->Location = System::Drawing::Point(263, 275);
+			this->lMaxDiffHelp->Location = System::Drawing::Point(263, 269);
 			this->lMaxDiffHelp->Name = L"lMaxDiffHelp";
 			this->lMaxDiffHelp->Size = System::Drawing::Size(75, 13);
 			this->lMaxDiffHelp->TabIndex = 122;

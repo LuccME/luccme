@@ -9,11 +9,13 @@ System::Void LuccME::AllocDiscreteForm::AllocDiscreteForm_Shown(System::Object ^
 		this->Text = "Allocation - Discrete Components";
 		gSAlloMod = "Another Allocation Component was modified.\nThe potential values will be lost\nDo you want to proceed?";
 		gSAlloModTitle = "Another Allocation Component was used";
+		sSAlloc = "Allocation - ";
 	}
 	else {
 		this->Text = "Alocação - Componentes Discretos";
 		gSAlloMod = "Outro componente de Alocação foi modificado anteriormente.\nOs valores de potencial serão apagados.\nDeseja continuar?";
 		gSAlloModTitle = "Outro componente de Alocação já utilizado";
+		sSAlloc = "Alocação - ";
 	}
 }
 
@@ -53,6 +55,30 @@ System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Objec
 	if (check) {
 		lReturn->Component = ALLOCATIONCLUESLIKE;
 		A_AllocationClueSLike^ allocationForm = gcnew A_AllocationClueSLike(lReturn);
+		allocationForm->Text = sSAlloc + "Allocation ClueS Like";
+		allocationForm->ShowDialog();
+		if (lReturn->Return == "") {
+			lReturn->Component = NONE;
+		}
+		this->Close();
+	}
+}
+
+System::Void LuccME::AllocDiscreteForm::bACSNO_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	bool check = true;
+	if (this->lReturn->Component != ALLOCATIONCLUESNEIGHBORORDERING && this->lReturn->Component != NONE) {
+		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
+			check = false;
+		}
+		else {
+			lReturn->Return = "";
+		}
+	}
+	if (check) {
+		lReturn->Component = ALLOCATIONCLUESNEIGHBORORDERING;
+		A_AllocationClueSLike^ allocationForm = gcnew A_AllocationClueSLike(lReturn);
+		allocationForm->Text = sSAlloc + "Allocation ClueS Neighbor Ordering";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

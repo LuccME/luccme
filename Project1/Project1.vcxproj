@@ -106,6 +106,7 @@
     <ClCompile Include="NovoModelo.cpp" />
     <ClCompile Include="PotContinuousForm.cpp" />
     <ClCompile Include="PotDiscreteForm.cpp" />
+    <ClCompile Include="P_AttractRepulseLogisticRegression.cpp" />
     <ClCompile Include="P_ContinuousR.cpp" />
     <ClCompile Include="P_DiscreteR.cpp" />
     <ClCompile Include="P_MaxEntLike.cpp" />
@@ -161,6 +162,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="PotDiscreteForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="P_AttractRepulseLogisticRegression.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="P_ContinuousR.h">
@@ -228,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PotDiscreteForm.resx">
       <DependentUpon>PotDiscreteForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="P_AttractRepulseLogisticRegression.resx">
+      <DependentUpon>P_AttractRepulseLogisticRegression.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="P_ContinuousR.resx">
       <DependentUpon>P_ContinuousR.h</DependentUpon>

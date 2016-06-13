@@ -81,6 +81,9 @@
     <ClCompile Include="P_MaxEntLike.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="P_AttractRepulseLogisticRegression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyForm.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="P_MaxEntLike.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="P_AttractRepulseLogisticRegression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

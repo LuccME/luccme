@@ -2,6 +2,7 @@
 #include "PotDiscreteForm.h"
 #include "P_DiscreteR.h"
 #include "P_MaxEntLike.h"
+#include "P_AttractRepulseLogisticRegression.h"
 
 System::Void LuccME::PotDiscreteForm::PotDiscreteForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
@@ -156,5 +157,27 @@ System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender,
 		}
 		this->Close();
 	}
+}
 
+System::Void LuccME::PotDiscreteForm::bARLR_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	bool check = true;
+	if (this->lReturn->Component != ATTRACTREPULSELOGISTICREGRESSION && this->lReturn->Component != NONE) {
+		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
+			check = false;
+		}
+		else {
+			lReturn->Return = "";
+		}
+	}
+	if (check) {
+		lReturn->Component = ATTRACTREPULSELOGISTICREGRESSION;
+		//lReturn->Return = "-1.961;0.1;0.5;dist_rodovias=0.00008578,assentamentos=-0.2604,uc_us=0.6064,fertilidadealtaoumedia=0.4393*#1.978;0.1;0.5;dist_rodovias=-0.00008651,assentamentos=0.2676,uc_us=-0.6376,fertilidadealtaoumedia=-0.4565*#0;0;0;*$1,0,0;0,1,0;0,0,1";
+		P_AttractRepulseLogisticRegression^ potentialForm = gcnew P_AttractRepulseLogisticRegression(lReturn);
+		potentialForm->ShowDialog();
+		if (lReturn->Return == "") {
+			lReturn->Component = NONE;
+		}
+		this->Close();
+	}
 }

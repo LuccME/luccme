@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "P_DiscreteR.h"
+#include "P_AttractRepulseLogisticRegression.h"
 
 using namespace System::Windows::Forms;
 
-System::Void LuccME::P_DiscreteR::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	System::Windows::Forms::TextBox^ thisTextBox = safe_cast<System::Windows::Forms::TextBox^>(sender);
 	if (thisTextBox->ForeColor != System::Drawing::Color::Black) {
@@ -15,7 +15,7 @@ System::Void LuccME::P_DiscreteR::textBox_Enter(System::Object ^ sender, System:
 /*
 Count the number of a caracter on a string
 */
-System::Int16 LuccME::P_DiscreteR::countCaracter(String^ source, char caracter)
+System::Int16 LuccME::P_AttractRepulseLogisticRegression::countCaracter(String^ source, char caracter)
 {
 	int count = 0;
 	for (int i = 0; i < source->Length; i++) {
@@ -29,7 +29,7 @@ System::Int16 LuccME::P_DiscreteR::countCaracter(String^ source, char caracter)
 /*
 Initialized all the regions on tcRegions for the default values
 */
-System::Void LuccME::P_DiscreteR::initializeRegions()
+System::Void LuccME::P_AttractRepulseLogisticRegression::initializeRegions()
 {
 	dgBetas->ColumnCount = 2;
 	dgBetas->Columns[0]->Name = gSAttributes;
@@ -37,18 +37,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas->Rows->Clear();
 	tConst->Text = "0.01";
 	tConst->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy->Text = "0.5";
-		tElasticy->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse->Text = "0.5";
-		tPercNeighborsUse->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy->Text = "0.5";
-		tElasticy->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse->Text = "0.5";
-		tPercNeighborsUse->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy->Text = "0.5";
+	tElasticy->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse->Text = "0.5";
+	tPercNeighborsUse->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix);
 
 	dgBetas2->ColumnCount = 2;
 	dgBetas2->Columns[0]->Name = gSAttributes;
@@ -56,18 +49,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas2->Rows->Clear();
 	tConst2->Text = "0.01";
 	tConst2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy2->Text = "0.5";
-		tElasticy2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse2->Text = "0.5";
-		tPercNeighborsUse2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy2->Text = "0.5";
-		tElasticy2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse2->Text = "0.5";
-		tPercNeighborsUse2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy2->Text = "0.5";
+	tElasticy2->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse2->Text = "0.5";
+	tPercNeighborsUse2->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix2);
 
 	dgBetas3->ColumnCount = 2;
 	dgBetas3->Columns[0]->Name = gSAttributes;
@@ -75,18 +61,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas3->Rows->Clear();
 	tConst3->Text = "0.01";
 	tConst3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy3->Text = "0.5";
-		tElasticy3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse3->Text = "0.5";
-		tPercNeighborsUse3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy3->Text = "0.5";
-		tElasticy3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse3->Text = "0.5";
-		tPercNeighborsUse3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy3->Text = "0.5";
+	tElasticy3->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse3->Text = "0.5";
+	tPercNeighborsUse3->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix3);
 
 	dgBetas4->ColumnCount = 2;
 	dgBetas4->Columns[0]->Name = gSAttributes;
@@ -94,18 +73,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas4->Rows->Clear();
 	tConst4->Text = "0.01";
 	tConst4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy4->Text = "0.5";
-		tElasticy4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse4->Text = "0.5";
-		tPercNeighborsUse4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy4->Text = "0.5";
-		tElasticy4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse4->Text = "0.5";
-		tPercNeighborsUse4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy4->Text = "0.5";
+	tElasticy4->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse4->Text = "0.5";
+	tPercNeighborsUse4->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix4);
 
 	dgBetas5->ColumnCount = 2;
 	dgBetas5->Columns[0]->Name = gSAttributes;
@@ -113,18 +85,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas5->Rows->Clear();
 	tConst5->Text = "0.01";
 	tConst5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy5->Text = "0.5";
-		tElasticy5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse5->Text = "0.5";
-		tPercNeighborsUse5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy5->Text = "0.5";
-		tElasticy5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse5->Text = "0.5";
-		tPercNeighborsUse5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy5->Text = "0.5";
+	tElasticy5->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse5->Text = "0.5";
+	tPercNeighborsUse5->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix5);
 
 	dgBetas6->ColumnCount = 2;
 	dgBetas6->Columns[0]->Name = gSAttributes;
@@ -132,18 +97,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas6->Rows->Clear();
 	tConst6->Text = "0.01";
 	tConst6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy6->Text = "0.5";
-		tElasticy6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse6->Text = "0.5";
-		tPercNeighborsUse6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy6->Text = "0.5";
-		tElasticy6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse6->Text = "0.5";
-		tPercNeighborsUse6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy6->Text = "0.5";
+	tElasticy6->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse6->Text = "0.5";
+	tPercNeighborsUse6->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix6);
 
 	dgBetas7->ColumnCount = 2;
 	dgBetas7->Columns[0]->Name = gSAttributes;
@@ -151,18 +109,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas7->Rows->Clear();
 	tConst7->Text = "0.01";
 	tConst7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy7->Text = "0.5";
-		tElasticy7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse7->Text = "0.5";
-		tPercNeighborsUse7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy7->Text = "0.5";
-		tElasticy7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse7->Text = "0.5";
-		tPercNeighborsUse7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy7->Text = "0.5";
+	tElasticy7->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse7->Text = "0.5";
+	tPercNeighborsUse7->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix7);
 
 	dgBetas8->ColumnCount = 2;
 	dgBetas8->Columns[0]->Name = gSAttributes;
@@ -170,18 +121,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas8->Rows->Clear();
 	tConst8->Text = "0.01";
 	tConst8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy8->Text = "0.5";
-		tElasticy8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse8->Text = "0.5";
-		tPercNeighborsUse8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy8->Text = "0.5";
-		tElasticy8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse8->Text = "0.5";
-		tPercNeighborsUse8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy8->Text = "0.5";
+	tElasticy8->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse8->Text = "0.5";
+	tPercNeighborsUse8->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix8);
 
 	dgBetas9->ColumnCount = 2;
 	dgBetas9->Columns[0]->Name = gSAttributes;
@@ -189,18 +133,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas9->Rows->Clear();
 	tConst9->Text = "0.01";
 	tConst9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy9->Text = "0.5";
-		tElasticy9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse9->Text = "0.5";
-		tPercNeighborsUse9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy9->Text = "0.5";
-		tElasticy9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse9->Text = "0.5";
-		tPercNeighborsUse9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy9->Text = "0.5";
+	tElasticy9->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse9->Text = "0.5";
+	tPercNeighborsUse9->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix9);
 
 	dgBetas10->ColumnCount = 2;
 	dgBetas10->Columns[0]->Name = gSAttributes;
@@ -208,18 +145,11 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas10->Rows->Clear();
 	tConst10->Text = "0.01";
 	tConst10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy10->Text = "0.5";
-		tElasticy10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse10->Text = "0.5";
-		tPercNeighborsUse10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy10->Text = "0.5";
-		tElasticy10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-		tPercNeighborsUse10->Text = "0.5";
-		tPercNeighborsUse10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+	tElasticy10->Text = "0.5";
+	tElasticy10->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tPercNeighborsUse10->Text = "0.5";
+	tPercNeighborsUse10->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	setInitializeAffinity(dgAffinityMatrix10);
 
 	tcRegions->SelectedIndex = 0;
 }
@@ -227,31 +157,80 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 /*
 Make the components of a tRagion visible or not
 */
-System::Void LuccME::P_DiscreteR::setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, Label^ lConst, TextBox^ tConst, Label^ lElasticy, TextBox^ tElasticy, Label^ lPercNeighborsUse, TextBox^ tPercNeighborsUse, bool status)
+System::Void LuccME::P_AttractRepulseLogisticRegression::setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, Label^ lConst, TextBox^ tConst, Label^ lElasticy, TextBox^ tElasticy, Label^ lPercNeighborsUse, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, Label^ lAffinityMatrix, bool status)
 {
-	lBetas->Visible = status;
-	dgBetas->ColumnCount = 2;
-	dgBetas->Columns[0]->Name = gSAttributes;
-	dgBetas->Columns[1]->Name = gSValues;
-	dgBetas->Visible = status;
-	lConst->Visible = status;
-	tConst->Visible = status;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		lElasticy->Visible = status;
-		tElasticy->Visible = status;
-	} 
-	else if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	if (tLUT->Text != "Affinity Matrix") {
+		lBetas->Visible = status;
+		dgBetas->ColumnCount = 2;
+		dgBetas->Columns[0]->Name = gSAttributes;
+		dgBetas->Columns[1]->Name = gSValues;
+		dgBetas->Visible = status;
+		lConst->Visible = status;
+		tConst->Visible = status;
 		lElasticy->Visible = status;
 		tElasticy->Visible = status;
 		lPercNeighborsUse->Visible = status;
 		tPercNeighborsUse->Visible = status;
+		dgAffinity->Visible = !status;
+		lAffinityMatrix->Visible = !status;
 	}
+	else {
+		lBetas->Visible = !status;
+		dgBetas->ColumnCount = 2;
+		dgBetas->Columns[0]->Name = gSAttributes;
+		dgBetas->Columns[1]->Name = gSValues;
+		dgBetas->Visible = !status;
+		lConst->Visible = !status;
+		tConst->Visible = !status;
+		lElasticy->Visible = !status;
+		tElasticy->Visible = !status;
+		lPercNeighborsUse->Visible = !status;
+		tPercNeighborsUse->Visible = !status;
+		dgAffinity->Visible = status;
+		lAffinityMatrix->Visible = status;
+	}
+}
+
+System::Void LuccME::P_AttractRepulseLogisticRegression::setInitializeAffinity(DataGridView^ dgAffinity)
+{
+	dgAffinity->Rows->Clear();
+	dgAffinity->ColumnCount = 0;
+
+	String^ tempLUT = "";
+	int count = 1;
+
+	dgAffinity->ColumnCount = count;
+	dgAffinity->Columns[count - 1]->Name = "->";
+	
+	count++;
+
+	for (int i = 0; i < this->lReturn->LUT->Length; i++) {
+		if (this->lReturn->LUT[i] != ',') {
+			if (this->lReturn->LUT[i] != '\"') {
+				tempLUT += this->lReturn->LUT[i];
+			}
+		}
+		else {
+			dgAffinity->ColumnCount = count;
+			dgAffinity->Columns[count - 1]->Name = tempLUT;
+			dgAffinity->Rows->Add(tempLUT);
+			count++;
+			tempLUT = "";
+		}
+	}
+	if (tempLUT != "") {
+		dgAffinity->ColumnCount = count;
+		dgAffinity->Columns[count - 1]->Name = tempLUT;
+		dgAffinity->Rows->Add(tempLUT);
+	}
+	dgAffinity->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+	dgAffinity->Columns[0]->ReadOnly = true;
 }
 
 /*
 Used when a tRegion is deleted, it copies the data from the tRegions higher than the deleted one.
 */
-System::Void LuccME::P_DiscreteR::moveData(DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, DataGridView^ dgBetas2, TextBox^ tConst2, TextBox^ tElasticy2, TextBox^ tPercNeighborsUse2)
+System::Void LuccME::P_AttractRepulseLogisticRegression::moveData(DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, DataGridView^ dgBetas2, TextBox^ tConst2, TextBox^ tElasticy2, TextBox^ tPercNeighborsUse2, DataGridView^ dgAffinity2)
 {
 	dgBetas->Rows->Clear();
 	for (int i = 0; i < dgBetas2->RowCount - 1; i++) {
@@ -259,20 +238,25 @@ System::Void LuccME::P_DiscreteR::moveData(DataGridView^ dgBetas, TextBox^ tCons
 		dgBetas->Rows[i]->Cells[0]->Value = dgBetas2->Rows[i]->Cells[0]->Value;
 		dgBetas->Rows[i]->Cells[1]->Value = dgBetas2->Rows[i]->Cells[1]->Value;
 	}
+
 	tConst->Text = tConst2->Text;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy->Text = tElasticy2->Text;
+	tElasticy->Text = tElasticy2->Text;
+	tPercNeighborsUse->Text = tPercNeighborsUse2->Text;
+
+	dgAffinity->Rows->Clear();
+	for (int i = 0; i < dgAffinity2->RowCount - 1; i++) {
+		dgAffinity->Rows->Add();
+		dgAffinity->Rows[i]->Cells[0]->Value = dgAffinity2->Rows[i]->Cells[0]->Value;
+		dgAffinity->Rows[i]->Cells[1]->Value = dgAffinity2->Rows[i]->Cells[1]->Value;
 	}
-	else if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy->Text = tElasticy2->Text;
-		tPercNeighborsUse->Text = tPercNeighborsUse2->Text;
-	}
+	dgAffinity->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
+	dgAffinity->Columns[0]->ReadOnly = true;
 }
 
 /*
 Used to set the tRegions data from lReturn->Return, it copies the lTempBetas data to tRegion
 */
-System::Int16 LuccME::P_DiscreteR::getRegionData(array<String^>^ lTempBetas, cReturnPotential^ lReturn, DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, int i, int j)
+System::Int16 LuccME::P_AttractRepulseLogisticRegression::getRegionData(array<String^>^ lTempBetas, cReturnPotential^ lReturn, DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, int i, int j)
 {
 	String^ tempConst = "";
 	while (lTempBetas[i][j] != ';') {
@@ -282,28 +266,18 @@ System::Int16 LuccME::P_DiscreteR::getRegionData(array<String^>^ lTempBetas, cRe
 	j++;
 
 	String^ tempElasticy = "";
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		while (lTempBetas[i][j] != ';') {
-			tempElasticy += lTempBetas[i][j];
-			j++;
-		}
+	while (lTempBetas[i][j] != ';') {
+		tempElasticy += lTempBetas[i][j];
 		j++;
 	}
+	j++;
 
 	String^ tempPNU = "";
-	if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		while (lTempBetas[i][j] != ';') {
-			tempElasticy += lTempBetas[i][j];
-			j++;
-		}
-		j++;
-
-		while (lTempBetas[i][j] != ';') {
-			tempPNU += lTempBetas[i][j];
-			j++;
-		}
+	while (lTempBetas[i][j] != ';') {
+		tempPNU += lTempBetas[i][j];
 		j++;
 	}
+	j++;
 
 	String^ tempBeta = "";
 	int rowCount = 0;
@@ -333,41 +307,63 @@ System::Int16 LuccME::P_DiscreteR::getRegionData(array<String^>^ lTempBetas, cRe
 	if (tempBeta != "") {
 		dgBetas->Rows[rowCount]->Cells[1]->Value = tempBeta;
 	}
+
 	tConst->Text = tempConst;
 	tConst->ForeColor = System::Drawing::Color::Black;
-	if (lReturn->Component == LOGISTICREGRESSION) {
-		tElasticy->Text = tempElasticy;
-		tElasticy->ForeColor = System::Drawing::Color::Black;
-	}
-	if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		tElasticy->Text = tempElasticy;
-		tElasticy->ForeColor = System::Drawing::Color::Black;
-		tPercNeighborsUse->Text = tempPNU;
-		tPercNeighborsUse->ForeColor = System::Drawing::Color::Black;
-	}
+	tElasticy->Text = tempElasticy;
+	tElasticy->ForeColor = System::Drawing::Color::Black;
+	tPercNeighborsUse->Text = tempPNU;
+	tPercNeighborsUse->ForeColor = System::Drawing::Color::Black;
 
 	return j;
 }
 
 /*
+Used to set the Affinity Matrix data from lReturn->Return, it copies the lTempBetas data to tRegion
+*/
+System::Void LuccME::P_AttractRepulseLogisticRegression::getMatrixData(array<String^>^ lTempValues, DataGridView^ dgAffinity, int k)
+{
+	int row = 0;
+	int column = 1;
+	String^ tempValue;
+	for (int j = 0; j < lTempValues[k]->Length; j++) {
+		if (lTempValues[k][j] != ';') {
+			if (lTempValues[k][j] != ',') {
+				if (lTempValues[k][j] != '\"') {
+					if (lTempValues[k][j] != '*') {
+						tempValue += lTempValues[k][j];
+					}
+				}
+			}
+			else {
+				dgAffinity->Rows[row]->Cells[column]->Value = tempValue;
+				column++;
+				tempValue = "";
+			}
+		}
+		else {
+			dgAffinity->Rows[row]->Cells[column]->Value = tempValue;
+			column = 1;
+			row++;
+			tempValue = "";
+		}
+	}
+	if (tempValue != "") {
+		dgAffinity->Rows[row]->Cells[column]->Value = tempValue;
+	}
+}
+
+/*
 Used to save the tRegions data to lReturn->Return, it copies the tRegion data to lTempBetas
 */
-System::Void LuccME::P_DiscreteR::setRegionData(DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, int i, int j)
+System::Void LuccME::P_AttractRepulseLogisticRegression::setRegionData(DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, int i, int j)
 {
 	lTempBetas[i] += tConst->Text;
 	lTempBetas[i] += ";";
-
-	if (this->lReturn->Component == LOGISTICREGRESSION) {
-		lTempBetas[i] += tElasticy->Text;
-		lTempBetas[i] += ";";
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		lTempBetas[i] += tElasticy->Text;
-		lTempBetas[i] += ";";
-		lTempBetas[i] += tPercNeighborsUse->Text;
-		lTempBetas[i] += ";";
-	}
-
+	lTempBetas[i] += tElasticy->Text;
+	lTempBetas[i] += ";";
+	lTempBetas[i] += tPercNeighborsUse->Text;
+	lTempBetas[i] += ";";
 
 	for (int j = 0; j < dgBetas->Rows->Count; j++) {
 		if (dgBetas->Rows[j]->Cells[0]->Value != nullptr) {
@@ -383,14 +379,42 @@ System::Void LuccME::P_DiscreteR::setRegionData(DataGridView^ dgBetas, TextBox^ 
 			}
 		}
 	}
+
 	lTempBetas[i] += "*";
 	lReturn->Regression += 1;
 }
 
 /*
+Used to save the tRegions data to lReturn->Return, it copies the tRegion data to lTempValues
+*/
+System::Void LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData( DataGridView^ dgAffinity, int k)
+{
+	for (int i = 0; i < dgAffinity->RowCount; i++) {
+		for (int j = 1; j < dgAffinity->ColumnCount; j++) {
+			if (dgAffinity->Rows[i]->Cells[j]->Value == nullptr) {
+				MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+				break;
+			}
+			else {
+				lTempValues[k] += dgAffinity->Rows[i]->Cells[j]->Value;
+				if (j + 1 < dgAffinity->ColumnCount) {
+					lTempValues[k] += ",";
+				}
+			}
+		}
+		if (i + 1 < dgAffinity->RowCount) {
+			if (dgAffinity->Rows[i + 1] != nullptr) {
+				lTempValues[k] += ";";
+			}
+		}
+	}
+	lTempValues[k] += "*";
+}
+
+/*
 Locate the initial cell for copying or pasting
 */
-System::Windows::Forms::DataGridViewCell ^ LuccME::P_DiscreteR::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
+System::Windows::Forms::DataGridViewCell ^ LuccME::P_AttractRepulseLogisticRegression::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
 	if (dgView->SelectedCells->Count == NONE)
@@ -413,7 +437,7 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_DiscreteR::GetStartCell(Sys
 /*
 Capture the keys press
 */
-System::Void LuccME::P_DiscreteR::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
 	DataGridView^ dgView = (DataGridView^)sender;
 	try
@@ -461,7 +485,7 @@ System::Void LuccME::P_DiscreteR::dgBetas_KeyDown(System::Object ^ sender, Syste
 /*
 Copy the clipboard data
 */
-System::Void LuccME::P_DiscreteR::CopyToClipboard(DataGridView^ dgView)
+System::Void LuccME::P_AttractRepulseLogisticRegression::CopyToClipboard(DataGridView^ dgView)
 {
 	DataObject^ dataObj = dgView->GetClipboardContent();
 	if (dataObj != nullptr) {
@@ -473,7 +497,7 @@ System::Void LuccME::P_DiscreteR::CopyToClipboard(DataGridView^ dgView)
 /*
 Paste the clipboard data
 */
-System::Void LuccME::P_DiscreteR::PasteClipboardValue(DataGridView^ dgView)
+System::Void LuccME::P_AttractRepulseLogisticRegression::PasteClipboardValue(DataGridView^ dgView)
 {
 	//Show Error if no cell is selected
 	if (dgView->SelectedCells->Count == NONE)
@@ -529,85 +553,20 @@ System::Void LuccME::P_DiscreteR::PasteClipboardValue(DataGridView^ dgView)
 	}
 }
 
-System::Void LuccME::P_DiscreteR::neighAttractionLogisticRegressionON()
-{
-	lElasticy->Visible = true;
-	tElasticy->Visible = true;
-	lElasticy2->Visible = true;
-	tElasticy2->Visible = true;
-	lElasticy3->Visible = true;
-	tElasticy3->Visible = true;
-	lElasticy4->Visible = true;
-	tElasticy4->Visible = true;
-	lElasticy5->Visible = true;
-	tElasticy5->Visible = true;
-	lElasticy6->Visible = true;
-	tElasticy6->Visible = true;
-	lElasticy7->Visible = true;
-	tElasticy7->Visible = true;
-	lElasticy8->Visible = true;
-	tElasticy8->Visible = true;
-	lElasticy9->Visible = true;
-	tElasticy9->Visible = true;
-	lElasticy10->Visible = true;
-	tElasticy10->Visible = true;
-	lPercNeighborsUse->Visible = true;
-	tPercNeighborsUse->Visible = true;
-	lPercNeighborsUse2->Visible = true;
-	tPercNeighborsUse2->Visible = true;
-	lPercNeighborsUse3->Visible = true;
-	tPercNeighborsUse3->Visible = true;
-	lPercNeighborsUse4->Visible = true;
-	tPercNeighborsUse4->Visible = true;
-	lPercNeighborsUse5->Visible = true;
-	tPercNeighborsUse5->Visible = true;
-	lPercNeighborsUse6->Visible = true;
-	tPercNeighborsUse6->Visible = true;
-	lPercNeighborsUse7->Visible = true;
-	tPercNeighborsUse7->Visible = true;
-	lPercNeighborsUse8->Visible = true;
-	tPercNeighborsUse8->Visible = true;
-	lPercNeighborsUse9->Visible = true;
-	tPercNeighborsUse9->Visible = true;
-	lPercNeighborsUse10->Visible = true;
-	tPercNeighborsUse10->Visible = true;
-}
-
-System::Void LuccME::P_DiscreteR::logisticRegressionON()
-{
-	lElasticy->Visible = true;
-	tElasticy->Visible = true;
-	lElasticy2->Visible = true;
-	tElasticy2->Visible = true;
-	lElasticy3->Visible = true;
-	tElasticy3->Visible = true;
-	lElasticy4->Visible = true;
-	tElasticy4->Visible = true;
-	lElasticy5->Visible = true;
-	tElasticy5->Visible = true;
-	lElasticy6->Visible = true;
-	tElasticy6->Visible = true;
-	lElasticy7->Visible = true;
-	tElasticy7->Visible = true;
-	lElasticy8->Visible = true;
-	tElasticy8->Visible = true;
-	lElasticy9->Visible = true;
-	tElasticy9->Visible = true;
-	lElasticy10->Visible = true;
-	tElasticy10->Visible = true;
-}
-
-System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, System::EventArgs^  e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisticRegression_Shown(System::Object^  sender, System::EventArgs^  e)
 {
 	if (lReturn->Language == "en") {
+		this->Text = "Pontential - Attract Repulse Logistic Regression";
 		bAddBetas->Text = "Add";
 		bCancel->Text = "Cancel";
 		bSalvar->Text = "Save";
-		gSLUT = "Land Use Types";
+		gSLUT = "Use Types and Matrix";
 		gSValues = "Coefficient";
 		gSAttributes = "Attributes";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
+		gSCells = "All the cells must be fullfilled.";
+		gSCellsTitle = "Error - Empty Cells";
 		lBetas->Text = "Factors";
 		lBetas2->Text = "Factors";
 		lBetas3->Text = "Factors";
@@ -620,14 +579,17 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		lBetas10->Text = "Factors";
 	}
 	else {
+		this->Text = "Pontencial - Attract Repulse Logistic Regression";
 		bAddBetas->Text = "Adicionar";
 		bCancel->Text = "Cancelar";
 		bSalvar->Text = "Salvar";
-		gSLUT = "Tipos de Uso da Terra";
+		gSLUT = "Usos da Terra e Matrix";
 		gSValues = "Coeficientes";
 		gSAttributes = "Atributos";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
+		gSCells = "Todas as células devem ser preenchidas.";
+		gSCellsTitle = "Erro - Células Vazias";
 		lBetas->Text = "Fatores";
 		lBetas2->Text = "Fatores";
 		lBetas3->Text = "Fatores";
@@ -669,79 +631,18 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		}
 	}
 
-	if (this->lReturn->Component == LOGISTICREGRESSION) {
-		logisticRegressionON();
-		lBetas->Location = Point(117, 80);
-		dgBetas->Location = Point(25, 110);
-		dgBetas->Height = 246;
-		lBetas2->Location = Point(117, 80);
-		dgBetas2->Location = Point(25, 110);
-		dgBetas2->Height = 246;
-		lBetas3->Location = Point(117, 80);
-		dgBetas3->Location = Point(25, 110);
-		dgBetas3->Height = 246;
-		lBetas4->Location = Point(117, 80);
-		dgBetas4->Location = Point(25, 110);
-		dgBetas4->Height = 246;
-		lBetas5->Location = Point(117, 80);
-		dgBetas5->Location = Point(25, 110);
-		dgBetas5->Height = 246;
-		lBetas6->Location = Point(117, 80);
-		dgBetas6->Location = Point(25, 110);
-		dgBetas6->Height = 246;
-		lBetas7->Location = Point(117, 80);
-		dgBetas7->Location = Point(25, 110);
-		dgBetas7->Height = 246;
-		lBetas8->Location = Point(117, 80);
-		dgBetas8->Location = Point(25, 110);
-		dgBetas8->Height = 246;
-		lBetas9->Location = Point(117, 80);
-		dgBetas9->Location = Point(25, 110);
-		dgBetas9->Height = 246;
-		lBetas10->Location = Point(117, 80);
-		dgBetas10->Location = Point(25, 110);
-		dgBetas10->Height = 246;
-	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-		neighAttractionLogisticRegressionON();
-		lBetas->Location = Point(117, 110);
-		dgBetas->Location = Point(25, 140);
-		dgBetas->Height = 216;
-		lBetas2->Location = Point(117, 110);
-		dgBetas2->Location = Point(25, 140);
-		dgBetas2->Height = 216;
-		lBetas3->Location = Point(117, 110);
-		dgBetas3->Location = Point(25, 140);
-		dgBetas3->Height = 216;
-		lBetas4->Location = Point(117, 110);
-		dgBetas4->Location = Point(25, 140);
-		dgBetas4->Height = 216;
-		lBetas5->Location = Point(117, 110);
-		dgBetas5->Location = Point(25, 140);
-		dgBetas5->Height = 216;
-		lBetas6->Location = Point(117, 110);
-		dgBetas6->Location = Point(25, 140);
-		dgBetas6->Height = 216;
-		lBetas7->Location = Point(117, 110);
-		dgBetas7->Location = Point(25, 140);
-		dgBetas7->Height = 216;
-		lBetas8->Location = Point(117, 110);
-		dgBetas8->Location = Point(25, 140);
-		dgBetas8->Height = 216;
-		lBetas9->Location = Point(117, 110);
-		dgBetas9->Location = Point(25, 140);
-		dgBetas9->Height = 216;
-		lBetas10->Location = Point(117, 110);
-		dgBetas10->Location = Point(25, 140);
-		dgBetas10->Height = 216;
-	}
-
+	this->lvLUT->Items->Add("Affinity Matrix");
 	this->lvLUT->Columns->Add("Status", 47, HorizontalAlignment::Left);
 
 	// Coping the data from the NovoModeloForm
+	int j = 0;
 	if (this->lReturn->Return != "") {
 		int rowCount = 0;
 		for (int i = 0; i < this->lReturn->Return->Length; i++) {
+			if (this->lReturn->Return[i] == '$') {
+				j = i+1;
+				break;
+			}
 			if (this->lReturn->Return[i] != '#') {
 				lTempBetas[rowCount] += this->lReturn->Return[i];
 			}
@@ -753,8 +654,19 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 				rowCount++;
 			}
 		}
+		
 		if (lTempBetas[rowCount] != "") {
 			lvLUT->Items[rowCount]->SubItems->Add("OK");
+		}
+		
+		rowCount = 0;
+		for (int i = j; i < this->lReturn->Return->Length; i++) {
+			if (this->lReturn->Return[i] != '*') {
+				lTempValues[rowCount] += this->lReturn->Return[i];
+			}
+			else {
+				rowCount++;
+			}
 		}
 	}
 
@@ -767,7 +679,7 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 	tcRegions->SelectedIndex = NONE;
 }
 
-System::Void  LuccME::P_DiscreteR::lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 {
 	if (bAddBetas->Visible == false) {
 		initializeRegions();
@@ -832,25 +744,82 @@ System::Void  LuccME::P_DiscreteR::lvLUT_SelectedIndexChanged(System::Object^  s
 			}
 		}
 
+		for (int k = 0; k < lReturn->Regression; k++) {
+			switch (k)
+			{
+			case 0:
+				setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, dgAffinityMatrix, lAffinityMatrix, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix, k);
+				}
+				break;
+			case 1:
+				setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, dgAffinityMatrix2, lAffinityMatrix2, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix2, k);
+				}
+				break;
+			case 2:
+				setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, dgAffinityMatrix3, lAffinityMatrix3, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix3, k);
+				}
+				break;
+			case 3:
+				setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, dgAffinityMatrix4, lAffinityMatrix4, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix4, k);
+				}
+				break;
+			case 4:
+				setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, dgAffinityMatrix5, lAffinityMatrix5, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix5, k);
+				}
+				break;
+			case 5:
+				setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, dgAffinityMatrix6, lAffinityMatrix6, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix6, k);
+				}
+				break;
+			case 6:
+				setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, dgAffinityMatrix7, lAffinityMatrix7, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix7, k);
+				}
+				break;
+			case 7:
+				setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, dgAffinityMatrix8, lAffinityMatrix8, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix8, k);
+				}
+				break;
+			case 8:
+				setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, dgAffinityMatrix9, lAffinityMatrix9, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix9, k);
+				}
+				break;
+			case 9:
+				setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, dgAffinityMatrix10, lAffinityMatrix10, true);
+				if (lTempValues[k] != nullptr) {
+					getMatrixData(lTempValues, dgAffinityMatrix10, k);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
 		bSalvar->Visible = false;
 		tcRegions->Visible = true;
-		lConst->Visible = true;
-		tConst->Visible = true;
-		lBetas->Visible = true;
-		dgBetas->Visible = true;
 		bAddBetas->Visible = true;
 		bCancel->Visible = true;
-
-		if (this->lReturn->Component == LOGISTICREGRESSION) {
-			logisticRegressionON();
-		}
-		else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
-			neighAttractionLogisticRegressionON();
-		}
 	}
 }
 
-System::Void LuccME::P_DiscreteR::tcRegions_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::tcRegions_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 {
 	bDeleteRegression->Visible = false;
 	if (tcRegions->SelectedIndex == (tcRegions->TabCount - 1)) {
@@ -890,34 +859,34 @@ System::Void LuccME::P_DiscreteR::tcRegions_SelectedIndexChanged(System::Object^
 		switch (tcRegions->SelectedIndex)
 		{
 		case 0:
-			setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, true);
+			setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, dgAffinityMatrix, lAffinityMatrix, true);
 			break;
 		case 1:
-			setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, true);
+			setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, dgAffinityMatrix2, lAffinityMatrix2, true);
 			break;
 		case 2:
-			setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, true);
+			setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, dgAffinityMatrix3, lAffinityMatrix3, true);
 			break;
 		case 3:
-			setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, true);
+			setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, dgAffinityMatrix4, lAffinityMatrix4, true);
 			break;
 		case 4:
-			setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, true);
+			setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, dgAffinityMatrix5, lAffinityMatrix5, true);
 			break;
 		case 5:
-			setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, true);
+			setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, dgAffinityMatrix6, lAffinityMatrix6, true);
 			break;
 		case 6:
-			setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, true);
+			setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, dgAffinityMatrix7, lAffinityMatrix7, true);
 			break;
 		case 7:
-			setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, true);
+			setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, dgAffinityMatrix8, lAffinityMatrix8, true);
 			break;
 		case 8:
-			setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, true);
+			setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, dgAffinityMatrix9, lAffinityMatrix9, true);
 			break;
 		case 9:
-			setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, true);
+			setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, dgAffinityMatrix10, lAffinityMatrix10, true);
 			break;
 		default:
 			break;
@@ -929,7 +898,7 @@ System::Void LuccME::P_DiscreteR::tcRegions_SelectedIndexChanged(System::Object^
 	}
 }
 
-System::Void LuccME::P_DiscreteR::bDeleteRegression_Click(System::Object^  sender, System::EventArgs^  e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::bDeleteRegression_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	int rToRemove = tcRegions->SelectedIndex;
 	int rNumber = tcRegions->TabCount;
@@ -938,28 +907,28 @@ System::Void LuccME::P_DiscreteR::bDeleteRegression_Click(System::Object^  sende
 			switch (i)
 			{
 			case 1:
-				moveData(dgBetas2, tConst2, tElasticy2, tPercNeighborsUse2, dgBetas3, tConst3, tElasticy3, tPercNeighborsUse3);
+				moveData(dgBetas2, tConst2, tElasticy2, tPercNeighborsUse2, dgAffinityMatrix2, dgBetas3, tConst3, tElasticy3, tPercNeighborsUse3, dgAffinityMatrix3);
 				break;
 			case 2:
-				moveData(dgBetas3, tConst3, tElasticy3, tPercNeighborsUse3, dgBetas4, tConst4, tElasticy4, tPercNeighborsUse4);
+				moveData(dgBetas3, tConst3, tElasticy3, tPercNeighborsUse3, dgAffinityMatrix3, dgBetas4, tConst4, tElasticy4, tPercNeighborsUse4, dgAffinityMatrix4);
 				break;
 			case 3:
-				moveData(dgBetas4, tConst4, tElasticy4, tPercNeighborsUse4, dgBetas5, tConst5, tElasticy5, tPercNeighborsUse5);
+				moveData(dgBetas4, tConst4, tElasticy4, tPercNeighborsUse4, dgAffinityMatrix4, dgBetas5, tConst5, tElasticy5, tPercNeighborsUse5, dgAffinityMatrix5);
 				break;
 			case 4:
-				moveData(dgBetas5, tConst5, tElasticy5, tPercNeighborsUse5, dgBetas6, tConst6, tElasticy6, tPercNeighborsUse6);
+				moveData(dgBetas5, tConst5, tElasticy5, tPercNeighborsUse5, dgAffinityMatrix5, dgBetas6, tConst6, tElasticy6, tPercNeighborsUse6, dgAffinityMatrix6);
 				break;
 			case 5:
-				moveData(dgBetas6, tConst6, tElasticy6, tPercNeighborsUse6, dgBetas7, tConst7, tElasticy7, tPercNeighborsUse7);
+				moveData(dgBetas6, tConst6, tElasticy6, tPercNeighborsUse6, dgAffinityMatrix6, dgBetas7, tConst7, tElasticy7, tPercNeighborsUse7, dgAffinityMatrix7);
 				break;
 			case 6:
-				moveData(dgBetas7, tConst7, tElasticy7, tPercNeighborsUse7, dgBetas8, tConst8, tElasticy8, tPercNeighborsUse8);
+				moveData(dgBetas7, tConst7, tElasticy7, tPercNeighborsUse7, dgAffinityMatrix7, dgBetas8, tConst8, tElasticy8, tPercNeighborsUse8, dgAffinityMatrix8);
 				break;
 			case 7:
-				moveData(dgBetas8, tConst8, tElasticy8, tPercNeighborsUse8, dgBetas9, tConst9, tElasticy9, tPercNeighborsUse9);
+				moveData(dgBetas8, tConst8, tElasticy8, tPercNeighborsUse8, dgAffinityMatrix8, dgBetas9, tConst9, tElasticy9, tPercNeighborsUse9, dgAffinityMatrix9);
 				break;
 			case 8:
-				moveData(dgBetas9, tConst9, tElasticy9, tPercNeighborsUse9, dgBetas10, tConst10, tElasticy10, tPercNeighborsUse10);
+				moveData(dgBetas9, tConst9, tElasticy9, tPercNeighborsUse9, dgAffinityMatrix9, dgBetas10, tConst10, tElasticy10, tPercNeighborsUse10, dgAffinityMatrix10);
 				break;
 			default:
 				break;
@@ -982,13 +951,16 @@ System::Void LuccME::P_DiscreteR::bDeleteRegression_Click(System::Object^  sende
 				int count = 0;
 				if (fulfillRegions > tcRegions->TabCount - 1) {
 					String^ aux = lTempBetas[i]->Substring(0, lRegionsLocation[0] + 1);
+					String^ aux2 = lTempValues[i]->Substring(0, lRegionsLocation[0] + 1);
 					for (int r = 1; r < lRegionsLocation->Length; r++) {
 						if (r < rToRemove) {
 							aux += lTempBetas[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
+							aux2 += lTempValues[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
 							count++;
 						}
 						else if (r > rToRemove) {
 							aux += lTempBetas[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
+							aux2 += lTempValues[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
 							count++;
 						}
 						else {
@@ -996,29 +968,14 @@ System::Void LuccME::P_DiscreteR::bDeleteRegression_Click(System::Object^  sende
 						}
 					}
 					lTempBetas[i] = aux;
+					lTempValues[i] = aux2;
 				}
 			}
 		}
 	}
 }
 
-System::Void LuccME::P_DiscreteR::bCancel_Click(System::Object^  sender, System::EventArgs^  e)
-{
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		lvLUT->Items[i]->Selected = false;
-	}
-
-	bAddBetas->Visible = false;
-	bCancel->Visible = false;
-	tLUT->Visible = false;
-	lvLUT->Visible = true;
-	bSalvar->Visible = true;
-	initializeRegions();
-	tcRegions->Visible = false;
-	bDeleteRegression->Visible = false;
-}
-
-System::Void LuccME::P_DiscreteR::bAddBetas_Click(System::Object^  sender, System::EventArgs^  e)
+System::Void LuccME::P_AttractRepulseLogisticRegression::bAddBetas_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
 		if (lvLUT->Items[i]->Selected == true) {
@@ -1067,6 +1024,50 @@ System::Void LuccME::P_DiscreteR::bAddBetas_Click(System::Object^  sender, Syste
 		}
 	}
 
+	if (tLUT->Text == "Affinity Matrix") {
+		for (int i = 0; i < lReturn->Regression; i++) {
+			for (int j = 0; j < tcRegions->TabCount - 1; j++) {
+				lTempValues[i] = "";
+				switch (j)
+				{
+				case 0:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 1:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 2:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 3:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 4:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 5:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 6:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 7:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 8:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				case 9:
+					setAffinityMatrixData(dgAffinityMatrix, i);
+					break;
+				default:
+					break;
+				}
+			}
+			lvLUT->Items[lvLUT->Items->Count - 1]->SubItems->Add("OK");
+		}
+	}
+
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
 		lvLUT->Items[i]->Selected = false;
 	}
@@ -1079,33 +1080,4 @@ System::Void LuccME::P_DiscreteR::bAddBetas_Click(System::Object^  sender, Syste
 	initializeRegions();
 	tcRegions->Visible = false;
 	bDeleteRegression->Visible = false;
-}
-
-System::Void LuccME::P_DiscreteR::bSalvar_Click(System::Object^  sender, System::EventArgs^  e)
-{
-	bool check = true;
-
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		if (lvLUT->Items[i]->SubItems->Count <= 1) {
-			check = false;
-			break;
-		}
-	}
-
-	lReturn->Return = "";
-
-	if (check) {
-		for (int i = 0; i < lvLUT->Items->Count; i++) {
-			this->lReturn->Return += lTempBetas[i];
-			if (i + 1 < lvLUT->Items->Count) {
-				this->lReturn->Return = this->lReturn->Return->Replace("\n", "");
-				this->lReturn->Return = this->lReturn->Return->Replace("\r", "");
-				this->lReturn->Return += "#";
-			}
-		}
-		this->Close();
-	}
-	else {
-		MessageBox::Show(gSEmptyComponent, gSEmptyComponentTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
-	}
 }

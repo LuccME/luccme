@@ -22,6 +22,7 @@ namespace LuccME {
 		String^ gSNSR = "";
 		String^ gSNSRTitle = "";
 	private: System::Windows::Forms::Button^  bMaxEntLike;
+	private: System::Windows::Forms::Button^  bARLR;
 
 	public:
 		cReturnPotential^ lReturn;
@@ -75,6 +76,7 @@ namespace LuccME {
 			this->bLogisticRegression = (gcnew System::Windows::Forms::Button());
 			this->bNALR = (gcnew System::Windows::Forms::Button());
 			this->bMaxEntLike = (gcnew System::Windows::Forms::Button());
+			this->bARLR = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -130,7 +132,7 @@ namespace LuccME {
 			// 
 			// bNALR
 			// 
-			this->bNALR->Location = System::Drawing::Point(251, 317);
+			this->bNALR->Location = System::Drawing::Point(251, 288);
 			this->bNALR->Name = L"bNALR";
 			this->bNALR->Size = System::Drawing::Size(185, 39);
 			this->bNALR->TabIndex = 89;
@@ -140,7 +142,7 @@ namespace LuccME {
 			// 
 			// bMaxEntLike
 			// 
-			this->bMaxEntLike->Location = System::Drawing::Point(251, 408);
+			this->bMaxEntLike->Location = System::Drawing::Point(251, 407);
 			this->bMaxEntLike->Name = L"bMaxEntLike";
 			this->bMaxEntLike->Size = System::Drawing::Size(185, 39);
 			this->bMaxEntLike->TabIndex = 95;
@@ -148,12 +150,23 @@ namespace LuccME {
 			this->bMaxEntLike->UseVisualStyleBackColor = true;
 			this->bMaxEntLike->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bMaxEntLike_Click);
 			// 
+			// bARLR
+			// 
+			this->bARLR->Location = System::Drawing::Point(251, 348);
+			this->bARLR->Name = L"bARLR";
+			this->bARLR->Size = System::Drawing::Size(185, 39);
+			this->bARLR->TabIndex = 96;
+			this->bARLR->Text = L"Attract Repulse Logistic Regression";
+			this->bARLR->UseVisualStyleBackColor = true;
+			this->bARLR->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bARLR_Click);
+			// 
 			// PotDiscreteForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 535);
+			this->Controls->Add(this->bARLR);
 			this->Controls->Add(this->bMaxEntLike);
 			this->Controls->Add(this->bNALR);
 			this->Controls->Add(this->bLogisticRegression);
@@ -177,5 +190,6 @@ namespace LuccME {
 	private: System::Void bNALR_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void PotDiscreteForm_Shown(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e);
-};
+	private: System::Void bARLR_Click(System::Object^  sender, System::EventArgs^  e);
+	};
 }

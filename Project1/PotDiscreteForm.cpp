@@ -172,7 +172,6 @@ System::Void LuccME::PotDiscreteForm::bARLR_Click(System::Object^  sender, Syste
 	}
 	if (check) {
 		lReturn->Component = ATTRACTREPULSELOGISTICREGRESSION;
-		//lReturn->Return = "-1.961;0.1;0.5;dist_rodovias=0.00008578,assentamentos=-0.2604,uc_us=0.6064,fertilidadealtaoumedia=0.4393*#1.978;0.1;0.5;dist_rodovias=-0.00008651,assentamentos=0.2676,uc_us=-0.6376,fertilidadealtaoumedia=-0.4565*#0;0;0;*$1,0,0;0,1,0;0,0,1";
 		P_AttractRepulseLogisticRegression^ potentialForm = gcnew P_AttractRepulseLogisticRegression(lReturn);
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {

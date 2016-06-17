@@ -1798,6 +1798,7 @@ namespace LuccME {
 	private: System::Void showReturnLogisticRegression();
 	private: System::Void showReturnNeighAttractionLogisticRegression();
 	private: System::Void showReturnMaxEntLike(String^ component);
+	private: System::Void showReturnARLR();
 	private: System::Void tModelName_Leave(System::Object^  sender, System::EventArgs^  e);
 	};
 }

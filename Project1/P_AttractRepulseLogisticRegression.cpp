@@ -157,7 +157,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::initializeRegions()
 /*
 Make the components of a tRagion visible or not
 */
-System::Void LuccME::P_AttractRepulseLogisticRegression::setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, Label^ lConst, TextBox^ tConst, Label^ lElasticy, TextBox^ tElasticy, Label^ lPercNeighborsUse, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, Label^ lAffinityMatrix, bool status)
+System::Void LuccME::P_AttractRepulseLogisticRegression::setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, Label^ lConst, TextBox^ tConst, Label^ lElasticy, TextBox^ tElasticy, Label^ lPercNeighborsUse, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, Label^ lAffinityMatrix, Label^ lLegend, bool status)
 {
 	if (tLUT->Text != "Affinity Matrix") {
 		lBetas->Visible = status;
@@ -173,6 +173,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setVisibleONorOFF(Label
 		tPercNeighborsUse->Visible = status;
 		dgAffinity->Visible = !status;
 		lAffinityMatrix->Visible = !status;
+		lLegend->Visible = !status;
 	}
 	else {
 		lBetas->Visible = !status;
@@ -188,6 +189,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setVisibleONorOFF(Label
 		tPercNeighborsUse->Visible = !status;
 		dgAffinity->Visible = status;
 		lAffinityMatrix->Visible = status;
+		lLegend->Visible = status;
 	}
 }
 
@@ -330,7 +332,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::getMatrixData(array<Str
 		if (lTempValues[k][j] != ';') {
 			if (lTempValues[k][j] != ',') {
 				if (lTempValues[k][j] != '\"') {
-					if (lTempValues[k][j] != '*') {
+					if (lTempValues[k][j] != '%') {
 						tempValue += lTempValues[k][j];
 					}
 				}
@@ -381,7 +383,6 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setRegionData(DataGridV
 	}
 
 	lTempBetas[i] += "*";
-	lReturn->Regression += 1;
 }
 
 /*
@@ -408,7 +409,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData( 
 			}
 		}
 	}
-	lTempValues[k] += "*";
+	lTempValues[k] += "%";
 }
 
 /*
@@ -568,15 +569,9 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		gSCells = "All the cells must be fullfilled.";
 		gSCellsTitle = "Error - Empty Cells";
 		lBetas->Text = "Factors";
-		lBetas2->Text = "Factors";
-		lBetas3->Text = "Factors";
-		lBetas4->Text = "Factors";
-		lBetas5->Text = "Factors";
-		lBetas6->Text = "Factors";
-		lBetas7->Text = "Factors";
-		lBetas8->Text = "Factors";
-		lBetas9->Text = "Factors";
-		lBetas10->Text = "Factors";
+		lLegend->Text = "      0      - Indifferent, does not influence the land uses affinity.\n"
+						"-0.1 a -1 - Repels, negative values one land use repels the other.\n"
+						" 0.1 a  1 - Attracts, positive values one land use attracts the other. ";
 	}
 	else {
 		this->Text = "Pontencial - Attract Repulse Logistic Regression";
@@ -591,16 +586,31 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		gSCells = "Todas as células devem ser preenchidas.";
 		gSCellsTitle = "Erro - Células Vazias";
 		lBetas->Text = "Fatores";
-		lBetas2->Text = "Fatores";
-		lBetas3->Text = "Fatores";
-		lBetas4->Text = "Fatores";
-		lBetas5->Text = "Fatores";
-		lBetas6->Text = "Fatores";
-		lBetas7->Text = "Fatores";
-		lBetas8->Text = "Fatores";
-		lBetas9->Text = "Fatores";
-		lBetas10->Text = "Fatores";
+		lLegend->Text = "      0      - Indiferente, não influencia na afinidade dos usos.\n"
+						"-0.1 a -1 - Repele, valores negativos um uso repele o outro.\n"
+						" 0.1 a  1 - Atrai, valores positivos um uso atrai o outro. ";
 	}
+	
+	//Use the same values for al regions
+	lBetas2->Text = lBetas->Text;
+	lBetas3->Text = lBetas->Text;
+	lBetas4->Text = lBetas->Text;
+	lBetas5->Text = lBetas->Text;
+	lBetas6->Text = lBetas->Text;
+	lBetas7->Text = lBetas->Text;
+	lBetas8->Text = lBetas->Text;
+	lBetas9->Text = lBetas->Text;
+	lBetas10->Text = lBetas->Text;
+
+	lLegend2->Text = lLegend->Text;
+	lLegend3->Text = lLegend->Text;
+	lLegend4->Text = lLegend->Text;
+	lLegend5->Text = lLegend->Text;
+	lLegend6->Text = lLegend->Text;
+	lLegend7->Text = lLegend->Text;
+	lLegend8->Text = lLegend->Text;
+	lLegend9->Text = lLegend->Text;
+	lLegend10->Text = lLegend->Text;
 
 	//Remove the Regions tabs
 	for (int i = REGRESSIONNUMBER; i >= INITIALREGRESSIONSHOW; i--) {
@@ -639,7 +649,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 	if (this->lReturn->Return != "") {
 		int rowCount = 0;
 		for (int i = 0; i < this->lReturn->Return->Length; i++) {
-			if (this->lReturn->Return[i] == '$') {
+			if (this->lReturn->Return[i] == '&') {
 				j = i+1;
 				break;
 			}
@@ -661,10 +671,11 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		
 		rowCount = 0;
 		for (int i = j; i < this->lReturn->Return->Length; i++) {
-			if (this->lReturn->Return[i] != '*') {
+			if (this->lReturn->Return[i] != '%') {
 				lTempValues[rowCount] += this->lReturn->Return[i];
 			}
 			else {
+				lTempValues[rowCount] += this->lReturn->Return[i];
 				rowCount++;
 			}
 		}
@@ -748,61 +759,61 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::lvLUT_SelectedIndexChan
 			switch (k)
 			{
 			case 0:
-				setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, dgAffinityMatrix, lAffinityMatrix, true);
+				setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, dgAffinityMatrix, lAffinityMatrix, lLegend, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix, k);
 				}
 				break;
 			case 1:
-				setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, dgAffinityMatrix2, lAffinityMatrix2, true);
+				setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, dgAffinityMatrix2, lAffinityMatrix2, lLegend2, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix2, k);
 				}
 				break;
 			case 2:
-				setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, dgAffinityMatrix3, lAffinityMatrix3, true);
+				setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, dgAffinityMatrix3, lAffinityMatrix3, lLegend3, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix3, k);
 				}
 				break;
 			case 3:
-				setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, dgAffinityMatrix4, lAffinityMatrix4, true);
+				setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, dgAffinityMatrix4, lAffinityMatrix4, lLegend4, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix4, k);
 				}
 				break;
 			case 4:
-				setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, dgAffinityMatrix5, lAffinityMatrix5, true);
+				setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, dgAffinityMatrix5, lAffinityMatrix5, lLegend5, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix5, k);
 				}
 				break;
 			case 5:
-				setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, dgAffinityMatrix6, lAffinityMatrix6, true);
+				setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, dgAffinityMatrix6, lAffinityMatrix6, lLegend6, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix6, k);
 				}
 				break;
 			case 6:
-				setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, dgAffinityMatrix7, lAffinityMatrix7, true);
+				setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, dgAffinityMatrix7, lAffinityMatrix7, lLegend7, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix7, k);
 				}
 				break;
 			case 7:
-				setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, dgAffinityMatrix8, lAffinityMatrix8, true);
+				setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, dgAffinityMatrix8, lAffinityMatrix8, lLegend8, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix8, k);
 				}
 				break;
 			case 8:
-				setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, dgAffinityMatrix9, lAffinityMatrix9, true);
+				setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, dgAffinityMatrix9, lAffinityMatrix9, lLegend9, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix9, k);
 				}
 				break;
 			case 9:
-				setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, dgAffinityMatrix10, lAffinityMatrix10, true);
+				setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, dgAffinityMatrix10, lAffinityMatrix10, lLegend10, true);
 				if (lTempValues[k] != nullptr) {
 					getMatrixData(lTempValues, dgAffinityMatrix10, k);
 				}
@@ -854,39 +865,43 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::tcRegions_SelectedIndex
 			default:
 				break;
 			}
+			
+			if (tcRegions->SelectedIndex == lReturn->Regression) {
+				lReturn->Regression += 1;
+			}
 		}
 
 		switch (tcRegions->SelectedIndex)
 		{
 		case 0:
-			setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, dgAffinityMatrix, lAffinityMatrix, true);
+			setVisibleONorOFF(lBetas, dgBetas, lConst, tConst, lElasticy, tElasticy, lPercNeighborsUse, tPercNeighborsUse, dgAffinityMatrix, lAffinityMatrix, lLegend, true);
 			break;
 		case 1:
-			setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, dgAffinityMatrix2, lAffinityMatrix2, true);
+			setVisibleONorOFF(lBetas2, dgBetas2, lConst2, tConst2, lElasticy2, tElasticy2, lPercNeighborsUse2, tPercNeighborsUse2, dgAffinityMatrix2, lAffinityMatrix2, lLegend2, true);
 			break;
 		case 2:
-			setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, dgAffinityMatrix3, lAffinityMatrix3, true);
+			setVisibleONorOFF(lBetas3, dgBetas3, lConst3, tConst3, lElasticy3, tElasticy3, lPercNeighborsUse3, tPercNeighborsUse3, dgAffinityMatrix3, lAffinityMatrix3, lLegend3, true);
 			break;
 		case 3:
-			setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, dgAffinityMatrix4, lAffinityMatrix4, true);
+			setVisibleONorOFF(lBetas4, dgBetas4, lConst4, tConst4, lElasticy4, tElasticy4, lPercNeighborsUse4, tPercNeighborsUse4, dgAffinityMatrix4, lAffinityMatrix4, lLegend4, true);
 			break;
 		case 4:
-			setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, dgAffinityMatrix5, lAffinityMatrix5, true);
+			setVisibleONorOFF(lBetas5, dgBetas5, lConst5, tConst5, lElasticy5, tElasticy5, lPercNeighborsUse5, tPercNeighborsUse5, dgAffinityMatrix5, lAffinityMatrix5, lLegend5, true);
 			break;
 		case 5:
-			setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, dgAffinityMatrix6, lAffinityMatrix6, true);
+			setVisibleONorOFF(lBetas6, dgBetas6, lConst6, tConst6, lElasticy6, tElasticy6, lPercNeighborsUse6, tPercNeighborsUse6, dgAffinityMatrix6, lAffinityMatrix6, lLegend6, true);
 			break;
 		case 6:
-			setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, dgAffinityMatrix7, lAffinityMatrix7, true);
+			setVisibleONorOFF(lBetas7, dgBetas7, lConst7, tConst7, lElasticy7, tElasticy7, lPercNeighborsUse7, tPercNeighborsUse7, dgAffinityMatrix7, lAffinityMatrix7, lLegend7, true);
 			break;
 		case 7:
-			setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, dgAffinityMatrix8, lAffinityMatrix8, true);
+			setVisibleONorOFF(lBetas8, dgBetas8, lConst8, tConst8, lElasticy8, tElasticy8, lPercNeighborsUse8, tPercNeighborsUse8, dgAffinityMatrix8, lAffinityMatrix8, lLegend8, true);
 			break;
 		case 8:
-			setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, dgAffinityMatrix9, lAffinityMatrix9, true);
+			setVisibleONorOFF(lBetas9, dgBetas9, lConst9, tConst9, lElasticy9, tElasticy9, lPercNeighborsUse9, tPercNeighborsUse9, dgAffinityMatrix9, lAffinityMatrix9, lLegend9, true);
 			break;
 		case 9:
-			setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, dgAffinityMatrix10, lAffinityMatrix10, true);
+			setVisibleONorOFF(lBetas10, dgBetas10, lConst10, tConst10, lElasticy10, tElasticy10, lPercNeighborsUse10, tPercNeighborsUse10, dgAffinityMatrix10, lAffinityMatrix10, lLegend10, true);
 			break;
 		default:
 			break;
@@ -977,9 +992,8 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bDeleteRegression_Click
 
 System::Void LuccME::P_AttractRepulseLogisticRegression::bAddBetas_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
+	for (int i = 0; i < lvLUT->Items->Count - 1; i++) {
 		if (lvLUT->Items[i]->Selected == true) {
-			lReturn->Regression = 0;
 			lTempBetas[i] = "";
 			for (int j = 0; j < tcRegions->TabCount - 1; j++) {
 				switch (j)
@@ -1025,47 +1039,45 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bAddBetas_Click(System:
 	}
 
 	if (tLUT->Text == "Affinity Matrix") {
-		for (int i = 0; i < lReturn->Regression; i++) {
-			for (int j = 0; j < tcRegions->TabCount - 1; j++) {
-				lTempValues[i] = "";
-				switch (j)
-				{
-				case 0:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 1:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 2:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 3:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 4:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 5:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 6:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 7:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 8:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				case 9:
-					setAffinityMatrixData(dgAffinityMatrix, i);
-					break;
-				default:
-					break;
-				}
+		for (int j = 0; j < tcRegions->TabCount - 1; j++) {
+			lTempValues[j] = "";
+			switch (j)
+			{
+			case 0:
+				setAffinityMatrixData(dgAffinityMatrix, j);
+				break;
+			case 1:
+				setAffinityMatrixData(dgAffinityMatrix2, j);
+				break;
+			case 2:
+				setAffinityMatrixData(dgAffinityMatrix3, j);
+				break;
+			case 3:
+				setAffinityMatrixData(dgAffinityMatrix4, j);
+				break;
+			case 4:
+				setAffinityMatrixData(dgAffinityMatrix5, j);
+				break;
+			case 5:
+				setAffinityMatrixData(dgAffinityMatrix6, j);
+				break;
+			case 6:
+				setAffinityMatrixData(dgAffinityMatrix7, j);
+				break;
+			case 7:
+				setAffinityMatrixData(dgAffinityMatrix8, j);
+				break;
+			case 8:
+				setAffinityMatrixData(dgAffinityMatrix9, j);
+				break;
+			case 9:
+				setAffinityMatrixData(dgAffinityMatrix10, j);
+				break;
+			default:
+				break;
 			}
-			lvLUT->Items[lvLUT->Items->Count - 1]->SubItems->Add("OK");
 		}
+		lvLUT->Items[lvLUT->Items->Count - 1]->SubItems->Add("OK");
 	}
 
 	for (int i = 0; i < lvLUT->Items->Count; i++) {
@@ -1080,4 +1092,55 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bAddBetas_Click(System:
 	initializeRegions();
 	tcRegions->Visible = false;
 	bDeleteRegression->Visible = false;
+}
+
+System::Void LuccME::P_AttractRepulseLogisticRegression::bCancel_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	for (int i = 0; i < lvLUT->Items->Count; i++) {
+		lvLUT->Items[i]->Selected = false;
+	}
+
+	bAddBetas->Visible = false;
+	bCancel->Visible = false;
+	tLUT->Visible = false;
+	lvLUT->Visible = true;
+	bSalvar->Visible = true;
+	initializeRegions();
+	tcRegions->Visible = false;
+	bDeleteRegression->Visible = false;
+}
+
+System::Void LuccME::P_AttractRepulseLogisticRegression::bSalvar_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	bool check = true;
+
+	for (int i = 0; i < lvLUT->Items->Count; i++) {
+		if (lvLUT->Items[i]->SubItems->Count <= 1) {
+			check = false;
+			break;
+		}
+	}
+
+	lReturn->Return = "";
+
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count - 1; i++) {
+			this->lReturn->Return += lTempBetas[i];
+			if (i + 1 < lvLUT->Items->Count) {
+				this->lReturn->Return = this->lReturn->Return->Replace("\n", "");
+				this->lReturn->Return = this->lReturn->Return->Replace("\r", "");
+				this->lReturn->Return += "#";
+			}
+		}
+		this->lReturn->Return += "&";
+		for (int i = 0; i < lReturn->Regression; i++) {
+			this->lReturn->Return += lTempValues[i];
+			this->lReturn->Return = this->lReturn->Return->Replace("\n", "");
+			this->lReturn->Return = this->lReturn->Return->Replace("\r", "");
+		}
+		this->Close();
+	}
+	else {
+		MessageBox::Show(gSEmptyComponent, gSEmptyComponentTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
 }

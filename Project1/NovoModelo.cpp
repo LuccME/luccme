@@ -1078,6 +1078,117 @@ System::Void LuccME::NovoModelo::showReturnMaxEntLike(String^ component)
 	tbPotential->Lines = lines;
 }
 
+/*
+This funtion create the visual return on the multiline textbox for the AttractiveRepulsiveLinearregression component
+*/
+System::Void LuccME::NovoModelo::showReturnARLR()
+{
+	int count = countCaracter(gPotential, '*');
+	int countAffinity = countCaracter(gPotential, '%');
+	int lineCount = 0;
+	int regression = 0;
+	int nLut = countCaracter(gPotentialLUT, ',') + 1;
+
+	array<String^>^ lines = gcnew array<String^>(count + (countAffinity * nLut) + 2);
+
+	lines[lineCount] = "AttractRepulseLogisticRegression";
+
+	lineCount = 1;
+
+	bool first = true;
+	bool second = true;
+
+	int i = 0;
+
+	for (i = 0; i < gPotential->Length; i++) {
+		if (gPotential[i] != '&'){
+			if (gPotential[i] != '#') {
+				if (gPotential[i] != '*') {
+					if (gPotential[i] != ';') {
+						lines[lineCount + regression] += gPotential[i];
+					}
+					else {
+						if (first) {
+							lines[lineCount + regression] += "$";
+							first = false;
+						}
+						else if (second) {
+							lines[lineCount + regression] += "@";
+							second = false;
+						}
+						else {
+							lines[lineCount + regression] += gPotential[i];
+						}
+					}
+				}
+				else {
+					if ((i + 1) < gPotential->Length) {
+						if (gPotential[i + 1] != '#') {
+							regression += nLut;
+							first = true;
+							second = true;
+						}
+					}
+				}
+			}
+			else {
+				int controlLoop;
+				if (gPotentialRegression == 1) {
+					controlLoop = 1;
+				}
+				else {
+					controlLoop = gPotentialRegression * nLut;
+				}
+
+				for (int j = 0; j < controlLoop; j += nLut) {
+					lines[lineCount + j] = String::Concat("const=", lines[lineCount + j]);
+					lines[lineCount + j] = lines[lineCount + j]->Replace("$", ",elasticity=");
+					lines[lineCount + j] = lines[lineCount + j]->Replace("@", ",percNeighborsUse=");
+					lines[lineCount + j] = lines[lineCount + j]->Replace(";", ",betas={");
+					lines[lineCount + j] = lines[lineCount + j]->Replace("=", " = ");
+					lines[lineCount + j] = lines[lineCount + j]->Replace(",", ", ");
+					lines[lineCount + j] = lines[lineCount + j] = String::Concat(lines[lineCount + j], "}");
+				}
+				lineCount++;
+				first = true;
+				second = true;
+				regression = 0;
+			}
+		}
+		else {
+			break;
+		}
+	}
+
+	i++;
+	if (gPotentialRegression > 1) {
+		lineCount = (gPotentialRegression * nLut) + 1;
+	}
+	
+	lines[lineCount] = "transitionMatrix=";
+	lineCount++;
+	for (i; i < gPotential->Length; i++) {
+		if (gPotential[i] != ';') {
+			if (gPotential[i] != ',') {
+				if (gPotential[i] != '%') {
+					lines[lineCount] += gPotential[i];
+				}
+				else {
+					lineCount++;
+				}
+			}
+			else {
+				lines[lineCount] += ", ";
+			}
+		}
+		else {
+			lineCount++;
+		}
+	}
+
+	tbPotential->Lines = lines;
+}
+
 System::Void LuccME::NovoModelo::bSelectFolder_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	//Open the dialog to select a folder and return the path
@@ -1460,6 +1571,11 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 				showReturnMaxEntLike("MaximumEntropyLikeD");
 			}
 			break;
+
+		case ATTRACTREPULSELOGISTICREGRESSION:
+			if (gPotential != "") {
+				showReturnARLR();
+			}
 		}
 	}
 	checkLanguage();
@@ -2407,6 +2523,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					int nLut = countCaracter(gPotentialLUT, ',') + 1;
 					int endRegion = 0;
 					int activeLUT = 0;
+					int startAffinity = 0;
 
 					switch (gPotentialComponent)
 					{
@@ -2501,6 +2618,108 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
+					case ATTRACTREPULSELOGISTICREGRESSION:
+						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
+						sw->WriteLine("{");
+						sw->WriteLine("\tpotentialData =");
+						sw->WriteLine("\t{");
+						if (gPotentialRegression > 1) {
+							sw->WriteLine("\t\tregionAttr = \"region\",");
+							sw->WriteLine("");
+						}
+
+						for (int k = 1; k < tbPotential->Lines->Length - (nLut*gPotentialRegression) - 2; k += nLut) {
+							sw->WriteLine("\t\t-- Region " + activeRegion.ToString());
+							sw->WriteLine("\t\t{");
+							if (gPotentialRegression == 1) {
+								endRegion = tbPotential->Lines->Length - (nLut*gPotentialRegression) - 2;
+							}
+							else {
+								endRegion = ((tbPotential->Lines->Length - (nLut*gPotentialRegression) - 2) / gPotentialRegression)*activeRegion;
+							}
+							for (int i = k; i <= endRegion; i++) {
+								if (tbPotential->Lines[i]->ToString() != "") {
+									sw->WriteLine("\t\t\t-- " + tempLUTs[activeLUT]);
+									activeLUT++;
+									sw->WriteLine("\t\t\t{");
+									aux = tbPotential->Lines[i]->ToString()->Replace("betas", "$betas");
+									int j = 0;
+									while (aux[j] != '$') {
+										if (aux[j] != ',') {
+											if (aux[j] != ' ') {
+												tempBetas += aux[j];
+											}
+										}
+										else {
+											sw->WriteLine("\t\t\t\t" + tempBetas->Replace("=", " = ") + ",");
+											tempBetas = "";
+										}
+										j++;
+									}
+									j++;
+									sw->WriteLine("\n\t\t\t\t" + aux->Substring(j, 7)); //Betas
+									sw->WriteLine("\t\t\t\t{");
+									j += 9;
+									for (int k = j; k < aux->Length; k++) {
+										if (aux[k] != ',') {
+											if (aux[k] != '}') {
+												if (aux[k] != ' ') {
+													tempBetas += aux[k];
+												}
+											}
+											else {
+												sw->WriteLine("\t\t\t\t\t" + tempBetas->Replace("=", " = "));
+												sw->WriteLine("\t\t\t\t}");
+												if (activeLUT != nLut) {
+													sw->WriteLine("\t\t\t},\n");
+												}
+												else {
+													sw->WriteLine("\t\t\t}");
+												}
+												tempBetas = "";
+												break;
+											}
+										}
+										else {
+											sw->WriteLine("\t\t\t\t\t" + tempBetas->Replace("=", " = ") + ",");
+											tempBetas = "";
+										}
+									}
+								}
+							}
+							activeRegion++;
+							activeLUT = 0;
+							sw->WriteLine("\t\t},\n");
+						}
+						sw->WriteLine("\taffinityMatrix = ");
+						sw->WriteLine("\t{");
+						activeRegion = 1;
+						startAffinity = endRegion + 2;
+						for (int k = startAffinity; k < tbPotential->Lines->Length; k += nLut) {
+							endRegion = startAffinity + (nLut * activeRegion);
+							sw->WriteLine("\t\t-- Region " + activeRegion.ToString());
+							sw->WriteLine("\t\t{");
+							for (int i = k; i < endRegion; i++) {
+								if (i + 1 < endRegion) {
+									sw->WriteLine("\t\t\t{" + tbPotential->Lines[i] + "},");
+								}
+								else {
+									sw->WriteLine("\t\t\t{" + tbPotential->Lines[i] + "}");
+									break;
+								}
+							}
+							if (k + nLut < tbPotential->Lines->Length) {
+								sw->WriteLine("\t\t},\n");
+							}
+							else {
+								sw->WriteLine("\t\t}");
+							}
+							activeRegion++;
+						}
+
+						sw->WriteLine("\t}");
+						sw->WriteLine("}\n");
+						break;
 					case SPATIALLAGLINEARROADS:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");

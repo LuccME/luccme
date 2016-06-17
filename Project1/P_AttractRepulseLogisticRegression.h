@@ -27,6 +27,17 @@ namespace LuccME {
 	public:
 		cReturnPotential^ lReturn;
 		array<String^>^ lTempBetas = gcnew array<String^>(50);
+	private: System::Windows::Forms::Label^  lLegend;
+	private: System::Windows::Forms::Label^  lLegend6;
+	private: System::Windows::Forms::Label^  lLegend7;
+	private: System::Windows::Forms::Label^  lLegend8;
+	private: System::Windows::Forms::Label^  lLegend10;
+	private: System::Windows::Forms::Label^  lLegend9;
+	private: System::Windows::Forms::Label^  lLegend5;
+	private: System::Windows::Forms::Label^  lLegend2;
+	private: System::Windows::Forms::Label^  lLegend3;
+	private: System::Windows::Forms::Label^  lLegend4;
+	public:
 		array<String^>^ lTempValues = gcnew array<String^>(50);
 		P_AttractRepulseLogisticRegression(cReturnPotential^ pPotencial)
 		{
@@ -270,6 +281,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tElasticy = (gcnew System::Windows::Forms::TextBox());
 			this->tcRegions = (gcnew System::Windows::Forms::TabControl());
 			this->tRegion1 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix = (gcnew System::Windows::Forms::Label());
 			this->lElasticy = (gcnew System::Windows::Forms::Label());
 			this->dgBetas = (gcnew System::Windows::Forms::DataGridView());
@@ -306,6 +318,15 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->bSalvar = (gcnew System::Windows::Forms::Button());
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->bCancel = (gcnew System::Windows::Forms::Button());
+			this->lLegend2 = (gcnew System::Windows::Forms::Label());
+			this->lLegend3 = (gcnew System::Windows::Forms::Label());
+			this->lLegend4 = (gcnew System::Windows::Forms::Label());
+			this->lLegend5 = (gcnew System::Windows::Forms::Label());
+			this->lLegend6 = (gcnew System::Windows::Forms::Label());
+			this->lLegend7 = (gcnew System::Windows::Forms::Label());
+			this->lLegend8 = (gcnew System::Windows::Forms::Label());
+			this->lLegend9 = (gcnew System::Windows::Forms::Label());
+			this->lLegend10 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas6))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas7))->BeginInit();
 			this->tRegion6->SuspendLayout();
@@ -546,6 +567,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion6
 			// 
+			this->tRegion6->Controls->Add(this->lLegend6);
 			this->tRegion6->Controls->Add(this->lAffinityMatrix6);
 			this->tRegion6->Controls->Add(this->tPercNeighborsUse6);
 			this->tRegion6->Controls->Add(this->lPercNeighborsUse6);
@@ -590,6 +612,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion7
 			// 
+			this->tRegion7->Controls->Add(this->lLegend7);
 			this->tRegion7->Controls->Add(this->lAffinityMatrix7);
 			this->tRegion7->Controls->Add(this->tPercNeighborsUse7);
 			this->tRegion7->Controls->Add(this->lPercNeighborsUse7);
@@ -648,6 +671,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion8
 			// 
+			this->tRegion8->Controls->Add(this->lLegend8);
 			this->tRegion8->Controls->Add(this->lAffinityMatrix8);
 			this->tRegion8->Controls->Add(this->tPercNeighborsUse8);
 			this->tRegion8->Controls->Add(this->lPercNeighborsUse8);
@@ -962,6 +986,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion10
 			// 
+			this->tRegion10->Controls->Add(this->lLegend10);
 			this->tRegion10->Controls->Add(this->lAffinityMatrix10);
 			this->tRegion10->Controls->Add(this->tPercNeighborsUse10);
 			this->tRegion10->Controls->Add(this->lPercNeighborsUse10);
@@ -1058,6 +1083,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion9
 			// 
+			this->tRegion9->Controls->Add(this->lLegend9);
 			this->tRegion9->Controls->Add(this->lAffinityMatrix9);
 			this->tRegion9->Controls->Add(this->tPercNeighborsUse9);
 			this->tRegion9->Controls->Add(this->lPercNeighborsUse9);
@@ -1129,6 +1155,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion5
 			// 
+			this->tRegion5->Controls->Add(this->lLegend5);
 			this->tRegion5->Controls->Add(this->lAffinityMatrix5);
 			this->tRegion5->Controls->Add(this->tPercNeighborsUse5);
 			this->tRegion5->Controls->Add(this->lPercNeighborsUse5);
@@ -1276,6 +1303,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion2
 			// 
+			this->tRegion2->Controls->Add(this->lLegend2);
 			this->tRegion2->Controls->Add(this->lAffinityMatrix2);
 			this->tRegion2->Controls->Add(this->tPercNeighborsUse2);
 			this->tRegion2->Controls->Add(this->lPercNeighborsUse2);
@@ -1430,6 +1458,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion1
 			// 
+			this->tRegion1->Controls->Add(this->lLegend);
 			this->tRegion1->Controls->Add(this->lAffinityMatrix);
 			this->tRegion1->Controls->Add(this->tPercNeighborsUse);
 			this->tRegion1->Controls->Add(this->lPercNeighborsUse);
@@ -1447,6 +1476,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion1->TabIndex = 0;
 			this->tRegion1->Text = L"Region 1";
 			this->tRegion1->UseVisualStyleBackColor = true;
+			// 
+			// lLegend
+			// 
+			this->lLegend->AutoSize = true;
+			this->lLegend->Location = System::Drawing::Point(9, 315);
+			this->lLegend->Name = L"lLegend";
+			this->lLegend->Size = System::Drawing::Size(29, 13);
+			this->lLegend->TabIndex = 98;
+			this->lLegend->Text = L"label";
+			this->lLegend->Visible = false;
 			// 
 			// lAffinityMatrix
 			// 
@@ -1542,6 +1581,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion3
 			// 
+			this->tRegion3->Controls->Add(this->lLegend3);
 			this->tRegion3->Controls->Add(this->lAffinityMatrix3);
 			this->tRegion3->Controls->Add(this->tPercNeighborsUse3);
 			this->tRegion3->Controls->Add(this->lPercNeighborsUse3);
@@ -1689,6 +1729,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// tRegion4
 			// 
+			this->tRegion4->Controls->Add(this->lLegend4);
 			this->tRegion4->Controls->Add(this->lAffinityMatrix4);
 			this->tRegion4->Controls->Add(this->tPercNeighborsUse4);
 			this->tRegion4->Controls->Add(this->lPercNeighborsUse4);
@@ -1877,17 +1918,18 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			// 
 			// bSalvar
 			// 
-			this->bSalvar->Location = System::Drawing::Point(331, 552);
+			this->bSalvar->Location = System::Drawing::Point(332, 552);
 			this->bSalvar->Name = L"bSalvar";
 			this->bSalvar->Size = System::Drawing::Size(75, 23);
 			this->bSalvar->TabIndex = 90;
 			this->bSalvar->Text = L"Salvar";
 			this->bSalvar->UseVisualStyleBackColor = true;
+			this->bSalvar->Click += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::bSalvar_Click);
 			// 
 			// pbLogo1
 			// 
 			this->pbLogo1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbLogo1.Image")));
-			this->pbLogo1->Location = System::Drawing::Point(184, 9);
+			this->pbLogo1->Location = System::Drawing::Point(186, 9);
 			this->pbLogo1->Name = L"pbLogo1";
 			this->pbLogo1->Size = System::Drawing::Size(367, 134);
 			this->pbLogo1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -1903,6 +1945,97 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->bCancel->Text = L"Cancelar";
 			this->bCancel->UseVisualStyleBackColor = true;
 			this->bCancel->Visible = false;
+			this->bCancel->Click += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::bCancel_Click);
+			// 
+			// lLegend2
+			// 
+			this->lLegend2->AutoSize = true;
+			this->lLegend2->Location = System::Drawing::Point(9, 315);
+			this->lLegend2->Name = L"lLegend2";
+			this->lLegend2->Size = System::Drawing::Size(29, 13);
+			this->lLegend2->TabIndex = 100;
+			this->lLegend2->Text = L"label";
+			this->lLegend2->Visible = false;
+			// 
+			// lLegend3
+			// 
+			this->lLegend3->AutoSize = true;
+			this->lLegend3->Location = System::Drawing::Point(9, 315);
+			this->lLegend3->Name = L"lLegend3";
+			this->lLegend3->Size = System::Drawing::Size(29, 13);
+			this->lLegend3->TabIndex = 100;
+			this->lLegend3->Text = L"label";
+			this->lLegend3->Visible = false;
+			// 
+			// lLegend4
+			// 
+			this->lLegend4->AutoSize = true;
+			this->lLegend4->Location = System::Drawing::Point(9, 315);
+			this->lLegend4->Name = L"lLegend4";
+			this->lLegend4->Size = System::Drawing::Size(29, 13);
+			this->lLegend4->TabIndex = 100;
+			this->lLegend4->Text = L"label";
+			this->lLegend4->Visible = false;
+			// 
+			// lLegend5
+			// 
+			this->lLegend5->AutoSize = true;
+			this->lLegend5->Location = System::Drawing::Point(9, 315);
+			this->lLegend5->Name = L"lLegend5";
+			this->lLegend5->Size = System::Drawing::Size(29, 13);
+			this->lLegend5->TabIndex = 100;
+			this->lLegend5->Text = L"label";
+			this->lLegend5->Visible = false;
+			// 
+			// lLegend6
+			// 
+			this->lLegend6->AutoSize = true;
+			this->lLegend6->Location = System::Drawing::Point(9, 315);
+			this->lLegend6->Name = L"lLegend6";
+			this->lLegend6->Size = System::Drawing::Size(29, 13);
+			this->lLegend6->TabIndex = 100;
+			this->lLegend6->Text = L"label";
+			this->lLegend6->Visible = false;
+			// 
+			// lLegend7
+			// 
+			this->lLegend7->AutoSize = true;
+			this->lLegend7->Location = System::Drawing::Point(9, 315);
+			this->lLegend7->Name = L"lLegend7";
+			this->lLegend7->Size = System::Drawing::Size(29, 13);
+			this->lLegend7->TabIndex = 100;
+			this->lLegend7->Text = L"label";
+			this->lLegend7->Visible = false;
+			// 
+			// lLegend8
+			// 
+			this->lLegend8->AutoSize = true;
+			this->lLegend8->Location = System::Drawing::Point(9, 315);
+			this->lLegend8->Name = L"lLegend8";
+			this->lLegend8->Size = System::Drawing::Size(29, 13);
+			this->lLegend8->TabIndex = 100;
+			this->lLegend8->Text = L"label";
+			this->lLegend8->Visible = false;
+			// 
+			// lLegend9
+			// 
+			this->lLegend9->AutoSize = true;
+			this->lLegend9->Location = System::Drawing::Point(9, 315);
+			this->lLegend9->Name = L"lLegend9";
+			this->lLegend9->Size = System::Drawing::Size(29, 13);
+			this->lLegend9->TabIndex = 100;
+			this->lLegend9->Text = L"label";
+			this->lLegend9->Visible = false;
+			// 
+			// lLegend10
+			// 
+			this->lLegend10->AutoSize = true;
+			this->lLegend10->Location = System::Drawing::Point(9, 315);
+			this->lLegend10->Name = L"lLegend10";
+			this->lLegend10->Size = System::Drawing::Size(29, 13);
+			this->lLegend10->TabIndex = 100;
+			this->lLegend10->Text = L"label";
+			this->lLegend10->Visible = false;
 			// 
 			// P_AttractRepulseLogisticRegression
 			// 
@@ -1918,6 +2051,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->Controls->Add(this->pbLogo1);
 			this->Controls->Add(this->bCancel);
 			this->Name = L"P_AttractRepulseLogisticRegression";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"P_AttractRepulseLogisticRegression";
 			this->Shown += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::P_AttractRepulseLogisticRegression_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas6))->EndInit();
@@ -1970,7 +2104,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 		private: System::Void textBox_Enter(System::Object^  sender, System::EventArgs^  e);
 		private: System::Int16 countCaracter(String^ source, char caracter);
 		private: System::Void initializeRegions();
-		private: System::Void setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, Label^ lConst, TextBox^ tConst, Label^ lElasticy, TextBox^ tElasticy, Label^ lPercNeighborsUse, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, Label^ lAffinityMatrix, bool status);
+		private: System::Void setVisibleONorOFF(Label^ lBetas, DataGridView^ dgBetas, Label^ lConst, TextBox^ tConst, Label^ lElasticy, TextBox^ tElasticy, Label^ lPercNeighborsUse, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, Label^ lAffinityMatrix, Label^ lLegend, bool status);
 		private: System::Void LuccME::P_AttractRepulseLogisticRegression::setInitializeAffinity(DataGridView^ dgAffinity);
 		private: System::Void moveData(DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, DataGridView^ dgAffinity, DataGridView^ dgBetas2, TextBox^ tConst2, TextBox^ tElasticy2, TextBox^ tPercNeighborsUse2, DataGridView^ dgAffinity2);
 		private: System::Int16 getRegionData(array<String^>^ lTempBetas, cReturnPotential^ lReturn, DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, int i, int j);
@@ -1986,5 +2120,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 		private: System::Void bDeleteRegression_Click(System::Object^  sender, System::EventArgs^  e);
 		private: System::Void bAddBetas_Click(System::Object^  sender, System::EventArgs^  e);
 		private: System::Void LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData(DataGridView^ dgAffinity, int k);
-};
+		private: System::Void bCancel_Click(System::Object^  sender, System::EventArgs^  e);
+		private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
+	};
 }

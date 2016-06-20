@@ -216,13 +216,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->lConst6 = (gcnew System::Windows::Forms::Label());
 			this->tPercNeighborsUse7 = (gcnew System::Windows::Forms::TextBox());
 			this->tRegion6 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend6 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix6 = (gcnew System::Windows::Forms::Label());
 			this->dgAffinityMatrix6 = (gcnew System::Windows::Forms::DataGridView());
 			this->tRegion7 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend7 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix7 = (gcnew System::Windows::Forms::Label());
 			this->lPercNeighborsUse7 = (gcnew System::Windows::Forms::Label());
 			this->dgAffinityMatrix7 = (gcnew System::Windows::Forms::DataGridView());
 			this->tRegion8 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend8 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix8 = (gcnew System::Windows::Forms::Label());
 			this->lPercNeighborsUse8 = (gcnew System::Windows::Forms::Label());
 			this->tElasticy8 = (gcnew System::Windows::Forms::TextBox());
@@ -247,6 +250,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tElasticy9 = (gcnew System::Windows::Forms::TextBox());
 			this->lElasticy9 = (gcnew System::Windows::Forms::Label());
 			this->tRegion10 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend10 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix10 = (gcnew System::Windows::Forms::Label());
 			this->dgAffinityMatrix10 = (gcnew System::Windows::Forms::DataGridView());
 			this->dgBetas9 = (gcnew System::Windows::Forms::DataGridView());
@@ -254,11 +258,13 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->lConst9 = (gcnew System::Windows::Forms::Label());
 			this->lPercNeighborsUse5 = (gcnew System::Windows::Forms::Label());
 			this->tRegion9 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend9 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix9 = (gcnew System::Windows::Forms::Label());
 			this->lBetas9 = (gcnew System::Windows::Forms::Label());
 			this->dgAffinityMatrix9 = (gcnew System::Windows::Forms::DataGridView());
 			this->lElasticy5 = (gcnew System::Windows::Forms::Label());
 			this->tRegion5 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend5 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix5 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas5 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas5 = (gcnew System::Windows::Forms::Label());
@@ -270,6 +276,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tElasticy2 = (gcnew System::Windows::Forms::TextBox());
 			this->lElasticy2 = (gcnew System::Windows::Forms::Label());
 			this->tRegion2 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend2 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix2 = (gcnew System::Windows::Forms::Label());
 			this->dgBetas2 = (gcnew System::Windows::Forms::DataGridView());
 			this->lBetas2 = (gcnew System::Windows::Forms::Label());
@@ -290,6 +297,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->lBetas = (gcnew System::Windows::Forms::Label());
 			this->dgAffinityMatrix = (gcnew System::Windows::Forms::DataGridView());
 			this->tRegion3 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend3 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix3 = (gcnew System::Windows::Forms::Label());
 			this->tPercNeighborsUse3 = (gcnew System::Windows::Forms::TextBox());
 			this->lPercNeighborsUse3 = (gcnew System::Windows::Forms::Label());
@@ -301,6 +309,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->lConst3 = (gcnew System::Windows::Forms::Label());
 			this->dgAffinityMatrix3 = (gcnew System::Windows::Forms::DataGridView());
 			this->tRegion4 = (gcnew System::Windows::Forms::TabPage());
+			this->lLegend4 = (gcnew System::Windows::Forms::Label());
 			this->lAffinityMatrix4 = (gcnew System::Windows::Forms::Label());
 			this->tPercNeighborsUse4 = (gcnew System::Windows::Forms::TextBox());
 			this->lPercNeighborsUse4 = (gcnew System::Windows::Forms::Label());
@@ -318,15 +327,6 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->bSalvar = (gcnew System::Windows::Forms::Button());
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->bCancel = (gcnew System::Windows::Forms::Button());
-			this->lLegend2 = (gcnew System::Windows::Forms::Label());
-			this->lLegend3 = (gcnew System::Windows::Forms::Label());
-			this->lLegend4 = (gcnew System::Windows::Forms::Label());
-			this->lLegend5 = (gcnew System::Windows::Forms::Label());
-			this->lLegend6 = (gcnew System::Windows::Forms::Label());
-			this->lLegend7 = (gcnew System::Windows::Forms::Label());
-			this->lLegend8 = (gcnew System::Windows::Forms::Label());
-			this->lLegend9 = (gcnew System::Windows::Forms::Label());
-			this->lLegend10 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas6))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas7))->BeginInit();
 			this->tRegion6->SuspendLayout();
@@ -472,7 +472,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas6->Name = L"dgBetas6";
 			this->dgBetas6->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas6->Size = System::Drawing::Size(245, 209);
-			this->dgBetas6->TabIndex = 92;
+			this->dgBetas6->TabIndex = 1;
 			this->dgBetas6->Visible = false;
 			this->dgBetas6->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -536,7 +536,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas7->Name = L"dgBetas7";
 			this->dgBetas7->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas7->Size = System::Drawing::Size(245, 209);
-			this->dgBetas7->TabIndex = 92;
+			this->dgBetas7->TabIndex = 1;
 			this->dgBetas7->Visible = false;
 			this->dgBetas7->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -585,6 +585,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion6->Text = L"+";
 			this->tRegion6->UseVisualStyleBackColor = true;
 			// 
+			// lLegend6
+			// 
+			this->lLegend6->AutoSize = true;
+			this->lLegend6->Location = System::Drawing::Point(9, 315);
+			this->lLegend6->Name = L"lLegend6";
+			this->lLegend6->Size = System::Drawing::Size(29, 13);
+			this->lLegend6->TabIndex = 100;
+			this->lLegend6->Text = L"label";
+			this->lLegend6->Visible = false;
+			// 
 			// lAffinityMatrix6
 			// 
 			this->lAffinityMatrix6->AutoSize = true;
@@ -629,6 +639,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion7->TabIndex = 6;
 			this->tRegion7->Text = L"+";
 			this->tRegion7->UseVisualStyleBackColor = true;
+			// 
+			// lLegend7
+			// 
+			this->lLegend7->AutoSize = true;
+			this->lLegend7->Location = System::Drawing::Point(9, 315);
+			this->lLegend7->Name = L"lLegend7";
+			this->lLegend7->Size = System::Drawing::Size(29, 13);
+			this->lLegend7->TabIndex = 100;
+			this->lLegend7->Text = L"label";
+			this->lLegend7->Visible = false;
 			// 
 			// lAffinityMatrix7
 			// 
@@ -688,6 +708,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion8->TabIndex = 7;
 			this->tRegion8->Text = L"+";
 			this->tRegion8->UseVisualStyleBackColor = true;
+			// 
+			// lLegend8
+			// 
+			this->lLegend8->AutoSize = true;
+			this->lLegend8->Location = System::Drawing::Point(9, 315);
+			this->lLegend8->Name = L"lLegend8";
+			this->lLegend8->Size = System::Drawing::Size(29, 13);
+			this->lLegend8->TabIndex = 100;
+			this->lLegend8->Text = L"label";
+			this->lLegend8->Visible = false;
 			// 
 			// lAffinityMatrix8
 			// 
@@ -750,7 +780,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas8->Name = L"dgBetas8";
 			this->dgBetas8->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas8->Size = System::Drawing::Size(245, 209);
-			this->dgBetas8->TabIndex = 92;
+			this->dgBetas8->TabIndex = 1;
 			this->dgBetas8->Visible = false;
 			this->dgBetas8->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -902,7 +932,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas10->Name = L"dgBetas10";
 			this->dgBetas10->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas10->Size = System::Drawing::Size(245, 209);
-			this->dgBetas10->TabIndex = 92;
+			this->dgBetas10->TabIndex = 1;
 			this->dgBetas10->Visible = false;
 			this->dgBetas10->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -1004,6 +1034,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion10->Text = L"+";
 			this->tRegion10->UseVisualStyleBackColor = true;
 			// 
+			// lLegend10
+			// 
+			this->lLegend10->AutoSize = true;
+			this->lLegend10->Location = System::Drawing::Point(9, 315);
+			this->lLegend10->Name = L"lLegend10";
+			this->lLegend10->Size = System::Drawing::Size(29, 13);
+			this->lLegend10->TabIndex = 100;
+			this->lLegend10->Text = L"label";
+			this->lLegend10->Visible = false;
+			// 
 			// lAffinityMatrix10
 			// 
 			this->lAffinityMatrix10->AutoSize = true;
@@ -1038,7 +1078,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas9->Name = L"dgBetas9";
 			this->dgBetas9->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas9->Size = System::Drawing::Size(245, 209);
-			this->dgBetas9->TabIndex = 92;
+			this->dgBetas9->TabIndex = 1;
 			this->dgBetas9->Visible = false;
 			this->dgBetas9->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -1100,6 +1140,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion9->TabIndex = 8;
 			this->tRegion9->Text = L"+";
 			this->tRegion9->UseVisualStyleBackColor = true;
+			// 
+			// lLegend9
+			// 
+			this->lLegend9->AutoSize = true;
+			this->lLegend9->Location = System::Drawing::Point(9, 315);
+			this->lLegend9->Name = L"lLegend9";
+			this->lLegend9->Size = System::Drawing::Size(29, 13);
+			this->lLegend9->TabIndex = 100;
+			this->lLegend9->Text = L"label";
+			this->lLegend9->Visible = false;
 			// 
 			// lAffinityMatrix9
 			// 
@@ -1173,6 +1223,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion5->Text = L"+";
 			this->tRegion5->UseVisualStyleBackColor = true;
 			// 
+			// lLegend5
+			// 
+			this->lLegend5->AutoSize = true;
+			this->lLegend5->Location = System::Drawing::Point(9, 315);
+			this->lLegend5->Name = L"lLegend5";
+			this->lLegend5->Size = System::Drawing::Size(29, 13);
+			this->lLegend5->TabIndex = 100;
+			this->lLegend5->Text = L"label";
+			this->lLegend5->Visible = false;
+			// 
 			// lAffinityMatrix5
 			// 
 			this->lAffinityMatrix5->AutoSize = true;
@@ -1194,7 +1254,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas5->Name = L"dgBetas5";
 			this->dgBetas5->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas5->Size = System::Drawing::Size(245, 209);
-			this->dgBetas5->TabIndex = 92;
+			this->dgBetas5->TabIndex = 1;
 			this->dgBetas5->Visible = false;
 			this->dgBetas5->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -1321,6 +1381,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion2->TabIndex = 1;
 			this->tRegion2->Text = L"+";
 			this->tRegion2->UseVisualStyleBackColor = true;
+			// 
+			// lLegend2
+			// 
+			this->lLegend2->AutoSize = true;
+			this->lLegend2->Location = System::Drawing::Point(9, 315);
+			this->lLegend2->Name = L"lLegend2";
+			this->lLegend2->Size = System::Drawing::Size(29, 13);
+			this->lLegend2->TabIndex = 100;
+			this->lLegend2->Text = L"label";
+			this->lLegend2->Visible = false;
 			// 
 			// lAffinityMatrix2
 			// 
@@ -1452,7 +1522,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tcRegions->Name = L"tcRegions";
 			this->tcRegions->SelectedIndex = 0;
 			this->tcRegions->Size = System::Drawing::Size(500, 389);
-			this->tcRegions->TabIndex = 94;
+			this->tcRegions->TabIndex = 1;
 			this->tcRegions->Visible = false;
 			this->tcRegions->SelectedIndexChanged += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::tcRegions_SelectedIndexChanged);
 			// 
@@ -1523,7 +1593,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas->Size = System::Drawing::Size(245, 209);
-			this->dgBetas->TabIndex = 87;
+			this->dgBetas->TabIndex = 1;
 			this->dgBetas->Visible = false;
 			this->dgBetas->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -1599,6 +1669,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion3->Text = L"+";
 			this->tRegion3->UseVisualStyleBackColor = true;
 			// 
+			// lLegend3
+			// 
+			this->lLegend3->AutoSize = true;
+			this->lLegend3->Location = System::Drawing::Point(9, 315);
+			this->lLegend3->Name = L"lLegend3";
+			this->lLegend3->Size = System::Drawing::Size(29, 13);
+			this->lLegend3->TabIndex = 100;
+			this->lLegend3->Text = L"label";
+			this->lLegend3->Visible = false;
+			// 
 			// lAffinityMatrix3
 			// 
 			this->lAffinityMatrix3->AutoSize = true;
@@ -1672,7 +1752,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas3->Name = L"dgBetas3";
 			this->dgBetas3->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas3->Size = System::Drawing::Size(245, 209);
-			this->dgBetas3->TabIndex = 92;
+			this->dgBetas3->TabIndex = 1;
 			this->dgBetas3->Visible = false;
 			this->dgBetas3->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -1747,6 +1827,16 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion4->Text = L"+";
 			this->tRegion4->UseVisualStyleBackColor = true;
 			// 
+			// lLegend4
+			// 
+			this->lLegend4->AutoSize = true;
+			this->lLegend4->Location = System::Drawing::Point(9, 315);
+			this->lLegend4->Name = L"lLegend4";
+			this->lLegend4->Size = System::Drawing::Size(29, 13);
+			this->lLegend4->TabIndex = 100;
+			this->lLegend4->Text = L"label";
+			this->lLegend4->Visible = false;
+			// 
 			// lAffinityMatrix4
 			// 
 			this->lAffinityMatrix4->AutoSize = true;
@@ -1820,7 +1910,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas4->Name = L"dgBetas4";
 			this->dgBetas4->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetas4->Size = System::Drawing::Size(245, 209);
-			this->dgBetas4->TabIndex = 92;
+			this->dgBetas4->TabIndex = 1;
 			this->dgBetas4->Visible = false;
 			this->dgBetas4->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
 			// 
@@ -1947,96 +2037,6 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->bCancel->Visible = false;
 			this->bCancel->Click += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::bCancel_Click);
 			// 
-			// lLegend2
-			// 
-			this->lLegend2->AutoSize = true;
-			this->lLegend2->Location = System::Drawing::Point(9, 315);
-			this->lLegend2->Name = L"lLegend2";
-			this->lLegend2->Size = System::Drawing::Size(29, 13);
-			this->lLegend2->TabIndex = 100;
-			this->lLegend2->Text = L"label";
-			this->lLegend2->Visible = false;
-			// 
-			// lLegend3
-			// 
-			this->lLegend3->AutoSize = true;
-			this->lLegend3->Location = System::Drawing::Point(9, 315);
-			this->lLegend3->Name = L"lLegend3";
-			this->lLegend3->Size = System::Drawing::Size(29, 13);
-			this->lLegend3->TabIndex = 100;
-			this->lLegend3->Text = L"label";
-			this->lLegend3->Visible = false;
-			// 
-			// lLegend4
-			// 
-			this->lLegend4->AutoSize = true;
-			this->lLegend4->Location = System::Drawing::Point(9, 315);
-			this->lLegend4->Name = L"lLegend4";
-			this->lLegend4->Size = System::Drawing::Size(29, 13);
-			this->lLegend4->TabIndex = 100;
-			this->lLegend4->Text = L"label";
-			this->lLegend4->Visible = false;
-			// 
-			// lLegend5
-			// 
-			this->lLegend5->AutoSize = true;
-			this->lLegend5->Location = System::Drawing::Point(9, 315);
-			this->lLegend5->Name = L"lLegend5";
-			this->lLegend5->Size = System::Drawing::Size(29, 13);
-			this->lLegend5->TabIndex = 100;
-			this->lLegend5->Text = L"label";
-			this->lLegend5->Visible = false;
-			// 
-			// lLegend6
-			// 
-			this->lLegend6->AutoSize = true;
-			this->lLegend6->Location = System::Drawing::Point(9, 315);
-			this->lLegend6->Name = L"lLegend6";
-			this->lLegend6->Size = System::Drawing::Size(29, 13);
-			this->lLegend6->TabIndex = 100;
-			this->lLegend6->Text = L"label";
-			this->lLegend6->Visible = false;
-			// 
-			// lLegend7
-			// 
-			this->lLegend7->AutoSize = true;
-			this->lLegend7->Location = System::Drawing::Point(9, 315);
-			this->lLegend7->Name = L"lLegend7";
-			this->lLegend7->Size = System::Drawing::Size(29, 13);
-			this->lLegend7->TabIndex = 100;
-			this->lLegend7->Text = L"label";
-			this->lLegend7->Visible = false;
-			// 
-			// lLegend8
-			// 
-			this->lLegend8->AutoSize = true;
-			this->lLegend8->Location = System::Drawing::Point(9, 315);
-			this->lLegend8->Name = L"lLegend8";
-			this->lLegend8->Size = System::Drawing::Size(29, 13);
-			this->lLegend8->TabIndex = 100;
-			this->lLegend8->Text = L"label";
-			this->lLegend8->Visible = false;
-			// 
-			// lLegend9
-			// 
-			this->lLegend9->AutoSize = true;
-			this->lLegend9->Location = System::Drawing::Point(9, 315);
-			this->lLegend9->Name = L"lLegend9";
-			this->lLegend9->Size = System::Drawing::Size(29, 13);
-			this->lLegend9->TabIndex = 100;
-			this->lLegend9->Text = L"label";
-			this->lLegend9->Visible = false;
-			// 
-			// lLegend10
-			// 
-			this->lLegend10->AutoSize = true;
-			this->lLegend10->Location = System::Drawing::Point(9, 315);
-			this->lLegend10->Name = L"lLegend10";
-			this->lLegend10->Size = System::Drawing::Size(29, 13);
-			this->lLegend10->TabIndex = 100;
-			this->lLegend10->Text = L"label";
-			this->lLegend10->Visible = false;
-			// 
 			// P_AttractRepulseLogisticRegression
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -2119,7 +2119,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 		private: System::Void LuccME::P_AttractRepulseLogisticRegression::getMatrixData(array<String^>^ lTempValues, DataGridView^ dgAffinity, int k);
 		private: System::Void bDeleteRegression_Click(System::Object^  sender, System::EventArgs^  e);
 		private: System::Void bAddBetas_Click(System::Object^  sender, System::EventArgs^  e);
-		private: System::Void LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData(DataGridView^ dgAffinity, int k);
+		private: System::Boolean setAffinityMatrixData(DataGridView^ dgAffinity, int k);
 		private: System::Void bCancel_Click(System::Object^  sender, System::EventArgs^  e);
 		private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
 	};

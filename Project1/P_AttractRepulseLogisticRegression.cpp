@@ -248,8 +248,9 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::moveData(DataGridView^ 
 	dgAffinity->Rows->Clear();
 	for (int i = 0; i < dgAffinity2->RowCount - 1; i++) {
 		dgAffinity->Rows->Add();
-		dgAffinity->Rows[i]->Cells[0]->Value = dgAffinity2->Rows[i]->Cells[0]->Value;
-		dgAffinity->Rows[i]->Cells[1]->Value = dgAffinity2->Rows[i]->Cells[1]->Value;
+		for (int j = 0; j < dgAffinity2->ColumnCount - 1; j++) {
+			dgAffinity->Rows[i]->Cells[j]->Value = dgAffinity2->Rows[i]->Cells[j]->Value;
+		}
 	}
 	dgAffinity->Columns[0]->DefaultCellStyle->ForeColor = System::Drawing::Color::Gray;
 	dgAffinity->Columns[0]->ReadOnly = true;
@@ -388,12 +389,14 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setRegionData(DataGridV
 /*
 Used to save the tRegions data to lReturn->Return, it copies the tRegion data to lTempValues
 */
-System::Void LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData( DataGridView^ dgAffinity, int k)
+System::Boolean LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData( DataGridView^ dgAffinity, int k)
 {
+	bool check = true;
 	for (int i = 0; i < dgAffinity->RowCount; i++) {
 		for (int j = 1; j < dgAffinity->ColumnCount; j++) {
 			if (dgAffinity->Rows[i]->Cells[j]->Value == nullptr) {
 				MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+				check = false;
 				break;
 			}
 			else {
@@ -403,13 +406,25 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setAffinityMatrixData( 
 				}
 			}
 		}
-		if (i + 1 < dgAffinity->RowCount) {
-			if (dgAffinity->Rows[i + 1] != nullptr) {
-				lTempValues[k] += ";";
+		if (check) {
+			if (i + 1 < dgAffinity->RowCount) {
+				if (dgAffinity->Rows[i + 1] != nullptr) {
+					lTempValues[k] += ";";
+				}
 			}
 		}
+		else {
+			break;
+		}
 	}
-	lTempValues[k] += "%";
+	if (check) {
+		lTempValues[k] += "%";
+	}
+	else {
+		lTempValues[k] = nullptr;
+	}
+	
+	return check;
 }
 
 /*
@@ -834,6 +849,13 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::tcRegions_SelectedIndex
 {
 	bDeleteRegression->Visible = false;
 	if (tcRegions->SelectedIndex == (tcRegions->TabCount - 1)) {
+		int nlvItems = countCaracter(lReturn->LUT, ',') + 2;
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			if (lvLUT->Items[i]->SubItems->Count == 2) {
+				lvLUT->Items[i]->SubItems->RemoveAt(1);
+			}
+		}
+
 		tcRegions->TabPages[tcRegions->SelectedIndex]->Text = "Region " + (tcRegions->SelectedIndex + 1).ToString();
 		if (tcRegions->SelectedIndex < REGRESSIONNUMBER) {
 			switch (tcRegions->SelectedIndex)
@@ -953,7 +975,8 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bDeleteRegression_Click
 		tcRegions->TabPages[tcRegions->TabCount - 1]->Text = "+";
 		tcRegions->SelectedIndex = NONE;
 
-		for (int i = 0; i < lvLUT->Items->Count; i++) {
+		//Remove LUT data from the deleted region
+		for (int i = 0; i < lvLUT->Items->Count - 1; i++) {
 			if (lTempBetas[i] != nullptr) {
 				int fulfillRegions = 0;
 				array<int>^ lRegionsLocation = gcnew array<int>(tcRegions->TabCount);
@@ -966,16 +989,13 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bDeleteRegression_Click
 				int count = 0;
 				if (fulfillRegions > tcRegions->TabCount - 1) {
 					String^ aux = lTempBetas[i]->Substring(0, lRegionsLocation[0] + 1);
-					String^ aux2 = lTempValues[i]->Substring(0, lRegionsLocation[0] + 1);
 					for (int r = 1; r < lRegionsLocation->Length; r++) {
 						if (r < rToRemove) {
 							aux += lTempBetas[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
-							aux2 += lTempValues[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
 							count++;
 						}
 						else if (r > rToRemove) {
 							aux += lTempBetas[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
-							aux2 += lTempValues[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
 							count++;
 						}
 						else {
@@ -983,15 +1003,25 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bDeleteRegression_Click
 						}
 					}
 					lTempBetas[i] = aux;
-					lTempValues[i] = aux2;
 				}
 			}
 		}
+		for (int i = rToRemove; i < lTempValues->Length - 1; i++) {
+			if (lTempValues[i + 1] != nullptr) {
+				lTempValues[i] = lTempValues[i + 1];
+			}
+			else {
+				lTempValues[i] = nullptr;
+				break;
+			}
+		}
+		lReturn->Regression -= 1;
 	}
 }
 
 System::Void LuccME::P_AttractRepulseLogisticRegression::bAddBetas_Click(System::Object^  sender, System::EventArgs^  e)
 {
+	bool check = true;
 	for (int i = 0; i < lvLUT->Items->Count - 1; i++) {
 		if (lvLUT->Items[i]->Selected == true) {
 			lTempBetas[i] = "";
@@ -1044,54 +1074,58 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bAddBetas_Click(System:
 			switch (j)
 			{
 			case 0:
-				setAffinityMatrixData(dgAffinityMatrix, j);
+				check = setAffinityMatrixData(dgAffinityMatrix, j);
 				break;
 			case 1:
-				setAffinityMatrixData(dgAffinityMatrix2, j);
+				check = setAffinityMatrixData(dgAffinityMatrix2, j);
 				break;
 			case 2:
-				setAffinityMatrixData(dgAffinityMatrix3, j);
+				check = setAffinityMatrixData(dgAffinityMatrix3, j);
 				break;
 			case 3:
-				setAffinityMatrixData(dgAffinityMatrix4, j);
+				check = setAffinityMatrixData(dgAffinityMatrix4, j);
 				break;
 			case 4:
-				setAffinityMatrixData(dgAffinityMatrix5, j);
+				check = setAffinityMatrixData(dgAffinityMatrix5, j);
 				break;
 			case 5:
-				setAffinityMatrixData(dgAffinityMatrix6, j);
+				check = setAffinityMatrixData(dgAffinityMatrix6, j);
 				break;
 			case 6:
-				setAffinityMatrixData(dgAffinityMatrix7, j);
+				check = setAffinityMatrixData(dgAffinityMatrix7, j);
 				break;
 			case 7:
-				setAffinityMatrixData(dgAffinityMatrix8, j);
+				check = setAffinityMatrixData(dgAffinityMatrix8, j);
 				break;
 			case 8:
-				setAffinityMatrixData(dgAffinityMatrix9, j);
+				check = setAffinityMatrixData(dgAffinityMatrix9, j);
 				break;
 			case 9:
-				setAffinityMatrixData(dgAffinityMatrix10, j);
+				check = setAffinityMatrixData(dgAffinityMatrix10, j);
 				break;
 			default:
 				break;
 			}
 		}
-		lvLUT->Items[lvLUT->Items->Count - 1]->SubItems->Add("OK");
+		if (check) {
+			lvLUT->Items[lvLUT->Items->Count - 1]->SubItems->Add("OK");
+		}
 	}
 
-	for (int i = 0; i < lvLUT->Items->Count; i++) {
-		lvLUT->Items[i]->Selected = false;
-	}
+	if (check) {
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			lvLUT->Items[i]->Selected = false;
+		}
 
-	bAddBetas->Visible = false;
-	bCancel->Visible = false;
-	tLUT->Visible = false;
-	lvLUT->Visible = true;
-	bSalvar->Visible = true;
-	initializeRegions();
-	tcRegions->Visible = false;
-	bDeleteRegression->Visible = false;
+		bAddBetas->Visible = false;
+		bCancel->Visible = false;
+		tLUT->Visible = false;
+		lvLUT->Visible = true;
+		bSalvar->Visible = true;
+		initializeRegions();
+		tcRegions->Visible = false;
+		bDeleteRegression->Visible = false;
+	}
 }
 
 System::Void LuccME::P_AttractRepulseLogisticRegression::bCancel_Click(System::Object^  sender, System::EventArgs^  e)

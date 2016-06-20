@@ -854,6 +854,12 @@ System::Void LuccME::P_DiscreteR::tcRegions_SelectedIndexChanged(System::Object^
 {
 	bDeleteRegression->Visible = false;
 	if (tcRegions->SelectedIndex == (tcRegions->TabCount - 1)) {
+		int nlvItems = countCaracter(lReturn->LUT, ',') + 1;
+		for (int i = 0; i < lvLUT->Items->Count; i++) {
+			if (lvLUT->Items[i]->SubItems->Count == 2) {
+				lvLUT->Items[i]->SubItems->RemoveAt(1);
+			}
+		}
 		tcRegions->TabPages[tcRegions->SelectedIndex]->Text = "Region " + (tcRegions->SelectedIndex + 1).ToString();
 		if (tcRegions->SelectedIndex < REGRESSIONNUMBER) {
 			switch (tcRegions->SelectedIndex)

@@ -1,17 +1,18 @@
 --- Simple component developed as teaching material. Not to be used in real applications. Estimates cell 
 -- potential for a given use according to the percentage of cells of the same type in a Moore neighbourhood.
 -- @arg component A NeighSimpleRule component.
--- @arg component.execute Handles with the execution method of a NeighSimpleRule component.
+-- @arg component.run Handles with the execution method of a NeighSimpleRule component.
 -- @arg component.verify Handles with the verify method of a NeighSimpleRule component.
 -- @return The modified component.
--- @usage potential = NeighSimpleRule{}
+-- @usage -- DONTRUN
+-- P1 = NeighSimpleRule{}
 function NeighSimpleRule(component)
 	--- Handles with the execution method of a NeighSimpleRule component.
-	-- @arg self A NeighSimpleRule component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, luccMEModel)
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
+	-- @usage --DONTRUN 
+	-- component.run(event, model)
+	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
@@ -21,13 +22,15 @@ function NeighSimpleRule(component)
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
-			cs:createNeighborhood()		
+    	if(event:getTime() == luccMEModel.startTime) then
+    		cs:createNeighborhood()		
+    	end
 		end
  		
 		local totalNeigh = 0
   		
 		for k, cell in pairs (cs.cells) do
-			totalNeigh = cell:getNeighborhood():size()
+			totalNeigh = #cell:getNeighborhood()
 		 	
 		 	if (cell.region == nil) then
 				  cell.region = 1
@@ -51,15 +54,16 @@ function NeighSimpleRule(component)
 				end	
 			end -- for i
 		end -- for k
-	end -- end execute
+	end -- end run
 	
 	--- Handles with the verify method of a NeighSimpleRule component.
-	-- @arg self A NeighSimpleRule component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @usage self.potential:verify(self, event)
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @usage --DONTRUN 
+	-- component.verify(self, event)
 	component.verify = function(self, event)
 	  print("Verifying Potential parameters")
 	end
 
+  collectgarbage("collect")
 	return component
 end --close RegressionLogistcModelNeighbourhood

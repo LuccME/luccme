@@ -10,7 +10,7 @@
 -- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.landUseDrivers The land use drivers fields in database.
--- @arg component.execute Handles with the execution method of a SpatialLagRegression component.
+-- @arg component.run Handles with the execution method of a SpatialLagRegression component.
 -- @arg component.verify Handles with the verify method of a SpatialLagRegression component.
 -- @arg component.modify Handles with the modify method of a SpatialLagRegression component.
 -- @arg component.adaptRegressionConstants Handles with the constants regression method of a
@@ -18,29 +18,69 @@
 -- @arg component.modifyDriver Modify potencial for an protected area.
 -- @arg component.computePotential Handles with the modify method of a SpatialLagRegression component.
 -- @return The modified component.
--- @usage myPontencial = SpatialLagRegression {
--- potentialData = {
---                    -- Region 1
---                    { 
---                      --Natural vegetation
---                      { isLog = false, ro = 0.1, const  = -0.1, minReg = 0.15, maxReg = 0.92,
---                        betas = {beta1 =  -0.05, beta2 =  0.2, beta3 = 0.1}},
---                      -- Deforestation
---                      { isLog = false, ro = 0.3, const  = -0.3, minReg = 0.13, maxReg = 0.89,
---                        betas = {beta1 =  0.03, beta2 = 0.6, beta3 = 0.01}},
---                      -- Others
---                      { isLog = false, ro = 0, const  = 0, minReg = 0, maxReg = 1,
---                        betas = {beta1 =  0}}
---                    }
---                  }
+-- @usage --DONTRUN 
+--P1 = SpatialLagRegression
+--{
+--  potentialData =
+--  {
+--    -- Region 1
+--    {
+--      -- floresta
+--      {
+--        isLog = false,
+--        const = 0.05266679,
+--        minReg = 0,
+--        maxReg = 1,
+--        ro = 0.9124615,
+--
+--        betas =
+--        {
+--          uc_us = 0.03789872,
+--          uc_pi = 0.04141921,
+--          ti = 0.04455667
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        isLog = false,
+--        const = 0.01431553,
+--        minReg = 0,
+--        maxReg = 1,
+--        ro = 0.9019253,
+--
+--        betas =
+--        {
+--          assentamentos = 0.0443537,
+--          uc_us = -0.01454847,
+--          dist_riobranco = -0.00000002262071,
+--          fertilidadealtaoumedia = 0.01701601
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        isLog = false,
+--        const = 0,
+--        minReg = 0,
+--        maxReg = 1,
+--        ro = 0,
+--
+--        betas =
+--        {
+--          
+--        }
+--      }
+--    }
+--  }
 --}
 function SpatialLagRegression(component)
   --- Handles with the execution method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self.potential:execute(event, model)
-  component.execute = function(self, event, luccMEModel)
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN
+  -- component.run(event, model)
+  component.run = function(self, event, luccMEModel)
     local luTypes = luccMEModel.landUseTypes
     local demand = luccMEModel.demand
     local regionsNumber = #self.potentialData
@@ -77,13 +117,13 @@ function SpatialLagRegression(component)
   	    self:computePotential (luccMEModel, rNumber, i)
       end
     end
-  end  -- function execute
+  end  -- function run
 	
 	--- Handles with the verify method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self.potential:verify(event, self)
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN
+  -- component.verify(event, self)
   component.verify = function(self, event, luccMEModel)
     print("Verifying Potential parameters")
     local cs = luccMEModel.cs
@@ -172,12 +212,12 @@ function SpatialLagRegression(component)
   end
  
   --- Handles with the modify method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg luccMEModel A LuccME model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @arg direction The direction for the regression.
-  -- @usage luccMEModel.potential:modify(luccMEModel, j, i, luDirect) 
+  -- @usage --DONTRUN
+  -- component.modify(luccMEModel, j, i, luDirect) 
 	component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
     local cs = luccMEModel.cs
 		local luData = self.potentialData[rNumber][luIndex] 
@@ -188,7 +228,9 @@ function SpatialLagRegression(component)
 		
 		if( luData.isLog ) then 
 				local const_unlog = math.pow (10, luData.newconst) + self.constChange * direction
-				if (const_unlog ~= 0) then luData.newconst = math.log (10, const_unlog) end	
+				if (const_unlog ~= 0) then 
+				  luData.newconst = math.log (10, const_unlog) 
+			  end	
 		else
 				luData.newconst = luData.newconst + self.constChange * direction
 		end
@@ -197,39 +239,41 @@ function SpatialLagRegression(component)
 	end	-- function	modifyPotential	
 
   --- Handles with the constants regression method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
-  -- @usage self:adaptRegressionConstants(demand, rNumbers)
+  -- @usage --DONTRUN
+  -- component.adaptRegressionConstants(demand, rNumbers)
 	component.adaptRegressionConstants = function(self, demand, rNumber)
-    for i, luData in pairs (self.potentialData[rNumber]) do			
-    	local currentDemand = demand:getCurrentLuDemand(i)
-    	local previousDemand = demand:getPreviousLuDemand(i) 
-    	local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
-    					   
-    	luData.newconst = luData.const
-    	
-    	if (luData.isLog) then
-  			local const_unlog = math.pow (10, luData.newconst) + plus 
-  			if (const_unlog ~= 0) then 
-  			  luData.newconst = math.log (10, const_unlog) 
-  		  end
-      else 
-    		luData.newconst = luData.newconst + plus  
-      end    
-       
-      luData.newminReg = luData.newminReg + plus  
-      luData.newmaxReg = luData.newmaxReg + plus
-      luData.const = luData.newconst  
-    end
+		for i, luData in pairs (self.potentialData[rNumber]) do			
+			local currentDemand = demand:getCurrentLuDemand(i)
+			local previousDemand = demand:getPreviousLuDemand(i) 
+			local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
+							   
+			luData.newconst = luData.const
+			
+			if (luData.isLog) then
+				local const_unlog = math.pow (10, luData.newconst) + plus 
+				if (const_unlog ~= 0) then 
+				  luData.newconst = math.log (10, const_unlog) 
+			  end
+		  else 
+				luData.newconst = luData.newconst + plus  
+		  end    
+		   
+		  luData.newminReg = luData.newminReg + plus  
+		  luData.newmaxReg = luData.newmaxReg + plus
+		  luData.const = luData.newconst  
+		end
 	end	-- function adaptRegressionConstants
 	
   --- Modify potencial for an protected area.
   -- @arg complementarLU Land use name.
   -- @arg attrProtection The protetion attribute name.
   -- @arg rate A rate for potencial multiplier.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN
+  -- component.modifyDriver(self.complementarLU, self.attrProtection, 0.5, event, luccMEModel)
   component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
     local regionsNumber = #luccMEModel.potential.potentialData
     local luTypes = luccMEModel.landUseTypes
@@ -256,11 +300,11 @@ function SpatialLagRegression(component)
   end
 
   --- Handles with the compute potential method of a SpatialLagRegression component.
-  -- @arg self A SpatialLagRegression component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg luccMEModel A LuccME model.
   -- @arg rNumber The pontencial region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-  -- @usage self:computePotential(luccMEModel, rNumber, luIndex)		
+  -- @usage --DONTRUN
+  -- component.computePotential(luccMEModel, rNumber, luIndex)		
 	component.computePotential = function(self, luccMEModel, rNumber, luIndex)
 		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes
@@ -284,7 +328,7 @@ function SpatialLagRegression(component)
   			local neighSum = 0
   			local count = 0
   
-  			forEachNeighbor(cell, function (cell, neigh, weight)
+  			forEachNeighbor(cell, function (cell, neigh)
                           				Y = cell.past[lu]
                           				neighY = neigh.past[lu]
                           			   
@@ -350,5 +394,6 @@ function SpatialLagRegression(component)
 		end
 	end  -- function computePotential
 
+  collectgarbage("collect")
 	return component
 end -- component definition

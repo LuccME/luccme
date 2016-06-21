@@ -8,28 +8,66 @@
 -- to transition for other land uses.
 -- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
--- @arg component.execute Handles with the execution method of a LogisticRegression component.
+-- @arg component.run Handles with the execution method of a LogisticRegression component.
 -- @arg component.verify Handles with the verify method of a LogisticRegression component.
--- @arg component.calcRegressionLogistic Handles with the calculation of the regression
+-- @arg component.calcRegressionLogistic Handles with the calculation of the regression.
 -- @arg component.probability Compute the probability logistic method of a LogisticRegression component.
 -- @return The modified component.
--- @usage potential  =  LogisticRegression {
---    potentialData = { 
---                      --  Region 1
---                      {
---                        {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}, elasticy = 0.5},  --D
---                        {const = 0.01, betas = {dist_estradas = -0.5}, elasticy = 0.5},                --F
---                        {const = 0.00, betas = {dist_estradas = 0}, elasticy = 0.5}                    --O 
---                      }  
---                     } 
+-- @usage --DONTRUN
+-- P1 = LogisticRegression
+--{
+--  potentialData =
+--  {
+--    -- Region 1
+--    {
+--      -- floresta
+--      {
+--        const = -1.961,
+--        elasticity = 0.1,
+--
+--        betas =
+--        {
+--          dist_rodovias = 0.00008578,
+--          assentamentos = -0.2604,
+--          uc_us = 0.6064,
+--          fertilidadealtaoumedia = 0.4393
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        const = 1.978,
+--        elasticity = 0.1,
+--
+--        betas =
+--        {
+--          dist_rodovias = -0.00008651,
+--          assentamentos = 0.2676,
+--          uc_us = -0.6376,
+--          fertilidadealtaoumedia = -0.4565
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        const = 0,
+--        elasticity = 0,
+--
+--        betas =
+--        {
+--          
+--        }
+--      }
+--    }
 --  }
+--}
 function LogisticRegression(component) 
 	--- Handles with the execution method of a LogisticRegression component.
-	-- @arg self A LogisticRegression component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, luccMEModel)
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
+  -- @usage --DONTRUN
+	-- component.run(event, model)
+	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local potentialData = self.potentialData
  		local luTypes = luccMEModel.landUseTypes
@@ -56,10 +94,10 @@ function LogisticRegression(component)
 	end
 	
 	--- Handles with the verify method of a LogisticRegression component.
-	-- @arg self A LogisticRegression component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:verify(event, self)
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
+  -- @usage --DONTRUN
+	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs
 	  print("Verifying Potential parameters")
@@ -128,9 +166,9 @@ function LogisticRegression(component)
 	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.
 	-- @arg cell A spatial location with homogeneous internal content.
 	-- @arg inputValues A parameter component.
-	-- @arg luDrivers The land use drivers fields in database.
 	-- @arg component A LogisticRegression component.
-	-- @usage component.calcRegressionLogistic(cell, inputValues, self)
+	-- @usage --DONTRUN
+	-- component.calcRegressionLogistic(cell, inputValues, self)
 	component.calcRegressionLogistic = function(cell, inputValues, component)
 		local regrLogit = inputValues.const
 		local betas = inputValues.betas
@@ -145,7 +183,8 @@ function LogisticRegression(component)
 	
 	--- Compute the probability.
 	-- @arg z A value used to calculate the probability (second parameter of a pow).
-	-- @usage component.probability(regrLogit)
+	-- @usage --DONTRUN
+	-- component.probability(regrLogit)
 	component.probability = function(z)
 		local euler  = 2.718281828459045235360287;
 		local zEuler = math.pow(euler, z);
@@ -154,5 +193,6 @@ function LogisticRegression(component)
 		return prob
 	end
 	
+	collectgarbage("collect")
 	return component
  end --close LogisticRegression	

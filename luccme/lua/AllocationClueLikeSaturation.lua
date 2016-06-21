@@ -12,16 +12,15 @@
 -- @arg component.allocationData A table with two allocation parameters for each land use.
 -- @arg component.allocationData.static Indicates if the variable can increase or decrease in each cell, or only change in the direction of the demand.
 -- @arg component.allocationData.minValue Minimum value allowed for the percentage of a given land use  in a cell (as a result of new changes -  the original 
--- value can be out of the limits )
+-- value can be out of the limits).
 -- @arg component.allocationData.maxValue Maximum value  allowed for the percentage of a given land use  in a cell (as a result of new changes - the original
--- value can be out of the limits )
+-- value can be out of the limits).
 -- @arg component.allocationData.minChange Minimum change in a given land use in a cell in a time step until (saturation) threshold.
 -- @arg component.allocationData.maxChange Maximum change in a given land use allowed in a cell in a time step until (saturation) threshold.
 -- @arg component.allocationData.changeLimiarValue Threshold (or limier) refers to a given amount of the land use in each cell.  After this limier, the speed
 -- of change of a given land use in the cell is modified. 
 -- @arg component.allocationData.maxChangeAboveLimiar Maximum change in a given land use allowed in a cell in a time step after (saturation) threshold.
--- @arg component.execute Handles with the rules of the component execution.
--- @arg component.execute Handles with the rules of the component execution.
+-- @arg component.run Handles with the rules of the component execution.
 -- @arg component.verify Handles with the verify method of a AllocationClueLikeSaturation component.
 -- @arg component.updateAllocationParameters Handles with the allocation parameters update.
 -- @arg component.initElasticity Handles with the elasticity initialize considering a single
@@ -34,22 +33,31 @@
 -- equations for each land use/cover type.
 -- @arg component.printAllocatedArea Calculates and prints the allocated by the regression
 -- equations for each land use/cover type.
--- @usage allocation = AllocationClueLikeSaturation { maxDifference = 50, maxIteration = 3000,
--- initialElasticity = 0.1, minElasticity = 0.001, maxElasticity = 1.5,
--- complementarLU = "VegN_2000",
--- saturationIndicator = "saturationLimiar", attrProtection = "protPublicForests_ALL",
--- allocationData = {{static = -1, minValue = 0.2, maxValue = 0.8, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03},-- VEGN
---                 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- AG
---                 {static = 0, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.06, changeLimiarValue = 0.4, maxChangeAboveLimiar = 0.03}, -- P
---                 {static = 1, minValue = 0.0, maxValue = 1.0, minChange = 0, maxChange = 0.0, changeLimiarVelue = 0.0, maxChangeAboveLimiar = 0.00}}  -- O
+-- @usage --DONTRUN
+--A1 = AllocationClueLikeSaturation
+--{
+--  maxDifference = 1643,
+--  maxIteration = 1000,
+--  initialElasticity = 0.1,
+--  minElasticity = 0.001,
+--  maxElasticity = 1.5,
+--  complementarLU = "floresta",
+--  saturationIndicator = "saturationLimiar",
+--  attrProtection = "uc_pi",
+--  allocationData =
+--  {
+--    {static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- floresta
+--    {static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- desmatamento
+--    {static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}   -- outros
+--  }
 --}
 function AllocationClueLikeSaturation (component)
   --- Handles with the rules of the component execution.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self.allocation:execute(event, model)  	 
-	component.execute = function (self,event,luccMEModel) 
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN 
+  -- component.run(event, model)  	 
+	component.run = function (self,event,luccMEModel) 
     -- Synchronize cellular space in the first year
     local luTypes = luccMEModel.landUseTypes
     local cs = luccMEModel.cs
@@ -76,12 +84,12 @@ function AllocationClueLikeSaturation (component)
       end
 
       -- verify if allocation reaches demand
-      maxdiff = self:compareAllocationToDemand (event, luccMEModel)   
+      maxdiff = self:compareAllocationToDemand(event, luccMEModel)   
       if (maxdiff <= maxAdjust) then
         allocation_ok = true
         
         if (luccMEModel.useLog == true) then
-          print("Demand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
+          print("\nDemand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
         end
       else 
         nIter = nIter + 1
@@ -95,7 +103,7 @@ function AllocationClueLikeSaturation (component)
     until ((nIter >= self.maxIteration) or (allocation_ok == true))
 
     if (nIter == self.maxIteration) then
-      error("Demand not allocated correctly in this time step: "..nIter)
+      error("\nDemand not allocated correctly in this time step: "..nIter)
     end       
  
     forEachCell(cs, function(cell)
@@ -124,10 +132,10 @@ function AllocationClueLikeSaturation (component)
   end
 		
   --- Handles with the parameters verification.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self.allocation:verify(event, self)
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN 
+  -- component.verify(event, self)
   component.verify = function(self, event, luccMEModel)
     print("Verifying Allocation parameters")
     -- check maxDifference
@@ -244,18 +252,18 @@ function AllocationClueLikeSaturation (component)
       end
     end
         
-    luccMEModel.cs:createNeighborhood{  name = "10x10",
+    luccMEModel.cs:createNeighborhood{  name = "11x11",
                                         strategy = "mxn",
-                                        m = 10,
-                                        n = 10
+                                        m = 11,
+                                        n = 11
                                      }
   end
 
-  --- Update the allocation parameters based on the saturation of the region
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self:updateAllocationParameters(event, luccMEModel)
+  --- Update the allocation parameters based on the saturation of the region.
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN 
+  -- component.updateAllocationParameters(event, luccMEModel)
   component.updateAllocationParameters = function(self, event, luccMEModel)
     local cs = luccMEModel.cs
     local currentTime = event:getTime()
@@ -280,7 +288,7 @@ function AllocationClueLikeSaturation (component)
                 if (perc_def_original > 1) then
                   perc_def_original = 1
                 end
-                forEachNeighbor (cell, "10x10", function(cell, neigh, weight)
+                forEachNeighbor (cell, "11x11", function(cell, neigh)
                                                   local prot_t = 0
                                                   local original = 1
                                                   if (self.attrProtection ~= nil) then
@@ -314,10 +322,10 @@ function AllocationClueLikeSaturation (component)
 	
   --- Handles with the elasticity initialize considering a single elasticity for each land use (all cells).
   -- Similar to the coarse scale old clue.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg luccMEModel A LuccME model.
   -- @arg value The elasticity value.
-  -- @usage self:initElasticity(luccMEModel, self.initialElasticity)
+  -- @usage --DONTRUN 
+  -- component.initElasticity(luccMEModel, self.initialElasticity)
   component.initElasticity = function(self, luccMEModel, value)
     -- Init elasticity. In this version of the component, a single elasticity for each land use(all cells).
     -- Similar to the coarse scale old clue
@@ -329,10 +337,9 @@ function AllocationClueLikeSaturation (component)
   end
 
   --- Compute the allocation change.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self:computeChange(luccMEModel)
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN 
+  -- component.computeChange(luccMEModel)
   component.computeChange = function(self, luccMEModel)
     local cs = luccMEModel.cs
     local luTypes = luccMEModel.landUseTypes
@@ -409,10 +416,10 @@ function AllocationClueLikeSaturation (component)
   end
 
   --- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN 
+  -- component.compareAllocationToDemand (event, luccMEModel)  
   component.compareAllocationToDemand = function(self, event, luccMEModel)
     -- Compares the demand to the amount of allocated land use/cover, then adapts elasticity
     local cs = luccMEModel.cs
@@ -477,9 +484,9 @@ function AllocationClueLikeSaturation (component)
   end
 		
 	--- Corrects total land use/cover types to 100 percent.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-  -- @usage self:correctCellChange(luccMEModel)
+	-- @arg luccMEModel A LuccME model.
+  -- @usage --DONTRUN 
+  -- component.correctCellChange(luccMEModel)
   component.correctCellChange = function(self, luccMEModel)
     -- corrects total land use/cover types to 100 percent
     local cs = luccMEModel.cs
@@ -650,10 +657,10 @@ function AllocationClueLikeSaturation (component)
   end -- correct100
 		
   --- Calculates total area allocated by the regression equations for each land use/cover type.
-  -- @arg self A AllocationClueLikeSaturation component.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg luTypes A set of land use types.
-  -- @usage areas = self:countAllocatedLandUseArea(cs, luTypes)
+  -- @usage --DONTRUN 
+  -- component.countAllocatedLandUseArea(cs, luTypes)
   component.countAllocatedLandUseArea = function(self, cs, luTypes)
     -- Calculates total area allocated by the regression equations for each land use/cover type
     local areas = {}
@@ -676,11 +683,11 @@ function AllocationClueLikeSaturation (component)
   end
 
   --- Calculates and prints the allocated by the regression equations for each land use/cover type.
-  -- @arg self A AllocationClueLikeSaturation component.
-  -- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
+  -- @arg event A representation of a time instant when the simulation engine must run.
+  -- @arg luccMEModel A LuccME model.
   -- @arg nIter An iterator number.
-  -- @usage self:printAllocatedArea(event, luccMEModel, nIter)
+  -- @usage --DONTRUN 
+  -- component.printAllocatedArea(event, luccMEModel, nIter)
   component.printAllocatedArea = function(self, event, luccMEModel, nIter)
     -- Calculates and prints the allocated by the regression equations for each land use/cover type
     local cs = luccMEModel.cs
@@ -699,5 +706,6 @@ function AllocationClueLikeSaturation (component)
     io.flush()
   end
 
+  collectgarbage("collect")
   return component
 end -- close Allocation Component

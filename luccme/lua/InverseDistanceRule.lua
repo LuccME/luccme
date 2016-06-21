@@ -4,26 +4,61 @@
 -- @arg component.potentialData A table with the potential parameters for each attribute.
 -- @arg component.potentialData.const A linear regression constant.
 -- @arg component.potentialData.betas A linear regression betas for land use drivers.
--- @arg component.execute Handles with the execution method of a InverseDistanceRule component.
+-- @arg component.run Handles with the execution method of a InverseDistanceRule component.
 -- @arg component.verify Handles with the verify method of a InverseDistanceRule component.
 -- @return The modified component.
--- @usage potential = InverseDistanceRule {
---  potentialData = {
---                    -- Region 1
---                    {  
---                      {const = 0.01, betas = {dist_estradas = 0.5, dist_br = 0.3}},  --D
---					            {const = 0.01, betas = {dist_estradas = -0.5}},  				       --F
---					            {const = 0.00, betas = {dist_estradas = 0}}					           --O
---                    }
---					        }
+-- @usage --DONTRUN
+-- P1 = InverseDistanceRule
+--{
+--  potentialData =
+--  {
+--    -- Region 1
+--    {
+--      -- floresta
+--      {
+--        const = -1.961,
+--
+--        betas =
+--        {
+--          dist_rodovias = 0.00008578,
+--          assentamentos = -0.2604,
+--          uc_us = 0.6064,
+--          fertilidadealtaoumedia = 0.4393
+--        }
+--      },
+--
+--      -- desmatamento
+--      {
+--        const = 1.978,
+--
+--        betas =
+--        {
+--          dist_rodovias = -0.00008651,
+--          assentamentos = 0.2676,
+--          uc_us = -0.6376,
+--          fertilidadealtaoumedia = 0.4565
+--        }
+--      },
+--
+--      -- outros
+--      {
+--        const = 0,
+--
+--        betas =
+--        {
+--          
+--        }
+--      }
+--    }
+--  }
 --}
 function InverseDistanceRule(component)
 	--- Handles with the execution method of a InverseDistanceRule component.
-	-- @arg self A InverseDistanceRule component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-  -- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:execute(event, model)
-	component.execute = function(self, event, luccMEModel)
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
+  -- @usage --DONTRUN
+	-- component.run(event, model)
+	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
@@ -57,13 +92,13 @@ function InverseDistanceRule(component)
     		end -- if region 
   		end -- for rNumber
 		end -- for k
-	end -- end execute
+	end -- end run
 	
 	--- Handles with the verify method of a InverseDistanceRule component.
-	-- @arg self A InverseDistanceRule component.
-	-- @arg event A representation of a time instant when the simulation engine must execute.
-	-- @arg luccMeModel A container that encapsulates space, time, behaviour, and other environments.
-	-- @usage self.potential:verify(event, self)
+	-- @arg event A representation of a time instant when the simulation engine must run.
+	-- @arg luccMEModel A luccME Model.
+	-- @usage --DONTRUN
+	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 	  local cs = luccMEModel.cs 
 	  print("Verifying Potential parameters")
@@ -123,5 +158,6 @@ function InverseDistanceRule(component)
     end -- else
 	end -- verify
 	
+	collectgarbage("collect")
 	return component
 end --close InverseDistanceRule

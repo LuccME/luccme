@@ -23,21 +23,11 @@ namespace LuccME {
 		String^ gSAttributes = "";
 		String^ gSCells = "";
 		String^ gSCellsTitle = "";
+		bool open = false;
 
 	public:
 		cReturnPotential^ lReturn;
 		array<String^>^ lTempBetas = gcnew array<String^>(50);
-	private: System::Windows::Forms::Label^  lLegend;
-	private: System::Windows::Forms::Label^  lLegend6;
-	private: System::Windows::Forms::Label^  lLegend7;
-	private: System::Windows::Forms::Label^  lLegend8;
-	private: System::Windows::Forms::Label^  lLegend10;
-	private: System::Windows::Forms::Label^  lLegend9;
-	private: System::Windows::Forms::Label^  lLegend5;
-	private: System::Windows::Forms::Label^  lLegend2;
-	private: System::Windows::Forms::Label^  lLegend3;
-	private: System::Windows::Forms::Label^  lLegend4;
-	public:
 		array<String^>^ lTempValues = gcnew array<String^>(50);
 		P_AttractRepulseLogisticRegression(cReturnPotential^ pPotencial)
 		{
@@ -59,8 +49,18 @@ namespace LuccME {
 				delete components;
 			}
 		}
+
+	private: System::Windows::Forms::Label^  lLegend;
+	private: System::Windows::Forms::Label^  lLegend6;
+	private: System::Windows::Forms::Label^  lLegend7;
+	private: System::Windows::Forms::Label^  lLegend8;
+	private: System::Windows::Forms::Label^  lLegend10;
+	private: System::Windows::Forms::Label^  lLegend9;
+	private: System::Windows::Forms::Label^  lLegend5;
+	private: System::Windows::Forms::Label^  lLegend2;
+	private: System::Windows::Forms::Label^  lLegend3;
+	private: System::Windows::Forms::Label^  lLegend4;
 	private: System::Windows::Forms::TextBox^  tPercNeighborsUse8;
-	protected:
 	private: System::Windows::Forms::Label^  lBetas7;
 	private: System::Windows::Forms::TextBox^  tConst7;
 	private: System::Windows::Forms::Label^  lConst7;

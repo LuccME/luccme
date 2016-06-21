@@ -4730,6 +4730,171 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 				
+				if (tempLine == "AttractRepulseLogisticRegression") {
+					gPotential = "";
+					gPotentialComponent = ATTRACTREPULSELOGISTICREGRESSION;
+					gPotentialLUT = gLandUseTypes;
+					int count = 2;
+
+					count += countCaracter(gPotentialLUT, ',');
+
+					line = sw->ReadLine();
+					while (line->Contains("=") != TRUE) { //potentialData
+						line = sw->ReadLine();
+					}
+
+					int countBraces = 0;
+					while (line->Contains("affinityMatrix") != TRUE) {
+						line = sw->ReadLine();
+						if (line->Contains("{")) {
+							countBraces++;
+						}
+					}
+
+					countBraces -= 1; //To remove the potencialData brace
+
+					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
+					int bracesForLUT = 2;
+					int nRegions = countBraces / (bracesForLUT*nLUT);
+					int activeRegion = 0;
+					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
+
+					gPotentialRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (line->Contains("potentialData") != TRUE) {
+						line = sw->ReadLine();
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						for (int k = 0; k < count - 1; k++) {
+							int position = k + (nLUT*activeRegion);
+
+							line = sw->ReadLine();
+							while (line->Contains("const") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("const=", "");
+							line = line->Replace(",", ";");
+
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("elasticity") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("elasticity=", "");
+							line = line->Replace(",", ";");
+
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("percNeighborsUse") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							line = line->Replace("\n", "");
+							line = line->Replace("\t", "");
+							line = line->Replace(" ", "");
+							line = line->Replace("percNeighborsUse=", "");
+							line = line->Replace(",", ";");
+
+							auxPotData[position] += line;
+
+							line = sw->ReadLine();
+							while (line->Contains("betas") != TRUE) {
+								line = sw->ReadLine();
+							}
+
+							tempLine = "";
+							while (line->Contains("}") != TRUE) {
+								tempLine += line;
+								line = sw->ReadLine();
+							}
+
+							tempLine += "}";
+							tempLine = tempLine->Replace("\n", "");
+							tempLine = tempLine->Replace("\t", "");
+							tempLine = tempLine->Replace(" ", "");
+
+							String^ tempAux = "";
+							bool enter = true;
+							for (int i = 0; i < tempLine->Length; i++) {
+								while (tempLine[i] != '{') {
+									if (i == tempLine->Length - 1) {
+										enter = false;
+										break;
+									}
+									i++;
+								}
+								if (enter) {
+									while (tempLine[i] != '}') {
+										tempAux += tempLine[i];
+										i++;
+									}
+								}
+							}
+							tempAux = tempAux->Replace("{", "");
+							auxPotData[position] += tempAux + "*";
+						}
+						activeRegion++;
+					}
+
+					for (int i = 0; i < nLUT; i++) {
+						for (int j = i; j < auxPotData->Length; j += nLUT) {
+							gPotential += auxPotData[j];
+						}
+						gPotential += "#";
+					}
+
+					//Fazer a parte da Affinity Matrix
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (line->Contains("affinityMatrix") != TRUE) {
+						line = sw->ReadLine();
+					}
+
+					gPotential += "&";
+
+					int fulfillMatrix = 0;
+					for (int i = 0; i < gPotentialRegression; i++) {
+						while (fulfillMatrix < nLUT) {
+							line = sw->ReadLine();
+							if (line->Contains("{") & line->Contains("}")) {
+								line = line->Replace("{", "");
+								line = line->Replace("},", "");
+								line = line->Replace("}", "");
+								line = line->Replace(" ", "");
+								gPotential += line;
+								if (fulfillMatrix + 1 < nLUT) {
+									gPotential += ";";
+								}
+								fulfillMatrix++;
+							}
+						}
+						gPotential += "%";
+						fulfillMatrix = 0;
+					}
+
+					gPotential = gPotential->Replace("\t", "");
+					gPotential = gPotential->Replace("\n", "");
+
+					if (gPotential != "") {
+						showReturnARLR();
+					}
+				}
+
 				//Contiuous Potential Components
 				if (tempLine == "LinearRegression") {
 					gPotential = "";

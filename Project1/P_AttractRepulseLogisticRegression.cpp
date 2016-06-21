@@ -694,6 +694,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 				rowCount++;
 			}
 		}
+		open = true;
 	}
 
 	for (int i = 0; i < lReturn->Regression; i++) {
@@ -702,6 +703,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		tcRegions->Visible = false;
 	}
 
+	open = false;
 	tcRegions->SelectedIndex = NONE;
 }
 
@@ -849,13 +851,14 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::tcRegions_SelectedIndex
 {
 	bDeleteRegression->Visible = false;
 	if (tcRegions->SelectedIndex == (tcRegions->TabCount - 1)) {
-		int nlvItems = countCaracter(lReturn->LUT, ',') + 2;
-		for (int i = 0; i < lvLUT->Items->Count; i++) {
-			if (lvLUT->Items[i]->SubItems->Count == 2) {
-				lvLUT->Items[i]->SubItems->RemoveAt(1);
+		if (!open) {
+			int nlvItems = countCaracter(lReturn->LUT, ',') + 2;
+			for (int i = 0; i < lvLUT->Items->Count; i++) {
+				if (lvLUT->Items[i]->SubItems->Count == 2) {
+					lvLUT->Items[i]->SubItems->RemoveAt(1);
+				}
 			}
 		}
-
 		tcRegions->TabPages[tcRegions->SelectedIndex]->Text = "Region " + (tcRegions->SelectedIndex + 1).ToString();
 		if (tcRegions->SelectedIndex < REGRESSIONNUMBER) {
 			switch (tcRegions->SelectedIndex)

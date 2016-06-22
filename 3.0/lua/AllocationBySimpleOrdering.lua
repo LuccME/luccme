@@ -35,7 +35,6 @@ function AllocationBySimpleOrdering(component)
  		end
   		
 		print("\nTime : ", event:getTime())
-		print("Step : ", step)
 
 		if (useLog == true) then
 			print("-------------------------------------------------------------------------------")
@@ -83,6 +82,7 @@ function AllocationBySimpleOrdering(component)
 				end
 				local cs_size = #cs.cells
 				local trj_size = #ord.cells	
+				
 				print("demand", lu, dem[lu], "trajectory size", trj_size)
 		
 				while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do 
@@ -94,6 +94,7 @@ function AllocationBySimpleOrdering(component)
 
 				-- Quantidade alocada do uso neste passo de tempo
 				local areaAlloc = self:areaAllocated(ord, cellarea, "alloc", 1)
+			
 				print("areaAlloc", lu, areaAlloc)
 				differences[lu] = (dem[lu] - areaAlloc)
 

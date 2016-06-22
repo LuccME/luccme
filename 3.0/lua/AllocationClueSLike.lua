@@ -73,7 +73,7 @@ function AllocationClueSLike(component)
 	  
 		while ((nIter <= max_iteration) and (allocation_ok == false)) do	
 			if useLog == true then
-				print("\nStep -> "..step.." Iteration -> "..nIter)
+				print("\nYear : "..event:getTime().." Iteration -> "..nIter)
 			end	
 			for k, cell in pairs (cs.cells) do
 				local lu_past = self:currentUse(cell, luTypes)

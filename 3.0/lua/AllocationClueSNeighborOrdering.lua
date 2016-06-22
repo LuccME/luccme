@@ -120,7 +120,7 @@ function AllocationClueSNeighborOrdering (component)
 			if (nIter == 0) then
 				print("\n")
 			end
-			print ("\nStep -> "..step.." Iteration -> "..nIter)
+			print ("\nYear : "..event:getTime().." Iteration -> "..nIter)
 		end	
 
 		for k, cell in pairs (cs.cells) do
@@ -170,7 +170,7 @@ function AllocationClueSNeighborOrdering (component)
 			print("\nDemand allocated correctly in this time step:",step)
 		-- If the number of iteractions is larger than or equal to the maximum number of iteractions allowed
 		elseif	(nIter >= max_iteration) then 
-			print("\nDemand not allocated correctly in this time step: "..step)
+			error("\nDemand not allocated correctly in this time step: "..step)
 		end      		
   	end 
   end 

@@ -51,8 +51,7 @@ function AllocationClueSNeighborOrdering (component)
   local aux = 0
   local j = 0
   	
-	print("\nTime : ",event:getTime())
-	print("Step : ",step)
+	print("\nTime: "..event:getTime())
 		
 	if useLog == true then
 		print("-------------------------------------------------------------------------------")
@@ -167,10 +166,10 @@ function AllocationClueSNeighborOrdering (component)
 		nIter= nIter + 1;
 		
 		if (allocation_ok == true) then  
-			print("\nDemand allocated correctly in this time step:",step)
+			print("\nDemand allocated correctly in this time: "..event:getTime())
 		-- If the number of iteractions is larger than or equal to the maximum number of iteractions allowed
 		elseif	(nIter >= max_iteration) then 
-			error("\nDemand not allocated correctly in this time step: "..step)
+			error("\nDemand not allocated correctly in this time step: "..event:getTime())
 		end      		
   	end 
   end 

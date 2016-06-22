@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "P_MaxEntLike.h"
 
+using namespace System::Windows::Forms;
+
 System::Void LuccME::P_MaxEntLike::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	//Create the efect of a edited TextBox (must select this function on focus->enter property of a TextBox)
@@ -8,6 +10,211 @@ System::Void LuccME::P_MaxEntLike::textBox_Enter(System::Object ^ sender, System
 	if (thisTextBox->ForeColor != System::Drawing::Color::Black) {
 		thisTextBox->Text = "";
 		thisTextBox->ForeColor = System::Drawing::Color::Black;
+	}
+}
+
+/*
+Locate the initial cell for copying or pasting
+*/
+System::Windows::Forms::DataGridViewCell ^ LuccME::P_MaxEntLike::GetStartCell(System::Windows::Forms::DataGridView ^ dgAttr)
+{
+	//get the smallest row,column index
+	if (dgAttr->SelectedCells->Count == NONE)
+		return nullptr;
+
+	int rowIndex = dgAttr->Rows->Count - 1;
+	int colIndex = dgAttr->Columns->Count - 1;
+
+	for each(DataGridViewCell^ dgvCell in dgAttr->SelectedCells)
+	{
+		if (dgvCell->RowIndex < rowIndex)
+			rowIndex = dgvCell->RowIndex;
+		if (dgvCell->ColumnIndex < colIndex)
+			colIndex = dgvCell->ColumnIndex;
+	}
+
+	return dgAttr[colIndex, rowIndex];
+}
+
+/*
+Copy the clipboard data
+*/
+System::Void LuccME::P_MaxEntLike::CopyToClipboard(DataGridView^ dgAttr)
+{
+	DataObject^ dataObj = dgAttr->GetClipboardContent();
+	if (dataObj != nullptr) {
+		Clipboard::SetDataObject(dataObj);
+	}
+}
+
+
+/*
+Paste the clipboard data
+*/
+System::Void LuccME::P_MaxEntLike::PasteClipboardValue(DataGridView^ dgAttr)
+{
+	//Show Error if no cell is selected
+	if (dgAttr->SelectedCells->Count == NONE)
+	{
+		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
+	}
+
+	//Get the satring Cell
+	DataGridViewCell^ startCell = GetStartCell(dgAttr);
+
+	//Get the clipboard value in a dictionary
+	String^ aux = Clipboard::GetText();
+
+	if (aux != "") {
+		array<String^>^ lines = aux->Split('\n');
+
+		if (dgAttr->RowCount < lines->Length - 1) {
+			while (dgAttr->RowCount < lines->Length) {
+				dgAttr->Rows->Add();
+			}
+		}
+		
+		
+		for (int i = 0; i < lines->Length - 1; i++) {
+			dgAttr->Rows[i]->Cells[0]->Value = lines[i];
+		}
+	}
+}
+
+/*
+Used to set the data from lReturn->Return to the form
+*/
+System::Void LuccME::P_MaxEntLike::setData(String^ dataSource)
+{
+	int j = 0;
+	String^ tempAttr = "";
+
+
+	tUsePerc->Text = "";
+
+	while (dataSource[j] != ';')
+	{
+		tUsePerc->Text += dataSource[j];
+		j++;
+	}
+
+	j++;
+	while (dataSource[j] != ';')
+	{
+		if (dataSource[j] != ',') {
+			if (dataSource[j] != '\"') {
+				tempAttr += dataSource[j];
+			}
+		}
+		else {
+			dgAttrPerc->Rows->Add(tempAttr);
+			tempAttr = "";
+		}
+		j++;
+	}
+
+	if (tempAttr != "") {
+		dgAttrPerc->Rows->Add(tempAttr);
+	}
+
+
+	j++;
+	tempAttr = "";
+
+	while (j < dataSource->Length)
+	{
+		if (dataSource[j] != ',') {
+			if (dataSource[j] != '\"') {
+				tempAttr += dataSource[j];
+			}
+		}
+		else {
+			dgAttrClass->Rows->Add(tempAttr);
+			tempAttr = "";
+		}
+		j++;
+	}
+
+	if (tempAttr != "") {
+		dgAttrClass->Rows->Add(tempAttr);
+	}
+}
+
+/*
+Initialized for the default values
+*/
+System::Void LuccME::P_MaxEntLike::initializeForm()
+{
+	//Added Header
+	dgAttrPerc->Rows->Clear();
+	dgAttrPerc->ColumnCount = 0;
+	dgAttrPerc->ColumnCount = 1;
+	dgAttrPerc->Columns[0]->Name = gSAttributes;
+	dgAttrPerc->Columns[0]->Width = 160;
+
+	//Added Header
+	dgAttrClass->Rows->Clear();
+	dgAttrClass->ColumnCount = 0;
+	dgAttrClass->ColumnCount = 1;
+	dgAttrClass->Columns[0]->Name = gSAttributes;
+	dgAttrClass->Columns[0]->Width = 160;
+
+	if (lReturn->Component == DMAXENTLIKE) {
+		tUsePerc->Text = "100";
+		tUsePerc->Enabled = false;
+	}
+	else {
+		tUsePerc->Text = "75";
+		tUsePerc->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	}
+}
+
+/*
+Capture the keys press
+*/
+System::Void LuccME::P_MaxEntLike::dgAttr_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
+{
+	DataGridView^ dgAttr = (DataGridView^)sender;
+	try
+	{
+		if (e->Modifiers == Keys::Control)
+		{
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboard(dgAttr);
+				break;
+
+			case Keys::V:
+				PasteClipboardValue(dgAttr);
+				break;
+			}
+		}
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgAttr->SelectedCells->Count != NONE)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgAttr);
+					int row = startCell->RowIndex;
+					int column = startCell->ColumnIndex;
+					for (int i = row; i < dgAttr->RowCount; i++) {
+						for (int j = column; j < dgAttr->ColumnCount; j++) {
+							if (dgAttr->Rows[i]->Cells[j]->Selected == true && j != 0) {
+								dgAttr->Rows[i]->Cells[j]->Value = "";
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -78,6 +285,8 @@ System::Void LuccME::P_MaxEntLike::P_MaxEntLike_Shown(System::Object^  sender, S
 				rowCount++;
 			}
 		}
+		dgAttrPerc->CurrentCell = nullptr;
+		dgAttrClass->CurrentCell = nullptr;
 	}
 }
 
@@ -161,6 +370,8 @@ System::Void LuccME::P_MaxEntLike::bAddBetas_Click(System::Object^  sender, Syst
 System::Void LuccME::P_MaxEntLike::lvLUT_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 {
 	initializeForm();
+	dgAttrPerc->CurrentCell = nullptr;
+	dgAttrClass->CurrentCell = nullptr;
 
 	if (bAddBetas->Visible == false) {
 		for (int i = 0; i < lvLUT->Items->Count; i++) {
@@ -187,84 +398,18 @@ System::Void LuccME::P_MaxEntLike::lvLUT_SelectedIndexChanged(System::Object^  s
 	}
 }
 
-System::Void LuccME::P_MaxEntLike::setData(String^ dataSource)
-{
-	int j = 0;
-	String^ tempAttr = "";
-
-
-	tUsePerc->Text = "";
-
-	while (dataSource[j] != ';')
-	{
-		tUsePerc->Text += dataSource[j];
-		j++;
-	}
-
-	j++;
-	while (dataSource[j] != ';')
-	{
-		if (dataSource[j] != ',') {
-			if (dataSource[j] != '\"') {
-				tempAttr += dataSource[j];
-			}
-		}
-		else {
-			dgAttrPerc->Rows->Add(tempAttr);
-			tempAttr = "";
-		}
-		j++;
-	}
-
-	if (tempAttr != "") {
-		dgAttrPerc->Rows->Add(tempAttr);
-	}
-
-
-	j++;
-	tempAttr = "";
-
-	while (j < dataSource->Length)
-	{
-		if (dataSource[j] != ',') {
-			if (dataSource[j] != '\"') {
-				tempAttr += dataSource[j];
-			}
-		}
-		else {
-			dgAttrClass->Rows->Add(tempAttr);
-			tempAttr = "";
-		}
-		j++;
-	}
-
-	if (tempAttr != "") {
-		dgAttrClass->Rows->Add(tempAttr);
-	}
+System::Void LuccME::P_MaxEntLike::copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgAttrPerc);
 }
 
-System::Void LuccME::P_MaxEntLike::initializeForm()
-{
-	//Added Header
-	dgAttrPerc->Rows->Clear();
-	dgAttrPerc->ColumnCount = 0;
-	dgAttrPerc->ColumnCount = 1;
-	dgAttrPerc->Columns[0]->Name = gSAttributes;
-	dgAttrPerc->Columns[0]->Width = 160;
+System::Void LuccME::P_MaxEntLike::pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgAttrPerc);
+}
 
-	//Added Header
-	dgAttrClass->Rows->Clear();
-	dgAttrClass->ColumnCount = 0;
-	dgAttrClass->ColumnCount = 1;
-	dgAttrClass->Columns[0]->Name = gSAttributes;
-	dgAttrClass->Columns[0]->Width = 160;
-	
-	if (lReturn->Component == DMAXENTLIKE) {
-		tUsePerc->Text = "100";
-		tUsePerc->Enabled = false;
-	}
-	else {
-		tUsePerc->Text = "75";
-		tUsePerc->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	}
+System::Void LuccME::P_MaxEntLike::toolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgAttrClass);
+}
+
+System::Void LuccME::P_MaxEntLike::toolStripMenuItem2_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgAttrClass);
 }

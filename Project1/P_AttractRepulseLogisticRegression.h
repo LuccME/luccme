@@ -50,6 +50,9 @@ namespace LuccME {
 			}
 		}
 
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous;
+	private: System::Windows::Forms::ToolStripMenuItem^  copyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteToolStripMenuItem;
 	private: System::Windows::Forms::Label^  lLegend;
 	private: System::Windows::Forms::Label^  lLegend6;
 	private: System::Windows::Forms::Label^  lLegend7;
@@ -182,6 +185,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix5;
 private: System::Windows::Forms::DataGridView^  dgAffinityMatrix2;
 private: System::Windows::Forms::DataGridView^  dgAffinityMatrix3;
 private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
+private: System::ComponentModel::IContainer^  components;
 
 
 
@@ -189,7 +193,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -198,6 +202,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(P_AttractRepulseLogisticRegression::typeid));
 			this->tPercNeighborsUse8 = (gcnew System::Windows::Forms::TextBox());
 			this->lBetas7 = (gcnew System::Windows::Forms::Label());
@@ -292,6 +297,9 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->lAffinityMatrix = (gcnew System::Windows::Forms::Label());
 			this->lElasticy = (gcnew System::Windows::Forms::Label());
 			this->dgBetas = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tConst = (gcnew System::Windows::Forms::TextBox());
 			this->lConst = (gcnew System::Windows::Forms::Label());
 			this->lBetas = (gcnew System::Windows::Forms::Label());
@@ -351,6 +359,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tcRegions->SuspendLayout();
 			this->tRegion1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->BeginInit();
+			this->cMSP_continuous->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAffinityMatrix))->BeginInit();
 			this->tRegion3->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas3))->BeginInit();
@@ -468,6 +477,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas6->AllowUserToResizeColumns = false;
 			this->dgBetas6->AllowUserToResizeRows = false;
 			this->dgBetas6->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas6->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas6->Location = System::Drawing::Point(110, 147);
 			this->dgBetas6->Name = L"dgBetas6";
 			this->dgBetas6->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -532,6 +542,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas7->AllowUserToResizeColumns = false;
 			this->dgBetas7->AllowUserToResizeRows = false;
 			this->dgBetas7->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas7->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas7->Location = System::Drawing::Point(110, 147);
 			this->dgBetas7->Name = L"dgBetas7";
 			this->dgBetas7->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -776,6 +787,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas8->AllowUserToResizeColumns = false;
 			this->dgBetas8->AllowUserToResizeRows = false;
 			this->dgBetas8->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas8->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas8->Location = System::Drawing::Point(110, 147);
 			this->dgBetas8->Name = L"dgBetas8";
 			this->dgBetas8->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -928,6 +940,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas10->AllowUserToResizeColumns = false;
 			this->dgBetas10->AllowUserToResizeRows = false;
 			this->dgBetas10->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas10->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas10->Location = System::Drawing::Point(110, 147);
 			this->dgBetas10->Name = L"dgBetas10";
 			this->dgBetas10->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1074,6 +1087,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas9->AllowUserToResizeColumns = false;
 			this->dgBetas9->AllowUserToResizeRows = false;
 			this->dgBetas9->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas9->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas9->Location = System::Drawing::Point(110, 147);
 			this->dgBetas9->Name = L"dgBetas9";
 			this->dgBetas9->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1250,6 +1264,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas5->AllowUserToResizeColumns = false;
 			this->dgBetas5->AllowUserToResizeRows = false;
 			this->dgBetas5->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas5->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas5->Location = System::Drawing::Point(110, 147);
 			this->dgBetas5->Name = L"dgBetas5";
 			this->dgBetas5->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1409,6 +1424,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas2->AllowUserToResizeColumns = false;
 			this->dgBetas2->AllowUserToResizeRows = false;
 			this->dgBetas2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas2->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas2->Location = System::Drawing::Point(110, 147);
 			this->dgBetas2->Name = L"dgBetas2";
 			this->dgBetas2->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1589,6 +1605,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas->AllowUserToResizeColumns = false;
 			this->dgBetas->AllowUserToResizeRows = false;
 			this->dgBetas->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas->Location = System::Drawing::Point(110, 147);
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1596,6 +1613,29 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas->TabIndex = 1;
 			this->dgBetas->Visible = false;
 			this->dgBetas->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_AttractRepulseLogisticRegression::dgBetas_KeyDown);
+			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(153, 70);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
+			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_AttractRepulseLogisticRegression::pasteToolStripMenuItem_Click);
 			// 
 			// tConst
 			// 
@@ -1748,6 +1788,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas3->AllowUserToResizeColumns = false;
 			this->dgBetas3->AllowUserToResizeRows = false;
 			this->dgBetas3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas3->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas3->Location = System::Drawing::Point(110, 147);
 			this->dgBetas3->Name = L"dgBetas3";
 			this->dgBetas3->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1906,6 +1947,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->dgBetas4->AllowUserToResizeColumns = false;
 			this->dgBetas4->AllowUserToResizeRows = false;
 			this->dgBetas4->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas4->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas4->Location = System::Drawing::Point(110, 147);
 			this->dgBetas4->Name = L"dgBetas4";
 			this->dgBetas4->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -2086,6 +2128,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 			this->tRegion1->ResumeLayout(false);
 			this->tRegion1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();
+			this->cMSP_continuous->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAffinityMatrix))->EndInit();
 			this->tRegion3->ResumeLayout(false);
 			this->tRegion3->PerformLayout();
@@ -2122,5 +2165,7 @@ private: System::Windows::Forms::DataGridView^  dgAffinityMatrix4;
 		private: System::Boolean setAffinityMatrixData(DataGridView^ dgAffinity, int k);
 		private: System::Void bCancel_Click(System::Object^  sender, System::EventArgs^  e);
 		private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
+		private: System::Void copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+		private: System::Void pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

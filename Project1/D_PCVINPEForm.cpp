@@ -295,3 +295,11 @@ System::Windows::Forms::DataGridViewCell^ LuccME::D_PCVINPEForm::GetStartCell(Sy
 
 	return dgView[colIndex, rowIndex];
 }
+
+System::Void LuccME::D_PCVINPEForm::copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard();
+}
+
+System::Void LuccME::D_PCVINPEForm::pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue();
+}

@@ -540,6 +540,9 @@ System::Void LuccME::P_SpatialLagLinearRoads::bSalvar_Click(System::Object ^ sen
 	}
 }
 
+/*
+Locate the initial cell for copying or pasting
+*/
 System::Windows::Forms::DataGridViewCell ^ LuccME::P_SpatialLagLinearRoads::GetStartCell(System::Windows::Forms::DataGridView ^ dgView)
 {
 	//get the smallest row,column index
@@ -560,6 +563,9 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_SpatialLagLinearRoads::GetS
 	return dgView[colIndex, rowIndex];
 }
 
+/*
+Capture the keys press
+*/
 System::Void LuccME::P_SpatialLagLinearRoads::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
 	switch (e->KeyCode)
@@ -582,6 +588,9 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgBetas_KeyDown(System::Object ^ s
 	}
 }
 
+/*
+Capture the keys press
+*/
 System::Void LuccME::P_SpatialLagLinearRoads::dgAttr_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
 	switch (e->KeyCode)
@@ -604,6 +613,9 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgAttr_KeyDown(System::Object ^ se
 	}
 }
 
+/*
+Capture the keys press
+*/
 System::Void LuccME::P_SpatialLagLinearRoads::dgBetasRM_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
 	switch (e->KeyCode)

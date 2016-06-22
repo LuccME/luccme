@@ -3206,7 +3206,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin\\");
+	Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin");
+	Environment::SetEnvironmentVariable("PATH", "C:\\Luccme\\Terrame\\bin");
 
 	String^ arguments = "";
 

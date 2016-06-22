@@ -50,24 +50,20 @@ namespace LuccME {
 				delete components;
 			}
 		}
+
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous;
+	private: System::Windows::Forms::ToolStripMenuItem^  copyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteToolStripMenuItem;
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::Label^  lPCVINPE;
-
 	private: System::Windows::Forms::DataGridView^  dgDemand;
 	private: System::Windows::Forms::Button^  bSalvar;
-
-
-
-
-
-
-	protected:
-
+	private: System::ComponentModel::IContainer^  components;
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -76,13 +72,18 @@ namespace LuccME {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(D_PCVINPEForm::typeid));
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->lPCVINPE = (gcnew System::Windows::Forms::Label());
 			this->dgDemand = (gcnew System::Windows::Forms::DataGridView());
 			this->bSalvar = (gcnew System::Windows::Forms::Button());
+			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgDemand))->BeginInit();
+			this->cMSP_continuous->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pbLogo1
@@ -114,6 +115,7 @@ namespace LuccME {
 			this->dgDemand->AllowUserToResizeColumns = false;
 			this->dgDemand->AllowUserToResizeRows = false;
 			this->dgDemand->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgDemand->ContextMenuStrip = this->cMSP_continuous;
 			this->dgDemand->Location = System::Drawing::Point(63, 210);
 			this->dgDemand->Name = L"dgDemand";
 			this->dgDemand->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -132,6 +134,27 @@ namespace LuccME {
 			this->bSalvar->UseVisualStyleBackColor = true;
 			this->bSalvar->Click += gcnew System::EventHandler(this, &D_PCVINPEForm::bSalvar_Click);
 			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
+			// 
 			// D_PCVINPEForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
@@ -149,6 +172,7 @@ namespace LuccME {
 			this->Shown += gcnew System::EventHandler(this, &D_PCVINPEForm::D_PCVINPEForm_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgDemand))->EndInit();
+			this->cMSP_continuous->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -162,5 +186,7 @@ namespace LuccME {
 	private: System::Void CopyToClipboard();
 	private: System::Void PasteClipboardValue();
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(DataGridView^ dgView);
+	private: System::Void copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

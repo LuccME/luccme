@@ -1181,3 +1181,79 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::bSalvar_Click(System::O
 		MessageBox::Show(gSEmptyComponent, gSEmptyComponentTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
+
+System::Void LuccME::P_AttractRepulseLogisticRegression::copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	switch (tcRegions->SelectedIndex)
+	{
+	case 0:
+		CopyToClipboard(dgBetas);
+		break;
+	case 1:
+		CopyToClipboard(dgBetas2);
+		break;
+	case 2:
+		CopyToClipboard(dgBetas3);
+		break;
+	case 3:
+		CopyToClipboard(dgBetas4);
+		break;
+	case 4:
+		CopyToClipboard(dgBetas5);
+		break;
+	case 5:
+		CopyToClipboard(dgBetas6);
+		break;
+	case 6:
+		CopyToClipboard(dgBetas7);
+		break;
+	case 7:
+		CopyToClipboard(dgBetas8);
+		break;
+	case 8:
+		CopyToClipboard(dgBetas9);
+		break;
+	case 9:
+		CopyToClipboard(dgBetas10);
+		break;
+	default:
+		break;
+	}
+}
+
+System::Void LuccME::P_AttractRepulseLogisticRegression::pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	switch (tcRegions->SelectedIndex)
+	{
+	case 0:
+		PasteClipboardValue(dgBetas);
+		break;
+	case 1:
+		PasteClipboardValue(dgBetas2);
+		break;
+	case 2:
+		PasteClipboardValue(dgBetas3);
+		break;
+	case 3:
+		PasteClipboardValue(dgBetas4);
+		break;
+	case 4:
+		PasteClipboardValue(dgBetas5);
+		break;
+	case 5:
+		PasteClipboardValue(dgBetas6);
+		break;
+	case 6:
+		PasteClipboardValue(dgBetas7);
+		break;
+	case 7:
+		PasteClipboardValue(dgBetas8);
+		break;
+	case 8:
+		PasteClipboardValue(dgBetas9);
+		break;
+	case 9:
+		PasteClipboardValue(dgBetas10);
+		break;
+	default:
+		break;
+	}
+}

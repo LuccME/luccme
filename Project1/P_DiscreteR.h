@@ -45,6 +45,10 @@ namespace LuccME {
 				delete components;
 			}
 		}
+
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous;
+	private: System::Windows::Forms::ToolStripMenuItem^  copyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteToolStripMenuItem;
 	private: System::Windows::Forms::Button^  bCancel;
 	private: System::Windows::Forms::TextBox^  tLUT;
 	private: System::Windows::Forms::Button^  bAddBetas;
@@ -143,12 +147,13 @@ namespace LuccME {
 	private: System::Windows::Forms::TextBox^  tPercNeighborsUse8;
 	private: System::Windows::Forms::TextBox^  tPercNeighborsUse9;
 	private: System::Windows::Forms::TextBox^  tPercNeighborsUse10;
+private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -157,6 +162,7 @@ namespace LuccME {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(P_DiscreteR::typeid));
 			this->bCancel = (gcnew System::Windows::Forms::Button());
 			this->tLUT = (gcnew System::Windows::Forms::TextBox());
@@ -256,6 +262,9 @@ namespace LuccME {
 			this->lBetas10 = (gcnew System::Windows::Forms::Label());
 			this->tConst10 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst10 = (gcnew System::Windows::Forms::Label());
+			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->tcRegions->SuspendLayout();
 			this->tRegion1->SuspendLayout();
@@ -278,6 +287,7 @@ namespace LuccME {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas9))->BeginInit();
 			this->tRegion10->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas10))->BeginInit();
+			this->cMSP_continuous->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// bCancel
@@ -447,6 +457,7 @@ namespace LuccME {
 			this->dgBetas->AllowUserToResizeColumns = false;
 			this->dgBetas->AllowUserToResizeRows = false;
 			this->dgBetas->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas->Location = System::Drawing::Point(23, 70);
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -567,6 +578,7 @@ namespace LuccME {
 			this->dgBetas2->AllowUserToResizeColumns = false;
 			this->dgBetas2->AllowUserToResizeRows = false;
 			this->dgBetas2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas2->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas2->Location = System::Drawing::Point(23, 70);
 			this->dgBetas2->Name = L"dgBetas2";
 			this->dgBetas2->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -686,6 +698,7 @@ namespace LuccME {
 			this->dgBetas3->AllowUserToResizeColumns = false;
 			this->dgBetas3->AllowUserToResizeRows = false;
 			this->dgBetas3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas3->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas3->Location = System::Drawing::Point(23, 70);
 			this->dgBetas3->Name = L"dgBetas3";
 			this->dgBetas3->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -805,6 +818,7 @@ namespace LuccME {
 			this->dgBetas4->AllowUserToResizeColumns = false;
 			this->dgBetas4->AllowUserToResizeRows = false;
 			this->dgBetas4->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas4->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas4->Location = System::Drawing::Point(23, 70);
 			this->dgBetas4->Name = L"dgBetas4";
 			this->dgBetas4->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -924,6 +938,7 @@ namespace LuccME {
 			this->dgBetas5->AllowUserToResizeColumns = false;
 			this->dgBetas5->AllowUserToResizeRows = false;
 			this->dgBetas5->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas5->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas5->Location = System::Drawing::Point(23, 70);
 			this->dgBetas5->Name = L"dgBetas5";
 			this->dgBetas5->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1043,6 +1058,7 @@ namespace LuccME {
 			this->dgBetas6->AllowUserToResizeColumns = false;
 			this->dgBetas6->AllowUserToResizeRows = false;
 			this->dgBetas6->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas6->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas6->Location = System::Drawing::Point(23, 70);
 			this->dgBetas6->Name = L"dgBetas6";
 			this->dgBetas6->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1162,6 +1178,7 @@ namespace LuccME {
 			this->dgBetas7->AllowUserToResizeColumns = false;
 			this->dgBetas7->AllowUserToResizeRows = false;
 			this->dgBetas7->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas7->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas7->Location = System::Drawing::Point(23, 70);
 			this->dgBetas7->Name = L"dgBetas7";
 			this->dgBetas7->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1281,6 +1298,7 @@ namespace LuccME {
 			this->dgBetas8->AllowUserToResizeColumns = false;
 			this->dgBetas8->AllowUserToResizeRows = false;
 			this->dgBetas8->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas8->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas8->Location = System::Drawing::Point(23, 70);
 			this->dgBetas8->Name = L"dgBetas8";
 			this->dgBetas8->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1400,6 +1418,7 @@ namespace LuccME {
 			this->dgBetas9->AllowUserToResizeColumns = false;
 			this->dgBetas9->AllowUserToResizeRows = false;
 			this->dgBetas9->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas9->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas9->Location = System::Drawing::Point(23, 70);
 			this->dgBetas9->Name = L"dgBetas9";
 			this->dgBetas9->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1519,6 +1538,7 @@ namespace LuccME {
 			this->dgBetas10->AllowUserToResizeColumns = false;
 			this->dgBetas10->AllowUserToResizeRows = false;
 			this->dgBetas10->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas10->ContextMenuStrip = this->cMSP_continuous;
 			this->dgBetas10->Location = System::Drawing::Point(23, 70);
 			this->dgBetas10->Name = L"dgBetas10";
 			this->dgBetas10->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -1563,6 +1583,27 @@ namespace LuccME {
 			this->lConst10->Text = L"Const";
 			this->lConst10->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lConst10->Visible = false;
+			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
 			// 
 			// P_DiscreteR
 			// 
@@ -1613,6 +1654,7 @@ namespace LuccME {
 			this->tRegion10->ResumeLayout(false);
 			this->tRegion10->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas10))->EndInit();
+			this->cMSP_continuous->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -1638,5 +1680,7 @@ namespace LuccME {
 	private: System::Void bCancel_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bAddBetas_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bSalvar_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

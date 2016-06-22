@@ -34,7 +34,7 @@ function AllocationBySimpleOrdering(component)
  			dem[lu] = -1
  		end
   		
-		print("\nTime : ", event:getTime())
+		print("\nTime: "..event:getTime())
 
 		if (useLog == true) then
 			print("-------------------------------------------------------------------------------")

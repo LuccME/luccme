@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "P_SpatialLagLinearRoads.h"
 
+using namespace System::Windows::Forms;
+
 System::Void LuccME::P_SpatialLagLinearRoads::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	System::Windows::Forms::TextBox^ thisTextBox = safe_cast<System::Windows::Forms::TextBox^>(sender);
@@ -564,27 +566,166 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::P_SpatialLagLinearRoads::GetS
 }
 
 /*
+Copy the clipboard data
+*/
+System::Void LuccME::P_SpatialLagLinearRoads::CopyToClipboardAttr()
+{
+	DataObject^ dataObj = dgAttr->GetClipboardContent();
+	if (dataObj != nullptr) {
+		Clipboard::SetDataObject(dataObj);
+	}
+}
+
+
+/*
+Paste the clipboard data
+*/
+System::Void LuccME::P_SpatialLagLinearRoads::PasteClipboardValueAttr()
+{
+	//Show Error if no cell is selected
+	if (dgAttr->SelectedCells->Count == NONE)
+	{
+		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
+	}
+
+	//Get the satring Cell
+	DataGridViewCell^ startCell = GetStartCell(dgAttr);
+
+	//Get the clipboard value in a dictionary
+	String^ aux = Clipboard::GetText();
+
+	if (aux != "") {
+		array<String^>^ lines = aux->Split('\n');
+
+		if (dgAttr->RowCount < lines->Length - 1) {
+			while (dgAttr->RowCount < lines->Length) {
+				dgAttr->Rows->Add();
+			}
+		}
+
+
+		for (int i = 0; i < lines->Length - 1; i++) {
+			dgAttr->Rows[i]->Cells[0]->Value = lines[i];
+		}
+	}
+}
+
+/*
+Copy the clipboard data
+*/
+System::Void LuccME::P_SpatialLagLinearRoads::CopyToClipboard(DataGridView^ dgView)
+{
+	DataObject^ dataObj = dgView->GetClipboardContent();
+	if (dataObj != nullptr) {
+		Clipboard::SetDataObject(dataObj);
+	}
+}
+
+
+/*
+Paste the clipboard data
+*/
+System::Void LuccME::P_SpatialLagLinearRoads::PasteClipboardValue(DataGridView^ dgView)
+{
+	//Show Error if no cell is selected
+	if (dgView->SelectedCells->Count == NONE)
+	{
+		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
+	}
+
+	//Get the satring Cell
+	DataGridViewCell^ startCell = GetStartCell(dgView);
+
+	//Get the clipboard value in a dictionary
+	String^ aux = Clipboard::GetText();
+
+	if (aux != "") {
+		array<String^>^ lines = aux->Split('\n');
+		array<String^>^ tempColumns = lines[0]->Split('\t');
+		array<String^>^ content = gcnew array<String^>((lines->Length - 1) * (tempColumns->Length));
+
+		int count = 0;
+		for (int i = 0; i < lines->Length - 1; i++) {
+			array<String^>^ temp = lines[i]->Split('\t');
+			for (int j = 0; j < temp->Length; j++) {
+				content[count] = temp[j];
+				count++;
+			}
+		}
+
+		int row = startCell->RowIndex;
+		int column = startCell->ColumnIndex;
+		int columnNumber = tempColumns->Length - 1;
+
+		if (tempColumns->Length == 2) {
+			if ((content->Length / dgView->ColumnCount) > dgView->RowCount) {
+				dgView->RowCount = content->Length / dgView->ColumnCount + 1;
+			}
+		}
+		else {
+			if (content->Length > dgView->RowCount) {
+				dgView->RowCount = content->Length + 1;
+			}
+		}
+
+		for (int i = 0; i < content->Length; i++) {
+			dgView->Rows[row]->Cells[column]->Value = content[i];
+			column++;
+			if (column > columnNumber) {
+				row++;
+				column = startCell->ColumnIndex;
+			}
+		}
+	}
+}
+
+/*
 Capture the keys press
 */
 System::Void LuccME::P_SpatialLagLinearRoads::dgBetas_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
-	switch (e->KeyCode)
+	DataGridView^ dgView = (DataGridView^)sender;
+	try
 	{
-	case Keys::Delete:
-		if (dgBetas->SelectedCells->Count != NONE)
+		if (e->Modifiers == Keys::Control)
 		{
-			DataGridViewCell^ startCell = GetStartCell(dgBetas);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgBetas->RowCount; i++) {
-				for (int j = column; j < dgBetas->ColumnCount; j++) {
-					if (dgBetas->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgBetas->Rows[i]->Cells[j]->Value = "";
-					}
-				}
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboard(dgView);
+				break;
+
+			case Keys::V:
+				PasteClipboardValue(dgView);
+				break;
 			}
 		}
-		break;
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgView->SelectedCells->Count != NONE)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgView);
+					int row = startCell->RowIndex;
+					int column = startCell->ColumnIndex;
+					for (int i = row; i < dgView->RowCount; i++) {
+						for (int j = column; j < dgView->ColumnCount; j++) {
+							if (dgView->Rows[i]->Cells[j]->Selected == true) {
+								dgView->Rows[i]->Cells[j]->Value = "";
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -593,47 +734,66 @@ Capture the keys press
 */
 System::Void LuccME::P_SpatialLagLinearRoads::dgAttr_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
 {
-	switch (e->KeyCode)
+	DataGridView^ dgAttr = (DataGridView^)sender;
+	try
 	{
-	case Keys::Delete:
-		if (dgAttr->SelectedCells->Count != NONE)
+		if (e->Modifiers == Keys::Control)
 		{
-			DataGridViewCell^ startCell = GetStartCell(dgAttr);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgAttr->RowCount; i++) {
-				for (int j = column; j < dgAttr->ColumnCount; j++) {
-					if (dgAttr->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgAttr->Rows[i]->Cells[j]->Value = "";
+			switch (e->KeyCode)
+			{
+			case Keys::C:
+				CopyToClipboardAttr();
+				break;
+
+			case Keys::V:
+				PasteClipboardValueAttr();
+				break;
+			}
+		}
+		else {
+			switch (e->KeyCode)
+			{
+			case Keys::Delete:
+				if (dgAttr->SelectedCells->Count != NONE)
+				{
+					DataGridViewCell^ startCell = GetStartCell(dgAttr);
+					int row = startCell->RowIndex;
+
+					for (int i = row; i < dgAttr->RowCount; i++) {
+						if (dgAttr->Rows[i]->Cells[0]->Selected) {
+							dgAttr->Rows[i]->Cells[0]->Value = "";
+						}
 					}
 				}
 			}
 		}
-		break;
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
-/*
-Capture the keys press
-*/
-System::Void LuccME::P_SpatialLagLinearRoads::dgBetasRM_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
-{
-	switch (e->KeyCode)
-	{
-	case Keys::Delete:
-		if (dgBetasRM->SelectedCells->Count != NONE)
-		{
-			DataGridViewCell^ startCell = GetStartCell(dgBetasRM);
-			int row = startCell->RowIndex;
-			int column = startCell->ColumnIndex;
-			for (int i = row; i < dgBetasRM->RowCount; i++) {
-				for (int j = column; j < dgBetasRM->ColumnCount; j++) {
-					if (dgBetasRM->Rows[i]->Cells[j]->Selected == true && j != 0) {
-						dgBetasRM->Rows[i]->Cells[j]->Value = "";
-					}
-				}
-			}
-		}
-		break;
-	}
+System::Void LuccME::P_SpatialLagLinearRoads::copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboardAttr();
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValueAttr();
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::toolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgBetas);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::toolStripMenuItem2_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgBetas);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::toolStrip2MenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+	CopyToClipboard(dgBetasRM);
+}
+
+System::Void LuccME::P_SpatialLagLinearRoads::toolStrip2MenuItem2_Click(System::Object^  sender, System::EventArgs^  e) {
+	PasteClipboardValue(dgBetasRM);
 }

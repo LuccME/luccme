@@ -47,8 +47,17 @@ namespace LuccME {
 				delete components;
 			}
 		}
+
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous2;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem1;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem2;
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous;
+	private: System::Windows::Forms::ToolStripMenuItem^  copyToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pasteToolStripMenuItem;
+	private: System::Windows::Forms::ContextMenuStrip^  cMSP_continuous3;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem3;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem4;
 	private: System::Windows::Forms::TextBox^  tMinReg;
-	protected:
 	private: System::Windows::Forms::TextBox^  tMaxReg;
 	private: System::Windows::Forms::CheckBox^  cIsLog;
 	private: System::Windows::Forms::TextBox^  tRo;
@@ -74,12 +83,13 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lChangeRM;
 	private: System::Windows::Forms::Label^  lAttributesRM;
 	private: System::Windows::Forms::DataGridView^  dgAttr;
+	private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -88,6 +98,7 @@ namespace LuccME {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(P_SpatialLagLinearRoads::typeid));
 			this->tMinReg = (gcnew System::Windows::Forms::TextBox());
 			this->tMaxReg = (gcnew System::Windows::Forms::TextBox());
@@ -115,10 +126,22 @@ namespace LuccME {
 			this->lChangeRM = (gcnew System::Windows::Forms::Label());
 			this->lAttributesRM = (gcnew System::Windows::Forms::Label());
 			this->dgAttr = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_continuous2 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->toolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->cMSP_continuous3 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->toolStripMenuItem3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetasRM))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->BeginInit();
+			this->cMSP_continuous2->SuspendLayout();
+			this->cMSP_continuous->SuspendLayout();
+			this->cMSP_continuous3->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tMinReg
@@ -221,6 +244,7 @@ namespace LuccME {
 			this->dgBetas->AllowUserToResizeColumns = false;
 			this->dgBetas->AllowUserToResizeRows = false;
 			this->dgBetas->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetas->ContextMenuStrip = this->cMSP_continuous2;
 			this->dgBetas->Location = System::Drawing::Point(226, 359);
 			this->dgBetas->Name = L"dgBetas";
 			this->dgBetas->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -339,13 +363,14 @@ namespace LuccME {
 			this->dgBetasRM->AllowUserToResizeColumns = false;
 			this->dgBetasRM->AllowUserToResizeRows = false;
 			this->dgBetasRM->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgBetasRM->ContextMenuStrip = this->cMSP_continuous3;
 			this->dgBetasRM->Location = System::Drawing::Point(567, 386);
 			this->dgBetasRM->Name = L"dgBetasRM";
 			this->dgBetasRM->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dgBetasRM->Size = System::Drawing::Size(245, 122);
 			this->dgBetasRM->TabIndex = 13;
 			this->dgBetasRM->Visible = false;
-			this->dgBetasRM->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgBetasRM_KeyDown);
+			this->dgBetasRM->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgBetas_KeyDown);
 			// 
 			// lBetasRM
 			// 
@@ -428,6 +453,7 @@ namespace LuccME {
 			this->dgAttr->AllowUserToResizeColumns = false;
 			this->dgAttr->AllowUserToResizeRows = false;
 			this->dgAttr->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgAttr->ContextMenuStrip = this->cMSP_continuous;
 			this->dgAttr->Location = System::Drawing::Point(568, 182);
 			this->dgAttr->Name = L"dgAttr";
 			this->dgAttr->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
@@ -435,6 +461,75 @@ namespace LuccME {
 			this->dgAttr->TabIndex = 10;
 			this->dgAttr->Visible = false;
 			this->dgAttr->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgAttr_KeyDown);
+			// 
+			// cMSP_continuous2
+			// 
+			this->cMSP_continuous2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->toolStripMenuItem1,
+					this->toolStripMenuItem2
+			});
+			this->cMSP_continuous2->Name = L"contextMenuStrip1";
+			this->cMSP_continuous2->Size = System::Drawing::Size(103, 48);
+			// 
+			// toolStripMenuItem1
+			// 
+			this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
+			this->toolStripMenuItem1->Size = System::Drawing::Size(102, 22);
+			this->toolStripMenuItem1->Text = L"Copy";
+			this->toolStripMenuItem1->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStripMenuItem1_Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this->toolStripMenuItem2->Name = L"toolStripMenuItem2";
+			this->toolStripMenuItem2->Size = System::Drawing::Size(102, 22);
+			this->toolStripMenuItem2->Text = L"Paste";
+			this->toolStripMenuItem2->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStripMenuItem2_Click);
+			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
+			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::pasteToolStripMenuItem_Click);
+			// 
+			// cMSP_continuous3
+			// 
+			this->cMSP_continuous3->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->toolStripMenuItem3,
+					this->toolStripMenuItem4
+			});
+			this->cMSP_continuous3->Name = L"contextMenuStrip1";
+			this->cMSP_continuous3->Size = System::Drawing::Size(153, 70);
+			// 
+			// toolStripMenuItem3
+			// 
+			this->toolStripMenuItem3->Name = L"toolStripMenuItem3";
+			this->toolStripMenuItem3->Size = System::Drawing::Size(152, 22);
+			this->toolStripMenuItem3->Text = L"Copy";
+			this->toolStripMenuItem3->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStrip2MenuItem1_Click);
+			// 
+			// toolStripMenuItem4
+			// 
+			this->toolStripMenuItem4->Name = L"toolStripMenuItem4";
+			this->toolStripMenuItem4->Size = System::Drawing::Size(152, 22);
+			this->toolStripMenuItem4->Text = L"Paste";
+			this->toolStripMenuItem4->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStrip2MenuItem2_Click);
 			// 
 			// P_SpatialLagLinearRoads
 			// 
@@ -476,6 +571,9 @@ namespace LuccME {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetasRM))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->EndInit();
+			this->cMSP_continuous2->ResumeLayout(false);
+			this->cMSP_continuous->ResumeLayout(false);
+			this->cMSP_continuous3->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -491,6 +589,15 @@ namespace LuccME {
 	private: System::Windows::Forms::DataGridViewCell^ GetStartCell(System::Windows::Forms::DataGridView^ dgView);
 	private: System::Void dgBetas_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 	private: System::Void dgAttr_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
-	private: System::Void dgBetasRM_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
+	private: System::Void CopyToClipboardAttr();
+	private: System::Void PasteClipboardValueAttr();
+	private: System::Void CopyToClipboard(DataGridView^ dgView);
+	private: System::Void PasteClipboardValue(DataGridView^ dgView);
+	private: System::Void copyToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pasteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void toolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void toolStripMenuItem2_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void toolStrip2MenuItem1_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void toolStrip2MenuItem2_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

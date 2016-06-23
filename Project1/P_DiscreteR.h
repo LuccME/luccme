@@ -178,6 +178,9 @@ private: System::ComponentModel::IContainer^  components;
 			this->tElasticy = (gcnew System::Windows::Forms::TextBox());
 			this->lElasticy = (gcnew System::Windows::Forms::Label());
 			this->dgBetas = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tConst = (gcnew System::Windows::Forms::TextBox());
 			this->lConst = (gcnew System::Windows::Forms::Label());
 			this->lBetas = (gcnew System::Windows::Forms::Label());
@@ -262,13 +265,11 @@ private: System::ComponentModel::IContainer^  components;
 			this->lBetas10 = (gcnew System::Windows::Forms::Label());
 			this->tConst10 = (gcnew System::Windows::Forms::TextBox());
 			this->lConst10 = (gcnew System::Windows::Forms::Label());
-			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
-			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->tcRegions->SuspendLayout();
 			this->tRegion1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->BeginInit();
+			this->cMSP_continuous->SuspendLayout();
 			this->tRegion2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas2))->BeginInit();
 			this->tRegion3->SuspendLayout();
@@ -287,7 +288,6 @@ private: System::ComponentModel::IContainer^  components;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas9))->BeginInit();
 			this->tRegion10->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas10))->BeginInit();
-			this->cMSP_continuous->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// bCancel
@@ -464,6 +464,28 @@ private: System::ComponentModel::IContainer^  components;
 			this->dgBetas->Size = System::Drawing::Size(245, 286);
 			this->dgBetas->TabIndex = 87;
 			this->dgBetas->Visible = false;
+			this->dgBetas->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_DiscreteR::dgBetas_KeyDown);
+			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
 			// 
 			// tConst
 			// 
@@ -1584,27 +1606,6 @@ private: System::ComponentModel::IContainer^  components;
 			this->lConst10->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lConst10->Visible = false;
 			// 
-			// cMSP_continuous
-			// 
-			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->copyToolStripMenuItem,
-					this->pasteToolStripMenuItem
-			});
-			this->cMSP_continuous->Name = L"contextMenuStrip1";
-			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
-			// 
-			// copyToolStripMenuItem
-			// 
-			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
-			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
-			this->copyToolStripMenuItem->Text = L"Copy";
-			// 
-			// pasteToolStripMenuItem
-			// 
-			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
-			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
-			this->pasteToolStripMenuItem->Text = L"Paste";
-			// 
 			// P_DiscreteR
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -1627,6 +1628,7 @@ private: System::ComponentModel::IContainer^  components;
 			this->tRegion1->ResumeLayout(false);
 			this->tRegion1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();
+			this->cMSP_continuous->ResumeLayout(false);
 			this->tRegion2->ResumeLayout(false);
 			this->tRegion2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas2))->EndInit();
@@ -1654,7 +1656,6 @@ private: System::ComponentModel::IContainer^  components;
 			this->tRegion10->ResumeLayout(false);
 			this->tRegion10->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas10))->EndInit();
-			this->cMSP_continuous->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

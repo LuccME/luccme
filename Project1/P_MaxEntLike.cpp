@@ -199,16 +199,13 @@ System::Void LuccME::P_MaxEntLike::dgAttr_KeyDown(System::Object ^ sender, Syste
 				{
 					DataGridViewCell^ startCell = GetStartCell(dgAttr);
 					int row = startCell->RowIndex;
-					int column = startCell->ColumnIndex;
+					
 					for (int i = row; i < dgAttr->RowCount; i++) {
-						for (int j = column; j < dgAttr->ColumnCount; j++) {
-							if (dgAttr->Rows[i]->Cells[j]->Selected == true && j != 0) {
-								dgAttr->Rows[i]->Cells[j]->Value = "";
-							}
+						if (dgAttr->Rows[i]->Cells[0]->Selected) {
+							dgAttr->Rows[i]->Cells[0]->Value = "";
 						}
 					}
 				}
-				break;
 			}
 		}
 	}

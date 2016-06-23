@@ -6130,7 +6130,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 						String^ saturationIndicator = "";
 						String^ attrProtection = "";
-						if (gAllocationComponent == 4) {
+						if (gAllocationComponent == ALLOCATIONCLUELIKESATURATION) {
 							while (gAllocation[j] != ';') {
 								saturationIndicator += gAllocation[j];
 								j++;

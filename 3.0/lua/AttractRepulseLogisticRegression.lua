@@ -285,7 +285,7 @@ function AttractRepulseLogisticRegression(component)
 	-- component.probability(regrLogit)
 	component.probability = function(z)
 		local euler  = 2.718281828459045235360287
-		local zEuler = math.pow(euler, z)
+		local zEuler = euler ^ z
 		local prob = zEuler / (1 + zEuler)
 
 		return prob

@@ -278,7 +278,7 @@ function LinearRegression(component)
 				end
 					
 				if (luData.isLog) then -- if the land use is log transformed
-					regression = math.pow(10, regression)
+					regression = 10 ^ regression
 				end 
 				
 				if (regression > 1) then

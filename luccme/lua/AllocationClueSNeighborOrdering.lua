@@ -119,7 +119,7 @@ function AllocationClueSNeighborOrdering (component)
 			if (nIter == 0) then
 				print("\n")
 			end
-			print ("\nYear : "..event:getTime().." Iteration -> "..nIter)
+			print ("\nYear: "..event:getTime().." Iteration -> "..nIter)
 		end	
 
 		for k, cell in pairs (cs.cells) do

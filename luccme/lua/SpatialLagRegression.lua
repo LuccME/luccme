@@ -227,7 +227,7 @@ function SpatialLagRegression(component)
 	  end	
 		
 		if( luData.isLog ) then 
-				local const_unlog = math.pow (10, luData.newconst) + self.constChange * direction
+				local const_unlog = (10 ^ luData.newconst) + self.constChange * direction
 				if (const_unlog ~= 0) then 
 				  luData.newconst = math.log (10, const_unlog) 
 			  end	
@@ -252,7 +252,7 @@ function SpatialLagRegression(component)
 			luData.newconst = luData.const
 			
 			if (luData.isLog) then
-				local const_unlog = math.pow (10, luData.newconst) + plus 
+				local const_unlog = (10 ^ luData.newconst) + plus 
 				if (const_unlog ~= 0) then 
 				  luData.newconst = math.log (10, const_unlog) 
 			  end
@@ -361,8 +361,8 @@ function SpatialLagRegression(component)
   			local regressionLimit = luData.const+ regressionX + regresY   		
   
   			if (luData.isLog) then -- if the land use is log transformed
-  				regression = math.pow(10, (regression)) - 0.0001
-  				regressionLimit = math.pow(10, (regressionLimit)) - 0.0001
+  				regression = (10 ^ regression) - 0.0001
+  				regressionLimit = (10 ^ regressionLimit) - 0.0001
   			end 
   
   			local oldReg = regressionLimit

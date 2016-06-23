@@ -473,19 +473,21 @@ private: System::ComponentModel::IContainer^  components;
 					this->pasteToolStripMenuItem
 			});
 			this->cMSP_continuous->Name = L"contextMenuStrip1";
-			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
+			this->cMSP_continuous->Size = System::Drawing::Size(153, 70);
 			// 
 			// copyToolStripMenuItem
 			// 
 			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
-			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->copyToolStripMenuItem->Text = L"Copy";
+			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_DiscreteR::copyToolStripMenuItem_Click);
 			// 
 			// pasteToolStripMenuItem
 			// 
 			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
-			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->pasteToolStripMenuItem->Text = L"Paste";
+			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_DiscreteR::pasteToolStripMenuItem_Click);
 			// 
 			// tConst
 			// 

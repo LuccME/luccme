@@ -77,10 +77,10 @@ namespace LuccME {
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->lPCVINPE = (gcnew System::Windows::Forms::Label());
 			this->dgDemand = (gcnew System::Windows::Forms::DataGridView());
-			this->bSalvar = (gcnew System::Windows::Forms::Button());
 			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->bSalvar = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgDemand))->BeginInit();
 			this->cMSP_continuous->SuspendLayout();
@@ -124,6 +124,29 @@ namespace LuccME {
 			this->dgDemand->CellValueChanged += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &D_PCVINPEForm::dgDemand_CellValueChanged);
 			this->dgDemand->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &D_PCVINPEForm::dgDemand_KeyDown);
 			// 
+			// cMSP_continuous
+			// 
+			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->copyToolStripMenuItem,
+					this->pasteToolStripMenuItem
+			});
+			this->cMSP_continuous->Name = L"contextMenuStrip1";
+			this->cMSP_continuous->Size = System::Drawing::Size(153, 70);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->copyToolStripMenuItem->Text = L"Copy";
+			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &D_PCVINPEForm::copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->pasteToolStripMenuItem->Text = L"Paste";
+			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &D_PCVINPEForm::pasteToolStripMenuItem_Click);
+			// 
 			// bSalvar
 			// 
 			this->bSalvar->Location = System::Drawing::Point(229, 572);
@@ -133,27 +156,6 @@ namespace LuccME {
 			this->bSalvar->Text = L"Salvar";
 			this->bSalvar->UseVisualStyleBackColor = true;
 			this->bSalvar->Click += gcnew System::EventHandler(this, &D_PCVINPEForm::bSalvar_Click);
-			// 
-			// cMSP_continuous
-			// 
-			this->cMSP_continuous->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->copyToolStripMenuItem,
-					this->pasteToolStripMenuItem
-			});
-			this->cMSP_continuous->Name = L"contextMenuStrip1";
-			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
-			// 
-			// copyToolStripMenuItem
-			// 
-			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
-			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
-			this->copyToolStripMenuItem->Text = L"Copy";
-			// 
-			// pasteToolStripMenuItem
-			// 
-			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
-			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
-			this->pasteToolStripMenuItem->Text = L"Paste";
 			// 
 			// D_PCVINPEForm
 			// 

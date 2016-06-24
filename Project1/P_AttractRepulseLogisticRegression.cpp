@@ -494,7 +494,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::dgBetas_KeyDown(System:
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -518,7 +518,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::PasteClipboardValue(Dat
 	//Show Error if no cell is selected
 	if (dgView->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPasteTitle, gSPaste, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -587,6 +587,13 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		lLegend->Text = "      0      - Indifferent, does not influence the land uses affinity.\n"
 						"-0.1 a -1 - Repels, negative values one land use repels the other.\n"
 						" 0.1 a  1 - Attracts, positive values one land use attracts the other. ";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
+		gSCopyPasteTitle = "Copy/Paste";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
 	}
 	else {
 		this->Text = "Pontencial - Attract Repulse Logistic Regression";
@@ -604,6 +611,10 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		lLegend->Text = "      0      - Indiferente, não influencia na afinidade dos usos.\n"
 						"-0.1 a -1 - Repele, valores negativos um uso repele o outro.\n"
 						" 0.1 a  1 - Atrai, valores positivos um uso atrai o outro. ";
+		gSCopyPasteTitle = "Copiar/Colar";
+		gSCopyPaste = "Operação de Copiar/Colar falhou. ";
+		gSPasteTitle = "Colar";
+		gSPaste = "Selecione uma célula";
 	}
 	
 	//Use the same values for al regions

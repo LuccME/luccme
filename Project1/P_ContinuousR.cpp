@@ -432,7 +432,7 @@ System::Void LuccME::P_ContinuousR::dgBetas_KeyDown(System::Object ^ sender, Sys
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -456,7 +456,7 @@ System::Void LuccME::P_ContinuousR::PasteClipboardValue(DataGridView^ dgView)
 	//Show Error if no cell is selected
 	if (dgView->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPaste, gSPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -624,6 +624,10 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 		gSAttributes = "Attributes";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
+		gSCopyPasteTitle = "Copy/Paste";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
 	}
 	else {
 		bAddBetas->Text = "Adicionar";
@@ -634,6 +638,10 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 		gSAttributes = "Atributos";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
+		gSCopyPasteTitle = "Copiar/Colar";
+		gSCopyPaste = "Operação de Copiar/Colar falhou. ";
+		gSPasteTitle = "Colar";
+		gSPaste = "Selecione uma célula";
 	}
 
 	//Remove the Regions tabs

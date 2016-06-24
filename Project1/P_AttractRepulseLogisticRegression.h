@@ -23,6 +23,10 @@ namespace LuccME {
 		String^ gSAttributes = "";
 		String^ gSCells = "";
 		String^ gSCellsTitle = "";
+		String^ gSCopyPasteTitle = "";
+		String^ gSCopyPaste = "";
+		String^ gSPasteTitle = "";
+		String^ gSPaste = "";
 		bool open = false;
 
 	public:

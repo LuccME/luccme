@@ -454,7 +454,7 @@ System::Void LuccME::P_DiscreteR::dgBetas_KeyDown(System::Object ^ sender, Syste
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -478,7 +478,7 @@ System::Void LuccME::P_DiscreteR::PasteClipboardValue(DataGridView^ dgView)
 	//Show Error if no cell is selected
 	if (dgView->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPaste, gSPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -617,6 +617,10 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		lBetas8->Text = "Factors";
 		lBetas9->Text = "Factors";
 		lBetas10->Text = "Factors";
+		gSCopyPasteTitle = "Copy/Paste";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
 	}
 	else {
 		bAddBetas->Text = "Adicionar";
@@ -637,6 +641,10 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		lBetas8->Text = "Fatores";
 		lBetas9->Text = "Fatores";
 		lBetas10->Text = "Fatores";
+		gSCopyPasteTitle = "Copiar/Colar";
+		gSCopyPaste = "Operação de Copiar/Colar falhou. ";
+		gSPasteTitle = "Colar";
+		gSPaste = "Selecione uma célula";
 	}
 
 	//Remove the Regions tabs

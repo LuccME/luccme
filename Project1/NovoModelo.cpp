@@ -225,6 +225,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSPotCont2Title = "Warning - Land Use Changes";
 		gSMainImportOld = "Main file vesrion 2.x imported with sucess.\nSelect the Submodel File.";
 		gSMainImportOldtTitle = "Main File v2.x Loaded, Select Submodel";
+		gSFileMissing = "Error writing the main File.\nCheck the path:";
+		gSFileMissing2 = "Error writing the submodel File.\nCheck the path:";
+		gSFileMissingTitle = "Make Files Error";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolution for Whole Area (ext)");
@@ -408,6 +411,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSPotCont2Title = "Aviso - Mudança dos Tipos de Uso da Terra";
 		gSMainImportOld = "Arquivo Main versão 2.x importado com sucesso.\nSelecione o Arquivo do Submodelo.";
 		gSMainImportOldtTitle = "Arquivo Main v2.x Carregado, Selecione o Submodelo";
+		gSFileMissing = "Erro na gravação do arquivo Principal.\nVerifique o caminho:";
+		gSFileMissing2 = "Erro na gravação do arquivo de Sub-Modelo.\nVerifique o caminho:";
+		gSFileMissingTitle = "Erro na geração dos Arquivos";
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolução de Toda a Área (ext)");
@@ -1836,7 +1842,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 
 			String^ saturationIndicator = "";
 			String^ attrProtection = "";
-			if (gAllocationComponent == 4) {
+			if (gAllocationComponent == ALLOCATIONCLUELIKESATURATION) {
 				while (gAllocation[j] != ';') {
 					saturationIndicator += gAllocation[j];
 					j++;
@@ -3138,12 +3144,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				}
 				else {
 					if (!mainFile) {
-						MessageBox::Show("Erro na gravação do arquivo Principal.\nVerifique o caminho:" + lSelectedFolder->Text, "Erro na geração dos Arquivos",
-							MessageBoxButtons::OK, MessageBoxIcon::Error);
+						MessageBox::Show(gSFileMissing + lSelectedFolder->Text, gSFileMissingTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 					}
 					else {
-						MessageBox::Show("Erro na gravação do arquivo Submodelos.\nVerifique o caminho:" + lSelectedFolder->Text, "Erro na geração dos Arquivos",
-							MessageBoxButtons::OK, MessageBoxIcon::Error);
+						MessageBox::Show(gSFileMissing2 + lSelectedFolder->Text, gSFileMissingTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 					}
 				}
 			}

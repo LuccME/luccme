@@ -5,23 +5,31 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 {
 	if (lReturn->Language == "en") {
 		this->Text = "Demand - Pre Computed Values INPE";
+		lPCVINPE->Text = "Annual Demand";
+		bSalvar->Text = "Save";
 		gSYear = "Years";
 		gSCells = "All the cells must be fullfilled.";
 		gSCellsTitle = "Error - Empty Cells";
-		bSalvar->Text = "Save";
 		gSDataMod = "The data was modified, but not saved.\nThe data will be lost.\nDo you want to proceed?";
 		gSExit = "Exit - Pre Computed Values INPE";
-		lPCVINPE->Text = "Annual Demand";
+		gSCopyPasteTitle = "Copy/Paste";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
 	}
 	else {
 		this->Text = "Demanda - Pre Computed Values INPE";
+		lPCVINPE->Text = "Demanda Anual";
+		bSalvar->Text = "Salvar";
 		gSYear = "Anos";
 		gSCells = "Todas as células devem ser preenchidas.";
 		gSCellsTitle = "Erro - Células Vazias";
-		bSalvar->Text = "Salvar";
 		gSDataMod = "Os dados foram modificados, mas não foram salvos.\nOs dados serão perdidos.\nDeseja continuar?";
 		gSExit = "Sair - Pre Computed Values INPE";
-		lPCVINPE->Text = "Demanda Anual";
+		gSCopyPasteTitle = "Copiar/Colar";
+		gSCopyPaste = "Operação de Copiar/Colar falhou. ";
+		gSPasteTitle = "Colar";
+		gSPaste = "Selecione uma célula";
 	}
 
 	dgDemand->ColumnCount = 1;
@@ -221,7 +229,7 @@ System::Void LuccME::D_PCVINPEForm::dgDemand_KeyDown(System::Object ^ sender, Sy
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -238,7 +246,7 @@ System::Void LuccME::D_PCVINPEForm::PasteClipboardValue()
 	//Show Error if no cell is selected
 	if (dgDemand->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPaste, gSPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 

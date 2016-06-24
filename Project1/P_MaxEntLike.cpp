@@ -56,7 +56,7 @@ System::Void LuccME::P_MaxEntLike::PasteClipboardValue(DataGridView^ dgAttr)
 	//Show Error if no cell is selected
 	if (dgAttr->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPaste, gSPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -211,7 +211,7 @@ System::Void LuccME::P_MaxEntLike::dgAttr_KeyDown(System::Object ^ sender, Syste
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -230,6 +230,10 @@ System::Void LuccME::P_MaxEntLike::P_MaxEntLike_Shown(System::Object^  sender, S
 		gSEmptyDG = "At least one attribute must be informed.";
 		gSEmptyDGTitle = "Error - Missing attributes";
 		gSLUT = "Land Use Types";
+		gSCopyPasteTitle = "Copy/Paste";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
 	}
 	else {
 		bSalvar->Text = "Salvar";
@@ -242,6 +246,10 @@ System::Void LuccME::P_MaxEntLike::P_MaxEntLike_Shown(System::Object^  sender, S
 		gSEmptyDG = "Pelo menos um atributo deve ser informado.";
 		gSEmptyDGTitle = "Error - Atributos";
 		gSLUT = "Tipos de Uso da Terra";
+		gSCopyPasteTitle = "Copiar/Colar";
+		gSCopyPaste = "Operação de Copiar/Colar falhou. ";
+		gSPasteTitle = "Colar";
+		gSPaste = "Selecione uma célula";
 	}
 
 	this->lvLUT->View = View::Details;

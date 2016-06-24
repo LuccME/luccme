@@ -115,6 +115,10 @@ namespace LuccME {
 		String^ gSPotCont2Title = "";
 		String^ gSMainImportOld = "";
 		String^ gSMainImportOldtTitle = "";
+		String^ gSFileMissing = "";
+		String^ gSFileMissing2 = "";
+		String^ gSFileMissingTitle = "";
+
 
 	public:
 		bool closing = false;

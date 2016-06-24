@@ -22,6 +22,10 @@ namespace LuccME {
 		String^ gSEmptyDG = "";
 		String^ gSEmptyDGTitle = ""; 
 		String^ gSLUT = "";
+		String^ gSCopyPasteTitle = "";
+		String^ gSCopyPaste = "";
+		String^ gSPasteTitle = "";
+		String^ gSPaste = "";
 
 	public:
 		cReturnPotential^ lReturn;

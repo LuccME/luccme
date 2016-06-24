@@ -23,6 +23,10 @@ System::Void LuccME::P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown(Syst
 		gSAttributes = "Attributes";
 		gSEmptyComponent = "The data of the component must be fulfilled.";
 		gSEmptyComponentTitle = "Component data missing";
+		gSCopyPasteTitle = "Copy/Paste";
+		gSCopyPaste = "Copy/paste operation failed. ";
+		gSPasteTitle = "Paste";
+		gSPaste = "Please select a cell";
 	}
 	else {
 		bAddData->Text = "Adicionar Dados";
@@ -33,6 +37,10 @@ System::Void LuccME::P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown(Syst
 		gSAttributes = "Atributos";
 		gSEmptyComponent = "Os dados do componente devem ser preenchidos.";
 		gSEmptyComponentTitle = "Faltando preencher os dados";
+		gSCopyPasteTitle = "Copiar/Colar";
+		gSCopyPaste = "Operação de Copiar/Colar falhou. ";
+		gSPasteTitle = "Colar";
+		gSPaste = "Selecione uma célula";
 	}
 
 	this->lvLUT->View = View::Details;
@@ -585,7 +593,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::PasteClipboardValueAttr()
 	//Show Error if no cell is selected
 	if (dgAttr->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPaste, gSPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -631,7 +639,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::PasteClipboardValue(DataGridView^ 
 	//Show Error if no cell is selected
 	if (dgView->SelectedCells->Count == NONE)
 	{
-		MessageBox::Show("Please select a cell", "Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSPaste, gSPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -725,7 +733,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgBetas_KeyDown(System::Object ^ s
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 
@@ -770,7 +778,7 @@ System::Void LuccME::P_SpatialLagLinearRoads::dgAttr_KeyDown(System::Object ^ se
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Copy/paste operation failed. " + ex->Message, "Copy/Paste", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(gSCopyPaste + ex->Message, gSCopyPasteTitle, MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 }
 

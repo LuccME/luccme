@@ -82,7 +82,7 @@ namespace LuccME {
 			// 
 			// bAllocationClueSLike
 			// 
-			this->bAllocationClueSLike->Location = System::Drawing::Point(155, 331);
+			this->bAllocationClueSLike->Location = System::Drawing::Point(155, 263);
 			this->bAllocationClueSLike->Name = L"bAllocationClueSLike";
 			this->bAllocationClueSLike->Size = System::Drawing::Size(185, 39);
 			this->bAllocationClueSLike->TabIndex = 88;
@@ -102,7 +102,7 @@ namespace LuccME {
 			// 
 			// bACSNO
 			// 
-			this->bACSNO->Location = System::Drawing::Point(155, 261);
+			this->bACSNO->Location = System::Drawing::Point(155, 335);
 			this->bACSNO->Name = L"bACSNO";
 			this->bACSNO->Size = System::Drawing::Size(185, 39);
 			this->bACSNO->TabIndex = 89;

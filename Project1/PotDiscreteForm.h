@@ -145,7 +145,7 @@ namespace LuccME {
 			this->bMaxEntLike->Location = System::Drawing::Point(251, 407);
 			this->bMaxEntLike->Name = L"bMaxEntLike";
 			this->bMaxEntLike->Size = System::Drawing::Size(185, 39);
-			this->bMaxEntLike->TabIndex = 95;
+			this->bMaxEntLike->TabIndex = 91;
 			this->bMaxEntLike->Text = L"MaxEnt Like";
 			this->bMaxEntLike->UseVisualStyleBackColor = true;
 			this->bMaxEntLike->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bMaxEntLike_Click);
@@ -155,7 +155,7 @@ namespace LuccME {
 			this->bARLR->Location = System::Drawing::Point(251, 348);
 			this->bARLR->Name = L"bARLR";
 			this->bARLR->Size = System::Drawing::Size(185, 39);
-			this->bARLR->TabIndex = 96;
+			this->bARLR->TabIndex = 90;
 			this->bARLR->Text = L"Attract Repulse Logistic Regression";
 			this->bARLR->UseVisualStyleBackColor = true;
 			this->bARLR->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bARLR_Click);

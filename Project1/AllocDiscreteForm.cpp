@@ -33,6 +33,9 @@ System::Void LuccME::AllocDiscreteForm::bABSO_Click(System::Object ^ sender, Sys
 	if (check) {
 		lReturn->Component = ALLOCATIONBYSIMPLEORDERING;
 		A_ABSO^ allocationForm = gcnew A_ABSO(lReturn);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;
@@ -55,6 +58,9 @@ System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Objec
 	if (check) {
 		lReturn->Component = ALLOCATIONCLUESLIKE;
 		A_AllocationClueSLike^ allocationForm = gcnew A_AllocationClueSLike(lReturn);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->Text = sSAlloc + "Allocation ClueS Like";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -78,6 +84,9 @@ System::Void LuccME::AllocDiscreteForm::bACSNO_Click(System::Object^  sender, Sy
 	if (check) {
 		lReturn->Component = ALLOCATIONCLUESNEIGHBORORDERING;
 		A_AllocationClueSLike^ allocationForm = gcnew A_AllocationClueSLike(lReturn);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->Text = sSAlloc + "Allocation ClueS Neighbor Ordering";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {

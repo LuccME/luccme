@@ -1233,6 +1233,9 @@ System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, Syst
 	lLandUses->Language = lLanguage;
 
 	LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUses);
+	landUseTypeForm->MinimizeBox = false;
+	landUseTypeForm->MaximizeBox = false;
+	landUseTypeForm->ShowInTaskbar = false;
 	landUseTypeForm->ShowDialog();
 
 	gLandUseTypes = lLandUses->Return->ToLower();
@@ -1250,6 +1253,9 @@ System::Void LuccME::NovoModelo::bLUNDManager_Click(System::Object ^ sender, Sys
 	lLandUsesNoData->Language = lLanguage;
 	
 	LuccME::LUND^ landUseTypeForm = gcnew LUND(lLandUsesNoData);
+	landUseTypeForm->MinimizeBox = false;
+	landUseTypeForm->MaximizeBox = false;
+	landUseTypeForm->ShowInTaskbar = false;
 	landUseTypeForm->ShowDialog();
 	
 	gLandUseNoData = lLandUsesNoData->Return;
@@ -1319,12 +1325,16 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 		lDemand->Language = lLanguage;
 
 		LuccME::D_PCVINPEForm^ demandForm = gcnew D_PCVINPEForm(lDemand);
+		demandForm->MinimizeBox = false;
+		demandForm->MaximizeBox = false;
+		demandForm->ShowInTaskbar = false;
 		demandForm->ShowDialog();
 
 		gDemand = lDemand->Return;
 		gDemand = gDemand->Replace("\n", "");
 		gDemand = gDemand->Replace("\r", "");
 		gDemandLUT = gLandUseTypes;
+		
 		if (gDemand != "") {
 			int count = 0;
 			
@@ -1404,10 +1414,16 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 		lDemand->FinalYear = Convert::ToInt16(tEndTime->Text);
 		lDemand->LUT = gLandUseTypes;
 		lDemand->Language = lLanguage;
+		
 		LuccME::D_CITwoDM^ demandForm = gcnew D_CITwoDM(lDemand);
+		demandForm->MinimizeBox = false;
+		demandForm->MaximizeBox = false;
+		demandForm->ShowInTaskbar = false;
 		demandForm->ShowDialog();
+		
 		gDemand = lDemand->Return;
 		gDemandLUT = gLandUseTypes;
+		
 		if (gDemand != "") {
 			array<String^>^ lines = gcnew array<String^>(4);
 			
@@ -1472,10 +1488,16 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 		lDemand->FinalYear = Convert::ToInt16(tEndTime->Text);
 		lDemand->LUT = gLandUseTypes;
 		lDemand->Language = lLanguage;
+		
 		LuccME::D_CIThreeDM^ demandForm = gcnew D_CIThreeDM(lDemand);
+		demandForm->MinimizeBox = false;
+		demandForm->MaximizeBox = false;
+		demandForm->ShowInTaskbar = false;
 		demandForm->ShowDialog();
+
 		gDemand = lDemand->Return;
 		gDemandLUT = gLandUseTypes;
+		
 		if (gDemand != "") {
 			array<String^>^ lines = gcnew array<String^>(6);
 
@@ -1525,8 +1547,13 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		lPotential->Component = gPotentialComponent;
 		lPotential->Language = lLanguage;
 		lPotential->Regression = gPotentialRegression;
+		
 		PotDiscreteForm^ potDiscreteForm = gcnew PotDiscreteForm(lPotential);
+		potDiscreteForm->MinimizeBox = false;
+		potDiscreteForm->MaximizeBox = false;
+		potDiscreteForm->ShowInTaskbar = false;
 		potDiscreteForm->ShowDialog();
+		
 		gPotential = lPotential->Return;
 		gPotential = gPotential->Replace("\n", "");
 		gPotential = gPotential->Replace("\r", "");
@@ -1618,8 +1645,13 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		lPotential->Component = gPotentialComponent;
 		lPotential->Language = lLanguage;
 		lPotential->Regression = gPotentialRegression;
+		
 		PotContinuousForm^ potContinuousForm = gcnew PotContinuousForm(lPotential);
+		potContinuousForm->MinimizeBox = false;
+		potContinuousForm->MaximizeBox = false;
+		potContinuousForm->ShowInTaskbar = false;
 		potContinuousForm->ShowDialog();
+		
 		gPotential = lPotential->Return;
 		gPotentialComponent = lPotential->Component;
 		gPotentialRegression = lPotential->Regression;
@@ -1678,6 +1710,9 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 		lAllocation->Language = lLanguage;
 
 		AllocDiscreteForm^ allocationForm = gcnew AllocDiscreteForm(lAllocation);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->ShowDialog();
 
 		gAllocation = lAllocation->Return;
@@ -1789,6 +1824,9 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 		lAllocation->Language = lLanguage;
 
 		AllocContinuousForm^ allocationForm = gcnew AllocContinuousForm(lAllocation);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->ShowDialog();
 
 		gAllocation = lAllocation->Return;
@@ -2695,8 +2733,14 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							}
 							activeRegion++;
 							activeLUT = 0;
-							sw->WriteLine("\t\t},\n");
+							if (activeRegion <= gPotentialRegression) {
+								sw->WriteLine("\t\t},\n");
+							}
+							else {
+								sw->WriteLine("\t\t}");
+							}
 						}
+						sw->WriteLine("\t},\n");
 						sw->WriteLine("\taffinityMatrix = ");
 						sw->WriteLine("\t{");
 						activeRegion = 1;
@@ -6279,6 +6323,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 System::Void LuccME::NovoModelo::idiomaToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	LanguageForm^ languageForm = gcnew LanguageForm(lLanguage);
+	languageForm->ShowInTaskbar = false;
+	languageForm->MinimizeBox = false;
+	languageForm->MaximizeBox = false;
 	languageForm->ShowDialog();
 	lLanguage = languageForm->lLanguage;
 	checkLanguage();
@@ -6293,18 +6340,19 @@ System::Void LuccME::NovoModelo::sairToolStripMenuItem_Click(System::Object ^ se
 System::Void LuccME::NovoModelo::sobreToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	AboutForm^ aboutForm = gcnew AboutForm(lLanguage);
+	aboutForm->ShowInTaskbar = false;
 	aboutForm->ShowDialog();
 }
 
 System::Void LuccME::NovoModelo::novoToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	lReturn = 1;
+	lReturn = NEWMODEL;
 	this->Close();
 }
 
 System::Void LuccME::NovoModelo::abrirToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	lReturn = 2;
+	lReturn = OPENMODEL;
 	this->Close();
 }
 

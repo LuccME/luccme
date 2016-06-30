@@ -59,6 +59,9 @@ System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Ob
 	}
 	if (check) {
 		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Neigh Inverse Distance Rule";
 		potentialForm->ShowDialog();
 		if (lReturn->Return != "") {
@@ -81,6 +84,9 @@ System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object 
 	}
 	if (check) {
 		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Inverse Distance Rule";
 		potentialForm->ShowDialog();
 		if (lReturn->Return != "") {
@@ -104,6 +110,9 @@ System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^
 	if (check) {
 		lReturn->Component = LOGISTICREGRESSION;
 		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Logistic Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -127,6 +136,9 @@ System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, Syste
 	if (check) {
 		lReturn->Component = NEIGHATTRACTIONLOGISTICREGRESSION;
 		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Neigh Attraction Logistic Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -150,6 +162,9 @@ System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender,
 	if (check) {
 		lReturn->Component = DMAXENTLIKE;
 		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "MaxEnt Like - Discrete";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -173,6 +188,9 @@ System::Void LuccME::PotDiscreteForm::bARLR_Click(System::Object^  sender, Syste
 	if (check) {
 		lReturn->Component = ATTRACTREPULSELOGISTICREGRESSION;
 		P_AttractRepulseLogisticRegression^ potentialForm = gcnew P_AttractRepulseLogisticRegression(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

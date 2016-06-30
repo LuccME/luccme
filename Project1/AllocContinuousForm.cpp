@@ -33,6 +33,9 @@ System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Obje
 	if (check) {
 		lReturn->Component = ALLOCATIONCLUELIKE;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->Text = gSAlloc + "Allocation Clue Like";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -56,6 +59,9 @@ System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ 
 	if (check) {
 		lReturn->Component = ALLOCATIONCLUELIKESATURATION;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
+		allocationForm->MinimizeBox = false;
+		allocationForm->MaximizeBox = false;
+		allocationForm->ShowInTaskbar = false;
 		allocationForm->Text = gSAlloc + "Allocation Clue Like Saturation";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {

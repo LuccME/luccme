@@ -49,7 +49,7 @@
 #define REGRESSIONNUMBER 9		 //Starts in 0
 #define INITIALREGRESSIONSHOW 2  //Absolute value
 
-//Components Number
+//Discrete Components Number
 #define NUMDISCPOTCOMP 7
 #define NUMDISCALLOCCOMP 3
 

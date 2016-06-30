@@ -34,6 +34,9 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 	if (check) {
 		lReturn->Component = LINEARREGRESSION;
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Linear Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -57,6 +60,9 @@ System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Obje
 	if (check) {
 		lReturn->Component = SPATIALLAGREGRESSION;
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Spatial Lag Regression";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -80,6 +86,9 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 	if (check) {
 		lReturn->Component = SPATIALLAGLINEARROADS;
 		P_SpatialLagLinearRoads^ potentialForm = gcnew P_SpatialLagLinearRoads(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "Spatial Lag Linear Roads";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
@@ -103,6 +112,9 @@ System::Void LuccME::PotContinuousForm::bMaxEntLike_Click(System::Object^  sende
 	if (check) {
 		lReturn->Component = CMAXENTLIKE;
 		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
+		potentialForm->MinimizeBox = false;
+		potentialForm->MaximizeBox = false;
+		potentialForm->ShowInTaskbar = false;
 		potentialForm->Text = gSPot + "MaxEnt Like - Continuous";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {

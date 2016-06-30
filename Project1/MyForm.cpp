@@ -83,6 +83,9 @@ System::Void LuccME::MyForm::checkLanguage()
 System::Void LuccME::MyForm::idiomaToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	LanguageForm^ languageForm = gcnew LanguageForm(lLanguage);
+	languageForm->ShowInTaskbar = false;
+	languageForm->MinimizeBox = false;
+	languageForm->MaximizeBox = false;
 	languageForm->ShowDialog();
 	lLanguage = languageForm->lLanguage;
 	checkLanguage();
@@ -97,6 +100,7 @@ System::Void LuccME::MyForm::sairToolStripMenuItem_Click(System::Object ^ sender
 System::Void LuccME::MyForm::sobreToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	AboutForm^ aboutForm = gcnew AboutForm(lLanguage);
+	aboutForm->ShowInTaskbar = false;
 	aboutForm->ShowDialog();
 }
 

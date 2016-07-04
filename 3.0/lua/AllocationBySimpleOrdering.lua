@@ -28,6 +28,7 @@ function AllocationBySimpleOrdering(component)
 		local luTypes = luccMEModel.landUseTypes
 		local dem = {}
 		local differences = {}
+		local area = 0
 		
 		--Inicialização das demandas
 		for ind, lu in  pairs (luTypes) do	
@@ -67,7 +68,7 @@ function AllocationBySimpleOrdering(component)
 				ord = Trajectory { target = cs,
         								   select = function(cell)
 														return (cell.alloc ~= 1 and cell.simUse ~= luccMEModel.landUseNoData)
-													end,
+													 end,
         								   greater = function(c, d)
 														return c[lu.."_pot"] > d[lu.."_pot"]
 													 end

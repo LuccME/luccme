@@ -283,10 +283,6 @@ function AllocationClueSNeighborOrdering (component)
       maxdiff = (math.abs(diff[land]))
       end
     end
-    if (useLog == true) then
-      print("\n  Maximum error of allocation (area): ", maxdiff, "\nMaximum permited error (area): ", maxdiffarea)
-      print("-------------------------------------------------------------------------------")
-    end
     if (maxdiff <= maxdiffarea) then
       return true
     else

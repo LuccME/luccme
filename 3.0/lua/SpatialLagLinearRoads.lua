@@ -417,6 +417,8 @@ function SpatialLagLinearRoads(component)
         local regresY = 0
         local neighSum = 0
         local count = 0
+        local neighY = 0
+        local Y = 0
   
         forEachNeighbor(cell, function (cell, neigh, weight)
                                   Y = cell.past[lu]
@@ -444,7 +446,7 @@ function SpatialLagLinearRoads(component)
         end 
         
         if (luData.isLog) then -- if the land use is log transformed
-          regresY = math.log (10, regresY + 0.0001)  
+          regresY = math.log(10, regresY + 0.0001)  
         end
   
         local regression = luData.newconst + regressionX + regresY 

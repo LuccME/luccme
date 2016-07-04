@@ -68,6 +68,7 @@
 --  }
 --}
 function MaximumEntropyLikeD(component)
+  local file
   --- Handles with the execution method of a MaximumEntropyLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A luccME Model.

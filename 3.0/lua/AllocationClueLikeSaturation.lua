@@ -254,8 +254,6 @@ function AllocationClueLikeSaturation (component)
         
     luccMEModel.cs:createNeighborhood{  name = "11x11",
                                         strategy = "mxn",
-                                        m = 11,
-                                        n = 11
                                      }
   end
 

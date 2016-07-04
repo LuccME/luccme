@@ -47,7 +47,7 @@ function AllocationClueSLike(component)
 
 		print("\nTime: "..event:getTime())
 
-		if useLog == true then
+		if (useLog == true) then
 			print("-------------------------------------------------------------------------------")
 			print("Cell Area "..cellarea)
 			print("Num of cells "..numofcells)
@@ -71,7 +71,7 @@ function AllocationClueSLike(component)
 		end
 	  
 		while ((nIter <= max_iteration) and (allocation_ok == false)) do	
-			if useLog == true then
+			if (useLog == true) then
 				print("\nYear: "..event:getTime().." Iteration -> "..nIter)
 			end	
 			for k, cell in pairs (cs.cells) do
@@ -112,7 +112,7 @@ function AllocationClueSLike(component)
 								  	
 			local diff = self:calcDifferences(event, luccMEModel)
 			
-			allocation_ok = self:convergency(diff, luTypes, self.maxDifference)
+			allocation_ok = self:convergency(diff, luTypes, self.maxDifference, useLog)
 			
 			self:adjustIteration(diff, luTypes, self.factorIteration, iteration)
 			
@@ -200,7 +200,7 @@ function AllocationClueSLike(component)
 		  dem = demand:getCurrentLuDemand(luind)
 		  --dem = demand.currentDemand[luind]
 		  differences[land] = (dem - (areaAlloc))
-		  if luccMEModel.useLog == true then
+		  if (luccMEModel.useLog == true) then
 			print(land.." -> " ..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
 		  end
 		end
@@ -227,7 +227,7 @@ function AllocationClueSLike(component)
 	-- @arg maxdiffarea The limit between the demand and the allocated area.
 	-- @usage --DONTRUN
 	-- component.convergency(diff, luTypes, maxdiffarea)
-	component.convergency = function(self, diff, luTypes, maxdiffarea)
+	component.convergency = function(self, diff, luTypes, maxdiffarea, useLog)
 		local tot_diff = 0.0
 		local maxdiff = 0.0
 		
@@ -235,10 +235,6 @@ function AllocationClueSLike(component)
 		  if ((math.abs(diff[land])) > maxdiff) then
 			maxdiff = (math.abs(diff[land]))
 		  end
-		end
-		if (useLog == true) then
-		  print("\n  Maximum error of allocation (area): ", maxdiff, "\nMaximum permited error (area): ", maxdiffarea)
-		  print("-------------------------------------------------------------------------------")
 		end
 		if (maxdiff <= maxdiffarea) then
 		  return true

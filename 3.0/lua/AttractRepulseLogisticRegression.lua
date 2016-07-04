@@ -252,6 +252,7 @@ function AttractRepulseLogisticRegression(component)
 	-- @usage --DONTRUN
 	-- component.toIndex(lu, luTypes)
 	component.toIndex = function(lu, usetypes)
+	  local index
 		for i, value in  pairs (usetypes) do
 		  if (value == lu) then
   			index = i

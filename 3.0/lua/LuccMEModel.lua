@@ -132,6 +132,7 @@ function LuccMEModel(model)
 	-- @usage --DONTRUN 
   -- model.verify(event)
 	model.verify = function(self, event)
+    local equal = 0
 		print("\nVerifying Model parameters")
 		-- Verify the model name
 		if (model.name == nil) then
@@ -177,7 +178,7 @@ function LuccMEModel(model)
 			if (self.cs.cells[1][lu] == nil) then
 				error("landUseType: "..lu.." not found within database", 2)
 			end
-			local equal = 1
+			equal = 1
 		end
 		
 		if (equal == 0) then

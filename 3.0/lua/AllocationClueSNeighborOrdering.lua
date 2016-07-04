@@ -1,6 +1,6 @@
 --- Based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described in Verburg et al. (2002)
 -- based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described in Verburg et al. (1999),
--- extended to incorporate new features, such as change in blocks (optional, parametrized by cell).
+-- extended to incorporate new features, such as change in blocks (optional, parametrized by cell) but first ordering the potencial according to neighborhood.
 -- @arg component.maxIteration Limit of interactions trying to allocate the demand.
 -- @arg component.factorIteration Initial value of the parameter which controls the allocation interaction factor.
 -- @arg component.maxDifference Maximum difference between informed demand and demand allocated by the model.

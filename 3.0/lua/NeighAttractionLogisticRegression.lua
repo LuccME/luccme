@@ -1,4 +1,4 @@
---- Modification of the LogisticRegression  combining cellular automata based models ideas. Cell potential is modified 
+--- Modification of the LogisticRegression combining cellular automata based models ideas. Cell potential is modified 
 -- according to the attractiveness of the same class in a given (generic) neighbourhood.
 -- @arg component A NeighAttractionLogisticRegression component.
 -- @arg component.potentialData A table with the regression parameters for each attribute.

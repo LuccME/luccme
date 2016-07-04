@@ -1,6 +1,10 @@
 --- Component developed based on MaxEnt behaviour, considering the attributes values of the samples cells
 -- to calculate the potencial of the use on the whole cellular space.  
 --@arg component A MaxEntLike Discrete component.
+-- @arg potentialData A table with the data need to run the component.
+-- @arg potentialData.cellUsePercentage On discrete components must be 100.
+-- @arg potentialData.attributesPerc A list of the select attributes (range) to analysis.
+-- @arg potentialData.attributesClass A list of the select attributes (categorical) to analysis.
 -- @return The modified component.
 -- @usage --DONTRUN 
 --P1 = MaximumEntropyLikeD

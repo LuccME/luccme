@@ -74,7 +74,7 @@
 --}
 function MaximumEntropyLikeC(component)
   local file
-  --- Handles with the execution method of a MaximumEntropyLike component.
+  -- Handles with the execution method of a MaximumEntropyLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN 
@@ -97,7 +97,7 @@ function MaximumEntropyLikeC(component)
     file:close()
   end  -- function run
   
-  --- Handles with the verify method of a MaximumEntropyLike component.
+  -- Handles with the verify method of a MaximumEntropyLike component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN 
@@ -161,7 +161,7 @@ function MaximumEntropyLikeC(component)
     end -- else
   end
   
-  --- Handles with the modify method of a MaximumEntropyLike component.
+  -- Handles with the modify method of a MaximumEntropyLike component.
   -- @arg luccMEModel A luccME Model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
@@ -171,7 +171,7 @@ function MaximumEntropyLikeC(component)
   component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
   end
   
-  --- Modify potencial for an protected area.
+  -- Modify potencial for an protected area.
   -- @arg complementarLU Land use name.
   -- @arg attrProtection The protetion attribute name.
   -- @arg rate A rate for potencial multiplier.
@@ -196,7 +196,7 @@ function MaximumEntropyLikeC(component)
     end
   end
   
-  --- Handles with the compute potential method of a LinearRegression component.
+  -- Handles with the compute potential method of a LinearRegression component.
   -- @arg luccMEModel A luccME Model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).

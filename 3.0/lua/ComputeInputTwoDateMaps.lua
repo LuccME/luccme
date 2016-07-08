@@ -27,7 +27,7 @@
 --  finalLandUseTypesForInterpolation = {"floresta2014", "desmatamento2014", "outros"},
 --}
 function ComputeInputTwoDateMaps(component)
-	--- Handles with the rules of the component execution.
+	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -68,7 +68,7 @@ function ComputeInputTwoDateMaps(component)
 		end -- for i
 	end -- run
 	
-	--- Handles with the parameters verification and the generation for the Demand.
+	-- Handles with the parameters verification and the generation for the Demand.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -134,7 +134,7 @@ function ComputeInputTwoDateMaps(component)
     end
 	end -- verify
 	
-  --- Generate the annual demand based on the data provided by the user.
+  -- Generate the annual demand based on the data provided by the user.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A luccME Model.
   -- @return annualDemand The annual demand.
@@ -248,7 +248,7 @@ function ComputeInputTwoDateMaps(component)
     return self.annualDemand
 	end -- generateDemand
 
-	--- Print on screen the generated demand.
+	-- Print on screen the generated demand.
   -- @arg initialDemand The demand values for the first year of simulation.
   -- @arg finalDemandForInterpolation The demand values of the end year of interpolatioin period.
   -- @arg timeToGenerateDemand The number of years to generate the demand values.
@@ -290,7 +290,7 @@ function ComputeInputTwoDateMaps(component)
 		print("\n")
 	end
 	
-  --- Return the current demand of the specified component.
+  -- Return the current demand of the specified component.
   -- Used on discrete allocation component.
   -- @return self.currentDemand the current demand of the component.
   -- @usage --DONTRUN
@@ -299,7 +299,7 @@ function ComputeInputTwoDateMaps(component)
 		return self.currentDemand
   end
 
-	--- Return the previous demand of the specified component.
+	-- Return the previous demand of the specified component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage --DONTRUN 
 	-- component.getPreviousDemand(i)
@@ -307,7 +307,7 @@ function ComputeInputTwoDateMaps(component)
 		return self.previousDemand
   end
 
-  --- Return the current demand for an specific luIndex.
+  -- Return the current demand for an specific luIndex.
   -- Used on allocation and continuous potential components.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand for an specific luIndex.
@@ -321,7 +321,7 @@ function ComputeInputTwoDateMaps(component)
 		return self.currentDemand[luIndex]
   end
 
-  --- Return the previous demand for an specific luIndex.
+  -- Return the previous demand for an specific luIndex.
   -- Used on continuous pontencial component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The previous demand for an specific luIndex.
@@ -335,7 +335,7 @@ function ComputeInputTwoDateMaps(component)
 		return self.previousDemand[luIndex]
   end
 
-  --- Return the current demand direction for an specific luIndex.
+  -- Return the current demand direction for an specific luIndex.
   -- Used on continuous allocation component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
@@ -349,7 +349,7 @@ function ComputeInputTwoDateMaps(component)
 		return self.demandDirection[luIndex]
   end	
 
-  --- Invert the demand direction for an specific luIndex.
+  -- Invert the demand direction for an specific luIndex.
   -- Used on continuous allocation component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.

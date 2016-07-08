@@ -79,7 +79,7 @@
 --  }
 --}
 function AttractRepulseLogisticRegression(component)
-	--- Handles with the execution method of a AttractRepulseLogisticRegression component.
+	-- Handles with the execution method of a AttractRepulseLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -154,7 +154,7 @@ function AttractRepulseLogisticRegression(component)
 		end -- end cells
 	end -- end execute
 
-	--- Handles with the verify method of a AttractRepulseLogisticRegression component.
+	-- Handles with the verify method of a AttractRepulseLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -246,7 +246,7 @@ function AttractRepulseLogisticRegression(component)
 		end -- else
 	end -- verify
 	
-	--- Return an Index for a land use type in a set of land use types.
+	-- Return an Index for a land use type in a set of land use types.
 	-- @arg lu A land use type.
 	-- @arg usetypes A set of land use type.
 	-- @usage --DONTRUN
@@ -263,7 +263,7 @@ function AttractRepulseLogisticRegression(component)
 		return index
 	end
 	
-	--- Handles with the calculation of the regression logistic method of a NeighAttractionLogisticRegression component.
+	-- Handles with the calculation of the regression logistic method of a NeighAttractionLogisticRegression component.
 	-- @arg cell A spatial location with homogeneous internal content.
 	-- @arg inputValues A parameter component.
 	-- @arg component A NeighAttractionLogisticRegression component.
@@ -280,7 +280,7 @@ function AttractRepulseLogisticRegression(component)
 		return component.probability(regrLogit)
 	end	--end calcRegressionLogistic
 	
-	--- Compute the probability.
+	-- Compute the probability.
 	-- @arg z A value used to calculate the probability (second parameter of a pow).
 	-- @usage --DONTRUN
 	-- component.probability(regrLogit)

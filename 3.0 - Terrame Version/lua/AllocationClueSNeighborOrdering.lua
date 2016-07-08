@@ -25,7 +25,7 @@
 --  }
 --}
 function AllocationClueSNeighborOrdering (component)
-  --- Handles with the rules of the component execution.
+  -- Handles with the rules of the component execution.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN 
@@ -174,7 +174,7 @@ function AllocationClueSNeighborOrdering (component)
   	end 
   end 
  	
-  --- Handles with the parameters verification.
+  -- Handles with the parameters verification.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN
@@ -228,7 +228,7 @@ function AllocationClueSNeighborOrdering (component)
     end -- else
   end -- verify
 
-  --- Calculate the difference between the value of the demand and the value to be allocate.
+  -- Calculate the difference between the value of the demand and the value to be allocate.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN
@@ -255,7 +255,7 @@ function AllocationClueSNeighborOrdering (component)
     return differences
   end
 
-  --- Modify for each land use the value of the cell area for an iteration.
+  -- Modify for each land use the value of the cell area for an iteration.
   -- @arg diff The demand area difference.
   -- @arg luTypes A set of land uses types.
   -- @arg interationFactor Interation factor.
@@ -268,7 +268,7 @@ function AllocationClueSNeighborOrdering (component)
     end
   end
 	
-  --- Handles with the allocation convergence based on self.maxDifference.
+  -- Handles with the allocation convergence based on self.maxDifference.
   -- @arg diff The demand area difference.
   -- @arg luTypes A set of land uses types.
   -- @arg maxdiffarea The limit between the demand and the allocated area.
@@ -290,7 +290,7 @@ function AllocationClueSNeighborOrdering (component)
     end
   end
 
-  --- Count the number of allocated areas.
+  -- Count the number of allocated areas.
   -- @arg cs A multivalued set of Cells (Cell Space).
   -- @arg cellarea A cell area.
   -- @arg field The field to be checked (Columns name).
@@ -326,7 +326,7 @@ function AllocationClueSNeighborOrdering (component)
     return index
   end
    
-  --- Initialise the iteration vector for each land use type.
+  -- Initialise the iteration vector for each land use type.
   -- @arg lutypes A set of land use types.
   -- @usage --DONTRUN
   -- component.initIteration(luTypes)
@@ -339,7 +339,7 @@ function AllocationClueSNeighborOrdering (component)
     return iteration
   end
 
-	--- Handles with the change of an use for a cell area.
+	-- Handles with the change of an use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg cur_use The current use.
 	-- @arg higher_use The new land use attributed to the cell.
@@ -360,7 +360,7 @@ function AllocationClueSNeighborOrdering (component)
 		end
 	end
   
-  --- Return the current use for a cell area.
+  -- Return the current use for a cell area.
   -- @arg cell A cell area.
   -- @arg landuses A set of land use types.
   -- @usage --DONTRUN

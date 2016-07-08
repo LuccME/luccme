@@ -9,7 +9,7 @@
 --  maxDifference = 106
 --} 
 function AllocationBySimpleOrdering(component)
-	--- Handles with the rules of the component execution.
+	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
@@ -126,7 +126,7 @@ function AllocationBySimpleOrdering(component)
 		end      	
  	end -- end of 'run' function
  	
-	--- Handles with the parameters verification.
+	-- Handles with the parameters verification.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @usage --DONTRUN 
 	-- component.verify(event, self)
@@ -137,7 +137,7 @@ function AllocationBySimpleOrdering(component)
 		end
 	end
 
-	--- Count the number of allocated areas.
+	-- Count the number of allocated areas.
 	-- @arg cs A multivalued set of Cells (Cell Space).
 	-- @arg cellarea A cell area.
 	-- @arg field The field to be checked (Columns name).
@@ -156,7 +156,7 @@ function AllocationBySimpleOrdering(component)
 		return (c * cellarea)
 	end
 
-	--- Handles with the change of an use for a cell area.
+	-- Handles with the change of an use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg cur_use The current use.
 	-- @arg higher_use The biggest cell value.
@@ -176,7 +176,7 @@ function AllocationBySimpleOrdering(component)
 		 end
 	end
 
-	--- Return the current use for a cell area.
+	-- Return the current use for a cell area.
 	-- @arg cell A cell area.
 	-- @arg landuses A set of land use types.
 	-- @usage --DONTRUN 

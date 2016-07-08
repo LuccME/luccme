@@ -62,7 +62,7 @@
 --  }
 --}
 function LogisticRegression(component) 
-	--- Handles with the execution method of a LogisticRegression component.
+	-- Handles with the execution method of a LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
@@ -93,7 +93,7 @@ function LogisticRegression(component)
 		end -- for k
 	end
 	
-	--- Handles with the verify method of a LogisticRegression component.
+	-- Handles with the verify method of a LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
@@ -163,7 +163,7 @@ function LogisticRegression(component)
     end -- else
 	end -- verify
 	
-	--- Handles with the calculation of the regression logistic method of a LogisticRegression component.
+	-- Handles with the calculation of the regression logistic method of a LogisticRegression component.
 	-- @arg cell A spatial location with homogeneous internal content.
 	-- @arg inputValues A parameter component.
 	-- @arg component A LogisticRegression component.
@@ -181,7 +181,7 @@ function LogisticRegression(component)
 		return component.probability(regrLogit)
 	end	--end calcRegressionLogistic
 	
-	--- Compute the probability.
+	-- Compute the probability.
 	-- @arg z A value used to calculate the probability (second parameter of a pow).
 	-- @usage --DONTRUN
 	-- component.probability(regrLogit)

@@ -52,7 +52,7 @@
 --  }
 --}				
 function NeighInverseDistanceRule(component)
-	--- Handles with the execution method of a NeighInverseDistanceRule component.
+	-- Handles with the execution method of a NeighInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -119,7 +119,7 @@ function NeighInverseDistanceRule(component)
 		end -- for k
 	end -- end run
 	
-	--- Handles with the verify method of a LogisticRegression component.
+	-- Handles with the verify method of a LogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN

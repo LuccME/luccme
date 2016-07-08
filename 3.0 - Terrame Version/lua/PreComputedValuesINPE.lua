@@ -35,7 +35,7 @@
 --  }
 --}
 function PreComputedValuesINPE(component)
-	--- Handles with the rules of the component execution.
+	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
@@ -76,7 +76,7 @@ function PreComputedValuesINPE(component)
 		end -- for i
 	end -- run
 	
-	--- Handles with the parameters verification.
+	-- Handles with the parameters verification.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
@@ -112,7 +112,7 @@ function PreComputedValuesINPE(component)
 		self.previousDemand = self.annualDemand[1]
 	end
 
-	--- Return the current demand of the specified component.
+	-- Return the current demand of the specified component.
 	-- Used on discrete allocation component.
 	-- @return self.currentDemand the current demand of the component.
 	-- @usage --DONTRUN
@@ -121,7 +121,7 @@ function PreComputedValuesINPE(component)
 		return self.currentDemand
 	end
 
-	--- Return the previous demand of the specified component.
+	-- Return the previous demand of the specified component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage --DONTRUN
 	-- component.getPreviousDemand(i)
@@ -129,7 +129,7 @@ function PreComputedValuesINPE(component)
 		return self.previousDemand
 	end
 
-	--- Return the current demand for an specific luIndex.
+	-- Return the current demand for an specific luIndex.
 	-- Used on allocation and continuous potential components.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand for an specific luIndex.
@@ -143,7 +143,7 @@ function PreComputedValuesINPE(component)
 		return self.currentDemand[luIndex]
 	end
 
-	--- Return the previous demand for an specific luIndex.
+	-- Return the previous demand for an specific luIndex.
 	-- Used on continuous pontencial component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The previous demand for an specific luIndex.
@@ -157,7 +157,7 @@ function PreComputedValuesINPE(component)
 		return self.previousDemand[luIndex]
 	end
 
-	--- Return the current demand direction for an specific luIndex.
+	-- Return the current demand direction for an specific luIndex.
 	-- Used on continuous allocation component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.
@@ -171,7 +171,7 @@ function PreComputedValuesINPE(component)
 		return self.demandDirection[luIndex]
 	end	
 
-	--- Invert the demand direction for an specific luIndex.
+	-- Invert the demand direction for an specific luIndex.
 	-- Used on continuous allocation component.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
 	-- @return The current demand direction for an specific luIndex.

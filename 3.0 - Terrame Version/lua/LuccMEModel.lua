@@ -105,7 +105,7 @@
 --  saveSingleTheme (Lab1, true)
 --end
 function LuccMEModel(model)
-	--- Implements the execution method of a LuccMe model.
+	-- Implements the execution method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage --DONTRUN
   -- model.run(event)
@@ -127,7 +127,7 @@ function LuccMEModel(model)
 		self.allocation:run(event, model)
 	end
 
-	--- Implements the verify method of a LuccMe model.
+	-- Implements the verify method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage --DONTRUN 
   -- model.verify(event)
@@ -229,7 +229,7 @@ function LuccMEModel(model)
 		collectgarbage("collect")
 	end
 	
-	--- Implements the variables dynamic method of a LuccMe model.
+	-- Implements the variables dynamic method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @arg model A luccME Model.
 	-- @usage --DONTRUN 
@@ -284,7 +284,7 @@ function LuccMEModel(model)
 	return model
 end
 
---- Override the error function to hold the screen.
+-- Override the error function to hold the screen.
 -- @arg message The message to inform the user.
 -- @arg code The number of level that got the error.
 -- @usage --DONTRUN

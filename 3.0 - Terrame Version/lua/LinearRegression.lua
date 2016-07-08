@@ -69,7 +69,7 @@
 --  }
 --}
 function LinearRegression(component)
-	--- Handles with the execution method of a LinearRegression component.
+	-- Handles with the execution method of a LinearRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -100,7 +100,7 @@ function LinearRegression(component)
 		end
 	end  -- function run
 
-	--- Handles with the verify method of a LinearRegression component.
+	-- Handles with the verify method of a LinearRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -170,7 +170,7 @@ function LinearRegression(component)
 		end -- else
 	end
  
-	--- Handles with the potential modify method of a LinearRegression component.
+	-- Handles with the potential modify method of a LinearRegression component.
 	-- This method is called by the Allocation component.
 	-- @arg luccMEModel A luccME Model.
 	-- @arg rNumber The potential region number.
@@ -193,7 +193,7 @@ function LinearRegression(component)
 		  self:computePotential (luccMEModel, rNumber, luIndex)
 	end	-- function	modify	
 
-	--- Handles with the constants regression method of a LinearRegression component.
+	-- Handles with the constants regression method of a LinearRegression component.
 	-- @arg demand A demand to calculate the potential.
 	-- @arg rNumber The potential region number.
 	-- @usage --DONTRUN
@@ -220,7 +220,7 @@ function LinearRegression(component)
 	end	-- function adaptRegressionConstants
 		
   
-	--- Modify potencial for an protected area.
+	-- Modify potencial for an protected area.
 	-- @arg complementarLU Land use name.
 	-- @arg attrProtection The protetion attribute name.
 	-- @arg rate A rate for potencial multiplier.
@@ -253,7 +253,7 @@ function LinearRegression(component)
 		end
 	end
   
-	--- Handles with the compute potential method of a LinearRegression component.
+	-- Handles with the compute potential method of a LinearRegression component.
 	-- @arg luccMEModel A luccME Model.
 	-- @arg rNumber The potential region number.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).

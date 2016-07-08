@@ -53,7 +53,7 @@
 --  }
 --}
 function InverseDistanceRule(component)
-	--- Handles with the execution method of a InverseDistanceRule component.
+	-- Handles with the execution method of a InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
   -- @usage --DONTRUN
@@ -94,7 +94,7 @@ function InverseDistanceRule(component)
 		end -- for k
 	end -- end run
 	
-	--- Handles with the verify method of a InverseDistanceRule component.
+	-- Handles with the verify method of a InverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN

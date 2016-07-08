@@ -134,7 +134,7 @@
 --  }
 --}
 function SpatialLagLinearRoads(component)
-  --- Handles with the execution method of a SpatialLagRegression_region component.
+  -- Handles with the execution method of a SpatialLagRegression_region component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN
@@ -178,7 +178,7 @@ function SpatialLagLinearRoads(component)
     end
   end  -- function run
 
-  --- Handles with the verify method of a SpatialLagRegression_region component.
+  -- Handles with the verify method of a SpatialLagRegression_region component.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
   -- @usage --DONTRUN
@@ -266,7 +266,7 @@ function SpatialLagLinearRoads(component)
     end
   end -- function verify
  
-  --- Handles with the modify method of a SpatialLagRegression component.
+  -- Handles with the modify method of a SpatialLagRegression component.
   -- @arg luccMEModel A LuccME model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
@@ -293,7 +293,7 @@ function SpatialLagLinearRoads(component)
     self:computePotential (luccMEModel, rNumber, luIndex)
   end -- function modifyPotential 
 
-  --- Handles with the modify regression method of a SpatialLagRegression_region component.
+  -- Handles with the modify regression method of a SpatialLagRegression_region component.
   -- @arg roadsModel A road model.
   -- @arg cell A spatial location with homogeneous internal content.
   -- @arg oldRegression The previous value of the regression.
@@ -328,7 +328,7 @@ function SpatialLagLinearRoads(component)
      return oldRegression
   end -- function modifyRegression
 
-  --- Handles with the constants regression method of a SpatialLagRegression component.
+  -- Handles with the constants regression method of a SpatialLagRegression component.
   -- @arg demand A demand to calculate the potential.
   -- @arg rNumber The potential region number.
   -- @usage --DONTRUN
@@ -356,7 +356,7 @@ function SpatialLagLinearRoads(component)
     end
   end -- function adaptRegressionConstants		
   
-  --- Modify potencial for an protected area.
+  -- Modify potencial for an protected area.
   -- @arg complementarLU Land use name.
   -- @arg attrProtection The protetion attribute name.
   -- @arg rate A rate for potencial multiplier.
@@ -389,7 +389,7 @@ function SpatialLagLinearRoads(component)
     end
   end
 
-  --- Handles with the compute potential method of a SpatialLagRegression component.
+  -- Handles with the compute potential method of a SpatialLagRegression component.
   -- @arg luccMEModel A LuccME model.
   -- @arg rNumber The potential region number.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).

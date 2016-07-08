@@ -29,7 +29,7 @@
 --  finalLandUseTypesForInterpolation = {"floresta2014", "desmatamento2014", "outros"},
 --}
 function ComputeInputThreeDateMaps(component)
-	--- Handles with the rules of the component execution.
+	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
@@ -70,7 +70,7 @@ function ComputeInputThreeDateMaps(component)
 		end -- for i
 	end -- run
 	
-	--- Handles with the parameters verification and the generation for the Demand.
+	-- Handles with the parameters verification and the generation for the Demand.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
@@ -161,7 +161,7 @@ function ComputeInputThreeDateMaps(component)
     end
 	end -- verify
 
-  --- Generate the annual demand based on the data provided by the user.
+  -- Generate the annual demand based on the data provided by the user.
   -- @arg event A representation of a time instant when the simulation engine must run.
   -- @arg luccMEModel A LuccME model.
   -- @return annualDemand The annual demand.
@@ -247,7 +247,7 @@ function ComputeInputThreeDateMaps(component)
     return self.annualDemand
   end -- generateDemand
   
-  --- Calculate the interpolatin factor for 2 demands.
+  -- Calculate the interpolatin factor for 2 demands.
   -- @arg parametersNumber Number of LandUseTypes.
   -- @arg interpolationFactor The interpolation factor itself.
   -- @arg finalDemand The final demand to search the direction.
@@ -271,7 +271,7 @@ function ComputeInputThreeDateMaps(component)
     return interpolationFactor
   end
   
-  --- Calulate the interpolation direction for 2 demands.
+  -- Calulate the interpolation direction for 2 demands.
   -- @arg parametersNumber Number of LandUseTypes.
   -- @arg interpolationDirection The interpolation direction itself.
   -- @arg finalDemand The final demand to search the direction.
@@ -316,7 +316,7 @@ function ComputeInputThreeDateMaps(component)
     return interpolationDirection
   end
 
-  --- Get the demand on the database.
+  -- Get the demand on the database.
   -- @arg returnDemand The demand that are looking for.
   -- @arg landUseTypes A set of land uses types.
   -- @arg luccMEModel A luccME Model.
@@ -337,7 +337,7 @@ function ComputeInputThreeDateMaps(component)
     return returnDemand
   end
   
-	--- Print on screen the generated demand.
+	-- Print on screen the generated demand.
 	-- @arg initialDemand The demand values for the first year of simulation.
 	-- @arg middleDemandForInterpolation The demand values of the end year for the first period of interpolatioin.
 	-- @arg finalDemandForInterpolation The demand values of the end year for the second period of interpolatioin.
@@ -390,7 +390,7 @@ function ComputeInputThreeDateMaps(component)
 		print("\n")
 	end
 	
-  --- Return the current demand of the specified component.
+  -- Return the current demand of the specified component.
   -- Used on discrete allocation component.
   -- @return self.currentDemand the current demand of the component.
   -- @usage --DONTRUN
@@ -399,7 +399,7 @@ function ComputeInputThreeDateMaps(component)
 		return self.currentDemand
   end
 
-	--- Return the previous demand of the specified component.
+	-- Return the previous demand of the specified component.
 	-- @return self.previousDemand the previous demand of the component.
 	-- @usage --DONTRUN
 	-- component.getPreviousDemand(i)
@@ -407,7 +407,7 @@ function ComputeInputThreeDateMaps(component)
 		return self.previousDemand
   end
 
-  --- Return the current demand for an specific luIndex.
+  -- Return the current demand for an specific luIndex.
   -- Used on allocation and continuous potential components.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand for an specific luIndex.
@@ -421,7 +421,7 @@ function ComputeInputThreeDateMaps(component)
 		return self.currentDemand[luIndex]
   end
 
-  --- Return the previous demand for an specific luIndex.
+  -- Return the previous demand for an specific luIndex.
   -- Used on continuous pontencial component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The previous demand for an specific luIndex.
@@ -435,7 +435,7 @@ function ComputeInputThreeDateMaps(component)
 		return self.previousDemand[luIndex]
   end
 
-  --- Return the current demand direction for an specific luIndex.
+  -- Return the current demand direction for an specific luIndex.
   -- Used on continuous allocation component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.
@@ -449,7 +449,7 @@ function ComputeInputThreeDateMaps(component)
 		return self.demandDirection[luIndex]
   end	
 
-  --- Invert the demand direction for an specific luIndex.
+  -- Invert the demand direction for an specific luIndex.
   -- Used on continuous allocation component.
   -- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
   -- @return The current demand direction for an specific luIndex.

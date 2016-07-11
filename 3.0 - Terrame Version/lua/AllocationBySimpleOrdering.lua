@@ -126,7 +126,7 @@ function AllocationBySimpleOrdering(component)
 		end      	
  	end -- end of 'run' function
  	
-	--- Handles with the parameters verification.
+	-- Handles with the parameters verification.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @usage --DONTRUN 
 	-- component.verify(event, self)

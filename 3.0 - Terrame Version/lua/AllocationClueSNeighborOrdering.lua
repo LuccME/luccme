@@ -309,7 +309,7 @@ function AllocationClueSNeighborOrdering (component)
     return (count * cellarea)
   end 
 
-  --- Return an Index for a land use type in a set of land use types.
+  -- Return an Index for a land use type in a set of land use types.
   -- @arg lu A land use type.
   -- @arg usetypes A set of land use type.
   -- @usage --DONTRUN

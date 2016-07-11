@@ -283,13 +283,3 @@ function LuccMEModel(model)
   collectgarbage("collect")
 	return model
 end
-
--- Override the error function to hold the screen.
--- @arg message The message to inform the user.
--- @arg code The number of level that got the error.
--- @usage --DONTRUN
--- error("Missing something", 1)
-error = function(message, code)
-			      print("\n[Error] "..message)
-			      os.exit()
-        end

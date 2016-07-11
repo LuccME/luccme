@@ -258,7 +258,6 @@ function AllocationClueSLike(component)
 						  end
 						end
 					)
-		--print("\n\n"..count, cellarea, field, "\n")          
 		return (count * cellarea)
 	end
   

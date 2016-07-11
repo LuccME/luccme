@@ -85,7 +85,7 @@ function AllocationClueLike(component)
       if (maxdiff <= maxAdjust) then
         allocation_ok = true
         if (luccMEModel.useLog) == true then
-          print("\nDemand allocated correctly in ", event:getTime(), "number of iterations", nIter, "maximum error: ", maxdiff)
+          print("\nDemand allocated correctly in "..event:getTime()..".\tNumber of iterations: "..nIter.."\tMaximum error: "..maxdiff)
         end
       else 
         nIter = nIter + 1
@@ -599,11 +599,11 @@ function AllocationClueLike(component)
 
     areas = self:countAllocatedLandUseArea(cs, luTypes)
     
-    print("\nYear:"..event:getTime()," Step: "..nIter)  
+    print("\nYear: "..event:getTime().."\tStep: "..nIter)  
     
     for i, lu in pairs (luTypes) do
       local currentDemand  = luccMEModel.demand:getCurrentLuDemand(i)
-      print(lu.." area: \t"..math.floor(areas[i]), "Difference: ", math.floor(areas[i] - currentDemand)) 
+      print(lu.." Area: "..math.floor(areas[i]).. "\tDifference: "..math.floor(areas[i] - currentDemand)) 
     end
     
     io.flush()

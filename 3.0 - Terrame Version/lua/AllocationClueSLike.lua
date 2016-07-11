@@ -221,7 +221,7 @@ function AllocationClueSLike(component)
 		end
 	end
 
-	-- Handles with the allocation convergence based on self.maxDifference.
+	--- Handles with the allocation convergence based on self.maxDifference.
 	-- @arg diff The demand area difference.
 	-- @arg luTypes A set of land uses types.
 	-- @arg maxdiffarea The limit between the demand and the allocated area.
@@ -258,7 +258,6 @@ function AllocationClueSLike(component)
 						  end
 						end
 					)
-		--print("\n\n"..count, cellarea, field, "\n")          
 		return (count * cellarea)
 	end
   

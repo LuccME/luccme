@@ -296,7 +296,7 @@ function MaximumEntropyLikeD(component)
     
     print("\n")
     print(lu)
-    print("Cell number", #sample)
+    print("Cell number: "..#sample)
     
     file:write(lu.."\n")
     file:write("Cell number: "..#sample.."\n")
@@ -304,14 +304,14 @@ function MaximumEntropyLikeD(component)
     
     for i = 1, #min, 1 do
       print(attributesPercNames[i])
-      print("min", min[i])
-      print("max", max[i])
-      print("avg", avg[i], "\n")
+      print("min: "..min[i])
+      print("max: "..max[i])
+      print("avg: "..avg[i].."\n")
       
       file:write(attributesPercNames[i].."\n")
-      file:write("min "..min[i].."\n")
-      file:write("max "..max[i].."\n")
-      file:write("avg "..avg[i].."\n\n")
+      file:write("min: "..min[i].."\n")
+      file:write("max: "..max[i].."\n")
+      file:write("avg: "..avg[i].."\n\n")
     end
     
     for i = 1, #values, 1 do
@@ -321,8 +321,8 @@ function MaximumEntropyLikeD(component)
       file:write(attributesClassNames[i].."\n")
     end
     for j = 1, #values[i], 1 do
-      print("values["..j.."]",values[i][j])
-      file:write("values["..j.."] "..values[i][j].."\n")
+      print("values["..j.."]: "..values[i][j])
+      file:write("values["..j.."]: "..values[i][j].."\n")
     end
     end
 
@@ -433,8 +433,8 @@ function MaximumEntropyLikeD(component)
     
 
     print("\n")
-    print(lu, "pot > 0", "\tpot = 0")
-    print(pot, countOne, "\t"..countZero)
+    print(lu.."\tpot > 0 \tpot = 0")
+    print(pot.."\t"..countOne.."\t"..countZero)
     
     file:write("\n")
     file:write(lu.." \t\tpot > 0 \tpot = 0\n")

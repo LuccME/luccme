@@ -355,7 +355,7 @@ function ComputeInputThreeDateMaps(component)
 		for j, lu in pairs (luccMEModel.landUseTypes) do
 			rowPrint = rowPrint .. initialDemand[j] .. " "
 		end
-		print("\n", rowPrint, luccMEModel.startTime)
+		print("\n"..rowPrint.."\t"..luccMEModel.startTime)
 		rowPrint = ""
 		
 		-- print the middle demand (used for the interpolation calculation)
@@ -364,7 +364,7 @@ function ComputeInputThreeDateMaps(component)
     for j, lu in pairs (self.middleLandUseTypesForInterpolation) do
       rowPrint = rowPrint .. middleDemandForInterpolation[j] .. " "
     end
-    print("\n", rowPrint, self.middleYearForInterpolation)
+    print("\n"..rowPrint.."\t"..self.middleYearForInterpolation)
     rowPrint = ""
 		
 		
@@ -374,7 +374,7 @@ function ComputeInputThreeDateMaps(component)
 		for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 			rowPrint = rowPrint .. finalDemandForInterpolation[j] .. " "
 		end
-		print("\n", rowPrint, self.finalYearForInterpolation)
+		print("\n"..rowPrint.."\t"..self.finalYearForInterpolation)
 		rowPrint = ""
 		
 		-- print all the demand (Demand that will be used on run)
@@ -384,7 +384,7 @@ function ComputeInputThreeDateMaps(component)
 			for j, lu in pairs (luccMEModel.landUseTypes) do
 				rowPrint = rowPrint .. self.annualDemand[i][j] .. " "
 			end
-			print("\n", rowPrint, luccMEModel.startTime + (i - 1))
+			print("\n"..rowPrint.."\t"..luccMEModel.startTime + (i - 1))
 			rowPrint = ""
 		end
 		print("\n")

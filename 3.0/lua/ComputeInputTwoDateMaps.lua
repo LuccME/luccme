@@ -265,7 +265,7 @@ function ComputeInputTwoDateMaps(component)
 		for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 			rowPrint = rowPrint .. initialDemand[j] .. " "
 		end
-		print("\n", rowPrint, luccMEModel.startTime)
+		print("\n"..rowPrint.."\t"..luccMEModel.startTime)
 		rowPrint = ""
 		
 		-- print the final demand (used for the interpolation calculation)
@@ -274,7 +274,7 @@ function ComputeInputTwoDateMaps(component)
 		for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 			rowPrint = rowPrint .. finalDemandForInterpolation[j] .. " "
 		end
-		print("\n", rowPrint, self.finalYearForInterpolation)
+		print("\n"..rowPrint.."\t"..self.finalYearForInterpolation)
 		rowPrint = ""
 		
 		-- print all the demand (Demand that will be used on run)
@@ -284,7 +284,7 @@ function ComputeInputTwoDateMaps(component)
 			for j, lu in pairs (self.finalLandUseTypesForInterpolation) do
 				rowPrint = rowPrint .. self.annualDemand[i][j] .. " "
 			end
-			print("\n", rowPrint, luccMEModel.startTime + (i - 1))
+			print("\n"..rowPrint.."\t"..luccMEModel.startTime + (i - 1))
 			rowPrint = ""
 		end
 		print("\n")

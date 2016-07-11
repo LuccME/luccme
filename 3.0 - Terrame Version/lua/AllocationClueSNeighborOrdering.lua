@@ -80,7 +80,7 @@ function AllocationClueSNeighborOrdering (component)
 		--print("Ordenamento: "..(k / numofcells * 100).."%")
 		if (nIter == 0) then
 			if (math.ceil(k / numofcells * 100) % 100 == 1) then
-				io.write("Ordenamento: 100%\r")
+				print("Ordenamento: 100%")
 			end
 		end
 		for i, lu in  pairs (luTypes) do
@@ -245,7 +245,6 @@ function AllocationClueSNeighborOrdering (component)
     for luind, land in pairs (luTypes) do
       areaAlloc = self:areaAllocated(cs, cellarea, land, 1)
       dem = demand:getCurrentLuDemand(luind)
-      --dem = demand.currentDemand[luind]
       differences[land] = (dem - (areaAlloc))
       if luccMEModel.useLog == true then
       print(land.." -> " ..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
@@ -305,7 +304,6 @@ function AllocationClueSNeighborOrdering (component)
               end
             end
           )
-    --print("\n\n"..count, cellarea, field, "\n")          
     return (count * cellarea)
   end 
 

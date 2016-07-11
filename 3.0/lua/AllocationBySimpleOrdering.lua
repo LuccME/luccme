@@ -84,7 +84,7 @@ function AllocationBySimpleOrdering(component)
 				local cs_size = #cs.cells
 				local trj_size = #ord.cells	
 				
-				print("demand", lu, dem[lu], "trajectory size", trj_size)
+				print("demand\t"..lu.."\t"..dem[lu].."\ttrajectory size".."\t"..trj_size)
 		
 				while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do 
 					-- Este atributo irá me indicar se a célula já teve seu uso alocado ou não
@@ -96,7 +96,7 @@ function AllocationBySimpleOrdering(component)
 				-- Quantidade alocada do uso neste passo de tempo
 				local areaAlloc = self:areaAllocated(ord, cellarea, "alloc", 1)
 			
-				print("areaAlloc", lu, areaAlloc)
+				print("areaAlloc".."\t"..lu.."\t"..areaAlloc)
 				differences[lu] = (dem[lu] - areaAlloc)
 
 				if (differences[lu]> 0) then

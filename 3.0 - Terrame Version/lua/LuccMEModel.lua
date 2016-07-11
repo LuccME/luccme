@@ -268,7 +268,7 @@ function LuccMEModel(model)
 																if (cell[var] ~= nil) then
 																	cell[var] = cell_temp[var]
 																	if (flag == false) then
-																		print("          ", var, cell[var])
+																		print("          ".."\t"..var.."\t"..cell[var])
 																	end		          					
 																end
 														end -- 1st inner if

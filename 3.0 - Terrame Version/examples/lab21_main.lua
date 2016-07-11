@@ -120,7 +120,7 @@ Lab21 = LuccMEModel
 	{
 		maxIteration = 5000,
 		factorIteration = 0.000001,
-		maxDifference = 0,
+		maxDifference = 2500,
 		transitionMatrix =
 		{
 			--Region 1

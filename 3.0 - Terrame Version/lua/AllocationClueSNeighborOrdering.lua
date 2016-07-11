@@ -68,6 +68,7 @@ function AllocationClueSNeighborOrdering (component)
  	end
 		
  	local iteration = self:initIteration(luTypes)
+ 	local first = true
 
 	for k,cell in pairs (cs.cells) do
 		for luind, lu in  pairs (luTypes) do
@@ -79,8 +80,9 @@ function AllocationClueSNeighborOrdering (component)
 	for k, cell in pairs (cs.cells) do
 		--print("Ordenamento: "..(k / numofcells * 100).."%")
 		if (nIter == 0) then
-			if (math.ceil(k / numofcells * 100) % 100 == 1) then
+			if (math.ceil(k / numofcells * 100) % 100 == 1 and first) then
 				print("Ordenamento: 100%")
+				first = false
 			end
 		end
 		for i, lu in  pairs (luTypes) do

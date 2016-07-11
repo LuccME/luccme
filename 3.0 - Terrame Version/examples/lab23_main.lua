@@ -95,7 +95,7 @@ Lab23 = LuccMEModel
 	{
 		maxIteration = 1000,
 		factorIteration = 0.000001,
-		maxDifference = 20,
+		maxDifference = 200,
 		transitionMatrix =
 		{
 			--Region 1

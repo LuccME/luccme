@@ -120,7 +120,7 @@ Lab9 = LuccMEModel
 	
 	allocation = AllocationClueLike
 	{
-		maxDifference = 150,
+		maxDifference = 2500,
 		maxIteration = 1000,
 		initialElasticity = 0.1,
 		minElasticity = 0.001,

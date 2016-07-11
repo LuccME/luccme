@@ -123,5 +123,4 @@ function saveSingleTheme(luccMEModel)
 	-- Hold the screen
 	io.write("\nPress enter key to exit...")
   io.flush()
-  io.read()
 end

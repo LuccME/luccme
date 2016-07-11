@@ -119,8 +119,4 @@ function saveSingleTheme(luccMEModel)
 	
 	print(string.format("\nElapsed time: %.2fs\n", os.clock() - x))
 	print("\nEnd of Simulation")
-	
-	-- Hold the screen
-	io.write("\nPress enter key to exit...")
-  io.flush()
 end

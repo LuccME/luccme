@@ -77,7 +77,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lEndTime->Text = "End Time";
 		//tabDefSpatial
 		lSpacialDimensions->Text = " Spatial Definitions";
-		lDatabase->Text = "Project File";
+		lDatabase->Text = "File:";
 		bSelectDatabase->Text = "Select";
 		lThemeName->Text = "Layer Name";
 		lCellArea->Text = "Cell Area";
@@ -117,6 +117,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cScenario->Text = "Scenario";
 		lScenariosStartTime->Text = "    Scenario Start Time";
 		lScenarioName->Text = "  Scenario Name";
+		lScenarioYears->Text = "Years with Scenario";
 		//tabValidation
 		lValidationMethod->Text = "Validation/Calibration Method";
 		lInputThemeName->Text = "  Theme Name";
@@ -149,6 +150,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSProject = "Project File";
 		gSDBTitle = "Select a Database File";
 		gSDBFilter = "Terraview Project (*.tview)|*.tview";
+		gSShape = "Shape File";
+		gSShapeTitle = "Select a Shape File";
+		gSShapeFilter = "Shape File (*.shp)|*.shp";
 		gSLUTManager = "Land Use no Data Manager";
 		gSDemand1Info = "Another demand component was modified.\nThe demand values will be erased.\nDo you want to proceed?";
 		gSDemand1Title = "Another demand component already in use";
@@ -215,6 +219,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSScenNameTitle = "Error - Scenario Name";
 		gSScenST = "The start time of the scenarios must be informed.";
 		gSScenSTTitle = "Error - Scenario Start Time";
+		gSScenSYU = "The scenario years to update musb be informed.";
+		gSScenSYUTitle = "Error - Scenario Update Year";
 		gSValSectMet = "A Validation/Calibration must be selected.";
 		gSValSectMetTitle = "Error - Validation/Calibration Method Not Selected";
 		gSValExt = "print(\"Hit percentage CONSIDERING THE STANDARD ARISING in each window:\\n\")";
@@ -263,7 +269,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lEndTime->Text = "Ano de Término";
 		//tabDefSpatial
 		lSpacialDimensions->Text = "Definições Espaciais";
-		lDatabase->Text = "Arquivo do Projeto";
+		lDatabase->Text = "Arquivo:";
 		bSelectDatabase->Text = "Selecionar";
 		lThemeName->Text = "Nome da Camada";
 		lCellArea->Text = "Tamanho da Célula";
@@ -303,6 +309,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cScenario->Text = "Cenário";
 		lScenariosStartTime->Text = "Ano de Início do Cenário";
 		lScenarioName->Text = "Nome de Cenário";
+		lScenarioYears->Text = "Anos com Cenário";
 		//tabValidation
 		lValidationMethod->Text = "Método de Validação/Calibração";
 		lInputThemeName->Text = "Nome do Tema";
@@ -348,6 +355,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSProject = "Arquivo do Projeto";
 		gSDBTitle = "Escolha o arquivo do Bando de Dados";
 		gSDBFilter = "Projeto Terraview (*.tview)|*.tview";
+		gSShape = "Arquivo Shape";
+		gSShapeTitle = "Escolha o arquivo Shape";
+		gSShapeFilter = "Arquivo Shape (*.shp)|*.shp";
 		gSLUTManager = "Gerenciador de Tipo de Uso da Terra sem Dados";
 		gSDemand1Info = "Outro componente de demanda foi modificado anteriormente.\nOs valores de demanda serão apagados.\nDeseja continuar?";
 		gSDemand1Title = "Outro componente de Demanda já utilizado";
@@ -401,6 +411,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		gSUnauthorizedTitle = "Erro - Permissão de escrita";
 		gSScenName = "O nomde do cenário deve ser preenchido.";
 		gSScenNameTitle = "Erro - Nome do Cenário";
+		gSScenSYU = "O(s) ano(s) de atualização do cenário deve(m) ser informado(s).";
+		gSScenSYUTitle = "Erro - Atualização Cenário";
 		gSValSectMet = "Um Método de Validação/Calibração deve ser selecionado.";
 		gSValSectMetTitle = "Erro - Nenhum Método de Validação/Calibração selecionado";
 		gSValExt = "print(\"Porcentagem de acertos CONSIDERANDO O PADRAO RESULTANTE em cada janela:\\n\")";
@@ -1221,7 +1233,8 @@ System::Void LuccME::NovoModelo::bSelectDatabase_Click(System::Object ^ sender, 
 		gSelectedDatabase = bdFile->FileName;
 		array<String^>^ lines = { gSProject, bdFile->FileName };
 		tbSelectedBatabase->Lines = lines;
-		access = true;
+		shape = false;
+		tThemeName->Enabled = true;
 	}
 }
 
@@ -2115,8 +2128,21 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		lvYearsDynamic->GridLines = true;
 		lvYearsDynamic->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
 
+		lvYearScenario->Clear();
+		lvYearScenario->View = View::Details;
+		lvYearScenario->GridLines = true;
+		lvYearScenario->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
+
 		for (int i = 0; i <= time; i++) {
 			lvYearsDynamic->Items->Add(Convert::ToString(tempTime + i));
+			lvYearScenario->Items->Add(Convert::ToString(tempTime + i));
+		}
+
+		if (shape) {
+			lScenarioYears->Visible = true;
+			lvYearScenario->Visible = true;
+			bScenario->Visible = true;
+			lScenarioYearsConfirm->Visible = true;
 		}
 	}
 	
@@ -2286,6 +2312,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 			MessageBox::Show(gSScenST, gSScenSTTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 			checked = false;
 		}
+		else if (shape) {
+			if (lScenarioYearsConfirm->Text == "") {
+				MessageBox::Show(gSScenSYU, gSScenSYUTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+				checked = false;
+			}
+		}
 	}
 
 	if (checked) {
@@ -2326,9 +2358,80 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
 
+				if (shape) {
+					sw->WriteLine("import(\"terralib\")\n");
+					sw->WriteLine("proj = Project {");
+					sw->WriteLine("\tfile = \"t3mp.tview\",");
+					sw->WriteLine("\tclean = true");
+					sw->WriteLine("}");
+
+					sw->WriteLine("l1 = Layer{");
+					sw->WriteLine("\tproject = proj,");
+					sw->WriteLine("\tname = \"" + tThemeName->Text + "\",");
+					sw->WriteLine("\tfile = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\"");
+					sw->WriteLine("}");
+
+					int dynamicVariables = 0;
+					if (cDynamicVariables->Checked == true && lDynamicConfirm->Text != "") {
+						int updateYearsCount = countCaracter(lDynamicConfirm->Text, ',') + 1;
+						array<String^>^ updateYearsArray = gcnew array<String^>(updateYearsCount);
+						String^ layerName = tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\");
+						layerName = layerName->Replace(".shp", "");
+						int caracter = 0;
+
+						for (int i = 0; i < updateYearsArray->Length; i++) {
+							while (lDynamicConfirm->Text[caracter] != ',') {
+								updateYearsArray[i] += lDynamicConfirm->Text[caracter];
+								caracter++;
+								if (caracter == lDynamicConfirm->Text->Length) {
+									break;
+								}
+							}
+							caracter++;
+						}
+
+						for (int i = 0; i < updateYearsArray->Length; i++) {
+							sw->WriteLine("l" + (i + 2) + " = Layer{");
+							sw->WriteLine("\tproject = proj,");
+							sw->WriteLine("\tname = \"" + tThemeName->Text + "_" + updateYearsArray[i]->Replace(" ", "") + "\",");
+							sw->WriteLine("\tfile = \"" + layerName + "_" + updateYearsArray[i]->Replace(" ", "") + ".shp\"");
+							sw->WriteLine("}");
+						}
+						dynamicVariables = updateYearsCount;
+					}
+
+					if (cScenario->Checked == true && lScenarioYearsConfirm->Text != "" && tScenarioName->Text != "") {
+						int updateYearsCount = countCaracter(lScenarioYearsConfirm->Text, ',') + 1;
+						array<String^>^ updateYearsArray = gcnew array<String^>(updateYearsCount);
+						String^ layerName = tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\");
+						layerName = layerName->Replace(".shp", "");
+						int caracter = 0;
+						
+						for (int i = 0; i < updateYearsArray->Length; i++) {
+							while (lScenarioYearsConfirm->Text[caracter] != ',') {
+								updateYearsArray[i] += lScenarioYearsConfirm->Text[caracter];
+								caracter++;
+								if (caracter == lScenarioYearsConfirm->Text->Length) {
+									break;
+								}
+							}
+							caracter++;
+						}
+
+						for (int i = 0; i < updateYearsArray->Length; i++) {
+							sw->WriteLine("l" + (i + 2 + dynamicVariables) + " = Layer{");
+							sw->WriteLine("\tproject = proj,");
+							sw->WriteLine("\tname = \"" + tThemeName->Text + "_" + tScenarioName->Text + "_" + updateYearsArray[i]->Replace(" ", "") + "\",");
+							sw->WriteLine("\tfile = \"" + layerName + "_" + tScenarioName->Text + "_" + updateYearsArray[i]->Replace(" ", "") + ".shp\"");
+							sw->WriteLine("}");
+						}
+					}
+				}
+				
+				sw->WriteLine("");
 				sw->WriteLine("import(\"luccme\")\n");
 				String^ folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
-				if (folderAux->Length > 4) {
+				if (folderAux->Length > ROOTDIR) {
 					sw->WriteLine("dofile(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_submodel.lua\")\n");
 				}
 				else {
@@ -2353,12 +2456,23 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\t-----------------------------------------------------");
 				sw->WriteLine("\t-- Spatial dimension definition                    --");
 				sw->WriteLine("\t-----------------------------------------------------");
-				sw->WriteLine("\tcs = CellularSpace");
-				sw->WriteLine("\t{");
-				sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
-				sw->WriteLine("\t\tlayer = \"" + tThemeName->Text + "\",");
-				sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
-				sw->WriteLine("\t},");
+				
+				if (tbSelectedBatabase->Lines[0]->ToString() == gSShape) {
+					sw->WriteLine("\tcs = CellularSpace");
+					sw->WriteLine("\t{");
+					sw->WriteLine("\t\tproject = \"t3mp.tview\",");
+					sw->WriteLine("\t\tlayer= \"" + tThemeName->Text + "\",");
+					sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
+					sw->WriteLine("\t},");
+				}
+				else {
+					sw->WriteLine("\tcs = CellularSpace");
+					sw->WriteLine("\t{");
+					sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+					sw->WriteLine("\t\tlayer = \"" + tThemeName->Text + "\",");
+					sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
+					sw->WriteLine("\t},");
+				}
 
 				if (cDynamicVariables->Checked == true) {
 					sw->WriteLine();
@@ -2465,9 +2579,14 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":run(" + tModelName->Text + ".endTime)");
-				sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
-				sw->WriteLine("end");
+				
+				if (shape) {
+					sw->WriteLine("\tif (isFile(\"t3mp.tview\")) then");
+					sw->WriteLine("\t\trmFile(\"t3mp.tview\")");
+					sw->WriteLine("\tend");
+				}
 
+				sw->WriteLine("end");
 				sw->Close();
 
 				if (File::Exists(path))
@@ -3299,12 +3418,16 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				String^ fileName = mainFile->FileName;
 				System::IO::StreamReader^ sw = gcnew System::IO::StreamReader(fileName);
 				bool found = false;
+
+				//Used to know when the LuccME Model begins
+				int beginning = 0;
 			
 				String^ line = sw->ReadLine();
 			
 				while (sw->EndOfStream == false) {
 					if (line->Contains("dofile") != TRUE) {
 						line = sw->ReadLine();
+						beginning++;
 					}
 					else {
 						found = true;
@@ -3347,7 +3470,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				sw->Close();
 				sw = gcnew System::IO::StreamReader(fileName);
 			
-				line = sw->ReadLine();
+				//When using Shape file the key word (name =) is used before
+				for (int k = 0; k <= beginning; k++) {
+					line = sw->ReadLine();
+				}
+
 				while (sw->EndOfStream == false) {
 					if (line->Contains("name =") != TRUE) {
 						line = sw->ReadLine();
@@ -3566,15 +3693,48 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						array<String^>^ tempBd = gcnew array<String^>(2);
 						String^ path = dbAux;
 
-						if (File::Exists(path))
-						{
-							tempBd[0] = gSProject;
-							tempBd[1] = dbAux;
-							tbSelectedBatabase->Lines = tempBd;
-							access = true;
+						//Using Shape file the project name is always t3mp.tview
+						if (path == "t3mp.tview") {
+							shape = true;
+							tThemeName->Enabled = false;
+							sw->Close();
+							sw = gcnew System::IO::StreamReader(fileName);
+							String^ tempShape = "";
+							while (sw->EndOfStream == false) {
+								if (tempShape->Contains(":\\") != TRUE) {
+									tempShape = sw->ReadLine();
+								}
+								else {
+									break;
+								}
+							}
+							tempShape = tempShape->Replace("\n", "");
+							tempShape = tempShape->Replace("\t", "");
+							tempShape = tempShape->Replace("file = ", "");
+							tempShape = tempShape->Replace("\"", "");
+							tempShape = tempShape->Replace("\\\\", "\\");
+							
+							if (File::Exists(tempShape))
+							{
+								tempBd[0] = gSShape;
+								tempBd[1] = tempShape;
+								tbSelectedBatabase->Lines = tempBd;
+							}
+							else {
+								imported = false;
+							}
 						}
+						//Using postgis
 						else {
-							imported = false;
+							if (File::Exists(path))
+							{
+								tempBd[0] = gSProject;
+								tempBd[1] = dbAux;
+								tbSelectedBatabase->Lines = tempBd;
+							}
+							else {
+								imported = false;
+							}
 						}
 					}
 					
@@ -3752,6 +3912,43 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 					tScenarioName->Text = tempLine->Replace("\"","");
 					tScenarioName->ForeColor = System::Drawing::Color::Black;
+
+					if (shape) {
+						sw->Close();
+						sw = gcnew System::IO::StreamReader(fileName);
+						
+						int countScenario = 0;
+						
+						line = sw->ReadLine();
+						while (sw->EndOfStream == false) {
+							if (line->Contains(tScenarioName->Text) == TRUE && line->Contains("name =") == FALSE) {
+								countScenario++;
+							}
+							line = sw->ReadLine();
+						}
+						
+						sw->Close();
+						sw = gcnew System::IO::StreamReader(fileName);
+						String^ auxSYU = "";
+
+						for (int k = 0; k < countScenario - 1; k++) {
+							line = sw->ReadLine();
+							while (sw->EndOfStream == false) {
+								if (line->Contains(tScenarioName->Text) == TRUE && line->Contains("name =") == FALSE) {
+									line = line->Replace("\t", "");
+									line = line->Replace("\n", "");
+									line = line->Replace("\"", "");
+									line = line->Substring(0, line->Length - 4);
+									line = line->Substring(line->Length - 4, 4);
+									auxSYU += line + ", ";
+									break;
+								}
+								line = sw->ReadLine();
+							}
+						}
+
+						lScenarioYearsConfirm->Text = auxSYU->Substring(0, auxSYU->Length - 2);
+					}
 				}
 
 				gParametersValues[9] = tScenarioName->Text;
@@ -6433,12 +6630,22 @@ System::Void LuccME::NovoModelo::cScenario_CheckedChanged(System::Object ^ sende
 		tScenariosStartTime->Visible = true;
 		lScenarioName->Visible = true;
 		tScenarioName->Visible = true;
+		if (shape) {
+			lScenarioYears->Visible = true;
+			lvYearScenario->Visible = true;
+			bScenario->Visible = true;
+			lScenarioYearsConfirm->Visible = true;
+		}
 	}
 	else {
 		lScenariosStartTime->Visible = false;
 		tScenariosStartTime->Visible = false;
 		lScenarioName->Visible = false;
 		tScenarioName->Visible = false;
+		lScenarioYears->Visible = false;
+		lvYearScenario->Visible = false;
+		bScenario->Visible = false;
+		lScenarioYearsConfirm->Visible = false;
 	}
 }
 
@@ -6841,4 +7048,38 @@ System::Void LuccME::NovoModelo::tAttributeInitValidation_Leave(System::Object^ 
 System::Void LuccME::NovoModelo::tModelName_Leave(System::Object^  sender, System::EventArgs^  e)
 {
 	tModelName->Text = tModelName->Text->Replace(" ", "");
+}
+
+System::Void LuccME::NovoModelo::bShape_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	//Open the dialog to select the shape file and return the path
+	LuccME::OpenFileDialog^ bdFile = gcnew OpenFileDialog;
+	bdFile->Title = gSShapeTitle;
+	bdFile->Multiselect = false;
+	bdFile->Filter = gSShapeFilter;
+	bdFile->FilterIndex = 1;
+	bdFile->ShowHelp = true;
+
+	if (bdFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		gSelectedDatabase = bdFile->FileName;
+		array<String^>^ lines = { gSShape, bdFile->FileName };
+		tbSelectedBatabase->Lines = lines;
+		shape = true;
+		tThemeName->Text = "layer";
+		tThemeName->Enabled = false;
+	}
+}
+
+System::Void LuccME::NovoModelo::bScenario_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	lScenarioYearsConfirm->Text = "";
+	for (int i = 0; i < lvYearScenario->Items->Count; i++) {
+		if (lvYearScenario->Items[i]->Selected) {
+			lScenarioYearsConfirm->Text += lvYearScenario->Items[i]->Text + ", ";
+		}
+	}
+	if (lScenarioYearsConfirm->Text != "") {
+		lScenarioYearsConfirm->Text = lScenarioYearsConfirm->Text->Substring(0, lScenarioYearsConfirm->Text->Length - 2);
+	}
 }

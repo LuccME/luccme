@@ -52,6 +52,9 @@ namespace LuccME {
 		String^ gSLuaFile = "";
 		String^ gSDBTitle = "";
 		String^ gSDBFilter = "";
+		String^ gSShape = "";
+		String^ gSShapeTitle = "";
+		String^ gSShapeFilter = "";
 		String^ gSLUTManager = ""; 
 		String^ gSDemand1Info = ""; 
 		String^ gSDemand1Title = "";
@@ -118,13 +121,14 @@ namespace LuccME {
 		String^ gSFileMissing = "";
 		String^ gSFileMissing2 = "";
 		String^ gSFileMissingTitle = "";
-
+		String^ gSScenSYU = "";
+		String^ gSScenSYUTitle = "";
 
 	public:
 		bool closing = false;
 		bool forceWriting = false;
 		bool runnable = false;
-		bool access = false;
+		bool shape = false;
 		bool lOpen = false;
 
 		int gDemandComponent = 0;
@@ -149,7 +153,21 @@ namespace LuccME {
 		String^ lLanguage;
 		
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
-		//[0] = lSelectedFolder->Text;
+private: System::Windows::Forms::Label^  lShape;
+public:
+private: System::Windows::Forms::Button^  bShape;
+private: System::Windows::Forms::Label^  lTerraview;
+
+private: System::Windows::Forms::Button^  bScenario;
+private: System::Windows::Forms::Label^  lScenarioYearsConfirm;
+private: System::Windows::Forms::Label^  lScenarioYears;
+private: System::Windows::Forms::ListView^  lvYearScenario;
+
+
+
+
+
+		 //[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
 		//[2] = tStartTime->Text;
 		//[3] = tEndTime->Text;
@@ -342,6 +360,9 @@ namespace LuccME {
 			this->bSelectFolder = (gcnew System::Windows::Forms::Button());
 			this->lDirProj = (gcnew System::Windows::Forms::Label());
 			this->tabDefSpatial = (gcnew System::Windows::Forms::TabPage());
+			this->lTerraview = (gcnew System::Windows::Forms::Label());
+			this->lShape = (gcnew System::Windows::Forms::Label());
+			this->bShape = (gcnew System::Windows::Forms::Button());
 			this->tbSelectedBatabase = (gcnew System::Windows::Forms::TextBox());
 			this->bSelectDatabase = (gcnew System::Windows::Forms::Button());
 			this->tCellArea = (gcnew System::Windows::Forms::TextBox());
@@ -394,6 +415,10 @@ namespace LuccME {
 			this->bGerarArquivos = (gcnew System::Windows::Forms::Button());
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
 			this->tabAdvRes = (gcnew System::Windows::Forms::TabPage());
+			this->bScenario = (gcnew System::Windows::Forms::Button());
+			this->lScenarioYearsConfirm = (gcnew System::Windows::Forms::Label());
+			this->lScenarioYears = (gcnew System::Windows::Forms::Label());
+			this->lvYearScenario = (gcnew System::Windows::Forms::ListView());
 			this->tScenarioName = (gcnew System::Windows::Forms::TextBox());
 			this->lScenarioName = (gcnew System::Windows::Forms::Label());
 			this->tScenariosStartTime = (gcnew System::Windows::Forms::TextBox());
@@ -561,10 +586,10 @@ namespace LuccME {
 			this->tabDefModel->Controls->Add(this->lSelectedFolder);
 			this->tabDefModel->Controls->Add(this->bSelectFolder);
 			this->tabDefModel->Controls->Add(this->lDirProj);
-			this->tabDefModel->Location = System::Drawing::Point(4, 22);
+			this->tabDefModel->Location = System::Drawing::Point(4, 25);
 			this->tabDefModel->Name = L"tabDefModel";
 			this->tabDefModel->Padding = System::Windows::Forms::Padding(3);
-			this->tabDefModel->Size = System::Drawing::Size(717, 455);
+			this->tabDefModel->Size = System::Drawing::Size(717, 452);
 			this->tabDefModel->TabIndex = 0;
 			this->tabDefModel->Text = L"Definições do Modelo";
 			this->tabDefModel->UseVisualStyleBackColor = true;
@@ -574,7 +599,7 @@ namespace LuccME {
 			this->tEndTime->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tEndTime->Location = System::Drawing::Point(249, 297);
 			this->tEndTime->Name = L"tEndTime";
-			this->tEndTime->Size = System::Drawing::Size(80, 20);
+			this->tEndTime->Size = System::Drawing::Size(80, 22);
 			this->tEndTime->TabIndex = 72;
 			this->tEndTime->Text = L"2010";
 			this->tEndTime->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -621,7 +646,7 @@ namespace LuccME {
 			this->tStartTime->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tStartTime->Location = System::Drawing::Point(249, 257);
 			this->tStartTime->Name = L"tStartTime";
-			this->tStartTime->Size = System::Drawing::Size(80, 20);
+			this->tStartTime->Size = System::Drawing::Size(80, 22);
 			this->tStartTime->TabIndex = 68;
 			this->tStartTime->Text = L"1999";
 			this->tStartTime->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -644,7 +669,7 @@ namespace LuccME {
 			this->tModelName->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tModelName->Location = System::Drawing::Point(249, 214);
 			this->tModelName->Name = L"tModelName";
-			this->tModelName->Size = System::Drawing::Size(194, 20);
+			this->tModelName->Size = System::Drawing::Size(194, 22);
 			this->tModelName->TabIndex = 66;
 			this->tModelName->Text = L"LuccMe_model";
 			this->tModelName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -697,6 +722,9 @@ namespace LuccME {
 			// 
 			// tabDefSpatial
 			// 
+			this->tabDefSpatial->Controls->Add(this->lTerraview);
+			this->tabDefSpatial->Controls->Add(this->lShape);
+			this->tabDefSpatial->Controls->Add(this->bShape);
 			this->tabDefSpatial->Controls->Add(this->tbSelectedBatabase);
 			this->tabDefSpatial->Controls->Add(this->bSelectDatabase);
 			this->tabDefSpatial->Controls->Add(this->tCellArea);
@@ -706,13 +734,47 @@ namespace LuccME {
 			this->tabDefSpatial->Controls->Add(this->lSpacialDimensions);
 			this->tabDefSpatial->Controls->Add(this->lSelectedBatabase);
 			this->tabDefSpatial->Controls->Add(this->lDatabase);
-			this->tabDefSpatial->Location = System::Drawing::Point(4, 22);
+			this->tabDefSpatial->Location = System::Drawing::Point(4, 25);
 			this->tabDefSpatial->Name = L"tabDefSpatial";
 			this->tabDefSpatial->Padding = System::Windows::Forms::Padding(3);
-			this->tabDefSpatial->Size = System::Drawing::Size(717, 455);
+			this->tabDefSpatial->Size = System::Drawing::Size(717, 452);
 			this->tabDefSpatial->TabIndex = 1;
 			this->tabDefSpatial->Text = L"Definições Espaciais";
 			this->tabDefSpatial->UseVisualStyleBackColor = true;
+			// 
+			// lTerraview
+			// 
+			this->lTerraview->AutoSize = true;
+			this->lTerraview->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lTerraview->Location = System::Drawing::Point(185, 68);
+			this->lTerraview->Name = L"lTerraview";
+			this->lTerraview->Size = System::Drawing::Size(88, 23);
+			this->lTerraview->TabIndex = 94;
+			this->lTerraview->Text = L"Terraview";
+			this->lTerraview->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// lShape
+			// 
+			this->lShape->AutoSize = true;
+			this->lShape->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lShape->Location = System::Drawing::Point(434, 68);
+			this->lShape->Name = L"lShape";
+			this->lShape->Size = System::Drawing::Size(58, 23);
+			this->lShape->TabIndex = 93;
+			this->lShape->Text = L"Shape";
+			this->lShape->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// bShape
+			// 
+			this->bShape->Location = System::Drawing::Point(425, 94);
+			this->bShape->Name = L"bShape";
+			this->bShape->Size = System::Drawing::Size(75, 23);
+			this->bShape->TabIndex = 92;
+			this->bShape->Text = L"Selecionar";
+			this->bShape->UseVisualStyleBackColor = true;
+			this->bShape->Click += gcnew System::EventHandler(this, &NovoModelo::bShape_Click);
 			// 
 			// tbSelectedBatabase
 			// 
@@ -726,7 +788,7 @@ namespace LuccME {
 			// 
 			// bSelectDatabase
 			// 
-			this->bSelectDatabase->Location = System::Drawing::Point(302, 94);
+			this->bSelectDatabase->Location = System::Drawing::Point(191, 94);
 			this->bSelectDatabase->Name = L"bSelectDatabase";
 			this->bSelectDatabase->Size = System::Drawing::Size(75, 23);
 			this->bSelectDatabase->TabIndex = 79;
@@ -737,9 +799,9 @@ namespace LuccME {
 			// tCellArea
 			// 
 			this->tCellArea->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tCellArea->Location = System::Drawing::Point(238, 284);
+			this->tCellArea->Location = System::Drawing::Point(195, 284);
 			this->tCellArea->Name = L"tCellArea";
-			this->tCellArea->Size = System::Drawing::Size(80, 20);
+			this->tCellArea->Size = System::Drawing::Size(80, 22);
 			this->tCellArea->TabIndex = 85;
 			this->tCellArea->Text = L"6.25";
 			this->tCellArea->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -761,9 +823,9 @@ namespace LuccME {
 			// tThemeName
 			// 
 			this->tThemeName->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tThemeName->Location = System::Drawing::Point(238, 241);
+			this->tThemeName->Location = System::Drawing::Point(195, 241);
 			this->tThemeName->Name = L"tThemeName";
-			this->tThemeName->Size = System::Drawing::Size(194, 20);
+			this->tThemeName->Size = System::Drawing::Size(194, 22);
 			this->tThemeName->TabIndex = 83;
 			this->tThemeName->Text = L"layer_name";
 			this->tThemeName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -811,9 +873,9 @@ namespace LuccME {
 				static_cast<System::Byte>(0)));
 			this->lDatabase->Location = System::Drawing::Point(12, 94);
 			this->lDatabase->Name = L"lDatabase";
-			this->lDatabase->Size = System::Drawing::Size(226, 23);
+			this->lDatabase->Size = System::Drawing::Size(78, 23);
 			this->lDatabase->TabIndex = 78;
-			this->lDatabase->Text = L"Arquivo do Banco de Dados";
+			this->lDatabase->Text = L"Arquivo:";
 			this->lDatabase->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
 			// tabLUT
@@ -825,10 +887,10 @@ namespace LuccME {
 			this->tabLUT->Controls->Add(this->bLUTManager);
 			this->tabLUT->Controls->Add(this->lLUTMedium);
 			this->tabLUT->Controls->Add(this->lLUTLarge);
-			this->tabLUT->Location = System::Drawing::Point(4, 22);
+			this->tabLUT->Location = System::Drawing::Point(4, 25);
 			this->tabLUT->Name = L"tabLUT";
 			this->tabLUT->Padding = System::Windows::Forms::Padding(3);
-			this->tabLUT->Size = System::Drawing::Size(717, 455);
+			this->tabLUT->Size = System::Drawing::Size(717, 452);
 			this->tabLUT->TabIndex = 2;
 			this->tabLUT->Text = L"Tipos de Uso da Terra";
 			this->tabLUT->UseVisualStyleBackColor = true;
@@ -923,9 +985,9 @@ namespace LuccME {
 			this->tabComponent->Controls->Add(this->bD_PCVINPE);
 			this->tabComponent->Controls->Add(this->lDemand);
 			this->tabComponent->Controls->Add(this->lComponentes);
-			this->tabComponent->Location = System::Drawing::Point(4, 22);
+			this->tabComponent->Location = System::Drawing::Point(4, 25);
 			this->tabComponent->Name = L"tabComponent";
-			this->tabComponent->Size = System::Drawing::Size(717, 455);
+			this->tabComponent->Size = System::Drawing::Size(717, 452);
 			this->tabComponent->TabIndex = 3;
 			this->tabComponent->Text = L"Componentes";
 			this->tabComponent->UseVisualStyleBackColor = true;
@@ -1102,10 +1164,10 @@ namespace LuccME {
 			this->tabSaveParam->Controls->Add(this->lSalvar);
 			this->tabSaveParam->Controls->Add(this->tOutputTheme);
 			this->tabSaveParam->Controls->Add(this->lOutputTheme);
-			this->tabSaveParam->Location = System::Drawing::Point(4, 22);
+			this->tabSaveParam->Location = System::Drawing::Point(4, 25);
 			this->tabSaveParam->Name = L"tabSaveParam";
 			this->tabSaveParam->Padding = System::Windows::Forms::Padding(3);
-			this->tabSaveParam->Size = System::Drawing::Size(717, 455);
+			this->tabSaveParam->Size = System::Drawing::Size(717, 452);
 			this->tabSaveParam->TabIndex = 4;
 			this->tabSaveParam->Text = L"Salvar Parâmetros";
 			this->tabSaveParam->UseVisualStyleBackColor = true;
@@ -1237,7 +1299,7 @@ namespace LuccME {
 			this->tOutputTheme->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tOutputTheme->Location = System::Drawing::Point(267, 84);
 			this->tOutputTheme->Name = L"tOutputTheme";
-			this->tOutputTheme->Size = System::Drawing::Size(162, 20);
+			this->tOutputTheme->Size = System::Drawing::Size(162, 22);
 			this->tOutputTheme->TabIndex = 85;
 			this->tOutputTheme->Text = L"LuccMe_Model_";
 			this->tOutputTheme->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1261,10 +1323,10 @@ namespace LuccME {
 			this->tabFileMaker->Controls->Add(this->lRunModel);
 			this->tabFileMaker->Controls->Add(this->bGerarArquivos);
 			this->tabFileMaker->Controls->Add(this->lFileMaker);
-			this->tabFileMaker->Location = System::Drawing::Point(4, 22);
+			this->tabFileMaker->Location = System::Drawing::Point(4, 25);
 			this->tabFileMaker->Name = L"tabFileMaker";
 			this->tabFileMaker->Padding = System::Windows::Forms::Padding(3);
-			this->tabFileMaker->Size = System::Drawing::Size(717, 455);
+			this->tabFileMaker->Size = System::Drawing::Size(717, 452);
 			this->tabFileMaker->TabIndex = 5;
 			this->tabFileMaker->Text = L"Gerar Arquivo";
 			this->tabFileMaker->UseVisualStyleBackColor = true;
@@ -1317,6 +1379,10 @@ namespace LuccME {
 			// 
 			// tabAdvRes
 			// 
+			this->tabAdvRes->Controls->Add(this->bScenario);
+			this->tabAdvRes->Controls->Add(this->lScenarioYearsConfirm);
+			this->tabAdvRes->Controls->Add(this->lScenarioYears);
+			this->tabAdvRes->Controls->Add(this->lvYearScenario);
 			this->tabAdvRes->Controls->Add(this->tScenarioName);
 			this->tabAdvRes->Controls->Add(this->lScenarioName);
 			this->tabAdvRes->Controls->Add(this->tScenariosStartTime);
@@ -1328,20 +1394,64 @@ namespace LuccME {
 			this->tabAdvRes->Controls->Add(this->lAnosVariaveis);
 			this->tabAdvRes->Controls->Add(this->lvYearsDynamic);
 			this->tabAdvRes->Controls->Add(this->cDynamicVariables);
-			this->tabAdvRes->Location = System::Drawing::Point(4, 22);
+			this->tabAdvRes->Location = System::Drawing::Point(4, 25);
 			this->tabAdvRes->Name = L"tabAdvRes";
 			this->tabAdvRes->Padding = System::Windows::Forms::Padding(3);
-			this->tabAdvRes->Size = System::Drawing::Size(717, 455);
+			this->tabAdvRes->Size = System::Drawing::Size(717, 452);
 			this->tabAdvRes->TabIndex = 6;
 			this->tabAdvRes->Text = L"Recursos Avançados";
 			this->tabAdvRes->UseVisualStyleBackColor = true;
 			// 
+			// bScenario
+			// 
+			this->bScenario->Location = System::Drawing::Point(476, 380);
+			this->bScenario->Name = L"bScenario";
+			this->bScenario->Size = System::Drawing::Size(75, 23);
+			this->bScenario->TabIndex = 107;
+			this->bScenario->Text = L"Selecionar";
+			this->bScenario->UseVisualStyleBackColor = true;
+			this->bScenario->Visible = false;
+			this->bScenario->Click += gcnew System::EventHandler(this, &NovoModelo::bScenario_Click);
+			// 
+			// lScenarioYearsConfirm
+			// 
+			this->lScenarioYearsConfirm->AutoSize = true;
+			this->lScenarioYearsConfirm->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lScenarioYearsConfirm->Location = System::Drawing::Point(435, 417);
+			this->lScenarioYearsConfirm->Name = L"lScenarioYearsConfirm";
+			this->lScenarioYearsConfirm->Size = System::Drawing::Size(0, 19);
+			this->lScenarioYearsConfirm->TabIndex = 106;
+			this->lScenarioYearsConfirm->Visible = false;
+			// 
+			// lScenarioYears
+			// 
+			this->lScenarioYears->AutoSize = true;
+			this->lScenarioYears->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lScenarioYears->Location = System::Drawing::Point(433, 219);
+			this->lScenarioYears->Name = L"lScenarioYears";
+			this->lScenarioYears->Size = System::Drawing::Size(163, 23);
+			this->lScenarioYears->TabIndex = 105;
+			this->lScenarioYears->Text = L"Anos com Variáveis";
+			this->lScenarioYears->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->lScenarioYears->Visible = false;
+			// 
+			// lvYearScenario
+			// 
+			this->lvYearScenario->Location = System::Drawing::Point(428, 245);
+			this->lvYearScenario->Name = L"lvYearScenario";
+			this->lvYearScenario->Size = System::Drawing::Size(171, 129);
+			this->lvYearScenario->TabIndex = 104;
+			this->lvYearScenario->UseCompatibleStateImageBehavior = false;
+			this->lvYearScenario->Visible = false;
+			// 
 			// tScenarioName
 			// 
 			this->tScenarioName->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tScenarioName->Location = System::Drawing::Point(432, 193);
+			this->tScenarioName->Location = System::Drawing::Point(432, 180);
 			this->tScenarioName->Name = L"tScenarioName";
-			this->tScenarioName->Size = System::Drawing::Size(162, 20);
+			this->tScenarioName->Size = System::Drawing::Size(162, 22);
 			this->tScenarioName->TabIndex = 103;
 			this->tScenarioName->Text = L"cenarioA";
 			this->tScenarioName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1353,7 +1463,7 @@ namespace LuccME {
 			this->lScenarioName->AutoSize = true;
 			this->lScenarioName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lScenarioName->Location = System::Drawing::Point(440, 164);
+			this->lScenarioName->Location = System::Drawing::Point(440, 151);
 			this->lScenarioName->Name = L"lScenarioName";
 			this->lScenarioName->Size = System::Drawing::Size(147, 23);
 			this->lScenarioName->TabIndex = 102;
@@ -1366,7 +1476,7 @@ namespace LuccME {
 			this->tScenariosStartTime->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tScenariosStartTime->Location = System::Drawing::Point(432, 111);
 			this->tScenariosStartTime->Name = L"tScenariosStartTime";
-			this->tScenariosStartTime->Size = System::Drawing::Size(162, 20);
+			this->tScenariosStartTime->Size = System::Drawing::Size(162, 22);
 			this->tScenariosStartTime->TabIndex = 101;
 			this->tScenariosStartTime->Text = L"2015";
 			this->tScenariosStartTime->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1488,10 +1598,10 @@ namespace LuccME {
 			this->tabValidation->Controls->Add(this->lAttributeForValidation);
 			this->tabValidation->Controls->Add(this->tInputThemeName);
 			this->tabValidation->Controls->Add(this->lInputThemeName);
-			this->tabValidation->Location = System::Drawing::Point(4, 22);
+			this->tabValidation->Location = System::Drawing::Point(4, 25);
 			this->tabValidation->Name = L"tabValidation";
 			this->tabValidation->Padding = System::Windows::Forms::Padding(3);
-			this->tabValidation->Size = System::Drawing::Size(717, 455);
+			this->tabValidation->Size = System::Drawing::Size(717, 452);
 			this->tabValidation->TabIndex = 7;
 			this->tabValidation->Text = L"Validação";
 			this->tabValidation->UseVisualStyleBackColor = true;
@@ -1514,7 +1624,7 @@ namespace LuccME {
 			this->cbValidationMethod->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->cbValidationMethod->Location = System::Drawing::Point(195, 68);
 			this->cbValidationMethod->Name = L"cbValidationMethod";
-			this->cbValidationMethod->Size = System::Drawing::Size(316, 21);
+			this->cbValidationMethod->Size = System::Drawing::Size(316, 24);
 			this->cbValidationMethod->TabIndex = 105;
 			// 
 			// cValidationSave
@@ -1557,7 +1667,7 @@ namespace LuccME {
 			this->tNumberWindows->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tNumberWindows->Location = System::Drawing::Point(506, 258);
 			this->tNumberWindows->Name = L"tNumberWindows";
-			this->tNumberWindows->Size = System::Drawing::Size(162, 20);
+			this->tNumberWindows->Size = System::Drawing::Size(162, 22);
 			this->tNumberWindows->TabIndex = 116;
 			this->tNumberWindows->Text = L"10";
 			this->tNumberWindows->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1580,7 +1690,7 @@ namespace LuccME {
 			this->tRange->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tRange->Location = System::Drawing::Point(506, 162);
 			this->tRange->Name = L"tRange";
-			this->tRange->Size = System::Drawing::Size(162, 20);
+			this->tRange->Size = System::Drawing::Size(162, 22);
 			this->tRange->TabIndex = 105;
 			this->tRange->Text = L"0";
 			this->tRange->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1625,7 +1735,7 @@ namespace LuccME {
 			this->tAttributeFinalValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tAttributeFinalValidation->Location = System::Drawing::Point(275, 258);
 			this->tAttributeFinalValidation->Name = L"tAttributeFinalValidation";
-			this->tAttributeFinalValidation->Size = System::Drawing::Size(162, 20);
+			this->tAttributeFinalValidation->Size = System::Drawing::Size(162, 22);
 			this->tAttributeFinalValidation->TabIndex = 107;
 			this->tAttributeFinalValidation->Text = L"desmatamento";
 			this->tAttributeFinalValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1648,7 +1758,7 @@ namespace LuccME {
 			this->tAttributeInitValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tAttributeInitValidation->Location = System::Drawing::Point(275, 162);
 			this->tAttributeInitValidation->Name = L"tAttributeInitValidation";
-			this->tAttributeInitValidation->Size = System::Drawing::Size(162, 20);
+			this->tAttributeInitValidation->Size = System::Drawing::Size(162, 22);
 			this->tAttributeInitValidation->TabIndex = 104;
 			this->tAttributeInitValidation->Text = L"desmatamento";
 			this->tAttributeInitValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1672,7 +1782,7 @@ namespace LuccME {
 			this->tAttributeForValidation->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tAttributeForValidation->Location = System::Drawing::Point(33, 258);
 			this->tAttributeForValidation->Name = L"tAttributeForValidation";
-			this->tAttributeForValidation->Size = System::Drawing::Size(162, 20);
+			this->tAttributeForValidation->Size = System::Drawing::Size(162, 22);
 			this->tAttributeForValidation->TabIndex = 106;
 			this->tAttributeForValidation->Text = L"desmatamento_out";
 			this->tAttributeForValidation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1695,7 +1805,7 @@ namespace LuccME {
 			this->tInputThemeName->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tInputThemeName->Location = System::Drawing::Point(33, 162);
 			this->tInputThemeName->Name = L"tInputThemeName";
-			this->tInputThemeName->Size = System::Drawing::Size(162, 20);
+			this->tInputThemeName->Size = System::Drawing::Size(162, 22);
 			this->tInputThemeName->TabIndex = 103;
 			this->tInputThemeName->Text = L"theme_name";
 			this->tInputThemeName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1804,5 +1914,7 @@ namespace LuccME {
 	private: System::Void showReturnMaxEntLike(String^ component);
 	private: System::Void showReturnARLR();
 	private: System::Void tModelName_Leave(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bShape_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bScenario_Click(System::Object^  sender, System::EventArgs^  e);
 	};
 }

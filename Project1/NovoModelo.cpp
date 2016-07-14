@@ -81,6 +81,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bSelectDatabase->Text = "Select";
 		lThemeName->Text = "Layer Name";
 		lCellArea->Text = "Cell Area";
+		lTerraview->Text = "Terraview Project";
 		//tabLUT
 		lLUTLarge->Text = "     Land Use Types";
 		lLUTMedium->Text = "Land Use Types";
@@ -273,6 +274,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bSelectDatabase->Text = "Selecionar";
 		lThemeName->Text = "Nome da Camada";
 		lCellArea->Text = "Tamanho da Célula";
+		lTerraview->Text = "Projeto Terraview";
 		//tabLUT
 		lLUTLarge->Text = "Tipos de Uso da Terra";
 		lLUTMedium->Text = "Tipos de Uso da Terra";
@@ -2579,6 +2581,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":run(" + tModelName->Text + ".endTime)");
+				sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
 				
 				if (shape) {
 					sw->WriteLine("\tif (isFile(\"t3mp.tview\")) then");

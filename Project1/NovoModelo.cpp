@@ -2140,7 +2140,7 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 			lvYearScenario->Items->Add(Convert::ToString(tempTime + i));
 		}
 
-		if (shape) {
+		if (shape && cScenario->Checked == true) {
 			lScenarioYears->Visible = true;
 			lvYearScenario->Visible = true;
 			bScenario->Visible = true;
@@ -2361,17 +2361,21 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("--------------------------------------------------------------\n");
 
 				if (shape) {
+					sw->WriteLine("--------------------------------------------------------------");
+					sw->WriteLine("-- Creating Terraview Project                               --");
+					sw->WriteLine("--------------------------------------------------------------");
+					sw->WriteLine("");
 					sw->WriteLine("import(\"terralib\")\n");
 					sw->WriteLine("proj = Project {");
 					sw->WriteLine("\tfile = \"t3mp.tview\",");
 					sw->WriteLine("\tclean = true");
-					sw->WriteLine("}");
+					sw->WriteLine("}\n");
 
 					sw->WriteLine("l1 = Layer{");
 					sw->WriteLine("\tproject = proj,");
 					sw->WriteLine("\tname = \"" + tThemeName->Text + "\",");
 					sw->WriteLine("\tfile = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\"");
-					sw->WriteLine("}");
+					sw->WriteLine("}\n");
 
 					int dynamicVariables = 0;
 					if (cDynamicVariables->Checked == true && lDynamicConfirm->Text != "") {
@@ -2397,7 +2401,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							sw->WriteLine("\tproject = proj,");
 							sw->WriteLine("\tname = \"" + tThemeName->Text + "_" + updateYearsArray[i]->Replace(" ", "") + "\",");
 							sw->WriteLine("\tfile = \"" + layerName + "_" + updateYearsArray[i]->Replace(" ", "") + ".shp\"");
-							sw->WriteLine("}");
+							sw->WriteLine("}\n");
 						}
 						dynamicVariables = updateYearsCount;
 					}
@@ -2425,9 +2429,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							sw->WriteLine("\tproject = proj,");
 							sw->WriteLine("\tname = \"" + tThemeName->Text + "_" + tScenarioName->Text + "_" + updateYearsArray[i]->Replace(" ", "") + "\",");
 							sw->WriteLine("\tfile = \"" + layerName + "_" + tScenarioName->Text + "_" + updateYearsArray[i]->Replace(" ", "") + ".shp\"");
-							sw->WriteLine("}");
+							sw->WriteLine("}\n");
 						}
 					}
+					sw->WriteLine("--------------------------------------------------------------");
+					sw->WriteLine("-- LuccME Model                                             --");
+					sw->WriteLine("--------------------------------------------------------------");
 				}
 				
 				sw->WriteLine("");
@@ -2442,7 +2449,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine();
 
 				sw->WriteLine("--------------------------------------------------------------");
-				sw->WriteLine("--             LuccME APPLICATION MODEL DEFINITION          --");
+				sw->WriteLine("-- LuccME APPLICATION MODEL DEFINITION                      --");
 				sw->WriteLine("--------------------------------------------------------------");
 
 				sw->WriteLine(tModelName->Text + " = LuccMEModel");

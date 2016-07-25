@@ -108,7 +108,7 @@ function LuccMEModel(model)
 	-- Implements the execution method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage --DONTRUN
-  -- model.run(event)
+	-- model.run(event)
 	model.run = function(self, event)
 		if (event:getTime() == self.startTime) then
 			model:verify(event)
@@ -130,9 +130,9 @@ function LuccMEModel(model)
 	-- Implements the verify method of a LuccMe model.
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @usage --DONTRUN 
-  -- model.verify(event)
+	-- model.verify(event)
 	model.verify = function(self, event)
-    local equal = 0
+		local equal = 0
 		print("\nVerifying Model parameters")
 		-- Verify the model name
 		if (model.name == nil) then
@@ -151,24 +151,24 @@ function LuccMEModel(model)
 		
 		  -- Verify the scenario stop time
 		if (self.endTime == nil) then
-		  error("A scenario end time is required", 2)
+			error("A scenario end time is required", 2)
 		end
 		
 		-- Verify the scenario date
 		if (self.endTime <= self.startTime) then
-		  error("The scenario end time must be higher than the scenario start time", 2)
+			error("The scenario end time must be higher than the scenario start time", 2)
 		end
 
 		-- Verify the cellular space
 		if (not self.cs) then
-		  error("A Cellular Space must be defined", 2)
+			error("A Cellular Space must be defined", 2)
 		end
 
 		-- Verify whether the land use no data is declared and its valid
 		if(self.landUseNoData == nil) then
-		  error("Land use no data type is missing", 2)
+			error("Land use no data type is missing", 2)
 		elseif(self.cs.cells[1][self.landUseNoData] == nil) then
-		  error("landUseNoData: "..self.landUseNoData.." not found within database", 2)
+			error("landUseNoData: "..self.landUseNoData.." not found within database", 2)
 		end
     
 		self.result = {}
@@ -211,12 +211,12 @@ function LuccMEModel(model)
 		
 		-- Verify wheter the potential compontent was declared
 		if (not self.potential) then
-		  error("A potential component must be specified", 2)     
+			error("A potential component must be specified", 2)     
 		end
 			
 			-- Verify wheter the allocation compontent was declared
 		if (not self.allocation) then
-		  error("An allocation component must be specified", 2)     
+			error("An allocation component must be specified", 2)     
 		end
     
 		-- Verify the dates to be saved
@@ -233,7 +233,7 @@ function LuccMEModel(model)
 	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
 	-- @arg model A luccME Model.
 	-- @usage --DONTRUN 
-  -- model.dinamicVars(event)
+	-- model.dinamicVars(event)
 	model.dinamicVars = function(self, event, model)
 		local currentTime = event:getTime()
 		local cs = model.cs
@@ -268,7 +268,7 @@ function LuccMEModel(model)
 																if (cell[var] ~= nil) then
 																	cell[var] = cell_temp[var]
 																	if (flag == false) then
-																		print("          ".."\t"..var.."\t"..cell[var])
+																		print("\t"..var)
 																	end		          					
 																end
 														end -- 1st inner if
@@ -280,7 +280,7 @@ function LuccMEModel(model)
 		end -- for				
 	end -- dinamicVars
 
-  collectgarbage("collect")
+	collectgarbage("collect")
 	return model
 end
 
@@ -290,9 +290,9 @@ end
 -- @usage --DONTRUN
 -- error("Missing something", 1)
 error = function(message, code)
-			      print("\n[Error] "..message)
-            io.write("\nPress enter key to exit...")
-            io.flush()
-            io.read()
-			      os.exit()
-        end
+	print("\n[Error] "..message)
+	io.write("\nPress enter key to exit...")
+	io.flush()
+	io.read()
+	os.exit()
+end

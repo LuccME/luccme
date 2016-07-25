@@ -46,19 +46,19 @@ function PreComputedValuesINPE(component)
 		local static = 0
 		local	step = 0
 		local luTypes = luccMEModel.landUseTypes
-		
+
 		step = event:getTime() - luccMEModel.startTime + 1
-		
+
 		if (#self.annualDemand < step) then	
 			error("Time required exceeds the demand set", 5)
 		end
-		
+
 		self.currentDemand = self.annualDemand[step]
-			
+
 		if (event:getTime() == luccMEModel.startTime) then
-		   self.previousDemand = self.currentDemand
+			self.previousDemand = self.currentDemand
 		else
-		   self.previousDemand = self.annualDemand[step - 1]
+			self.previousDemand = self.annualDemand[step - 1]
 		end
 
 		self.demandDirection = {}
@@ -69,6 +69,7 @@ function PreComputedValuesINPE(component)
 				if (self.previousDemand[i] < self.currentDemand[i]) then
 					self.demandDirection[i] = increasing
 				end
+				
 				if (self.previousDemand[i] > self.currentDemand[i]) then
 					self.demandDirection[i] = decreasing
 				end
@@ -84,12 +85,12 @@ function PreComputedValuesINPE(component)
 	component.verify = function(self, event, luccMEModel)
 		print("Verifying Demand parameters")
 		local yearsSimulated = (luccMEModel.endTime - luccMEModel.startTime) + 1
-		
+
 		-- Check if the demand is proper to the number of years to simulate
 		if (#self.annualDemand < yearsSimulated) then
 			error("The simulation time exceeds the demand set", 5)
 		end	
-		
+
 		-- Check the number of years to simulate
 		if (yearsSimulated == 0) then
 			error("The simulation time is zero", 5)
@@ -102,12 +103,14 @@ function PreComputedValuesINPE(component)
 
 		for k, lu in pairs (luTypes) do
 			self.demandDirection[k] = 0
+			
 			if (self.annualDemand[1][k] == nil) then
 				error("Invalid number of land use in the demand table", 5)
 			end
+			
 			self.numLU = self.numLU + 1
 		end
-		
+
 		self.currentDemand = self.annualDemand[1]	
 		self.previousDemand = self.annualDemand[1]
 	end
@@ -139,7 +142,7 @@ function PreComputedValuesINPE(component)
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
 		end
-		
+
 		return self.currentDemand[luIndex]
 	end
 
@@ -179,17 +182,16 @@ function PreComputedValuesINPE(component)
 	-- component.changeLuDirection(luIndex)
 	component.changeLuDirection = function(self, luIndex)
 		local oppositeDirection = -1
-		
+
 		if (luIndex > self.numLU) then
 			error("Invalid land use index", 5)
 		end
 
 		self.demandDirection[luIndex] = self.demandDirection[luIndex] * oppositeDirection
-		
+
 		return self.demandDirection[luIndex]
 	end		
 
-  collectgarbage("collect")
+	collectgarbage("collect")
 	return component
-end -- ScenariosDemand
-		
+end -- PreComputedValuesINPE

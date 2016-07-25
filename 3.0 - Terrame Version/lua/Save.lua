@@ -48,6 +48,7 @@ function databaseSave(luccMEModel)
 										print("\nSaving "..luccMEModel.save.outputTheme..event:getTime().." into database.")
 										luccMEModel.cs:save(luccMEModel.save.outputTheme..event:getTime(), luccMEModel.save.saveAttrs)
 									end
+									
 									return false
 								end
 					}

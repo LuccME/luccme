@@ -48,6 +48,7 @@ function databaseSave(luccMEModel)
 										print("\nSaving "..luccMEModel.save.outputTheme..event:getTime().." into database.")
 										luccMEModel.cs:save(luccMEModel.save.outputTheme..event:getTime(), luccMEModel.save.saveAttrs)
 									end
+									
 									return false
 								end
 					}
@@ -122,6 +123,6 @@ function saveSingleTheme(luccMEModel)
 	
 	-- Hold the screen
 	io.write("\nPress enter key to exit...")
-  io.flush()
-  io.read()
+	io.flush()
+	io.read()
 end

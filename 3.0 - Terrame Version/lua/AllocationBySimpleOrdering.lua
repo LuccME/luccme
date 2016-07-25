@@ -66,28 +66,28 @@ function AllocationBySimpleOrdering(component)
 		for ind, lu in  pairs (luTypes) do	
 			if (lu ~= luccMEModel.landUseNoData) then 
 				ord = Trajectory { target = cs,
-        								   select = function(cell)
-														return (cell.alloc ~= 1 and cell.simUse ~= luccMEModel.landUseNoData)
-													 end,
-        								   greater = function(c, d)
-														return c[lu.."_pot"] > d[lu.."_pot"]
-													 end
+								   select = function(cell)
+												return (cell.alloc ~= 1 and cell.simUse ~= luccMEModel.landUseNoData)
+											end,
+								   greater = function(c, d)
+												return c[lu.."_pot"] > d[lu.."_pot"]
+											end
 								 }
 
 				--Seleção de tantas células quanto forem necessárias na demanda
 				local j = 1
 				if (dem[lu] == -1) then
-					--dem[lu] = demand:getCurrentDemand(model)
 					dem[lu] = demand.currentDemand
 					dem[lu] = dem[lu][ind]
 				end
+				
 				local cs_size = #cs.cells
 				local trj_size = #ord.cells	
 				
 				print("demand\t"..lu.."\t"..dem[lu].."\ttrajectory size".."\t"..trj_size)
 		
 				while (j <= dem[lu]) and (j <= (trj_size * cellarea))  do 
-					-- Este atributo irá me indicar se a célula já teve seu uso alocado ou não
+					-- This show if the use was allocated or not
 					ord.cells[j].alloc = 1
 					ord.cells[j].simUse = lu
 					j = j + 1
@@ -104,6 +104,7 @@ function AllocationBySimpleOrdering(component)
 				else
 					dem[lu] = 0
 				end
+				
 				-- Diferença total
 				diff = diff + math.abs(differences[lu])
 			end
@@ -114,13 +115,13 @@ function AllocationBySimpleOrdering(component)
 		end
  		
 		if (allocation_ok == true) then 
- 			--Atualizando os status de uso de cada uma das células se a demanda foi alocada corretamente
+ 			-- Update the status of each use for eache cell if the demand was allocated
 			for k, cell in pairs (cs.cells) do			
  				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
  				cell.alloc = 0
  			end
+			
 			print("\nDemand allocated correctly in this time: "..event:getTime())
- 			-- If the number of iterations is larger than or equal to the maximum number of iterations allowed
 		else
 			error("\nDemand not allocated correctly in this time: "..event:getTime())
 		end      	
@@ -132,8 +133,9 @@ function AllocationBySimpleOrdering(component)
 	-- component.verify(event, self)
 	component.verify = function(self, event)
 		print("Verifying Allocation parameters")
+		
 		if (self.maxDifference == nil) then
-		  error("maxDifference variable is missing", 2)
+			error("maxDifference variable is missing", 2)
 		end
 	end
 
@@ -147,9 +149,9 @@ function AllocationBySimpleOrdering(component)
 	component.areaAllocated = function(self, cs, cellarea, field, attr)
 		local c = 0
 		forEachCell(cs, function(cell)
-						  if (cell[field] == attr) then
-							c = c + 1   
-						  end
+							if (cell[field] == attr) then
+								c = c + 1   
+							end
 						end
 					)
 					
@@ -165,15 +167,17 @@ function AllocationBySimpleOrdering(component)
 	component.changeUse = function(self, cell, cur_use, higher_use)
 		cell[cur_use] = 0
 		cell[cur_use.."_out"] = 0
+		
 		cell[higher_use] = 1
 		cell[higher_use.."_out"] = 1
 	  
 		cell[higher_use.."_change"] = 0
 		cell[cur_use.."_change"] = 0  
+		
 		if (cur_use ~= higher_use) then
-		  cell[higher_use.."_change"] = 1
-		  cell[cur_use.."_change"] = -1 
-		 end
+			cell[higher_use.."_change"] = 1
+			cell[cur_use.."_change"] = -1 
+		end
 	end
 
 	-- Return the current use for a cell area.
@@ -189,6 +193,6 @@ function AllocationBySimpleOrdering(component)
 		end
 	end
 
-  collectgarbage("collect")
+	collectgarbage("collect")
 	return component
 end -- end of AllocationCluesLike

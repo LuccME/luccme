@@ -16,37 +16,37 @@ function NeighSimpleRule(component)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
- 		local landUseDrivers = self.landUseDrivers
+		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
-		
+
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
-    	if(event:getTime() == luccMEModel.startTime) then
-    		cs:createNeighborhood()		
-    	end
+			if(event:getTime() == luccMEModel.startTime) then
+				cs:createNeighborhood()		
+			end
 		end
- 		
+
 		local totalNeigh = 0
-  		
+
 		for k, cell in pairs (cs.cells) do
 			totalNeigh = #cell:getNeighborhood()
-		 	
-		 	if (cell.region == nil) then
-				  cell.region = 1
+
+			if (cell.region == nil) then
+				cell.region = 1
 			end 	
-      
+
 			for i, lu in pairs (luTypes) do 
 				cell[lu.."_pot"] = 0
-					local numNeigh = 0;
-					forEachNeighbor(cell, function(cell, neigh)				
-          												if (neigh[lu] == 1) then					
-          													numNeigh = numNeigh + 1
-          												end
-          											end
-        									)
-									
-				-- Step 4: Compute potential
+				local numNeigh = 0;
+				
+				forEachNeighbor(cell, function(cell, neigh)				
+											if (neigh[lu] == 1) then					
+												numNeigh = numNeigh + 1
+											end
+										end
+								)
+
 				if (totalNeigh > 0) then
 					cell[lu.."_pot"] = numNeigh / totalNeigh 	
 				else 	
@@ -55,15 +55,15 @@ function NeighSimpleRule(component)
 			end -- for i
 		end -- for k
 	end -- end run
-	
+
 	-- Handles with the verify method of a NeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @usage --DONTRUN 
 	-- component.verify(self, event)
 	component.verify = function(self, event)
-	  print("Verifying Potential parameters")
+		print("Verifying Potential parameters")
 	end
 
-  collectgarbage("collect")
+	collectgarbage("collect")
 	return component
 end --close RegressionLogistcModelNeighbourhood

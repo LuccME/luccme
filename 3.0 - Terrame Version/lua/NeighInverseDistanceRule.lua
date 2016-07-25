@@ -61,60 +61,60 @@ function NeighInverseDistanceRule(component)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
- 		local landUseDrivers = self.landUseDrivers
+		local landUseDrivers = self.landUseDrivers
 		local filename = self.filename
-    local nRegions = #self.potentialData
-		
+		local nRegions = #self.potentialData
+
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
-      if(event:getTime() == luccMEModel.startTime) then
-        cs:createNeighborhood()   
-      end
+			if(event:getTime() == luccMEModel.startTime) then
+				cs:createNeighborhood()   
+			end
 		end
- 		
+
 		local totalNeigh = 0
-  		
+
 		for k, cell in pairs (cs.cells) do
-      for rNumber = 1, nRegions, 1 do
-  			totalNeigh = #cell:getNeighborhood()
-  		 	if (cell.region == rNumber) then  
-    			for i, lu in pairs (luTypes) do 
-    				cell[lu.."_pot"] = 0
-    				local numNeigh = 0;
-    				
-    				forEachNeighbor(cell, function(cell, neigh)				
-              											if (neigh[lu] == 1) then					
-              												numNeigh = numNeigh + 1
-              											end
-              										end
-            								)
-    								
-    				-- Step 4: Compute potential
-    				if (totalNeigh > 0) then
-    					cell[lu.."_pot"] = numNeigh / totalNeigh 	
-    				else 	
-    					cell[lu.."_pot"] = 0
-    				end	
-    			
-    				local luData = self.potentialData[rNumber][i]
-    				local potDrivers = 0
-    				
-    				for var, coef in pairs (luData.betas) do
-    					if (cell[var] > 0) then
-    						potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
-    					else
-    						potDrivers = potDrivers + luData.const
-    					end
-    				end
-    
-    				if (potDrivers > 1) then 
-    				  potDrivers = 1 
-  				  end
-      
-    				cell[lu.."_pot"] = cell[lu.."_pot"] + potDrivers
-    			end -- for i
-  			end -- if region
+			for rNumber = 1, nRegions, 1 do
+				totalNeigh = #cell:getNeighborhood()
+				if (cell.region == rNumber) then  
+					for i, lu in pairs (luTypes) do 
+						cell[lu.."_pot"] = 0
+						local numNeigh = 0;
+
+						forEachNeighbor(cell, function(cell, neigh)				
+													if (neigh[lu] == 1) then					
+													numNeigh = numNeigh + 1
+													end
+												end
+										)
+
+						-- Step 4: Compute potential
+						if (totalNeigh > 0) then
+							cell[lu.."_pot"] = numNeigh / totalNeigh 	
+						else 	
+							cell[lu.."_pot"] = 0
+						end	
+
+						local luData = self.potentialData[rNumber][i]
+						local potDrivers = 0
+
+						for var, coef in pairs (luData.betas) do
+							if (cell[var] > 0) then
+								potDrivers = potDrivers + coef * 1 / cell[var] * luData.const
+							else
+								potDrivers = potDrivers + luData.const
+							end
+						end
+
+						if (potDrivers > 1) then 
+							potDrivers = 1 
+						end
+
+						cell[lu.."_pot"] = cell[lu.."_pot"] + potDrivers
+					end -- for i
+				end -- if region
 			end -- for rNumber
 		end -- for k
 	end -- end run
@@ -125,64 +125,67 @@ function NeighInverseDistanceRule(component)
 	-- @usage --DONTRUN
 	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
-	  local cs = luccMEModel.cs
-	  print("Verifying Potential parameters")
-    -- check potentialData
-    if (self.potentialData == nil) then
-      error("potentialData is missing", 2)
-    end    
-    
-     local regionsNumber = #self.potentialData
+		local cs = luccMEModel.cs
+		print("Verifying Potential parameters")
+		
+		-- check potentialData
+		if (self.potentialData == nil) then
+			error("potentialData is missing", 2)
+		end    
 
-    -- check number of Regions
-    if (regionsNumber == nil or regionsNumber == 0) then
-      error("The model must have at least One region", 2)
-    else
-      for i = 1, regionsNumber, 1 do
-        local regressionNumber = #self.potentialData[i]
-        local lutNumber = #luccMEModel.landUseTypes
-        local activeRegionNumber = 0
-        
-        -- check the number of regressions
-        if (regressionNumber ~= lutNumber) then
-          error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber, 2)
-        end
-        
-        -- check active regions
-        for k,cell in pairs (cs.cells) do
-          if (cell.region == nil) then
-            cell.region = 1
-          end 
-          if (cell.region == i) then
-            activeRegionNumber = i
-          end
-        end
-        if (activeRegionNumber == 0) then
-          error("Region ".. i.." is not set into database.")  
-        end
-        
-        for j = 1, regressionNumber, 1 do
-          -- check const variable
-          if(self.potentialData[i][j].const == nil) then
-            error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
-          end
-         
-          -- check betas variable
-          if (self.potentialData[i][j].betas == nil) then
-            error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
-          end
-          
-          -- check betas within database
-          for k, lu in pairs (self.potentialData[i][j].betas) do
-            if (luccMEModel.cs.cells[1][k] == nil) then
-              error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
-            end
-          end
-        end -- for j
-      end -- for i
-    end -- else
-  end -- verify
+		local regionsNumber = #self.potentialData
 
-  collectgarbage("collect")
+		-- check number of Regions
+		if (regionsNumber == nil or regionsNumber == 0) then
+			error("The model must have at least One region", 2)
+		else
+			for i = 1, regionsNumber, 1 do
+				local regressionNumber = #self.potentialData[i]
+				local lutNumber = #luccMEModel.landUseTypes
+				local activeRegionNumber = 0
+
+				-- check the number of regressions
+				if (regressionNumber ~= lutNumber) then
+					error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber, 2)
+				end
+
+				-- check active regions
+				for k,cell in pairs (cs.cells) do
+					if (cell.region == nil) then
+						cell.region = 1
+					end 
+					
+					if (cell.region == i) then
+						activeRegionNumber = i
+					end
+				end
+				
+				if (activeRegionNumber == 0) then
+					error("Region ".. i.." is not set into database.")  
+				end
+
+				for j = 1, regressionNumber, 1 do
+					-- check const variable
+					if(self.potentialData[i][j].const == nil) then
+						error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
+					end
+
+					-- check betas variable
+					if (self.potentialData[i][j].betas == nil) then
+						error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
+					end
+
+					-- check betas within database
+					for k, lu in pairs (self.potentialData[i][j].betas) do
+						if (luccMEModel.cs.cells[1][k] == nil) then
+							error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+						end
+					end
+				end -- for j
+			end -- for i
+		end -- else
+	end -- verify
+
+	collectgarbage("collect")
 	return component
 end --close RegressionLogistcModelNeighbourhood

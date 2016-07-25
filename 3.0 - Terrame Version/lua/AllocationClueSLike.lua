@@ -221,7 +221,7 @@ function AllocationClueSLike(component)
 		end
 	end
 
-	--- Handles with the allocation convergence based on self.maxDifference.
+	-- Handles with the allocation convergence based on self.maxDifference.
 	-- @arg diff The demand area difference.
 	-- @arg luTypes A set of land uses types.
 	-- @arg maxdiffarea The limit between the demand and the allocated area.
@@ -268,7 +268,7 @@ function AllocationClueSLike(component)
 	-- @arg usetypes A set of land use type.
 	-- @usage --DONTRUN
 	-- component.toIndex(lu, luTypes)
-		component.toIndex = function(self, lu, usetypes)
+	component.toIndex = function(self, lu, usetypes)
 		local index = 0
 		
 		for i, value in  pairs (usetypes) do

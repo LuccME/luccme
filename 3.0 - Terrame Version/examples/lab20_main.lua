@@ -1,21 +1,22 @@
+-- @example LuccME Discrete Model using the following components, Dynamic Variables and Scenario.
+-- ComputeInputThreeDateMaps.
+-- LogisticRegression.
+-- AllocationClueSLike.
+-- Dynamic Variables update in 2009.
+-- Scenario staring in 2015, update variables in 2020, until 2025.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab20 = LuccMEModel
 {
 	name = "Lab20",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2025,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
@@ -23,16 +24,12 @@ Lab20 = LuccMEModel
 		cellArea = 1,
 	},
 
-	-----------------------------------------------------
-	-- Dynamic variables definition                    --
-	-----------------------------------------------------
+	-- Dynamic variables definition
 	updateYears = {2009},
 	scenarioStartTime = 2015,
 	scenarioName = "cenarioA",
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -40,10 +37,8 @@ Lab20 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = ComputeInputThreeDateMaps
 	{
 		middleYearForInterpolation = 2011,
@@ -133,9 +128,7 @@ Lab20 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -150,9 +143,7 @@ timer = Timer
 env_Lab20 = Environment{}
 env_Lab20:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab20.isCoupled == false then
 	tsave = databaseSave(Lab20)
 	env_Lab20:add(tsave)

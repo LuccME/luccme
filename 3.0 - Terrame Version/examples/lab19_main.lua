@@ -1,21 +1,21 @@
+-- @example LuccME Discrete Model using the following components and Dynamic Variables.
+-- ComputeInputThreeDateMaps.
+-- LogisticRegression.
+-- AllocationClueSLike.
+-- Dynamic Variables update in 2009.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab19 = LuccMEModel
 {
 	name = "Lab19",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2014,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
@@ -23,14 +23,10 @@ Lab19 = LuccMEModel
 		cellArea = 1,
 	},
 
-	-----------------------------------------------------
-	-- Dynamic variables definition                    --
-	-----------------------------------------------------
+	-- Dynamic variables definition
 	updateYears = {2009},
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -38,10 +34,8 @@ Lab19 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = ComputeInputThreeDateMaps
 	{
 		middleYearForInterpolation = 2011,
@@ -131,9 +125,7 @@ Lab19 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -148,9 +140,7 @@ timer = Timer
 env_Lab19 = Environment{}
 env_Lab19:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab19.isCoupled == false then
 	tsave = databaseSave(Lab19)
 	env_Lab19:add(tsave)

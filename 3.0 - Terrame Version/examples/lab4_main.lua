@@ -1,21 +1,20 @@
+-- @example LuccME Continuous Model using the following components.
+-- ComputeInputTwoDateMaps.
+-- SpatialLagRegression.
+-- AllocationClueLike.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab4 = LuccMEModel
 {
 	name = "Lab4",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition 
 	startTime = 2008,
 	endTime = 2014,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition  
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_continuous.tview",
@@ -23,9 +22,7 @@ Lab4 = LuccMEModel
 		cellArea = 25,
 	},
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -33,10 +30,8 @@ Lab4 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = ComputeInputTwoDateMaps
 	{
 		finalYearForInterpolation = 2014,
@@ -65,7 +60,7 @@ Lab4 = LuccMEModel
 					}
 				},
 
-				-- den
+				-- d
 				{
 					isLog = false,
 					const = 0.01431553,
@@ -110,7 +105,7 @@ Lab4 = LuccMEModel
 		allocationData =
 		{
 			{static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},	-- f
-			{static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},	-- den
+			{static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},	-- d
 			{static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},	-- outros
 		}
 	},
@@ -132,9 +127,7 @@ Lab4 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -149,9 +142,7 @@ timer = Timer
 env_Lab4 = Environment{}
 env_Lab4:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab4.isCoupled == false then
 	tsave = databaseSave(Lab4)
 	env_Lab4:add(tsave)

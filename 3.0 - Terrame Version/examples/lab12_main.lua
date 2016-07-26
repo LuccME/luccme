@@ -1,21 +1,20 @@
+-- @example LuccME Discrete Model using the following components.
+-- PreComputedValuesINPE.
+-- InverseDistanceRule.
+-- AllocationBySimpleOrdering.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab12 = LuccMEModel
 {
 	name = "Lab12",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2014,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
@@ -23,9 +22,7 @@ Lab12 = LuccMEModel
 		cellArea = 1,
 	},
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -33,10 +30,8 @@ Lab12 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = PreComputedValuesINPE
 	{
 		annualDemand =
@@ -119,9 +114,7 @@ Lab12 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -136,9 +129,7 @@ timer = Timer
 env_Lab12 = Environment{}
 env_Lab12:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab12.isCoupled == false then
 	tsave = databaseSave(Lab12)
 	env_Lab12:add(tsave)

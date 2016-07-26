@@ -1,21 +1,22 @@
+-- @example LuccME Continuous Model using the following components, Dynamic Variables and Scenario.
+-- PreComputedValuesINPE.
+-- SpatialLagRegression.
+-- AllocationClueLike.
+-- Dynamic Variables update in 2009.
+-- Scenario staring in 2015, update variables in 2020, until 2025.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab7 = LuccMEModel
 {
 	name = "Lab7",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2025,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_continuous.tview",
@@ -23,16 +24,12 @@ Lab7 = LuccMEModel
 		cellArea = 25,
 	},
 
-	-----------------------------------------------------
-	-- Dynamic variables definition                    --
-	-----------------------------------------------------
+	-- Dynamic variables definition
 	updateYears = {2009},
 	scenarioStartTime = 2015,
 	scenarioName = "cenarioA",
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -40,10 +37,8 @@ Lab7 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = PreComputedValuesINPE
 	{
 		annualDemand =
@@ -159,9 +154,7 @@ Lab7 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -176,9 +169,7 @@ timer = Timer
 env_Lab7 = Environment{}
 env_Lab7:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab7.isCoupled == false then
 	tsave = databaseSave(Lab7)
 	env_Lab7:add(tsave)

@@ -1,21 +1,20 @@
+-- @example LuccME Model using the following components.
+-- PreComputedValuesINPE.
+-- AttractRepulseLogisticRegression.
+-- AllocationClueSNeighborOrdering.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab22 = LuccMEModel
 {
 	name = "Lab22",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2014,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
@@ -23,9 +22,7 @@ Lab22 = LuccMEModel
 		cellArea = 1,
 	},
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -33,10 +30,8 @@ Lab22 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = PreComputedValuesINPE
 	{
 		annualDemand =
@@ -146,9 +141,7 @@ Lab22 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -163,9 +156,7 @@ timer = Timer
 env_Lab22 = Environment{}
 env_Lab22:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab22.isCoupled == false then
 	tsave = databaseSave(Lab22)
 	env_Lab22:add(tsave)

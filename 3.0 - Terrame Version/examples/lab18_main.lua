@@ -1,21 +1,20 @@
+-- @example LuccME Discrete Model using the following components.
+-- ComputeInputThreeDateMaps.
+-- LogisticRegression.
+-- AllocationClueSLike.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+-- LuccME APPLICATION MODEL DEFINITION
 Lab18 = LuccMEModel
 {
 	name = "Lab18",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2014,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
@@ -23,9 +22,7 @@ Lab18 = LuccMEModel
 		cellArea = 1,
 	},
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -33,10 +30,8 @@ Lab18 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = ComputeInputThreeDateMaps
 	{
 		middleYearForInterpolation = 2011,
@@ -126,9 +121,7 @@ Lab18 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -143,9 +136,7 @@ timer = Timer
 env_Lab18 = Environment{}
 env_Lab18:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab18.isCoupled == false then
 	tsave = databaseSave(Lab18)
 	env_Lab18:add(tsave)

@@ -1,21 +1,22 @@
+-- @example LuccME Continuous Model using the following components and Dynamic Variables.
+-- PreComputedValuesINPE.
+-- SpatialLagRegression.
+-- AllocationClueLikeSaturation.
+-- Dynamic Variables update in 2009.
+
 import("luccme")
 
---------------------------------------------------------------
---             LuccME APPLICATION MODEL DEFINITION          --
---------------------------------------------------------------
+
+-- LuccME APPLICATION MODEL DEFINITION
 Lab6 = LuccMEModel
 {
 	name = "Lab6",
 
-	-----------------------------------------------------
-	-- Temporal dimension definition                   --
-	-----------------------------------------------------
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2014,
 
-	-----------------------------------------------------
-	-- Spatial dimension definition                    --
-	-----------------------------------------------------
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_continuous.tview",
@@ -23,14 +24,10 @@ Lab6 = LuccMEModel
 		cellArea = 25,
 	},
 
-	-----------------------------------------------------
-	-- Dynamic variables definition                    --
-	-----------------------------------------------------
+	-- Dynamic variables definition
 	updateYears = {2009},
 
-	-----------------------------------------------------
-	-- Land use variables definition                   --
-	-----------------------------------------------------
+	-- Land use variables definition
 	landUseTypes =
 	{
 		"f", "d", "outros"
@@ -38,10 +35,8 @@ Lab6 = LuccMEModel
 
 	landUseNoData	= "outros",
 
-	-----------------------------------------------------
-	-- Behaviour dimension definition:                 --
-	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS     --
-	-----------------------------------------------------
+	-- Behaviour dimension definition:
+	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = PreComputedValuesINPE
 	{
 		annualDemand =
@@ -149,9 +144,7 @@ Lab6 = LuccMEModel
 	isCoupled = false
 }  -- END LuccME application model definition
 
------------------------------------------------------
--- ENVIROMMENT DEFINITION                          --
------------------------------------------------------
+-- ENVIROMMENT DEFINITION
 timer = Timer
 {
 	Event
@@ -166,9 +159,7 @@ timer = Timer
 env_Lab6 = Environment{}
 env_Lab6:add(timer)
 
------------------------------------------------------
--- ENVIROMMENT EXECUTION                           --
------------------------------------------------------
+-- ENVIROMMENT EXECUTION
 if Lab6.isCoupled == false then
 	tsave = databaseSave(Lab6)
 	env_Lab6:add(tsave)

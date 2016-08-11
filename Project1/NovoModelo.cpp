@@ -2149,6 +2149,17 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 	}
 	
 	if (tNovoModelo->SelectedIndex == VALIDATION) {
+		if (shape) {
+			if (lLanguage == "en") {
+				lInputThemeName->Text = "  Shape Name";
+				lThemeHelp->Text = "Output Shape File Name";
+			}
+			else {
+				lInputThemeName->Text = "Nome do Shape";
+				lThemeHelp->Text = "Nome do Shape de Saída";
+			}
+		}
+
 		if (gAllocationComponent > NUMDISCALLOCCOMP || gPotentialComponent > NUMDISCPOTCOMP) {
 			tRange->Enabled = true;
 		}
@@ -6697,6 +6708,31 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("\tos.exit()");
 		sw->WriteLine("end");
 		sw->WriteLine("");
+
+		if (shape) {
+			sw->WriteLine("import(\"terralib\")");
+			sw->WriteLine("proj = Project{");
+			sw->WriteLine("\tfile = \"t3mp.tview\",");
+			sw->WriteLine("\tclean = true");
+			sw->WriteLine("}");
+			sw->WriteLine("l1 = Layer{");
+			sw->WriteLine("\tproject = proj,");
+			sw->WriteLine("name = \"layer\",");
+
+			String^ aux = tbSelectedBatabase->Lines[1]->ToString();
+			int i = aux->Length - 1;
+
+			while (i > 0) {
+				if (aux[i] == '\\') {
+					aux = aux->Substring(0, i);
+					break;
+				}
+				i--;
+			}
+
+			sw->WriteLine("file = \"" + aux->Replace("\\", "\\\\") + "\\\\" + tInputThemeName->Text->Replace(".shp", "") + ".shp\"");
+			sw->WriteLine("}");
+		}
 		
 		//Input parameters
 		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
@@ -6713,10 +6749,20 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
 		sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
 		sw->WriteLine("");
-		sw->WriteLine("cs = CellularSpace {");
-		sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
-		sw->WriteLine("\t\tlayer = input_theme_name");
-		sw->WriteLine("}");
+
+		if (!shape) {
+			sw->WriteLine("cs = CellularSpace {");
+			sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+			sw->WriteLine("\t\tlayer = input_theme_name");
+			sw->WriteLine("}");
+		}
+		else {
+			sw->WriteLine("cs = CellularSpace {");
+			sw->WriteLine("\t\tproject = \"t3mp.tview\",");
+			sw->WriteLine("\t\tlayer = \"layer\"");
+			sw->WriteLine("}");
+		}
+
 		sw->WriteLine("");
 		sw->WriteLine("range = " + tRange->Text + " / 100");
 		
@@ -7041,6 +7087,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		if (File::Exists(path))
 		{
 			File::Delete(path);
+		}
+
+		if (File::Exists("t3mp.tview"))
+		{
+			File::Delete("t3mp.tview");
 		}
 	}
 }

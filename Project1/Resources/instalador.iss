@@ -43,8 +43,3 @@ Source: "D:\_SVN\LuccME\branches\Project2\Release\*"; DestDir: "C:\LuccME"; Flag
 Name: "{group}\LuccME"; Filename: "C:\LuccME\LuccME 3.0.exe"
 Name: "{group}\{cm:UninstallProgram,LuccME}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\LuccME 3.0"; Filename: "C:\LuccME\LuccME 3.0.exe"; Tasks: desktopicon
-
-
-;[Registry]
-;Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "TME_PATH_1_3_1"; ValueData: "C:\LuccME\TerraME"; Flags: uninsdeletevalue
-;Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};C:\LuccME\TerraME";

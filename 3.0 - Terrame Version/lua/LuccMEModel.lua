@@ -246,14 +246,14 @@ function LuccMEModel(model)
 				
 				if ((self.scenarioStartTime ~= nil) and (currentTime >= self.scenarioStartTime)) then
 					cs_temp = CellularSpace {	project = self.cs.project, 
-												layer = self.cs.layer.."_"..self.scenarioName.."_"..updtYear
+												layer = self.cs.layer.name.."_"..self.scenarioName.."_"..updtYear
 											}
-					print(self.cs.layer.."_"..self.scenarioName.."_"..updtYear)
+					print(self.cs.layer.name.."_"..self.scenarioName.."_"..updtYear)
 				else
 					cs_temp = CellularSpace {	project = self.cs.project,
-												layer = self.cs.layer.."_"..updtYear
+												layer = self.cs.layer.name.."_"..updtYear
 											}
-					print(self.cs.layer.."_"..updtYear)
+					print(self.cs.layer.name.."_"..updtYear)
 				end
 
 				-- For each cell in the original cs, variables are contained in cs_temp is updated
@@ -282,4 +282,17 @@ function LuccMEModel(model)
 
 	collectgarbage("collect")
 	return model
+end
+
+-- Override the error function to hold the screen.
+-- @arg message The message to inform the user.
+-- @arg code The number of level that got the error.
+-- @usage --DONTRUN
+-- error("Missing something", 1)
+error = function(message, code)
+	print("\n[Error] "..message)
+	io.write("\nPress enter key to exit...")
+	io.flush()
+	io.read()
+	os.exit()
 end

@@ -3398,17 +3398,24 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 	Environment::SetEnvironmentVariable("PATH", "C:\\Luccme\\Terrame\\bin");
 
 	String^ arguments = "";
-
+	
 	if (lSelectedFolder->Text[lSelectedFolder->Text->Length - 1] != '\\') {
-		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tModelName->Text->ToLower() + "_main.lua\"";
+		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tModelName->Text->ToLower() + "_main.lua\" 2>NUL";
 	}
 	else {
-		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tModelName->Text->ToLower() + "_main.lua\"";
+		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tModelName->Text->ToLower() + "_main.lua\" 2>NUL";
 	}
 
+	//System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
+	//cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+	//cmd->StartInfo->Arguments = arguments;
+	//cmd->Start();
+	//cmd->WaitForExit();
+	//cmd->Close();
+	
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
-	cmd->StartInfo->Arguments = arguments;
+	cmd->StartInfo->FileName = "cmd.exe";
+	cmd->StartInfo->Arguments = "/c terrame " + arguments;
 	cmd->Start();
 	cmd->WaitForExit();
 	cmd->Close();

@@ -70,7 +70,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 
 		String^ saturationIndicator = "";
 		String^ attrProtection = "";
-		if (lReturn->Component == 4) {
+		if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
 			while (lReturn->Return[j] != ';') {
 				saturationIndicator += lReturn->Return[j];
 				j++;

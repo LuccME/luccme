@@ -44,6 +44,14 @@ function AllocationClueSLike(component)
 		local luind = 0
 		local lu_pastIndex = 0
 		local possibleTransitions = 0
+		
+		if (event:getTime() == luccMEModel.startTime) then
+			for k, cell in pairs (cs.cells) do
+				for luind, lu in  pairs (luTypes) do
+					cell[lu.."_backup"] = cell[lu]
+				end
+			end
+		end
 
 		print("\nTime: "..event:getTime())
 
@@ -121,6 +129,13 @@ function AllocationClueSLike(component)
 
 			if (allocation_ok == true) then 
 				print("\nDemand allocated correctly in this time: "..event:getTime())
+				if (event:getTime() == luccMEModel.endTime) then
+					for k, cell in pairs (cs.cells) do
+						for luind, lu in  pairs (luTypes) do
+							cell[lu] = cell[lu.."_backup"]
+						end
+					end
+				end
 			elseif	(nIter >= max_iteration) then
 				error("\nDemand not allocated correctly in this time: "..event:getTime())
 			end      		

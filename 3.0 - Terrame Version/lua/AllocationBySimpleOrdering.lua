@@ -17,18 +17,22 @@ function AllocationBySimpleOrdering(component)
 	component.run = function(self, event, luccMEModel)
 		local useLog = luccMEModel.useLog
 		local cs = luccMEModel.cs
-		local potential = luccMEModel.potential		
 		local cellarea = cs.cellArea
-		local step = event:getTime() - luccMEModel.startTime + 1	
-		local start = luccMEModel.startTime		
 		local demand = luccMEModel.demand
-		local nIter = 0
 		local allocation_ok = false
 		local numofcells  = #cs.cells
 		local luTypes = luccMEModel.landUseTypes
 		local dem = {}
 		local differences = {}
 		local area = 0
+		
+		if (event:getTime() == luccMEModel.startTime) then
+			for k, cell in pairs (cs.cells) do
+				for luind, lu in  pairs (luTypes) do
+					cell[lu.."_backup"] = cell[lu]
+				end
+			end
+		end
 		
 		--Inicialização das demandas
 		for ind, lu in  pairs (luTypes) do	
@@ -110,7 +114,7 @@ function AllocationBySimpleOrdering(component)
 			end
 		end
 		
-		if (diff < self.maxDifference) then
+		if (diff <= self.maxDifference) then
 			allocation_ok = true
 		end
  		
@@ -122,6 +126,13 @@ function AllocationBySimpleOrdering(component)
  			end
 			
 			print("\nDemand allocated correctly in this time: "..event:getTime())
+			if (event:getTime() == luccMEModel.endTime) then
+				for k, cell in pairs (cs.cells) do
+					for luind, lu in  pairs (luTypes) do
+						cell[lu] = cell[lu.."_backup"]
+					end
+				end
+			end
 		else
 			error("\nDemand not allocated correctly in this time: "..event:getTime())
 		end      	

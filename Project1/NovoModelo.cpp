@@ -3406,19 +3406,19 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tModelName->Text->ToLower() + "_main.lua\" 2>NUL";
 	}
 
-	//System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	//cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
-	//cmd->StartInfo->Arguments = arguments;
-	//cmd->Start();
-	//cmd->WaitForExit();
-	//cmd->Close();
-	
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	cmd->StartInfo->FileName = "cmd.exe";
-	cmd->StartInfo->Arguments = "/c terrame " + arguments;
+	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->Arguments = arguments;
 	cmd->Start();
 	cmd->WaitForExit();
 	cmd->Close();
+	
+	//System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
+	//cmd->StartInfo->FileName = "cmd.exe";
+	//cmd->StartInfo->Arguments = "/c terrame " + arguments;
+	//cmd->Start();
+	//cmd->WaitForExit();
+	//cmd->Close();
 }
 
 System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System::EventArgs ^ e)

@@ -72,22 +72,26 @@ function LogisticRegression(component)
 		local potentialData = self.potentialData
 		local luTypes = luccMEModel.landUseTypes
 		local landUseDrivers = self.landUseDrivers
+		local lu = luTypes[1]
+		local regrLogit = 0
+		local elas = 0
 
 		for k, cell in pairs (cs.cells) do
 			for luind, inputValues in pairs (potentialData[cell.region]) do
-				local lu = luTypes[luind]
+				lu = luTypes[luind]
 
 				-- Step 1: Calculates the regression estimates
-				local regrLogit = self.calcRegressionLogistic(cell, inputValues, self)
+				regrLogit = self.calcRegressionLogistic(cell, inputValues, self)
 
 				-- Step 2: Calculates the elasticity
-				local elas = 0				
+				elas = 0				
 
 				if (cell[lu] == 1) then
 					elas = inputValues.elasticity
 				end	
 
 				--Step 3 : Computes the total probability
+				cell[lu.."_reg"] = regrLogit
 				cell[lu.."_pot"] = regrLogit + elas
 			end	--close for region
 		end -- for k

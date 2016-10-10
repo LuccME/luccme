@@ -406,6 +406,7 @@ function SpatialLagLinearRoads(component)
 		local lu = luTypes[luIndex]
 		local luData = self.potentialData[rNumber][luIndex]
 		local pot = lu.."_pot"
+		local reg = lu.."_reg"
 		local activeRegionNumber = 0
 
 		for k,cell in pairs (cs.cells) do
@@ -488,6 +489,7 @@ function SpatialLagLinearRoads(component)
 				end
 
 				regression = regression * (1 - cell[luccMEModel.landUseNoData])
+				cell[reg] = regression 
 				cell[pot] = regression - cell.past[lu] 
 			end -- if region
 		end -- for k

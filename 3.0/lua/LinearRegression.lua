@@ -268,6 +268,7 @@ function LinearRegression(component)
 		local lu = luTypes[luIndex]
 		local luData = self.potentialData[rNumber][luIndex]
 		local pot = lu.."_pot"
+		local reg = lu.."_reg"
 		local activeRegionNumber = 0
 
 		for k,cell in pairs (cs.cells) do
@@ -295,7 +296,8 @@ function LinearRegression(component)
 				if (luccMEModel.landUseNoData ~= nil) then     
 					regression = regression * (1 - cell[luccMEModel.landUseNoData]) 
 				end
-
+				
+				cell[reg] = regression 
 				cell[pot] = regression - cell.past[lu] 
 			end 
 		end

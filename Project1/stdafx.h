@@ -36,6 +36,7 @@
 #define ALLOCATIONCLUELIKESATURATION	5
 
 //TabPages
+#define COMPONENT   3
 #define	SAVEPARAM	4	//Save Parameters
 #define ADVRES		6	//Advanced Resources
 #define VALIDATION	7

@@ -105,6 +105,10 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bSelectedYears->Text = "Select";
 		lSaveAttr->Text = "      Attributes to Save";
 		bSelectedAttr->Text = "Select";
+		lSaidaAdicionais->Text = "Aditional Outputs";
+		cPot->Text = "Potential";
+		cChange->Text = "Change";
+		cReg->Text = "Regression";
 		//tabFileMaker
 		lFileMaker->Text = "       Files Maker";
 		bGerarArquivos->Text = "Make Files";
@@ -298,6 +302,10 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bSelectedYears->Text = "Selecionar";
 		lSaveAttr->Text = "Atributos a serem Salvos";
 		bSelectedAttr->Text = "Selecionar";
+		lSaidaAdicionais->Text = "Saídas Adicionais";
+		cPot->Text = "Potencial";
+		cChange->Text = "Mudança";
+		cReg->Text = "Regressão";
 		//tabFileMaker
 		lFileMaker->Text = "Gerar os Arquivos";
 		bGerarArquivos->Text = "Gerar Arquivos";
@@ -2064,6 +2072,27 @@ System::Void LuccME::NovoModelo::bSelectedYears_Click(System::Object ^ sender, S
 
 System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
 {
+	if (tNovoModelo->SelectedIndex == COMPONENT) {
+		if (gPotentialComponent > NUMDISCPOTCOMP || gAllocationComponent > NUMDISCALLOCCOMP) {
+			bPotDiscrete->Enabled = false;
+			bAllocDiscrete->Enabled = false;
+			bPotContinuous->Enabled = true;
+			bAllocContinuous->Enabled = true;
+		}
+		else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) || (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
+			bPotDiscrete->Enabled = true;
+			bAllocDiscrete->Enabled = true;
+			bPotContinuous->Enabled = false;
+			bAllocContinuous->Enabled = false;
+		}
+		else {
+			bPotDiscrete->Enabled = true;
+			bAllocDiscrete->Enabled = true;
+			bPotContinuous->Enabled = true;
+			bAllocContinuous->Enabled = true;
+		}
+	}
+
 	if (tNovoModelo->SelectedIndex == SAVEPARAM) {
 		if (gAttrLUT != gLandUseTypes) {
 			lAttrToSave->Text = "";
@@ -2114,6 +2143,10 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 
 		if (tOutputTheme->ForeColor != System::Drawing::Color::Black) {
 			tOutputTheme->Text = tModelName->Text + "_";
+		}
+
+		if (gPotentialComponent == LINEARREGRESSION || gPotentialComponent == LOGISTICREGRESSION || gPotentialComponent == SPATIALLAGLINEARROADS || gPotentialComponent == SPATIALLAGREGRESSION) {
+			cReg->Enabled = true;
 		}
 	}
 
@@ -2550,9 +2583,17 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 								aux = aux->Remove(0, 1);
 							}
 							sw->WriteLine("\t\t\t\"" + aux + "_out\",");
-							sw->WriteLine("\t\t\t\"" + aux + "_change\",");
-							sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
+							if (cChange->Checked) {
+								sw->WriteLine("\t\t\t\"" + aux + "_change\",");
+							}
+							if (cPot->Checked) {
+								sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
+							}
+							if (cReg->Checked) {
+								sw->WriteLine("\t\t\t\"" + aux + "_reg\",");
+							}
 							aux = "";
+
 						}
 					}
 					if (aux != "") {
@@ -2560,8 +2601,15 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							aux = aux->Remove(0, 1);
 						}
 						sw->WriteLine("\t\t\t\"" + aux + "_out\",");
-						sw->WriteLine("\t\t\t\"" + aux + "_change\",");
-						sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
+						if (cChange->Checked) {
+							sw->WriteLine("\t\t\t\"" + aux + "_change\",");
+						}
+						if (cPot->Checked) {
+							sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
+						}
+						if (cReg->Checked) {
+							sw->WriteLine("\t\t\t\"" + aux + "_reg\",");
+						}
 					}
 					sw->WriteLine("\t\t},\n");
 				}
@@ -2584,7 +2632,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\t{");
 				sw->WriteLine("\t\tstart = " + tModelName->Text + ".startTime,");
 				sw->WriteLine("\t\taction = function(event)");
-				sw->WriteLine("\t\t\t\t\t\t" + tModelName->Text + ":run(event)");
+				sw->WriteLine("\t\t\t\t\t" + tModelName->Text + ":run(event)");
 				sw->WriteLine("\t\t\t\t  end");
 				sw->WriteLine("\t}");
 				sw->WriteLine("}\n");
@@ -2602,8 +2650,9 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
 				
 				if (shape) {
-					sw->WriteLine("\tif (isFile(\"t3mp.tview\")) then");
-					sw->WriteLine("\t\trmFile(\"t3mp.tview\")");
+					sw->WriteLine("\tlocal projFile = File(\"t3mp.tview\")");
+					sw->WriteLine("\tif(projFile:exists()) then");
+					sw->WriteLine("\t\tprojFile:delete()");
 					sw->WriteLine("\tend");
 				}
 
@@ -3400,10 +3449,10 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 	String^ arguments = "";
 	
 	if (lSelectedFolder->Text[lSelectedFolder->Text->Length - 1] != '\\') {
-		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tModelName->Text->ToLower() + "_main.lua\" 2>NUL";
+		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tModelName->Text->ToLower() + "_main.lua\"";
 	}
 	else {
-		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tModelName->Text->ToLower() + "_main.lua\" 2>NUL";
+		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tModelName->Text->ToLower() + "_main.lua\"";
 	}
 
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
@@ -3412,13 +3461,9 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 	cmd->Start();
 	cmd->WaitForExit();
 	cmd->Close();
-	
-	//System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	//cmd->StartInfo->FileName = "cmd.exe";
-	//cmd->StartInfo->Arguments = "/c terrame " + arguments;
-	//cmd->Start();
-	//cmd->WaitForExit();
-	//cmd->Close();
+
+	cmd = gcnew System::Diagnostics::Process;
+	arguments = "";
 }
 
 System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System::EventArgs ^ e)
@@ -4178,50 +4223,25 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							j++;
 						}
 
-						String^ testeAux = tempLine->Substring(k, j - k);
+						tempLine = tempLine->Replace("\t","");
+						tempLine = tempLine->Replace(" ", "");
+						tempLine = tempLine->Replace("saveAttrs={", "");
+						tempLine = tempLine->Replace(",},", "");
+						tempLine = tempLine->Replace("_out", "");
+						tempLine = tempLine->Replace("_pot", "");
+						tempLine = tempLine->Replace("_change", "");
+						tempLine = tempLine->Replace("_reg", "");
+						tempLine = tempLine->Replace("\"", "");
 
-						lAttrToSave->Text = "";
-						lAttrToSave->Text += tempLine->Substring(k, j - k)->Replace("\"", "");
-						tempLine = tempLine->Substring(j - 4);
-
-						tempLine = tempLine->Replace("\t", " ");
-						tempLine = tempLine->Replace("  ", " ");
-						tempLine = tempLine->Replace(", ", ",");
-						j = 0;
-						k = 0;
-						for (int i = 0; i < tempLine->Length; i++) {
-							if (j == 3) {
-								String^ tempLUT = tempLine->Substring(i);
-								String^ tempAux = "";
-								k = 0;
-								while (tempLUT[k] != ',') {
-									if (k < tempLUT->Length - 1) {
-										if (tempLUT[k] != '\"') {
-											if (tempLUT[k] != '}') {
-												if (tempLUT[k] != ',') {
-													tempAux += tempLUT[k];
-												}
-											}
-										}
-										k++;
-									}
-									else {
-										break;
-									}
-								}
-								if (tempAux == "") {
-									break;
-								}
-								lAttrToSave->Text += ", " + tempAux;
-								j = 0;
-								i += k;
-							}
-							if (tempLine[i] == ',') {
-								j++;
+						array<String^>^ attrsTemp = tempLine->Split(',');
+						lAttrToSave->Text = attrsTemp[0];
+						
+						for (int z = 1; z < attrsTemp->Length; z++) {
+							if (!lAttrToSave->Text->Contains(attrsTemp[z])) {
+								lAttrToSave->Text += ", " + attrsTemp[z];
 							}
 						}
-						lAttrToSave->Text = lAttrToSave->Text->Replace("_out", "");
-						lAttrToSave->Text = lAttrToSave->Text->Replace("  ", " ");
+
 						gAttrLUT = gLandUseTypes;
 					}
 				}
@@ -6920,7 +6940,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			//Diff Method
 			case 1:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
-				if (folderAux->Length > 4) {
+				if (folderAux->Length > ROOTDIR) {
 					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
 				}
 				else {
@@ -7090,10 +7110,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		cmd->WaitForExit();
 		cmd->Close();
 
+
 		//Delete file after cmd closes
-		if (File::Exists(path))
+		if (File::Exists("validation.lua"))
 		{
-			File::Delete(path);
+			File::Delete("validation.lua");
 		}
 
 		if (File::Exists("t3mp.tview"))

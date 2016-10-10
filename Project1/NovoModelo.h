@@ -162,6 +162,10 @@ private: System::Windows::Forms::Button^  bScenario;
 private: System::Windows::Forms::Label^  lScenarioYearsConfirm;
 private: System::Windows::Forms::Label^  lScenarioYears;
 private: System::Windows::Forms::ListView^  lvYearScenario;
+private: System::Windows::Forms::CheckBox^  cReg;
+private: System::Windows::Forms::CheckBox^  cChange;
+private: System::Windows::Forms::CheckBox^  cPot;
+private: System::Windows::Forms::Label^  lSaidaAdicionais;
 
 
 
@@ -396,11 +400,15 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			this->lDemand = (gcnew System::Windows::Forms::Label());
 			this->lComponentes = (gcnew System::Windows::Forms::Label());
 			this->tabSaveParam = (gcnew System::Windows::Forms::TabPage());
+			this->cReg = (gcnew System::Windows::Forms::CheckBox());
+			this->cChange = (gcnew System::Windows::Forms::CheckBox());
+			this->cPot = (gcnew System::Windows::Forms::CheckBox());
 			this->cIsCoupled = (gcnew System::Windows::Forms::CheckBox());
 			this->bSelectedAttr = (gcnew System::Windows::Forms::Button());
 			this->lAttrToSave = (gcnew System::Windows::Forms::Label());
 			this->bSelectedYears = (gcnew System::Windows::Forms::Button());
 			this->lYearsToSave = (gcnew System::Windows::Forms::Label());
+			this->lSaidaAdicionais = (gcnew System::Windows::Forms::Label());
 			this->lSaveAttr = (gcnew System::Windows::Forms::Label());
 			this->lvSaveAttr = (gcnew System::Windows::Forms::ListView());
 			this->lSelectYears = (gcnew System::Windows::Forms::Label());
@@ -1151,11 +1159,15 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			// 
 			// tabSaveParam
 			// 
+			this->tabSaveParam->Controls->Add(this->cReg);
+			this->tabSaveParam->Controls->Add(this->cChange);
+			this->tabSaveParam->Controls->Add(this->cPot);
 			this->tabSaveParam->Controls->Add(this->cIsCoupled);
 			this->tabSaveParam->Controls->Add(this->bSelectedAttr);
 			this->tabSaveParam->Controls->Add(this->lAttrToSave);
 			this->tabSaveParam->Controls->Add(this->bSelectedYears);
 			this->tabSaveParam->Controls->Add(this->lYearsToSave);
+			this->tabSaveParam->Controls->Add(this->lSaidaAdicionais);
 			this->tabSaveParam->Controls->Add(this->lSaveAttr);
 			this->tabSaveParam->Controls->Add(this->lvSaveAttr);
 			this->tabSaveParam->Controls->Add(this->lSelectYears);
@@ -1172,11 +1184,45 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			this->tabSaveParam->Text = L"Salvar Parâmetros";
 			this->tabSaveParam->UseVisualStyleBackColor = true;
 			// 
+			// cReg
+			// 
+			this->cReg->AutoSize = true;
+			this->cReg->Enabled = false;
+			this->cReg->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
+			this->cReg->Location = System::Drawing::Point(624, 429);
+			this->cReg->Name = L"cReg";
+			this->cReg->Size = System::Drawing::Size(96, 23);
+			this->cReg->TabIndex = 97;
+			this->cReg->Text = L"Regressão";
+			this->cReg->UseVisualStyleBackColor = true;
+			// 
+			// cChange
+			// 
+			this->cChange->AutoSize = true;
+			this->cChange->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
+			this->cChange->Location = System::Drawing::Point(522, 429);
+			this->cChange->Name = L"cChange";
+			this->cChange->Size = System::Drawing::Size(92, 23);
+			this->cChange->TabIndex = 97;
+			this->cChange->Text = L"Mudança";
+			this->cChange->UseVisualStyleBackColor = true;
+			// 
+			// cPot
+			// 
+			this->cPot->AutoSize = true;
+			this->cPot->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
+			this->cPot->Location = System::Drawing::Point(421, 429);
+			this->cPot->Name = L"cPot";
+			this->cPot->Size = System::Drawing::Size(92, 23);
+			this->cPot->TabIndex = 97;
+			this->cPot->Text = L"Potencial";
+			this->cPot->UseVisualStyleBackColor = true;
+			// 
 			// cIsCoupled
 			// 
 			this->cIsCoupled->AutoSize = true;
 			this->cIsCoupled->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
-			this->cIsCoupled->Location = System::Drawing::Point(499, 82);
+			this->cIsCoupled->Location = System::Drawing::Point(531, 3);
 			this->cIsCoupled->Name = L"cIsCoupled";
 			this->cIsCoupled->Size = System::Drawing::Size(107, 27);
 			this->cIsCoupled->TabIndex = 96;
@@ -1186,7 +1232,7 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			// 
 			// bSelectedAttr
 			// 
-			this->bSelectedAttr->Location = System::Drawing::Point(515, 382);
+			this->bSelectedAttr->Location = System::Drawing::Point(541, 331);
 			this->bSelectedAttr->Name = L"bSelectedAttr";
 			this->bSelectedAttr->Size = System::Drawing::Size(75, 23);
 			this->bSelectedAttr->TabIndex = 95;
@@ -1200,7 +1246,7 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			this->lAttrToSave->AutoSize = true;
 			this->lAttrToSave->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttrToSave->Location = System::Drawing::Point(460, 427);
+			this->lAttrToSave->Location = System::Drawing::Point(486, 376);
 			this->lAttrToSave->Name = L"lAttrToSave";
 			this->lAttrToSave->Size = System::Drawing::Size(0, 19);
 			this->lAttrToSave->TabIndex = 94;
@@ -1226,12 +1272,24 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			this->lYearsToSave->Size = System::Drawing::Size(0, 19);
 			this->lYearsToSave->TabIndex = 92;
 			// 
+			// lSaidaAdicionais
+			// 
+			this->lSaidaAdicionais->AutoSize = true;
+			this->lSaidaAdicionais->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lSaidaAdicionais->Location = System::Drawing::Point(501, 403);
+			this->lSaidaAdicionais->Name = L"lSaidaAdicionais";
+			this->lSaidaAdicionais->Size = System::Drawing::Size(146, 23);
+			this->lSaidaAdicionais->TabIndex = 91;
+			this->lSaidaAdicionais->Text = L"Saídas Adicionais";
+			this->lSaidaAdicionais->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// lSaveAttr
 			// 
 			this->lSaveAttr->AutoSize = true;
 			this->lSaveAttr->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lSaveAttr->Location = System::Drawing::Point(446, 134);
+			this->lSaveAttr->Location = System::Drawing::Point(472, 83);
 			this->lSaveAttr->Name = L"lSaveAttr";
 			this->lSaveAttr->Size = System::Drawing::Size(206, 23);
 			this->lSaveAttr->TabIndex = 91;
@@ -1240,7 +1298,7 @@ private: System::Windows::Forms::ListView^  lvYearScenario;
 			// 
 			// lvSaveAttr
 			// 
-			this->lvSaveAttr->Location = System::Drawing::Point(464, 163);
+			this->lvSaveAttr->Location = System::Drawing::Point(490, 112);
 			this->lvSaveAttr->Name = L"lvSaveAttr";
 			this->lvSaveAttr->Size = System::Drawing::Size(171, 207);
 			this->lvSaveAttr->TabIndex = 90;

@@ -61,6 +61,14 @@ function AllocationClueLikeSaturation (component)
 		-- Synchronize cellular space in the first year
 		local luTypes = luccMEModel.landUseTypes
 		local cs = luccMEModel.cs
+		
+		if (event:getTime() == luccMEModel.startTime) then
+			for k, cell in pairs (cs.cells) do
+				for luind, lu in  pairs (luTypes) do
+					cell[lu.."_backup"] = cell[lu]
+				end
+			end
+		end				
 
 		-- Initialize the demandDirection and elasticity(internal component variables)
 		self:initElasticity(luccMEModel, self.initialElasticity) 
@@ -131,6 +139,14 @@ function AllocationClueLikeSaturation (component)
 			end
 		end
 
+		if (event:getTime() == luccMEModel.endTime) then
+			for k, cell in pairs (cs.cells) do
+				for luind, lu in  pairs (luTypes) do
+					cell[lu] = cell[lu.."_backup"]
+				end
+			end
+		end
+		
 		cs:synchronize()
 	end
 

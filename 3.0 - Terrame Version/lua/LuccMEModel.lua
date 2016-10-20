@@ -293,6 +293,5 @@ error = function(message, code)
 	print("\n[Error] "..message)
 	io.write("\nPress enter key to exit...")
 	io.flush()
-	io.read()
 	os.exit()
 end

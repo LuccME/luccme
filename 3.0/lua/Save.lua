@@ -112,11 +112,15 @@ function saveSingleTheme(luccMEModel)
 	end
 
 	io.flush()
-	print("\nSaving "..luccMEModel.save.outputTheme.."inc_area_"..luccMEModel.endTime..".")
-	luccMEModel.cs:save(luccMEModel.save.outputTheme.."inc_area_"..luccMEModel.endTime, attrs_inc)
-	
-	print("Saving "..luccMEModel.save.outputTheme.."ext_area_"..luccMEModel.endTime..".")
-	luccMEModel.cs:save(luccMEModel.save.outputTheme.."ext_area_"..luccMEModel.endTime, attrs_ext)
+	if(luccMEModel.hasAuxiliaryOutputs ~= nill) then
+		if (luccMEModel.hasAuxiliaryOutputs) then
+			print("\nSaving "..luccMEModel.save.outputTheme.."inc_area_"..luccMEModel.endTime..".")
+			luccMEModel.cs:save(luccMEModel.save.outputTheme.."inc_area_"..luccMEModel.endTime, attrs_inc)
+			
+			print("Saving "..luccMEModel.save.outputTheme.."ext_area_"..luccMEModel.endTime..".")
+			luccMEModel.cs:save(luccMEModel.save.outputTheme.."ext_area_"..luccMEModel.endTime, attrs_ext)
+		end
+	end
 	
 	print(string.format("\nElapsed time: %.2fs\n", os.clock() - x))
 	print("\nEnd of Simulation")

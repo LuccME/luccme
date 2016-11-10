@@ -162,6 +162,24 @@ function LuccMEModel(model)
 		-- Verify the cellular space
 		if (not self.cs) then
 			error("A Cellular Space must be defined", 2)
+		else
+			if (self.cs.cells[1].lin ~= nil) then
+				local aux = self.cs
+				self.cs = CellularSpace {
+					project = "t3mp.tview",
+					layer = "layer",
+					xy = {"col", "lin"},
+					cellArea = aux.cellArea
+				}
+			elseif (self.cs.cells[1].Lin ~= nil) then
+				local aux = self.cs
+				self.cs = CellularSpace {
+					project = "t3mp.tview",
+					layer = "layer",
+					xy = {"Col", "Lin"},
+					cellArea = aux.cellArea
+			}
+			end
 		end
 
 		-- Verify whether the land use no data is declared and its valid

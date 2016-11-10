@@ -1,14 +1,15 @@
---- Modification of the AllocationClueLike component. In this case  the speed of change in each cell  use a spatio-temporal variable, dynamically updated
--- every year, that indicates if the cell is in a more consolidated or in a frontier area. The saturation threshold considers a 10x10 neighbourhood, 
--- discounting protected areas. 
+--- Based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described
+-- in Verburg et al. (1999).  Cells receive a percentage of the annual change that must be allocated to the whole area, proportionally to their potential.  
+-- In the case of deforestation, cells with a positive change potential will receive a percentage of the annual change that must be allocated to the whole 
+-- area, proportionally to their potential. The INPE version differs from the original CLUE model as it was adapted for the Brazilian context, for instance
+-- to represent the Forest Code and law enforcement (Aguiar, 2006). For instance, there are parameters to control the amount and speed of change that can 
+-- happen in each cell.
 -- @arg component.maxDifference Maximum allocation error allowed for each land use in area.
 -- @arg component.maxIteration Maximum number of iterations at each time step of the model.
 -- @arg component.initialElasticity Initial elasticity value (iterationFactor).
 -- @arg component.minElasticity Minimum elasticity value which controls the allocation interaction factor. 
 -- @arg component.maxElasticity Maximum elasticity value which controls the allocation interaction factor.
 -- @arg component.complementarLU The land use which will be recomputed in the end to sum exactly 100%.
--- @arg component.saturationIndicator Name of a attribute which will be dynamically updated (and can be saved for calibration purposes).
--- @arg component.attrProtection Database attribute indicating the percentage of protected areas to be excluded from the saturation level computation.
 -- @arg component.allocationData A table with two allocation parameters for each land use.
 -- @arg component.allocationData.static Indicates if the variable can increase or decrease in each cell, or only change in the direction of the demand.
 -- @arg component.allocationData.minValue Minimum value allowed for the percentage of a given land use  in a cell (as a result of new changes -  the original 
@@ -21,8 +22,7 @@
 -- of change of a given land use in the cell is modified. 
 -- @arg component.allocationData.maxChangeAboveLimiar Maximum change in a given land use allowed in a cell in a time step after (saturation) threshold.
 -- @arg component.run Handles with the rules of the component execution.
--- @arg component.verify Handles with the verify method of a AllocationClueLikeSaturation component.
--- @arg component.updateAllocationParameters Handles with the allocation parameters update.
+-- @arg component.verify Handles with the verify method of a AllocationCClueLike component.
 -- @arg component.initElasticity Handles with the elasticity initialize considering a single
 -- elasticity for each land use (all cells).
 -- @arg component.computeChange Compute the Allocation change based on the potential of the cell.
@@ -33,8 +33,8 @@
 -- equations for each land use/cover type.
 -- @arg component.printAllocatedArea Calculates and prints the allocated by the regression
 -- equations for each land use/cover type.
--- @usage --DONTRUN
---A1 = AllocationClueLikeSaturation
+-- @usage --DONTRUN 
+--A1 = AllocationCClueLike
 --{
 --  maxDifference = 1643,
 --  maxIteration = 1000,
@@ -42,22 +42,20 @@
 --  minElasticity = 0.001,
 --  maxElasticity = 1.5,
 --  complementarLU = "floresta",
---  saturationIndicator = "saturationLimiar",
---  attrProtection = "uc_pi",
 --  allocationData =
 --  {
 --    {static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- floresta
 --    {static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- desmatamento
---    {static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}   -- outros
+--    {static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},  -- outros
 --  }
 --}
-function AllocationClueLikeSaturation (component)
+function AllocationCClueLike(component)
 	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
-	-- component.run(event, model)  	 
-	component.run = function (self,event,luccMEModel) 
+	-- component.run(event, model)
+	component.run = function(self, event, luccMEModel)
 		-- Synchronize cellular space in the first year
 		local luTypes = luccMEModel.landUseTypes
 		local cs = luccMEModel.cs
@@ -70,9 +68,8 @@ function AllocationClueLikeSaturation (component)
 			end
 		end				
 
-		-- Initialize the demandDirection and elasticity(internal component variables)
+		--Init demandDirection and elasticity (internal component variables)
 		self:initElasticity(luccMEModel, self.initialElasticity) 
-		self:updateAllocationParameters(event, luccMEModel)
 
 		-- Define iteration loop variables
 		local nIter = 0
@@ -80,33 +77,30 @@ function AllocationClueLikeSaturation (component)
 		local maxAdjust = self.maxDifference 
 		local maxdiff = self.maxDifference * 1000 -- Used to have a large number of iterations
 		local flagFlex = false
-
+		
 		-- Loop until maxdiff is achieved
 		repeat
 			-- compute tentative allocation
 			self:computeChange(luccMEModel)
 			self:correctCellChange(luccMEModel)
 
-			if luccMEModel.useLog == true then
+			if (luccMEModel.useLog == true) then
 				self:printAllocatedArea(event, luccMEModel, nIter)
 			end
 
 			-- verify if allocation reaches demand
-			maxdiff = self:compareAllocationToDemand(event, luccMEModel)   
+			maxdiff = self:compareAllocationToDemand(event, luccMEModel)    
 			if (maxdiff <= maxAdjust) then
 				allocation_ok = true
-
-				if (luccMEModel.useLog == true) then
-					print("\nDemand allocated correctly in "..event:getTime().."\tNumber of iterations: "..nIter.."\tMaximum error: "..maxdiff)
+				if (luccMEModel.useLog) == true then
+					print("\nDemand allocated correctly in "..event:getTime()..".\tNumber of iterations: "..nIter.."\tMaximum error: "..maxdiff)
 				end
 			else 
 				nIter = nIter + 1
-
 				if (nIter >  self.maxIteration * 0.50) and (flagFlex == false) then
 					maxAdjust = maxAdjust * 2 
-					flagFlex = true
-					luccMEModel.potential:modifyDriver(self.complementarLU, self.attrProtection, 0.5, event, luccMEModel)  
-				end           
+					flagFlex = true 
+				end   
 			end
 		until ((nIter >= self.maxIteration) or (allocation_ok == true))
 
@@ -116,15 +110,13 @@ function AllocationClueLikeSaturation (component)
 
 		forEachCell(cs, function(cell)
 							local total = 0
-							
 							for i, lu in pairs (luTypes) do
-								if (lu ~= self.complementarLU) then
+								if (lu ~= luccMEModel.complementarLU) then
 									total = total + cell[lu]
 								end
 							end
-							
-							if (self.complementarLU ~= nil) then
-								cell[self.complementarLU] = 1 - total
+							if (luccMEModel.complementarLU ~= nil) then
+								cell[luccMEModel.complementarLU] = 1 - total
 							end
 						end
 					)
@@ -132,13 +124,12 @@ function AllocationClueLikeSaturation (component)
 		for i, lu in pairs (luTypes) do
 			local out = lu.."_out"
 			local diff = lu.."_change"
-			
 			for k, cell in pairs (cs.cells) do
 				cell[out] = cell[lu]
 				cell[diff] = cell[lu] - cell.past[lu]
 			end
 		end
-
+		
 		if (event:getTime() == luccMEModel.endTime) then
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
@@ -185,16 +176,6 @@ function AllocationClueLikeSaturation (component)
 		-- check complementarLU
 		if (self.complementarLU == nil) then
 			error("complementarLU variable is missing", 2)
-		end 
-
-		-- check saturationIndicator
-		if (self.saturationIndicator == nil) then
-			error("saturationIndicator variable is missing", 2)
-		end    
-
-		-- check attrProtection
-		if (self.attrProtection == nil) then
-			error("attrProtection variable is missing", 2)
 		end   
 
 		-- check allocationData
@@ -260,94 +241,11 @@ function AllocationClueLikeSaturation (component)
 			end
 
 			if (foundCLU == 0) then
-				error("complementarLU: "..self.complementarLU.."  is not a landUseType defined on main file.", 2)
-			end   
-		end
-
-		-- check attrProtection within database
-		if (self.attrProtection ~= nil) then
-			if (luccMEModel.cs.cells[1][self.attrProtection] == nil) then
-				error("attrProtection: "..self.attrProtection.." not found within database", 2)
+				error("complementarLU: "..self.complementarLU.." is not a landUseType defined on main file.", 2)
 			end
 		end
-
-		luccMEModel.cs:createNeighborhood{ name = "11x11",
-										   strategy = "mxn",
-										 }
 	end
-
-	-- Update the allocation parameters based on the saturation of the region.
-	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMEModel A LuccME model.
-	-- @usage --DONTRUN 
-	-- component.updateAllocationParameters(event, luccMEModel)
-	component.updateAllocationParameters = function(self, event, luccMEModel)
-		local cs = luccMEModel.cs
-		local currentTime = event:getTime()
-
-		forEachCell(cs, function(cell)
-							local prot_t = 0
-							local original = 1
-							local perc_def_original = 0
-
-							if (self.attrProtection ~= nil) then
-								prot_t = cell[self.attrProtection]
-							end
-							
-							if (luccMEModel.landUseNoData ~= nil) then
-								original = 1 - cell[luccMEModel.landUseNoData]
-							end
-							
-							local available_forest = original - prot_t
-
-							if (available_forest > 0) then
-								local total_perc = 0
-								local count = 0
-								
-								perc_def_original = (1 - cell[self.complementarLU]) / available_forest
-								
-								if (perc_def_original > 1) then
-									perc_def_original = 1
-								end
-								
-								forEachNeighbor(cell, "11x11", function(cell, neigh)
-																	local prot_t = 0
-																	local original = 1
-																	
-																	if (self.attrProtection ~= nil) then
-																		prot_t = neigh[self.attrProtection]
-																	end
-																	
-																	if (luccMEModel.landUseNoData ~= nil) then
-																		original = 1 - neigh[luccMEModel.landUseNoData]
-																	end
-																	
-																	local neigh_available_forest = original - prot_t
-																	
-																	if (neigh_available_forest > 0) then
-																		local neigh_perc = (1 - neigh[self.complementarLU]) / neigh_available_forest
-																		if (neigh_perc > 1) then
-																			neigh_perc = 1 
-																		end
-																		
-																		total_perc = total_perc + neigh_perc
-																		count = count + 1
-																	end
-																end
-												)
-												
-								if (count > 0) then
-									perc_def_original = total_perc / count
-								end
-							else
-								perc_def_original = 1  
-							end
-
-							cell[self.saturationIndicator] = perc_def_original
-						end
-					)
-	end
-	
+	 
 	-- Handles with the elasticity initialize considering a single elasticity for each land use (all cells).
 	-- Similar to the coarse scale old clue.
 	-- @arg luccMEModel A LuccME model.
@@ -355,17 +253,17 @@ function AllocationClueLikeSaturation (component)
 	-- @usage --DONTRUN 
 	-- component.initElasticity(luccMEModel, self.initialElasticity)
 	component.initElasticity = function(self, luccMEModel, value)
-		-- Init elasticity. In this version of the component, a single elasticity for each land use(all cells).
+		-- Init elasticity. In this version of the component, a single elasticity for each land use (all cells).
 		-- Similar to the coarse scale old clue
 		local luTypes = luccMEModel.landUseTypes
-		self.elasticity = {}  
+		self.elasticity = {}	
 		
 		for k = 1, #luTypes, 1 do
 			self.elasticity[k] = value
 		end
 	end
 
-	-- Compute the allocation change.
+	-- Compute the Allocation change based on the potential of the cell.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
 	-- component.computeChange(luccMEModel)
@@ -381,6 +279,7 @@ function AllocationClueLikeSaturation (component)
 			for k, cell in pairs (cs.cells) do        
 				local pot = cell[attr_pot]
 				local luStatic = luAllocData.static
+
 				local change = pot * self.elasticity[i]
 
 				if (math.abs(change) < luAllocData.minChange) then
@@ -389,33 +288,11 @@ function AllocationClueLikeSaturation (component)
 				end
 
 				if (math.abs(change) >= luAllocData.maxChange) then
-					if (pot ~= 0) then
-						change = luAllocData.maxChange * (pot / math.abs(pot))
-					end
-				end
-
-				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue))) then
-					if (change >= luAllocData.maxChangeAboveLimiar) then
-						if ((change / 2) < luAllocData.maxChangeAboveLimiar) then
-							change = change / 2
-						else
-							change = luAllocData.maxChangeAboveLimiar 
-						end
-					end
-				end
-
-				if ((pot <= 0) and (luDirect == -1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue)) then
-					if (math.abs(change) >= luAllocData.maxChangeAboveLimiar) then
-						if (math.abs(change / 2) < luAllocData.maxChangeAboveLimiar) then
-							change = change / 2
-						else
-							change = (-1) * luAllocData.maxChangeAboveLimiar
-						end
-					end
+					change = luAllocData.maxChange * (pot / math.abs(pot))
 				end
 
 				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1)) or
-				((pot <= 0) and (luDirect == -1) and (luStatic < 1))) then
+					((pot <= 0) and (luDirect == -1) and (luStatic < 1))) then
 					cell[lu] = cell.past[lu] + change 
 				elseif (luStatic ~= 0) then
 					cell[lu] = cell.past[lu]
@@ -425,7 +302,11 @@ function AllocationClueLikeSaturation (component)
 					cell[lu] = 0
 				end
 
-				if (cell[lu] < luAllocData.minValue) then       
+				if (cell[lu] > 1) then
+					cell[lu] = 1
+				end
+
+				if (cell[lu] <= luAllocData.minValue) then  
 					if (cell.past[lu] >= luAllocData.minValue) then
 						cell[lu] = luAllocData.minValue
 					else
@@ -433,7 +314,7 @@ function AllocationClueLikeSaturation (component)
 					end
 				end
 
-				if (cell[lu] > luAllocData.maxValue) then       
+				if (cell[lu] > luAllocData.maxValue) then 
 					if (cell.past[lu] <= luAllocData.maxValue) then 
 						cell[lu] = luAllocData.maxValue
 					else
@@ -442,13 +323,13 @@ function AllocationClueLikeSaturation (component)
 				end
 			end  -- for cell
 		end -- for lu
-	end
+	end -- computeChange
 
 	-- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
-	-- component.compareAllocationToDemand (event, luccMEModel)  
+	-- component.compareAllocationToDemand(event, luccMEModel)
 	component.compareAllocationToDemand = function(self, event, luccMEModel)
 		-- Compares the demand to the amount of allocated land use/cover, then adapts elasticity
 		local cs = luccMEModel.cs
@@ -474,24 +355,28 @@ function AllocationClueLikeSaturation (component)
 				if (luDirect == 1) then
 					self.elasticity[i] = self.elasticity[i] * (currentDemand / areas[i])
 				else
-					self.elasticity[i] = self.elasticity[i] * (areas[i] / currentDemand)
+					self.elasticity[i]  = self.elasticity[i] * (areas[i] / currentDemand)
 				end
 
+				local flag = false
+
 				if (self.elasticity[i] > self.maxElasticity) then  
+					flag = true
 					self.elasticity[i] = self.maxElasticity
-					luccMEModel.potential:modify(luccMEModel, j, i, luDirect, event)			
+					luccMEModel.potential:modify(luccMEModel, j, i, luDirect)			
 				end
 
 				if (self.elasticity[i] < self.minElasticity) then
+					flag = true
 					if (self.allocationData[i].static < 0) then  
 						self.elasticity[i] = self.minElasticity
-						luccMEModel.potential:modify(luccMEModel, j, i, luDirect * (-1), event) -- Original clue does not modify in this case, but AMAZALERT results are like this
+						luccMEModel.potential:modify(luccMEModel, j, i, luDirect * (-1)) -- Original clue does not modify in this case, but AMAZALERT results are like this
 					else
 						luccMEModel.demand:changeLuDirection(i)
 					end
-				end 
+				end
 
-				if (luccMEModel.useLog == true) then
+				if (luccMEModel.useLog == true and flag == true) then
 					if (j > nRegression) then
 						print("Region "..j)
 						nRegression = j
@@ -501,18 +386,19 @@ function AllocationClueLikeSaturation (component)
 					luccMEModel.potential.potentialData[j][i].newminReg, luccMEModel.potential.potentialData[j][i].newmaxReg)
 				end
 
-				local  diff = math.abs((areas[i] - currentDemand)) 
+				local diff = math.abs((areas[i] - currentDemand)) 
 
 				if (diff > max) then 
-					max = diff
+					max =  diff
 				end
 
 				tot = tot + math.abs(areas[i] - currentDemand )
 			end -- for i
-		end -- for j
+		end  -- for j
+
 		return max
 	end
-		
+
 	-- Corrects total land use/cover types to 100 percent.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
@@ -521,6 +407,7 @@ function AllocationClueLikeSaturation (component)
 		-- corrects total land use/cover types to 100 percent
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
+
 		local NCOV = #luTypes
 		local BACKP = 0.5
 
@@ -533,7 +420,7 @@ function AllocationClueLikeSaturation (component)
 			local totstatic = 0
 			local amin = cell[luTypes[1]] - cell.past[luTypes[1]]
 			local amax = amin
-			local max  = math.abs(amax)
+			local max = math.abs(amax)
 			local l = 0
 
 			-- checks if total land use/covers from 100 percent
@@ -562,7 +449,7 @@ function AllocationClueLikeSaturation (component)
 				-- adapts land use/cover types if all of them change into the same direction
 				if (totchange > 0) then
 					if ((BACKP * totchange) > (max * 0.5)) then  
-						BACKP =(max / (2 * totchange))
+						BACKP = (max / (2 * totchange))
 					end
 				end
 
@@ -572,16 +459,16 @@ function AllocationClueLikeSaturation (component)
 
 					if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
 						luStatic = 1
-					end    
-					
+					end   
+
 					if (luStatic < 1) then
 						local dif = cell[lu] - cell.past[lu]
-						
-						if (dif >(-1 * BACKP * totchange)) then
+
+						if (dif > (-1 * BACKP * totchange)) then
 							incr = incr + 1
 						end
-						
-						if (dif <(BACKP * totchange)) then
+
+						if (dif < (BACKP * totchange)) then
 							decr = decr + 1
 						end
 					else
@@ -589,7 +476,7 @@ function AllocationClueLikeSaturation (component)
 					end
 				end
 
-				if ((decr == (NCOV - nostatic)) or (incr == (NCOV - nostatic))) then
+				if (decr == (NCOV - nostatic)) or (incr == (NCOV - nostatic)) then
 					for i, luAllocData in pairs (self.allocationData) do
 						local lu = luTypes[i]
 						local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
@@ -602,11 +489,11 @@ function AllocationClueLikeSaturation (component)
 						
 						if (luStatic < 1) then
 							if (incr == (NCOV - nostatic)) then
-								cell[lu] =  cell[lu] -(amin +(BACKP * totchange))
+								cell[lu] = cell[lu] - (amin + (BACKP * totchange))
 							end
 							
-							if (decr == (NCOV - nostatic)) then
-								cell[lu] = cell[lu] +((BACKP * totchange) - amax)
+							if (decr == (NCOV-nostatic)) then
+								cell[lu] = cell[lu] + ((BACKP * totchange) - amax)
 							end
 							
 							if (cell[lu] < 0) then
@@ -630,14 +517,13 @@ function AllocationClueLikeSaturation (component)
 					totcov = 0
 					totchange = 0
 					totstatic = 0
-					
 					for i, luAllocData in pairs (self.allocationData) do
 						local lu = luTypes[i]
 						local luStatic = luAllocData.static
-						
+
 						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
 							luStatic = 1
-						end 
+						end
 						
 						if (luStatic < 1) then
 							totcov = totcov + cell[lu]
@@ -647,27 +533,25 @@ function AllocationClueLikeSaturation (component)
 						
 						totchange = totchange + math.abs(cell[lu] - cell.past[lu])
 					end
-					
 					if (math.abs(totcov - (1 - totstatic)) > 0.005) then
 						if (totchange == 0) then
 							for i, luAllocData in pairs (self.allocationData) do
 								local lu = luTypes[i]
 								local luStatic = luAllocData.static
 								
-								if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+								if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
 									luStatic = 1
-								end
+								end   
 								
 								if (luStatic < 1) then
-									cell[lu] = cell[lu] *((1 - totstatic) / totcov)
+									cell[lu] = cell[lu] * ((1-totstatic)/totcov)
 								end
 							end
 						else
 							for i, luAllocData in pairs (self.allocationData) do
 								local lu = luTypes[i]
 								local aux = cell[lu]
-								
-								cell[lu] = cell[lu] -(math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1 - totstatic)) / totchange))
+								cell[lu] = cell[lu] - (math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1 - totstatic)) / totchange))
 								
 								if (cell[lu] < 0) then
 									cell[lu] = 0
@@ -675,7 +559,7 @@ function AllocationClueLikeSaturation (component)
 							end
 						end
 					end
-				until(math.abs(totcov -(1-totstatic)) <= 0.005) or (l >= 25)
+				until ((math.abs(totcov - (1 - totstatic)) <= 0.005) or (l >= 25))
 
 				if (l == 25) then
 					totcov = 0
@@ -685,9 +569,9 @@ function AllocationClueLikeSaturation (component)
 						local lu = luTypes[i]
 						local luStatic = luAllocData.static
 						
-						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic =1
-						end  
+						if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
+							luStatic = 1
+						end     
 						
 						if (luStatic < 1) then
 							totcov = totcov + cell[lu]
@@ -702,17 +586,17 @@ function AllocationClueLikeSaturation (component)
 						
 						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
 							luStatic = 1
-						end     
+						end   
 						
 						if (luStatic < 1) then
-							cell[lu] = cell[lu] *((1 - totstatic)/totcov)
+							cell[lu] = cell[lu] * ((1 - totstatic) / totcov)
 						end
 					end
-				end
-			end -- totcov
-		end -- for each cell
-	end
-
+				end -- if l
+			end -- if totcov
+		end -- for k
+	end -- correctCellChange
+	
 	-- Calculates total area allocated by the regression equations for each land use/cover type.
 	-- @arg cs A multivalued set of Cells (Cell Space).
 	-- @arg luTypes A set of land use types.
@@ -724,14 +608,10 @@ function AllocationClueLikeSaturation (component)
 		local cellarea = cs.cellArea
 
 		for i, lu in pairs (luTypes) do
-			local area = 0
+			local area = 0.0
 
 			for k, cell in pairs (cs.cells) do
-				local temp = cell[lu]
-
-				if (temp > 0) then
-					area = area + temp
-				end
+				area = area + cell[lu]
 			end
 			
 			areas[i] = area * cellarea
@@ -739,7 +619,7 @@ function AllocationClueLikeSaturation (component)
 
 		return areas
 	end
-
+  
 	-- Calculates and prints the allocated by the regression equations for each land use/cover type.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
@@ -757,8 +637,8 @@ function AllocationClueLikeSaturation (component)
 		print("\nYear: "..event:getTime().."\tStep: "..nIter)  
 
 		for i, lu in pairs (luTypes) do
-			local currentDemand = luccMEModel.demand:getCurrentLuDemand(i)
-			print(lu.."\tarea: "..math.floor(areas[i]).."\tDifference: "..math.floor(areas[i] - currentDemand)) 
+			local currentDemand  = luccMEModel.demand:getCurrentLuDemand(i)
+			print(lu.." Area: "..math.floor(areas[i]).. "\tDifference: "..math.floor(areas[i] - currentDemand)) 
 		end
 
 		io.flush()

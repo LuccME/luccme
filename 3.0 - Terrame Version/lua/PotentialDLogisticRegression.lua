@@ -1,30 +1,29 @@
---- Modification of the LogisticRegression combining cellular automata based models ideas. Cell potential is modified 
--- according to the attractiveness of the same class in a given (generic) neighbourhood.
--- @arg component A NeighAttractionLogisticRegression component.
+--- Uses logistic regression techniques to compute cell probability for each land use. 
+-- Based on the original CLUE-S framework potential calculation (Verburg et al., 2002), 
+-- modifies the probability with a user defined elasticity, for the current land use.
+-- @arg component A Logistic Regression component.
 -- @arg component.potentialData A table with the regression parameters for each attribute.
 -- @arg component.potentialData.const A linear regression constant.
--- @arg component.potentialData.elasticity An elasticity value, closer to 1 is more difficulty
+-- @arg component.potentialData.elasticity An elasticity value, closer to 1 is more easy
 -- to transition for other land uses.
--- @arg component.potentialData.percNeighborsUse Percent of neighbours with the same use.
 -- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
--- @arg component.run Handles with the execution method of a NeighAttractionLogisticRegression component.
--- @arg component.verify Handles with the verify method of a NeighAttractionLogisticRegression component.
+-- @arg component.run Handles with the execution method of a PotentialDLogisticRegression component.
+-- @arg component.verify Handles with the verify method of a PotentialDLogisticRegression component.
 -- @arg component.calcRegressionLogistic Handles with the calculation of the regression.
--- @arg component.probability Compute the probability logistic method of a NeighAttractionLogisticRegression component.
+-- @arg component.probability Compute the probability logistic method of a PotentialDLogisticRegression component.
 -- @return The modified component.
--- @usage --DONTRUN 
---P1 = NeighAttractionLogisticRegression
+-- @usage --DONTRUN
+-- P1 = PotentialDLogisticRegression
 --{
 --  potentialData =
 --  {
---    -- region 1
+--    -- Region 1
 --    {
 --      -- floresta
 --      {
 --        const = -1.961,
 --        elasticity = 0.1,
---        percNeighborsUse = 0.5,
 --
 --        betas =
 --        {
@@ -39,7 +38,6 @@
 --      {
 --        const = 1.978,
 --        elasticity = 0.1,
---        percNeighborsUse = 0.5,
 --
 --        betas =
 --        {
@@ -54,7 +52,6 @@
 --      {
 --        const = 0,
 --        elasticity = 0,
---        percNeighborsUse = 0,
 --
 --        betas =
 --        {
@@ -64,65 +61,43 @@
 --    }
 --  }
 --}
-function NeighAttractionLogisticRegression(component)
-	-- Handles with the execution method of a NeighAttractionLogisticRegression component.
+function PotentialDLogisticRegression(component) 
+	-- Handles with the execution method of a PotentialDLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
 	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
-		local luTypes = luccMEModel.landUseTypes
 		local potentialData = self.potentialData
+		local luTypes = luccMEModel.landUseTypes
 		local landUseDrivers = self.landUseDrivers
-		local filename = self.filename
-
-		if (filename ~= nil) then
-			loadGALNeighborhood(filename)
-		else
-			if(event:getTime() == luccMEModel.startTime) then
-				cs:createNeighborhood()   
-			end
-		end
-
-		local totalNeigh = 0
+		local lu = luTypes[1]
+		local regrLogit = 0
+		local elas = 0
 
 		for k, cell in pairs (cs.cells) do
-			totalNeigh = #cell:getNeighborhood()
-
 			for luind, inputValues in pairs (potentialData[cell.region]) do
-				local lu = luTypes[luind]
+				lu = luTypes[luind]
 
 				-- Step 1: Calculates the regression estimates
-				local regrProb = self.calcRegressionLogistic(cell, inputValues, self)
+				regrLogit = self.calcRegressionLogistic(cell, inputValues, self)
 
 				-- Step 2: Calculates the elasticity
-				local elas = 0				
+				elas = 0				
+
 				if (cell[lu] == 1) then
 					elas = inputValues.elasticity
 				end	
 
-				-- Step 3: Consider the neighbours
-				local numNeigh = 0;
-
-				forEachNeighbor(cell, function(cell, neigh)				
-											if (neigh[lu] == 1 and neigh ~= cell) then					
-												numNeigh = numNeigh + 1
-											end
-										end
-								)
-
-				-- Step 4: Compute potential
-				if numNeigh <= (totalNeigh * inputValues.percNeighborsUse - 1) then
-					cell[lu.."_pot"] = regrProb + elas 				
-				elseif numNeigh > (totalNeigh * inputValues.percNeighborsUse - 1) then
-					cell[lu.."_pot"] = (regrProb + elas) * (numNeigh / (totalNeigh * inputValues.percNeighborsUse))
-				end
-			end -- for luind
+				--Step 3 : Computes the total probability
+				cell[lu.."_reg"] = regrLogit
+				cell[lu.."_pot"] = regrLogit + elas
+			end	--close for region
 		end -- for k
-	end -- end run
+	end
 	
-	-- Handles with the verify method of a NeighAttractionLogisticRegression component.
+	-- Handles with the verify method of a PotentialDLogisticRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -130,7 +105,7 @@ function NeighAttractionLogisticRegression(component)
 	component.verify = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
 		print("Verifying Potential parameters")
-		
+
 		-- check potentialData
 		if (self.potentialData == nil) then
 			error("potentialData is missing", 2)
@@ -140,7 +115,7 @@ function NeighAttractionLogisticRegression(component)
 
 		-- check number of Regions
 		if (regionsNumber == nil or regionsNumber == 0) then
-			error("The model must have at least One region", 2)
+		error("The model must have at least One region", 2)
 		else
 			for i = 1, regionsNumber, 1 do
 				local regressionNumber = #self.potentialData[i]
@@ -161,11 +136,12 @@ function NeighAttractionLogisticRegression(component)
 					if (cell.region == i) then
 						activeRegionNumber = i
 					end
-				end 
+				end
 				
 				if (activeRegionNumber == 0) then
 					error("Region ".. i.." is not set into database.")  
 				end
+
 
 				for j = 1, regressionNumber, 1 do
 					-- check constant variable
@@ -176,11 +152,6 @@ function NeighAttractionLogisticRegression(component)
 					-- check elasticity variable
 					if (self.potentialData[i][j].elasticity == nil) then
 						error("elasticity variable is missing on Region "..i.." LandUseType number "..j, 2)
-					end
-
-					-- check percNeighborsUse variable
-					if (self.potentialData[i][j].percNeighborsUse == nil) then
-						error("percNeighborsUse variable is missing on Region "..i.." LandUseType number "..j, 2)
 					end
 
 					-- check betas variable
@@ -199,10 +170,10 @@ function NeighAttractionLogisticRegression(component)
 		end -- else
 	end -- verify
 	
-	-- Handles with the calculation of the regression logistic method of a NeighAttractionLogisticRegression component.
+	-- Handles with the calculation of the regression logistic method of a PotentialDLogisticRegression component.
 	-- @arg cell A spatial location with homogeneous internal content.
 	-- @arg inputValues A parameter component.
-	-- @arg component A NeighAttractionLogisticRegression component.
+	-- @arg component A PotentialDLogisticRegression component.
 	-- @usage --DONTRUN
 	-- component.calcRegressionLogistic(cell, inputValues, self)
 	component.calcRegressionLogistic = function(cell, inputValues, component)
@@ -231,4 +202,4 @@ function NeighAttractionLogisticRegression(component)
 	
 	collectgarbage("collect")
 	return component
-end --close NeighAttractionLogisticRegression
+ end --close PotentialDLogisticRegression	

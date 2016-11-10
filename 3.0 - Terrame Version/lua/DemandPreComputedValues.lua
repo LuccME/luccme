@@ -10,8 +10,8 @@
 -- the final year to calculate the demand interpolation.
 -- @arg component.directionForInterpolation Set the direction of the demand for each
 -- landUseTypesForInterpolation (optional).
--- @arg component.run Handles with the execution method of a PreComputedValuesINPE component.
--- @arg model.verify Handles with the verify method of a PreComputedValuesINPE component.
+-- @arg component.run Handles with the execution method of a DemandPreComputedValues component.
+-- @arg model.verify Handles with the verify method of a DemandPreComputedValues component.
 -- @arg component.getCurrentDemand Return the current demand of the specified component.
 -- @arg component.getPreviousDemand Return the previous demand of the specified component.
 -- @arg component.getCurrentLuDemand Return the current demand for an specific luIndex.
@@ -20,7 +20,7 @@
 -- @arg component.changeLuDirection Invert the demand direction for an specific luIndex.
 -- @return the modified component.
 -- @usage --DONTRUN 
---D1 = PreComputedValuesINPE
+--D1 = DemandPreComputedValues
 --{
 --  annualDemand =
 --  {
@@ -34,7 +34,7 @@
 --    {7748, 2852, 12}  -- 2014
 --  }
 --}
-function PreComputedValuesINPE(component)
+function DemandPreComputedValues(component)
 	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
@@ -194,4 +194,4 @@ function PreComputedValuesINPE(component)
 
 	collectgarbage("collect")
 	return component
-end -- PreComputedValuesINPE
+end -- DemandPreComputedValues

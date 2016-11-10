@@ -1,13 +1,13 @@
 --- Simple component developed as teaching material. Not to be used in real applications. Estimates cell potential combining above two methods.
--- @arg component A NeighInverseDistanceRule component.
+-- @arg component A PotentialDNeighInverseDistanceRule component.
 -- @arg component.potentialData A table with the potential parameters for each attribute.
 -- @arg component.potentialData.const A linear regression constant.
 -- @arg component.potentialData.betas A linear regression betas for land use drivers.
--- @arg component.run Handles with the execution method of a NeighInverseDistanceRule component.
+-- @arg component.run Handles with the execution method of a PotentialDNeighInverseDistanceRule component.
 -- @arg component.verify Handles with the verify method of a LogisticRegression component.
 -- @return The modified component.
 -- @usage --DONTRUN 
---P1 = NeighInverseDistanceRule
+--P1 = PotentialDNeighInverseDistanceRule
 --{
 --  potentialData =
 --  {
@@ -51,8 +51,8 @@
 --    }
 --  }
 --}				
-function NeighInverseDistanceRule(component)
-	-- Handles with the execution method of a NeighInverseDistanceRule component.
+function PotentialDNeighInverseDistanceRule(component)
+	-- Handles with the execution method of a PotentialDNeighInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN

@@ -1,14 +1,14 @@
 --- Simple model developed as teaching material. Not to be used in real applications. Instead of using the iterative process employed in the CLUE family, 
 -- the component implements a simple ordering approach. A more elaborate ordering approch is under construction.
--- @arg component A AllocationBySimpleOrdering component.
+-- @arg component A AllocationDSimpleOrdering component.
 -- @arg component.run Handles with the rules of the component execution.
 -- @arg component.verify Handles with the parameters verification.
 -- @usage --DONTRUN 
---A1 = AllocationBySimpleOrdering
+--A1 = AllocationDSimpleOrdering
 --{
 --  maxDifference = 106
 --} 
-function AllocationBySimpleOrdering(component)
+function AllocationDSimpleOrdering(component)
 	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.

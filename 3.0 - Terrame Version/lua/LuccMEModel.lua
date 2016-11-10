@@ -162,6 +162,24 @@ function LuccMEModel(model)
 		-- Verify the cellular space
 		if (not self.cs) then
 			error("A Cellular Space must be defined", 2)
+		else
+			if (self.cs.cells[1].lin ~= nil) then
+				local aux = self.cs
+				self.cs = CellularSpace {
+					project = "t3mp.tview",
+					layer = "layer",
+					xy = {"col", "lin"},
+					cellArea = aux.cellArea
+				}
+			elseif (self.cs.cells[1].Lin ~= nil) then
+				local aux = self.cs
+				self.cs = CellularSpace {
+					project = "t3mp.tview",
+					layer = "layer",
+					xy = {"Col", "Lin"},
+					cellArea = aux.cellArea
+			}
+			end
 		end
 
 		-- Verify whether the land use no data is declared and its valid
@@ -282,16 +300,4 @@ function LuccMEModel(model)
 
 	collectgarbage("collect")
 	return model
-end
-
--- Override the error function to hold the screen.
--- @arg message The message to inform the user.
--- @arg code The number of level that got the error.
--- @usage --DONTRUN
--- error("Missing something", 1)
-error = function(message, code)
-	print("\n[Error] "..message)
-	io.write("\nPress enter key to exit...")
-	io.flush()
-	os.exit()
 end

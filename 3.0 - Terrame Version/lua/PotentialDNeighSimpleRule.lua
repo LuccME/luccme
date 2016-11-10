@@ -1,13 +1,13 @@
 --- Simple component developed as teaching material. Not to be used in real applications. Estimates cell 
 -- potential for a given use according to the percentage of cells of the same type in a Moore neighbourhood.
--- @arg component A NeighSimpleRule component.
--- @arg component.run Handles with the execution method of a NeighSimpleRule component.
--- @arg component.verify Handles with the verify method of a NeighSimpleRule component.
+-- @arg component A PotentialDNeighSimpleRule component.
+-- @arg component.run Handles with the execution method of a PotentialDNeighSimpleRule component.
+-- @arg component.verify Handles with the verify method of a PotentialDNeighSimpleRule component.
 -- @return The modified component.
 -- @usage -- DONTRUN
--- P1 = NeighSimpleRule{}
-function NeighSimpleRule(component)
-	-- Handles with the execution method of a NeighSimpleRule component.
+-- P1 = PotentialDNeighSimpleRule{}
+function PotentialDNeighSimpleRule(component)
+	-- Handles with the execution method of a PotentialDNeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN 
@@ -56,7 +56,7 @@ function NeighSimpleRule(component)
 		end -- for k
 	end -- end run
 
-	-- Handles with the verify method of a NeighSimpleRule component.
+	-- Handles with the verify method of a PotentialDNeighSimpleRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @usage --DONTRUN 
 	-- component.verify(self, event)

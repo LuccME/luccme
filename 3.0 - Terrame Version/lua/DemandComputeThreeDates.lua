@@ -10,8 +10,8 @@
 -- the final year to calculate the demand interpolation.
 -- @arg component.directionForInterpolation Set the direction of the demand for each
 -- landUseTypesForInterpolation (optional).
--- @arg component.run Handles with the execution method of a ComputeInputThreeDateMaps component.
--- @arg model.verify Handles with the verify method of a ComputeInputThreeDateMaps component.
+-- @arg component.run Handles with the execution method of a DemandComputeThreeDates component.
+-- @arg model.verify Handles with the verify method of a DemandComputeThreeDates component.
 -- @arg component.printDemand Print the generated demand.
 -- @arg component.getCurrentDemand Return the current demand of the specified component.
 -- @arg component.getPreviousDemand Return the previous demand of the specified component.
@@ -21,14 +21,14 @@
 -- @arg component.changeLuDirection Invert the demand direction for an specific luIndex.
 -- @return The modified component.
 -- @usage --DONTRUN 
---D1 = ComputeInputThreeDateMaps
+--D1 = DemandComputeThreeDates
 --{
 --  middleYearForInterpolation = 2011,
 --  middleLandUseTypesForInterpolation = {"floresta2011", "desmatamento2011", "outros"},
 --  finalYearForInterpolation = 2014,
 --  finalLandUseTypesForInterpolation = {"floresta2014", "desmatamento2014", "outros"},
 --}
-function ComputeInputThreeDateMaps(component)
+function DemandComputeThreeDates(component)
 	-- Handles with the rules of the component execution.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
@@ -479,4 +479,4 @@ function ComputeInputThreeDateMaps(component)
 
 	collectgarbage("collect")
 	return component
-end -- ComputeInputThreeDateMaps
+end -- DemandComputeThreeDates

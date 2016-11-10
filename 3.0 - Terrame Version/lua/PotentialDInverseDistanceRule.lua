@@ -1,14 +1,14 @@
 --- Simple component developed as teaching material. Not to be used in real applications. Estimates cell potential for a given 
 -- use according to the inverse of the distance to given attributes.
--- @arg component A InverseDistanceRule component.
+-- @arg component A PotentialDInverseDistanceRule component.
 -- @arg component.potentialData A table with the potential parameters for each attribute.
 -- @arg component.potentialData.const A linear regression constant.
 -- @arg component.potentialData.betas A linear regression betas for land use drivers.
--- @arg component.run Handles with the execution method of a InverseDistanceRule component.
--- @arg component.verify Handles with the verify method of a InverseDistanceRule component.
+-- @arg component.run Handles with the execution method of a PotentialDInverseDistanceRule component.
+-- @arg component.verify Handles with the verify method of a PotentialDInverseDistanceRule component.
 -- @return The modified component.
 -- @usage --DONTRUN
--- P1 = InverseDistanceRule
+-- P1 = PotentialDInverseDistanceRule
 --{
 --  potentialData =
 --  {
@@ -52,8 +52,8 @@
 --    }
 --  }
 --}
-function InverseDistanceRule(component)
-	-- Handles with the execution method of a InverseDistanceRule component.
+function PotentialDInverseDistanceRule(component)
+	-- Handles with the execution method of a PotentialDInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -94,7 +94,7 @@ function InverseDistanceRule(component)
 		end -- for k
 	end -- end run
 	
-	-- Handles with the verify method of a InverseDistanceRule component.
+	-- Handles with the verify method of a PotentialDInverseDistanceRule component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -162,4 +162,4 @@ function InverseDistanceRule(component)
 	
 	collectgarbage("collect")
 	return component
-end --close InverseDistanceRule
+end --close PotentialDInverseDistanceRule

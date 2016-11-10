@@ -1,6 +1,6 @@
 --- Modification of the LogisticRegression combining cellular automata based models ideas. Cell potential is modified 
 -- according to the affinity matrix attracting or repeling the other cell based on this matrix.
--- @arg component A AttractRepulseLogisticRegression component.
+-- @arg component A PotentialDLogisticRegressionNeighAttractRepulsion component.
 -- @arg component.potentialData A table with the regression parameters for each attribute.
 -- @arg component.potentialData.const A linear regression constant.
 -- @arg component.potentialData.elasticity An elasticity value, closer to 1 is more difficulty
@@ -14,7 +14,7 @@
 -- @arg component.probability Compute the probability logistic method of a NeighAttractionLogisticRegression component.
 -- @return The modified component.
 -- @usage --DONTRUN 
---P1 = AttractRepulseLogisticRegression
+--P1 = PotentialDLogisticRegressionNeighAttractRepulsion
 --{
 --  potentialData =
 --  {
@@ -78,8 +78,8 @@
 --    } 
 --  }
 --}
-function AttractRepulseLogisticRegression(component)
-	-- Handles with the execution method of a AttractRepulseLogisticRegression component.
+function PotentialDLogisticRegressionNeighAttractRepulsion(component)
+	-- Handles with the execution method of a PotentialDLogisticRegressionNeighAttractRepulsion component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -158,7 +158,7 @@ function AttractRepulseLogisticRegression(component)
 		end -- end cells
 	end -- end run
 
-	-- Handles with the verify method of a AttractRepulseLogisticRegression component.
+	-- Handles with the verify method of a PotentialDLogisticRegressionNeighAttractRepulsion component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -298,4 +298,4 @@ function AttractRepulseLogisticRegression(component)
 	
 	collectgarbage("collect")
 	return component
-end --close AttractRepulseLogisticRegression
+end --close PotentialDLogisticRegressionNeighAttractRepulsion

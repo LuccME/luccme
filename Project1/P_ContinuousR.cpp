@@ -42,7 +42,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog->Checked = false;
 	tConst->Text = "0.01";
 	tConst->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg->Text = "0";
 		tMinReg->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg->Text = "1";
@@ -58,7 +58,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog2->Checked = false;
 	tConst2->Text = "0.01";
 	tConst2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg2->Text = "0";
 		tMinReg2->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg2->Text = "1";
@@ -74,7 +74,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog3->Checked = false;
 	tConst3->Text = "0.01";
 	tConst3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg3->Text = "0";
 		tMinReg3->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg3->Text = "1";
@@ -90,7 +90,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog4->Checked = false;
 	tConst4->Text = "0.01";
 	tConst4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg4->Text = "0";
 		tMinReg4->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg4->Text = "1";
@@ -106,7 +106,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog5->Checked = false;
 	tConst5->Text = "0.01";
 	tConst5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg5->Text = "0";
 		tMinReg5->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg5->Text = "1";
@@ -122,7 +122,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog6->Checked = false;
 	tConst6->Text = "0.01";
 	tConst6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg6->Text = "0";
 		tMinReg6->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg6->Text = "1";
@@ -138,7 +138,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog7->Checked = false;
 	tConst7->Text = "0.01";
 	tConst7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg7->Text = "0";
 		tMinReg7->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg7->Text = "1";
@@ -154,7 +154,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog8->Checked = false;
 	tConst8->Text = "0.01";
 	tConst8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg8->Text = "0";
 		tMinReg8->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg8->Text = "1";
@@ -170,7 +170,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog9->Checked = false;
 	tConst9->Text = "0.01";
 	tConst9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg9->Text = "0";
 		tMinReg9->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg9->Text = "1";
@@ -186,7 +186,7 @@ System::Void LuccME::P_ContinuousR::initializeRegions()
 	cIsLog10->Checked = false;
 	tConst10->Text = "0.01";
 	tConst10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg10->Text = "0";
 		tMinReg10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tMaxReg10->Text = "1";
@@ -210,7 +210,7 @@ System::Void LuccME::P_ContinuousR::setVisibleONorOFF(Label^ lBetas, DataGridVie
 	cIsLog->Visible = status;
 	lConst->Visible = status;
 	tConst->Visible = status;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		spatialLagRegressionONOFF(status);
 	}
 }
@@ -228,7 +228,7 @@ System::Void LuccME::P_ContinuousR::moveData(DataGridView^ dgBetas, CheckBox^ cI
 	}
 	cIsLog->Checked = cIsLog2->Checked;
 	tConst->Text = tConst2->Text;
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg->Text = tMinReg2->Text;
 		tMaxReg->Text = tMaxReg2->Text;
 		tRo->Text = tRo2->Text;
@@ -256,7 +256,7 @@ System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, c
 	String^ tempMinReg = "";
 	String^ tempMaxReg = "";
 	String^ tempRo = "";
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		while (lTempBetas[i][j] != ';') {
 			tempMinReg += lTempBetas[i][j];
 			j++;
@@ -307,7 +307,7 @@ System::Int16 LuccME::P_ContinuousR::getRegionData(array<String^>^ lTempBetas, c
 	tConst->Text = tempConst;
 	tConst->ForeColor = System::Drawing::Color::Black;
 
-	if (lReturn->Component == SPATIALLAGREGRESSION) {
+	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg->Text = tempMinReg;
 		tMinReg->ForeColor = System::Drawing::Color::Black;
 		tMaxReg->Text = tempMaxReg;
@@ -336,7 +336,7 @@ System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBo
 	lTempBetas[i] += tConst->Text;
 	lTempBetas[i] += ";";
 
-	if (this->lReturn->Component == SPATIALLAGREGRESSION) {
+	if (this->lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		lTempBetas[i] += tMinReg->Text;
 		lTempBetas[i] += ";";
 
@@ -673,7 +673,7 @@ System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender,
 		}
 	}
 
-	if (this->lReturn->Component == SPATIALLAGREGRESSION) {
+	if (this->lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		spatialLagRegressionONOFF(true);
 	}
 
@@ -783,7 +783,7 @@ System::Void LuccME::P_ContinuousR::lvLUT_SelectedIndexChanged(System::Object^  
 		bAddBetas->Visible = true;
 		bCancel->Visible = true;
 
-		if (lReturn->Component == SPATIALLAGREGRESSION) {
+		if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 			spatialLagRegressionONOFF(true);
 		}
 	}

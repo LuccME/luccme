@@ -31,7 +31,7 @@ System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ se
 		check = false;
 	}
 
-	if (this->lReturn->Component != NEIGHSIMPLERULE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDNEIGHSIMPLERULE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -40,7 +40,7 @@ System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ se
 
 	if (check) {
 		lReturn->Return = "";
-		lReturn->Component = NEIGHSIMPLERULE;
+		lReturn->Component = POTENTIALDNEIGHSIMPLERULE;
 		this->Close();
 	}
 }
@@ -48,7 +48,7 @@ System::Void LuccME::PotDiscreteForm::bNeighSimpleRule_Click(System::Object ^ se
 System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != NEIGHINVERSEDISTANCERULE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDNEIGHINVERSEDISTANCERULE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -65,7 +65,7 @@ System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Ob
 		potentialForm->Text = gSPot + "Neigh Inverse Distance Rule";
 		potentialForm->ShowDialog();
 		if (lReturn->Return != "") {
-			lReturn->Component = NEIGHINVERSEDISTANCERULE;
+			lReturn->Component = POTENTIALDNEIGHINVERSEDISTANCERULE;
 		}
 		this->Close();
 	}
@@ -74,7 +74,7 @@ System::Void LuccME::PotDiscreteForm::bNeighInverseDistanceRule_Click(System::Ob
 System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != INVERSEDISTANCERULE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDINVERSEDISTANCERULE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -90,7 +90,7 @@ System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object 
 		potentialForm->Text = gSPot + "Inverse Distance Rule";
 		potentialForm->ShowDialog();
 		if (lReturn->Return != "") {
-			lReturn->Component = INVERSEDISTANCERULE;
+			lReturn->Component = POTENTIALDINVERSEDISTANCERULE;
 		}
 		this->Close();
 	}
@@ -99,7 +99,7 @@ System::Void LuccME::PotDiscreteForm::bInverseDistanceRule_Click(System::Object 
 System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != LOGISTICREGRESSION && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDLOGISTICREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -108,7 +108,7 @@ System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^
 		}
 	}
 	if (check) {
-		lReturn->Component = LOGISTICREGRESSION;
+		lReturn->Component = POTENTIALDLOGISTICREGRESSION;
 		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
@@ -125,7 +125,7 @@ System::Void LuccME::PotDiscreteForm::bLogisticRegression_Click(System::Object ^
 System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != NEIGHATTRACTIONLOGISTICREGRESSION && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -134,7 +134,7 @@ System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, Syste
 		}
 	}
 	if (check) {
-		lReturn->Component = NEIGHATTRACTIONLOGISTICREGRESSION;
+		lReturn->Component = POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT;
 		P_DiscreteR^ potentialForm = gcnew P_DiscreteR(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
@@ -151,7 +151,7 @@ System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, Syste
 System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	bool check = true;
-	if (this->lReturn->Component != DMAXENTLIKE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDMAXIMUMENTROPYLIKE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -160,7 +160,7 @@ System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender,
 		}
 	}
 	if (check) {
-		lReturn->Component = DMAXENTLIKE;
+		lReturn->Component = POTENTIALDMAXIMUMENTROPYLIKE;
 		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
@@ -177,7 +177,7 @@ System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender,
 System::Void LuccME::PotDiscreteForm::bARLR_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	bool check = true;
-	if (this->lReturn->Component != ATTRACTREPULSELOGISTICREGRESSION && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDLOGISTICREGRESSIONNEIGHATTRACTREPULSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -186,7 +186,7 @@ System::Void LuccME::PotDiscreteForm::bARLR_Click(System::Object^  sender, Syste
 		}
 	}
 	if (check) {
-		lReturn->Component = ATTRACTREPULSELOGISTICREGRESSION;
+		lReturn->Component = POTENTIALDLOGISTICREGRESSIONNEIGHATTRACTREPULSION;
 		P_AttractRepulseLogisticRegression^ potentialForm = gcnew P_AttractRepulseLogisticRegression(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;

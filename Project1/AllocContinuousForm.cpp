@@ -19,10 +19,10 @@ System::Void LuccME::AllocContinuousForm::AllocContinuousForm_Shown(System::Obje
 }
 
 
-System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Object ^ sender, System::EventArgs ^ e)
+System::Void LuccME::AllocContinuousForm::bAllocationCClueLike_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != ALLOCATIONCLUELIKE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != ALLOCATIONCCLUELIKE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -31,7 +31,7 @@ System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Obje
 		}
 	}
 	if (check) {
-		lReturn->Component = ALLOCATIONCLUELIKE;
+		lReturn->Component = ALLOCATIONCCLUELIKE;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
@@ -48,7 +48,7 @@ System::Void LuccME::AllocContinuousForm::bAllocationClueLike_Click(System::Obje
 System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != ALLOCATIONCLUELIKESATURATION && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != ALLOCATIONCCLUELIKESATURATION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -57,7 +57,7 @@ System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ 
 		}
 	}
 	if (check) {
-		lReturn->Component = ALLOCATIONCLUELIKESATURATION;
+		lReturn->Component = ALLOCATIONCCLUELIKESATURATION;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;

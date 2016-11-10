@@ -136,7 +136,7 @@ namespace LuccME {
 			this->bNALR->Name = L"bNALR";
 			this->bNALR->Size = System::Drawing::Size(185, 39);
 			this->bNALR->TabIndex = 89;
-			this->bNALR->Text = L"Neigh Attraction Logistic Regression";
+			this->bNALR->Text = L"Logistic Regression Neigh Attraction ";
 			this->bNALR->UseVisualStyleBackColor = true;
 			this->bNALR->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bNALR_Click);
 			// 
@@ -156,7 +156,7 @@ namespace LuccME {
 			this->bARLR->Name = L"bARLR";
 			this->bARLR->Size = System::Drawing::Size(185, 39);
 			this->bARLR->TabIndex = 90;
-			this->bARLR->Text = L"Attract Repulse Logistic Regression";
+			this->bARLR->Text = L"Logistic Regression Neigh Attract Repulsion";
 			this->bARLR->UseVisualStyleBackColor = true;
 			this->bARLR->Click += gcnew System::EventHandler(this, &PotDiscreteForm::bARLR_Click);
 			// 

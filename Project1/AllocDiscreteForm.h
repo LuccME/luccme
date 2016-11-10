@@ -86,7 +86,7 @@ namespace LuccME {
 			this->bAllocationClueSLike->Name = L"bAllocationClueSLike";
 			this->bAllocationClueSLike->Size = System::Drawing::Size(185, 39);
 			this->bAllocationClueSLike->TabIndex = 88;
-			this->bAllocationClueSLike->Text = L"Allocation ClueS Like";
+			this->bAllocationClueSLike->Text = L"ClueS Like";
 			this->bAllocationClueSLike->UseVisualStyleBackColor = true;
 			this->bAllocationClueSLike->Click += gcnew System::EventHandler(this, &AllocDiscreteForm::bAllocationClueSLike_Click);
 			// 
@@ -96,7 +96,7 @@ namespace LuccME {
 			this->bABSO->Name = L"bABSO";
 			this->bABSO->Size = System::Drawing::Size(185, 39);
 			this->bABSO->TabIndex = 87;
-			this->bABSO->Text = L"Allocation By Simple Ordering";
+			this->bABSO->Text = L"Simple Ordering";
 			this->bABSO->UseVisualStyleBackColor = true;
 			this->bABSO->Click += gcnew System::EventHandler(this, &AllocDiscreteForm::bABSO_Click);
 			// 
@@ -106,7 +106,7 @@ namespace LuccME {
 			this->bACSNO->Name = L"bACSNO";
 			this->bACSNO->Size = System::Drawing::Size(185, 39);
 			this->bACSNO->TabIndex = 89;
-			this->bACSNO->Text = L"Allocation ClueS Neighbor Ordering";
+			this->bACSNO->Text = L"ClueS Neighbor Ordering";
 			this->bACSNO->UseVisualStyleBackColor = true;
 			this->bACSNO->Click += gcnew System::EventHandler(this, &AllocDiscreteForm::bACSNO_Click);
 			// 

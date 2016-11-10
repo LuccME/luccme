@@ -22,7 +22,7 @@ System::Void LuccME::AllocDiscreteForm::AllocDiscreteForm_Shown(System::Object ^
 System::Void LuccME::AllocDiscreteForm::bABSO_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != ALLOCATIONBYSIMPLEORDERING && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != ALLOCATIONDSIMPLEORDERING && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -31,7 +31,7 @@ System::Void LuccME::AllocDiscreteForm::bABSO_Click(System::Object ^ sender, Sys
 		}
 	}
 	if (check) {
-		lReturn->Component = ALLOCATIONBYSIMPLEORDERING;
+		lReturn->Component = ALLOCATIONDSIMPLEORDERING;
 		A_ABSO^ allocationForm = gcnew A_ABSO(lReturn);
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
@@ -47,7 +47,7 @@ System::Void LuccME::AllocDiscreteForm::bABSO_Click(System::Object ^ sender, Sys
 System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != ALLOCATIONCLUESLIKE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != ALLOCATIONDCLUESLIKE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -56,7 +56,7 @@ System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Objec
 		}
 	}
 	if (check) {
-		lReturn->Component = ALLOCATIONCLUESLIKE;
+		lReturn->Component = ALLOCATIONDCLUESLIKE;
 		A_AllocationClueSLike^ allocationForm = gcnew A_AllocationClueSLike(lReturn);
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
@@ -73,7 +73,7 @@ System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Objec
 System::Void LuccME::AllocDiscreteForm::bACSNO_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	bool check = true;
-	if (this->lReturn->Component != ALLOCATIONCLUESNEIGHBORORDERING && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != ALLOCATIONDCLUESNEIGHORDERING && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSAlloMod, gSAlloModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -82,7 +82,7 @@ System::Void LuccME::AllocDiscreteForm::bACSNO_Click(System::Object^  sender, Sy
 		}
 	}
 	if (check) {
-		lReturn->Component = ALLOCATIONCLUESNEIGHBORORDERING;
+		lReturn->Component = ALLOCATIONDCLUESNEIGHORDERING;
 		A_AllocationClueSLike^ allocationForm = gcnew A_AllocationClueSLike(lReturn);
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;

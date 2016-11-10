@@ -70,7 +70,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 
 		String^ saturationIndicator = "";
 		String^ attrProtection = "";
-		if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
+		if (lReturn->Component == ALLOCATIONCCLUELIKESATURATION) {
 			while (lReturn->Return[j] != ';') {
 				saturationIndicator += lReturn->Return[j];
 				j++;
@@ -102,7 +102,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		tComplementarLU->Text = complementarLU;
 		tComplementarLU->ForeColor = System::Drawing::Color::Black;
 		
-		if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
+		if (lReturn->Component == ALLOCATIONCCLUELIKESATURATION) {
 			tSaturationIndicator->Text = saturationIndicator;
 			tSaturationIndicator->ForeColor = System::Drawing::Color::Black;
 
@@ -220,7 +220,7 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		}
 		dgAllocationData->Columns[0]->ReadOnly = true;
 	}
-	if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
+	if (lReturn->Component == ALLOCATIONCCLUELIKESATURATION) {
 		lSaturationIndicator->Visible = true;
 		tSaturationIndicator->Visible = true;
 		lAttrProtection->Visible = true;
@@ -253,7 +253,7 @@ System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System
 	lReturn->Return += tComplementarLU->Text;
 	lReturn->Return += ";";
 	
-	if (lReturn->Component == ALLOCATIONCLUELIKESATURATION) {
+	if (lReturn->Component == ALLOCATIONCCLUELIKESATURATION) {
 		lReturn->Return += tSaturationIndicator->Text;
 		lReturn->Return += ";";
 		lReturn->Return += tAttrProtection->Text;

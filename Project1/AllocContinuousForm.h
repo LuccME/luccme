@@ -44,7 +44,7 @@ namespace LuccME {
 		}
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::Button^  bACLSaturation;
-	private: System::Windows::Forms::Button^  bAllocationClueLike;
+	private: System::Windows::Forms::Button^  bAllocationCClueLike;
 
 	private:
 		/// <summary>
@@ -62,7 +62,7 @@ namespace LuccME {
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(AllocContinuousForm::typeid));
 			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->bACLSaturation = (gcnew System::Windows::Forms::Button());
-			this->bAllocationClueLike = (gcnew System::Windows::Forms::Button());
+			this->bAllocationCClueLike = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -82,19 +82,19 @@ namespace LuccME {
 			this->bACLSaturation->Name = L"bACLSaturation";
 			this->bACLSaturation->Size = System::Drawing::Size(185, 39);
 			this->bACLSaturation->TabIndex = 90;
-			this->bACLSaturation->Text = L"Allocation Clue Like Saturation";
+			this->bACLSaturation->Text = L"Clue Like Saturation";
 			this->bACLSaturation->UseVisualStyleBackColor = true;
 			this->bACLSaturation->Click += gcnew System::EventHandler(this, &AllocContinuousForm::bACLSaturation_Click);
 			// 
-			// bAllocationClueLike
+			// bAllocationCClueLike
 			// 
-			this->bAllocationClueLike->Location = System::Drawing::Point(155, 205);
-			this->bAllocationClueLike->Name = L"bAllocationClueLike";
-			this->bAllocationClueLike->Size = System::Drawing::Size(185, 39);
-			this->bAllocationClueLike->TabIndex = 89;
-			this->bAllocationClueLike->Text = L"Allocation Clue Like";
-			this->bAllocationClueLike->UseVisualStyleBackColor = true;
-			this->bAllocationClueLike->Click += gcnew System::EventHandler(this, &AllocContinuousForm::bAllocationClueLike_Click);
+			this->bAllocationCClueLike->Location = System::Drawing::Point(155, 205);
+			this->bAllocationCClueLike->Name = L"bAllocationCClueLike";
+			this->bAllocationCClueLike->Size = System::Drawing::Size(185, 39);
+			this->bAllocationCClueLike->TabIndex = 89;
+			this->bAllocationCClueLike->Text = L"Clue Like";
+			this->bAllocationCClueLike->UseVisualStyleBackColor = true;
+			this->bAllocationCClueLike->Click += gcnew System::EventHandler(this, &AllocContinuousForm::bAllocationCClueLike_Click);
 			// 
 			// AllocContinuousForm
 			// 
@@ -103,7 +103,7 @@ namespace LuccME {
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(495, 421);
 			this->Controls->Add(this->bACLSaturation);
-			this->Controls->Add(this->bAllocationClueLike);
+			this->Controls->Add(this->bAllocationCClueLike);
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"AllocContinuousForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
@@ -114,7 +114,7 @@ namespace LuccME {
 
 		}
 #pragma endregion
-	private: System::Void bAllocationClueLike_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bAllocationCClueLike_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bACLSaturation_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void AllocContinuousForm_Shown(System::Object^  sender, System::EventArgs^  e);
 };

@@ -23,7 +23,7 @@ System::Void LuccME::PotContinuousForm::PotContinuousForm_Shown(System::Object ^
 System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != LINEARREGRESSION && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALCLINEARREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -32,7 +32,7 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 		}
 	}
 	if (check) {
-		lReturn->Component = LINEARREGRESSION;
+		lReturn->Component = POTENTIALCLINEARREGRESSION;
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
@@ -49,7 +49,7 @@ System::Void LuccME::PotContinuousForm::bLinearRegression_Click(System::Object ^
 System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != SPATIALLAGREGRESSION && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALCSPATIALLAGREGRESSION && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -58,7 +58,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Obje
 		}
 	}
 	if (check) {
-		lReturn->Component = SPATIALLAGREGRESSION;
+		lReturn->Component = POTENTIALCSPATIALLAGREGRESSION;
 		P_ContinuousR^ potentialForm = gcnew P_ContinuousR(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
@@ -75,7 +75,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagRegression_Click(System::Obje
 System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
-	if (this->lReturn->Component != SPATIALLAGLINEARROADS && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALCSPATIALLAGLINEARREGRESSIONMIX && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -84,7 +84,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 		}
 	}
 	if (check) {
-		lReturn->Component = SPATIALLAGLINEARROADS;
+		lReturn->Component = POTENTIALCSPATIALLAGLINEARREGRESSIONMIX;
 		P_SpatialLagLinearRoads^ potentialForm = gcnew P_SpatialLagLinearRoads(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
@@ -101,7 +101,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 System::Void LuccME::PotContinuousForm::bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	bool check = true;
-	if (this->lReturn->Component != CMAXENTLIKE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALCMAXIMUMENTROPYLIKE && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -110,7 +110,7 @@ System::Void LuccME::PotContinuousForm::bMaxEntLike_Click(System::Object^  sende
 		}
 	}
 	if (check) {
-		lReturn->Component = CMAXENTLIKE;
+		lReturn->Component = POTENTIALCMAXIMUMENTROPYLIKE;
 		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;

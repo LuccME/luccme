@@ -85,7 +85,7 @@ namespace LuccME {
 			this->bSpatialLagLinearRoads->Name = L"bSpatialLagLinearRoads";
 			this->bSpatialLagLinearRoads->Size = System::Drawing::Size(185, 39);
 			this->bSpatialLagLinearRoads->TabIndex = 93;
-			this->bSpatialLagLinearRoads->Text = L"Spatial Lag Linear Roads";
+			this->bSpatialLagLinearRoads->Text = L"Spatial Lag Linear Regression Mix";
 			this->bSpatialLagLinearRoads->UseVisualStyleBackColor = true;
 			this->bSpatialLagLinearRoads->Click += gcnew System::EventHandler(this, &PotContinuousForm::bSpatialLagLinearRoads_Click);
 			// 

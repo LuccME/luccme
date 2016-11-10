@@ -5,7 +5,7 @@
 System::Void LuccME::LUTForm::bAddLUT_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (tLUT->Text != "") {
-		this->lvLUT->Items->Add(tLUT->Text->ToLower());
+		this->lvLUT->Items->Add(tLUT->Text);
 		tLUT->Text = "";
 		bUpLUT->Visible = false;
 		bDownLUT->Visible = false;

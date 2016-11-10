@@ -37,13 +37,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas->Rows->Clear();
 	tConst->Text = "0.01";
 	tConst->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy->Text = "0.5";
 		tElasticy->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse->Text = "0.5";
 		tPercNeighborsUse->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy->Text = "0.5";
 		tElasticy->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse->Text = "0.5";
@@ -56,13 +56,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas2->Rows->Clear();
 	tConst2->Text = "0.01";
 	tConst2->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy2->Text = "0.5";
 		tElasticy2->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse2->Text = "0.5";
 		tPercNeighborsUse2->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy2->Text = "0.5";
 		tElasticy2->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse2->Text = "0.5";
@@ -75,13 +75,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas3->Rows->Clear();
 	tConst3->Text = "0.01";
 	tConst3->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy3->Text = "0.5";
 		tElasticy3->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse3->Text = "0.5";
 		tPercNeighborsUse3->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy3->Text = "0.5";
 		tElasticy3->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse3->Text = "0.5";
@@ -94,13 +94,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas4->Rows->Clear();
 	tConst4->Text = "0.01";
 	tConst4->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy4->Text = "0.5";
 		tElasticy4->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse4->Text = "0.5";
 		tPercNeighborsUse4->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy4->Text = "0.5";
 		tElasticy4->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse4->Text = "0.5";
@@ -113,13 +113,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas5->Rows->Clear();
 	tConst5->Text = "0.01";
 	tConst5->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy5->Text = "0.5";
 		tElasticy5->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse5->Text = "0.5";
 		tPercNeighborsUse5->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy5->Text = "0.5";
 		tElasticy5->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse5->Text = "0.5";
@@ -132,13 +132,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas6->Rows->Clear();
 	tConst6->Text = "0.01";
 	tConst6->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy6->Text = "0.5";
 		tElasticy6->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse6->Text = "0.5";
 		tPercNeighborsUse6->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy6->Text = "0.5";
 		tElasticy6->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse6->Text = "0.5";
@@ -151,13 +151,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas7->Rows->Clear();
 	tConst7->Text = "0.01";
 	tConst7->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy7->Text = "0.5";
 		tElasticy7->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse7->Text = "0.5";
 		tPercNeighborsUse7->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy7->Text = "0.5";
 		tElasticy7->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse7->Text = "0.5";
@@ -170,13 +170,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas8->Rows->Clear();
 	tConst8->Text = "0.01";
 	tConst8->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy8->Text = "0.5";
 		tElasticy8->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse8->Text = "0.5";
 		tPercNeighborsUse8->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy8->Text = "0.5";
 		tElasticy8->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse8->Text = "0.5";
@@ -189,13 +189,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas9->Rows->Clear();
 	tConst9->Text = "0.01";
 	tConst9->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy9->Text = "0.5";
 		tElasticy9->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse9->Text = "0.5";
 		tPercNeighborsUse9->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy9->Text = "0.5";
 		tElasticy9->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse9->Text = "0.5";
@@ -208,13 +208,13 @@ System::Void LuccME::P_DiscreteR::initializeRegions()
 	dgBetas10->Rows->Clear();
 	tConst10->Text = "0.01";
 	tConst10->ForeColor = System::Drawing::SystemColors::ScrollBar;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy10->Text = "0.5";
 		tElasticy10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse10->Text = "0.5";
 		tPercNeighborsUse10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy10->Text = "0.5";
 		tElasticy10->ForeColor = System::Drawing::SystemColors::ScrollBar;
 		tPercNeighborsUse10->Text = "0.5";
@@ -236,11 +236,11 @@ System::Void LuccME::P_DiscreteR::setVisibleONorOFF(Label^ lBetas, DataGridView^
 	dgBetas->Visible = status;
 	lConst->Visible = status;
 	tConst->Visible = status;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		lElasticy->Visible = status;
 		tElasticy->Visible = status;
 	} 
-	else if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		lElasticy->Visible = status;
 		tElasticy->Visible = status;
 		lPercNeighborsUse->Visible = status;
@@ -260,10 +260,10 @@ System::Void LuccME::P_DiscreteR::moveData(DataGridView^ dgBetas, TextBox^ tCons
 		dgBetas->Rows[i]->Cells[1]->Value = dgBetas2->Rows[i]->Cells[1]->Value;
 	}
 	tConst->Text = tConst2->Text;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy->Text = tElasticy2->Text;
 	}
-	else if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy->Text = tElasticy2->Text;
 		tPercNeighborsUse->Text = tPercNeighborsUse2->Text;
 	}
@@ -282,7 +282,7 @@ System::Int16 LuccME::P_DiscreteR::getRegionData(array<String^>^ lTempBetas, cRe
 	j++;
 
 	String^ tempElasticy = "";
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		while (lTempBetas[i][j] != ';') {
 			tempElasticy += lTempBetas[i][j];
 			j++;
@@ -291,7 +291,7 @@ System::Int16 LuccME::P_DiscreteR::getRegionData(array<String^>^ lTempBetas, cRe
 	}
 
 	String^ tempPNU = "";
-	if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		while (lTempBetas[i][j] != ';') {
 			tempElasticy += lTempBetas[i][j];
 			j++;
@@ -335,11 +335,11 @@ System::Int16 LuccME::P_DiscreteR::getRegionData(array<String^>^ lTempBetas, cRe
 	}
 	tConst->Text = tempConst;
 	tConst->ForeColor = System::Drawing::Color::Black;
-	if (lReturn->Component == LOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		tElasticy->Text = tempElasticy;
 		tElasticy->ForeColor = System::Drawing::Color::Black;
 	}
-	if (lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	if (lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		tElasticy->Text = tempElasticy;
 		tElasticy->ForeColor = System::Drawing::Color::Black;
 		tPercNeighborsUse->Text = tempPNU;
@@ -357,11 +357,11 @@ System::Void LuccME::P_DiscreteR::setRegionData(DataGridView^ dgBetas, TextBox^ 
 	lTempBetas[i] += tConst->Text;
 	lTempBetas[i] += ";";
 
-	if (this->lReturn->Component == LOGISTICREGRESSION) {
+	if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		lTempBetas[i] += tElasticy->Text;
 		lTempBetas[i] += ";";
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		lTempBetas[i] += tElasticy->Text;
 		lTempBetas[i] += ";";
 		lTempBetas[i] += tPercNeighborsUse->Text;
@@ -676,7 +676,7 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		}
 	}
 
-	if (this->lReturn->Component == LOGISTICREGRESSION) {
+	if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 		logisticRegressionON();
 		lBetas->Location = Point(117, 80);
 		dgBetas->Location = Point(25, 110);
@@ -709,7 +709,7 @@ System::Void LuccME::P_DiscreteR::P_DiscreteR_Shown(System::Object^  sender, Sys
 		dgBetas10->Location = Point(25, 110);
 		dgBetas10->Height = 246;
 	}
-	else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+	else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 		neighAttractionLogisticRegressionON();
 		lBetas->Location = Point(117, 110);
 		dgBetas->Location = Point(25, 140);
@@ -848,10 +848,10 @@ System::Void  LuccME::P_DiscreteR::lvLUT_SelectedIndexChanged(System::Object^  s
 		bAddBetas->Visible = true;
 		bCancel->Visible = true;
 
-		if (this->lReturn->Component == LOGISTICREGRESSION) {
+		if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSION) {
 			logisticRegressionON();
 		}
-		else if (this->lReturn->Component == NEIGHATTRACTIONLOGISTICREGRESSION) {
+		else if (this->lReturn->Component == POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT) {
 			neighAttractionLogisticRegressionON();
 		}
 	}

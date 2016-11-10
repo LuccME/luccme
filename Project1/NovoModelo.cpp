@@ -109,6 +109,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cPot->Text = "Potential";
 		cChange->Text = "Change";
 		cReg->Text = "Regression";
+		cAuxOut->Text = "Auxilary";
 		//tabFileMaker
 		lFileMaker->Text = "       Files Maker";
 		bGerarArquivos->Text = "Make Files";
@@ -136,6 +137,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Location = Point(265, 320);
 		cValidationSave->Text = "Save into Database";
 		bValidate->Text = "Validate";
+		cSaveValidationFile->Text = "Save Validation Files";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -306,6 +308,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cPot->Text = "Potencial";
 		cChange->Text = "Mudança";
 		cReg->Text = "Regressão";
+		cAuxOut->Text = "Auxiliares";
 		//tabFileMaker
 		lFileMaker->Text = "Gerar os Arquivos";
 		bGerarArquivos->Text = "Gerar Arquivos";
@@ -333,6 +336,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Location = Point(240, 320);
 		cValidationSave->Text = "Salvar no Banco de Dados";
 		bValidate->Text = "Validar";
+		cSaveValidationFile->Text = "Salvar os Arquivos de Validação";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";
@@ -479,7 +483,7 @@ System::Void LuccME::NovoModelo::showReturnLinearRegression()
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "LinearRegression";
+	lines[lineCount] = "PotentialCLinearRegression";
 	lineCount = 1;
 	regression = 0;
 	bool first = true;
@@ -578,7 +582,7 @@ System::Void LuccME::NovoModelo::showReturnSpatialLagRegression()
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "SpatialLagRegression";
+	lines[lineCount] = "PotentialCSpatialLagRegression";
 	lineCount = 1;
 	regression = 0;
 	int change = 0;
@@ -702,7 +706,7 @@ System::Void LuccME::NovoModelo::showReturnSpatialLagLinearRoads()
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "SpatialLagLinearRoads";
+	lines[lineCount] = "PotentialCSpatialLagLinearRegressionMix";
 	lineCount = 1;
 	int change = 0;
 
@@ -885,7 +889,7 @@ System::Void LuccME::NovoModelo::showReturnLogisticRegression()
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "LogisticRegression";
+	lines[lineCount] = "PotentialDLogisticRegression";
 
 	lineCount = 1;
 	bool first = true;
@@ -970,7 +974,7 @@ System::Void LuccME::NovoModelo::showReturnNeighAttractionLogisticRegression()
 
 	array<String^>^ lines = gcnew array<String^>(count + 1);
 
-	lines[lineCount] = "NeighAttractionLogisticRegression";
+	lines[lineCount] = "PotentialDLogisticRegressionNeighAttract";
 
 	lineCount = 1;
 
@@ -1119,7 +1123,7 @@ System::Void LuccME::NovoModelo::showReturnARLR()
 
 	array<String^>^ lines = gcnew array<String^>(count + (countAffinity * nLut) + 2);
 
-	lines[lineCount] = "AttractRepulseLogisticRegression";
+	lines[lineCount] = "PotentialDLogisticRegressionNeighAttractRepulsion";
 
 	lineCount = 1;
 
@@ -1252,8 +1256,11 @@ System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, Syst
 {
 	cReturn^ lLandUses = gcnew cReturn();
 	int nLUT = countCaracter(gLandUseTypes, ',') + 1;
-	lLandUses->Return = gLandUseTypes->ToLower();
+
+	lLandUses->Return = gLandUseTypes;
 	lLandUses->Language = lLanguage;
+
+	array<String^>^ backupLUT = gLandUseTypes->Split(',');
 
 	LuccME::LUTForm^ landUseTypeForm = gcnew LUTForm(lLandUses);
 	landUseTypeForm->MinimizeBox = false;
@@ -1261,7 +1268,59 @@ System::Void LuccME::NovoModelo::bLUTManager_Click(System::Object ^ sender, Syst
 	landUseTypeForm->ShowInTaskbar = false;
 	landUseTypeForm->ShowDialog();
 
-	gLandUseTypes = lLandUses->Return->ToLower();
+	int nNLUT = countCaracter(lLandUses->Return, ',') + 1;
+
+	if (nLUT < nNLUT) {
+		nLUT = nNLUT;
+	}
+
+	array<String^>^ tempLandUses = gcnew array<String^>(nLUT);
+	array<String^>^ tempNewLandUses = gcnew array<String^>(nLUT);
+
+	tempLandUses = backupLUT;
+	
+	gLandUseTypes = lLandUses->Return;
+	tempNewLandUses = gLandUseTypes->Split(',');
+
+	bool equalUses = false;
+	if (gLandUseTypes != "" && lLUTShow->Text != "") {
+		equalUses = true;
+		int count = 0;
+		for (int i = 0; i < tempLandUses->Length; i++) {
+			if (tempLandUses[i] != nullptr && tempNewLandUses[i] != nullptr) {
+				if (tempLandUses[i]->ToLower() != tempNewLandUses[i]->ToLower()) {
+					count++;
+				}
+			}
+		}
+		if (count > 1) {
+			equalUses = false;
+		}
+	}
+
+	if (equalUses) {
+		gDemandLUT = gLandUseTypes;
+		gAllocationLUT = gLandUseTypes;
+		gPotentialLUT = gLandUseTypes;
+		
+		if (gAllocationComponent == ALLOCATIONCCLUELIKE || gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
+			array<String^>^ auxAllocation = tbAllocation->Text->Split('\n');
+			String^ auxAllocationLine = auxAllocation[6];
+			auxAllocationLine = auxAllocationLine->Replace("complementarLU = ", "");
+			auxAllocationLine = auxAllocationLine->Replace("\n", "");
+			auxAllocationLine = auxAllocationLine->Replace("\r", "");
+			auxAllocationLine = "\"" + auxAllocationLine + "\"";
+			for (int i = 0; i < backupLUT->Length; i++) {
+				if (auxAllocationLine == backupLUT[i]) {
+					gAllocation = gAllocation->Replace(";" + auxAllocationLine->Replace("\"", "") + ";", ";" + tempNewLandUses[i]->Replace("\"", "") + ";");
+					auxAllocation[6] = "complementarLU = " + tempNewLandUses[i]->Replace("\"","");
+					break;
+				}
+			}
+			tbAllocation->Lines = auxAllocation;
+		}
+	}
+
 	lLUTShow->Text = gLandUseTypes;
 }
 
@@ -1293,7 +1352,7 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 	bool check = true;
 	String^ rTempAux = "";
 
-	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != PCVINPE) {
+	if (gDemand == "" || gDemandLUT != gLandUseTypes || gDemandComponent != PCVINPE) {
 		if (gDemandComponent != PCVINPE && gDemandComponent != NONE ) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 				rTempAux = gDemand;
@@ -1366,7 +1425,7 @@ System::Void LuccME::NovoModelo::bD_PCVINPE_Click(System::Object ^ sender, Syste
 			array<String^>^ lines = gcnew array<String^>(count + 3); //If has 1 semicolon there are 2 values + header (2)
 			String^ auxLine = "";
 
-			lines[0] = "PreComputedValuesINPE";
+			lines[0] = "DemandPreComputedValues";
 			lines[1] = gDemandLUT;
 			count = 2;
 
@@ -1398,7 +1457,7 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 	bool check = true;
 	String^ rTempAux = "";
 
-	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != CITWODM) {
+	if (gDemand == "" || gDemandLUT != gLandUseTypes || gDemandComponent != CITWODM) {
 		if (gDemandComponent != CITWODM && gDemandComponent != NONE) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 				rTempAux = gDemand;
@@ -1451,7 +1510,7 @@ System::Void LuccME::NovoModelo::bD_CITwoDM_Click(System::Object ^ sender, Syste
 			array<String^>^ lines = gcnew array<String^>(4);
 			
 			gDemandFinalYear = Convert::ToString(lDemand->FinalYear);
-			lines[0] = "ComputeInputTwoDateMaps";
+			lines[0] = "DemandComputeTwoDates";
 			lines[1] = "finalYearForInterpolation = " + gDemandFinalYear;
 			lines[2] = gDemandLUT;
 			lines[3] = gDemand;
@@ -1471,7 +1530,7 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 	bool check = true;
 	String^ rTempAux = "";
 
-	if (gDemand == "" || gDemandLUT->Length != gLandUseTypes->Length || gDemandComponent != CITHREEDM) {
+	if (gDemand == "" || gDemandLUT != gLandUseTypes || gDemandComponent != CITHREEDM) {
 		if (gDemandComponent != CITHREEDM && gDemandComponent != NONE) {
 			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 				rTempAux = gDemand;
@@ -1526,7 +1585,7 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 
 			gDemandFinalYear = Convert::ToString(lDemand->FinalYear);
 			gDemandMiddleYear = Convert::ToString(lDemand->MiddleYear);
-			lines[0] = "ComputeInputThreeDateMaps";
+			lines[0] = "DemandComputeThreeDates";
 			lines[1] = "middleYearForInterpolation = " + gDemandMiddleYear;
 			lines[2] = "finalYearForInterpolation = " + gDemandFinalYear;
 
@@ -1593,42 +1652,42 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 		
 		switch (lPotential->Component)
 		{
-		case NEIGHSIMPLERULE:
-			lines[0] = "NeighSimpleRule{}";
+		case POTENTIALDNEIGHSIMPLERULE:
+			lines[0] = "PotentialDNeighSimpleRule{}";
 			tbPotential->Lines = lines;
 			break;
 
-		case NEIGHINVERSEDISTANCERULE:
+		case POTENTIALDNEIGHINVERSEDISTANCERULE:
 			if (gPotential != "") {
-				showReturnDistanceRule("NeighInverseDistanceRule");
+				showReturnDistanceRule("PotentialDNeighInverseDistanceRule");
 			}
 			break;
 
-		case INVERSEDISTANCERULE:
+		case POTENTIALDINVERSEDISTANCERULE:
 			if (gPotential != "") {
-				showReturnDistanceRule("InverseDistanceRule");
+				showReturnDistanceRule("PotentialDInverseDistanceRule");
 			}
 			break;
 
-		case LOGISTICREGRESSION:
+		case POTENTIALDLOGISTICREGRESSION:
 			if (gPotential != "") {
 				showReturnLogisticRegression();
 			}
 			break;
 
-		case NEIGHATTRACTIONLOGISTICREGRESSION:
+		case POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT:
 			if (gPotential != "") {
 				showReturnNeighAttractionLogisticRegression();
 			}
 			break;
 
-		case DMAXENTLIKE:
+		case POTENTIALDMAXIMUMENTROPYLIKE:
 			if (gPotential != "") {
-				showReturnMaxEntLike("MaximumEntropyLikeD");
+				showReturnMaxEntLike("PotentialDMaximumEntropyLike");
 			}
 			break;
 
-		case ATTRACTREPULSELOGISTICREGRESSION:
+		case POTENTIALDLOGISTICREGRESSIONNEIGHATTRACTREPULSION:
 			if (gPotential != "") {
 				showReturnARLR();
 			}
@@ -1652,7 +1711,7 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		check = false;
 	}
 
-	if (gPotentialLUT->Length > gLandUseTypes->Length && gPotential != "") {
+	if (gPotentialLUT != gLandUseTypes && gPotential != "") {
 		if (MessageBox::Show(gSPotCont2Info, gSPotCont2Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
 			gPotential = "";
 		}
@@ -1682,27 +1741,27 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 		
 		switch (lPotential->Component)
 		{
-		case LINEARREGRESSION:
+		case POTENTIALCLINEARREGRESSION:
 			if (gPotential != "") {
 				showReturnLinearRegression();
 			}
 			break;
 
-		case SPATIALLAGREGRESSION:
+		case POTENTIALCSPATIALLAGREGRESSION:
 			if (gPotential != "") {
 				showReturnSpatialLagRegression();
 			}
 			break;
 
-		case SPATIALLAGLINEARROADS:
+		case POTENTIALCSPATIALLAGLINEARREGRESSIONMIX:
 			if (gPotential != "") {
 				showReturnSpatialLagLinearRoads();
 			}
 			break;
 
-		case CMAXENTLIKE:
+		case POTENTIALCMAXIMUMENTROPYLIKE:
 			if (gPotential != "") {
-				showReturnMaxEntLike("MaximumEntropyLikeC");
+				showReturnMaxEntLike("PotentialCMaximumEntropyLike");
 			}
 			break;
 		}
@@ -1754,22 +1813,22 @@ System::Void LuccME::NovoModelo::bAllocDiscrete_Click(System::Object ^ sender, S
 
 		switch (lAllocation->Component)
 		{
-		case ALLOCATIONBYSIMPLEORDERING:
+		case ALLOCATIONDSIMPLEORDERING:
 			if (gAllocation != "") {
-				lines[0] = "AllocationBySimpleOrdering";
+				lines[0] = "AllocationDSimpleOrdering";
 				lines[1] = "maxDifference = " + lAllocation->Return;
 				tbAllocation->Lines = lines;
 			}
 			break;
 
-		case ALLOCATIONCLUESNEIGHBORORDERING:
-		case ALLOCATIONCLUESLIKE:
+		case ALLOCATIONDCLUESNEIGHORDERING:
+		case ALLOCATIONDCLUESLIKE:
 			if (gAllocation != "") {
-				if (lAllocation->Component == ALLOCATIONCLUESLIKE) {
-					lines2[0] = "AllocationClueSLike";
+				if (lAllocation->Component == ALLOCATIONDCLUESLIKE) {
+					lines2[0] = "AllocationDClueSLike";
 				}
 				else {
-					lines2[0] = "AllocationClueSNeighborOrdering";
+					lines2[0] = "AllocationDClueSNeighOrdering";
 				}
 
 				int lineCount = 1;
@@ -1903,7 +1962,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 
 			String^ saturationIndicator = "";
 			String^ attrProtection = "";
-			if (gAllocationComponent == ALLOCATIONCLUELIKESATURATION) {
+			if (gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
 				while (gAllocation[j] != ';') {
 					saturationIndicator += gAllocation[j];
 					j++;
@@ -1926,14 +1985,14 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 
 			array<String^>^ lines = gcnew array<String^>(count + 10);
 
-			if (gAllocationComponent == ALLOCATIONCLUELIKE)
+			if (gAllocationComponent == ALLOCATIONCCLUELIKE)
 			{
-				lines[0] = "AllocationClueLike";
+				lines[0] = "AllocationCClueLike";
 				lines[7] = "allocationData";
 				count = 8;
 			}
-			else if(gAllocationComponent == ALLOCATIONCLUELIKESATURATION) {
-				lines[0] = "AllocationClueLikeSaturation";
+			else if(gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
+				lines[0] = "AllocationCClueLikeSaturation";
 				lines[7] = "saturationIndicator = " + saturationIndicator;
 				lines[8] = "attrProtection = " + attrProtection;
 				lines[9] = "allocationData";
@@ -2145,7 +2204,7 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 			tOutputTheme->Text = tModelName->Text + "_";
 		}
 
-		if (gPotentialComponent == LINEARREGRESSION || gPotentialComponent == LOGISTICREGRESSION || gPotentialComponent == SPATIALLAGLINEARROADS || gPotentialComponent == SPATIALLAGREGRESSION) {
+		if (gPotentialComponent == POTENTIALCLINEARREGRESSION || gPotentialComponent == POTENTIALDLOGISTICREGRESSION || gPotentialComponent == POTENTIALCSPATIALLAGLINEARREGRESSIONMIX || gPotentialComponent == POTENTIALCSPATIALLAGREGRESSION) {
 			cReg->Enabled = true;
 		}
 	}
@@ -2615,6 +2674,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				}
 				sw->WriteLine("\t},\n");
 
+				if (cAuxOut->Checked) {
+					sw->WriteLine("\thasAuxiliaryOutputs = true,");
+				}
+
 				if (cIsCoupled->Checked) {
 					sw->WriteLine("\tisCoupled = true");
 				}
@@ -2667,7 +2730,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				//Creating Submodel File
 				path = lSelectedFolder->Text->Replace("\\", "\\\\") + "\\" + tModelName->Text->ToLower() + "_submodel.lua";
 				path = path->Replace("\\\\\\\\", "\\\\");
-
+				
 				if (File::Exists(path))
 				{
 					File::Delete(path);
@@ -2760,16 +2823,16 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 					switch (gPotentialComponent)
 					{
-					case NEIGHSIMPLERULE:
+					case POTENTIALDNEIGHSIMPLERULE:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0] + "\n");
 						break;
 
-					case NEIGHINVERSEDISTANCERULE:
-					case INVERSEDISTANCERULE:
-					case LOGISTICREGRESSION:
-					case NEIGHATTRACTIONLOGISTICREGRESSION:
-					case LINEARREGRESSION:
-					case SPATIALLAGREGRESSION:
+					case POTENTIALDNEIGHINVERSEDISTANCERULE:
+					case POTENTIALDINVERSEDISTANCERULE:
+					case POTENTIALDLOGISTICREGRESSION:
+					case POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT:
+					case POTENTIALCLINEARREGRESSION:
+					case POTENTIALCSPATIALLAGREGRESSION:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
@@ -2851,7 +2914,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
-					case ATTRACTREPULSELOGISTICREGRESSION:
+					case POTENTIALDLOGISTICREGRESSIONNEIGHATTRACTREPULSION:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
@@ -2959,7 +3022,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\t}");
 						sw->WriteLine("}\n");
 						break;
-					case SPATIALLAGLINEARROADS:
+					case POTENTIALCSPATIALLAGLINEARREGRESSIONMIX:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
@@ -3089,8 +3152,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
-					case DMAXENTLIKE:
-					case CMAXENTLIKE:
+					case POTENTIALDMAXIMUMENTROPYLIKE:
+					case POTENTIALCMAXIMUMENTROPYLIKE:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
@@ -3242,15 +3305,15 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 					switch (gAllocationComponent)
 					{
-					case ALLOCATIONBYSIMPLEORDERING:
+					case ALLOCATIONDSIMPLEORDERING:
 						sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\t" + tbAllocation->Lines[1]);
 						sw->WriteLine("}\n");
 						break;
 
-					case ALLOCATIONCLUESNEIGHBORORDERING:
-					case ALLOCATIONCLUESLIKE:
+					case ALLOCATIONDCLUESNEIGHORDERING:
+					case ALLOCATIONDCLUESLIKE:
 						sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\t" + tbAllocation->Lines[1] + ",");
@@ -3274,7 +3337,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
-					case ALLOCATIONCLUELIKE:
+					case ALLOCATIONCCLUELIKE:
 						sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\t" + tbAllocation->Lines[1] + ",");
@@ -3300,7 +3363,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
-					case ALLOCATIONCLUELIKESATURATION:
+					case ALLOCATIONCCLUELIKESATURATION:
 						sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\t" + tbAllocation->Lines[1] + ",");
@@ -4248,6 +4311,27 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 				gParametersValues[14] = lAttrToSave->Text;
 				sw->Close();
+
+				found = false;
+				sw->Close();
+				sw = gcnew System::IO::StreamReader(fileName);
+
+				line = sw->ReadLine();
+				while (sw->EndOfStream == false) {
+					if (line->Contains("hasAuxiliaryOutputs") != TRUE) {
+						line = sw->ReadLine();
+					}
+					else {
+						found = true;
+						break;
+					}
+				}
+
+				if (found) {
+					cAuxOut->Checked = true;
+				}
+
+				sw->Close();
 				main = true;
 				if (!oldModel) {
 					MessageBox::Show(gSMainImport, gSMainImportTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -4285,7 +4369,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				tempLine = tempLine->Replace(" ", "");
 			
 				//Demand
-				if (tempLine == "PreComputedValuesINPE") {
+				if (tempLine == "DemandPreComputedValues") {
 					j = 0;
 					line = sw->ReadLine();
 					j++;
@@ -4334,7 +4418,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 						array<String^>^ lines = gcnew array<String^>(count + 3); //If has 1 semicolon there are 2 values + header (2)
 						String^ auxLine = "";
-						lines[0] = "PreComputedValuesINPE";
+						lines[0] = "DemandPreComputedValues";
 						lines[1] = gDemandLUT;
 						count = 2;
 						for (int i = 0; i < gDemand->Length; i++) {
@@ -4355,7 +4439,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "ComputeInputTwoDateMaps") {
+				if (tempLine == "DemandComputeTwoDates") {
 					tempLine = "";
 					gDemandLUT = gLandUseTypes;
 					while (line->Contains("finalYearForInterpolation") != TRUE) {
@@ -4405,7 +4489,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					if (gDemand != "") {
 						array<String^>^ lines = gcnew array<String^>(4);
 
-						lines[0] = "ComputeInputTwoDateMaps";
+						lines[0] = "DemandComputeTwoDates";
 						lines[1] = "finalYearForInterpolation = " + gDemandFinalYear;
 						lines[2] = gDemandLUT;
 						lines[3] = gDemand;
@@ -4415,7 +4499,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "ComputeInputThreeDateMaps") {
+				if (tempLine == "DemandComputeThreeDates") {
 					tempLine = "";
 					gDemandLUT = gLandUseTypes;
 
@@ -4509,7 +4593,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 					if (gDemand != "") {
 						array<String^>^ lines = gcnew array<String^>(6);
-						lines[0] = "ComputeInputThreeDateMaps";
+						lines[0] = "DemandComputeThreeDates";
 						lines[1] = "middleYearForInterpolation = " + gDemandMiddleYear;
 						lines[2] = "finalYearForInterpolation = " + gDemandFinalYear;
 
@@ -4546,16 +4630,16 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				tempLine = line->Substring(j);
 				tempLine = tempLine->Replace(" ", "");
 
-				if (tempLine == "NeighSimpleRule{}") {
-					array<String^>^ lines = { "NeighSimpleRule{}" };
+				if (tempLine == "PotentialDNeighSimpleRule{}") {
+					array<String^>^ lines = { "PotentialDNeighSimpleRule{}" };
 					tbPotential->Lines = lines;
-					gPotentialComponent = NEIGHSIMPLERULE;
+					gPotentialComponent = POTENTIALDNEIGHSIMPLERULE;
 					gPotentialLUT = gLandUseTypes;
 				}
 
-				if (tempLine == "NeighInverseDistanceRule") {
+				if (tempLine == "PotentialDNeighInverseDistanceRule") {
 					gPotential = "";
-					gPotentialComponent = NEIGHINVERSEDISTANCERULE;
+					gPotentialComponent = POTENTIALDNEIGHINVERSEDISTANCERULE;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -4657,13 +4741,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
 					if (gPotential != "") {
-						showReturnDistanceRule("NeighInverseDistanceRule");
+						showReturnDistanceRule("PotentialDNeighInverseDistanceRule");
 					}
 				}
 
-				if (tempLine == "InverseDistanceRule") {
+				if (tempLine == "PotentialDInverseDistanceRule") {
 					gPotential = "";
-					gPotentialComponent = INVERSEDISTANCERULE;
+					gPotentialComponent = POTENTIALDINVERSEDISTANCERULE;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -4765,13 +4849,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gPotential = gPotential->Substring(0, gPotential->Length - 1);
 
 					if (gPotential != "") {
-						showReturnDistanceRule("InverseDistanceRule");
+						showReturnDistanceRule("PotentialDInverseDistanceRule");
 					}
 				}
 
-				if (tempLine == "LogisticRegression") {
+				if (tempLine == "PotentialDLogisticRegression") {
 					gPotential = "";
-					gPotentialComponent = LOGISTICREGRESSION;
+					gPotentialComponent = POTENTIALDLOGISTICREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -4890,9 +4974,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 	
-				if (tempLine == "NeighAttractionLogisticRegression") {
+				if (tempLine == "PotentialDLogisticRegressionNeighAttract") {
 					gPotential = "";
-					gPotentialComponent = NEIGHATTRACTIONLOGISTICREGRESSION;
+					gPotentialComponent = POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -5024,9 +5108,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 				
-				if (tempLine == "AttractRepulseLogisticRegression") {
+				if (tempLine == "PotentialDLogisticRegressionNeighAttractRepulsion") {
 					gPotential = "";
-					gPotentialComponent = ATTRACTREPULSELOGISTICREGRESSION;
+					gPotentialComponent = POTENTIALDLOGISTICREGRESSIONNEIGHATTRACTREPULSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -5190,9 +5274,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				}
 
 				//Contiuous Potential Components
-				if (tempLine == "LinearRegression") {
+				if (tempLine == "PotentialCLinearRegression") {
 					gPotential = "";
-					gPotentialComponent = LINEARREGRESSION;
+					gPotentialComponent = POTENTIALCLINEARREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -5316,9 +5400,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "SpatialLagRegression") {
+				if (tempLine == "PotentialCSpatialLagRegression") {
 					gPotential = "";
-					gPotentialComponent = SPATIALLAGREGRESSION;
+					gPotentialComponent = POTENTIALCSPATIALLAGREGRESSION;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 
@@ -5481,9 +5565,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "SpatialLagLinearRoads") {
+				if (tempLine == "PotentialCSpatialLagLinearRegressionMix") {
 					gPotential = "";
-					gPotentialComponent = SPATIALLAGLINEARROADS;
+					gPotentialComponent = POTENTIALCSPATIALLAGLINEARREGRESSIONMIX;
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
 					for (int i = 0; i < gPotentialLUT->Length; i++) {
@@ -5711,13 +5795,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "MaximumEntropyLikeD" || tempLine == "MaximumEntropyLikeC") {
+				if (tempLine == "PotentialDMaximumEntropyLike" || tempLine == "PotentialCMaximumEntropyLike") {
 					gPotential = "";
-					if (tempLine == "MaximumEntropyLikeD") {
-						gPotentialComponent = DMAXENTLIKE;
+					if (tempLine == "PotentialDMaximumEntropyLike") {
+						gPotentialComponent = POTENTIALDMAXIMUMENTROPYLIKE;
 					} 	
 					else {
-						gPotentialComponent = CMAXENTLIKE;
+						gPotentialComponent = POTENTIALCMAXIMUMENTROPYLIKE;
 					}
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
@@ -5772,11 +5856,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					if (gPotential != "") {
-						if (gPotentialComponent == DMAXENTLIKE) {
-							showReturnMaxEntLike("MaximumEntropyLikeD");
+						if (gPotentialComponent == POTENTIALDMAXIMUMENTROPYLIKE) {
+							showReturnMaxEntLike("PotentialDMaximumEntropyLike");
 						}
 						else {
-							showReturnMaxEntLike("MaximumEntropyLikeC");
+							showReturnMaxEntLike("PotentialCMaximumEntropyLike");
 						}
 					}
 				}
@@ -5805,9 +5889,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				tempLine = line->Substring(j);
 				tempLine = tempLine->Replace(" ", "");
 
-				if (tempLine == "AllocationBySimpleOrdering") {
+				if (tempLine == "AllocationDSimpleOrdering") {
 					gAllocation = "";
-					gAllocationComponent = ALLOCATIONBYSIMPLEORDERING;
+					gAllocationComponent = ALLOCATIONDSIMPLEORDERING;
 
 					line = sw->ReadLine();
 					while (line->Contains("maxDifference") != TRUE) {
@@ -5824,19 +5908,19 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					array<String^>^ lines = gcnew array<String^>(2);
 				
 					if (gAllocation != "") {
-						lines[0] = "AllocationBySimpleOrdering";
+						lines[0] = "AllocationDSimpleOrdering";
 						lines[1] = "maxDifference = " + gAllocation;
 						tbAllocation->Lines = lines;
 					}
 				}
 
-				if (tempLine == "AllocationClueSLike" || tempLine == "AllocationClueSNeighborOrdering") {
+				if (tempLine == "AllocationDClueSLike" || tempLine == "AllocationDClueSNeighOrdering") {
 					gAllocation = "";
-					if (tempLine == "AllocationClueSLike") {
-						gAllocationComponent = ALLOCATIONCLUESLIKE;
+					if (tempLine == "AllocationDClueSLike") {
+						gAllocationComponent = ALLOCATIONDCLUESLIKE;
 					}
 					else {
-						gAllocationComponent = ALLOCATIONCLUESNEIGHBORORDERING;
+						gAllocationComponent = ALLOCATIONDCLUESNEIGHORDERING;
 					}
 					
 					gAllocationLUT = gLandUseTypes;
@@ -5910,11 +5994,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					array<String^>^ lines2 = gcnew array<String^>(count + 5);
 
 					if (gAllocation != "") {
-						if (gAllocationComponent == ALLOCATIONCLUESLIKE) {
-							lines2[0] = "AllocationClueSLike";
+						if (gAllocationComponent == ALLOCATIONDCLUESLIKE) {
+							lines2[0] = "AllocationDClueSLike";
 						}
 						else {
-							lines2[0] = "AllocationClueSNeighborOrdering";
+							lines2[0] = "AllocationDClueSNeighOrdering";
 						}
 
 						int lineCount = 1;
@@ -5966,9 +6050,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				}
 
 				//Contiouos Allocation Components
-				if (tempLine == "AllocationClueLike") {
+				if (tempLine == "AllocationCClueLike") {
 					gAllocation = "";
-					gAllocationComponent = ALLOCATIONCLUELIKE;
+					gAllocationComponent = ALLOCATIONCCLUELIKE;
 					gAllocationLUT = gLandUseTypes;
 
 					line = sw->ReadLine();
@@ -6136,7 +6220,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 						array<String^>^ lines = gcnew array<String^>(count + 10);
 
-						lines[0] = "AllocationClueLike";
+						lines[0] = "AllocationCClueLike";
 
 						lines[1] = "maxDifference = " + maxDifference;
 						lines[2] = "maxIteration = " + maxIteration;
@@ -6227,9 +6311,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				
 				}
 
-				if (tempLine == "AllocationClueLikeSaturation") {
+				if (tempLine == "AllocationCClueLikeSaturation") {
 					gAllocation = "";
-					gAllocationComponent = ALLOCATIONCLUELIKESATURATION;
+					gAllocationComponent = ALLOCATIONCCLUELIKESATURATION;
 					gAllocationLUT = gLandUseTypes;
 
 					line = sw->ReadLine();
@@ -6423,7 +6507,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 						String^ saturationIndicator = "";
 						String^ attrProtection = "";
-						if (gAllocationComponent == ALLOCATIONCLUELIKESATURATION) {
+						if (gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
 							while (gAllocation[j] != ';') {
 								saturationIndicator += gAllocation[j];
 								j++;
@@ -6443,7 +6527,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						
 						array<String^>^ lines = gcnew array<String^>(count + 10);
 
-						lines[0] = "AllocationClueLikeSaturation";
+						lines[0] = "AllocationCClueLikeSaturation";
 						lines[1] = "maxDifference = " + maxDifference;
 						lines[2] = "maxIteration = " + maxIteration;
 						lines[3] = "initialElasticity = " + initialElasticity;
@@ -6800,7 +6884,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			//Ext Method
 			case 0:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
-				if (folderAux->Length > 4) {
+				if (folderAux->Length > ROOTDIR) {
 					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
 				}
 				else {
@@ -6874,7 +6958,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("file:write(\"======================================================\")");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\")");
-				if (gAllocationComponent > 2) {
+				if (gAllocationComponent > NUMDISCALLOCCOMP) {
 					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
@@ -7014,7 +7098,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("file:write(\"======================================================\")");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\")");
-				if (gAllocationComponent > 2) {
+				if (gAllocationComponent > NUMDISCALLOCCOMP) {
 					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
@@ -7110,6 +7194,25 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		cmd->WaitForExit();
 		cmd->Close();
 
+		if (cSaveValidationFile->Checked == true) {
+			FileInfo^ copyValidation = gcnew FileInfo("validation.lua");
+			if (gAllocationComponent > NUMDISCALLOCCOMP) {
+				if (cbValidationMethod->SelectedIndex == 0) {
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\" + "validationExtContinuous.lua");
+				}
+				else {
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\validationDifContinuous.lua");
+				}
+			}
+			else {
+				if (cbValidationMethod->SelectedIndex == 0) {
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\validationExtDiscrete.lua");
+				}
+				else {
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\validationDifDiscrete.lua");
+				}
+			}
+		}
 
 		//Delete file after cmd closes
 		if (File::Exists("validation.lua"))

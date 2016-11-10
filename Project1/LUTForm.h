@@ -99,7 +99,7 @@ namespace LuccME {
 			this->tLUT->ForeColor = System::Drawing::SystemColors::ScrollBar;
 			this->tLUT->Location = System::Drawing::Point(156, 175);
 			this->tLUT->Name = L"tLUT";
-			this->tLUT->Size = System::Drawing::Size(194, 20);
+			this->tLUT->Size = System::Drawing::Size(194, 22);
 			this->tLUT->TabIndex = 36;
 			this->tLUT->Text = L"floresta";
 			this->tLUT->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;

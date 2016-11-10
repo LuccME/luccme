@@ -1,6 +1,5 @@
---- Modification of the SpatialLagRegression component to allow the use of simple linear regression in specific cases, 
--- when roads are created or paved. The component is an example of how the framework can be extended for specific 
--- applications. It was created to allow the representation of the creation new deforestation frontiers in the Brazilian Amazon.
+--- Similar to the LinearRegression approach, but relies spatial regression techniques to estimate the 
+-- regression cover (considers the spatial dependence of the land use). 
 -- @arg component A Spatial Lag Regression component.
 -- @arg component.potentialData A table with the regression parameters for each attribute.
 -- @arg component.potentialData.isLog Inform whether the model is part of a coupling model.
@@ -11,18 +10,16 @@
 -- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.landUseDrivers The land use drivers fields in database.
--- @arg component.run Handles with the execution method of a SpatialLagLinearRoads component.
--- @arg component.verify Handles with the verify method of a SpatialLagLinearRoads component.
--- @arg component.modify Handles with the modify method of a SpatialLagLinearRoads component.
--- @arg component.modifyRegression Handles with the modify regression method of a
--- SpatialLagLinearRoads component.
+-- @arg component.run Handles with the execution method of a PotentialCSpatialLagRegression component.
+-- @arg component.verify Handles with the verify method of a PotentialCSpatialLagRegression component.
+-- @arg component.modify Handles with the modify method of a PotentialCSpatialLagRegression component.
 -- @arg component.adaptRegressionConstants Handles with the constants regression method of a
--- SpatialLagLinearRoads component.
+-- PotentialCSpatialLagRegression component.
 -- @arg component.modifyDriver Modify potencial for an protected area.
--- @arg component.computePotential Handles with the modify method of a SpatialLagLinearRoads component.
+-- @arg component.computePotential Handles with the modify method of a PotentialCSpatialLagRegression component.
 -- @return The modified component.
 -- @usage --DONTRUN 
---P1 = SpatialLagLinearRoads
+--P1 = PotentialCSpatialLagRegression
 --{
 --  potentialData =
 --  {
@@ -36,31 +33,11 @@
 --        maxReg = 1,
 --        ro = 0.9124615,
 --
---        betas  = 
+--        betas =
 --        {
 --          uc_us = 0.03789872,
 --          uc_pi = 0.04141921,
 --          ti = 0.04455667
---        },
---
---        roadsModel = 
---        {
---          attrs = 
---          {
---            "rodovias"
---          },
---          const = 0.7392,
---          change = -1.5,
---
---          betas =
---          {
---            assentamentos = -0.2193,
---            uc_us = 0.1754,
---            uc_pi = 0.09708,
---            ti = 0.1207,
---            dist_riobranco = 0.0000002388,
---            fertilidadealtaoumedia = -0.1313
---          }
 --        }
 --      },
 --
@@ -72,36 +49,16 @@
 --        maxReg = 1,
 --        ro = 0.9019253,
 --
---        betas  = 
+--        betas =
 --        {
---          rodovias = -0.00000004454423,
 --          assentamentos = 0.0443537,
 --          uc_us = -0.01454847,
 --          dist_riobranco = -0.00000002262071,
 --          fertilidadealtaoumedia = 0.01701601
---        },
---
---        roadsModel = 
---        {
---          attrs = 
---          {
---            "rodovias"
---          },
---          const = 0.267,
---          change = -1.5,
---
---          betas =
---          {
---            rodovias = -0.0000009922,
---            assentamentos = 0.2294,
---            uc_us = -0.09867,
---            dist_riobranco = -0.0000003216,
---            fertilidadealtaoumedia = 0.1281
---          }
 --        }
 --      },
 --
---      -- Outros
+--      -- outros
 --      {
 --        isLog = false,
 --        const = 0,
@@ -109,32 +66,16 @@
 --        maxReg = 1,
 --        ro = 0,
 --
---        betas  = 
+--        betas =
 --        {
 --          
---        },
---
---        roadsModel = 
---        {
---          attrs = 
---          {
---            "rodovias"
---          },
---          const = 0,
---          change = 0,
---
---          betas =
---          {
---            
---          }
 --        }
---      },
---
+--      }
 --    }
 --  }
 --}
-function SpatialLagLinearRoads(component)
-	-- Handles with the execution method of a SpatialLagRegression_region component.
+function PotentialCSpatialLagRegression(component)
+	-- Handles with the execution method of a PotentialCSpatialLagRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
@@ -172,13 +113,13 @@ function SpatialLagLinearRoads(component)
 				self:adaptRegressionConstants(demand, rNumber)
 			end
 
-			for i = 1, #luTypes, 1 do                       
-				self:computePotential (luccMEModel, rNumber, i, event)
+			for i = 1, #luTypes, 1 do	                      
+				self:computePotential (luccMEModel, rNumber, i)
 			end
 		end
-	end  -- function run
-
-	-- Handles with the verify method of a SpatialLagRegression_region component.
+	end -- function run
+	
+	-- Handles with the verify method of a PotentialCSpatialLagRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
@@ -187,15 +128,20 @@ function SpatialLagLinearRoads(component)
 		print("Verifying Potential parameters")
 		local cs = luccMEModel.cs
 
-		forEachCell(cs, function(cell)
-							cell["alternate_model"] = 0
-							cell["region"] = 1
-						end
-					)
-
 		if (self.regionAttr == nil) then
 			self.regionAttr = "region"
-		end
+		end   
+
+		forEachCell(cs, function(cell)
+							cell["alternate_model"] = 0
+							
+							if (cell[self.regionAttr] == nil) then
+								cell["region"] = 1
+							else
+								cell["region"] = cell[self.regionAttr]
+							end
+						end
+					)
 
 		-- check potentialData
 		if (self.potentialData == nil) then
@@ -216,16 +162,11 @@ function SpatialLagLinearRoads(component)
 				if (regressionNumber ~= lutNumber) then
 					error("Invalid number of regressions on Region number "..i.." . Regressions: "..regressionNumber.." LandUseTypes: "..lutNumber)
 				end
-
+				
 				for j = 1, regressionNumber, 1 do
 					-- check isLog variable
 					if(self.potentialData[i][j].isLog == nil) then
 						error("isLog variable is missing on Region "..i.." LandUseType number "..j, 2)
-					end
-
-					-- check ro variable
-					if(self.potentialData[i][j].ro == nil) then
-						error("ro variable is missing on Region "..i.." LandUseType number "..j, 2)
 					end
 
 					-- check minReg variable
@@ -238,14 +179,19 @@ function SpatialLagLinearRoads(component)
 						error("maxReg variable is missing on Region "..i.." LandUseType number "..j, 2)
 					end
 
-					-- check constant variable
-					if(self.potentialData[i][j].const == nil) then
+					-- check ro variable
+					if(self.potentialData[i][j].ro == nil) then
+						error("ro variable is missing on Region "..i.." LandUseType number "..j, 2)
+					end                  
+
+					-- check const variable
+					if (self.potentialData[i][j].const == nil) then
 						error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
 					end
 
 					-- check betas variable
 					if (self.potentialData[i][j].betas == nil) then
-						error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
+						error("minReg variable is missing on Region "..i.." LandUseType number "..j, 2)
 					end
 
 					-- check betas within database
@@ -256,18 +202,18 @@ function SpatialLagLinearRoads(component)
 					end
 				end -- for j
 			end -- for i
-		end -- else   
+		end -- else
 
 		local filename = self.filename
-		
+
 		if (filename ~= nil) then
 			loadGALNeighborhood(filename)
 		else
 			cs:createNeighborhood() 
 		end
-	end -- function verify
+	end -- verify
  
-	-- Handles with the modify method of a SpatialLagRegression component.
+	-- Handles with the modify method of a PotentialCSpatialLagRegression component.
 	-- @arg luccMEModel A LuccME model.
 	-- @arg rNumber The potential region number.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
@@ -278,66 +224,30 @@ function SpatialLagLinearRoads(component)
 		local cs = luccMEModel.cs
 		local luData = self.potentialData[rNumber][luIndex] 
 
-		if (luData.newconst == nil) then 
+		if luData.newconst == nil then 
 			luData.newconst = 0 
-		end 
+		end	
 
 		if( luData.isLog ) then 
 			local const_unlog = (10 ^ luData.newconst) + self.constChange * direction
 			
 			if (const_unlog ~= 0) then 
 				luData.newconst = math.log (10, const_unlog) 
-			end 
+			end	
 		else
 			luData.newconst = luData.newconst + self.constChange * direction
 		end
 
 		self:computePotential (luccMEModel, rNumber, luIndex)
-	end -- function modifyPotential 
+	end	-- function	modifyPotential	
 
-	-- Handles with the modify regression method of a SpatialLagRegression_region component.
-	-- @arg roadsModel A road model.
-	-- @arg cell A spatial location with homogeneous internal content.
-	-- @arg oldRegression The previous value of the regression.
-	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @usage --DONTRUN
-	-- component.modifyRegression(luData.roadsModel, cell, regression)
-	component.modifyRegression = function(self, roadsModel, cell, oldRegression, event)
-		local currentTime = event:getTime()
-		local regression = roadsModel.const
-
-		for var, beta in pairs (roadsModel.betas) do
-			regression = regression + beta * cell[var]
-		end
-
-		if (currentTime < cell["alternate_model"] + 3) then
-			return regression
-		end
-
-		if (currentTime == cell["alternate_model"] + 3) then
-			cell["alternate_model"] = 0
-		end
-
-		for i, attr in pairs (roadsModel.attrs) do
-			local diff = cell[attr] - cell.past[attr]
-			
-			if ((roadsModel.change < 0 and diff < 0 and diff < roadsModel.change) or
-				(roadsModel.change > 0 and diff > 0 and diff > roadsModel.change)) then
-				cell["alternate_model"]  = currentTime
-				return regression
-			end
-		end
-
-		return oldRegression
-	end -- function modifyRegression
-
-	-- Handles with the constants regression method of a SpatialLagRegression component.
+	-- Handles with the constants regression method of a PotentialCSpatialLagRegression component.
 	-- @arg demand A demand to calculate the potential.
 	-- @arg rNumber The potential region number.
 	-- @usage --DONTRUN
-	-- component.adaptRegressionConstants(demand, rNumber)
+	-- component.adaptRegressionConstants(demand, rNumbers)
 	component.adaptRegressionConstants = function(self, demand, rNumber)
-		for i, luData in pairs (self.potentialData[rNumber]) do      
+		for i, luData in pairs (self.potentialData[rNumber]) do			
 			local currentDemand = demand:getCurrentLuDemand(i)
 			local previousDemand = demand:getPreviousLuDemand(i) 
 			local plus = 0.01 * ((currentDemand - previousDemand) / previousDemand)
@@ -358,14 +268,14 @@ function SpatialLagLinearRoads(component)
 			luData.newmaxReg = luData.newmaxReg + plus
 			luData.const = luData.newconst  
 		end
-	end -- function adaptRegressionConstants		
-  
+	end	-- function adaptRegressionConstants
+	
 	-- Modify potencial for an protected area.
 	-- @arg complementarLU Land use name.
 	-- @arg attrProtection The protetion attribute name.
 	-- @arg rate A rate for potencial multiplier.
 	-- @arg event A representation of a time instant when the simulation engine must run.
-	-- @arg luccMEModel A luccME Model.
+	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN
 	-- component.modifyDriver(self.complementarLU, self.attrProtection, 0.5, event, luccMEModel)
 	component.modifyDriver = function(self, complementarLU, attrProtection, rate, event, luccMEModel)
@@ -393,15 +303,14 @@ function SpatialLagLinearRoads(component)
 		end
 	end
 
-	-- Handles with the compute potential method of a SpatialLagRegression component.
+	-- Handles with the compute potential method of a PotentialCSpatialLagRegression component.
 	-- @arg luccMEModel A LuccME model.
-	-- @arg rNumber The potential region number.
+	-- @arg rNumber The pontencial region number.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).
-	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @usage --DONTRUN
-	-- component.computePotential(luccMEModel, luIndex)    
-	component.computePotential = function(self, luccMEModel, rNumber, luIndex, event)
-		local cs = luccMEModel.cs 
+	-- component.computePotential(luccMEModel, rNumber, luIndex)		
+	component.computePotential = function(self, luccMEModel, rNumber, luIndex)
+		local cs = luccMEModel.cs	
 		local luTypes = luccMEModel.landUseTypes
 		local lu = luTypes[luIndex]
 		local luData = self.potentialData[rNumber][luIndex]
@@ -412,6 +321,7 @@ function SpatialLagLinearRoads(component)
 		for k,cell in pairs (cs.cells) do
 			if (cell.region == rNumber) then
 				activeRegionNumber = rNumber
+
 				local regressionX = 0
 
 				for var, beta in pairs (luData.betas) do 
@@ -425,7 +335,7 @@ function SpatialLagLinearRoads(component)
 				local neighY = 0
 				local Y = 0
 
-				forEachNeighbor(cell, function (cell, neigh, weight)
+				forEachNeighbor(cell, function (cell, neigh)
 											Y = cell.past[lu]
 											neighY = neigh.past[lu]
 
@@ -448,22 +358,14 @@ function SpatialLagLinearRoads(component)
 					regresY = (Y + neighSum) / (count + 1) * luData.ro  
 				else
 					regresY = Y * luData.ro  
-				end 
+				end	
 
 				if (luData.isLog) then -- if the land use is log transformed
 					regresY = math.log(10, regresY + 0.0001)  
 				end
 
 				local regression = luData.newconst + regressionX + regresY 
-				local regressionLimit = luData.const+ regressionX + regresY
-
-				if (luData.roadsModel ~= nil) then 
-					local newRegression = self:modifyRegression(luData.roadsModel, cell, regression, event) 
-					if (newRegression ~= regression) then
-						regression = newRegression
-						regressionLimit = regression
-					end
-				end               
+				local regressionLimit = luData.const+ regressionX + regresY   		
 
 				if (luData.isLog) then -- if the land use is log transformed
 					regression = (10 ^ regression) - 0.0001
@@ -501,4 +403,4 @@ function SpatialLagLinearRoads(component)
 
 	collectgarbage("collect")
 	return component
-end -- SpatialLagLinearRoads
+end -- PotentialCSpatialLagRegression

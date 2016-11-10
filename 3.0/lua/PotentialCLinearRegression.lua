@@ -9,16 +9,16 @@
 -- @arg component.potentialData.betas A linear regression betas for land use drivers
 -- and the index of landUseDrivers to be used by the regression (attributes).
 -- @arg component.landUseDrivers The land use drivers fields in database.
--- @arg component.run Handles with the execution method of a LinearRegression component.
--- @arg component.verify Handles with the verify method of a LinearRegression component.
--- @arg component.modify Handles with the modify method of a LinearRegression component.
+-- @arg component.run Handles with the execution method of a PotentialCLinearRegression component.
+-- @arg component.verify Handles with the verify method of a PotentialCLinearRegression component.
+-- @arg component.modify Handles with the modify method of a PotentialCLinearRegression component.
 -- @arg component.adaptRegressionConstants Handles with the constants regression method of a
--- LinearRegression component.
+-- PotentialCLinearRegression component.
 -- @arg component.modifyDriver Modify potencial for an protected area.
--- @arg component.computePotential Handles with the modify method of a LinearRegression component.
+-- @arg component.computePotential Handles with the modify method of a PotentialCLinearRegression component.
 -- @return The modified component.
 -- @usage --DONTRUN
---P1 = LinearRegression
+--P1 = PotentialCLinearRegression
 --{
 --  potentialData =
 --  {
@@ -68,8 +68,8 @@
 --    }
 --  }
 --}
-function LinearRegression(component)
-	-- Handles with the execution method of a LinearRegression component.
+function PotentialCLinearRegression(component)
+	-- Handles with the execution method of a PotentialCLinearRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -101,7 +101,7 @@ function LinearRegression(component)
 		end
 	end  -- function run
 
-	-- Handles with the verify method of a LinearRegression component.
+	-- Handles with the verify method of a PotentialCLinearRegression component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
 	-- @usage --DONTRUN
@@ -172,7 +172,7 @@ function LinearRegression(component)
 		end -- else
 	end
  
-	-- Handles with the potential modify method of a LinearRegression component.
+	-- Handles with the potential modify method of a PotentialCLinearRegression component.
 	-- This method is called by the Allocation component.
 	-- @arg luccMEModel A luccME Model.
 	-- @arg rNumber The potential region number.
@@ -196,7 +196,7 @@ function LinearRegression(component)
 		self:computePotential (luccMEModel, rNumber, luIndex)
 	end	-- function	modify	
 
-	-- Handles with the constants regression method of a LinearRegression component.
+	-- Handles with the constants regression method of a PotentialCLinearRegression component.
 	-- @arg demand A demand to calculate the potential.
 	-- @arg rNumber The potential region number.
 	-- @usage --DONTRUN
@@ -256,7 +256,7 @@ function LinearRegression(component)
 		end
 	end
   
-	-- Handles with the compute potential method of a LinearRegression component.
+	-- Handles with the compute potential method of a PotentialCLinearRegression component.
 	-- @arg luccMEModel A luccME Model.
 	-- @arg rNumber The potential region number.
 	-- @arg luIndex A land use index (an specific luIndex of a list of possible land uses).

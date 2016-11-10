@@ -1,13 +1,13 @@
 --- Component developed based on MaxEnt behaviour, considering the attributes values of the samples cells
 -- to calculate the potencial of the use on the whole cellular space.  
--- @arg component A MaxEntLike Discrete component.
+-- @arg component A MaxEntLike Continuous component.
 -- @arg component.potentialData A table with the data need to run the component.
--- @arg component.potentialData.cellUsePercentage On discrete components must be 100.
+-- @arg component.potentialData.cellUsePercentage A percentage to consider a cell a sample.
 -- @arg component.potentialData.attributesPerc A list of the select attributes (range) to analysis.
 -- @arg component.potentialData.attributesClass A list of the select attributes (categorical) to analysis.
 -- @return The modified component.
--- @usage --DONTRUN 
---P1 = MaximumEntropyLikeD
+-- @usage --DONTRUN
+--P1 = PotentialCMaximumEntropyLike
 --{
 --  potentialData =
 --  {
@@ -15,46 +15,51 @@
 --    {
 --      -- floresta
 --      {
---        cellUsePercentage = 100, 
+--        cellUsePercentage = 75, 
 --
 --        attributesPerc = 
 --        {
---          "dist_rodovias",
---          "dist_centrourbano",
+--          "assentamentos",
+--          "rodovias",
+--          "dist_riobranco",
+--          "rios_todos",
+--          "uc_us",
+--          "ti",
+--          "ap",
+--          "uc_pi",
+--          "fertilidadealtaoumedia"
 --        },
 --
 --        attributesClass = 
 --        {
---          "uc_us",
---          "fertilidadealtaoumedia",
---          "assentamentos",
---          "ti",
---          "desmatamento"
 --        }
 --      },
 --
 --      -- desmatamento
 --      {
---        cellUsePercentage = 100, 
+--        cellUsePercentage = 75, 
 --
 --        attributesPerc = 
 --        {
---          "dist_rodovias",
---          "dist_centrourbano",
+--          "assentamentos",
+--          "rodovias",
+--          "dist_riobranco",
+--          "rios_todos",
+--          "uc_us",
+--          "ti",
+--          "ap",
+--          "uc_pi",
+--          "fertilidadealtaoumedia"
 --        },
 --
 --        attributesClass = 
 --        {
---          "uc_us",
---          "fertilidadealtaoumedia",
---          "assentamentos",
---          "ti",
 --        }
 --      },
 --
 --      -- outros
 --      {
---        cellUsePercentage = 100, 
+--        cellUsePercentage = 75, 
 --
 --        attributesPerc = 
 --        {
@@ -67,13 +72,13 @@
 --    }
 --  }
 --}
-function MaximumEntropyLikeD(component)
+function PotentialCMaximumEntropyLike(component)
 	local file
 	
 	-- Handles with the execution method of a MaximumEntropyLike component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
-	-- @usage --DONTRUN
+	-- @usage --DONTRUN 
 	-- component.run(event, model)
 	component.run = function(self, event, luccMEModel)
 		local cs = luccMEModel.cs
@@ -92,11 +97,11 @@ function MaximumEntropyLikeD(component)
 
 		file:close()
 	end  -- function run
-  
+
 	-- Handles with the verify method of a MaximumEntropyLike component.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A luccME Model.
-	-- @usage --DONTRUN
+	-- @usage --DONTRUN 
 	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 		print("Verifying Potential parameters")
@@ -142,7 +147,6 @@ function MaximumEntropyLikeD(component)
 					if (self.potentialData[i][j].cellUsePercentage == nil) then
 						error("cellUsePercentage on Region "..i.." LandUseType number "..j.." is missinge", 2)
 					end 
-					
 					for k, lu in pairs (self.potentialData[i][j].attributesPerc) do
 						if (luccMEModel.cs.cells[1][lu] == nil) then
 							error("AttributePerc "..lu.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
@@ -157,7 +161,7 @@ function MaximumEntropyLikeD(component)
 				end -- for j
 			end -- for i
 		end -- else
-	end -- verify
+	end -- end verify
   
 	-- Handles with the modify method of a MaximumEntropyLike component.
 	-- @arg luccMEModel A luccME Model.
@@ -219,7 +223,7 @@ function MaximumEntropyLikeD(component)
 				activeRegionNumber = rNumber
 
 				-- Check the LU % on the cell to consider a sample
-				if (cell[lu] == 1) then
+				if (cell[lu] >= (luData.cellUsePercentage/100)) then
 					sample[countSample] = cell
 					countSample = countSample + 1
 				end
@@ -236,7 +240,6 @@ function MaximumEntropyLikeD(component)
 		for t, attribute in pairs (luData.attributesClass) do
 			for k = 1, #sample, 1 do
 				class[t][k] = sample[k][attribute]
-				
 				if(k == 1) then
 					attributesClassNames[t] = attribute
 				end
@@ -272,7 +275,7 @@ function MaximumEntropyLikeD(component)
 				if (countDiff > #values[i]) then
 					values[i][#values[i] + 1] = class[i][j]
 				end
-					
+				
 				countDiff = 1
 			end
 		end
@@ -358,6 +361,7 @@ function MaximumEntropyLikeD(component)
 				for t, attribute in pairs (luData.attributesPerc) do
 					if (cell[attribute] >= min[t] and cell[attribute] <= max[t]) then
 						percOK[t] = 1
+						
 						if(avg[t] > 0) then
 							avgCompare[k][t] = math.abs(1 - (math.abs((avg[t] - cell[attribute])) / avg[t]))
 						else
@@ -373,6 +377,7 @@ function MaximumEntropyLikeD(component)
 				for t, attribute in pairs (luData.attributesClass) do
 					for w, value in pairs (values) do
 						valueOK[t] = 0
+						
 						if (cell[attribute] == values[t][w]) then
 							valueOK[t] = 1
 							break;
@@ -410,6 +415,7 @@ function MaximumEntropyLikeD(component)
 
 				if (#valueOK > 0) then
 					auxValue = 1
+					
 					for i = 1, #valueOK, 1 do
 						if (valueOK[i] == 0) then
 							auxValue = 0
@@ -438,7 +444,6 @@ function MaximumEntropyLikeD(component)
 					end
 				end
 			end
-
 		end
 
 		print("\n")
@@ -453,8 +458,8 @@ function MaximumEntropyLikeD(component)
 		if (activeRegionNumber == 0) then
 			error("Region ".. rNumber.." is not set into database.")  
 		end
-	end -- computePotential
+	end -- end computePotential
   
 	collectgarbage("collect")
 	return component
-end -- MaximumEntropyLikeD
+end -- PotentialCMaximumEntropyLike

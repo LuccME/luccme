@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	AllocationClueSNeighborOrdering = function(unitTest)
+	DemandPreComputedValues = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

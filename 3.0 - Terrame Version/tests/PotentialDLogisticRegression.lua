@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	MaximumEntropyLikeC = function(unitTest)
+	PotentialDLogisticRegression = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

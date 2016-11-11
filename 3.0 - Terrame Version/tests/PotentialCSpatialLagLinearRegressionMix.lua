@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	AttractRepulseLogisticRegression = function(unitTest)
+	PotentialCSpatialLagLinearRegressionMix = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

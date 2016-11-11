@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	InverseDistanceRule = function(unitTest)
+	AllocationCClueLikeSaturation = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

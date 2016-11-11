@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	AllocationBySimpleOrdering = function(unitTest)
+	PotentialDNeighInverseDistanceRule = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

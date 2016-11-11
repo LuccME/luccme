@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	SpatialLagRegression = function(unitTest)
+	AllocationCClueLike = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

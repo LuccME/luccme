@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	AllocationClueLikeSaturation = function(unitTest)
+	PotentialDInverseDistanceRule = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

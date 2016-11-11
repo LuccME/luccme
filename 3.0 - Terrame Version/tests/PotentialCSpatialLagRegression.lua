@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	NeighInverseDistanceRule = function(unitTest)
+	PotentialCSpatialLagRegression = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

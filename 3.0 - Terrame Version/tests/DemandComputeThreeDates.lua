@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	ComputeInputThreeDateMaps = function(unitTest)
+	DemandComputeThreeDates = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

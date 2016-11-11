@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	SpatialLagLinearRoads = function(unitTest)
+	PotentialDLogisticRegressionNeighAttractRepulsion = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

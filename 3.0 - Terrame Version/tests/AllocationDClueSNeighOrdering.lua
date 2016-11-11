@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	LogisticRegression = function(unitTest)
+	AllocationDClueSNeighOrdering = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

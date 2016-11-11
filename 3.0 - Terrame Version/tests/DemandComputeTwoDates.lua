@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	NeighSimpleRule = function(unitTest)
+	DemandComputeTwoDates = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

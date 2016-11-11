@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	MaximumEntropyLikeD = function(unitTest)
+	AllocationDSimpleOrdering = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	AllocationClueLike = function(unitTest)
+	PotentialCMaximumEntropyLike = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

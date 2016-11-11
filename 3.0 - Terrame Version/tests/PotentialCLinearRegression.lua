@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	ComputeInputTwoDateMaps = function(unitTest)
+	PotentialCLinearRegression = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

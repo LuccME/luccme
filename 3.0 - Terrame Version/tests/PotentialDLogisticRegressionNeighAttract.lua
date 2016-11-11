@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	NeighAttractionLogisticRegression = function(unitTest)
+	PotentialDLogisticRegressionNeighAttract = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

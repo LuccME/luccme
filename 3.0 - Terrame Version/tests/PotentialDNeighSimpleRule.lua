@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	PreComputedValuesINPE = function(unitTest)
+	PotentialDNeighSimpleRule = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

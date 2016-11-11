@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	AllocationClueSLike = function(unitTest)
+	AllocationDClueSLike = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

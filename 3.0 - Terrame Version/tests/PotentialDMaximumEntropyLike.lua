@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	LinearRegression = function(unitTest)
+	PotentialDMaximumEntropyLike = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

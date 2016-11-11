@@ -1,7 +1,7 @@
 -- @example LuccME Model using the following components.
--- ComputeInputTwoDateMaps.
--- LogisticRegression.
--- AllocationClueSNeighborOrdering.
+-- DemandComputeTwoDates.
+-- PotentialDLogisticRegression.
+-- AllocationDClueSNeighOrdering.
 
 import("luccme")
 
@@ -32,13 +32,13 @@ Lab23 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = ComputeInputTwoDateMaps
+	demand = DemandComputeTwoDates
 	{
 		finalYearForInterpolation = 2014,
 		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
 	},
 	
-	potential = LogisticRegression
+	potential = PotentialDLogisticRegression
 	{
 		potentialData =
 		{
@@ -86,7 +86,7 @@ Lab23 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueSNeighborOrdering
+	allocation = AllocationDClueSNeighOrdering
 	{
 		maxIteration = 1000,
 		factorIteration = 0.000001,

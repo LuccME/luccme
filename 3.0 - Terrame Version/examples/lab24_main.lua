@@ -1,7 +1,7 @@
 -- @example LuccME Model using the following components.
--- PreComputedValuesINPE.
--- AttractRepulseLogisticRegression.
--- AllocationClueSLike.
+-- DemandPreComputedValues.
+-- PotentialDLogisticRegressionNeighAttractRepulsion.
+-- AllocationDClueSLike.
 
 import("luccme")
 
@@ -33,7 +33,7 @@ Lab24 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = PreComputedValuesINPE
+	demand = DemandPreComputedValues
 	{
 		annualDemand =
 		{
@@ -48,7 +48,7 @@ Lab24 = LuccMEModel
 		}
 	},
 	
-	potential = AttractRepulseLogisticRegression
+	potential = PotentialDLogisticRegressionNeighAttractRepulsion
 	{
 		potentialData =
 		{
@@ -109,7 +109,7 @@ Lab24 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueSLike
+	allocation = AllocationDClueSLike
 	{
 		maxIteration = 1000,
 		factorIteration = 0.0001,

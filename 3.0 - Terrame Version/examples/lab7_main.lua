@@ -1,7 +1,7 @@
 -- @example LuccME Continuous Model using the following components, Dynamic Variables and Scenario.
--- PreComputedValuesINPE.
--- SpatialLagRegression.
--- AllocationClueLike.
+-- DemandPreComputedValues.
+-- PotentialCSpatialLagRegression.
+-- AllocationCClueLike.
 -- Dynamic Variables update in 2009.
 -- Scenario staring in 2015, update variables in 2020, until 2025.
 
@@ -39,7 +39,7 @@ Lab7 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = PreComputedValuesINPE
+	demand = DemandPreComputedValues
 	{
 		annualDemand =
 		{
@@ -65,7 +65,7 @@ Lab7 = LuccMEModel
 		}
 	},
 	
-	potential = SpatialLagRegression
+	potential = PotentialCSpatialLagRegression
 	{
 		potentialData =
 		{
@@ -121,7 +121,7 @@ Lab7 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueLike
+	allocation = AllocationCClueLike
 	{
 		maxDifference = 1643,
 		maxIteration = 1000,

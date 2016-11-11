@@ -1,7 +1,7 @@
 -- @example LuccME Model using the following components.
--- PreComputedValuesINPE.
--- MaximumEntropyLikeD.
--- AllocationClueLike.
+-- DemandPreComputedValues.
+-- PotentialDMaximumEntropyLike.
+-- AllocationCClueLike.
 
 import("luccme")
 
@@ -32,7 +32,7 @@ Lab21 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = PreComputedValuesINPE
+	demand = DemandPreComputedValues
 	{
 		annualDemand =
 		{
@@ -47,7 +47,7 @@ Lab21 = LuccMEModel
 		}
 	},
 	
-	potential = MaximumEntropyLikeD
+	potential = PotentialDMaximumEntropyLike
 	{
 		potentialData =
 		{
@@ -111,7 +111,7 @@ Lab21 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueSLike
+	allocation = AllocationDClueSLike
 	{
 		maxIteration = 5000,
 		factorIteration = 0.000001,

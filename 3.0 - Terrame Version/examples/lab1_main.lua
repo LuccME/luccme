@@ -1,7 +1,7 @@
 -- @example LuccME Continuous Model using the following components.
--- PreComputedValuesINPE.
--- LinearRegression.
--- AllocationClueLike.
+-- DemandPreComputedValues.
+-- PotentialCLinearRegression.
+-- AllocationCClueLike.
 
 import("luccme")
 
@@ -32,7 +32,7 @@ Lab1 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = PreComputedValuesINPE
+	demand = DemandPreComputedValues
 	{
 		annualDemand =
 		{
@@ -47,7 +47,7 @@ Lab1 = LuccMEModel
 		}
 	},
 	
-	potential = LinearRegression
+	potential = PotentialCLinearRegression
 	{
 		potentialData =
 		{
@@ -98,7 +98,7 @@ Lab1 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueLike
+	allocation = AllocationCClueLike
 	{
 		maxDifference = 1643,
 		maxIteration = 1000,

@@ -1,7 +1,7 @@
 -- @example LuccME Discrete Model using the following components, Dynamic Variables and Scenario.
--- ComputeInputThreeDateMaps.
--- LogisticRegression.
--- AllocationClueSLike.
+-- DemandComputeThreeDates.
+-- PotentialDLogisticRegression.
+-- AllocationDClueSLike.
 -- Dynamic Variables update in 2009.
 -- Scenario staring in 2015, update variables in 2020, until 2025.
 
@@ -39,7 +39,7 @@ Lab20 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = ComputeInputThreeDateMaps
+	demand = DemandComputeThreeDates
 	{
 		middleYearForInterpolation = 2011,
 		middleLandUseTypesForInterpolation = {"f2011", "d2011", "outros"},
@@ -47,7 +47,7 @@ Lab20 = LuccMEModel
 		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
 	},
 	
-	potential = LogisticRegression
+	potential = PotentialDLogisticRegression
 	{
 		potentialData =
 		{
@@ -95,7 +95,7 @@ Lab20 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueSLike
+	allocation = AllocationDClueSLike
 	{
 		maxIteration = 1000,
 		factorIteration = 0.000001,

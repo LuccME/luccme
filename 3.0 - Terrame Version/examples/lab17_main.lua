@@ -1,7 +1,7 @@
 -- @example LuccME Discrete Model using the following components.
--- ComputeInputTwoDateMaps.
--- LogisticRegression.
--- AllocationClueSLike.
+-- DemandComputeTwoDates.
+-- PotentialDLogisticRegression.
+-- AllocationDClueSLike.
 
 import("luccme")
 
@@ -32,13 +32,13 @@ Lab17 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = ComputeInputTwoDateMaps
+	demand = DemandComputeTwoDates
 	{
 		finalYearForInterpolation = 2014,
 		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
 	},
 	
-	potential = LogisticRegression
+	potential = PotentialDLogisticRegression
 	{
 		potentialData =
 		{
@@ -86,7 +86,7 @@ Lab17 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueSLike
+	allocation = AllocationDClueSLike
 	{
 		maxIteration = 1000,
 		factorIteration = 0.000001,

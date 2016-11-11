@@ -1,7 +1,7 @@
 -- @example LuccME Continuous Model using the following components.
--- PreComputedValuesINPE.
--- SpatialLagLinearRoads.
--- AllocationClueLike.
+-- DemandPreComputedValues.
+-- PotentialCSpatialLagLinearRegressionMix.
+-- AllocationCClueLike.
 
 import("luccme")
 
@@ -32,7 +32,7 @@ Lab8 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = PreComputedValuesINPE
+	demand = DemandPreComputedValues
 	{
 		annualDemand =
 		{
@@ -47,7 +47,7 @@ Lab8 = LuccMEModel
 		}
 	},
 	
-	potential = SpatialLagLinearRoads
+	potential = PotentialCSpatialLagLinearRegressionMix
 	{
 		potentialData =
 		{
@@ -159,7 +159,7 @@ Lab8 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueLike
+	allocation = AllocationCClueLike
 	{
 		maxDifference = 1643,
 		maxIteration = 1000,

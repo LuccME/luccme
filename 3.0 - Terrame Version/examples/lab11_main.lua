@@ -1,7 +1,7 @@
 -- @example LuccME Discrete Model using the following components.
--- PreComputedValuesINPE.
--- NeighSimpleRule.
--- AllocationBySimpleOrdering.
+-- DemandPreComputedValues.
+-- PotentialDNeighSimpleRule.
+-- AllocationDSimpleOrdering.
 
 import("luccme")
 
@@ -32,7 +32,7 @@ Lab11 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = PreComputedValuesINPE
+	demand = DemandPreComputedValues
 	{
 		annualDemand =
 		{
@@ -47,9 +47,9 @@ Lab11 = LuccMEModel
 		}
 	},
 	
-	potential = NeighSimpleRule{},
+	potential = PotentialDNeighSimpleRule{},
 	
-	allocation = AllocationBySimpleOrdering
+	allocation = AllocationDSimpleOrdering
 	{
 		maxDifference = 106
 	},

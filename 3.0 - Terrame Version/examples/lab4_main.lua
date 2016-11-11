@@ -1,7 +1,7 @@
 -- @example LuccME Continuous Model using the following components.
--- ComputeInputTwoDateMaps.
--- SpatialLagRegression.
--- AllocationClueLike.
+-- DemandComputeTwoDates.
+-- PotentialCSpatialLagRegression.
+-- AllocationCClueLike.
 
 import("luccme")
 
@@ -32,13 +32,13 @@ Lab4 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = ComputeInputTwoDateMaps
+	demand = DemandComputeTwoDates
 	{
 		finalYearForInterpolation = 2014,
 		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
 	},
 	
-	potential = SpatialLagRegression
+	potential = PotentialCSpatialLagRegression
 	{
 		potentialData =
 		{
@@ -94,7 +94,7 @@ Lab4 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationClueLike
+	allocation = AllocationCClueLike
 	{
 		maxDifference = 1643,
 		maxIteration = 1000,

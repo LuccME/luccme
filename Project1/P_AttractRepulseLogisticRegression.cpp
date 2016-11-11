@@ -572,7 +572,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::PasteClipboardValue(Dat
 System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisticRegression_Shown(System::Object^  sender, System::EventArgs^  e)
 {
 	if (lReturn->Language == "en") {
-		this->Text = "Pontential - Attract Repulse Logistic Regression";
+		this->Text = "Pontential - Logistic Regression Attract Repulsion";
 		bAddBetas->Text = "Add";
 		bCancel->Text = "Cancel";
 		bSalvar->Text = "Save";
@@ -596,7 +596,7 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::P_AttractRepulseLogisti
 		gSPaste = "Please select a cell";
 	}
 	else {
-		this->Text = "Pontencial - Attract Repulse Logistic Regression";
+		this->Text = "Pontencial - Logistic Regression Attract Repulsion";
 		bAddBetas->Text = "Adicionar";
 		bCancel->Text = "Cancelar";
 		bSalvar->Text = "Salvar";

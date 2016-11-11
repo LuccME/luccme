@@ -135,19 +135,19 @@ namespace LuccME {
 					this->pasteToolStripMenuItem
 			});
 			this->cMSP_continuous->Name = L"contextMenuStrip1";
-			this->cMSP_continuous->Size = System::Drawing::Size(153, 70);
+			this->cMSP_continuous->Size = System::Drawing::Size(103, 48);
 			// 
 			// copyToolStripMenuItem
 			// 
 			this->copyToolStripMenuItem->Name = L"copyToolStripMenuItem";
-			this->copyToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->copyToolStripMenuItem->Size = System::Drawing::Size(102, 22);
 			this->copyToolStripMenuItem->Text = L"Copy";
 			this->copyToolStripMenuItem->Click += gcnew System::EventHandler(this, &D_PCVINPEForm::copyToolStripMenuItem_Click);
 			// 
 			// pasteToolStripMenuItem
 			// 
 			this->pasteToolStripMenuItem->Name = L"pasteToolStripMenuItem";
-			this->pasteToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
 			this->pasteToolStripMenuItem->Text = L"Paste";
 			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &D_PCVINPEForm::pasteToolStripMenuItem_Click);
 			// 
@@ -173,7 +173,7 @@ namespace LuccME {
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"D_PCVINPEForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Demanda - Pre Computed Values INPE";
+			this->Text = L"Demanda - Pre Computed Values";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &D_PCVINPEForm::D_PCVINPEForm_FormClosing);
 			this->Shown += gcnew System::EventHandler(this, &D_PCVINPEForm::D_PCVINPEForm_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();

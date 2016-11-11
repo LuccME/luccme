@@ -18,12 +18,12 @@ System::Void LuccME::A_ABSO::bSalvar_Click(System::Object ^ sender, System::Even
 System::Void LuccME::A_ABSO::A_ABSO_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lReturn->Language == "en") {
-		this->Text = "Allocation - Allocation By Simple Ordering";
+		this->Text = "Allocation - Simple Ordering";
 		bSalvar->Text = "Save";
 		lMaxDiffHelp->Text = "Absolute Value";
 	}
 	else {
-		this->Text = "Allocação - Allocation By Simple Ordering";
+		this->Text = "Alocação - Simple Ordering";
 		bSalvar->Text = "Salvar";
 		lMaxDiffHelp->Text = "Valor Absoluto";
 	}

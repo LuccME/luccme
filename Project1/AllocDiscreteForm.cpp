@@ -61,7 +61,7 @@ System::Void LuccME::AllocDiscreteForm::bAllocationClueSLike_Click(System::Objec
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
 		allocationForm->ShowInTaskbar = false;
-		allocationForm->Text = sSAlloc + "Allocation ClueS Like";
+		allocationForm->Text = sSAlloc + "ClueS Like";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;
@@ -87,7 +87,7 @@ System::Void LuccME::AllocDiscreteForm::bACSNO_Click(System::Object^  sender, Sy
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
 		allocationForm->ShowInTaskbar = false;
-		allocationForm->Text = sSAlloc + "Allocation ClueS Neighbor Ordering";
+		allocationForm->Text = sSAlloc + "ClueS Neigh Ordering";
 		allocationForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

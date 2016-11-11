@@ -89,7 +89,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
 		potentialForm->ShowInTaskbar = false;
-		potentialForm->Text = gSPot + "Spatial Lag Linear Roads";
+		potentialForm->Text = gSPot + "Spatial Lag Linear Regression Mix";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

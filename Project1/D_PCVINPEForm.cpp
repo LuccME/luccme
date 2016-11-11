@@ -4,7 +4,7 @@
 System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lReturn->Language == "en") {
-		this->Text = "Demand - Pre Computed Values INPE";
+		this->Text = "Demand - Pre Computed Values";
 		lPCVINPE->Text = "Annual Demand";
 		bSalvar->Text = "Save";
 		gSYear = "Years";
@@ -18,7 +18,7 @@ System::Void LuccME::D_PCVINPEForm::D_PCVINPEForm_Shown(System::Object ^ sender,
 		gSPaste = "Please select a cell";
 	}
 	else {
-		this->Text = "Demanda - Pre Computed Values INPE";
+		this->Text = "Demanda - Pre Computed Values";
 		lPCVINPE->Text = "Demanda Anual";
 		bSalvar->Text = "Salvar";
 		gSYear = "Anos";
@@ -134,6 +134,9 @@ System::Void LuccME::D_PCVINPEForm::bSalvar_Click(System::Object ^ sender, Syste
 		}
 		temp += "{";
 		for (int j = 1; j < dgDemand->ColumnCount; j++) {
+			if (!check) {
+				break;
+			}
 			if (dgDemand->Rows[i]->Cells[j]->Value == nullptr) {
 				MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				check = false;

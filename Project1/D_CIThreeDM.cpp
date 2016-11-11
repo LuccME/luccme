@@ -13,7 +13,7 @@ System::Void LuccME::D_CIThreeDM::textBox_Enter(System::Object ^ sender, System:
 System::Void LuccME::D_CIThreeDM::D_CIThreeDM_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lReturn->Language == "en") {
-		this->Text = "Demand - Compute Input Three Date Maps";
+		this->Text = "Demand - Compute Three Dates";
 		lYearInterpolation->Text = "Years for Interpolation:";
 		lMiddleYear->Text = "Middle Year";
 		lFinalYear->Text = "Final Year";
@@ -25,7 +25,7 @@ System::Void LuccME::D_CIThreeDM::D_CIThreeDM_Shown(System::Object ^ sender, Sys
 		gSExit = "Exit - Compute Input Two Date Maps";
 	}
 	else {
-		this->Text = "Demanda - Compute Input Three Date Maps";
+		this->Text = "Demanda - Compute Three Dates";
 		lYearInterpolation->Text = "Anos para Interpolação:";
 		lMiddleYear->Text = "Ano Intemediário";
 		lFinalYear->Text = "Ano Final";
@@ -134,6 +134,9 @@ System::Void LuccME::D_CIThreeDM::bSalvar_Click(System::Object ^ sender, System:
 	String^ temp = "";
 
 	for (int j = 0; j < dgDemand->ColumnCount; j++) {
+		if (!check) {
+			break;
+		}
 		if (dgDemand->Rows[0]->Cells[j]->Value == nullptr) {
 			MessageBox::Show(gSCells,gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 			check = false;
@@ -156,6 +159,9 @@ System::Void LuccME::D_CIThreeDM::bSalvar_Click(System::Object ^ sender, System:
 	temp += ";";
 
 	for (int j = 0; j < dgDemand->ColumnCount; j++) {
+		if (!check) {
+			break;
+		}
 		if (dgDemand->Rows[1]->Cells[j]->Value == nullptr) {
 			MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 			check = false;

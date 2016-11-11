@@ -242,7 +242,7 @@ namespace LuccME {
 			this->Controls->Add(this->pbLogo1);
 			this->Name = L"A_AllocationClueSLike";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Alocação - Allocation ClueS Like";
+			this->Text = L"Alocação - ClueS Like";
 			this->Shown += gcnew System::EventHandler(this, &A_AllocationClueSLike::A_AllocationClueSLike_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgTransitionMatrix))->EndInit();

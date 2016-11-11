@@ -113,6 +113,9 @@ namespace LuccME {
 			this->tLUT = (gcnew System::Windows::Forms::TextBox());
 			this->lBetas = (gcnew System::Windows::Forms::Label());
 			this->dgBetas = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_continuous2 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->toolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tConst = (gcnew System::Windows::Forms::TextBox());
 			this->lConst = (gcnew System::Windows::Forms::Label());
 			this->bAddData = (gcnew System::Windows::Forms::Button());
@@ -123,6 +126,9 @@ namespace LuccME {
 			this->lMinReg = (gcnew System::Windows::Forms::Label());
 			this->bRoadsModel = (gcnew System::Windows::Forms::Button());
 			this->dgBetasRM = (gcnew System::Windows::Forms::DataGridView());
+			this->cMSP_continuous3 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->toolStripMenuItem3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->lBetasRM = (gcnew System::Windows::Forms::Label());
 			this->tConstRM = (gcnew System::Windows::Forms::TextBox());
 			this->lConstRM = (gcnew System::Windows::Forms::Label());
@@ -130,22 +136,16 @@ namespace LuccME {
 			this->lChangeRM = (gcnew System::Windows::Forms::Label());
 			this->lAttributesRM = (gcnew System::Windows::Forms::Label());
 			this->dgAttr = (gcnew System::Windows::Forms::DataGridView());
-			this->cMSP_continuous2 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
-			this->toolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->toolStripMenuItem2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->cMSP_continuous = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->copyToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pasteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->cMSP_continuous3 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
-			this->toolStripMenuItem3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->toolStripMenuItem4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->BeginInit();
+			this->cMSP_continuous2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetasRM))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->BeginInit();
-			this->cMSP_continuous2->SuspendLayout();
-			this->cMSP_continuous->SuspendLayout();
 			this->cMSP_continuous3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->BeginInit();
+			this->cMSP_continuous->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tMinReg
@@ -256,6 +256,29 @@ namespace LuccME {
 			this->dgBetas->TabIndex = 7;
 			this->dgBetas->Visible = false;
 			this->dgBetas->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgBetas_KeyDown);
+			// 
+			// cMSP_continuous2
+			// 
+			this->cMSP_continuous2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->toolStripMenuItem1,
+					this->toolStripMenuItem2
+			});
+			this->cMSP_continuous2->Name = L"contextMenuStrip1";
+			this->cMSP_continuous2->Size = System::Drawing::Size(103, 48);
+			// 
+			// toolStripMenuItem1
+			// 
+			this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
+			this->toolStripMenuItem1->Size = System::Drawing::Size(102, 22);
+			this->toolStripMenuItem1->Text = L"Copy";
+			this->toolStripMenuItem1->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStripMenuItem1_Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this->toolStripMenuItem2->Name = L"toolStripMenuItem2";
+			this->toolStripMenuItem2->Size = System::Drawing::Size(102, 22);
+			this->toolStripMenuItem2->Text = L"Paste";
+			this->toolStripMenuItem2->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStripMenuItem2_Click);
 			// 
 			// tConst
 			// 
@@ -376,6 +399,29 @@ namespace LuccME {
 			this->dgBetasRM->Visible = false;
 			this->dgBetasRM->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgBetas_KeyDown);
 			// 
+			// cMSP_continuous3
+			// 
+			this->cMSP_continuous3->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->toolStripMenuItem3,
+					this->toolStripMenuItem4
+			});
+			this->cMSP_continuous3->Name = L"contextMenuStrip1";
+			this->cMSP_continuous3->Size = System::Drawing::Size(103, 48);
+			// 
+			// toolStripMenuItem3
+			// 
+			this->toolStripMenuItem3->Name = L"toolStripMenuItem3";
+			this->toolStripMenuItem3->Size = System::Drawing::Size(102, 22);
+			this->toolStripMenuItem3->Text = L"Copy";
+			this->toolStripMenuItem3->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStrip2MenuItem1_Click);
+			// 
+			// toolStripMenuItem4
+			// 
+			this->toolStripMenuItem4->Name = L"toolStripMenuItem4";
+			this->toolStripMenuItem4->Size = System::Drawing::Size(102, 22);
+			this->toolStripMenuItem4->Text = L"Paste";
+			this->toolStripMenuItem4->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStrip2MenuItem2_Click);
+			// 
 			// lBetasRM
 			// 
 			this->lBetasRM->AutoSize = true;
@@ -383,9 +429,9 @@ namespace LuccME {
 				static_cast<System::Byte>(0)));
 			this->lBetasRM->Location = System::Drawing::Point(614, 359);
 			this->lBetasRM->Name = L"lBetasRM";
-			this->lBetasRM->Size = System::Drawing::Size(163, 23);
+			this->lBetasRM->Size = System::Drawing::Size(164, 23);
 			this->lBetasRM->TabIndex = 101;
-			this->lBetasRM->Text = L"Roads Model Betas";
+			this->lBetasRM->Text = L"Linear Model Betas";
 			this->lBetasRM->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->lBetasRM->Visible = false;
 			// 
@@ -446,9 +492,9 @@ namespace LuccME {
 				static_cast<System::Byte>(0)));
 			this->lAttributesRM->Location = System::Drawing::Point(598, 156);
 			this->lAttributesRM->Name = L"lAttributesRM";
-			this->lAttributesRM->Size = System::Drawing::Size(198, 23);
+			this->lAttributesRM->Size = System::Drawing::Size(199, 23);
 			this->lAttributesRM->TabIndex = 107;
-			this->lAttributesRM->Text = L"Roads Model Attributes";
+			this->lAttributesRM->Text = L"Linear Model Attributes";
 			this->lAttributesRM->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->lAttributesRM->Visible = false;
 			// 
@@ -465,29 +511,6 @@ namespace LuccME {
 			this->dgAttr->TabIndex = 10;
 			this->dgAttr->Visible = false;
 			this->dgAttr->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &P_SpatialLagLinearRoads::dgAttr_KeyDown);
-			// 
-			// cMSP_continuous2
-			// 
-			this->cMSP_continuous2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->toolStripMenuItem1,
-					this->toolStripMenuItem2
-			});
-			this->cMSP_continuous2->Name = L"contextMenuStrip1";
-			this->cMSP_continuous2->Size = System::Drawing::Size(103, 48);
-			// 
-			// toolStripMenuItem1
-			// 
-			this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
-			this->toolStripMenuItem1->Size = System::Drawing::Size(102, 22);
-			this->toolStripMenuItem1->Text = L"Copy";
-			this->toolStripMenuItem1->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStripMenuItem1_Click);
-			// 
-			// toolStripMenuItem2
-			// 
-			this->toolStripMenuItem2->Name = L"toolStripMenuItem2";
-			this->toolStripMenuItem2->Size = System::Drawing::Size(102, 22);
-			this->toolStripMenuItem2->Text = L"Paste";
-			this->toolStripMenuItem2->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStripMenuItem2_Click);
 			// 
 			// cMSP_continuous
 			// 
@@ -511,29 +534,6 @@ namespace LuccME {
 			this->pasteToolStripMenuItem->Size = System::Drawing::Size(102, 22);
 			this->pasteToolStripMenuItem->Text = L"Paste";
 			this->pasteToolStripMenuItem->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::pasteToolStripMenuItem_Click);
-			// 
-			// cMSP_continuous3
-			// 
-			this->cMSP_continuous3->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->toolStripMenuItem3,
-					this->toolStripMenuItem4
-			});
-			this->cMSP_continuous3->Name = L"contextMenuStrip1";
-			this->cMSP_continuous3->Size = System::Drawing::Size(153, 70);
-			// 
-			// toolStripMenuItem3
-			// 
-			this->toolStripMenuItem3->Name = L"toolStripMenuItem3";
-			this->toolStripMenuItem3->Size = System::Drawing::Size(152, 22);
-			this->toolStripMenuItem3->Text = L"Copy";
-			this->toolStripMenuItem3->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStrip2MenuItem1_Click);
-			// 
-			// toolStripMenuItem4
-			// 
-			this->toolStripMenuItem4->Name = L"toolStripMenuItem4";
-			this->toolStripMenuItem4->Size = System::Drawing::Size(152, 22);
-			this->toolStripMenuItem4->Text = L"Paste";
-			this->toolStripMenuItem4->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::toolStrip2MenuItem2_Click);
 			// 
 			// P_SpatialLagLinearRoads
 			// 
@@ -569,15 +569,15 @@ namespace LuccME {
 			this->Controls->Add(this->lBetasRM);
 			this->Name = L"P_SpatialLagLinearRoads";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Potencial - Spatial Lag Linear Roads";
+			this->Text = L"Potencial - Spatial Lag Linear Regression Mix";
 			this->Shown += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::P_SpatialLagLinearRoads_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetas))->EndInit();
+			this->cMSP_continuous2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgBetasRM))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->EndInit();
-			this->cMSP_continuous2->ResumeLayout(false);
-			this->cMSP_continuous->ResumeLayout(false);
 			this->cMSP_continuous3->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttr))->EndInit();
+			this->cMSP_continuous->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

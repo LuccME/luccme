@@ -12,7 +12,7 @@ System::Void LuccME::D_CITwoDM::tFinalYear_Enter(System::Object ^ sender, System
 System::Void LuccME::D_CITwoDM::D_CITwoDM_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lReturn->Language == "en") {
-		this->Text = "Demand - Compute Input Two Date Maps";
+		this->Text = "Demand - Compute Two Dates";
 		lFinalYear->Text = "Final Year for Interpolation";
 		lLUTfI->Text = "Colunms for Interpolation";
 		bSalvar->Text = "Save";
@@ -22,7 +22,7 @@ System::Void LuccME::D_CITwoDM::D_CITwoDM_Shown(System::Object ^ sender, System:
 		gSExit = "Exit - Compute Input Two Date Maps";
 	}
 	else {
-		this->Text = "Demanda - Compute Input Two Date Maps";
+		this->Text = "Demanda - Compute Two Dates";
 		lFinalYear->Text = "Ano Final para Interpolação";
 		lLUTfI->Text = "Colunas para Interpolação";
 		bSalvar->Text = "Salvar";
@@ -110,6 +110,9 @@ System::Void LuccME::D_CITwoDM::bSalvar_Click(System::Object ^ sender, System::E
 	bool check = true;
 	String^ temp = "";
 	for (int j = 0; j < dgDemand->ColumnCount; j++) {
+		if (!check) {
+			break;
+		}
 		if (dgDemand->Rows[0]->Cells[j]->Value == nullptr) {
 			MessageBox::Show(gSCells, gSCellsTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 			check = false;

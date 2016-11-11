@@ -106,7 +106,7 @@ namespace LuccME {
 			this->bACSNO->Name = L"bACSNO";
 			this->bACSNO->Size = System::Drawing::Size(185, 39);
 			this->bACSNO->TabIndex = 89;
-			this->bACSNO->Text = L"ClueS Neighbor Ordering";
+			this->bACSNO->Text = L"ClueS Neigh Ordering";
 			this->bACSNO->UseVisualStyleBackColor = true;
 			this->bACSNO->Click += gcnew System::EventHandler(this, &AllocDiscreteForm::bACSNO_Click);
 			// 

@@ -99,7 +99,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bAllocContinuous->Text = "Continuous Components";
 		//tabSaveParam
 		lSalvar->Text = "Save";
-		lOutputTheme->Text = "Ouput Theme Name";
+		lOutputTheme->Text = "Ouput Name";
 		cSaveYearly->Text = "Yearly Save";
 		lSelectYears->Text = "     Years to Save";
 		bSelectedYears->Text = "Select";
@@ -298,7 +298,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bAllocContinuous->Text = "Componentes Contínuos";
 		//tabSaveParam
 		lSalvar->Text = "Salvar";
-		lOutputTheme->Text = "Nome do Tema de Saída";
+		lOutputTheme->Text = "Nome de Saída";
 		cSaveYearly->Text = "Salvar Anualmente";
 		lSelectYears->Text = "Anos a serem Salvos";
 		bSelectedYears->Text = "Selecionar";
@@ -2622,8 +2622,16 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\t\toutputTheme = \"" + tOutputTheme->Text + "\",");
 				sw->WriteLine("\t\tmode = \"multiple\",");
 				if (cSaveYearly->Checked) {
-					sw->WriteLine("\t\tyearly = true,");
-
+					int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+					int tempTime = Convert::ToInt16(tStartTime->Text);
+					String^ tempYears = "";
+					for (int i = 0; i <= time; i++) {
+						tempYears += Convert::ToString(tempTime + i);
+						if (i < time) {
+							tempYears += ",";
+						}
+					}
+					sw->WriteLine("\t\tsaveYears = {" + tempYears + "},");
 				}
 				else {
 					sw->WriteLine("\t\tsaveYears = {" + lYearsToSave->Text + "},");
@@ -7198,18 +7206,18 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			FileInfo^ copyValidation = gcnew FileInfo("validation.lua");
 			if (gAllocationComponent > NUMDISCALLOCCOMP) {
 				if (cbValidationMethod->SelectedIndex == 0) {
-					copyValidation->CopyTo(lSelectedFolder->Text + "\\" + "validationExtContinuous.lua");
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\" + tModelName->Text + "_validationExtContinuous.lua");
 				}
 				else {
-					copyValidation->CopyTo(lSelectedFolder->Text + "\\validationDifContinuous.lua");
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\" + tModelName->Text + "_validationDifContinuous.lua");
 				}
 			}
 			else {
 				if (cbValidationMethod->SelectedIndex == 0) {
-					copyValidation->CopyTo(lSelectedFolder->Text + "\\validationExtDiscrete.lua");
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\" + tModelName->Text + "_validationExtDiscrete.lua");
 				}
 				else {
-					copyValidation->CopyTo(lSelectedFolder->Text + "\\validationDifDiscrete.lua");
+					copyValidation->CopyTo(lSelectedFolder->Text + "\\" + tModelName->Text + "_validationDifDiscrete.lua");
 				}
 			}
 		}

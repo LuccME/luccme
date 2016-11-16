@@ -4317,6 +4317,23 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				int auxEnd = Convert::ToInt16(tEndTime->Text);
+				int auxStart = Convert::ToInt16(tStartTime->Text);
+				String^ allYears = "";
+
+				for (int w = auxStart; w <= auxEnd; w++) {
+					allYears += w.ToString();
+					if (w < auxEnd) {
+						allYears += ",";
+					}
+				}
+
+				if (allYears == lYearsToSave->Text) {
+					lYearsToSave->Text = "";
+					cSaveYearly->Checked = true;
+					gParametersValues[13] = lYearsToSave->Text;
+				}
+
 				gParametersValues[14] = lAttrToSave->Text;
 				sw->Close();
 

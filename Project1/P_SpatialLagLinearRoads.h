@@ -380,7 +380,7 @@ namespace LuccME {
 			this->bRoadsModel->Name = L"bRoadsModel";
 			this->bRoadsModel->Size = System::Drawing::Size(93, 23);
 			this->bRoadsModel->TabIndex = 8;
-			this->bRoadsModel->Text = L"RoadsModel >>";
+			this->bRoadsModel->Text = L"Linear Model >>";
 			this->bRoadsModel->UseVisualStyleBackColor = true;
 			this->bRoadsModel->Visible = false;
 			this->bRoadsModel->Click += gcnew System::EventHandler(this, &P_SpatialLagLinearRoads::bRoadsModel_Click);

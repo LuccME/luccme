@@ -90,8 +90,8 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bLUNDManager->Text = "Manager";
 		//tabComponent
 		lComponentes->Text = "   Select the Components";
-		lDemand->Text = "Demand ";
-		lPotential->Text = "Potential";
+		lDemand->Text = "  Demand";
+		lPotential->Text = " Potential";
 		lAllocation->Text = "Allocation";
 		bPotDiscrete->Text = "Discrete Components";
 		bPotContinuous->Text = "Continuous Components";

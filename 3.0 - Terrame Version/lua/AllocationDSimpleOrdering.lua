@@ -70,7 +70,8 @@ function AllocationDSimpleOrdering(component)
 	   	
 		for k, cell in pairs (cs.cells) do
 			for luind, lu in  pairs (luTypes) do
-				cell[lu.."_change"] = 0
+				cell[lu.."_chtot"] = 0
+				cell[lu.."_chpast"] = 0
 				cell[lu.."_out"] = cell[lu]
 			end
 			cell.alloc = 0
@@ -135,7 +136,7 @@ function AllocationDSimpleOrdering(component)
 		if (allocation_ok == true) then 
  			-- Update the status of each use for eache cell if the demand was allocated
 			for k, cell in pairs (cs.cells) do			
- 				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse)
+ 				self:changeUse(cell, self:currentUse(cell, luTypes), cell.simUse, event:getTime(), luccMEModel.startTime)
  				cell.alloc = 0
  			end
 			
@@ -188,20 +189,23 @@ function AllocationDSimpleOrdering(component)
 	-- @arg cur_use The current use.
 	-- @arg higher_use The biggest cell value.
 	-- @usage --DONTRUN 
-	-- component.changeUse(cell, currentUse(cell, luTypes), cell.simUse))
-	component.changeUse = function(self, cell, cur_use, higher_use)
+	-- component.changeUse(cell, currentUse(cell, luTypes), cell.simUse, currentTime, initialTime))
+	component.changeUse = function(self, cell, cur_use, higher_use, currentTime, initialTime)
 		cell[cur_use] = 0
 		cell[cur_use.."_out"] = 0
 		
 		cell[higher_use] = 1
 		cell[higher_use.."_out"] = 1
 	  
-		cell[higher_use.."_change"] = 0
-		cell[cur_use.."_change"] = 0  
+		cell[higher_use.."_chtot"] = 0
+		cell[cur_use.."_chtot"] = 0 
+		
+		cell[higher_use.."_chpast"] = 0
+		cell[cur_use.."_chpast"] = 0  
 		
 		if (cur_use ~= higher_use) then
-			cell[higher_use.."_change"] = 1
-			cell[cur_use.."_change"] = -1 
+			cell[higher_use.."_chpast"] = 1
+			cell[cur_use.."_chpast"] = -1 
 		end
 	end
 

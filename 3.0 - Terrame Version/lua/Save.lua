@@ -63,7 +63,7 @@ function databaseSave(luccMEModel)
 																	for j, lu in pairs (luccMEModel.landUseTypes) do
 																		if (lu ~= luccMEModel.allocation.landUseNoData) then
 																			cell[lu.."_Ext"..year] = cell[lu] * luccMEModel.cs.cellArea
-																			cell[lu.."_Area"..year] = cell[lu.."_change"] * luccMEModel.cs.cellArea
+																			cell[lu.."_Area"..year] = cell[lu.."_chpast"] * luccMEModel.cs.cellArea
 																		end
 																	end
 																end

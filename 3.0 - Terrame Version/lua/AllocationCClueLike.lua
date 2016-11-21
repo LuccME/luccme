@@ -137,8 +137,15 @@ function AllocationCClueLike(component)
 
 		for i, lu in pairs (luTypes) do
 			local out = lu.."_out"
-			local diff = lu.."_change"
+			local diff = lu.."_chpast"
+			local previous = lu.."_chtot"
+			
 			for k, cell in pairs (cs.cells) do
+				if (event:getTime() == luccMEModel.startTime) then
+					cell[previous] = 0
+				else
+					cell[previous] = cell[lu] - cell[lu.."_backup"]
+				end
 				cell[out] = cell[lu]
 				cell[diff] = cell[lu] - cell.past[lu]
 			end

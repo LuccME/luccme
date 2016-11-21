@@ -102,7 +102,7 @@ namespace LuccME {
 			// 
 			// bNeighInverseDistanceRule
 			// 
-			this->bNeighInverseDistanceRule->Location = System::Drawing::Point(43, 317);
+			this->bNeighInverseDistanceRule->Location = System::Drawing::Point(43, 407);
 			this->bNeighInverseDistanceRule->Name = L"bNeighInverseDistanceRule";
 			this->bNeighInverseDistanceRule->Size = System::Drawing::Size(185, 39);
 			this->bNeighInverseDistanceRule->TabIndex = 86;
@@ -112,7 +112,7 @@ namespace LuccME {
 			// 
 			// bInverseDistanceRule
 			// 
-			this->bInverseDistanceRule->Location = System::Drawing::Point(43, 408);
+			this->bInverseDistanceRule->Location = System::Drawing::Point(43, 318);
 			this->bInverseDistanceRule->Name = L"bInverseDistanceRule";
 			this->bInverseDistanceRule->Size = System::Drawing::Size(185, 39);
 			this->bInverseDistanceRule->TabIndex = 87;

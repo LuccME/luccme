@@ -109,7 +109,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cPot->Text = "Potential";
 		cChange->Text = "Change";
 		cReg->Text = "Regression";
-		cAuxOut->Text = "Auxilary";
+		cAuxOut->Text = "Aggregate";
 		//tabFileMaker
 		lFileMaker->Text = "       Files Maker";
 		bGerarArquivos->Text = "Make Files";
@@ -137,7 +137,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Location = Point(265, 320);
 		cValidationSave->Text = "Save into Database";
 		bValidate->Text = "Validate";
-		cSaveValidationFile->Text = "Save Validation Files";
+		cSaveValidationFile->Text = "Save Validation Script";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -308,7 +308,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cPot->Text = "Potencial";
 		cChange->Text = "Mudança";
 		cReg->Text = "Regressão";
-		cAuxOut->Text = "Auxiliares";
+		cAuxOut->Text = "Agregado";
 		//tabFileMaker
 		lFileMaker->Text = "Gerar os Arquivos";
 		bGerarArquivos->Text = "Gerar Arquivos";
@@ -336,7 +336,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Location = Point(240, 320);
 		cValidationSave->Text = "Salvar no Banco de Dados";
 		bValidate->Text = "Validar";
-		cSaveValidationFile->Text = "Salvar os Arquivos de Validação";
+		cSaveValidationFile->Text = "Salvar os Scripts de Validação";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";
@@ -2651,7 +2651,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 							}
 							sw->WriteLine("\t\t\t\"" + aux + "_out\",");
 							if (cChange->Checked) {
-								sw->WriteLine("\t\t\t\"" + aux + "_change\",");
+								sw->WriteLine("\t\t\t\"" + aux + "_chtot\",");
+								sw->WriteLine("\t\t\t\"" + aux + "_chpast\",");
 							}
 							if (cPot->Checked) {
 								sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
@@ -2669,7 +2670,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						}
 						sw->WriteLine("\t\t\t\"" + aux + "_out\",");
 						if (cChange->Checked) {
-							sw->WriteLine("\t\t\t\"" + aux + "_change\",");
+							sw->WriteLine("\t\t\t\"" + aux + "_chtot\",");
+							sw->WriteLine("\t\t\t\"" + aux + "_chpast\",");
 						}
 						if (cPot->Checked) {
 							sw->WriteLine("\t\t\t\"" + aux + "_pot\",");
@@ -4294,13 +4296,26 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							j++;
 						}
 
+						if (tempLine->Contains("_pot")) {
+							cPot->Checked = true;
+						}
+
+						if (tempLine->Contains("_chpast")) {
+							cChange->Checked = true;
+						}
+
+						if (tempLine->Contains("_reg")) {
+							cReg->Checked = true;
+						}
+
 						tempLine = tempLine->Replace("\t","");
 						tempLine = tempLine->Replace(" ", "");
 						tempLine = tempLine->Replace("saveAttrs={", "");
 						tempLine = tempLine->Replace(",},", "");
 						tempLine = tempLine->Replace("_out", "");
 						tempLine = tempLine->Replace("_pot", "");
-						tempLine = tempLine->Replace("_change", "");
+						tempLine = tempLine->Replace("_chtot", "");
+						tempLine = tempLine->Replace("_chpast", "");
 						tempLine = tempLine->Replace("_reg", "");
 						tempLine = tempLine->Replace("\"", "");
 

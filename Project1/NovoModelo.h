@@ -153,27 +153,7 @@ namespace LuccME {
 		String^ lLanguage;
 		
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
-private: System::Windows::Forms::Label^  lShape;
-public:
-private: System::Windows::Forms::Button^  bShape;
-private: System::Windows::Forms::Label^  lTerraview;
-
-private: System::Windows::Forms::Button^  bScenario;
-private: System::Windows::Forms::Label^  lScenarioYearsConfirm;
-private: System::Windows::Forms::Label^  lScenarioYears;
-private: System::Windows::Forms::ListView^  lvYearScenario;
-private: System::Windows::Forms::CheckBox^  cReg;
-private: System::Windows::Forms::CheckBox^  cChange;
-private: System::Windows::Forms::CheckBox^  cPot;
-private: System::Windows::Forms::Label^  lSaidaAdicionais;
-private: System::Windows::Forms::CheckBox^  cSaveValidationFile;
-private: System::Windows::Forms::CheckBox^  cAuxOut;
-
-
-
-
-
-		 //[0] = lSelectedFolder->Text;
+		//[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
 		//[2] = tStartTime->Text;
 		//[3] = tEndTime->Text;
@@ -217,6 +197,19 @@ private: System::Windows::Forms::CheckBox^  cAuxOut;
 			}
 		}
 
+	private: System::Windows::Forms::Label^  lShape;
+	private: System::Windows::Forms::Button^  bShape;
+	private: System::Windows::Forms::Label^  lTerraview;
+	private: System::Windows::Forms::Button^  bScenario;
+	private: System::Windows::Forms::Label^  lScenarioYearsConfirm;
+	private: System::Windows::Forms::Label^  lScenarioYears;
+	private: System::Windows::Forms::ListView^  lvYearScenario;
+	private: System::Windows::Forms::CheckBox^  cReg;
+	private: System::Windows::Forms::CheckBox^  cChange;
+	private: System::Windows::Forms::CheckBox^  cPot;
+	private: System::Windows::Forms::Label^  lSaidaAdicionais;
+	private: System::Windows::Forms::CheckBox^  cSaveValidationFile;
+	private: System::Windows::Forms::CheckBox^  cAuxOut;
 	private: System::Windows::Forms::TextBox^  tbSelectedBatabase;
 	private: System::Windows::Forms::TextBox^  tbDemand;
 	private: System::Windows::Forms::Button^  bPotContinuous;
@@ -1197,7 +1190,7 @@ private: System::Windows::Forms::CheckBox^  cAuxOut;
 			this->cAuxOut->Name = L"cAuxOut";
 			this->cAuxOut->Size = System::Drawing::Size(94, 23);
 			this->cAuxOut->TabIndex = 97;
-			this->cAuxOut->Text = L"Auxiliares";
+			this->cAuxOut->Text = L"Agregado";
 			this->cAuxOut->UseVisualStyleBackColor = true;
 			// 
 			// cReg
@@ -1205,7 +1198,7 @@ private: System::Windows::Forms::CheckBox^  cAuxOut;
 			this->cReg->AutoSize = true;
 			this->cReg->Enabled = false;
 			this->cReg->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
-			this->cReg->Location = System::Drawing::Point(529, 429);
+			this->cReg->Location = System::Drawing::Point(525, 429);
 			this->cReg->Name = L"cReg";
 			this->cReg->Size = System::Drawing::Size(96, 23);
 			this->cReg->TabIndex = 97;

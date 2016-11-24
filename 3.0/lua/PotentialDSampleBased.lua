@@ -7,7 +7,7 @@
 -- @arg component.potentialData.attributesClass A list of the select attributes (categorical) to analysis.
 -- @return The modified component.
 -- @usage --DONTRUN 
---P1 = PotentialDMaximumEntropyLike
+--P1 = PotentialDSampleBased
 --{
 --  potentialData =
 --  {
@@ -67,7 +67,7 @@
 --    }
 --  }
 --}
-function PotentialDMaximumEntropyLike(component)
+function PotentialDSampleBased(component)
 	local file
 	
 	-- Handles with the execution method of a MaximumEntropyLike component.
@@ -457,4 +457,4 @@ function PotentialDMaximumEntropyLike(component)
   
 	collectgarbage("collect")
 	return component
-end -- PotentialDMaximumEntropyLike
+end -- PotentialDSampleBased

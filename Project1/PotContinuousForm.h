@@ -125,7 +125,7 @@ namespace LuccME {
 			this->bMaxEntLike->Name = L"bMaxEntLike";
 			this->bMaxEntLike->Size = System::Drawing::Size(185, 39);
 			this->bMaxEntLike->TabIndex = 94;
-			this->bMaxEntLike->Text = L"MaxEnt Like";
+			this->bMaxEntLike->Text = L"Sample Based";
 			this->bMaxEntLike->UseVisualStyleBackColor = true;
 			this->bMaxEntLike->Click += gcnew System::EventHandler(this, &PotContinuousForm::bMaxEntLike_Click);
 			// 

@@ -151,7 +151,7 @@ System::Void LuccME::PotDiscreteForm::bNALR_Click(System::Object ^ sender, Syste
 System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	bool check = true;
-	if (this->lReturn->Component != POTENTIALDMAXIMUMENTROPYLIKE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALDSAMPLEBASED && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -160,12 +160,12 @@ System::Void LuccME::PotDiscreteForm::bMaxEntLike_Click(System::Object^  sender,
 		}
 	}
 	if (check) {
-		lReturn->Component = POTENTIALDMAXIMUMENTROPYLIKE;
+		lReturn->Component = POTENTIALDSAMPLEBASED;
 		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
 		potentialForm->ShowInTaskbar = false;
-		potentialForm->Text = gSPot + "MaxEnt Like - Discrete";
+		potentialForm->Text = gSPot + "Sample Based - Discrete";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

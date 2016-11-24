@@ -101,7 +101,7 @@ System::Void LuccME::PotContinuousForm::bSpatialLagLinearRoads_Click(System::Obj
 System::Void LuccME::PotContinuousForm::bMaxEntLike_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	bool check = true;
-	if (this->lReturn->Component != POTENTIALCMAXIMUMENTROPYLIKE && this->lReturn->Component != NONE) {
+	if (this->lReturn->Component != POTENTIALCSAMPLEBASED && this->lReturn->Component != NONE) {
 		if (MessageBox::Show(gSPotMod, gSPotModTitle, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::No) {
 			check = false;
 		}
@@ -110,12 +110,12 @@ System::Void LuccME::PotContinuousForm::bMaxEntLike_Click(System::Object^  sende
 		}
 	}
 	if (check) {
-		lReturn->Component = POTENTIALCMAXIMUMENTROPYLIKE;
+		lReturn->Component = POTENTIALCSAMPLEBASED;
 		P_MaxEntLike^ potentialForm = gcnew P_MaxEntLike(lReturn);
 		potentialForm->MinimizeBox = false;
 		potentialForm->MaximizeBox = false;
 		potentialForm->ShowInTaskbar = false;
-		potentialForm->Text = gSPot + "MaxEnt Like - Continuous";
+		potentialForm->Text = gSPot + "Sample Based - Continuous";
 		potentialForm->ShowDialog();
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;

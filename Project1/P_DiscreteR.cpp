@@ -375,7 +375,7 @@ System::Void LuccME::P_DiscreteR::setRegionData(DataGridView^ dgBetas, TextBox^ 
 			lTempBetas[i] += "=";
 		}
 		if (dgBetas->Rows[j]->Cells[1]->Value != nullptr) {
-			lTempBetas[i] += dgBetas->Rows[j]->Cells[1]->Value;
+			lTempBetas[i] += dgBetas->Rows[j]->Cells[1]->Value->ToString()->Replace(",",".");
 			if (j + 1 < dgBetas->Rows->Count) {
 				if (dgBetas->Rows[j + 1]->Cells[0]->Value != nullptr) {
 					lTempBetas[i] += ",";

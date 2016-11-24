@@ -1681,9 +1681,9 @@ System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, Sys
 			}
 			break;
 
-		case POTENTIALDMAXIMUMENTROPYLIKE:
+		case POTENTIALDSAMPLEBASED:
 			if (gPotential != "") {
-				showReturnMaxEntLike("PotentialDMaximumEntropyLike");
+				showReturnMaxEntLike("PotentialDSampleBased");
 			}
 			break;
 
@@ -1759,9 +1759,9 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 			}
 			break;
 
-		case POTENTIALCMAXIMUMENTROPYLIKE:
+		case POTENTIALCSAMPLEBASED:
 			if (gPotential != "") {
-				showReturnMaxEntLike("PotentialCMaximumEntropyLike");
+				showReturnMaxEntLike("PotencialCSampleBased");
 			}
 			break;
 		}
@@ -3162,8 +3162,8 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("}\n");
 						break;
 
-					case POTENTIALDMAXIMUMENTROPYLIKE:
-					case POTENTIALCMAXIMUMENTROPYLIKE:
+					case POTENTIALDSAMPLEBASED:
+					case POTENTIALCSAMPLEBASED:
 						sw->WriteLine("P1 = " + tbPotential->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\tpotentialData =");
@@ -5835,13 +5835,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
-				if (tempLine == "PotentialDMaximumEntropyLike" || tempLine == "PotentialCMaximumEntropyLike") {
+				if (tempLine == "PotentialDSampleBased" || tempLine == "PotentialCSampleBased") {
 					gPotential = "";
-					if (tempLine == "PotentialDMaximumEntropyLike") {
-						gPotentialComponent = POTENTIALDMAXIMUMENTROPYLIKE;
+					if (tempLine == "PotentialDSampleBased") {
+						gPotentialComponent = POTENTIALDSAMPLEBASED;
 					} 	
 					else {
-						gPotentialComponent = POTENTIALCMAXIMUMENTROPYLIKE;
+						gPotentialComponent = POTENTIALCSAMPLEBASED;
 					}
 					gPotentialLUT = gLandUseTypes;
 					int count = 2;
@@ -5896,11 +5896,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					if (gPotential != "") {
-						if (gPotentialComponent == POTENTIALDMAXIMUMENTROPYLIKE) {
-							showReturnMaxEntLike("PotentialDMaximumEntropyLike");
+						if (gPotentialComponent == POTENTIALDSAMPLEBASED) {
+							showReturnMaxEntLike("PotentialDSampleBased");
 						}
 						else {
-							showReturnMaxEntLike("PotentialCMaximumEntropyLike");
+							showReturnMaxEntLike("PotentialCSampleBased");
 						}
 					}
 				}

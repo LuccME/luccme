@@ -302,7 +302,7 @@ namespace LuccME {
 			this->Controls->Add(this->lAttrPerc);
 			this->Name = L"P_MaxEntLike";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"MaxEnt Like";
+			this->Text = L"Sample Based";
 			this->Shown += gcnew System::EventHandler(this, &P_MaxEntLike::P_MaxEntLike_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgAttrPerc))->EndInit();

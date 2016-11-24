@@ -160,7 +160,7 @@ System::Void LuccME::P_MaxEntLike::initializeForm()
 	dgAttrClass->Columns[0]->Name = gSAttributes;
 	dgAttrClass->Columns[0]->Width = 160;
 
-	if (lReturn->Component == POTENTIALDMAXIMUMENTROPYLIKE) {
+	if (lReturn->Component == POTENTIALDSAMPLEBASED) {
 		tUsePerc->Text = "100";
 		tUsePerc->Enabled = false;
 	}

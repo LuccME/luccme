@@ -268,9 +268,7 @@
 				
 			
 		
-					<li>
-						<a href="../files/PotentialDLogisticRegressionNeighAttract.html">PotentialDLogisticRegressionNeighAttract</a>
-					</li>
+					<li><strong>PotentialDLogisticRegressionNeighAttract</strong></li>
 				
 			
 		
@@ -377,7 +375,9 @@
 		
 		
 		
-					<li><strong>Save</strong></li>
+					<li>
+						<a href="../files/Save.html">Save</a>
+					</li>
 				
 			
 		
@@ -402,7 +402,7 @@
 				</div> <!-- id="navigation" -->
 
 				<div id="content">
-					<h1>Save
+					<h1>PotentialDLogisticRegressionNeighAttract
 					
 					
 					</h1>
@@ -416,25 +416,141 @@
 
 					
 						
+						<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+<span class="description">
+
+Modification of the LogisticRegression combining cellular automata based models ideas. Cell potential is modified according to the attractiveness of the same class in a given (generic) neighbourhood.</span>
+
+
+
+
+<!-- Function arguments -->
+  <h3>Arguments</h3>
+<ul><span class="arg">
+
+    <li>
+	  <strong>calcRegressionLogistic</strong>: Handles with the calculation of the regression.
+    </li> 
+    
+  
+    <li>
+	  <strong>potentialData</strong>: A table with the regression parameters for each attribute.
+    </li> 
+    
+  
+    <li>
+	  <strong>potentialData.betas</strong>: A linear regression betas for land use drivers and the index of landUseDrivers to be used by the regression (attributes).
+    </li> 
+    
+  
+    <li>
+	  <strong>potentialData.const</strong>: A linear regression constant.
+    </li> 
+    
+  
+    <li>
+	  <strong>potentialData.elasticity</strong>: An elasticity value, closer to 1 is more difficulty to transition for other land uses.
+    </li> 
+    
+  
+    <li>
+	  <strong>potentialData.percNeighborsUse</strong>: Percent of neighbours with the same use.
+    </li> 
+    
+  
+    <li>
+	  <strong>probability</strong>: Compute the probability logistic method of a PotentialDLogisticRegressionNeighAttract component.
+    </li> 
+    
+  
+    <li>
+	  <strong>run</strong>: Handles with the execution method of a PotentialDLogisticRegressionNeighAttract component.
+    </li> 
+    
+  
+    <li>
+	  <strong>verify</strong>: Handles with the verify method of a PotentialDLogisticRegressionNeighAttract component.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+<h3>Return value:</h3>
+<ol>
+The modified component.
+</ol>
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">P1</span> = <span class="function">PotentialDLogisticRegressionNeighAttract</span>
+{
+ <span class="id">potentialData</span> =
+ {
+   <span class="comment">-- region 1</span>
+   {
+     <span class="comment">-- floresta</span>
+     {
+       <span class="id">const</span> = <span class="number">-1</span><span class="number">.961</span>,
+       <span class="id">elasticity</span> = <span class="number">0.1</span>,
+       <span class="id">percNeighborsUse</span> = <span class="number">0.5</span>,
+
+       <span class="id">betas</span> =
+       {
+         <span class="id">dist_rodovias</span> = <span class="number">0.00008578</span>,
+         <span class="id">assentamentos</span> = <span class="number">-0</span><span class="number">.2604</span>,
+         <span class="id">uc_us</span> = <span class="number">0.6064</span>,
+         <span class="id">fertilidadealtaoumedia</span> = <span class="number">0.4393</span>
+       }
+     },
+
+     <span class="comment">-- desmatamento</span>
+     {
+       <span class="id">const</span> = <span class="number">1.978</span>,
+       <span class="id">elasticity</span> = <span class="number">0.1</span>,
+       <span class="id">percNeighborsUse</span> = <span class="number">0.5</span>,
+
+       <span class="id">betas</span> =
+       {
+         <span class="id">dist_rodovias</span> = <span class="number">-0</span><span class="number">.00008651</span>,
+         <span class="id">assentamentos</span> = <span class="number">0.2676</span>,
+         <span class="id">uc_us</span> = <span class="number">-0</span><span class="number">.6376</span>,
+         <span class="id">fertilidadealtaoumedia</span> = <span class="number">-0</span><span class="number">.4565</span>
+       }
+     },
+
+     <span class="comment">-- outros</span>
+     {
+       <span class="id">const</span> = <span class="number">0</span>,
+       <span class="id">elasticity</span> = <span class="number">0</span>,
+       <span class="id">percNeighborsUse</span> = <span class="number">0</span>,
+
+       <span class="id">betas</span> =
+       {
+         
+       }
+     }
+   }
+ }
+}</code></pre>
+
+
+
+
+</dd>
+
 
 						
-							<h2 class="function_list">Functions</h2>
-							<table class="function_list">
-							
-								
-									<tr>
-										<td class="name" nowrap><a href="#databaseSave">databaseSave</a>&nbsp;
-<td class="summary">Save the generated data after the simulation into the database for each year a layer will be created.</td>
-									</tr>
-								
-							
-								
-									<tr>
-										<td class="name" nowrap><a href="#saveSingleTheme">saveSingleTheme</a>&nbsp;
-<td class="summary">Save the generated data after the simulation into the database all the data for each year will be created in a single layer.</td>
-									</tr>
-								
-							
+						
+
 						
 						</table>
 					
@@ -444,105 +560,6 @@
 					<!--<br/>
 					<br/>-->
 
-					
-						
-						<dl class="function">
-							
-									<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-
-<dt><h2><a name="databaseSave">
-
-	</a><strong>databaseSave</strong>&nbsp;
-
-</h2></dt>
-<dd>
-
-
-<span class="description">
-
-Save the generated data after the simulation into the database for each year a layer will be created.</span>
-
-
-
-
-<!-- Function arguments -->
-  <h3>Arguments</h3>
-<ul><span class="arg">
-
-    <li>
-	  <strong>#1</strong>: A LuccME model.
-    </li> 
-    
-  
-  </span></ul>
-
-
-
-
-
-
-
-<h3>Usage</h3>
-<pre class="example"><code><span class="function">databaseSave</span>(<span class="id">luccMeModel</span>)</code></pre>
-
-
-
-
-</dd>
-
-
-						    	
-							
-									<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-
-<dt><h2><a name="saveSingleTheme">
-
-	</a><strong>saveSingleTheme</strong>&nbsp;
-
-</h2></dt>
-<dd>
-
-
-<span class="description">
-
-Save the generated data after the simulation into the database all the data for each year will be created in a single layer.<br><br></span>
-
-
-
-
-<!-- Function arguments -->
-  <h3>Arguments</h3>
-<ul><span class="arg">
-
-    <li>
-	  <strong>#1</strong>: A luccME Model.
-    </li> 
-    
-  
-  </span></ul>
-
-
-
-
-
-
-
-<h3>Usage</h3>
-<pre class="example"><code><span class="function">saveSingleTheme</span>(<span class="id">luccMeModel</span>)</code></pre>
-
-
-
-
-</dd>
-
-
-						    	
-							
-						</dl>
 					
 
 					

@@ -190,9 +190,7 @@
 				
 			
 		
-					<li>
-						<a href="../files/AllocationDClueSLike.html">AllocationDClueSLike</a>
-					</li>
+					<li><strong>AllocationDClueSLike</strong></li>
 				
 			
 		
@@ -294,8 +292,7 @@
 		
 					<li>
 						<a href="../files/PotentialDSampleBased.html">PotentialDSampleBased</a>
-					</li>
-				
+					</li>				
 			
 		
 		
@@ -377,7 +374,9 @@
 		
 		
 		
-					<li><strong>Save</strong></li>
+					<li>
+						<a href="../files/Save.html">Save</a>
+					</li>
 				
 			
 		
@@ -402,7 +401,7 @@
 				</div> <!-- id="navigation" -->
 
 				<div id="content">
-					<h1>Save
+					<h1>AllocationDClueSLike
 					
 					
 					</h1>
@@ -416,25 +415,86 @@
 
 					
 						
+						<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+<span class="description">
+
+Based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described in Verburg et al. (2002) based on the process of competition among classes in the same cell, adjusted iteratively to reach the demand when all cells are considered, as described in Verburg et al. (1999), extended to incorporate new features, such as change in blocks (optional, parametrized by cell).</span>
+
+
+
+
+<!-- Function arguments -->
+  <h3>Arguments</h3>
+<ul><span class="arg">
+
+    <li>
+	  <strong>factorIteration</strong>: Initial value of the parameter which controls the allocation interaction factor.
+    </li> 
+    
+  
+    <li>
+	  <strong>maxDifference</strong>: Maximum difference between informed demand and demand allocated by the model.
+    </li> 
+    
+  
+    <li>
+	  <strong>maxIteration</strong>: Limit of interactions trying to allocate the demand.
+    </li> 
+    
+  
+    <li>
+	  <strong>run</strong>: Handles with the rules of the component execution.
+    </li> 
+    
+  
+    <li>
+	  <strong>transitionMatrix</strong>: Indicates the allowable (1) and  not allowable (0) transition in a landuse x landuse matrix. Must have at least one region.
+    </li> 
+    
+  
+    <li>
+	  <strong>verify</strong>: Handles with the parameters verification.
+    </li> 
+    
+  
+  </span></ul>
+
+
+
+
+
+
+
+<h3>Usage</h3>
+<pre class="example"><code><span class="id">A1</span> = <span class="function">AllocationDClueSLike</span>
+{
+ <span class="id">maxIteration</span> = <span class="number">1000</span>,
+ <span class="id">factorIteration</span> = <span class="number">0.000001</span>,
+ <span class="id">maxDifference</span> = <span class="number">106</span>,
+ <span class="id">transitionMatrix</span> =
+ {
+   <span class="comment">--Region 1</span>
+   {
+     {<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>},
+     {<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>},
+     {<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}
+   }
+ }
+}</code></pre>
+
+
+
+
+</dd>
+
 
 						
-							<h2 class="function_list">Functions</h2>
-							<table class="function_list">
-							
-								
-									<tr>
-										<td class="name" nowrap><a href="#databaseSave">databaseSave</a>&nbsp;
-<td class="summary">Save the generated data after the simulation into the database for each year a layer will be created.</td>
-									</tr>
-								
-							
-								
-									<tr>
-										<td class="name" nowrap><a href="#saveSingleTheme">saveSingleTheme</a>&nbsp;
-<td class="summary">Save the generated data after the simulation into the database all the data for each year will be created in a single layer.</td>
-									</tr>
-								
-							
+						
+
 						
 						</table>
 					
@@ -444,105 +504,6 @@
 					<!--<br/>
 					<br/>-->
 
-					
-						
-						<dl class="function">
-							
-									<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-
-<dt><h2><a name="databaseSave">
-
-	</a><strong>databaseSave</strong>&nbsp;
-
-</h2></dt>
-<dd>
-
-
-<span class="description">
-
-Save the generated data after the simulation into the database for each year a layer will be created.</span>
-
-
-
-
-<!-- Function arguments -->
-  <h3>Arguments</h3>
-<ul><span class="arg">
-
-    <li>
-	  <strong>#1</strong>: A LuccME model.
-    </li> 
-    
-  
-  </span></ul>
-
-
-
-
-
-
-
-<h3>Usage</h3>
-<pre class="example"><code><span class="function">databaseSave</span>(<span class="id">luccMeModel</span>)</code></pre>
-
-
-
-
-</dd>
-
-
-						    	
-							
-									<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-
-<dt><h2><a name="saveSingleTheme">
-
-	</a><strong>saveSingleTheme</strong>&nbsp;
-
-</h2></dt>
-<dd>
-
-
-<span class="description">
-
-Save the generated data after the simulation into the database all the data for each year will be created in a single layer.<br><br></span>
-
-
-
-
-<!-- Function arguments -->
-  <h3>Arguments</h3>
-<ul><span class="arg">
-
-    <li>
-	  <strong>#1</strong>: A luccME Model.
-    </li> 
-    
-  
-  </span></ul>
-
-
-
-
-
-
-
-<h3>Usage</h3>
-<pre class="example"><code><span class="function">saveSingleTheme</span>(<span class="id">luccMeModel</span>)</code></pre>
-
-
-
-
-</dd>
-
-
-						    	
-							
-						</dl>
 					
 
 					

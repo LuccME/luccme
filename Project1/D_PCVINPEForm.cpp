@@ -145,7 +145,7 @@ System::Void LuccME::D_PCVINPEForm::bSalvar_Click(System::Object ^ sender, Syste
 				if (j != 1) {
 					temp += ",";
 				}
-				temp += dgDemand->Rows[i]->Cells[j]->Value;
+				temp += dgDemand->Rows[i]->Cells[j]->Value->ToString()->Replace(",", ".");
 			}
 		}
 		if (i + 1 < dgDemand->RowCount) {

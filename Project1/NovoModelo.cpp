@@ -6894,6 +6894,22 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			sw->WriteLine("\t\tproject = \"t3mp.tview\",");
 			sw->WriteLine("\t\tlayer = \"layer\"");
 			sw->WriteLine("}");
+			sw->WriteLine("");
+			sw->WriteLine("if (cs.cells[1].row == nil) then");
+			sw->WriteLine("\tif (cs.cells[1].ROW ~= nil) then");
+			sw->WriteLine("\t\tcs = CellularSpace {");
+			sw->WriteLine("\t\t\tproject = \"t3mp.tview\",");
+			sw->WriteLine("\t\t\tlayer = \"layer\",");
+			sw->WriteLine("\t\t\txy = {\"COL\",\"ROW\"}");
+			sw->WriteLine("\t\t}");
+			sw->WriteLine("\telseif (cs.cells[1].Row ~= nil) then");
+			sw->WriteLine("\t\tcs = CellularSpace {");
+			sw->WriteLine("\t\t\tproject = \"t3mp.tview\",");
+			sw->WriteLine("\t\t\tlayer = \"layer\",");
+			sw->WriteLine("\t\t\txy = {\"Col\",\"Row\"}");
+			sw->WriteLine("\t\t}");
+			sw->WriteLine("\tend");
+			sw->WriteLine("end");
 		}
 
 		sw->WriteLine("");

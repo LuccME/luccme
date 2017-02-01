@@ -1549,6 +1549,7 @@ namespace LuccME {
 			this->tScenariosStartTime->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->tScenariosStartTime->Visible = false;
 			this->tScenariosStartTime->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			this->tScenariosStartTime->Leave += gcnew System::EventHandler(this, &NovoModelo::validateDate);
 			// 
 			// lScenariosStartTime
 			// 
@@ -1995,5 +1996,7 @@ namespace LuccME {
 	private: System::Void tModelName_Leave(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bShape_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bScenario_Click(System::Object^  sender, System::EventArgs^  e);
-	};
+	private: System::Void LuccME::NovoModelo::checkScenarioDynamicVariableDates();
+	private: System::Void validateDate(System::Object^  sender, System::EventArgs^  e);
+};
 }

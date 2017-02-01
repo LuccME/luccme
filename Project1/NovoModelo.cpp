@@ -2210,34 +2210,7 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 	}
 
 	if (tNovoModelo->SelectedIndex == ADVRES) {
-		int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
-		int tempTime = Convert::ToInt16(tStartTime->Text);
-
-		if (gDynTime != time) {
-			lDynamicConfirm->Text = "";
-		}
-		
-		lvYearsDynamic->Clear();
-		lvYearsDynamic->View = View::Details;
-		lvYearsDynamic->GridLines = true;
-		lvYearsDynamic->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
-
-		lvYearScenario->Clear();
-		lvYearScenario->View = View::Details;
-		lvYearScenario->GridLines = true;
-		lvYearScenario->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
-
-		for (int i = 0; i <= time; i++) {
-			lvYearsDynamic->Items->Add(Convert::ToString(tempTime + i));
-			lvYearScenario->Items->Add(Convert::ToString(tempTime + i));
-		}
-
-		if (shape && cScenario->Checked == true) {
-			lScenarioYears->Visible = true;
-			lvYearScenario->Visible = true;
-			bScenario->Visible = true;
-			lScenarioYearsConfirm->Visible = true;
-		}
+		checkScenarioDynamicVariableDates();
 	}
 	
 	if (tNovoModelo->SelectedIndex == VALIDATION) {
@@ -2405,11 +2378,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 	}
 
 	else if (cScenario->Checked == true) {
-		if (cDynamicVariables->Checked == false) {
-			MessageBox::Show(gSCheckDyn, gSCheckDynTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
-			checked = false;
-		}
-		else if (tScenarioName->Text == "") {
+		if (tScenarioName->Text == "") {
 			MessageBox::Show(gSScenName, gSScenNameTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 			checked = false;
 		}
@@ -2586,12 +2555,20 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t},");
 				}
 
-				if (cDynamicVariables->Checked == true) {
+				if (cDynamicVariables->Checked == true || cScenario->Checked == true) {
 					sw->WriteLine();
 					sw->WriteLine("\t-----------------------------------------------------");
 					sw->WriteLine("\t-- Dynamic variables definition                    --");
 					sw->WriteLine("\t-----------------------------------------------------");
-					sw->WriteLine("\tupdateYears = {" + lDynamicConfirm->Text + "},");
+					if (cDynamicVariables->Checked == true && cScenario->Checked == false) {
+						sw->WriteLine("\tupdateYears = {" + lDynamicConfirm->Text + "},");
+					}
+					else if (cDynamicVariables->Checked == false && cScenario->Checked == true) {
+						sw->WriteLine("\tupdateYears = {" + lScenarioYearsConfirm->Text + "},");
+					}
+					else if (cDynamicVariables->Checked == true && cScenario->Checked == true) {
+						sw->WriteLine("\tupdateYears = {" + lDynamicConfirm->Text + ", " + lScenarioYearsConfirm->Text + "},");
+					}
 
 					if (cScenario->Checked == true) {
 						sw->WriteLine("\tscenarioStartTime = " + tScenariosStartTime->Text + ",");
@@ -4094,6 +4071,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						}
 
 						lScenarioYearsConfirm->Text = auxSYU->Substring(0, auxSYU->Length - 2);
+						lDynamicConfirm->Text = lDynamicConfirm->Text->Replace(", " + lScenarioYearsConfirm->Text, "");
+						lDynamicConfirm->Text = lDynamicConfirm->Text->Replace(lScenarioYearsConfirm->Text, "");
+						if (lDynamicConfirm->Text == "") {
+							cDynamicVariables->Checked = false;
+						}
 					}
 				}
 
@@ -7313,5 +7295,52 @@ System::Void LuccME::NovoModelo::bScenario_Click(System::Object^  sender, System
 	}
 	if (lScenarioYearsConfirm->Text != "") {
 		lScenarioYearsConfirm->Text = lScenarioYearsConfirm->Text->Substring(0, lScenarioYearsConfirm->Text->Length - 2);
+	}
+}
+
+System::Void LuccME::NovoModelo::validateDate(System::Object^  sender, System::EventArgs^  e)
+{
+	checkScenarioDynamicVariableDates();
+}
+
+System::Void LuccME::NovoModelo::checkScenarioDynamicVariableDates()
+{
+	int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+	int tempTime = Convert::ToInt16(tStartTime->Text);
+
+	if (gDynTime != time) {
+		lDynamicConfirm->Text = "";
+	}
+
+	lvYearsDynamic->Clear();
+	lvYearsDynamic->View = View::Details;
+	lvYearsDynamic->GridLines = true;
+	lvYearsDynamic->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
+
+	lvYearScenario->Clear();
+	lvYearScenario->View = View::Details;
+	lvYearScenario->GridLines = true;
+	lvYearScenario->Columns->Add(gSAnos, lvYearsDynamic->Width - 22, HorizontalAlignment::Center);
+
+	if (tScenariosStartTime->ForeColor != System::Drawing::Color::Black) {
+		for (int i = 0; i <= time; i++) {
+			lvYearsDynamic->Items->Add(Convert::ToString(tempTime + i));
+			lvYearScenario->Items->Add(Convert::ToString(tempTime + i));
+		}
+	}
+	else {
+		for (int i = tempTime; i < Convert::ToInt16(tScenariosStartTime->Text); i++) {
+			lvYearsDynamic->Items->Add(Convert::ToString(i));
+		}
+		for (int i = Convert::ToInt16(tScenariosStartTime->Text); i <= Convert::ToInt16(tEndTime->Text); i++) {
+			lvYearScenario->Items->Add(Convert::ToString(i));
+		}
+	}
+
+	if (shape && cScenario->Checked == true) {
+		lScenarioYears->Visible = true;
+		lvYearScenario->Visible = true;
+		bScenario->Visible = true;
+		lScenarioYearsConfirm->Visible = true;
 	}
 }

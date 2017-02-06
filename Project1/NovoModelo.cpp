@@ -6843,14 +6843,17 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("");
 
 		if (shape) {
+			sw->WriteLine("-- CREATING PROJECT --");
 			sw->WriteLine("import(\"terralib\")");
+			sw->WriteLine("");
 			sw->WriteLine("proj = Project{");
 			sw->WriteLine("\tfile = \"t3mp.tview\",");
 			sw->WriteLine("\tclean = true");
 			sw->WriteLine("}");
+			sw->WriteLine("");
 			sw->WriteLine("l1 = Layer{");
 			sw->WriteLine("\tproject = proj,");
-			sw->WriteLine("name = \"layer\",");
+			sw->WriteLine("\tname = \"layer\",");
 
 			String^ aux = tbSelectedBatabase->Lines[1]->ToString();
 			int i = aux->Length - 1;
@@ -6863,11 +6866,13 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				i--;
 			}
 
-			sw->WriteLine("file = \"" + aux->Replace("\\", "\\\\") + "\\\\" + tInputThemeName->Text->Replace(".shp", "") + ".shp\"");
+			sw->WriteLine("\tfile = \"" + aux->Replace("\\", "\\\\") + "\\\\" + tInputThemeName->Text->Replace(".shp", "") + ".shp\"");
 			sw->WriteLine("}");
 		}
 		
 		//Input parameters
+		sw->WriteLine("");
+		sw->WriteLine("-- VALIDATION CODE --");
 		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
 		if (cValidationSave->Checked) {
 			sw->WriteLine("flag_save = true");
@@ -6923,12 +6928,12 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			case 0:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
-					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
 				}
 				else {
-					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
 				}
-				sw->WriteLine("output_theme = \"validation_ext_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text +"_\"");
+				sw->WriteLine("output_theme = \"" + tInputThemeName->Text + "_" +tAttributeInitValidation->Text->ToLower() + "_ext_result\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"sim\"");
 				sw->WriteLine("attribute2 = \"diff\"");
@@ -6996,6 +7001,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("file:write(\"======================================================\")");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\")");
+				
 				if (gAllocationComponent > NUMDISCALLOCCOMP) {
 					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
@@ -7006,9 +7012,13 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
-				sw->WriteLine("file:write(\"layer\t\t : \", input_theme_name)");
-				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine("print(\"layer\t\t : \", input_theme_name)");
+				
+				if (!shape) {
+					sw->WriteLine("file:write(\"layer\t\t : \", input_theme_name)");
+					sw->WriteLine("file:write(\"\\n\")");
+					sw->WriteLine("print(\"layer\t\t : \", input_theme_name)");
+				}
+
 				sw->WriteLine("file:write(\"attr REAL initial:\", init_real)");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
@@ -7063,12 +7073,12 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			case 1:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
-					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
 				}
 				else {
-					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
 				}
-				sw->WriteLine("output_theme = \"validation_diff_" + tInputThemeName->Text + "_" + tAttributeForValidation->Text + "_\"");
+				sw->WriteLine("output_theme = \"" + tInputThemeName->Text + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result\"");
 				sw->WriteLine("");
 				sw->WriteLine("attribute1 = \"diff_sim\"");
 				sw->WriteLine("attribute2 = \"diff_real\"");
@@ -7136,6 +7146,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("file:write(\"======================================================\")");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"======================================================\")");
+				
 				if (gAllocationComponent > NUMDISCALLOCCOMP) {
 					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
@@ -7146,9 +7157,13 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("file:write(\"\\n\")");
 					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
 				}
-				sw->WriteLine("file:write(\"layer\t\t : \", input_theme_name)");
-				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine("print(\"layer\t\t : \", input_theme_name)");
+				
+				if (!shape) {
+					sw->WriteLine("file:write(\"layer\t\t : \", input_theme_name)");
+					sw->WriteLine("file:write(\"\\n\")");
+					sw->WriteLine("print(\"layer\t\t : \", input_theme_name)");
+				}
+
 				sw->WriteLine("file:write(\"attr REAL initial:\", init_real)");
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine("print(\"attr REAL initial:\", init_real)");
@@ -7185,6 +7200,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\t\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\t\telse");
 				sw->WriteLine("\t\t\tfile:write(i..\"\\t\",\"0.00 %\")");
+				sw->WriteLine("\t\t\tfile:write(\"\\n\")");
 				sw->WriteLine("\t\t\tprint(i, \"0.00 %\")");
 				sw->WriteLine("\t\tend");
 				sw->WriteLine("\tend");

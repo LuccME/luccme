@@ -138,6 +138,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Text = "Save into Database";
 		bValidate->Text = "Validate";
 		cSaveValidationFile->Text = "Save Validation Script";
+		lValidationRegion->Text = "Region for Validation";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -337,6 +338,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Text = "Salvar no Banco de Dados";
 		bValidate->Text = "Validar";
 		cSaveValidationFile->Text = "Salvar os Scripts de Validação";
+		lValidationRegion->Text = "Região para Validação";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";
@@ -2263,6 +2265,15 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		
 		if (runnable == true) {
 			bValidate->Visible = true;
+		}
+
+		if (gPotentialRegression > 1) {
+			lValidationRegion->Visible = true;
+			tValidationRegion->Visible = true;
+		}
+		else {
+			lValidationRegion->Visible = false;
+			tValidationRegion->Visible = false;
 		}
 	}
 }
@@ -6887,6 +6898,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
 		sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
 		sw->WriteLine("");
+		
+		if (gPotentialRegression > 1) {
+			sw->WriteLine("selectedRegion = " + tValidationRegion->Text);
+			sw->WriteLine("");
+		}
 
 		if (!shape) {
 			sw->WriteLine("cs = CellularSpace {");
@@ -6928,10 +6944,20 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			case 0:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
-					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					if (gPotentialRegression == 1) {
+						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					}
+					else {
+						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_ext_result.txt\", \"w\")\n");
+					}
 				}
 				else {
-					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					if (gPotentialRegression == 1) {
+						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					}
+					else {
+						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_ext_result.txt\", \"w\")\n");
+					}
 				}
 				sw->WriteLine("output_theme = \"" + tInputThemeName->Text + "_" +tAttributeInitValidation->Text->ToLower() + "_ext_result\"");
 				sw->WriteLine("");
@@ -6962,6 +6988,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tsumcc1 = 0");
 				sw->WriteLine("\t\tsumcc2 = 0");
 				sw->WriteLine("");
+				
+				if (gPotentialRegression > 1) {
+					sw->WriteLine("\t\tif (cell.region == selectedRegion) then");
+				}
+				
 				sw->WriteLine("\t\tif cell.flag == 0 then");
 				sw->WriteLine("\t\t\tfor xx = 0, (window - 1) do");
 				sw->WriteLine("\t\t\t\tfor yy = 0,(window - 1) do");
@@ -6993,6 +7024,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("\t\t\treturn true");
 				sw->WriteLine("\t\tend");
+				
+				if (gPotentialRegression > 1) {
+					sw->WriteLine("\t\tend");
+				}
+				
 				sw->WriteLine("\tend)");
 				sw->WriteLine("");
 				sw->WriteLine("\treturn count, diff, sum");
@@ -7073,10 +7109,20 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			case 1:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
-					sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					if (gPotentialRegression == 1) {
+						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					}
+					else {
+						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_diff_result.txt\", \"w\")\n");
+					}
 				}
 				else {
-					sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					if (gPotentialRegression == 1) {
+						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					}
+					else {
+						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_diff_result.txt\", \"w\")\n");
+					}
 				}
 				sw->WriteLine("output_theme = \"" + tInputThemeName->Text + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result\"");
 				sw->WriteLine("");
@@ -7107,6 +7153,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tsumcc1 = 0");
 				sw->WriteLine("\t\tsumcc2 = 0");
 				sw->WriteLine("");
+				
+				if (gPotentialRegression > 1) {
+					sw->WriteLine("\t\tif (cell.region == selectedRegion) then");
+				}
+				
 				sw->WriteLine("\t\tif cell.flag == 0 then");
 				sw->WriteLine("\t\t\tfor xx = 0, (window - 1) do");
 				sw->WriteLine("\t\t\t\tfor yy = 0, (window - 1) do");
@@ -7138,6 +7189,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("\t\t\treturn true");
 				sw->WriteLine("\t\tend");
+
+				if (gPotentialRegression > 1) {
+					sw->WriteLine("\t\tend");
+				}
+
 				sw->WriteLine("\tend)");
 				sw->WriteLine("");
 				sw->WriteLine("\treturn count * window * window, diff, sum");

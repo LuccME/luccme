@@ -153,7 +153,10 @@ namespace LuccME {
 		String^ lLanguage;
 		
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
-		//[0] = lSelectedFolder->Text;
+private: System::Windows::Forms::TextBox^  tValidationRegion;
+public:
+private: System::Windows::Forms::Label^  lValidationRegion;
+		 //[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
 		//[2] = tStartTime->Text;
 		//[3] = tEndTime->Text;
@@ -456,6 +459,8 @@ namespace LuccME {
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->lValidationRegion = (gcnew System::Windows::Forms::Label());
+			this->tValidationRegion = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -1647,6 +1652,8 @@ namespace LuccME {
 			// 
 			// tabValidation
 			// 
+			this->tabValidation->Controls->Add(this->tValidationRegion);
+			this->tabValidation->Controls->Add(this->lValidationRegion);
 			this->tabValidation->Controls->Add(this->lRangeHelp);
 			this->tabValidation->Controls->Add(this->cbValidationMethod);
 			this->tabValidation->Controls->Add(this->cSaveValidationFile);
@@ -1910,6 +1917,31 @@ namespace LuccME {
 			this->statusStrip1->Size = System::Drawing::Size(745, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
+			// 
+			// lValidationRegion
+			// 
+			this->lValidationRegion->AutoSize = true;
+			this->lValidationRegion->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lValidationRegion->Location = System::Drawing::Point(502, 382);
+			this->lValidationRegion->Name = L"lValidationRegion";
+			this->lValidationRegion->Size = System::Drawing::Size(182, 23);
+			this->lValidationRegion->TabIndex = 121;
+			this->lValidationRegion->Text = L"Região para Validação";
+			this->lValidationRegion->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lValidationRegion->Visible = false;
+			// 
+			// tValidationRegion
+			// 
+			this->tValidationRegion->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tValidationRegion->Location = System::Drawing::Point(561, 405);
+			this->tValidationRegion->Name = L"tValidationRegion";
+			this->tValidationRegion->Size = System::Drawing::Size(53, 20);
+			this->tValidationRegion->TabIndex = 122;
+			this->tValidationRegion->Text = L"1";
+			this->tValidationRegion->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tValidationRegion->Visible = false;
+			this->tValidationRegion->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// NovoModelo
 			// 

@@ -1,2 +1,0 @@
-LuccME version: 2.1
-(release date XX/XX/2015)

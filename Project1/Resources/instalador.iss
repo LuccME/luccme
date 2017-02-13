@@ -8,7 +8,6 @@
 AppId={{1F80FBB1-2C18-4FC0-85FB-E82346A23938}
 AppName=LuccME
 AppVersion=2.2.1.3
-;AppVerName=LuccME 1.0.2.1
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
 AppSupportURL=http://luccme.ccst.inpe.br/
@@ -17,10 +16,10 @@ DefaultDirName=C:\LuccME
 DisableDirPage=yes
 DefaultGroupName=LuccME
 DisableProgramGroupPage=yes
-LicenseFile=D:\_SVN\LuccME\branches\Project1\Project1\Resources\comment.txt
+LicenseFile=D:\_SVN\LuccME\branches\Interface2.0\Project1\Resources\comment.txt
 OutputDir=D:\Diego Melo\Desktop
 OutputBaseFilename=LuccME_2.2.1.3
-SetupIconFile=D:\_SVN\LuccME\branches\Project1\Project1\Resources\icon.ico
+SetupIconFile=D:\_SVN\LuccME\branches\Interface2.0\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes
 UninstallFilesDir=C:\LuccME
@@ -35,8 +34,8 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\_SVN\LuccME\branches\Project1\Release\LuccME.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
-Source: "D:\_SVN\LuccME\branches\Project1\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "D:\_SVN\LuccME\branches\Interface2.0\Release\LuccME.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
+Source: "D:\_SVN\LuccME\branches\Interface2.0\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -46,4 +45,3 @@ Name: "{commondesktop}\LuccME"; Filename: "C:\LuccME\LuccME.exe"; Tasks: desktop
 
 [Registry]
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "TME_PATH_1_3_1"; ValueData: "C:\LuccME\TerraME"; Flags: uninsdeletevalue
-;Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};C:\LuccME\TerraME";

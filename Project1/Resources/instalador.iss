@@ -16,10 +16,10 @@ DefaultDirName=C:\LuccME
 DisableDirPage=yes
 DefaultGroupName=LuccME
 DisableProgramGroupPage=yes
-LicenseFile=D:\_SVN\LuccME\branches\Project2\Project1\Resources\comment.txt
+LicenseFile=D:\_SVN\LuccME\branches\Interface3.0\Project1\Resources\comment.txt
 OutputDir=D:\Diego Melo\Desktop
 OutputBaseFilename=LuccME_3.0.2.8
-SetupIconFile=D:\_SVN\LuccME\branches\Project2\Project1\Resources\icon.ico
+SetupIconFile=D:\_SVN\LuccME\branches\Interface3.0\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes
 UninstallFilesDir=C:\LuccME
@@ -34,8 +34,8 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "D:\_SVN\LuccME\branches\Project2\Release\LuccME 3.0.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
-Source: "D:\_SVN\LuccME\branches\Project2\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "D:\_SVN\LuccME\branches\Interface3.0\Release\LuccME 3.0.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
+Source: "D:\_SVN\LuccME\branches\Interface3.0\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

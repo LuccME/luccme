@@ -37,6 +37,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		lCellSpaceResolution->Text = "Resolution";
 		
 		//tpAttributeFill
+		tpAttributeFill->Text = "Attributes to Fill";
 		bDeleteAttribute->Text = "Remove";
 		lOperationName->Text = "Select an Operation";
 		lOperationOut->Text = "Output Attribute";
@@ -71,6 +72,12 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSLimitFileAddressTitle = "Error - Limit File is missing";
 		gSLimitFileAddress2 = "Limit File is not supported: ";
 		gSLimitFileAddress2Title = "Error - Limit File is not supported";
+		gSAOMissing = "All Attributes Operations must be defined in Attributes to Fill.";
+		gSAOMissingTitle = "Error - Missing Attributes Operation";
+		gSCellSpaceName = "Cellular Space Name not defined in Creating Cellular Space.";
+		gSCellSpaceNameTitle = "Error - Cellular Space Name is missing";
+		gSCellSpaceResolution = "Cellular Space Resolution not defined in Creating Cellular Space.";
+		gSCellSpaceResolutionTitle = "Error - Cellular Space Resolution is missing";
 	}
 	else {
 		this->Text = "Criando um Novo Script";
@@ -91,6 +98,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		lCellSpaceResolution->Text = "Resolução";
 
 		//tpAttributeFill
+		tpAttributeFill->Text = "Atributos de Preenchimento";
 		bDeleteAttribute->Text = "Remover";
 		lOperationName->Text = "Selecione uma Operação";
 		lOperationOut->Text = "Atributo de Saída";
@@ -125,6 +133,12 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSLimitFileAddressTitle = "Erro - Arquivo de Limite não definido";
 		gSLimitFileAddress2 = "Arquivo de limite não suportado: ";
 		gSLimitFileAddress2Title = "Error - Arquivo de Limite não suportado";
+		gSAOMissing = "Todos os atributos devem ter suas operações definidas em Atributos de Preenchimento.";
+		gSAOMissingTitle = "Erro - Operações de Atributos não definida";
+		gSCellSpaceName = "Nome do Espaço Celular não definido em Criando o Espaço Celular.";
+		gSCellSpaceNameTitle = "Erro - Nome do Espaço Celular não definido";
+		gSCellSpaceResolution = "Resolução do Espaço Celular não definido em Criando o Espaço Celular.";
+		gSCellSpaceResolutionTitle = "Erro - Resolução do Espaço Celular não definida";
 	}
 }
 
@@ -334,6 +348,9 @@ System::Int32 CellFulfill::NovoModelo::rasterOperationToindex(String^ operation)
 	}
 }
 
+/*
+Visual Effect on TextBox Components
+*/
 System::Void CellFulfill::NovoModelo::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	//Create the efect of a edited TextBox (must select this function on focus->enter property of a TextBox)
@@ -841,7 +858,7 @@ System::Void CellFulfill::NovoModelo::bAddAttribute_Click(System::Object^  sende
 System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	int attributeIndex = attributeToindex();
-	if (cbOperation->SelectedItem != "") {
+	if (cbOperation->SelectedItem != "" && tOperationOut->Text != "") {
 		array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[attributeIndex]);
 		if (attributeToList[AS_ATTRIBUTE]->Contains(".shp")) {
 			switch (cbOperation->SelectedIndex)
@@ -976,9 +993,27 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 		checked = false;
 	}
 
-	else if (lLimitFileAddress->Text->Contains(".shp") || lLimitFileAddress->Text->Contains(".tif")) {
+	else if (!(lLimitFileAddress->Text->Contains(".shp") || lLimitFileAddress->Text->Contains(".tif"))) {
 		MessageBox::Show(gSLimitFileAddress2, gSLimitFileAddress2Title, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
+	}
+
+	else if (tCellSpaceName->Text == "") {
+		MessageBox::Show(gSCellSpaceName, gSCellSpaceNameTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
+	else if (tCellSpaceResolution->Text == "") {
+		MessageBox::Show(gSCellSpaceResolution, gSCellSpaceResolutionTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+		checked = false;
+	}
+
+	for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
+		if (lvAttributesToFill->Items[i]->SubItems->Count <= 1) {
+			MessageBox::Show(gSAOMissing, gSAOMissingTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+			checked = false;
+			break;
+		}
 	}
 
 	if (checked) {
@@ -1156,7 +1191,27 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 
 System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System::EventArgs^  e)
 {
+	Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin");
+	Environment::SetEnvironmentVariable("PATH", "C:\\Luccme\\Terrame\\bin");
 
+	String^ arguments = "";
+
+	if (lSelectedFolder->Text[lSelectedFolder->Text->Length - 1] != '\\') {
+		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + "\\\\" + tScriptName->Text->ToLower() + ".lua\"";
+	}
+	else {
+		arguments = "\"" + lSelectedFolder->Text->Replace("\\", "\\\\") + tScriptName->Text->ToLower() + ".lua\"";
+	}
+
+	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
+	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->Arguments = arguments;
+	cmd->Start();
+	cmd->WaitForExit();
+	cmd->Close();
+
+	cmd = gcnew System::Diagnostics::Process;
+	arguments = "";
 }
 
 System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, System::EventArgs^  e)

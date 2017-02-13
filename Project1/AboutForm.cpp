@@ -5,22 +5,28 @@ System::Void CellFulfill::AboutForm::AboutForm_Load(System::Object ^ sender, Sys
 {
 	if (lLanguage == "en") {
 		this->Text = "About";
-		lProgram->Text = "CellFulfill Model Manager";
-		lCompatible->Text = "Compatible with CellFulfill";
-		lVersion->Text = "Version 2.8";
-		lCopyright->Text = "Copyright © 2016. All rigths reserved.";
+		lProgram->Text = "CellFill Scripts Manager";
+		lCompatible->Text = "Compatible with LuccME 3.0";
+		lVersion->Text = "Version 1.0";
+		lCopyright->Text = "Copyright © 2017. All rigths reserved.";
 	}
 	else {
 		this->Text = "Sobre";
-		lProgram->Text = "Gerenciador de Modelos CellFulfill";
-		lCompatible->Text = "Compatível com CellFulfill";
-		lVersion->Text = "Versão 2.8";
-		lCopyright->Text = "Copyright © 2016. Todos os direitos reservados.";
+		lProgram->Text = "Gerenciador de Scripts de Preenchimento de Célula";
+		lCompatible->Text = "Compatível com LuccME 3.0";
+		lVersion->Text = "Versão 1.0";
+		lCopyright->Text = "Copyright © 2017. Todos os direitos reservados.";
 	}
 }
 
 System::Void CellFulfill::AboutForm::linkLabel1_LinkClicked(System::Object ^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs ^ e)
 {
 	linkLabel1->LinkVisited = true;
-	System::Diagnostics::Process::Start("http://CellFulfill.ccst.inpe.br/");
+	System::Diagnostics::Process::Start("http://luccme.ccst.inpe.br/");
+}
+
+System::Void CellFulfill::AboutForm::linkLabel2_LinkClicked(System::Object ^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs ^ e)
+{
+	linkLabel2->LinkVisited = true;
+	System::Diagnostics::Process::Start("https://github.com/TerraME/terrame");
 }

@@ -36,10 +36,13 @@ namespace CellFulfill {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::PictureBox^  pbLogo1;
+
 	private: System::Windows::Forms::RadioButton^  rLBr;
 	private: System::Windows::Forms::RadioButton^  rLEn;
 	private: System::Windows::Forms::Button^  bSelectLanguage;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::PictureBox^  pbLogo2;
+	private: System::Windows::Forms::PictureBox^  pbLogo1;
 
 
 
@@ -60,22 +63,15 @@ namespace CellFulfill {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(LanguageForm::typeid));
-			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
 			this->rLBr = (gcnew System::Windows::Forms::RadioButton());
 			this->rLEn = (gcnew System::Windows::Forms::RadioButton());
 			this->bSelectLanguage = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->pbLogo2 = (gcnew System::Windows::Forms::PictureBox());
+			this->pbLogo1 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->SuspendLayout();
-			// 
-			// pbLogo1
-			// 
-			this->pbLogo1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbLogo1.Image")));
-			this->pbLogo1->Location = System::Drawing::Point(58, 12);
-			this->pbLogo1->Name = L"pbLogo1";
-			this->pbLogo1->Size = System::Drawing::Size(367, 134);
-			this->pbLogo1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pbLogo1->TabIndex = 13;
-			this->pbLogo1->TabStop = false;
 			// 
 			// rLBr
 			// 
@@ -111,20 +107,54 @@ namespace CellFulfill {
 			this->bSelectLanguage->UseVisualStyleBackColor = true;
 			this->bSelectLanguage->Click += gcnew System::EventHandler(this, &LanguageForm::bSelectLanguage_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(133, 63);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(27, 26);
+			this->label1->TabIndex = 67;
+			this->label1->Text = L"&&";
+			// 
+			// pbLogo2
+			// 
+			this->pbLogo2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbLogo2.Image")));
+			this->pbLogo2->Location = System::Drawing::Point(2, 9);
+			this->pbLogo2->Name = L"pbLogo2";
+			this->pbLogo2->Size = System::Drawing::Size(136, 134);
+			this->pbLogo2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pbLogo2->TabIndex = 66;
+			this->pbLogo2->TabStop = false;
+			// 
+			// pbLogo1
+			// 
+			this->pbLogo1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbLogo1.Image")));
+			this->pbLogo1->Location = System::Drawing::Point(133, 9);
+			this->pbLogo1->Name = L"pbLogo1";
+			this->pbLogo1->Size = System::Drawing::Size(337, 134);
+			this->pbLogo1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pbLogo1->TabIndex = 65;
+			this->pbLogo1->TabStop = false;
+			// 
 			// LanguageForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoScroll = true;
 			this->ClientSize = System::Drawing::Size(471, 352);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->pbLogo2);
+			this->Controls->Add(this->pbLogo1);
 			this->Controls->Add(this->bSelectLanguage);
 			this->Controls->Add(this->rLEn);
 			this->Controls->Add(this->rLBr);
-			this->Controls->Add(this->pbLogo1);
 			this->Name = L"LanguageForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Seleção de Idioma";
 			this->Shown += gcnew System::EventHandler(this, &LanguageForm::LanguageForm_Shown);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();

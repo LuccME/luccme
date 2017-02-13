@@ -43,6 +43,12 @@ namespace CellFulfill {
 		String^ gSLimitFileAddressTitle = "";
 		String^ gSLimitFileAddress2 = "";
 		String^ gSLimitFileAddress2Title = "";
+		String^ gSAOMissing = "";
+		String^ gSAOMissingTitle = "";
+		String^ gSCellSpaceName = "";
+		String^ gSCellSpaceNameTitle = "";
+		String^ gSCellSpaceResolution = "";
+		String^ gSCellSpaceResolutionTitle = "";
 		
 		Collections::ArrayList^ attributeList = gcnew Collections::ArrayList();
 		array<String^>^ rasterList = gcnew array<String^>(7);

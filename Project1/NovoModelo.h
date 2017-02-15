@@ -109,7 +109,6 @@ namespace CellFulfill {
 	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  ajudaToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  cellFillToolStripMenuItem;
-
 	private: System::Windows::Forms::ToolStripMenuItem^  sobreToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  preferênciasToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  idiomaToolStripMenuItem;
@@ -121,7 +120,7 @@ namespace CellFulfill {
 	private: System::Windows::Forms::TextBox^  tOperationOut;
 	private: System::Windows::Forms::Label^  lOperationOut;
 	private: System::Windows::Forms::Label^  lOperationName;
-private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
+	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
 
 	public:
 		int lReturn;

@@ -168,7 +168,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSCellSpaceNameTitle = "Erro - Nome do Espaço Celular não definido";
 		gSCellSpaceResolution = "Resolução do Espaço Celular não definido em Criando o Espaço Celular.";
 		gSCellSpaceResolutionTitle = "Erro - Resolução do Espaço Celular não definida";
-		gSScriptLoad = "Selecione o Arquivo do Script.";
+		gSScriptLoad = "Selecione o Arquivo do Script";
 		gSScriptLoadTitle = "Importar Arquivo de Script";
 		gSLuaFile = "Arquivo Lua (*.lua)|*.lua";
 		gSEditing = "Editando um Script";

@@ -20,6 +20,17 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 	//Select Strings according to the selected language
 	if (lLanguage == "en") {
 		this->Text = "Creating a New Script";
+
+		//Menu
+		arquivoToolStripMenuItem->Text = "File";
+		novoToolStripMenuItem->Text = "New";
+		abrirToolStripMenuItem->Text = "Open";
+		sairToolStripMenuItem->Text = "Exit";
+		preferênciasToolStripMenuItem->Text = "Preferences";
+		idiomaToolStripMenuItem->Text = "Language";
+		ajudaToolStripMenuItem->Text = "Help";
+		sobreToolStripMenuItem->Text = "About";
+		cellFillToolStripMenuItem->Text = "Cell Fill";
 		
 		//tpScript
 		tpScript->Text = "Script Definition";
@@ -78,9 +89,27 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSCellSpaceNameTitle = "Error - Cellular Space Name is missing";
 		gSCellSpaceResolution = "Cellular Space Resolution not defined in Creating Cellular Space.";
 		gSCellSpaceResolutionTitle = "Error - Cellular Space Resolution is missing";
+		gSScriptLoad = "Select the Script File.";
+		gSScriptLoadTitle = "Script File to Import";
+		gSLuaFile = "Lua File(*.lua)|*.lua";
+		gSEditing = "Editing a Script";
+		gSImportError = "Incloplete file, can't import it.";
+		gSImportErrorTitle = "Error - Importing Files";
 	}
 	else {
 		this->Text = "Criando um Novo Script";
+
+		
+		// Menu
+		arquivoToolStripMenuItem->Text = "Arquivo";
+		novoToolStripMenuItem->Text = "Novo";
+		abrirToolStripMenuItem->Text = "Abrir";
+		sairToolStripMenuItem->Text = "Sair";
+		preferênciasToolStripMenuItem->Text = "Preferências";
+		idiomaToolStripMenuItem->Text = "Idioma";
+		ajudaToolStripMenuItem->Text = "Ajuda";
+		sobreToolStripMenuItem->Text = "Sobre";
+		cellFillToolStripMenuItem->Text = "Preenchimento";
 		
 		//tpScript
 		tpScript->Text = "Definições do Script";
@@ -139,9 +168,14 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSCellSpaceNameTitle = "Erro - Nome do Espaço Celular não definido";
 		gSCellSpaceResolution = "Resolução do Espaço Celular não definido em Criando o Espaço Celular.";
 		gSCellSpaceResolutionTitle = "Erro - Resolução do Espaço Celular não definida";
+		gSScriptLoad = "Selecione o Arquivo do Script.";
+		gSScriptLoadTitle = "Importar Arquivo de Script";
+		gSLuaFile = "Arquivo Lua (*.lua)|*.lua";
+		gSEditing = "Editando um Script";
+		gSImportError = "Arquivo incompleto, não pode ser carregado.";
+		gSImportErrorTitle = "Erro - Importando Arquivos";
 	}
 }
-
 
 /*
 Set the Operation VIsual OFF
@@ -1239,4 +1273,216 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 	vectorList[12] = "nearest";
 	
 	checkLanguage();
+
+	if (lOpen) {
+		try {
+			if (lvAttributesToFill->Columns->Count == NONE) {
+				lvAttributesToFill->Clear();
+				lvAttributesToFill->View = View::Details;
+				lvAttributesToFill->GridLines = true;
+				lvAttributesToFill->Columns->Add(gSAttributes, lvAttributesToFill->Width - 50, HorizontalAlignment::Left);
+				lvAttributesToFill->Columns->Add("Status", 47, HorizontalAlignment::Center);
+			}
+
+			CellFulfill::OpenFileDialog^ scriptFile = gcnew OpenFileDialog;
+			scriptFile->Title = gSScriptLoad;
+			scriptFile->Multiselect = false;
+			scriptFile->Filter = gSLuaFile;
+			scriptFile->FilterIndex = 1;
+			scriptFile->ShowHelp = true;
+
+			bool fileOK = false;
+
+			if (scriptFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				String^ fileName = scriptFile->FileName;
+				System::IO::StreamReader^ sw = gcnew System::IO::StreamReader(fileName);
+
+				String^ line = sw->ReadLine();
+
+				// Set Script Definition
+				int lastSlash = 0;
+				for (int i = 0; i < fileName->Length; i++) {
+					if (fileName[i] == '\\') {
+						lastSlash = i + 1;
+					}
+				}
+
+				tScriptName->Text = fileName->Substring(lastSlash, fileName->Length - (lastSlash + EXTENSION));
+				tScriptName->ForeColor = System::Drawing::Color::Black;
+				lSelectedFolder->Text = fileName->Substring(0, lastSlash - 1);
+
+				// Get the attributes address
+				while (sw->EndOfStream == false) {
+					if (line->Contains("local cs = Layer{") != TRUE) {
+						if (line->Contains("file = ") && !line->Contains("t3mp.tview")) {
+							line = line->Replace("\\\\", "\\");
+							line = line->Replace("file = ", "");
+							line = line->Replace("\t", "");
+							line = line->Replace("\"", "");
+
+							array<String^>^ dataTemp = { line, "", "", "", "", "" };
+							attributeList->Add(dataTemp);
+
+							int lastSlash = 0;
+							for (int i = 0; i < line->Length; i++) {
+								if (line[i] == '\\') {
+									lastSlash = i + 1;
+								}
+							}
+
+							lvAttributesToFill->Items->Add(line->Substring(lastSlash, line->Length - lastSlash));
+						}
+						line = sw->ReadLine();
+					}
+					else {
+						fileOK = true;
+						break;
+					}
+				}
+
+				// Remove the limit shape file from the attribute list and set the address
+				if (lvAttributesToFill->Items->Count > NONE) {
+					array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[0]);
+					lLimitFileAddress->Text = dataTemp[0];	//Address set
+					lvAttributesToFill->Items->RemoveAt(0);
+					attributeList->RemoveAt(0);
+				}
+
+				sw->Close();
+				sw = gcnew System::IO::StreamReader(fileName);
+				fileOK = false;
+
+				bool csResolutionFound = false;
+				bool csFileFound = false;
+
+				line = sw->ReadLine();
+
+				// Get Cellular Space Information
+				while (sw->EndOfStream == false) {
+					if (line->Contains("local cs = Layer{") != TRUE) {
+						line = sw->ReadLine();
+					}
+					else {
+						while (sw->EndOfStream == false) {
+							if (line->Contains("resolution")) {
+								line = line->Replace("\t", "");
+								line = line->Replace("resolution = ", "");
+								line = line->Replace(",", "");
+
+								tCellSpaceResolution->Text = line;
+								tCellSpaceResolution->ForeColor = System::Drawing::Color::Black;
+								csResolutionFound = true;
+							}
+
+							if (line->Contains("file")) {
+								line = line->Replace("\t", "");
+								line = line->Replace("file = ", "");
+								line = line->Replace(",", "");
+								line = line->Replace("\"", "");
+
+								tCellSpaceName->Text = line->Substring(0, line->Length - EXTENSION);
+								tCellSpaceName->ForeColor = System::Drawing::Color::Black;
+								csFileFound = true;
+							}
+
+							if (csFileFound && csResolutionFound) {
+								fileOK = true;
+								break;
+							}
+
+							line = sw->ReadLine();
+						}
+					}
+
+					if (csFileFound && csResolutionFound) {
+						break;
+					}
+				}
+
+				sw->Close();
+				sw = gcnew System::IO::StreamReader(fileName);
+				fileOK = false;
+
+				line = sw->ReadLine();
+
+				while (sw->EndOfStream == false) {
+					if (line->Contains("cs:fill{") != TRUE) {
+						line = sw->ReadLine();
+					}
+					else {
+						break;
+					}
+				}
+
+				line = sw->ReadLine();
+				for (int i = 0; i < attributeList->Count; i++) {
+					while (sw->EndOfStream == false) {
+						if (line->Contains("cs:fill{") != TRUE) {
+							array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[i]);
+							if (line->Contains("operation = ")) {
+								line = line->Replace("operation = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_OPERATION] = line;
+							}
+							else if (line->Contains("attribute = ")) {
+								line = line->Replace("attribute = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_OUTPUT] = line;
+							}
+							else if (line->Contains("select = ")) {
+								line = line->Replace("select = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_SELECT] = line;
+							}
+							else if (line->Contains("area = ")) {
+								dataTemp[AS_AREA] = "true";
+							}
+							else if (line->Contains("default = ")) {
+								line = line->Replace("default = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_DEFAULT] = line;
+							}
+
+							line = sw->ReadLine();
+						}
+						else {
+							lvAttributesToFill->Items[i]->SubItems->Add("OK");
+							line = sw->ReadLine();
+							break;
+						}
+					}
+
+					if ((i + 1) == attributeList->Count) {
+						lvAttributesToFill->Items[i]->SubItems->Add("OK");
+						fileOK = true;
+					}
+				}
+				sw->Close();
+			}
+
+			if (fileOK) {
+				lRunScript->Visible = true;
+				bRun->Visible = true;
+				runnable = true;
+				checkLanguage();
+				this->Text = gSEditing;
+			}
+		}
+		catch (Exception^ e) {
+			if (e->GetType()->ToString() == "System.IndexOutOfRangeException") {
+				MessageBox::Show(gSImportError, gSImportErrorTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+				closing = true;
+				this->Close();
+			}
+		}
+	}
 }

@@ -49,10 +49,16 @@ namespace CellFulfill {
 		String^ gSCellSpaceNameTitle = "";
 		String^ gSCellSpaceResolution = "";
 		String^ gSCellSpaceResolutionTitle = "";
+		String^ gSScriptLoad = "";
+		String^ gSScriptLoadTitle = "";
+		String^ gSLuaFile = "";
+		String^ gSEditing = "";
+		String^ gSImportError = "";
+		String^ gSImportErrorTitle = "";
 		
 		Collections::ArrayList^ attributeList = gcnew Collections::ArrayList();
-		array<String^>^ rasterList = gcnew array<String^>(7);
-		array<String^>^ vectorList = gcnew array<String^>(13);
+		array<String^>^ rasterList = gcnew array<String^>(RASTERLIST);
+		array<String^>^ vectorList = gcnew array<String^>(VECTORLIST);
 
 	public:
 		bool closing = false;
@@ -102,7 +108,8 @@ namespace CellFulfill {
 	private: System::Windows::Forms::ToolStripMenuItem^  novoToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  ajudaToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  CellFulfillToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  cellFillToolStripMenuItem;
+
 	private: System::Windows::Forms::ToolStripMenuItem^  sobreToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  preferênciasToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  idiomaToolStripMenuItem;
@@ -114,6 +121,7 @@ namespace CellFulfill {
 	private: System::Windows::Forms::TextBox^  tOperationOut;
 	private: System::Windows::Forms::Label^  lOperationOut;
 	private: System::Windows::Forms::Label^  lOperationName;
+private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
 
 	public:
 		int lReturn;
@@ -163,9 +171,10 @@ namespace CellFulfill {
 			this->preferênciasToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->idiomaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->ajudaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->CellFulfillToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->cellFillToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sobreToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->toolStripStatusLabel1 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tpScript = (gcnew System::Windows::Forms::TabPage());
 			this->lScriptDefinition = (gcnew System::Windows::Forms::Label());
@@ -184,6 +193,7 @@ namespace CellFulfill {
 			this->bShape = (gcnew System::Windows::Forms::Button());
 			this->lLimitFile = (gcnew System::Windows::Forms::Label());
 			this->tpAttributeFill = (gcnew System::Windows::Forms::TabPage());
+			this->lOperationName = (gcnew System::Windows::Forms::Label());
 			this->tSelectedAttribute = (gcnew System::Windows::Forms::TextBox());
 			this->bSaveOperation = (gcnew System::Windows::Forms::Button());
 			this->tDefaultOperation = (gcnew System::Windows::Forms::TextBox());
@@ -191,6 +201,8 @@ namespace CellFulfill {
 			this->rbTrueOperation = (gcnew System::Windows::Forms::RadioButton());
 			this->rbFalseOperation = (gcnew System::Windows::Forms::RadioButton());
 			this->lAreaOperation = (gcnew System::Windows::Forms::Label());
+			this->tOperationOut = (gcnew System::Windows::Forms::TextBox());
+			this->lOperationOut = (gcnew System::Windows::Forms::Label());
 			this->tSelectOperation = (gcnew System::Windows::Forms::TextBox());
 			this->lSelectOperation = (gcnew System::Windows::Forms::Label());
 			this->cbOperation = (gcnew System::Windows::Forms::ComboBox());
@@ -204,11 +216,9 @@ namespace CellFulfill {
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
 			this->pbLogo2 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->lOperationOut = (gcnew System::Windows::Forms::Label());
-			this->tOperationOut = (gcnew System::Windows::Forms::TextBox());
-			this->lOperationName = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
+			this->statusStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tpScript->SuspendLayout();
 			this->tpCellularSpace->SuspendLayout();
@@ -287,20 +297,20 @@ namespace CellFulfill {
 			// ajudaToolStripMenuItem
 			// 
 			this->ajudaToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->CellFulfillToolStripMenuItem,
+				this->cellFillToolStripMenuItem,
 					this->sobreToolStripMenuItem
 			});
 			this->ajudaToolStripMenuItem->Name = L"ajudaToolStripMenuItem";
 			this->ajudaToolStripMenuItem->Size = System::Drawing::Size(50, 20);
 			this->ajudaToolStripMenuItem->Text = L"Ajuda";
 			// 
-			// CellFulfillToolStripMenuItem
+			// cellFillToolStripMenuItem
 			// 
-			this->CellFulfillToolStripMenuItem->Name = L"CellFulfillToolStripMenuItem";
-			this->CellFulfillToolStripMenuItem->ShortcutKeys = System::Windows::Forms::Keys::F1;
-			this->CellFulfillToolStripMenuItem->Size = System::Drawing::Size(142, 22);
-			this->CellFulfillToolStripMenuItem->Text = L"CellFulfill";
-			this->CellFulfillToolStripMenuItem->Click += gcnew System::EventHandler(this, &NovoModelo::CellFulfillToolStripMenuItem_Click);
+			this->cellFillToolStripMenuItem->Name = L"cellFillToolStripMenuItem";
+			this->cellFillToolStripMenuItem->ShortcutKeys = System::Windows::Forms::Keys::F1;
+			this->cellFillToolStripMenuItem->Size = System::Drawing::Size(142, 22);
+			this->cellFillToolStripMenuItem->Text = L"CellFulfill";
+			this->cellFillToolStripMenuItem->Click += gcnew System::EventHandler(this, &NovoModelo::CellFulfillToolStripMenuItem_Click);
 			// 
 			// sobreToolStripMenuItem
 			// 
@@ -311,11 +321,17 @@ namespace CellFulfill {
 			// 
 			// statusStrip1
 			// 
+			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->toolStripStatusLabel1 });
 			this->statusStrip1->Location = System::Drawing::Point(0, 655);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->Size = System::Drawing::Size(745, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
+			// 
+			// toolStripStatusLabel1
+			// 
+			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(0, 17);
 			// 
 			// tabControl1
 			// 
@@ -498,7 +514,7 @@ namespace CellFulfill {
 			this->lLimitFileAddress->AutoSize = true;
 			this->lLimitFileAddress->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lLimitFileAddress->Location = System::Drawing::Point(143, 140);
+			this->lLimitFileAddress->Location = System::Drawing::Point(172, 140);
 			this->lLimitFileAddress->Name = L"lLimitFileAddress";
 			this->lLimitFileAddress->Size = System::Drawing::Size(0, 19);
 			this->lLimitFileAddress->TabIndex = 95;
@@ -551,6 +567,20 @@ namespace CellFulfill {
 			this->tpAttributeFill->Text = L"Atributos de Preenchimento";
 			this->tpAttributeFill->UseVisualStyleBackColor = true;
 			// 
+			// lOperationName
+			// 
+			this->lOperationName->AutoSize = true;
+			this->lOperationName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lOperationName->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lOperationName->Location = System::Drawing::Point(391, 43);
+			this->lOperationName->Name = L"lOperationName";
+			this->lOperationName->Size = System::Drawing::Size(205, 23);
+			this->lOperationName->TabIndex = 107;
+			this->lOperationName->Text = L"Selecione uma Operação";
+			this->lOperationName->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lOperationName->Visible = false;
+			// 
 			// tSelectedAttribute
 			// 
 			this->tSelectedAttribute->Enabled = false;
@@ -562,7 +592,7 @@ namespace CellFulfill {
 			// 
 			// bSaveOperation
 			// 
-			this->bSaveOperation->Location = System::Drawing::Point(446, 338);
+			this->bSaveOperation->Location = System::Drawing::Point(456, 333);
 			this->bSaveOperation->Name = L"bSaveOperation";
 			this->bSaveOperation->Size = System::Drawing::Size(75, 23);
 			this->bSaveOperation->TabIndex = 13;
@@ -633,6 +663,33 @@ namespace CellFulfill {
 			this->lAreaOperation->Text = L"Usar Geometria da Área";
 			this->lAreaOperation->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lAreaOperation->Visible = false;
+			// 
+			// tOperationOut
+			// 
+			this->tOperationOut->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tOperationOut->Location = System::Drawing::Point(482, 140);
+			this->tOperationOut->MaxLength = 10;
+			this->tOperationOut->Name = L"tOperationOut";
+			this->tOperationOut->Size = System::Drawing::Size(151, 20);
+			this->tOperationOut->TabIndex = 9;
+			this->tOperationOut->Text = L"use";
+			this->tOperationOut->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tOperationOut->Visible = false;
+			this->tOperationOut->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lOperationOut
+			// 
+			this->lOperationOut->AutoSize = true;
+			this->lOperationOut->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lOperationOut->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lOperationOut->Location = System::Drawing::Point(328, 138);
+			this->lOperationOut->Name = L"lOperationOut";
+			this->lOperationOut->Size = System::Drawing::Size(147, 23);
+			this->lOperationOut->TabIndex = 98;
+			this->lOperationOut->Text = L"Atributo de Saída";
+			this->lOperationOut->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lOperationOut->Visible = false;
 			// 
 			// tSelectOperation
 			// 
@@ -782,47 +839,6 @@ namespace CellFulfill {
 			this->label1->TabIndex = 22;
 			this->label1->Text = L"&&";
 			// 
-			// lOperationOut
-			// 
-			this->lOperationOut->AutoSize = true;
-			this->lOperationOut->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lOperationOut->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lOperationOut->Location = System::Drawing::Point(328, 138);
-			this->lOperationOut->Name = L"lOperationOut";
-			this->lOperationOut->Size = System::Drawing::Size(147, 23);
-			this->lOperationOut->TabIndex = 98;
-			this->lOperationOut->Text = L"Atributo de Saída";
-			this->lOperationOut->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lOperationOut->Visible = false;
-			// 
-			// tOperationOut
-			// 
-			this->tOperationOut->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tOperationOut->Location = System::Drawing::Point(482, 140);
-			this->tOperationOut->MaxLength = 10;
-			this->tOperationOut->Name = L"tOperationOut";
-			this->tOperationOut->Size = System::Drawing::Size(151, 20);
-			this->tOperationOut->TabIndex = 9;
-			this->tOperationOut->Text = L"use";
-			this->tOperationOut->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tOperationOut->Visible = false;
-			this->tOperationOut->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
-			// 
-			// lOperationName
-			// 
-			this->lOperationName->AutoSize = true;
-			this->lOperationName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lOperationName->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lOperationName->Location = System::Drawing::Point(391, 43);
-			this->lOperationName->Name = L"lOperationName";
-			this->lOperationName->Size = System::Drawing::Size(205, 23);
-			this->lOperationName->TabIndex = 107;
-			this->lOperationName->Text = L"Selecione uma Operação";
-			this->lOperationName->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lOperationName->Visible = false;
-			// 
 			// NovoModelo
 			// 
 			this->AllowDrop = true;
@@ -844,6 +860,8 @@ namespace CellFulfill {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->EndInit();
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
+			this->statusStrip1->ResumeLayout(false);
+			this->statusStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
 			this->tpScript->ResumeLayout(false);
 			this->tpScript->PerformLayout();
@@ -885,5 +903,5 @@ namespace CellFulfill {
 	private: System::Void bDeleteAttribute_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bFileMaker_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bRun_Click(System::Object^  sender, System::EventArgs^  e);
-};
+	};
 }

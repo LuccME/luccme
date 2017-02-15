@@ -64,6 +64,7 @@ System::Void CellFulfill::MyForm::checkLanguage()
 		idiomaToolStripMenuItem->Text = "Language";
 		ajudaToolStripMenuItem->Text = "Help";
 		sobreToolStripMenuItem->Text = "About";
+		cellFillToolStripMenuItem->Text = "Cell Fill";
 	}
 	else {
 		this->Text = "Preenchimento de Células - Gerenciador de Scripts";
@@ -77,6 +78,7 @@ System::Void CellFulfill::MyForm::checkLanguage()
 		idiomaToolStripMenuItem->Text = "Idioma";
 		ajudaToolStripMenuItem->Text = "Ajuda";
 		sobreToolStripMenuItem->Text = "Sobre";
+		cellFillToolStripMenuItem->Text = "Preenchimento";
 	}
 }
 

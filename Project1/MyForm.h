@@ -46,7 +46,8 @@ namespace CellFulfill {
 	private: System::Windows::Forms::ToolStripMenuItem^  novoToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  ajudaToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  CellFulfillToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  cellFillToolStripMenuItem;
+
 	private: System::Windows::Forms::ToolStripMenuItem^  sobreToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  preferênciasToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  idiomaToolStripMenuItem;
@@ -84,7 +85,7 @@ namespace CellFulfill {
 			this->preferênciasToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->idiomaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->ajudaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->CellFulfillToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->cellFillToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sobreToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -194,25 +195,25 @@ namespace CellFulfill {
 			// ajudaToolStripMenuItem
 			// 
 			this->ajudaToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->CellFulfillToolStripMenuItem,
+				this->cellFillToolStripMenuItem,
 					this->sobreToolStripMenuItem
 			});
 			this->ajudaToolStripMenuItem->Name = L"ajudaToolStripMenuItem";
 			this->ajudaToolStripMenuItem->Size = System::Drawing::Size(50, 20);
 			this->ajudaToolStripMenuItem->Text = L"Ajuda";
 			// 
-			// CellFulfillToolStripMenuItem
+			// cellFillToolStripMenuItem
 			// 
-			this->CellFulfillToolStripMenuItem->Name = L"CellFulfillToolStripMenuItem";
-			this->CellFulfillToolStripMenuItem->ShortcutKeys = System::Windows::Forms::Keys::F1;
-			this->CellFulfillToolStripMenuItem->Size = System::Drawing::Size(142, 22);
-			this->CellFulfillToolStripMenuItem->Text = L"CellFulfill";
-			this->CellFulfillToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::CellFulfillToolStripMenuItem_Click);
+			this->cellFillToolStripMenuItem->Name = L"cellFillToolStripMenuItem";
+			this->cellFillToolStripMenuItem->ShortcutKeys = System::Windows::Forms::Keys::F1;
+			this->cellFillToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->cellFillToolStripMenuItem->Text = L"Cell Fill";
+			this->cellFillToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::CellFulfillToolStripMenuItem_Click);
 			// 
 			// sobreToolStripMenuItem
 			// 
 			this->sobreToolStripMenuItem->Name = L"sobreToolStripMenuItem";
-			this->sobreToolStripMenuItem->Size = System::Drawing::Size(142, 22);
+			this->sobreToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->sobreToolStripMenuItem->Text = L"Sobre";
 			this->sobreToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::sobreToolStripMenuItem_Click);
 			// 

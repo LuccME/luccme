@@ -10,10 +10,9 @@
 #define NEWSCRIPT  1
 #define OPENSCRIPT 2
 
-//Demand Components
-#define PCVINPE		1
-#define CITWODM		2
-#define CITHREEDM	3
+//List TYPES
+#define RASTERLIST	7
+#define VECTORLIST	13
 
 //TabPages
 #define ATTRFULFILL  2
@@ -32,8 +31,9 @@
 #define AS_OUTPUT		5
 
 //Miscellaneous
-#define ROOTDIR	4
-#define SECOND	1000
+#define ROOTDIR		4
+#define SECOND		1000
+#define EXTENSION	4
 
 
 

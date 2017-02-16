@@ -34,27 +34,34 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		
 		//tpScript
 		tpScript->Text = "Script Definition";
-		lFiles->Text = "Files";
+		lFiles->Text = "   Files";
 		lDirProj->Text = "Folder to Save Scripts";
 		bSelectFolder->Text = "Select";
-		lScriptDefinition->Text = "Script Definition";
+		lScriptDefinition->Text = "   Script Definition";
 		lScriptName->Text = "Script Name";
 
 		//tpCellularSpace
 		tpCellularSpace->Text = "Creating Cellular Space";
-		lLimitFile->Text = "File for Cellular Space Limit";
+		lLimitFile->Text = "     File for Cellular Space Limit";
 		bShape->Text = "Select";
-		lCellSpaceName->Text = "Cellular Space Output Name";
+		lCellSpaceName->Text = "    Cellular Space Output Name";
 		lCellSpaceResolution->Text = "Resolution";
 		
 		//tpAttributeFill
 		tpAttributeFill->Text = "Attributes to Fill";
 		bDeleteAttribute->Text = "Remove";
-		lOperationName->Text = "Select an Operation";
+		lOperationName->Text = "    Select an Operation";
 		lOperationOut->Text = "Output Attribute";
-		lSelectOperation->Text = "Input Attribute";
-		lDefaultOperation->Text = "Dummy Value";
+		lSelectOperation->Text = "         Input Attribute";
+		lDefaultOperation->Text = "     Dummy Value";
 		lAreaOperation->Text = "Use Area Geometry";
+
+		//tpMakeFiles
+		tpMakeFiles->Text = "Make File";
+		lFileMaker->Text = "    Make File";
+		bFileMaker->Text = "Make File";
+		lRunScript->Text = "    Run Script";
+		bRun->Text = "Run Script";
 		
 		//Strings
 		gSShapeTitle = "Select a Shape File";
@@ -89,7 +96,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSCellSpaceNameTitle = "Error - Cellular Space Name is missing";
 		gSCellSpaceResolution = "Cellular Space Resolution not defined in Creating Cellular Space.";
 		gSCellSpaceResolutionTitle = "Error - Cellular Space Resolution is missing";
-		gSScriptLoad = "Select the Script File.";
+		gSScriptLoad = "Select the Script File";
 		gSScriptLoadTitle = "Script File to Import";
 		gSLuaFile = "Lua File(*.lua)|*.lua";
 		gSEditing = "Editing a Script";
@@ -134,6 +141,13 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		lSelectOperation->Text = "Atributo de Entrada";
 		lDefaultOperation->Text = "Valor de Dummy";
 		lAreaOperation->Text = "Usar Geometria da Área";
+
+		//tpMakeFiles
+		tpMakeFiles->Text = "Gerar Arquivo";
+		lFileMaker->Text = "Gerar Arquivo";
+		bFileMaker->Text = "Gerar Arquivo";
+		lRunScript->Text = "Rodar Script";
+		bRun->Text = "Rodar Script";
 
 		//Strigs
 		gSShapeTitle = "Escolha o arquivo Shape";

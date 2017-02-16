@@ -810,7 +810,7 @@ namespace CellFulfill {
 			this->lFileMaker->AutoSize = true;
 			this->lFileMaker->Font = (gcnew System::Drawing::Font(L"Calibri", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lFileMaker->Location = System::Drawing::Point(282, 75);
+			this->lFileMaker->Location = System::Drawing::Point(289, 75);
 			this->lFileMaker->Name = L"lFileMaker";
 			this->lFileMaker->Size = System::Drawing::Size(149, 26);
 			this->lFileMaker->TabIndex = 92;

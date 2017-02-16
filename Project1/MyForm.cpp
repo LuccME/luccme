@@ -53,7 +53,7 @@ System::Void CellFulfill::MyForm::checkLanguage()
 	}
 	
 	if (lLanguage == "en") {
-		this->Text = "Cell Fulfill - Script Manager";
+		this->Text = "Fill Cell - Script Manager";
 		bNovoModelo->Text = "New Script";
 		bAbrirModelo->Text = "Open Script";
 		arquivoToolStripMenuItem->Text = "File";

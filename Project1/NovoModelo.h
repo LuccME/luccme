@@ -65,7 +65,9 @@ namespace CellFulfill {
 		bool forceWriting = false;
 		bool runnable = false;
 		bool lOpen = false;
+		bool csExist = false;
 		String^ lLanguage;
+		array<String^>^ gParameters = gcnew array<String^>(PARAMETERSNUMBER);
 	
 	private: System::Windows::Forms::ComboBox^  cbOperation;
 	private: System::Windows::Forms::RadioButton^  rbTrueOperation;
@@ -121,6 +123,7 @@ namespace CellFulfill {
 	private: System::Windows::Forms::Label^  lOperationOut;
 	private: System::Windows::Forms::Label^  lOperationName;
 	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
+	private: System::Windows::Forms::CheckBox^  cbUseCS;
 
 	public:
 		int lReturn;
@@ -184,6 +187,7 @@ namespace CellFulfill {
 			this->lScriptName = (gcnew System::Windows::Forms::Label());
 			this->lSelectedFolder = (gcnew System::Windows::Forms::Label());
 			this->tpCellularSpace = (gcnew System::Windows::Forms::TabPage());
+			this->cbUseCS = (gcnew System::Windows::Forms::CheckBox());
 			this->tCellSpaceResolution = (gcnew System::Windows::Forms::TextBox());
 			this->lCellSpaceResolution = (gcnew System::Windows::Forms::Label());
 			this->tCellSpaceName = (gcnew System::Windows::Forms::TextBox());
@@ -445,6 +449,7 @@ namespace CellFulfill {
 			// 
 			// tpCellularSpace
 			// 
+			this->tpCellularSpace->Controls->Add(this->cbUseCS);
 			this->tpCellularSpace->Controls->Add(this->tCellSpaceResolution);
 			this->tpCellularSpace->Controls->Add(this->lCellSpaceResolution);
 			this->tpCellularSpace->Controls->Add(this->tCellSpaceName);
@@ -459,6 +464,19 @@ namespace CellFulfill {
 			this->tpCellularSpace->TabIndex = 1;
 			this->tpCellularSpace->Text = L"Criando o Espaço Celular";
 			this->tpCellularSpace->UseVisualStyleBackColor = true;
+			// 
+			// cbUseCS
+			// 
+			this->cbUseCS->AutoSize = true;
+			this->cbUseCS->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->cbUseCS->Location = System::Drawing::Point(12, 14);
+			this->cbUseCS->Name = L"cbUseCS";
+			this->cbUseCS->Size = System::Drawing::Size(263, 27);
+			this->cbUseCS->TabIndex = 97;
+			this->cbUseCS->Text = L"Usar Espaço Celular existente";
+			this->cbUseCS->UseVisualStyleBackColor = true;
+			this->cbUseCS->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cbUseCS_CheckedChanged);
 			// 
 			// tCellSpaceResolution
 			// 
@@ -902,5 +920,6 @@ namespace CellFulfill {
 	private: System::Void bDeleteAttribute_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bFileMaker_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bRun_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void cbUseCS_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	};
 }

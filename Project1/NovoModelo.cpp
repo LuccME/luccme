@@ -41,11 +41,18 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		lScriptName->Text = "Script Name";
 
 		//tpCellularSpace
-		tpCellularSpace->Text = "Creating Cellular Space";
-		lLimitFile->Text = "     File for Cellular Space Limit";
 		bShape->Text = "Select";
 		lCellSpaceName->Text = "    Cellular Space Output Name";
 		lCellSpaceResolution->Text = "Resolution";
+		cbUseCS->Text = "Use existing Cellular Space";
+		if (!csExist) {
+			tpCellularSpace->Text = "Creating Cellular Space";
+			lLimitFile->Text = "     File for Cellular Space Limit";
+		}
+		else {
+			tpCellularSpace->Text = "Using Cellular Space";
+			lLimitFile->Text = "          File with Cellular Space";
+		}
 		
 		//tpAttributeFill
 		tpAttributeFill->Text = "Attributes to Fill";
@@ -127,11 +134,18 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		lScriptName->Text = "Nome do Script";
 
 		//tpCellularSpace
-		tpCellularSpace->Text = "Criando o Espaço Celular";
-		lLimitFile->Text = "Arquivo de Limite do Espaço Celular";
 		bShape->Text = "Selecionar";
 		lCellSpaceName->Text = "Nome do Saída do Espaço Celular";
 		lCellSpaceResolution->Text = "Resolução";
+		cbUseCS->Text = "Usar Espaço Celular existente";
+		if (!csExist) {
+			tpCellularSpace->Text = "Criando o Espaço Celular";
+			lLimitFile->Text = "Arquivo de Limite do Espaço Celular";
+		}
+		else {
+			tpCellularSpace->Text = "Usando o Espaço Celular";
+			lLimitFile->Text = "          Arquivo do Espaço Celular";
+		}
 
 		//tpAttributeFill
 		tpAttributeFill->Text = "Atributos de Preenchimento";
@@ -241,11 +255,14 @@ Return the index for an Vector Operation
 */
 System::Int32 CellFulfill::NovoModelo::attributeToindex()
 {
-	for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
+	int i = 0;
+	for (i = 0; i < lvAttributesToFill->Items->Count; i++) {
 		if (lvAttributesToFill->Items[i]->Selected) {
-			return i;
+			break;
 		}
 	}
+
+	return i;
 }
 
 /*
@@ -292,6 +309,8 @@ System::String^ CellFulfill::NovoModelo::vectorOperationToName(int operation)
 	else if (operation == 12) {
 		return "nearest";
 	}
+
+	return "";
 }
 
 /*
@@ -320,6 +339,8 @@ System::String^ CellFulfill::NovoModelo::rasterOperationToName(int operation)
 	else if (operation == 6) {
 		return "stdev";
 	}
+
+	return "";
 }
 
 /*
@@ -366,6 +387,8 @@ System::Int32 CellFulfill::NovoModelo::vectorOperationToindex(String^ operation)
 	else if (operation->Equals("nearest")) {
 		return 12;
 	}
+
+	return -1;
 }
 
 /*
@@ -394,6 +417,8 @@ System::Int32 CellFulfill::NovoModelo::rasterOperationToindex(String^ operation)
 	else if (operation->Equals("stdev")) {
 		return 6;
 	}
+
+	return -1;
 }
 
 /*
@@ -492,6 +517,18 @@ System::Void CellFulfill::NovoModelo::tabControl1_SelectedIndexChanged(System::O
 			lvAttributesToFill->Columns->Add(gSAttributes, lvAttributesToFill->Width - 50, HorizontalAlignment::Left);
 			lvAttributesToFill->Columns->Add("Status", 47, HorizontalAlignment::Center);
 		}
+	}
+
+	if (tabControl1->SelectedIndex == RUNSCRIPT) {
+		if (!runnable) {
+			lRunScript->Visible = false;
+			bRun->Visible = false;
+		}
+		else {
+			lRunScript->Visible = true;
+			bRun->Visible = true;
+		}
+
 	}
 }
 
@@ -1046,12 +1083,12 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 		checked = false;
 	}
 
-	else if (tCellSpaceName->Text == "") {
+	else if (tCellSpaceName->Text == "" && !cbUseCS->Checked) {
 		MessageBox::Show(gSCellSpaceName, gSCellSpaceNameTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
 
-	else if (tCellSpaceResolution->Text == "") {
+	else if (tCellSpaceResolution->Text == "" && !cbUseCS->Checked) {
 		MessageBox::Show(gSCellSpaceResolution, gSCellSpaceResolutionTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
 		checked = false;
 	}
@@ -1117,7 +1154,12 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("\tfile = \"" + lLimitFileAddress->Text->Replace("\\", "\\\\") + "\"");
 				sw->WriteLine("}");
 				sw->WriteLine("");
-				sw->WriteLine("print(\"Limit added\")");
+				if (!cbUseCS->Checked) {
+					sw->WriteLine("print(\"Limit added\")");
+				}
+				else {
+					sw->WriteLine("print(\"Cellular Space added\")");
+				}
 				
 				for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
 					array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[i]);
@@ -1130,25 +1172,36 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					sw->WriteLine("");
 				}
 				
-				sw->WriteLine("-- CREATING CELLULAR SPACE --");
-				sw->WriteLine("print(\"Creating Cellular Space\")");
-				sw->WriteLine("local cs = Layer{");
-				sw->WriteLine("\tproject = proj,");
-				
-				if (lLimitFileAddress->Text->Contains(".shp")) {
-					sw->WriteLine("\tsource = \"shp\",");
+				if (!cbUseCS->Checked) {
+					sw->WriteLine("-- CREATING CELLULAR SPACE --");
+					sw->WriteLine("print(\"Creating Cellular Space\")");
+					sw->WriteLine("local cs = Layer{");
+					sw->WriteLine("\tproject = proj,");
+
+					if (lLimitFileAddress->Text->Contains(".shp")) {
+						sw->WriteLine("\tsource = \"shp\",");
+					}
+					else {
+						sw->WriteLine("\tsource = \"tif\",");
+					}
+
+					sw->WriteLine("\tname = \"cs\",");
+					sw->WriteLine("\tinput = l1.name,");
+					sw->WriteLine("\tresolution = " + tCellSpaceResolution->Text + ",");
+					sw->WriteLine("\tfile = \"" + tCellSpaceName->Text + ".shp\",");
+					sw->WriteLine("\tclean = true");
+					sw->WriteLine("}");
+					sw->WriteLine("");
 				}
 				else {
-					sw->WriteLine("\tsource = \"tif\",");
+					sw->WriteLine("-- OPENING CELLULAR SPACE --");
+					sw->WriteLine("print(\"Openning Cellular Space\")");
+					sw->WriteLine("local cs = Layer{");
+					sw->WriteLine("\tproject = proj,");
+					sw->WriteLine("\tname = l1.name,");
+					sw->WriteLine("}");
+					sw->WriteLine("");
 				}
-
-				sw->WriteLine("\tname = \"cs\",");
-				sw->WriteLine("\tinput = l1.name,");
-				sw->WriteLine("\tresolution = " + tCellSpaceResolution->Text + ",");
-				sw->WriteLine("\tfile = \"" + tCellSpaceName->Text + ".shp\",");
-				sw->WriteLine("\tclean = true");
-				sw->WriteLine("}");
-				sw->WriteLine("");
 
 				sw->WriteLine("-- ATTRIBUTES TO FILL --");
 				for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
@@ -1325,6 +1378,24 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 				tScriptName->Text = fileName->Substring(lastSlash, fileName->Length - (lastSlash + EXTENSION));
 				tScriptName->ForeColor = System::Drawing::Color::Black;
 				lSelectedFolder->Text = fileName->Substring(0, lastSlash - 1);
+				gParameters[SCRIPTNAME] = tScriptName->Text;
+				gParameters[SCRIPTFOLDER] = lSelectedFolder->Text;
+
+				// Search if it is a existing cellular space
+				while (sw->EndOfStream == false) {
+					if (line->Contains("Openning Cellular Space") != TRUE) {
+						line = sw->ReadLine();
+					}
+					else {
+						csExist = true;
+						break;
+					}
+				}
+
+				sw->Close();
+				sw = gcnew System::IO::StreamReader(fileName);
+				fileOK = false;
+
 
 				// Get the attributes address
 				while (sw->EndOfStream == false) {
@@ -1359,62 +1430,75 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 				if (lvAttributesToFill->Items->Count > NONE) {
 					array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[0]);
 					lLimitFileAddress->Text = dataTemp[0];	//Address set
+					gParameters[SHPADDRESS] = lLimitFileAddress->Text;
 					lvAttributesToFill->Items->RemoveAt(0);
 					attributeList->RemoveAt(0);
+					for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
+						gParameters[SCRIPTATTRIBUTES] += lvAttributesToFill->Items[i]->Text + ";";
+					}
 				}
 
 				sw->Close();
-				sw = gcnew System::IO::StreamReader(fileName);
-				fileOK = false;
+					
+				if (!csExist) {
+					sw = gcnew System::IO::StreamReader(fileName);
+					fileOK = false;
 
-				bool csResolutionFound = false;
-				bool csFileFound = false;
+					bool csResolutionFound = false;
+					bool csFileFound = false;
 
-				line = sw->ReadLine();
+					line = sw->ReadLine();
 
-				// Get Cellular Space Information
-				while (sw->EndOfStream == false) {
-					if (line->Contains("local cs = Layer{") != TRUE) {
-						line = sw->ReadLine();
-					}
-					else {
-						while (sw->EndOfStream == false) {
-							if (line->Contains("resolution")) {
-								line = line->Replace("\t", "");
-								line = line->Replace("resolution = ", "");
-								line = line->Replace(",", "");
-
-								tCellSpaceResolution->Text = line;
-								tCellSpaceResolution->ForeColor = System::Drawing::Color::Black;
-								csResolutionFound = true;
-							}
-
-							if (line->Contains("file")) {
-								line = line->Replace("\t", "");
-								line = line->Replace("file = ", "");
-								line = line->Replace(",", "");
-								line = line->Replace("\"", "");
-
-								tCellSpaceName->Text = line->Substring(0, line->Length - EXTENSION);
-								tCellSpaceName->ForeColor = System::Drawing::Color::Black;
-								csFileFound = true;
-							}
-
-							if (csFileFound && csResolutionFound) {
-								fileOK = true;
-								break;
-							}
-
+					// Get Cellular Space Information
+					while (sw->EndOfStream == false) {
+						if (line->Contains("local cs = Layer{") != TRUE) {
 							line = sw->ReadLine();
+						}
+						else {
+							while (sw->EndOfStream == false) {
+								if (line->Contains("resolution")) {
+									line = line->Replace("\t", "");
+									line = line->Replace("resolution = ", "");
+									line = line->Replace(",", "");
+
+									tCellSpaceResolution->Text = line;
+									tCellSpaceResolution->ForeColor = System::Drawing::Color::Black;
+									csResolutionFound = true;
+									gParameters[SHPRESOLUTION] = tCellSpaceResolution->Text;
+								}
+
+								if (line->Contains("file")) {
+									line = line->Replace("\t", "");
+									line = line->Replace("file = ", "");
+									line = line->Replace(",", "");
+									line = line->Replace("\"", "");
+
+									tCellSpaceName->Text = line->Substring(0, line->Length - EXTENSION);
+									tCellSpaceName->ForeColor = System::Drawing::Color::Black;
+									csFileFound = true;
+									gParameters[SHPOUTNAME] = tCellSpaceName->Text;
+								}
+
+								if (csFileFound && csResolutionFound) {
+									fileOK = true;
+									break;
+								}
+
+								line = sw->ReadLine();
+							}
+						}
+
+						if (csFileFound && csResolutionFound) {
+							break;
 						}
 					}
 
-					if (csFileFound && csResolutionFound) {
-						break;
-					}
+					sw->Close();
+				} 
+				else {
+					cbUseCS->Checked = true;
 				}
-
-				sw->Close();
+			
 				sw = gcnew System::IO::StreamReader(fileName);
 				fileOK = false;
 
@@ -1479,7 +1563,8 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 						lvAttributesToFill->Items[i]->SubItems->Add("OK");
 						fileOK = true;
 					}
-				}
+				}	
+				
 				sw->Close();
 			}
 
@@ -1498,5 +1583,32 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 				this->Close();
 			}
 		}
+	}
+}
+
+System::Void CellFulfill::NovoModelo::cbUseCS_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	if (cbUseCS->Checked) {
+		checkLanguage();
+		
+		tCellSpaceName->Text = "";
+		tCellSpaceName->Enabled = false;
+		tCellSpaceResolution->Text = "";
+		tCellSpaceResolution->Enabled = false;
+		
+		if (!csExist) {
+			runnable = false;
+			lLimitFileAddress->Text = "";
+			lvAttributesToFill->Items->Clear();
+			attributeList->Clear();
+		}
+
+		csExist = true;
+	}
+	else if (cbUseCS->Checked == false) {
+		csExist = false;
+		checkLanguage();
+		tCellSpaceName->Enabled = true;
+		tCellSpaceResolution->Enabled = true;
 	}
 }

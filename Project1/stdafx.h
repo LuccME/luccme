@@ -11,11 +11,12 @@
 #define OPENSCRIPT 2
 
 //List TYPES
-#define RASTERLIST	7
-#define VECTORLIST	13
+#define RASTERLIST		 7
+#define VECTORLIST		 13
 
 //TabPages
 #define ATTRFULFILL  2
+#define RUNSCRIPT	 3
 
 //Data values
 #define TRUE	1
@@ -29,6 +30,15 @@
 #define AS_AREA			3
 #define AS_DEFAULT		4
 #define AS_OUTPUT		5
+
+//Parameters
+#define PARAMETERSNUMBER 6
+#define SCRIPTFOLDER	 0
+#define SCRIPTNAME		 1
+#define SHPADDRESS		 2
+#define SHPOUTNAME		 3
+#define SHPRESOLUTION	 4
+#define SCRIPTATTRIBUTES 5
 
 //Miscellaneous
 #define ROOTDIR		4

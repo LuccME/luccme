@@ -7,14 +7,14 @@ System::Void LuccME::AboutForm::AboutForm_Load(System::Object ^ sender, System::
 		this->Text = "About";
 		lProgram->Text = "LuccME Model Manager";
 		lCompatible->Text = "Compatible with LuccME 3.0";
-		lVersion->Text = "Version 2.8";
+		lVersion->Text = "Version 2.9";
 		lCopyright->Text = "Copyright © 2016. All rigths reserved.";
 	}
 	else {
 		this->Text = "Sobre";
 		lProgram->Text = "Gerenciador de Modelos LuccME";
 		lCompatible->Text = "Compatível com LuccME 3.0";
-		lVersion->Text = "Versão 2.8";
+		lVersion->Text = "Versão 2.9";
 		lCopyright->Text = "Copyright © 2016. Todos os direitos reservados.";
 	}
 }

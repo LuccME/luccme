@@ -5,24 +5,24 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{1F80FBB1-2C18-4FC0-85FB-E82346A23938}
-AppName=LuccME
-AppVersion=3.0.2.8
+AppId={{6D5D196C-1793-4C0B-843F-7009F6F330FD}
+AppName=FillCell
+AppVersion=1.0
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
 AppSupportURL=http://luccme.ccst.inpe.br/
 AppUpdatesURL=http://luccme.ccst.inpe.br/
-DefaultDirName=C:\LuccME
+DefaultDirName=C:\FillCell
 DisableDirPage=yes
-DefaultGroupName=LuccME
+DefaultGroupName=FillCell
 DisableProgramGroupPage=yes
-LicenseFile=D:\_SVN\LuccME\branches\Project2\Project1\Resources\comment.txt
-OutputDir=D:\Diego Melo\Desktop
-OutputBaseFilename=LuccME_3.0.2.8
-SetupIconFile=D:\_SVN\LuccME\branches\Project2\Project1\Resources\icon.ico
+LicenseFile=D:\_SVN\LuccME\branches\InterfaceCellFill\Project1\Resources\comment.txt
+OutputDir=D:\Diego\Desktop
+OutputBaseFilename=FillCell_1.0
+SetupIconFile=D:\_SVN\LuccME\branches\InterfaceCellFill\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes
-UninstallFilesDir=C:\LuccME
+UninstallFilesDir=C:\FillCell
 ;ChangesEnvironment=yes
 UninstallDisplayIcon={app}\icon.ico
 
@@ -34,11 +34,11 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "D:\_SVN\LuccME\branches\Project2\Release\LuccME 3.0.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
-Source: "D:\_SVN\LuccME\branches\Project2\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "D:\_SVN\LuccME\branches\InterfaceCellFill\Release\FillCell.exe"; DestDir: "C:\FillCell"; Flags: ignoreversion;
+Source: "D:\_SVN\LuccME\branches\InterfaceCellFill\Release\*"; DestDir: "C:\FillCell"; Flags: ignoreversion recursesubdirs createallsubdirs;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\LuccME"; Filename: "C:\LuccME\LuccME 3.0.exe"
-Name: "{group}\{cm:UninstallProgram,LuccME}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\LuccME 3.0"; Filename: "C:\LuccME\LuccME 3.0.exe"; Tasks: desktopicon
+Name: "{group}\FillCell"; Filename: "C:\FillCell\FillCell.exe"
+Name: "{group}\{cm:UninstallProgram,FillCell}"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\FillCell"; Filename: "C:\FillCell\FillCell.exe"; Tasks: desktopicon

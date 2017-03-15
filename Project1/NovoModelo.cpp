@@ -1292,8 +1292,8 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 
 System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin");
-	Environment::SetEnvironmentVariable("PATH", "C:\\Luccme\\Terrame\\bin");
+	Environment::SetEnvironmentVariable("TME_PATH", "C:\\FillCell\\Terrame\\bin");
+	Environment::SetEnvironmentVariable("PATH", "C:\\FillCell\\Terrame\\bin");
 
 	String^ arguments = "";
 
@@ -1305,7 +1305,7 @@ System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System
 	}
 
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->FileName = "C:\\FillCell\\TerraME\\bin\\TerraME.exe";
 	cmd->StartInfo->Arguments = arguments;
 	cmd->Start();
 	cmd->WaitForExit();

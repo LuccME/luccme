@@ -12,7 +12,7 @@ System::Void CellFulfill::AboutForm::AboutForm_Load(System::Object ^ sender, Sys
 	}
 	else {
 		this->Text = "Sobre";
-		lProgram->Text = "Gerenciador de Scripts de Preenchimento de Célula";
+		lProgram->Text = "Gerenciador de Scripts de Preenchimento de Células";
 		lCompatible->Text = "Compatível com LuccME e INPE-EM 3.0";
 		lVersion->Text = "Versão 1.0";
 		lCopyright->Text = "Copyright © 2017. Todos os direitos reservados.";

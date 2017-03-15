@@ -135,31 +135,33 @@ namespace CellFulfill {
 			// lVersion
 			// 
 			this->lVersion->AutoSize = true;
-			this->lVersion->Font = (gcnew System::Drawing::Font(L"Calibri", 13));
+			this->lVersion->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->lVersion->Location = System::Drawing::Point(17, 216);
 			this->lVersion->Name = L"lVersion";
-			this->lVersion->Size = System::Drawing::Size(87, 22);
+			this->lVersion->Size = System::Drawing::Size(77, 19);
 			this->lVersion->TabIndex = 18;
 			this->lVersion->Text = L"Versão 2.0";
 			// 
 			// lProgram
 			// 
 			this->lProgram->AutoSize = true;
-			this->lProgram->Font = (gcnew System::Drawing::Font(L"Calibri", 12.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lProgram->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lProgram->Location = System::Drawing::Point(14, 160);
 			this->lProgram->Name = L"lProgram";
-			this->lProgram->Size = System::Drawing::Size(248, 21);
+			this->lProgram->Size = System::Drawing::Size(232, 19);
 			this->lProgram->TabIndex = 19;
 			this->lProgram->Text = L"Gerenciador de Modelos CellFulfill";
 			// 
 			// lCompatible
 			// 
 			this->lCompatible->AutoSize = true;
-			this->lCompatible->Font = (gcnew System::Drawing::Font(L"Calibri", 12));
+			this->lCompatible->Font = (gcnew System::Drawing::Font(L"Calibri", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->lCompatible->Location = System::Drawing::Point(15, 182);
 			this->lCompatible->Name = L"lCompatible";
-			this->lCompatible->Size = System::Drawing::Size(177, 19);
+			this->lCompatible->Size = System::Drawing::Size(169, 18);
 			this->lCompatible->TabIndex = 21;
 			this->lCompatible->Text = L"Compatível com CellFulfill";
 			// 

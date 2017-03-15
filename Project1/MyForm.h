@@ -35,10 +35,9 @@ namespace CellFulfill {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^  bNovoModelo;
-	protected:
-	private: System::Windows::Forms::Button^  bAbrirModelo;
 
+	private: System::Windows::Forms::Button^  bNovoModelo;
+	private: System::Windows::Forms::Button^  bAbrirModelo;
 	private: System::Windows::Forms::PictureBox^  pbLogo2;
 	private: System::Windows::Forms::StatusStrip^  statusStrip1;
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
@@ -47,7 +46,6 @@ namespace CellFulfill {
 	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  ajudaToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  cellFillToolStripMenuItem;
-
 	private: System::Windows::Forms::ToolStripMenuItem^  sobreToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  preferênciasToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  idiomaToolStripMenuItem;
@@ -55,9 +53,6 @@ namespace CellFulfill {
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
-
-
-	private:
 
 	private:
 		/// <summary>

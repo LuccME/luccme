@@ -51,6 +51,7 @@ namespace CellFulfill {
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::LinkLabel^  linkLabel2;
 
+
 	private:
 		/// <summary>
 		/// Required designer variable.

@@ -437,10 +437,10 @@ System::Void CellFulfill::NovoModelo::textBox_Enter(System::Object ^ sender, Sys
 System::Void CellFulfill::NovoModelo::CellFulfillToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lLanguage == "en") {
-		Help::ShowHelp(this, "help.chm");
+		Help::ShowHelp(this, "fillcellhelp.chm");
 	}
 	else {
-		Help::ShowHelp(this, "ajuda.chm");
+		Help::ShowHelp(this, "fillcellajuda.chm");
 	}
 }
 

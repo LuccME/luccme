@@ -131,9 +131,9 @@ System::Void CellFulfill::MyForm::bAbrirModelo_Click(System::Object ^ sender, Sy
 System::Void CellFulfill::MyForm::CellFulfillToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lLanguage == "en") {
-		Help::ShowHelp(this, "help.chm");
+		Help::ShowHelp(this, "fillcellhelp.chm");
 	}
 	else {
-		Help::ShowHelp(this, "ajuda.chm");
+		Help::ShowHelp(this, "fillcellajuda.chm");
 	}
 }

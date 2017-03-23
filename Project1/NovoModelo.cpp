@@ -135,7 +135,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 
 		//tpCellularSpace
 		bShape->Text = "Selecionar";
-		lCellSpaceName->Text = "Nome do Saída do Espaço Celular";
+		lCellSpaceName->Text = "Nome de Saída do Espaço Celular";
 		lCellSpaceResolution->Text = "Resolução";
 		cbUseCS->Text = "Usar Espaço Celular existente";
 		if (!csExist) {

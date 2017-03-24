@@ -1,3 +1,10 @@
+customError = function (msg)
+print(msg)
+io.flush()
+io.read()
+os.exit()
+end
+
 local x = os.clock();
 --- Save the generated data after the simulation into the database for each year a layer will be created.
 -- @arg luccMEModel A LuccME model.

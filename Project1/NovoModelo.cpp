@@ -1136,6 +1136,13 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("--       Generated with Fill Cell Script Configurator       --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
+				sw->WriteLine("customError = function (msg)");
+				sw->WriteLine("\tprint(msg)");
+				sw->WriteLine("\tio.flush()");
+				sw->WriteLine("\tio.read()");
+				sw->WriteLine("\tos.exit()");
+				sw->WriteLine("end");
+				sw->WriteLine("");
 				sw->WriteLine("local x = os.clock()"); 
 				sw->WriteLine("import(\"terralib\")");
 				sw->WriteLine("");
@@ -1292,8 +1299,14 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 
 System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System::EventArgs^  e)
 {
+#ifdef LUCCME
+	Environment::SetEnvironmentVariable("TME_PATH", "C:\\Luccme\\Terrame\\bin");
+	Environment::SetEnvironmentVariable("PATH", "C:\\Luccme\\Terrame\\bin");
+#endif 
+#ifndef LUCCME
 	Environment::SetEnvironmentVariable("TME_PATH", "C:\\FillCell\\Terrame\\bin");
 	Environment::SetEnvironmentVariable("PATH", "C:\\FillCell\\Terrame\\bin");
+#endif 
 
 	String^ arguments = "";
 
@@ -1305,7 +1318,14 @@ System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System
 	}
 
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
+
+#ifdef LUCCME
+	cmd->StartInfo->FileName = "C:\\Luccme\\TerraME\\bin\\TerraME.exe";
+#endif
+#ifndef LUCCME
 	cmd->StartInfo->FileName = "C:\\FillCell\\TerraME\\bin\\TerraME.exe";
+#endif 
+	
 	cmd->StartInfo->Arguments = arguments;
 	cmd->Start();
 	cmd->WaitForExit();

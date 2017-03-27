@@ -3,6 +3,9 @@
 // are changed infrequently
 #pragma once
 
+//Target
+//#define LUCCME	1
+
 //Language
 #define DEFAULTLANGUAGE "br"
 

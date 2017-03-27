@@ -1,8 +1,8 @@
 customError = function (msg)
-print(msg)
-io.flush()
-io.read()
-os.exit()
+	print(msg)
+	io.flush()
+	io.read()
+	os.exit()
 end
 
 local x = os.clock();

@@ -1136,13 +1136,13 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("--       Generated with Fill Cell Script Configurator       --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
-				sw->WriteLine("customError = function (msg)");
-				sw->WriteLine("\tprint(msg)");
-				sw->WriteLine("\tio.flush()");
-				sw->WriteLine("\tio.read()");
-				sw->WriteLine("\tos.exit()");
-				sw->WriteLine("end");
-				sw->WriteLine("");
+				//sw->WriteLine("customError = function (msg)");
+				//sw->WriteLine("\tprint(msg)");
+				//sw->WriteLine("\tio.flush()");
+				//sw->WriteLine("\tio.read()");
+				//sw->WriteLine("\tos.exit()");
+				//sw->WriteLine("end");
+				//sw->WriteLine("");
 				sw->WriteLine("local x = os.clock()"); 
 				sw->WriteLine("import(\"terralib\")");
 				sw->WriteLine("");
@@ -1227,7 +1227,7 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 						sw->WriteLine("\tarea = true,");
 					}
 					if (attributeToList[AS_DEFAULT] != "" && attributeToList[AS_DEFAULT] != "null") {
-						sw->WriteLine("\tdefault = " + lDefaultOperation->Text);
+						sw->WriteLine("\tdefault = " + tDefaultOperation->Text);
 					}
 					sw->WriteLine("}");
 					sw->WriteLine("");
@@ -1236,15 +1236,15 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("print(string.format(\"\\nElapsed time : %.2fs\\n\", os.clock() - x))");
 				sw->WriteLine("print(\"\\nEnd of Script\")");
 				sw->WriteLine("");
-				sw->WriteLine("-- Hold the screen --");
-				sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
-				sw->WriteLine("io.flush()");
-				sw->WriteLine("io.read()");
-				sw->WriteLine("");
-				sw->WriteLine("local projFile = File(\"t3mp.tview\")");
-				sw->WriteLine("if(projFile:exists()) then");
-				sw->WriteLine("\tprojFile:delete()");
-				sw->WriteLine("end");
+				//sw->WriteLine("-- Hold the screen --");
+				//sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
+				//sw->WriteLine("io.flush()");
+				//sw->WriteLine("io.read()");
+				//sw->WriteLine("");
+				//sw->WriteLine("local projFile = File(\"t3mp.tview\")");
+				//sw->WriteLine("if(projFile:exists()) then");
+				//sw->WriteLine("\tprojFile:delete()");
+				//sw->WriteLine("end");
 
 				sw->Close();
 
@@ -1320,10 +1320,10 @@ System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
 
 #ifdef LUCCME
-	cmd->StartInfo->FileName = "C:\\Luccme\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->FileName = "C:\\Luccme\\TerraME\\bin\\luccme.bat";
 #endif
 #ifndef LUCCME
-	cmd->StartInfo->FileName = "C:\\FillCell\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->FileName = "C:\\FillCell\\TerraME\\bin\\luccme.bat";
 #endif 
 	
 	cmd->StartInfo->Arguments = arguments;

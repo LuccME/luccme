@@ -1,10 +1,3 @@
-customError = function (msg)
-	print(msg)
-	io.flush()
-	io.read()
-	os.exit()
-end
-
 local x = os.clock();
 --- Save the generated data after the simulation into the database for each year a layer will be created.
 -- @arg luccMEModel A LuccME model.
@@ -131,9 +124,4 @@ function saveSingleTheme(luccMEModel)
 	
 	print(string.format("\nElapsed time: %.2fs\n", os.clock() - x))
 	print("\nEnd of Simulation")
-	
-	-- Hold the screen
-	io.write("\nPress enter key to exit...")
-	io.flush()
-	io.read()
 end

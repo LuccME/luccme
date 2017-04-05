@@ -3517,7 +3517,7 @@ System::Void LuccME::NovoModelo::bRun_Click(System::Object ^ sender, System::Eve
 	}
 
 	System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
-	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+	cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\luccme.bat";
 	cmd->StartInfo->Arguments = arguments;
 	cmd->Start();
 	cmd->WaitForExit();
@@ -7281,14 +7281,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		}
 
 		//Hold cmd open
-		sw->WriteLine("print(\"\\nEnd of Validation\")");
-		sw->WriteLine("");
-		sw->WriteLine("local answer");
-		sw->WriteLine("repeat");
-		sw->WriteLine("\tio.write(\"\\nPress enter key to exit...\")");
-		sw->WriteLine("\tio.flush()");
-		sw->WriteLine("\tanswer = io.read()");
-		sw->WriteLine("until answer ~= \"`\"");
+		//sw->WriteLine("print(\"\\nEnd of Validation\")");
+		//sw->WriteLine("");
+		//sw->WriteLine("local answer");
+		//sw->WriteLine("repeat");
+		//sw->WriteLine("\tio.write(\"\\nPress enter key to exit...\")");
+		//sw->WriteLine("\tio.flush()");
+		//sw->WriteLine("\tanswer = io.read()");
+		//sw->WriteLine("until answer ~= \"`\"");
 
 		sw->Close();
 
@@ -7298,7 +7298,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		String^ arguments = "validation.lua";
 		System::Diagnostics::Process^ cmd = gcnew System::Diagnostics::Process;
 
-		cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\TerraME.exe";
+		cmd->StartInfo->FileName = "C:\\LuccME\\TerraME\\bin\\luccme.bat";
 		cmd->StartInfo->Arguments = arguments;
 		cmd->Start();
 		cmd->WaitForExit();

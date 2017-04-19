@@ -286,7 +286,7 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 			local const_unlog = (10 ^ luData.newconst) + self.constChange * direction
 			
 			if (const_unlog ~= 0) then 
-				luData.newconst = math.log (10, const_unlog) 
+				luData.newconst = math.log (const_unlog, 10) 
 			end 
 		else
 			luData.newconst = luData.newconst + self.constChange * direction
@@ -348,7 +348,7 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 				local const_unlog = (10 ^ luData.newconst) + plus 
 				
 				if (const_unlog ~= 0) then 
-					luData.newconst = math.log (10, const_unlog) 
+					luData.newconst = math.log (const_unlog, 10) 
 				end
 			else 
 				luData.newconst = luData.newconst + plus  
@@ -445,14 +445,18 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 								)
 
 				if (count > 0) then
-					regresY = (Y + neighSum) / (count + 1) * luData.ro  
+					regresY = (Y + neighSum) / (count + 1)  
 				else
-					regresY = Y * luData.ro  
-				end 
+					regresY = Y  
+				end	
+                
 
 				if (luData.isLog) then -- if the land use is log transformed
-					regresY = math.log(10, regresY + 0.0001)  
+					regresY = math.log(regresY + 0.0001, 10)   -- ANAP
 				end
+                  
+                
+                regresY = regresY*luData.ro 
 
 				local regression = luData.newconst + regressionX + regresY 
 				local regressionLimit = luData.const+ regressionX + regresY
@@ -480,13 +484,13 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 					regression = 0
 				end
 
-				if (regression > 1) then
-					regression = 1
-				end
+				--if (regression > 1) then
+				--	regression = 1
+				--end
 
-				if (regression < 0) then
-					regression = 0
-				end
+				--if (regression < 0) then
+				--	regression = 0
+				--end
 
 				regression = regression * (1 - cell[luccMEModel.landUseNoData])
 				cell[reg] = regression 

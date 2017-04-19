@@ -188,7 +188,7 @@ function PotentialCLinearRegression(component)
 		end	
 
 		if (luData.isLog) then 
-			luData.newconst = luData.newconst - math.log(10, 0.1) * direction
+			luData.newconst = luData.newconst - math.log( 0.1, 10) * direction
 		else
 			luData.newconst = luData.newconst + 0.1 * direction
 		end
@@ -211,11 +211,11 @@ function PotentialCLinearRegression(component)
 
 			if( luData.isLog ) then
 				if (plus > 0) then 
-					luData.newconst = luData.newconst - math.log(10, plus) * 0.01 
+					luData.newconst = luData.newconst - math.log(plus, 10) * 0.01 
 				end
 				
 				if (plus < 0) then 
-					luData.newconst = luData.newconst + math.log(10, (-1) * plus) * 0.01
+					luData.newconst = luData.newconst + math.log((-1) * plus, 10) * 0.01
 				end
 			else 
 				luData.newconst = luData.newconst + plus * 0.01  

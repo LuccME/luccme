@@ -311,13 +311,18 @@ function AllocationCClueLike(component)
 				if (math.abs(change) >= luAllocData.maxChange) then
 					change = luAllocData.maxChange * (pot / math.abs(pot))
 				end
-
-				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1)) or
-					((pot <= 0) and (luDirect == -1) and (luStatic < 1))) then
-					cell[lu] = cell.past[lu] + change 
-				elseif (luStatic ~= 0) then
+                
+                
+                if (luStatic == 1) then  --do not change
 					cell[lu] = cell.past[lu]
-				end
+                elseif (luStatic == 0) then  -- change independent of demand direction (ANAP)
+					 cell[lu] = cell.past[lu] + change 
+                elseif (((pot >= 0) and (luDirect == 1) and (luStatic == -1)) or ((pot <= 0) and (luDirect == -1) and (luStatic == -1))) then
+					cell[lu] = cell.past[lu] + change -- change according to demand direction
+				else  
+                    cell[lu] = cell.past[lu]
+                end
+              
 
 				if (cell[lu] < 0) then
 					cell[lu] = 0

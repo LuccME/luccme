@@ -1,6 +1,6 @@
 version = "3.0"
 license = "LGPL-3"
-date = "9 December 2016"
+date = "11 November 2016"
 package = "luccme"
 title = ""
 url = "http://luccme.ccst.inpe.br/"

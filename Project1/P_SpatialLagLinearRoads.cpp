@@ -396,13 +396,13 @@ System::Void LuccME::P_SpatialLagLinearRoads::bAddData_Click(System::Object ^ se
 				lTempBetas[i] += ";";
 			}
 
-			lTempBetas[i] += tConst->Text;
+			lTempBetas[i] += tConst->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tMinReg->Text;
+			lTempBetas[i] += tMinReg->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tMaxReg->Text;
+			lTempBetas[i] += tMaxReg->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
-			lTempBetas[i] += tRo->Text;
+			lTempBetas[i] += tRo->Text->Replace(',', '.');
 			lTempBetas[i] += ";";
 
 			for (int j = 0; j < dgBetas->Rows->Count; j++) {

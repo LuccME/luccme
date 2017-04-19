@@ -14,7 +14,7 @@ System::Void LuccME::AboutForm::AboutForm_Load(System::Object ^ sender, System::
 		this->Text = "Sobre";
 		lProgram->Text = "Gerenciador de Modelos LuccME";
 		lCompatible->Text = "Compatível com LuccME 3.0";
-		lVersion->Text = "Versão 2.9";
+		lVersion->Text = "Versão 3.2";
 		lCopyright->Text = "Copyright © 2016. Todos os direitos reservados.";
 	}
 }

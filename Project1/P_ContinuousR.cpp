@@ -333,17 +333,17 @@ System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBo
 		lTempBetas[i] += ";";
 	}
 
-	lTempBetas[i] += tConst->Text;
+	lTempBetas[i] += tConst->Text->Replace(',', '.');
 	lTempBetas[i] += ";";
 
 	if (this->lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
-		lTempBetas[i] += tMinReg->Text;
+		lTempBetas[i] += tMinReg->Text->Replace(',', '.');
 		lTempBetas[i] += ";";
 
-		lTempBetas[i] += tMaxReg->Text;
+		lTempBetas[i] += tMaxReg->Text->Replace(',', '.');
 		lTempBetas[i] += ";";
 
-		lTempBetas[i] += tRo->Text;
+		lTempBetas[i] += tRo->Text->Replace(',', '.');
 		lTempBetas[i] += ";";
 	}
 

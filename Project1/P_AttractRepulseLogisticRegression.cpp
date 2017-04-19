@@ -361,11 +361,11 @@ Used to save the tRegions data to lReturn->Return, it copies the tRegion data to
 */
 System::Void LuccME::P_AttractRepulseLogisticRegression::setRegionData(DataGridView^ dgBetas, TextBox^ tConst, TextBox^ tElasticy, TextBox^ tPercNeighborsUse, int i, int j)
 {
-	lTempBetas[i] += tConst->Text;
+	lTempBetas[i] += tConst->Text->Replace(',','.');
 	lTempBetas[i] += ";";
-	lTempBetas[i] += tElasticy->Text;
+	lTempBetas[i] += tElasticy->Text->Replace(',', '.');
 	lTempBetas[i] += ";";
-	lTempBetas[i] += tPercNeighborsUse->Text;
+	lTempBetas[i] += tPercNeighborsUse->Text->Replace(',', '.');
 	lTempBetas[i] += ";";
 
 	for (int j = 0; j < dgBetas->Rows->Count; j++) {

@@ -280,7 +280,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lDatabase->Text = "Arquivo:";
 		bSelectDatabase->Text = "Selecionar";
 		lThemeName->Text = "Nome da Camada";
-		lCellArea->Text = "Tamanho da Célula";
+		lCellArea->Text = "Área da Célula";
 		lTerraview->Text = "Projeto Terraview";
 		//tabLUT
 		lLUTLarge->Text = "Tipos de Uso da Terra";
@@ -445,7 +445,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		//Combo Box
 		cbValidationMethod->Items->Clear();
 		cbValidationMethod->Items->Add("Multiresolução de Toda a Área (ext)");
-		cbValidationMethod->Items->Add("Multiresolução das Áreas onde Houveram Mudanças (dif)");
+		cbValidationMethod->Items->Add("Multiresolução das Áreas onde Houve Mudanças (dif)");
 	}
 }
 
@@ -2208,6 +2208,14 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 
 		if (gPotentialComponent == POTENTIALCLINEARREGRESSION || gPotentialComponent == POTENTIALDLOGISTICREGRESSION || gPotentialComponent == POTENTIALCSPATIALLAGLINEARREGRESSIONMIX || gPotentialComponent == POTENTIALCSPATIALLAGREGRESSION) {
 			cReg->Enabled = true;
+		}
+
+		if (gAllocationComponent == ALLOCATIONDCLUESLIKE || gAllocationComponent == ALLOCATIONDCLUESNEIGHORDERING || gAllocationComponent == ALLOCATIONDSIMPLEORDERING) {
+			cChange->Checked = false;
+			cChange->Enabled = false;
+		}
+		else {
+			cChange->Enabled = true;
 		}
 	}
 

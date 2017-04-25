@@ -49,6 +49,8 @@ function AllocationDClueSLike(component)
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
 					cell[lu.."_backup"] = cell[lu]
+					cell[lu.."_chtot"] = 0
+					cell[lu.."_chpast"] = 0
 				end
 			end
 		elseif (belong(event:getTime() - 1,luccMEModel.save.saveYears) and (event:getTime() - 1)) then
@@ -87,8 +89,6 @@ function AllocationDClueSLike(component)
 
 		for k, cell in pairs (cs.cells) do
 			for luind, lu in  pairs (luTypes) do
-				cell[lu.."_chpast"] = 0
-				cell[lu.."_chtot"] = 0
 				cell[lu.."_out"] = cell[lu]
 			end
 		end
@@ -147,6 +147,8 @@ function AllocationDClueSLike(component)
 				if (belong(event:getTime(),luccMEModel.save.saveYears)) then
 					for k, cell in pairs (cs.cells) do
 						for luind, lu in  pairs (luTypes) do
+							cell[lu.."_chpast"] =  cell[lu.."_backupYear"] - cell[lu]
+							cell[lu.."_chtot"] =  cell[lu.."_backup"] - cell[lu]
 							cell[lu] = cell[lu.."_backup"]
 						end
 					end
@@ -338,16 +340,8 @@ function AllocationDClueSLike(component)
 		cell[higher_use] = 1
 		cell[higher_use.."_out"] = 1
 	  
-		cell[higher_use.."_chtot"] = 0
-		cell[cur_use.."_chtot"] = 0 
-		
 		cell[higher_use.."_chpast"] = 0
 		cell[cur_use.."_chpast"] = 0  
-		
-		if (cur_use ~= higher_use) then
-			cell[higher_use.."_chpast"] = 1
-			cell[cur_use.."_chpast"] = -1 
-		end
 	end
   
 	-- Return the current use for a cell area.

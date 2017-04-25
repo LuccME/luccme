@@ -1,0 +1,152 @@
+
+Verifying Model parameters
+Verifying Demand parameters
+Verifying Potential parameters
+Verifying Allocation parameters
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2008
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7771
+Initial area for land use : d -> 2829
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7771	trajectory size	10600
+areaAlloc	f	7771
+demand	d	2829	trajectory size	2829
+areaAlloc	d	2829
+
+Demand allocated correctly in this time: 2008
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2009
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7771
+Initial area for land use : d -> 2829
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7766	trajectory size	10600
+areaAlloc	f	7766
+demand	d	2834	trajectory size	2834
+areaAlloc	d	2834
+
+Demand allocated correctly in this time: 2009
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2010
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7766
+Initial area for land use : d -> 2834
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7762	trajectory size	10600
+areaAlloc	f	7762
+demand	d	2838	trajectory size	2838
+areaAlloc	d	2838
+
+Demand allocated correctly in this time: 2010
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2011
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7762
+Initial area for land use : d -> 2838
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7757	trajectory size	10600
+areaAlloc	f	7757
+demand	d	2843	trajectory size	2843
+areaAlloc	d	2843
+
+Demand allocated correctly in this time: 2011
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2012
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7757
+Initial area for land use : d -> 2843
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7754	trajectory size	10600
+areaAlloc	f	7754
+demand	d	2846	trajectory size	2846
+areaAlloc	d	2846
+
+Demand allocated correctly in this time: 2012
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2013
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7754
+Initial area for land use : d -> 2846
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7751	trajectory size	10600
+areaAlloc	f	7751
+demand	d	2849	trajectory size	2849
+areaAlloc	d	2849
+
+Demand allocated correctly in this time: 2013
+
+Executing Demand component
+Executing Potential component
+Executing Allocation component
+
+Time: 2014
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 106
+Initial area for land use : f -> 7751
+Initial area for land use : d -> 2849
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+demand	f	7748	trajectory size	10600
+areaAlloc	f	7748
+demand	d	2852	trajectory size	2852
+areaAlloc	d	2852
+
+Demand allocated correctly in this time: 2014
+
+Saving Lab12_2014 into database.
+
+Elapsed time: 7.62s
+
+
+End of Simulation

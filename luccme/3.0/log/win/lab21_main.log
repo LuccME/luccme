@@ -1,0 +1,1603 @@
+
+Verifying Model parameters
+Verifying Demand parameters
+Verifying Potential parameters
+Verifying Allocation parameters
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 7771
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 53104.325248294
+
+dist_centr
+min: 5323.077
+max: 183060.6
+avg: 83263.638576171
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	7783	2829
+
+
+d
+Cell number: 2829
+dist_rodov
+min: 19.4228
+max: 83205.12
+avg: 18756.981055212
+
+dist_centr
+min: 479.2581
+max: 118814.9
+avg: 35204.596804452
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8690	1922
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2008
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 7771
+Initial area for land use : d -> 2829
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2008 Iteration -> 0
+f -> 5258		demand -> 7771 difference -> 2513
+d -> 5342		demand -> 2829 difference -> -2513
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2008 Iteration -> 1
+f -> 5271		demand -> 7771 difference -> 2500
+d -> 5329		demand -> 2829 difference -> -2500
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2008
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 5271
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 57702.026070589
+
+dist_centr
+min: 19593.59
+max: 183060.6
+avg: 92623.484592185
+
+
+uc_us
+values[1]: 1
+values[2]: 0
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	5283	5329
+
+
+d
+Cell number: 5329
+dist_rodov
+min: 19.4228
+max: 83205.12
+avg: 30319.698081023
+
+dist_centr
+min: 479.2581
+max: 118814.9
+avg: 48488.367204615
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8690	1922
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2009
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 5271
+Initial area for land use : d -> 5329
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2009 Iteration -> 0
+f -> 4348		demand -> 7766 difference -> 3418
+d -> 6252		demand -> 2834 difference -> -3418
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 1
+f -> 4375		demand -> 7766 difference -> 3391
+d -> 6225		demand -> 2834 difference -> -3391
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 2
+f -> 4399		demand -> 7766 difference -> 3367
+d -> 6201		demand -> 2834 difference -> -3367
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 3
+f -> 4421		demand -> 7766 difference -> 3345
+d -> 6179		demand -> 2834 difference -> -3345
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 4
+f -> 4441		demand -> 7766 difference -> 3325
+d -> 6159		demand -> 2834 difference -> -3325
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 5
+f -> 4466		demand -> 7766 difference -> 3300
+d -> 6134		demand -> 2834 difference -> -3300
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 6
+f -> 4497		demand -> 7766 difference -> 3269
+d -> 6103		demand -> 2834 difference -> -3269
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 7
+f -> 4517		demand -> 7766 difference -> 3249
+d -> 6083		demand -> 2834 difference -> -3249
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 8
+f -> 4547		demand -> 7766 difference -> 3219
+d -> 6053		demand -> 2834 difference -> -3219
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 9
+f -> 4580		demand -> 7766 difference -> 3186
+d -> 6020		demand -> 2834 difference -> -3186
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 10
+f -> 4615		demand -> 7766 difference -> 3151
+d -> 5985		demand -> 2834 difference -> -3151
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 11
+f -> 4651		demand -> 7766 difference -> 3115
+d -> 5949		demand -> 2834 difference -> -3115
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 12
+f -> 4678		demand -> 7766 difference -> 3088
+d -> 5922		demand -> 2834 difference -> -3088
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 13
+f -> 4712		demand -> 7766 difference -> 3054
+d -> 5888		demand -> 2834 difference -> -3054
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 14
+f -> 4751		demand -> 7766 difference -> 3015
+d -> 5849		demand -> 2834 difference -> -3015
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 15
+f -> 4788		demand -> 7766 difference -> 2978
+d -> 5812		demand -> 2834 difference -> -2978
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 16
+f -> 4822		demand -> 7766 difference -> 2944
+d -> 5778		demand -> 2834 difference -> -2944
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 17
+f -> 4846		demand -> 7766 difference -> 2920
+d -> 5754		demand -> 2834 difference -> -2920
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 18
+f -> 4881		demand -> 7766 difference -> 2885
+d -> 5719		demand -> 2834 difference -> -2885
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 19
+f -> 4917		demand -> 7766 difference -> 2849
+d -> 5683		demand -> 2834 difference -> -2849
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 20
+f -> 4948		demand -> 7766 difference -> 2818
+d -> 5652		demand -> 2834 difference -> -2818
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 21
+f -> 4979		demand -> 7766 difference -> 2787
+d -> 5621		demand -> 2834 difference -> -2787
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 22
+f -> 5010		demand -> 7766 difference -> 2756
+d -> 5590		demand -> 2834 difference -> -2756
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 23
+f -> 5048		demand -> 7766 difference -> 2718
+d -> 5552		demand -> 2834 difference -> -2718
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 24
+f -> 5072		demand -> 7766 difference -> 2694
+d -> 5528		demand -> 2834 difference -> -2694
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 25
+f -> 5121		demand -> 7766 difference -> 2645
+d -> 5479		demand -> 2834 difference -> -2645
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 26
+f -> 5154		demand -> 7766 difference -> 2612
+d -> 5446		demand -> 2834 difference -> -2612
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 27
+f -> 5188		demand -> 7766 difference -> 2578
+d -> 5412		demand -> 2834 difference -> -2578
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 28
+f -> 5223		demand -> 7766 difference -> 2543
+d -> 5377		demand -> 2834 difference -> -2543
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 29
+f -> 5257		demand -> 7766 difference -> 2509
+d -> 5343		demand -> 2834 difference -> -2509
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2009 Iteration -> 30
+f -> 5295		demand -> 7766 difference -> 2471
+d -> 5305		demand -> 2834 difference -> -2471
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2009
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 5295
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 57396.147254963
+
+dist_centr
+min: 479.2581
+max: 183060.6
+avg: 92583.226782213
+
+
+uc_us
+values[1]: 1
+values[2]: 0
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	5307	5305
+
+
+d
+Cell number: 5305
+dist_rodov
+min: 44.86975
+max: 83205.12
+avg: 30501.145185396
+
+dist_centr
+min: 3838.793
+max: 118814.9
+avg: 48328.918004523
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8642	1970
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2010
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 5295
+Initial area for land use : d -> 5305
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2010 Iteration -> 0
+f -> 4649		demand -> 7762 difference -> 3113
+d -> 5951		demand -> 2838 difference -> -3113
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 1
+f -> 4673		demand -> 7762 difference -> 3089
+d -> 5927		demand -> 2838 difference -> -3089
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 2
+f -> 4691		demand -> 7762 difference -> 3071
+d -> 5909		demand -> 2838 difference -> -3071
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 3
+f -> 4705		demand -> 7762 difference -> 3057
+d -> 5895		demand -> 2838 difference -> -3057
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 4
+f -> 4724		demand -> 7762 difference -> 3038
+d -> 5876		demand -> 2838 difference -> -3038
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 5
+f -> 4748		demand -> 7762 difference -> 3014
+d -> 5852		demand -> 2838 difference -> -3014
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 6
+f -> 4776		demand -> 7762 difference -> 2986
+d -> 5824		demand -> 2838 difference -> -2986
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 7
+f -> 4804		demand -> 7762 difference -> 2958
+d -> 5796		demand -> 2838 difference -> -2958
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 8
+f -> 4838		demand -> 7762 difference -> 2924
+d -> 5762		demand -> 2838 difference -> -2924
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 9
+f -> 4878		demand -> 7762 difference -> 2884
+d -> 5722		demand -> 2838 difference -> -2884
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 10
+f -> 4910		demand -> 7762 difference -> 2852
+d -> 5690		demand -> 2838 difference -> -2852
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 11
+f -> 4953		demand -> 7762 difference -> 2809
+d -> 5647		demand -> 2838 difference -> -2809
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 12
+f -> 4996		demand -> 7762 difference -> 2766
+d -> 5604		demand -> 2838 difference -> -2766
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 13
+f -> 5035		demand -> 7762 difference -> 2727
+d -> 5565		demand -> 2838 difference -> -2727
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 14
+f -> 5072		demand -> 7762 difference -> 2690
+d -> 5528		demand -> 2838 difference -> -2690
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 15
+f -> 5102		demand -> 7762 difference -> 2660
+d -> 5498		demand -> 2838 difference -> -2660
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 16
+f -> 5117		demand -> 7762 difference -> 2645
+d -> 5483		demand -> 2838 difference -> -2645
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 17
+f -> 5131		demand -> 7762 difference -> 2631
+d -> 5469		demand -> 2838 difference -> -2631
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 18
+f -> 5142		demand -> 7762 difference -> 2620
+d -> 5458		demand -> 2838 difference -> -2620
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 19
+f -> 5148		demand -> 7762 difference -> 2614
+d -> 5452		demand -> 2838 difference -> -2614
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 20
+f -> 5160		demand -> 7762 difference -> 2602
+d -> 5440		demand -> 2838 difference -> -2602
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 21
+f -> 5170		demand -> 7762 difference -> 2592
+d -> 5430		demand -> 2838 difference -> -2592
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 22
+f -> 5183		demand -> 7762 difference -> 2579
+d -> 5417		demand -> 2838 difference -> -2579
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 23
+f -> 5186		demand -> 7762 difference -> 2576
+d -> 5414		demand -> 2838 difference -> -2576
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 24
+f -> 5204		demand -> 7762 difference -> 2558
+d -> 5396		demand -> 2838 difference -> -2558
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 25
+f -> 5206		demand -> 7762 difference -> 2556
+d -> 5394		demand -> 2838 difference -> -2556
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 26
+f -> 5221		demand -> 7762 difference -> 2541
+d -> 5379		demand -> 2838 difference -> -2541
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 27
+f -> 5229		demand -> 7762 difference -> 2533
+d -> 5371		demand -> 2838 difference -> -2533
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 28
+f -> 5245		demand -> 7762 difference -> 2517
+d -> 5355		demand -> 2838 difference -> -2517
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 29
+f -> 5249		demand -> 7762 difference -> 2513
+d -> 5351		demand -> 2838 difference -> -2513
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 30
+f -> 5260		demand -> 7762 difference -> 2502
+d -> 5340		demand -> 2838 difference -> -2502
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2010 Iteration -> 31
+f -> 5271		demand -> 7762 difference -> 2491
+d -> 5329		demand -> 2838 difference -> -2491
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2010
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 5271
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 57494.078035335
+
+dist_centr
+min: 479.2581
+max: 183060.6
+avg: 92769.264294119
+
+
+uc_us
+values[1]: 1
+values[2]: 0
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	5283	5329
+
+
+d
+Cell number: 5329
+dist_rodov
+min: 44.86975
+max: 83205.12
+avg: 30525.383267113
+
+dist_centr
+min: 3838.793
+max: 118814.9
+avg: 48344.173848405
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8642	1970
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2011
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 5271
+Initial area for land use : d -> 5329
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2011 Iteration -> 0
+f -> 4646		demand -> 7757 difference -> 3111
+d -> 5954		demand -> 2843 difference -> -3111
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 1
+f -> 4668		demand -> 7757 difference -> 3089
+d -> 5932		demand -> 2843 difference -> -3089
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 2
+f -> 4688		demand -> 7757 difference -> 3069
+d -> 5912		demand -> 2843 difference -> -3069
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 3
+f -> 4702		demand -> 7757 difference -> 3055
+d -> 5898		demand -> 2843 difference -> -3055
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 4
+f -> 4720		demand -> 7757 difference -> 3037
+d -> 5880		demand -> 2843 difference -> -3037
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 5
+f -> 4743		demand -> 7757 difference -> 3014
+d -> 5857		demand -> 2843 difference -> -3014
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 6
+f -> 4767		demand -> 7757 difference -> 2990
+d -> 5833		demand -> 2843 difference -> -2990
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 7
+f -> 4801		demand -> 7757 difference -> 2956
+d -> 5799		demand -> 2843 difference -> -2956
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 8
+f -> 4834		demand -> 7757 difference -> 2923
+d -> 5766		demand -> 2843 difference -> -2923
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 9
+f -> 4866		demand -> 7757 difference -> 2891
+d -> 5734		demand -> 2843 difference -> -2891
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 10
+f -> 4908		demand -> 7757 difference -> 2849
+d -> 5692		demand -> 2843 difference -> -2849
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 11
+f -> 4950		demand -> 7757 difference -> 2807
+d -> 5650		demand -> 2843 difference -> -2807
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 12
+f -> 4994		demand -> 7757 difference -> 2763
+d -> 5606		demand -> 2843 difference -> -2763
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 13
+f -> 5035		demand -> 7757 difference -> 2722
+d -> 5565		demand -> 2843 difference -> -2722
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 14
+f -> 5072		demand -> 7757 difference -> 2685
+d -> 5528		demand -> 2843 difference -> -2685
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 15
+f -> 5099		demand -> 7757 difference -> 2658
+d -> 5501		demand -> 2843 difference -> -2658
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 16
+f -> 5112		demand -> 7757 difference -> 2645
+d -> 5488		demand -> 2843 difference -> -2645
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 17
+f -> 5129		demand -> 7757 difference -> 2628
+d -> 5471		demand -> 2843 difference -> -2628
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 18
+f -> 5137		demand -> 7757 difference -> 2620
+d -> 5463		demand -> 2843 difference -> -2620
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 19
+f -> 5146		demand -> 7757 difference -> 2611
+d -> 5454		demand -> 2843 difference -> -2611
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 20
+f -> 5156		demand -> 7757 difference -> 2601
+d -> 5444		demand -> 2843 difference -> -2601
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 21
+f -> 5166		demand -> 7757 difference -> 2591
+d -> 5434		demand -> 2843 difference -> -2591
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 22
+f -> 5176		demand -> 7757 difference -> 2581
+d -> 5424		demand -> 2843 difference -> -2581
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 23
+f -> 5186		demand -> 7757 difference -> 2571
+d -> 5414		demand -> 2843 difference -> -2571
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 24
+f -> 5200		demand -> 7757 difference -> 2557
+d -> 5400		demand -> 2843 difference -> -2557
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 25
+f -> 5206		demand -> 7757 difference -> 2551
+d -> 5394		demand -> 2843 difference -> -2551
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 26
+f -> 5219		demand -> 7757 difference -> 2538
+d -> 5381		demand -> 2843 difference -> -2538
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 27
+f -> 5226		demand -> 7757 difference -> 2531
+d -> 5374		demand -> 2843 difference -> -2531
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 28
+f -> 5242		demand -> 7757 difference -> 2515
+d -> 5358		demand -> 2843 difference -> -2515
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 29
+f -> 5248		demand -> 7757 difference -> 2509
+d -> 5352		demand -> 2843 difference -> -2509
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2011 Iteration -> 30
+f -> 5258		demand -> 7757 difference -> 2499
+d -> 5342		demand -> 2843 difference -> -2499
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2011
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 5258
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 57539.251251623
+
+dist_centr
+min: 479.2581
+max: 183060.6
+avg: 92865.814439741
+
+
+uc_us
+values[1]: 1
+values[2]: 0
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	5270	5342
+
+
+d
+Cell number: 5342
+dist_rodov
+min: 44.86975
+max: 83205.12
+avg: 30546.53750397
+
+dist_centr
+min: 3838.793
+max: 118814.9
+avg: 48357.231860752
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8642	1970
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2012
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 5258
+Initial area for land use : d -> 5342
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2012 Iteration -> 0
+f -> 4643		demand -> 7754 difference -> 3111
+d -> 5957		demand -> 2846 difference -> -3111
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 1
+f -> 4662		demand -> 7754 difference -> 3092
+d -> 5938		demand -> 2846 difference -> -3092
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 2
+f -> 4686		demand -> 7754 difference -> 3068
+d -> 5914		demand -> 2846 difference -> -3068
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 3
+f -> 4702		demand -> 7754 difference -> 3052
+d -> 5898		demand -> 2846 difference -> -3052
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 4
+f -> 4717		demand -> 7754 difference -> 3037
+d -> 5883		demand -> 2846 difference -> -3037
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 5
+f -> 4740		demand -> 7754 difference -> 3014
+d -> 5860		demand -> 2846 difference -> -3014
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 6
+f -> 4765		demand -> 7754 difference -> 2989
+d -> 5835		demand -> 2846 difference -> -2989
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 7
+f -> 4799		demand -> 7754 difference -> 2955
+d -> 5801		demand -> 2846 difference -> -2955
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 8
+f -> 4831		demand -> 7754 difference -> 2923
+d -> 5769		demand -> 2846 difference -> -2923
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 9
+f -> 4863		demand -> 7754 difference -> 2891
+d -> 5737		demand -> 2846 difference -> -2891
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 10
+f -> 4906		demand -> 7754 difference -> 2848
+d -> 5694		demand -> 2846 difference -> -2848
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 11
+f -> 4946		demand -> 7754 difference -> 2808
+d -> 5654		demand -> 2846 difference -> -2808
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 12
+f -> 4990		demand -> 7754 difference -> 2764
+d -> 5610		demand -> 2846 difference -> -2764
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 13
+f -> 5034		demand -> 7754 difference -> 2720
+d -> 5566		demand -> 2846 difference -> -2720
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 14
+f -> 5068		demand -> 7754 difference -> 2686
+d -> 5532		demand -> 2846 difference -> -2686
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 15
+f -> 5092		demand -> 7754 difference -> 2662
+d -> 5508		demand -> 2846 difference -> -2662
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 16
+f -> 5109		demand -> 7754 difference -> 2645
+d -> 5491		demand -> 2846 difference -> -2645
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 17
+f -> 5127		demand -> 7754 difference -> 2627
+d -> 5473		demand -> 2846 difference -> -2627
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 18
+f -> 5135		demand -> 7754 difference -> 2619
+d -> 5465		demand -> 2846 difference -> -2619
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 19
+f -> 5146		demand -> 7754 difference -> 2608
+d -> 5454		demand -> 2846 difference -> -2608
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 20
+f -> 5154		demand -> 7754 difference -> 2600
+d -> 5446		demand -> 2846 difference -> -2600
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 21
+f -> 5163		demand -> 7754 difference -> 2591
+d -> 5437		demand -> 2846 difference -> -2591
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 22
+f -> 5173		demand -> 7754 difference -> 2581
+d -> 5427		demand -> 2846 difference -> -2581
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 23
+f -> 5184		demand -> 7754 difference -> 2570
+d -> 5416		demand -> 2846 difference -> -2570
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 24
+f -> 5197		demand -> 7754 difference -> 2557
+d -> 5403		demand -> 2846 difference -> -2557
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 25
+f -> 5206		demand -> 7754 difference -> 2548
+d -> 5394		demand -> 2846 difference -> -2548
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 26
+f -> 5216		demand -> 7754 difference -> 2538
+d -> 5384		demand -> 2846 difference -> -2538
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 27
+f -> 5224		demand -> 7754 difference -> 2530
+d -> 5376		demand -> 2846 difference -> -2530
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 28
+f -> 5239		demand -> 7754 difference -> 2515
+d -> 5361		demand -> 2846 difference -> -2515
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 29
+f -> 5248		demand -> 7754 difference -> 2506
+d -> 5352		demand -> 2846 difference -> -2506
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2012 Iteration -> 30
+f -> 5256		demand -> 7754 difference -> 2498
+d -> 5344		demand -> 2846 difference -> -2498
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2012
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 5256
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 57546.302756759
+
+dist_centr
+min: 479.2581
+max: 183060.6
+avg: 92880.50756108
+
+
+uc_us
+values[1]: 1
+values[2]: 0
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	5268	5344
+
+
+d
+Cell number: 5344
+dist_rodov
+min: 44.86975
+max: 83205.12
+avg: 30549.702268234
+
+dist_centr
+min: 3838.793
+max: 118814.9
+avg: 48359.434933957
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8642	1970
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2013
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 5256
+Initial area for land use : d -> 5344
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2013 Iteration -> 0
+f -> 4643		demand -> 7751 difference -> 3108
+d -> 5957		demand -> 2849 difference -> -3108
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 1
+f -> 4660		demand -> 7751 difference -> 3091
+d -> 5940		demand -> 2849 difference -> -3091
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 2
+f -> 4684		demand -> 7751 difference -> 3067
+d -> 5916		demand -> 2849 difference -> -3067
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 3
+f -> 4701		demand -> 7751 difference -> 3050
+d -> 5899		demand -> 2849 difference -> -3050
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 4
+f -> 4717		demand -> 7751 difference -> 3034
+d -> 5883		demand -> 2849 difference -> -3034
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 5
+f -> 4740		demand -> 7751 difference -> 3011
+d -> 5860		demand -> 2849 difference -> -3011
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 6
+f -> 4765		demand -> 7751 difference -> 2986
+d -> 5835		demand -> 2849 difference -> -2986
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 7
+f -> 4799		demand -> 7751 difference -> 2952
+d -> 5801		demand -> 2849 difference -> -2952
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 8
+f -> 4831		demand -> 7751 difference -> 2920
+d -> 5769		demand -> 2849 difference -> -2920
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 9
+f -> 4863		demand -> 7751 difference -> 2888
+d -> 5737		demand -> 2849 difference -> -2888
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 10
+f -> 4905		demand -> 7751 difference -> 2846
+d -> 5695		demand -> 2849 difference -> -2846
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 11
+f -> 4944		demand -> 7751 difference -> 2807
+d -> 5656		demand -> 2849 difference -> -2807
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 12
+f -> 4989		demand -> 7751 difference -> 2762
+d -> 5611		demand -> 2849 difference -> -2762
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 13
+f -> 5034		demand -> 7751 difference -> 2717
+d -> 5566		demand -> 2849 difference -> -2717
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 14
+f -> 5068		demand -> 7751 difference -> 2683
+d -> 5532		demand -> 2849 difference -> -2683
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 15
+f -> 5092		demand -> 7751 difference -> 2659
+d -> 5508		demand -> 2849 difference -> -2659
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 16
+f -> 5109		demand -> 7751 difference -> 2642
+d -> 5491		demand -> 2849 difference -> -2642
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 17
+f -> 5126		demand -> 7751 difference -> 2625
+d -> 5474		demand -> 2849 difference -> -2625
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 18
+f -> 5134		demand -> 7751 difference -> 2617
+d -> 5466		demand -> 2849 difference -> -2617
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 19
+f -> 5146		demand -> 7751 difference -> 2605
+d -> 5454		demand -> 2849 difference -> -2605
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 20
+f -> 5154		demand -> 7751 difference -> 2597
+d -> 5446		demand -> 2849 difference -> -2597
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 21
+f -> 5162		demand -> 7751 difference -> 2589
+d -> 5438		demand -> 2849 difference -> -2589
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 22
+f -> 5172		demand -> 7751 difference -> 2579
+d -> 5428		demand -> 2849 difference -> -2579
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 23
+f -> 5184		demand -> 7751 difference -> 2567
+d -> 5416		demand -> 2849 difference -> -2567
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 24
+f -> 5195		demand -> 7751 difference -> 2556
+d -> 5405		demand -> 2849 difference -> -2556
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 25
+f -> 5206		demand -> 7751 difference -> 2545
+d -> 5394		demand -> 2849 difference -> -2545
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 26
+f -> 5216		demand -> 7751 difference -> 2535
+d -> 5384		demand -> 2849 difference -> -2535
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 27
+f -> 5224		demand -> 7751 difference -> 2527
+d -> 5376		demand -> 2849 difference -> -2527
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 28
+f -> 5239		demand -> 7751 difference -> 2512
+d -> 5361		demand -> 2849 difference -> -2512
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 29
+f -> 5248		demand -> 7751 difference -> 2503
+d -> 5352		demand -> 2849 difference -> -2503
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2013 Iteration -> 30
+f -> 5255		demand -> 7751 difference -> 2496
+d -> 5345		demand -> 2849 difference -> -2496
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2013
+
+Executing Demand component
+Executing Potential component
+
+
+f
+Cell number: 5255
+dist_rodov
+min: 1.815143
+max: 102172.9
+avg: 57549.100108882
+
+dist_centr
+min: 479.2581
+max: 183060.6
+avg: 92889.012611986
+
+
+uc_us
+values[1]: 1
+values[2]: 0
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+d
+values[1]: 0
+
+
+f	pot > 0 	pot = 0
+f_pot	5267	5345
+
+
+d
+Cell number: 5345
+dist_rodov
+min: 44.86975
+max: 83205.12
+avg: 30552.001878734
+
+dist_centr
+min: 3838.793
+max: 118814.9
+avg: 48359.400988028
+
+
+uc_us
+values[1]: 0
+values[2]: 1
+
+fertilidad
+values[1]: 0
+values[2]: 1
+
+assentamen
+values[1]: 0
+values[2]: 1
+
+ti
+values[1]: 0
+
+
+d	pot > 0 	pot = 0
+d_pot	8642	1970
+
+
+outros
+Cell number: 12
+
+
+outros	pot > 0 	pot = 0
+outros_pot	0	10612
+Executing Allocation component
+
+Time: 2014
+-------------------------------------------------------------------------------
+Cell Area 1
+Num of cells 10612
+Max diff area 2500
+Initial area for land use : f -> 5255
+Initial area for land use : d -> 5345
+Initial area for land use : outros -> 12
+-------------------------------------------------------------------------------
+
+Year: 2014 Iteration -> 0
+f -> 4643		demand -> 7748 difference -> 3105
+d -> 5957		demand -> 2852 difference -> -3105
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 1
+f -> 4659		demand -> 7748 difference -> 3089
+d -> 5941		demand -> 2852 difference -> -3089
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 2
+f -> 4683		demand -> 7748 difference -> 3065
+d -> 5917		demand -> 2852 difference -> -3065
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 3
+f -> 4700		demand -> 7748 difference -> 3048
+d -> 5900		demand -> 2852 difference -> -3048
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 4
+f -> 4717		demand -> 7748 difference -> 3031
+d -> 5883		demand -> 2852 difference -> -3031
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 5
+f -> 4740		demand -> 7748 difference -> 3008
+d -> 5860		demand -> 2852 difference -> -3008
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 6
+f -> 4765		demand -> 7748 difference -> 2983
+d -> 5835		demand -> 2852 difference -> -2983
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 7
+f -> 4799		demand -> 7748 difference -> 2949
+d -> 5801		demand -> 2852 difference -> -2949
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 8
+f -> 4831		demand -> 7748 difference -> 2917
+d -> 5769		demand -> 2852 difference -> -2917
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 9
+f -> 4863		demand -> 7748 difference -> 2885
+d -> 5737		demand -> 2852 difference -> -2885
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 10
+f -> 4905		demand -> 7748 difference -> 2843
+d -> 5695		demand -> 2852 difference -> -2843
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 11
+f -> 4943		demand -> 7748 difference -> 2805
+d -> 5657		demand -> 2852 difference -> -2805
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 12
+f -> 4989		demand -> 7748 difference -> 2759
+d -> 5611		demand -> 2852 difference -> -2759
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 13
+f -> 5034		demand -> 7748 difference -> 2714
+d -> 5566		demand -> 2852 difference -> -2714
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 14
+f -> 5067		demand -> 7748 difference -> 2681
+d -> 5533		demand -> 2852 difference -> -2681
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 15
+f -> 5092		demand -> 7748 difference -> 2656
+d -> 5508		demand -> 2852 difference -> -2656
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 16
+f -> 5109		demand -> 7748 difference -> 2639
+d -> 5491		demand -> 2852 difference -> -2639
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 17
+f -> 5125		demand -> 7748 difference -> 2623
+d -> 5475		demand -> 2852 difference -> -2623
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 18
+f -> 5134		demand -> 7748 difference -> 2614
+d -> 5466		demand -> 2852 difference -> -2614
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 19
+f -> 5146		demand -> 7748 difference -> 2602
+d -> 5454		demand -> 2852 difference -> -2602
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 20
+f -> 5154		demand -> 7748 difference -> 2594
+d -> 5446		demand -> 2852 difference -> -2594
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 21
+f -> 5162		demand -> 7748 difference -> 2586
+d -> 5438		demand -> 2852 difference -> -2586
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 22
+f -> 5171		demand -> 7748 difference -> 2577
+d -> 5429		demand -> 2852 difference -> -2577
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 23
+f -> 5184		demand -> 7748 difference -> 2564
+d -> 5416		demand -> 2852 difference -> -2564
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 24
+f -> 5195		demand -> 7748 difference -> 2553
+d -> 5405		demand -> 2852 difference -> -2553
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 25
+f -> 5206		demand -> 7748 difference -> 2542
+d -> 5394		demand -> 2852 difference -> -2542
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 26
+f -> 5214		demand -> 7748 difference -> 2534
+d -> 5386		demand -> 2852 difference -> -2534
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 27
+f -> 5224		demand -> 7748 difference -> 2524
+d -> 5376		demand -> 2852 difference -> -2524
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 28
+f -> 5238		demand -> 7748 difference -> 2510
+d -> 5362		demand -> 2852 difference -> -2510
+outros -> 12		demand -> 12 difference -> 0
+
+Year: 2014 Iteration -> 29
+f -> 5248		demand -> 7748 difference -> 2500
+d -> 5352		demand -> 2852 difference -> -2500
+outros -> 12		demand -> 12 difference -> 0
+
+Demand allocated correctly in this time: 2014
+
+Saving Lab21_2014 into database.
+
+Elapsed time: 18.62s
+
+
+End of Simulation

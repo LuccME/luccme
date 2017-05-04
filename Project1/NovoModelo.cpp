@@ -138,7 +138,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Text = "Save into Database";
 		bValidate->Text = "Validate";
 		cSaveValidationFile->Text = "Save Validation Script";
-		lValidationRegion->Text = "Region for Validation";
+		cbValidationRegionEnable->Text = "Regions Validation";
+		lValidationRegion->Text = "Specific Region";
+		cbValidateAllRegions->Text = "All Regions";
 		//Strings
 		gSExit = "The data changed will be lost.\nDo you want to proceed?";
 		gSExitTitle = "Exiting - Data not saved";
@@ -338,7 +340,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		cValidationSave->Text = "Salvar no Banco de Dados";
 		bValidate->Text = "Validar";
 		cSaveValidationFile->Text = "Salvar os Scripts de Validação";
-		lValidationRegion->Text = "Região para Validação";
+		cbValidationRegionEnable->Text = "Validar por Regiões";
+		lValidationRegion->Text = "Especificar Região";
+		cbValidateAllRegions->Text = "Todas as Regiões";
 		//Strings
 		gSScenST = "O ano de início do cenário deve ser preenchido.";
 		gSScenSTTitle = "Erro - Ano de início dos Cenários";
@@ -2273,15 +2277,6 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 		
 		if (runnable == true) {
 			bValidate->Visible = true;
-		}
-
-		if (gPotentialRegression > 1) {
-			lValidationRegion->Visible = true;
-			tValidationRegion->Visible = true;
-		}
-		else {
-			lValidationRegion->Visible = false;
-			tValidationRegion->Visible = false;
 		}
 	}
 }
@@ -6848,19 +6843,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		String^ path = "validation.lua";
 		StreamWriter^ sw = File::CreateText(path);
 
-		//Function to hold the cmd open when catch an error
-		sw->WriteLine("error = function(message, code)");
-		sw->WriteLine("\tprint(message)");
-		sw->WriteLine("\tlocal answer");
-		sw->WriteLine("\trepeat");
-		sw->WriteLine("\t\tio.write(\"\\nPress enter key to exit...\")");
-		sw->WriteLine("\t\tio.flush()");
-		sw->WriteLine("\t\tanswer = io.read()");
-		sw->WriteLine("\tuntil answer ~= \"`\"");
-		sw->WriteLine("\tos.exit()");
-		sw->WriteLine("end");
-		sw->WriteLine("");
-
 		if (shape) {
 			sw->WriteLine("-- CREATING PROJECT --");
 			sw->WriteLine("import(\"terralib\")");
@@ -6892,23 +6874,28 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		//Input parameters
 		sw->WriteLine("");
 		sw->WriteLine("-- VALIDATION CODE --");
-		sw->WriteLine("numberOfWindows = " + tNumberWindows->Text);
+		sw->WriteLine("local numberOfWindows = " + tNumberWindows->Text);
 		if (cValidationSave->Checked) {
-			sw->WriteLine("flag_save = true");
+			sw->WriteLine("local flag_save = true");
 		}
 		else {
-			sw->WriteLine("flag_save = false");
+			sw->WriteLine("local flag_save = false");
 		}
-		sw->WriteLine("final_year = " + tEndTime->Text);
+		sw->WriteLine("local final_year = " + tEndTime->Text);
 		sw->WriteLine("");
-		sw->WriteLine("input_theme_name = \"" + tInputThemeName->Text + "\"");
-		sw->WriteLine("last_sim = \"" + tAttributeForValidation->Text + "\"");
-		sw->WriteLine("init_real = \"" + tAttributeInitValidation->Text + "\"");
-		sw->WriteLine("last_real = \"" + tAttributeFinalValidation->Text + "\"");
+		sw->WriteLine("local input_theme_name = \"" + tInputThemeName->Text + "\"");
+		sw->WriteLine("local last_sim = \"" + tAttributeForValidation->Text + "\"");
+		sw->WriteLine("local init_real = \"" + tAttributeInitValidation->Text + "\"");
+		sw->WriteLine("local last_real = \"" + tAttributeFinalValidation->Text + "\"");
 		sw->WriteLine("");
 		
-		if (gPotentialRegression > 1) {
-			sw->WriteLine("selectedRegion = " + tValidationRegion->Text);
+		if (cbValidationRegionEnable->Checked) {
+			if (!cbValidateAllRegions->Checked) {
+				sw->WriteLine("local especificRegion = " + tValidationRegion->Text);
+			}
+			else {
+				sw->WriteLine("local especificRegion = 0");
+			}
 			sw->WriteLine("");
 		}
 
@@ -6942,7 +6929,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		}
 
 		sw->WriteLine("");
-		sw->WriteLine("range = " + tRange->Text + " / 100");
+		sw->WriteLine("local range = " + tRange->Text + " / 100");
 		
 		String^ folderAux = "";
 
@@ -6952,44 +6939,80 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			case 0:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
-					if (gPotentialRegression == 1) {
-						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					if (cbValidateAllRegions->Checked) {
+						sw->WriteLine("local file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
 					}
 					else {
-						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_ext_result.txt\", \"w\")\n");
+						sw->WriteLine("local file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_ext_result.txt\", \"w\")\n");
 					}
 				}
 				else {
-					if (gPotentialRegression == 1) {
-						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
+					if (cbValidateAllRegions->Checked) {
+						sw->WriteLine("local file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_ext_result.txt\", \"w\")\n");
 					}
 					else {
-						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_ext_result.txt\", \"w\")\n");
+						sw->WriteLine("local file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_ext_result.txt\", \"w\")\n");
 					}
 				}
-				sw->WriteLine("output_theme = \"" + tInputThemeName->Text + "_" +tAttributeInitValidation->Text->ToLower() + "_ext_result\"");
+				sw->WriteLine("local output_theme = \"" + tInputThemeName->Text + "_" +tAttributeInitValidation->Text->ToLower() + "_ext_result\"");
 				sw->WriteLine("");
-				sw->WriteLine("attribute1 = \"sim\"");
-				sw->WriteLine("attribute2 = \"diff\"");
+				sw->WriteLine("local attribute1 = \"sim\"");
+				sw->WriteLine("local attribute2 = \"diff\"");
 				sw->WriteLine("");
-				sw->WriteLine("if cs.cells[1][init_real] == nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
-				sw->WriteLine("if cs.cells[1][last_real] == nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
-				sw->WriteLine("if cs.cells[1][last_sim] == nil then error(\"Attribute: \"..last_sim..\". Does not exist in the theme.\") end");
+				sw->WriteLine("local regionsValues = {}");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][init_real] == nil then");
+				sw->WriteLine("\terror(\"Attribute: \"..init_real..\". Does not exist into database.\")");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][last_real] == nil then");
+				sw->WriteLine("\terror(\"Attribute: \"..last_real..\". Does not exist into database.\")");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][last_sim] == nil then");
+				sw->WriteLine("\terror(\"Attribute: \"..last_sim..\". Does not exist into database.\")");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][\"region\"] == nil then");
+				sw->WriteLine("\terror(\"Column region does not exist into database.\") ");
+				sw->WriteLine("else");
+				sw->WriteLine("\tregionsValues[1] = cs.cells[1][\"region\"]");
+				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("forEachCell(cs, function(cell) ");
 				sw->WriteLine("\tcell[attribute1] = cell[last_sim]");
 				sw->WriteLine("\tcell[attribute2] = cell[last_real]");
+				sw->WriteLine("");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("\tif #regionsValues ~= 0 then");
+					sw->WriteLine("\t\tlocal countDiffRegion = 0");
+					sw->WriteLine("\t\tfor i = 1, #regionsValues do");
+					sw->WriteLine("\t\t\tif cell[\"region\"] ~= regionsValues[i] then");
+					sw->WriteLine("\t\t\t\tcountDiffRegion = countDiffRegion + 1");
+					sw->WriteLine("\t\t\tend");
+					sw->WriteLine("\t\t\t");
+					sw->WriteLine("\t\t\tif countDiffRegion == #regionsValues then");
+					sw->WriteLine("\t\t\t\tregionsValues[#regionsValues + 1] = cell[\"region\"]");
+					sw->WriteLine("\t\t\tend");
+					sw->WriteLine("\t\tend");
+					sw->WriteLine("\tend");
+				}
 				sw->WriteLine("end)");
 				sw->WriteLine("");
-				sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window, selectedRegion)");
+				}
+				else {
+					sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+				}
 				sw->WriteLine("\tforEachCell(cs2, function(cell) cell.flag = 0 end)");
 				sw->WriteLine("");
 				sw->WriteLine("\tlocal count = 0");
 				sw->WriteLine("\tlocal diff = 0");
 				sw->WriteLine("\tlocal sum = 0");
+				sw->WriteLine("\tlocal internalcount = 0");
 				sw->WriteLine("\tlocal cc1 = {}");
 				sw->WriteLine("\tlocal cc2 = {}");
-				sw->WriteLine("\tlocal internalcount = 0");
 				sw->WriteLine("");
 				sw->WriteLine("\tforEachCell(cs2, function(cell)");
 				sw->WriteLine("\t\tinternalcount = 0");
@@ -6997,7 +7020,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tsumcc2 = 0");
 				sw->WriteLine("");
 				
-				if (gPotentialRegression > 1) {
+				if (cbValidationRegionEnable->Checked) {
 					sw->WriteLine("\t\tif (cell.region == selectedRegion) then");
 				}
 				
@@ -7033,7 +7056,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\t\treturn true");
 				sw->WriteLine("\t\tend");
 				
-				if (gPotentialRegression > 1) {
+				if (cbValidationRegionEnable->Checked) {
 					sw->WriteLine("\t\tend");
 				}
 				
@@ -7047,14 +7070,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"======================================================\")");
 				
 				if (gAllocationComponent > NUMDISCALLOCCOMP) {
-					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.1\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
-					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.1\\n\")");
 				}
 				else {
-					sw->WriteLine("file:write(\"Validation Metric for Discrete Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"Validation Metric for Discrete Data - version 1.1\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
-					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.1\\n\")");
 				}
 				
 				if (!shape) {
@@ -7077,8 +7100,20 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"Accepted error   :\", (range * 100)..\"%\")");
 				sw->WriteLine("file:write(\"======================================================\\n\")");
 				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine("print(\"======================================================\\n\")");
+				sw->WriteLine("print(\"======================================================\")");
 				sw->WriteLine("");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("for k = 1, #regionsValues do");
+					sw->WriteLine("local selectedRegion = k");
+					sw->WriteLine("if especificRegion ~= 0 then");
+					sw->WriteLine("\tselectedRegion = especificRegion");
+					sw->WriteLine("end");
+					sw->WriteLine("");
+					sw->WriteLine("file:write(\"\\nRegion: \"..selectedRegion)");
+					sw->WriteLine("file:write(\"\\n\")");
+					sw->WriteLine("print(\"\\nRegion: \"..selectedRegion..\"\\n\")");
+					sw->WriteLine("");
+				}
 				sw->WriteLine("file:write(\"" + gSValExt->Replace("print(\"",""));
 				sw->WriteLine("file:write(\"\\n\")");
 				sw->WriteLine(gSValExt);
@@ -7088,9 +7123,21 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("for i = 1, numberOfWindows do");
 				sw->WriteLine("\tattrs[i]=\"diff\"..i");
 				sw->WriteLine("");
-				sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i, selectedRegion)");
+				}
+				else {
+					sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+				}
 				sw->WriteLine("");
-				sw->WriteLine("\tif (sum < diff) then total, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i) end");
+				sw->WriteLine("\tif (sum < diff) then");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i, selectedRegion)");
+				}
+				else {
+					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i)");
+				}
+				sw->WriteLine("\tend");
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
 				sw->WriteLine("\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
@@ -7101,10 +7148,19 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("");
 				sw->WriteLine("forEachCell(cs, function(cell)");
 				sw->WriteLine("\t\t\t\t for i = 1, #attrs do");
-				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then	cell[attrs[i]] = 0 end");
+				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then");
+				sw->WriteLine("\t\t\t\t\t\tcell[attrs[i]] = 0");
+				sw->WriteLine("\t\t\t\t\tend");
 				sw->WriteLine("\t\t\t\tend");
 				sw->WriteLine("end)");
 				sw->WriteLine("");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("if especificRegion ~= 0 then");
+					sw->WriteLine("\tbreak");
+					sw->WriteLine("end");
+					sw->WriteLine("end");
+					sw->WriteLine("");
+				}
 				sw->WriteLine("if (flag_save) then");
 				sw->WriteLine("\tprint(\"\\nSaving \"..output_theme..\" into database.\")");
 				sw->WriteLine("\tcs:save(output_theme, attrs)");
@@ -7117,44 +7173,79 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			case 1:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
-					if (gPotentialRegression == 1) {
-						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					if (!cbValidateAllRegions->Checked) {
+						sw->WriteLine("local file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
 					}
 					else {
-						sw->WriteLine("file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_diff_result.txt\", \"w\")\n");
+						sw->WriteLine("local file = io.open(\"" + folderAux + "\\\\" + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_diff_result.txt\", \"w\")\n");
 					}
 				}
 				else {
-					if (gPotentialRegression == 1) {
-						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
+					if (!cbValidateAllRegions->Checked) {
+						sw->WriteLine("local file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result.txt\", \"w\")\n");
 					}
 					else {
-						sw->WriteLine("file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_diff_result.txt\", \"w\")\n");
+						sw->WriteLine("local file = io.open(\"" + folderAux + tModelName->Text->ToLower() + "_" + tAttributeInitValidation->Text->ToLower() + "_region_" + tValidationRegion->Text + "_diff_result.txt\", \"w\")\n");
 					}
 				}
-				sw->WriteLine("output_theme = \"" + tInputThemeName->Text + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result\"");
+				sw->WriteLine("local output_theme = \"" + tInputThemeName->Text + "_" + tAttributeInitValidation->Text->ToLower() + "_diff_result\"");
 				sw->WriteLine("");
-				sw->WriteLine("attribute1 = \"diff_sim\"");
-				sw->WriteLine("attribute2 = \"diff_real\"");
+				sw->WriteLine("local attribute1 = \"diff_sim\"");
+				sw->WriteLine("local attribute2 = \"diff_real\"");
 				sw->WriteLine("");
-				sw->WriteLine("if cs.cells[1][init_real] == nil then error(\"Attribute: \"..init_real..\". Does not exist in the theme.\") end");
-				sw->WriteLine("if cs.cells[1][last_real] == nil then error(\"Attribute: \"..last_real..\". Does not exist in the theme.\") end");
-				sw->WriteLine("if cs.cells[1][last_sim] == nil then error(\"Attribute: \"..last_sim..\". Does not exist in the theme.\") end");
+				sw->WriteLine("local regionsValues = {}");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][init_real] == nil then");
+				sw->WriteLine("\terror(\"Attribute: \"..init_real..\". Does not exist into database.\")");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][last_real] == nil then");
+				sw->WriteLine("\terror(\"Attribute: \"..last_real..\". Does not exist into database.\")");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][last_sim] == nil then");
+				sw->WriteLine("\terror(\"Attribute: \"..last_sim..\". Does not exist into database.\")");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if cs.cells[1][\"region\"] == nil then");
+				sw->WriteLine("\terror(\"Column region does not exist into database.\") ");
+				sw->WriteLine("else");
+				sw->WriteLine("\tregionsValues[1] = cs.cells[1][\"region\"]");
+				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("forEachCell(cs, function(cell) ");
 				sw->WriteLine("\tcell[attribute1] = cell[last_sim] - cell[init_real]");
 				sw->WriteLine("\tcell[attribute2] = cell[last_real] - cell[init_real]");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("\tif #regionsValues ~= 0 then");
+					sw->WriteLine("\t\tlocal countDiffRegion = 0");
+					sw->WriteLine("\t\tfor i = 1, #regionsValues do");
+					sw->WriteLine("\t\t\tif cell[\"region\"] ~= regionsValues[i] then");
+					sw->WriteLine("\t\t\t\tcountDiffRegion = countDiffRegion + 1");
+					sw->WriteLine("\t\t\tend");
+					sw->WriteLine("\t\t\t");
+					sw->WriteLine("\t\t\tif countDiffRegion == #regionsValues then");
+					sw->WriteLine("\t\t\t\tregionsValues[#regionsValues + 1] = cell[\"region\"]");
+					sw->WriteLine("\t\t\tend");
+					sw->WriteLine("\t\tend");
+					sw->WriteLine("\tend");
+				}
 				sw->WriteLine("end)");
 				sw->WriteLine("");
-				sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window, selectedRegion)");
+				}
+				else {
+					sw->WriteLine("MultiRes = function(cs1, attribute1, cs2, attribute2, window)");
+				}
 				sw->WriteLine("\tforEachCell(cs2, function(cell) cell.flag = 0 end)");
 				sw->WriteLine("");
 				sw->WriteLine("\tlocal count = 0");
 				sw->WriteLine("\tlocal diff = 0");
 				sw->WriteLine("\tlocal sum = 0");
+				sw->WriteLine("\tlocal internalcount = 0");
 				sw->WriteLine("\tlocal cc1 = {}");
 				sw->WriteLine("\tlocal cc2 = {}");
-				sw->WriteLine("\tlocal internalcount = 0");
 				sw->WriteLine("");
 				sw->WriteLine("\tforEachCell(cs2, function(cell)");
 				sw->WriteLine("\t\tinternalcount = 0");
@@ -7162,7 +7253,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\tsumcc2 = 0");
 				sw->WriteLine("");
 				
-				if (gPotentialRegression > 1) {
+				if (cbValidationRegionEnable->Checked) {
 					sw->WriteLine("\t\tif (cell.region == selectedRegion) then");
 				}
 				
@@ -7198,7 +7289,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\t\treturn true");
 				sw->WriteLine("\t\tend");
 
-				if (gPotentialRegression > 1) {
+				if (cbValidationRegionEnable->Checked) {
 					sw->WriteLine("\t\tend");
 				}
 
@@ -7212,14 +7303,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"======================================================\")");
 				
 				if (gAllocationComponent > NUMDISCALLOCCOMP) {
-					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"Validation Metric for Continuous Data - version 1.1\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
-					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Continuous Data - version 1.1\\n\")");
 				}
 				else {
-					sw->WriteLine("file:write(\"Validation Metric for Discrete Data - version 1.0\\n\")");
+					sw->WriteLine("file:write(\"Validation Metric for Discrete Data - version 1.1\\n\")");
 					sw->WriteLine("file:write(\"\\n\")");
-					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.0\\n\")");
+					sw->WriteLine("print(\"Validation Metric for Discrete Data - version 1.1\\n\")");
 				}
 				
 				if (!shape) {
@@ -7242,41 +7333,67 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("print(\"Accepted error   :\", (range * 100)..\"%\")");
 				sw->WriteLine("file:write(\"======================================================\\n\")");
 				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine("print(\"======================================================\\n\")");
+				sw->WriteLine("print(\"======================================================\")");
 				sw->WriteLine("");
-				sw->WriteLine("file:write(\"" + gSValDiff->Replace("print(\"", ""));
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("for k = 1, #regionsValues do");
+					sw->WriteLine("local selectedRegion = k");
+					sw->WriteLine("if especificRegion ~= 0 then");
+					sw->WriteLine("\tselectedRegion = especificRegion");
+					sw->WriteLine("end");
+					sw->WriteLine("");
+					sw->WriteLine("file:write(\"\\nRegion: \"..selectedRegion)");
+					sw->WriteLine("file:write(\"\\n\")");
+					sw->WriteLine("print(\"\\nRegion: \"..selectedRegion..\"\\n\")");
+					sw->WriteLine("");
+				}
+				sw->WriteLine("file:write(\"" + gSValExt->Replace("print(\"", ""));
 				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine(gSValDiff);
+				sw->WriteLine(gSValExt);
 				sw->WriteLine("io.flush()");
 				sw->WriteLine("attrs = {}");
 				sw->WriteLine("");
 				sw->WriteLine("for i = 1, numberOfWindows do");
 				sw->WriteLine("\tattrs[i]=\"diff\"..i");
 				sw->WriteLine("");
-				sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i, selectedRegion)");
+				}
+				else {
+					sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
+				}
 				sw->WriteLine("");
+				sw->WriteLine("\tif (sum < diff) then");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i, selectedRegion)");
+				}
+				else {
+					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i)");
+				}
+				sw->WriteLine("\tend");
 				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
-				sw->WriteLine("\tif ((i == 1) or (i % 1 == 0)) then");
-				sw->WriteLine("\t\tif (1 - diff / (2 * sum) >= 0) then");
-				sw->WriteLine("\t\t\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
-				sw->WriteLine("\t\t\tfile:write(\"\\n\")");
-				sw->WriteLine("\t\t\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
-				sw->WriteLine("\t\telse");
-				sw->WriteLine("\t\t\tfile:write(i..\"\\t\",\"0.00 %\")");
-				sw->WriteLine("\t\t\tfile:write(\"\\n\")");
-				sw->WriteLine("\t\t\tprint(i, \"0.00 %\")");
-				sw->WriteLine("\t\tend");
-				sw->WriteLine("\tend");
+				sw->WriteLine("\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\tfile:write(\"\\n\")");
+				sw->WriteLine("\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("forEachCell(cs, function(cell)");
 				sw->WriteLine("\t\t\t\t for i = 1, #attrs do");
-				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then	cell[attrs[i]] = 0 end");
+				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then");
+				sw->WriteLine("\t\t\t\t\t\tcell[attrs[i]] = 0");
+				sw->WriteLine("\t\t\t\t\tend");
 				sw->WriteLine("\t\t\t\tend");
 				sw->WriteLine("end)");
-				sw->WriteLine(""); 
+				sw->WriteLine("");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("if especificRegion ~= 0 then");
+					sw->WriteLine("\tbreak");
+					sw->WriteLine("end");
+					sw->WriteLine("end");
+					sw->WriteLine("");
+				}
 				sw->WriteLine("if (flag_save) then");
 				sw->WriteLine("\tprint(\"\\nSaving \"..output_theme..\" into database.\")");
 				sw->WriteLine("\tcs:save(output_theme, attrs)");
@@ -7287,16 +7404,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			default:
 				break;
 		}
-
-		//Hold cmd open
-		//sw->WriteLine("print(\"\\nEnd of Validation\")");
-		//sw->WriteLine("");
-		//sw->WriteLine("local answer");
-		//sw->WriteLine("repeat");
-		//sw->WriteLine("\tio.write(\"\\nPress enter key to exit...\")");
-		//sw->WriteLine("\tio.flush()");
-		//sw->WriteLine("\tanswer = io.read()");
-		//sw->WriteLine("until answer ~= \"`\"");
 
 		sw->Close();
 
@@ -7438,5 +7545,29 @@ System::Void LuccME::NovoModelo::checkScenarioDynamicVariableDates()
 		lvYearScenario->Visible = true;
 		bScenario->Visible = true;
 		lScenarioYearsConfirm->Visible = true;
+	}
+}
+
+System::Void LuccME::NovoModelo::cbValidationRegionEnable_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	if (cbValidationRegionEnable->Checked) {
+		lValidationRegion->Visible = true;
+		tValidationRegion->Visible = true;
+		cbValidateAllRegions->Visible = true;
+	}
+	else {
+		lValidationRegion->Visible = false;
+		tValidationRegion->Visible = false;
+		cbValidateAllRegions->Visible = false;
+	}
+}
+
+System::Void LuccME::NovoModelo::cbValidateAllRegions_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	if (cbValidateAllRegions->Checked) {
+		tValidationRegion->Enabled = false;
+	}
+	else {
+		tValidationRegion->Enabled = true;
 	}
 }

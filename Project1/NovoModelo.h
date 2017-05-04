@@ -156,6 +156,9 @@ namespace LuccME {
 private: System::Windows::Forms::TextBox^  tValidationRegion;
 public:
 private: System::Windows::Forms::Label^  lValidationRegion;
+private: System::Windows::Forms::CheckBox^  cbValidateAllRegions;
+
+private: System::Windows::Forms::CheckBox^  cbValidationRegionEnable;
 		 //[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
 		//[2] = tStartTime->Text;
@@ -438,6 +441,10 @@ private: System::Windows::Forms::Label^  lValidationRegion;
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
 			this->tabValidation = (gcnew System::Windows::Forms::TabPage());
+			this->cbValidateAllRegions = (gcnew System::Windows::Forms::CheckBox());
+			this->cbValidationRegionEnable = (gcnew System::Windows::Forms::CheckBox());
+			this->tValidationRegion = (gcnew System::Windows::Forms::TextBox());
+			this->lValidationRegion = (gcnew System::Windows::Forms::Label());
 			this->lRangeHelp = (gcnew System::Windows::Forms::Label());
 			this->cbValidationMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->cSaveValidationFile = (gcnew System::Windows::Forms::CheckBox());
@@ -459,8 +466,6 @@ private: System::Windows::Forms::Label^  lValidationRegion;
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
-			this->lValidationRegion = (gcnew System::Windows::Forms::Label());
-			this->tValidationRegion = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -1653,6 +1658,8 @@ private: System::Windows::Forms::Label^  lValidationRegion;
 			// tabValidation
 			// 
 			this->tabValidation->Controls->Add(this->tValidationRegion);
+			this->tabValidation->Controls->Add(this->cbValidateAllRegions);
+			this->tabValidation->Controls->Add(this->cbValidationRegionEnable);
 			this->tabValidation->Controls->Add(this->lValidationRegion);
 			this->tabValidation->Controls->Add(this->lRangeHelp);
 			this->tabValidation->Controls->Add(this->cbValidationMethod);
@@ -1681,6 +1688,56 @@ private: System::Windows::Forms::Label^  lValidationRegion;
 			this->tabValidation->TabIndex = 7;
 			this->tabValidation->Text = L"Validação";
 			this->tabValidation->UseVisualStyleBackColor = true;
+			// 
+			// cbValidateAllRegions
+			// 
+			this->cbValidateAllRegions->AutoSize = true;
+			this->cbValidateAllRegions->Font = (gcnew System::Drawing::Font(L"Calibri", 13, System::Drawing::FontStyle::Bold));
+			this->cbValidateAllRegions->Location = System::Drawing::Point(506, 409);
+			this->cbValidateAllRegions->Name = L"cbValidateAllRegions";
+			this->cbValidateAllRegions->Size = System::Drawing::Size(154, 26);
+			this->cbValidateAllRegions->TabIndex = 124;
+			this->cbValidateAllRegions->Text = L"Todas as Regiões";
+			this->cbValidateAllRegions->UseVisualStyleBackColor = true;
+			this->cbValidateAllRegions->Visible = false;
+			this->cbValidateAllRegions->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cbValidateAllRegions_CheckedChanged);
+			// 
+			// cbValidationRegionEnable
+			// 
+			this->cbValidationRegionEnable->AutoSize = true;
+			this->cbValidationRegionEnable->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold));
+			this->cbValidationRegionEnable->Location = System::Drawing::Point(506, 352);
+			this->cbValidationRegionEnable->Name = L"cbValidationRegionEnable";
+			this->cbValidationRegionEnable->Size = System::Drawing::Size(182, 27);
+			this->cbValidationRegionEnable->TabIndex = 123;
+			this->cbValidationRegionEnable->Text = L"Validar por Regiões";
+			this->cbValidationRegionEnable->UseVisualStyleBackColor = true;
+			this->cbValidationRegionEnable->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cbValidationRegionEnable_CheckedChanged);
+			// 
+			// tValidationRegion
+			// 
+			this->tValidationRegion->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tValidationRegion->Location = System::Drawing::Point(646, 385);
+			this->tValidationRegion->Name = L"tValidationRegion";
+			this->tValidationRegion->Size = System::Drawing::Size(53, 20);
+			this->tValidationRegion->TabIndex = 122;
+			this->tValidationRegion->Text = L"1";
+			this->tValidationRegion->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tValidationRegion->Visible = false;
+			this->tValidationRegion->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lValidationRegion
+			// 
+			this->lValidationRegion->AutoSize = true;
+			this->lValidationRegion->Font = (gcnew System::Drawing::Font(L"Calibri", 13, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lValidationRegion->Location = System::Drawing::Point(502, 383);
+			this->lValidationRegion->Name = L"lValidationRegion";
+			this->lValidationRegion->Size = System::Drawing::Size(145, 22);
+			this->lValidationRegion->TabIndex = 121;
+			this->lValidationRegion->Text = L"Especificar Região";
+			this->lValidationRegion->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lValidationRegion->Visible = false;
 			// 
 			// lRangeHelp
 			// 
@@ -1918,31 +1975,6 @@ private: System::Windows::Forms::Label^  lValidationRegion;
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
 			// 
-			// lValidationRegion
-			// 
-			this->lValidationRegion->AutoSize = true;
-			this->lValidationRegion->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lValidationRegion->Location = System::Drawing::Point(502, 382);
-			this->lValidationRegion->Name = L"lValidationRegion";
-			this->lValidationRegion->Size = System::Drawing::Size(182, 23);
-			this->lValidationRegion->TabIndex = 121;
-			this->lValidationRegion->Text = L"Região para Validação";
-			this->lValidationRegion->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lValidationRegion->Visible = false;
-			// 
-			// tValidationRegion
-			// 
-			this->tValidationRegion->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tValidationRegion->Location = System::Drawing::Point(561, 405);
-			this->tValidationRegion->Name = L"tValidationRegion";
-			this->tValidationRegion->Size = System::Drawing::Size(53, 20);
-			this->tValidationRegion->TabIndex = 122;
-			this->tValidationRegion->Text = L"1";
-			this->tValidationRegion->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tValidationRegion->Visible = false;
-			this->tValidationRegion->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
-			// 
 			// NovoModelo
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
@@ -2030,5 +2062,7 @@ private: System::Windows::Forms::Label^  lValidationRegion;
 	private: System::Void bScenario_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void LuccME::NovoModelo::checkScenarioDynamicVariableDates();
 	private: System::Void validateDate(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void cbValidationRegionEnable_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void cbValidateAllRegions_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 };
 }

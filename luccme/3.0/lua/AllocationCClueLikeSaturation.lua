@@ -46,9 +46,12 @@
 --  attrProtection = "uc_pi",
 --  allocationData =
 --  {
---    {static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- floresta
---    {static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- desmatamento
---    {static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}   -- outros
+--	  -- Region 1
+--	  {
+--    	{static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- floresta
+--    	{static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0}, -- desmatamento
+--    	{static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},  -- outros
+--	  }
 --  }
 --}
 function AllocationCClueLikeSaturation(component)
@@ -94,12 +97,15 @@ function AllocationCClueLikeSaturation(component)
 		local maxAdjust = self.maxDifference 
 		local maxdiff = self.maxDifference * 1000 -- Used to have a large number of iterations
 		local flagFlex = false
+		local regionsNumber = #self.allocationData
 
 		-- Loop until maxdiff is achieved
 		repeat
-			-- compute tentative allocation
-			self:computeChange(luccMEModel)
-			self:correctCellChange(luccMEModel)
+			for rNumber = 1, regionsNumber, 1 do
+				-- compute tentative allocation
+				self:computeChange(luccMEModel, rNumber)
+				self:correctCellChange(luccMEModel, rNumber)
+			end
 
 			if luccMEModel.useLog == true then
 				self:printAllocatedArea(event, luccMEModel, nIter)
@@ -107,6 +113,7 @@ function AllocationCClueLikeSaturation(component)
 
 			-- verify if allocation reaches demand
 			maxdiff = self:compareAllocationToDemand(event, luccMEModel)   
+			
 			if (maxdiff <= maxAdjust) then
 				allocation_ok = true
 
@@ -177,6 +184,25 @@ function AllocationCClueLikeSaturation(component)
 	-- component.verify(event, self)
 	component.verify = function(self, event, luccMEModel)
 		print("Verifying Allocation parameters")
+		
+		-- create a region if does not have one
+		local cs = luccMEModel.cs
+		
+		if (self.regionAttr == nil) then
+			self.regionAttr = "region"
+		end   
+
+		forEachCell(cs, function(cell)
+							cell["alternate_model"] = 0
+							
+							if (cell[self.regionAttr] == nil) then
+								cell["region"] = 1
+							else
+								cell["region"] = cell[self.regionAttr]
+							end
+						end
+					)  
+					
 		-- check maxDifference
 		if (self.maxDifference == nil) then
 			error("maxDifference variable is missing", 2)
@@ -222,51 +248,60 @@ function AllocationCClueLikeSaturation(component)
 			error("allocationData is missing", 2)
 		end    
 
-		local allocationNumber = #self.allocationData
+		local regionsNumber = #self.allocationData
 		local lutNumber = #luccMEModel.landUseTypes
+		
+		-- check number of Regions
+		if (regionsNumber == nil or regionsNumber == 0) then
+			error("The model must have at least One region")
+		else
+			for i = 1, regionsNumber, 1 do
+				local allocationNumber = #self.allocationData[i]
+				
+				-- check the number of allocations
+				if (allocationNumber ~= lutNumber) then
+					error("Invalid number of regressions on Region number "..i.." . Regressions: "..allocationNumber.." LandUseTypes: "..lutNumber)
+				end
 
-		-- check the number of aloccations
-		if (allocationNumber ~= lutNumber) then
-			error("Invalid number of allocations. Allocations: "..allocationNumber.." LandUseTypes: "..lutNumber)
-		end
+				-- check data into allocationData
+				for j = 1, allocationNumber, 1 do
+					-- check static variable
+					if(self.allocationData[i][j].static == nil) then
+						error("static variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end
 
-		-- check data into allocationData
-		for j = 1, allocationNumber, 1 do
-			-- check static variable
-			if(self.allocationData[j].static == nil) then
-				error("static variable is missing on Allocation number "..j, 2)
-			end
+					-- check minValue variable
+					if (self.allocationData[i][j].minValue == nil) then
+						error("minValue variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end
 
-			-- check minValue variable
-			if (self.allocationData[j].minValue == nil) then
-				error("minValue variable is missing on Allocation number "..j, 2)
-			end
+					-- check maxValue variable
+					if (self.allocationData[i][j].maxValue == nil) then
+						error("maxValue variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end
 
-			-- check maxValue variable
-			if (self.allocationData[j].maxValue == nil) then
-				error("maxValue variable is missing on Allocation number "..j, 2)
-			end
+					-- check minChange variable
+					if (self.allocationData[i][j].minChange == nil) then
+						error("minChange variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end
 
-			-- check minChange variable
-			if (self.allocationData[j].minChange == nil) then
-				error("minChange variable is missing on Allocation number "..j, 2)
-			end
+					-- check maxChange variable
+					if (self.allocationData[i][j].maxChange == nil) then
+						error("maxChange variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end     
 
-			-- check maxChange variable
-			if (self.allocationData[j].maxChange == nil) then
-				error("maxChange variable is missing on Allocation number "..j, 2)
-			end     
+					-- check changeLimiarValue variable
+					if (self.allocationData[i][j].changeLimiarValue == nil) then
+						error("changeLimiarValue variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end
 
-			-- check changeLimiarValue variable
-			if (self.allocationData[j].changeLimiarValue == nil) then
-				error("changeLimiarValue variable is missing on Allocation number "..j, 2)
-			end
-
-			-- check maxChangeAboveLimiar variable
-			if (self.allocationData[j].maxChangeAboveLimiar == nil) then
-				error("maxChangeAboveLimiar variable is missing on Allocation number "..j, 2)
-			end      
-		end
+					-- check maxChangeAboveLimiar variable
+					if (self.allocationData[i][j].maxChangeAboveLimiar == nil) then
+						error("maxChangeAboveLimiar variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
+					end      
+				end -- for j
+			end -- for i
+		end -- else
 
 		-- check complementarLU within database
 		if (self.complementarLU ~= nil) then
@@ -389,91 +424,100 @@ function AllocationCClueLikeSaturation(component)
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
 	-- component.computeChange(luccMEModel)
-	component.computeChange = function(self, luccMEModel)
+	component.computeChange = function(self, luccMEModel, rNumber)
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
+		local activeRegionNumber = 0
 
-		for i, luAllocData in pairs (self.allocationData) do
+		for i, luAllocData in pairs (self.allocationData[rNumber]) do
 			local lu = luTypes[i]
 			local attr_pot = lu.."_pot"
 			local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
 
-			for k, cell in pairs (cs.cells) do        
-				local pot = cell[attr_pot]
-				local luStatic = luAllocData.static
-				local change = pot * self.elasticity[i]
+			for k, cell in pairs (cs.cells) do       
+				if (cell.region == rNumber) then
+					local pot = cell[attr_pot]
+					local luStatic = luAllocData.static
+					local change = pot * self.elasticity[i]
+					
+					activeRegionNumber = rNumber
 
-				if (math.abs(change) < luAllocData.minChange) then
-					pot = 0
-					change = 0
-				end
-
-				if (math.abs(change) >= luAllocData.maxChange) then
-					if (pot ~= 0) then
-						change = luAllocData.maxChange * (pot / math.abs(pot))
+					if (math.abs(change) < luAllocData.minChange) then
+						pot = 0
+						change = 0
 					end
-				end
 
-				if (((pot >= 0) and (luDirect == 1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue))) then
-					if (change >= luAllocData.maxChangeAboveLimiar) then
-						if ((change / 2) < luAllocData.maxChangeAboveLimiar) then
-							change = change / 2
-						else
-							change = luAllocData.maxChangeAboveLimiar 
+					if (math.abs(change) >= luAllocData.maxChange) then
+						if (pot ~= 0) then
+							change = luAllocData.maxChange * (pot / math.abs(pot))
 						end
 					end
-				end
 
-				if ((pot <= 0) and (luDirect == -1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue)) then
-					if (math.abs(change) >= luAllocData.maxChangeAboveLimiar) then
-						if (math.abs(change / 2) < luAllocData.maxChangeAboveLimiar) then
-							change = change / 2
-						else
-							change = (-1) * luAllocData.maxChangeAboveLimiar
+					if (((pot >= 0) and (luDirect == 1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue))) then
+						if (change >= luAllocData.maxChangeAboveLimiar) then
+							if ((change / 2) < luAllocData.maxChangeAboveLimiar) then
+								change = change / 2
+							else
+								change = luAllocData.maxChangeAboveLimiar 
+							end
 						end
 					end
-				end
-                 
-                
-				if (luStatic == 1) then  --do not change
-					cell[lu] = cell.past[lu]
-                elseif (luStatic == 0) then  -- change independent of demand direction (ANAP)
-					cell[lu] = cell.past[lu] + change 
-                elseif (((pot >= 0) and (luDirect == 1) and (luStatic == -1)) or ((pot <= 0) and (luDirect == -1) and (luStatic == -1))) then
-					cell[lu] = cell.past[lu] + change -- change according to demand direction
-				else  
-                    cell[lu] = cell.past[lu]
-                end
 
-				if (cell[lu] < 0) then
-					cell[lu] = 0
-				end
-
-				if (cell[lu] < luAllocData.minValue) then       
-					if (cell.past[lu] >= luAllocData.minValue) then
-						cell[lu] = luAllocData.minValue
-					else
+					if ((pot <= 0) and (luDirect == -1) and (luStatic < 1) and (cell[self.saturationIndicator] > luAllocData.changeLimiarValue)) then
+						if (math.abs(change) >= luAllocData.maxChangeAboveLimiar) then
+							if (math.abs(change / 2) < luAllocData.maxChangeAboveLimiar) then
+								change = change / 2
+							else
+								change = (-1) * luAllocData.maxChangeAboveLimiar
+							end
+						end
+					end
+					 
+					
+					if (luStatic == 1) then  --do not change
+						cell[lu] = cell.past[lu]
+					elseif (luStatic == 0) then  -- change independent of demand direction (ANAP)
+						cell[lu] = cell.past[lu] + change 
+					elseif (((pot >= 0) and (luDirect == 1) and (luStatic == -1)) or ((pot <= 0) and (luDirect == -1) and (luStatic == -1))) then
+						cell[lu] = cell.past[lu] + change -- change according to demand direction
+					else  
 						cell[lu] = cell.past[lu]
 					end
-				end
 
-				if (cell[lu] > luAllocData.maxValue) then       
-					if (cell.past[lu] <= luAllocData.maxValue) then 
-						cell[lu] = luAllocData.maxValue
-					else
-						cell[lu] = cell.past[lu]
+					if (cell[lu] < 0) then
+						cell[lu] = 0
 					end
-				end
-			end  -- for cell
-		end -- for lu
-	end
+
+					if (cell[lu] < luAllocData.minValue) then       
+						if (cell.past[lu] >= luAllocData.minValue) then
+							cell[lu] = luAllocData.minValue
+						else
+							cell[lu] = cell.past[lu]
+						end
+					end
+
+					if (cell[lu] > luAllocData.maxValue) then       
+						if (cell.past[lu] <= luAllocData.maxValue) then 
+							cell[lu] = luAllocData.maxValue
+						else
+							cell[lu] = cell.past[lu]
+						end
+					end
+				end -- if cell.region
+			end  -- for k
+			
+			if (activeRegionNumber == 0) then
+				error("Region ".. rNumber.." is not set into database.")  
+			end
+		end -- for i, lu
+	end -- computeChange
 
 	-- Compares the demand to the amount of allocated land use/cover, then adapts elasticity.
 	-- @arg event A representation of a time instant when the simulation engine must run.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
 	-- component.compareAllocationToDemand (event, luccMEModel)  
-	component.compareAllocationToDemand = function(self, event, luccMEModel)
+	component.compareAllocationToDemand = function(self, event, luccMEModel, rNumber)
 		-- Compares the demand to the amount of allocated land use/cover, then adapts elasticity
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -481,9 +525,10 @@ function AllocationCClueLikeSaturation(component)
 		local max = 0
 		local tot = 0
 		local nRegression = 0
+		local regionsNumber = #self.allocationData
 
 		for j = 1, #luccMEModel.potential.potentialData, 1 do
-			for i, lu in  pairs( luTypes) do
+			for i, lu in  pairs (luTypes) do
 				local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
 				local currentDemand = luccMEModel.demand:getCurrentLuDemand(i) 
 
@@ -507,7 +552,7 @@ function AllocationCClueLikeSaturation(component)
 				end
 
 				if (self.elasticity[i] < self.minElasticity) then
-					if (self.allocationData[i].static < 0) then  
+					if (self.allocationData[1][i].static < 0) then  
 						self.elasticity[i] = self.minElasticity
 						luccMEModel.potential:modify(luccMEModel, j, i, luDirect * (-1), event) -- Original clue does not modify in this case, but AMAZALERT results are like this
 					else
@@ -534,14 +579,15 @@ function AllocationCClueLikeSaturation(component)
 				tot = tot + math.abs(areas[i] - currentDemand )
 			end -- for i
 		end -- for j
+		
 		return max
 	end
-		
+
 	-- Corrects total land use/cover types to 100 percent.
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
 	-- component.correctCellChange(luccMEModel)
-	component.correctCellChange = function(self, luccMEModel)
+	component.correctCellChange = function(self, luccMEModel, rNumber)
 		-- corrects total land use/cover types to 100 percent
 		local cs = luccMEModel.cs
 		local luTypes = luccMEModel.landUseTypes
@@ -549,191 +595,193 @@ function AllocationCClueLikeSaturation(component)
 		local BACKP = 0.5
 
 		for k, cell in pairs (cs.cells) do
-			local nostatic = 0
-			local decr = 0
-			local incr = 0
-			local totcov = 0
-			local totchange = 0
-			local totstatic = 0
-			local amin = cell[luTypes[1]] - cell.past[luTypes[1]]
-			local amax = amin
-			local max  = math.abs(amax)
-			local l = 0
+			if (cell.region == rNumber) then
+				local nostatic = 0
+				local decr = 0
+				local incr = 0
+				local totcov = 0
+				local totchange = 0
+				local totstatic = 0
+				local amin = cell[luTypes[1]] - cell.past[luTypes[1]]
+				local amax = amin
+				local max  = math.abs(amax)
+				local l = 0
 
-			-- checks if total land use/covers from 100 percent
-			for i, lu in pairs (luTypes) do
-				totcov = totcov + cell[lu]
-			end
-
-			if (math.abs(totcov - 1) > 0.005) then
+				-- checks if total land use/covers from 100 percent
 				for i, lu in pairs (luTypes) do
-					local dif = cell[lu] - cell.past[lu]
-					totchange = totchange + math.abs(dif)
-					
-					if (math.abs(dif) > max) then
-						max = math.abs(dif)
-					end
-					
-					if (dif > amax) then
-						amax = dif
-					end
-					
-					if (dif < amin) then
-						amin = dif
-					end
+					totcov = totcov + cell[lu]
 				end
 
-				-- adapts land use/cover types if all of them change into the same direction
-				if (totchange > 0) then
-					if ((BACKP * totchange) > (max * 0.5)) then  
-						BACKP =(max / (2 * totchange))
-					end
-				end
-
-				for i, luAllocData in pairs (self.allocationData) do
-					local lu = luTypes[i]
-					local luStatic = luAllocData.static
-
-					if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-						luStatic = 1
-					end    
-					
-					if (luStatic < 1) then
+				if (math.abs(totcov - 1) > 0.005) then
+					for i, lu in pairs (luTypes) do
 						local dif = cell[lu] - cell.past[lu]
+						totchange = totchange + math.abs(dif)
 						
-						if (dif >(-1 * BACKP * totchange)) then
-							incr = incr + 1
+						if (math.abs(dif) > max) then
+							max = math.abs(dif)
 						end
 						
-						if (dif <(BACKP * totchange)) then
-							decr = decr + 1
-						end
-					else
-						nostatic = nostatic + 1
-					end
-				end
-
-				if ((decr == (NCOV - nostatic)) or (incr == (NCOV - nostatic))) then
-					for i, luAllocData in pairs (self.allocationData) do
-						local lu = luTypes[i]
-						local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
-
-						local luStatic = luAllocData.static
-						
-						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic = 1
-						end   
-						
-						if (luStatic < 1) then
-							if (incr == (NCOV - nostatic)) then
-								cell[lu] =  cell[lu] -(amin +(BACKP * totchange))
-							end
-							
-							if (decr == (NCOV - nostatic)) then
-								cell[lu] = cell[lu] +((BACKP * totchange) - amax)
-							end
-							
-							if (cell[lu] < 0) then
-								cell[lu] = 0
-							end
+						if (dif > amax) then
+							amax = dif
 						end
 						
-						if ((luDirect == 1) and (cell[lu] < cell.past[lu]) and (luAllocData.static == -1)) then
-							cell[lu] = cell.past[lu]
-						end
-						
-						if ((luDirect == -1) and (cell[lu] > cell.past[lu]) and (luAllocData.static == -1)) then
-							cell[lu] = cell.past[lu]
+						if (dif < amin) then
+							amin = dif
 						end
 					end
-				end
 
-				-- perform the corrections
-				repeat
-					l = l + 1
-					totcov = 0
-					totchange = 0
-					totstatic = 0
-					
-					for i, luAllocData in pairs (self.allocationData) do
+					-- adapts land use/cover types if all of them change into the same direction
+					if (totchange > 0) then
+						if ((BACKP * totchange) > (max * 0.5)) then  
+							BACKP =(max / (2 * totchange))
+						end
+					end
+
+					for i, luAllocData in pairs (self.allocationData[rNumber]) do
 						local lu = luTypes[i]
 						local luStatic = luAllocData.static
-						
+
 						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
 							luStatic = 1
-						end 
+						end    
 						
 						if (luStatic < 1) then
-							totcov = totcov + cell[lu]
-						else
-							totstatic = totstatic +  cell[lu]
-						end
-						
-						totchange = totchange + math.abs(cell[lu] - cell.past[lu])
-					end
-					
-					if (math.abs(totcov - (1 - totstatic)) > 0.005) then
-						if (totchange == 0) then
-							for i, luAllocData in pairs (self.allocationData) do
-								local lu = luTypes[i]
-								local luStatic = luAllocData.static
-								
-								if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-									luStatic = 1
-								end
-								
-								if (luStatic < 1) then
-									cell[lu] = cell[lu] *((1 - totstatic) / totcov)
-								end
+							local dif = cell[lu] - cell.past[lu]
+							
+							if (dif >(-1 * BACKP * totchange)) then
+								incr = incr + 1
+							end
+							
+							if (dif <(BACKP * totchange)) then
+								decr = decr + 1
 							end
 						else
-							for i, luAllocData in pairs (self.allocationData) do
-								local lu = luTypes[i]
-								local aux = cell[lu]
+							nostatic = nostatic + 1
+						end
+					end
+
+					if ((decr == (NCOV - nostatic)) or (incr == (NCOV - nostatic))) then
+						for i, luAllocData in pairs (self.allocationData[rNumber]) do
+							local lu = luTypes[i]
+							local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
+
+							local luStatic = luAllocData.static
+							
+							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+								luStatic = 1
+							end   
+							
+							if (luStatic < 1) then
+								if (incr == (NCOV - nostatic)) then
+									cell[lu] =  cell[lu] -(amin +(BACKP * totchange))
+								end
 								
-								cell[lu] = cell[lu] -(math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1 - totstatic)) / totchange))
+								if (decr == (NCOV - nostatic)) then
+									cell[lu] = cell[lu] +((BACKP * totchange) - amax)
+								end
 								
 								if (cell[lu] < 0) then
 									cell[lu] = 0
 								end
 							end
+							
+							if ((luDirect == 1) and (cell[lu] < cell.past[lu]) and (luAllocData.static == -1)) then
+								cell[lu] = cell.past[lu]
+							end
+							
+							if ((luDirect == -1) and (cell[lu] > cell.past[lu]) and (luAllocData.static == -1)) then
+								cell[lu] = cell.past[lu]
+							end
 						end
 					end
-				until(math.abs(totcov -(1-totstatic)) <= 0.005) or (l >= 25)
 
-				if (l == 25) then
-					totcov = 0
-					totstatic = 0
-					
-					for i, luAllocData in pairs (self.allocationData) do
-						local lu = luTypes[i]
-						local luStatic = luAllocData.static
+					-- perform the corrections
+					repeat
+						l = l + 1
+						totcov = 0
+						totchange = 0
+						totstatic = 0
 						
-						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic =1
-						end  
-						
-						if (luStatic < 1) then
-							totcov = totcov + cell[lu]
-						else
-							totstatic = totstatic + cell[lu]
+						for i, luAllocData in pairs (self.allocationData[rNumber]) do
+							local lu = luTypes[i]
+							local luStatic = luAllocData.static
+							
+							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+								luStatic = 1
+							end 
+							
+							if (luStatic < 1) then
+								totcov = totcov + cell[lu]
+							else
+								totstatic = totstatic +  cell[lu]
+							end
+							
+							totchange = totchange + math.abs(cell[lu] - cell.past[lu])
 						end
-					end
-					
-					for i, luAllocData in pairs (self.allocationData) do
-						local lu = luTypes[i]
-						local luStatic = luAllocData.static
 						
-						if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
-							luStatic = 1
-						end     
-						
-						if (luStatic < 1) then
-							cell[lu] = cell[lu] *((1 - totstatic)/totcov)
+						if (math.abs(totcov - (1 - totstatic)) > 0.005) then
+							if (totchange == 0) then
+								for i, luAllocData in pairs (self.allocationData[rNumber]) do
+									local lu = luTypes[i]
+									local luStatic = luAllocData.static
+									
+									if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+										luStatic = 1
+									end
+									
+									if (luStatic < 1) then
+										cell[lu] = cell[lu] *((1 - totstatic) / totcov)
+									end
+								end
+							else
+								for i, luAllocData in pairs (self.allocationData[rNumber]) do
+									local lu = luTypes[i]
+									local aux = cell[lu]
+									
+									cell[lu] = cell[lu] -(math.abs(cell[lu] - cell.past[lu]) * ((totcov - (1 - totstatic)) / totchange))
+									
+									if (cell[lu] < 0) then
+										cell[lu] = 0
+									end
+								end
+							end
 						end
-					end
-				end
-			end -- totcov
+					until(math.abs(totcov -(1-totstatic)) <= 0.005) or (l >= 25)
+
+					if (l == 25) then
+						totcov = 0
+						totstatic = 0
+						
+						for i, luAllocData in pairs (self.allocationData[rNumber]) do
+							local lu = luTypes[i]
+							local luStatic = luAllocData.static
+							
+							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+								luStatic =1
+							end  
+							
+							if (luStatic < 1) then
+								totcov = totcov + cell[lu]
+							else
+								totstatic = totstatic + cell[lu]
+							end
+						end
+						
+						for i, luAllocData in pairs (self.allocationData[rNumber]) do
+							local lu = luTypes[i]
+							local luStatic = luAllocData.static
+							
+							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+								luStatic = 1
+							end     
+							
+							if (luStatic < 1) then
+								cell[lu] = cell[lu] *((1 - totstatic)/totcov)
+							end
+						end
+					end -- if l
+				end -- totcov
+			end -- if cell.region
 		end -- for each cell
 	end
 

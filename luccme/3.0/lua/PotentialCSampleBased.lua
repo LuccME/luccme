@@ -145,17 +145,17 @@ function PotentialCSampleBased(component)
 				for j = 1, regressionNumber, 1 do
 					-- check betas within database
 					if (self.potentialData[i][j].cellUsePercentage == nil) then
-						error("cellUsePercentage on Region "..i.." LandUseType number "..j.." is missinge", 2)
+						error("cellUsePercentage on Region "..i.." LandUseType "..luccMEModel.landUseTypes[j].." is missinge", 2)
 					end 
 					for k, lu in pairs (self.potentialData[i][j].attributesPerc) do
 						if (luccMEModel.cs.cells[1][lu] == nil) then
-							error("AttributePerc "..lu.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+							error("AttributePerc "..lu.." on Region "..i.." LandUseType "..luccMEModel.landUseTypes[j].." not found within database", 2)
 						end
 					end
 
 					for k, lu in pairs (self.potentialData[i][j].attributesClass) do
 						if (luccMEModel.cs.cells[1][lu] == nil) then
-							error("AttributeClass "..lu.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+							error("AttributeClass "..lu.." on Region "..i.." LandUseType "..luccMEModel.landUseTypes[j].." not found within database", 2)
 						end
 					end
 				end -- for j

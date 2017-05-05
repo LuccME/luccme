@@ -151,7 +151,7 @@ function PotentialDSampleBased(component)
 
 					for k, lu in pairs (self.potentialData[i][j].attributesClass) do
 						if (luccMEModel.cs.cells[1][lu] == nil) then
-							error("AttributeClass "..lu.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+							error("AttributeClass "..lu.." on Region "..i.." LandUseType number "..luccMEModel.landUseTypes[j].." not found within database", 2)
 						end
 					end
 				end -- for j

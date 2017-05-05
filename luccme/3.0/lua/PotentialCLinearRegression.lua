@@ -148,23 +148,23 @@ function PotentialCLinearRegression(component)
 				for j = 1, regressionNumber, 1 do
 					-- check isLog variable
 					if(self.potentialData[i][j].isLog == nil) then
-						error("isLog variable is missing on Region "..i.." LandUseType number "..j, 2)
+						error("isLog variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
 					end
 
 					-- check const variable
 					if (self.potentialData[i][j].const == nil) then
-						error("const variable is missing on Region "..i.." LandUseType number "..j, 2)
+						error("const variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
 					end
 
 					-- check betas variable
 					if (self.potentialData[i][j].betas == nil) then
-						error("betas variable is missing on Region "..i.." LandUseType number "..j, 2)
+						error("betas variable is missing on Region "..i.." LandUseType: "..luccMEModel.landUseTypes[j], 2)
 					end
 
 					-- check betas within database
 					for k, lu in pairs (self.potentialData[i][j].betas) do
 						if (luccMEModel.cs.cells[1][k] == nil) then
-							error("Beta "..k.." on Region "..i.." LandUseType number "..j.." not found within database", 2)
+							error("Beta "..k.." on Region "..i.." LandUseType "..luccMEModel.landUseTypes[j].." not found within database", 2)
 						end
 					end
 				end -- for j

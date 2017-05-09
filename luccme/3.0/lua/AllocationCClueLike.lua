@@ -100,8 +100,10 @@ function AllocationCClueLike(component)
 		repeat
 			for rNumber = 1, regionsNumber, 1 do
 				-- compute tentative allocation
-				self:computeChange(luccMEModel, rNumber)
-				self:correctCellChange(luccMEModel, rNumber)
+				if (event:getTime() ~= luccMEModel.startTime) then
+					self:computeChange(luccMEModel, rNumber)
+					self:correctCellChange(luccMEModel, rNumber)
+				end
 			end
 
 			if (luccMEModel.useLog == true) then

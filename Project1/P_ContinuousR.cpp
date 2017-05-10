@@ -221,13 +221,16 @@ Used when a tRegion is deleted, it copies the data from the tRegions higher than
 System::Void LuccME::P_ContinuousR::moveData(DataGridView^ dgBetas, CheckBox^ cIsLog, TextBox^ tConst, TextBox^ tMinReg, TextBox^ tMaxReg, TextBox^ tRo, DataGridView^ dgBetas2, CheckBox^ cIsLog2, TextBox^ tConst2, TextBox^ tMinReg2, TextBox^ tMaxReg2, TextBox^ tRo2)
 {
 	dgBetas->Rows->Clear();
+
 	for (int i = 0; i < dgBetas2->RowCount - 1; i++) {
 		dgBetas->Rows->Add();
 		dgBetas->Rows[i]->Cells[0]->Value = dgBetas2->Rows[i]->Cells[0]->Value;
 		dgBetas->Rows[i]->Cells[1]->Value = dgBetas2->Rows[i]->Cells[1]->Value;
 	}
+
 	cIsLog->Checked = cIsLog2->Checked;
 	tConst->Text = tConst2->Text;
+
 	if (lReturn->Component == POTENTIALCSPATIALLAGREGRESSION) {
 		tMinReg->Text = tMinReg2->Text;
 		tMaxReg->Text = tMaxReg2->Text;
@@ -507,6 +510,9 @@ System::Void LuccME::P_ContinuousR::PasteClipboardValue(DataGridView^ dgView)
 	}
 }
 
+/*
+Set the components visible status ON or OFF
+*/
 System::Void LuccME::P_ContinuousR::spatialLagRegressionONOFF(bool status)
 {
 	this->Height = 674;
@@ -610,7 +616,6 @@ System::Void LuccME::P_ContinuousR::spatialLagRegressionONOFF(bool status)
 	dgBetas10->Location = Point(20, 207);
 	dgBetas10->Height = 186;
 }
-
 
 
 System::Void LuccME::P_ContinuousR::P_ContinuousR_Shown(System::Object^  sender, System::EventArgs^  e)
@@ -904,6 +909,7 @@ System::Void LuccME::P_ContinuousR::bDeleteRegression_Click(System::Object^  sen
 				break;
 			}
 		}
+
 		tcRegions->TabPages->RemoveAt(tcRegions->TabCount - 1);
 		tcRegions->TabPages[tcRegions->TabCount - 1]->Text = "+";
 		tcRegions->SelectedIndex = 0;
@@ -911,16 +917,19 @@ System::Void LuccME::P_ContinuousR::bDeleteRegression_Click(System::Object^  sen
 		for (int i = 0; i < lvLUT->Items->Count; i++) {
 			if (lTempBetas[i] != nullptr) {
 				int fulfillRegions = 0;
+				int count = 0;
 				array<int>^ lRegionsLocation = gcnew array<int>(tcRegions->TabCount);
+
 				for (int r = 0; r < lTempBetas[i]->Length; r++) {
 					if (lTempBetas[i][r] == '*') {
 						lRegionsLocation[fulfillRegions] = r;
 						fulfillRegions += 1;
 					}
 				}
-				int count = 0;
+				
 				if (fulfillRegions > tcRegions->TabCount - 1) {
 					String^ aux = lTempBetas[i]->Substring(0, lRegionsLocation[0] + 1);
+
 					for (int r = 1; r < lRegionsLocation->Length; r++) {
 						if (r < rToRemove) {
 							aux += lTempBetas[i]->Substring(lRegionsLocation[count] + 1, (lRegionsLocation[count + 1] - lRegionsLocation[count]));
@@ -934,6 +943,7 @@ System::Void LuccME::P_ContinuousR::bDeleteRegression_Click(System::Object^  sen
 							count++;
 						}
 					}
+
 					lTempBetas[i] = aux;
 				}
 			}

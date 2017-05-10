@@ -3,6 +3,9 @@
 
 using namespace System::Windows::Forms;
 
+/*
+Used on the enter focus to change default values and colors
+*/
 System::Void LuccME::P_DiscreteR::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	System::Windows::Forms::TextBox^ thisTextBox = safe_cast<System::Windows::Forms::TextBox^>(sender);

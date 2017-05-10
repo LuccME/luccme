@@ -130,6 +130,7 @@ namespace LuccME {
 		bool runnable = false;
 		bool shape = false;
 		bool lOpen = false;
+		bool gAllocUsePotReg = false;
 
 		int gDemandComponent = 0;
 		int gPotentialComponent = 0;
@@ -137,6 +138,7 @@ namespace LuccME {
 		int gAttrTime = 0;
 		int gDynTime = 0;
 		int gPotentialRegression = 1;
+		int gAllocationRegression = 1;
 
 		String^ gLandUseTypes = "";
 		String^ gLandUseNoData = "";
@@ -153,13 +155,7 @@ namespace LuccME {
 		String^ lLanguage;
 		
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
-private: System::Windows::Forms::TextBox^  tValidationRegion;
-public:
-private: System::Windows::Forms::Label^  lValidationRegion;
-private: System::Windows::Forms::CheckBox^  cbValidateAllRegions;
-
-private: System::Windows::Forms::CheckBox^  cbValidationRegionEnable;
-		 //[0] = lSelectedFolder->Text;
+		//[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
 		//[2] = tStartTime->Text;
 		//[3] = tEndTime->Text;
@@ -202,7 +198,11 @@ private: System::Windows::Forms::CheckBox^  cbValidationRegionEnable;
 				delete components;
 			}
 		}
-
+	
+	private: System::Windows::Forms::TextBox^  tValidationRegion;
+	private: System::Windows::Forms::Label^  lValidationRegion;
+	private: System::Windows::Forms::CheckBox^  cbValidateAllRegions;
+	private: System::Windows::Forms::CheckBox^  cbValidationRegionEnable;
 	private: System::Windows::Forms::Label^  lShape;
 	private: System::Windows::Forms::Button^  bShape;
 	private: System::Windows::Forms::Label^  lTerraview;

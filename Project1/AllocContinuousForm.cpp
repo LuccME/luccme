@@ -33,11 +33,13 @@ System::Void LuccME::AllocContinuousForm::bAllocationCClueLike_Click(System::Obj
 	if (check) {
 		lReturn->Component = ALLOCATIONCCLUELIKE;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
+		
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
 		allocationForm->ShowInTaskbar = false;
 		allocationForm->Text = gSAlloc + "Clue Like";
 		allocationForm->ShowDialog();
+		
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;
 		}
@@ -59,11 +61,13 @@ System::Void LuccME::AllocContinuousForm::bACLSaturation_Click(System::Object ^ 
 	if (check) {
 		lReturn->Component = ALLOCATIONCCLUELIKESATURATION;
 		A_Continuous^ allocationForm = gcnew A_Continuous(lReturn);
+		
 		allocationForm->MinimizeBox = false;
 		allocationForm->MaximizeBox = false;
 		allocationForm->ShowInTaskbar = false;
 		allocationForm->Text = gSAlloc + "Clue Like Saturation";
 		allocationForm->ShowDialog();
+		
 		if (lReturn->Return == "") {
 			lReturn->Component = NONE;
 		}

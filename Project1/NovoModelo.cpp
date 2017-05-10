@@ -453,6 +453,9 @@ System::Void LuccME::NovoModelo::checkLanguage()
 	}
 }
 
+/*
+Used on the enter focus to change default values and colors
+*/
 System::Void LuccME::NovoModelo::textBox_Enter(System::Object ^ sender, System::EventArgs ^ e)
 {
 	//Create the efect of a edited TextBox (must select this function on focus->enter property of a TextBox)
@@ -1910,6 +1913,8 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 		lAllocation->LUT = gLandUseTypes;
 		lAllocation->Component = gAllocationComponent;
 		lAllocation->Language = lLanguage;
+		lAllocation->Regression = gAllocationRegression;
+		lAllocation->PotRegression = gAllocUsePotReg;
 
 		AllocContinuousForm^ allocationForm = gcnew AllocContinuousForm(lAllocation);
 		allocationForm->MinimizeBox = false;
@@ -1920,6 +1925,8 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 		gAllocation = lAllocation->Return;
 		gAllocationLUT = gLandUseTypes;
 		gAllocationComponent = lAllocation->Component;
+		gAllocationRegression = lAllocation->Regression;
+		gAllocUsePotReg = lAllocation->PotRegression;
 
 		if (gAllocation != "") {
 			int j = 0;
@@ -1968,6 +1975,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 
 			String^ saturationIndicator = "";
 			String^ attrProtection = "";
+
 			if (gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
 				while (gAllocation[j] != ';') {
 					saturationIndicator += gAllocation[j];
@@ -1989,7 +1997,7 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 				}
 			}
 
-			array<String^>^ lines = gcnew array<String^>(count + 10);
+			array<String^>^ lines = gcnew array<String^>((count * gAllocationRegression) + 10);
 
 			if (gAllocationComponent == ALLOCATIONCCLUELIKE)
 			{
@@ -1997,13 +2005,14 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 				lines[7] = "allocationData";
 				count = 8;
 			}
-			else if(gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
+			else if (gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
 				lines[0] = "AllocationCClueLikeSaturation";
 				lines[7] = "saturationIndicator = " + saturationIndicator;
 				lines[8] = "attrProtection = " + attrProtection;
 				lines[9] = "allocationData";
 				count = 10;
 			}
+
 			lines[1] = "maxDifference = " + maxDifference;
 			lines[2] = "maxIteration = " + maxIteration;
 			lines[3] = "initialElasticity = " + initialElasticity;
@@ -2071,10 +2080,12 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 					lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
 					lines[count] = lines[count]->Replace(",", ", ");
 					lines[count] = lines[count]->Replace("=", " = ");
+					lines[count] = lines[count]->Replace("*", "");
 					count++;
 					change = 0;
 				}
 			}
+
 			if (lines[count] != "") {
 				lines[count] = String::Concat("static=", lines[count]);
 				lines[count] = lines[count]->Replace("$", ",minValue=");
@@ -2085,10 +2096,13 @@ System::Void LuccME::NovoModelo::bAllocContinuous_Click(System::Object ^ sender,
 				lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
 				lines[count] = lines[count]->Replace(",", ", ");
 				lines[count] = lines[count]->Replace("=", " = ");
+				lines[count] = lines[count]->Replace("*", "");
 			}
+
 			tbAllocation->Lines = lines;
 		}
 	}
+
 	checkLanguage();
 }
 
@@ -2438,7 +2452,9 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				checked = false;
 			}
 
+			//Writing the .lua Files
 			if (checked) {
+				//Main File
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("-- This file contains a LUCCME APPLICATION MODEL definition --");
 				sw->WriteLine("--               Compatible with LuccME 3.0                 --");
@@ -2451,7 +2467,15 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("-- Creating Terraview Project                               --");
 					sw->WriteLine("--------------------------------------------------------------");
 					sw->WriteLine("");
-					sw->WriteLine("import(\"terralib\")\n");
+					sw->WriteLine("import(\"terralib\")");
+					if (shape) {
+						sw->WriteLine("");
+						sw->WriteLine("local projFile = File(\"t3mp.tview\")");
+						sw->WriteLine("if(projFile:exists()) then");
+						sw->WriteLine("\tprojFile:delete()");
+						sw->WriteLine("end");
+						sw->WriteLine("");
+					}
 					sw->WriteLine("proj = Project {");
 					sw->WriteLine("\tfile = \"t3mp.tview\",");
 					sw->WriteLine("\tclean = true");
@@ -2714,7 +2738,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
 				
 				if (shape) {
-					sw->WriteLine("\tlocal projFile = File(\"t3mp.tview\")");
+					sw->WriteLine("\tprojFile = File(\"t3mp.tview\")");
 					sw->WriteLine("\tif(projFile:exists()) then");
 					sw->WriteLine("\t\tprojFile:delete()");
 					sw->WriteLine("\tend");
@@ -3535,6 +3559,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 	checkLanguage();
 	NovoModelo::Update();
 	
+	//Open a Model
 	if (lOpen) {
 		try {
 			bool main = false;
@@ -3550,6 +3575,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			mainFile->FilterIndex = 1;
 			mainFile->ShowHelp = true;
 
+			//Main File
 			if (mainFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 			{
 				String^ fileName = mainFile->FileName;
@@ -4384,6 +4410,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 			submodelFile->FilterIndex = 1;
 			submodelFile->ShowHelp = true;
 
+			//Submodel File
 			if (submodelFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 			{
 				String^ fileName = submodelFile->FileName;
@@ -4405,6 +4432,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				tempLine = tempLine->Replace(" ", "");
 			
 				//Demand
+				//DemandPreComputedValues
 				if (tempLine == "DemandPreComputedValues") {
 					j = 0;
 					line = sw->ReadLine();
@@ -4475,6 +4503,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//DemandComputeTwoDates
 				if (tempLine == "DemandComputeTwoDates") {
 					tempLine = "";
 					gDemandLUT = gLandUseTypes;
@@ -4535,6 +4564,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//DemandComputeThreeDates
 				if (tempLine == "DemandComputeThreeDates") {
 					tempLine = "";
 					gDemandLUT = gLandUseTypes;
@@ -4666,6 +4696,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				tempLine = line->Substring(j);
 				tempLine = tempLine->Replace(" ", "");
 
+				//Discrete Potential Components
+				//PotentialDNeighSimpleRule
 				if (tempLine == "PotentialDNeighSimpleRule{}") {
 					array<String^>^ lines = { "PotentialDNeighSimpleRule{}" };
 					tbPotential->Lines = lines;
@@ -4673,6 +4705,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					gPotentialLUT = gLandUseTypes;
 				}
 
+				//PotentialDNeighInverseDistanceRule
 				if (tempLine == "PotentialDNeighInverseDistanceRule") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALDNEIGHINVERSEDISTANCERULE;
@@ -4781,6 +4814,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//PotentialDInverseDistanceRule
 				if (tempLine == "PotentialDInverseDistanceRule") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALDINVERSEDISTANCERULE;
@@ -4889,6 +4923,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//PotentialDLogisticRegression
 				if (tempLine == "PotentialDLogisticRegression") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALDLOGISTICREGRESSION;
@@ -5010,6 +5045,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 	
+				//PotentialDLogisticRegressionNeighAttract
 				if (tempLine == "PotentialDLogisticRegressionNeighAttract") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALDLOGISTICREGRESSIONNEIGHATTRACT;
@@ -5144,6 +5180,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 				
+				//PotentialDLogisticRegressionNeighAttractRepulsion
 				if (tempLine == "PotentialDLogisticRegressionNeighAttractRepulsion") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALDLOGISTICREGRESSIONNEIGHATTRACTREPULSION;
@@ -5310,6 +5347,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				}
 
 				//Contiuous Potential Components
+				//PotentialCLinearRegression
 				if (tempLine == "PotentialCLinearRegression") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALCLINEARREGRESSION;
@@ -5351,6 +5389,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					for (int i = 0; i < nRegions; i++) {
 						for (int k = 0; k < count - 1; k++) {
 							int position = k + (nLUT*activeRegion);
+							
 							line = sw->ReadLine();
 							while (line->Contains("isLog") != TRUE) {
 								line = sw->ReadLine();
@@ -5436,6 +5475,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//PotentialCSpatialLagRegression
 				if (tempLine == "PotentialCSpatialLagRegression") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALCSPATIALLAGREGRESSION;
@@ -5450,6 +5490,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 
 					int countBraces = 0;
+
 					while (line->Contains("Allocation") != TRUE) {
 						line = sw->ReadLine();
 						if (line->Contains("{")) {
@@ -5601,6 +5642,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//PotentialCSpatialLagLinearRegressionMix
 				if (tempLine == "PotentialCSpatialLagLinearRegressionMix") {
 					gPotential = "";
 					gPotentialComponent = POTENTIALCSPATIALLAGLINEARREGRESSIONMIX;
@@ -5831,6 +5873,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//PotentialDSampleBased || PotentialCSampleBased
 				if (tempLine == "PotentialDSampleBased" || tempLine == "PotentialCSampleBased") {
 					gPotential = "";
 					if (tempLine == "PotentialDSampleBased") {
@@ -5925,6 +5968,8 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				tempLine = line->Substring(j);
 				tempLine = tempLine->Replace(" ", "");
 
+				//Discrete Allocation Components
+				//AllocationDSimpleOrdering
 				if (tempLine == "AllocationDSimpleOrdering") {
 					gAllocation = "";
 					gAllocationComponent = ALLOCATIONDSIMPLEORDERING;
@@ -5950,6 +5995,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					}
 				}
 
+				//AllocationDClueSLike || AllocationDClueSNeighOrdering
 				if (tempLine == "AllocationDClueSLike" || tempLine == "AllocationDClueSNeighOrdering") {
 					gAllocation = "";
 					if (tempLine == "AllocationDClueSLike") {
@@ -6029,6 +6075,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 					array<String^>^ lines2 = gcnew array<String^>(count + 5);
 
+					//ALLOCATIONDCLUESLIKE
 					if (gAllocation != "") {
 						if (gAllocationComponent == ALLOCATIONDCLUESLIKE) {
 							lines2[0] = "AllocationDClueSLike";
@@ -6086,6 +6133,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				}
 
 				//Contiouos Allocation Components
+				//AllocationCClueLike
 				if (tempLine == "AllocationCClueLike") {
 					gAllocation = "";
 					gAllocationComponent = ALLOCATIONCCLUELIKE;
@@ -6170,91 +6218,134 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						j++;
 					}
 
-					tempLine = "";
-					line = sw->ReadLine();
-					while (line != "}") {
+					int countBraces = 0;
+
+					while (sw->EndOfStream != TRUE) {
 						line = sw->ReadLine();
-						line = line->Replace(" ", "");
-						line = line->Replace("\t", "");
-						line = line->Replace("--", "$");
-						j = 0;
-						while (line[j] != '$' && j < line->Length - 1) {
-							tempLine += line[j];
-							j++;
+						if (line->Contains("{")) {
+							countBraces++;
 						}
 					}
 
-					tempLine = tempLine->Replace("--", "");
-					tempLine = tempLine->Replace("Region 1", "");
-					tempLine = tempLine->Replace("Region1", "");
-					tempLine = tempLine->Replace("\t", "");
-					tempLine = tempLine->Replace("\n", "");
-					tempLine = tempLine->Replace("{{{", "{");
-					tempLine = tempLine->Replace("{{", "{");
-					tempLine = tempLine->Replace("{", "");
-					tempLine = tempLine->Replace("}}}", "}");
-					tempLine = tempLine->Replace("}}", "}");
-					tempLine = tempLine->Replace("}", ";");
-					tempLine = tempLine->Replace(";,", ";");
-					tempLine = tempLine->Replace(" ", "");
-					tempLine = tempLine->Replace("static=", "");
-					tempLine = tempLine->Replace("minValue=", "");
-					tempLine = tempLine->Replace("maxValue=", "");
-					tempLine = tempLine->Replace("minChange=", "");
-					tempLine = tempLine->Replace("maxChange=", "");
-					tempLine = tempLine->Replace("changeLimiarValue=", "");
-					tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
-					tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
+					countBraces -= 1; //To remove the potencialData brace
 
-					gAllocation += tempLine;
-					gAllocation = gAllocation->Substring(0, gAllocation->Length - 1);
+					int nLUT = countCaracter(gAllocationLUT, ',') + 1;
+					int bracesForLUT = 1;
+					int nRegions = countBraces / (bracesForLUT*(nLUT+1));
+					int activeRegion = 0;
+					array<String^>^ auxAllocData = gcnew array<String^>(nRegions*nLUT);
+
+					gAllocationRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					line = sw->ReadLine();
+					while (line->Contains("allocationData") != TRUE) {
+						line = sw->ReadLine();
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						tempLine = "";
+						line = sw->ReadLine();
+						while (line != "}," && line != "}") {
+							line = sw->ReadLine();
+							if (line->Contains("-- Region")) {
+								line = sw->ReadLine();
+							}
+							line = line->Replace(" ", "");
+							line = line->Replace("\t", "");
+							line = line->Replace("--", "$");
+							j = 0;
+							while (line[j] != '$' && j < line->Length - 1) {
+								tempLine += line[j];
+								j++;
+							}
+						}
+
+						tempLine = tempLine->Replace("--", "");
+						tempLine = tempLine->Replace("\t", "");
+						tempLine = tempLine->Replace("\n", "");
+						tempLine = tempLine->Replace("{{{", "{");
+						tempLine = tempLine->Replace("{{", "{");
+						tempLine = tempLine->Replace("{", "");
+						tempLine = tempLine->Replace("}}}", "}");
+						tempLine = tempLine->Replace("}}", "}");
+						tempLine = tempLine->Replace("}", ";");
+						tempLine = tempLine->Replace(";,", ";");
+						tempLine = tempLine->Replace(" ", "");
+						tempLine = tempLine->Replace("static=", "");
+						tempLine = tempLine->Replace("minValue=", "");
+						tempLine = tempLine->Replace("maxValue=", "");
+						tempLine = tempLine->Replace("minChange=", "");
+						tempLine = tempLine->Replace("maxChange=", "");
+						tempLine = tempLine->Replace("changeLimiarValue=", "");
+						tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
+						tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
+
+						gAllocation += tempLine;
+						gAllocation = gAllocation->Substring(0, gAllocation->Length - 1);
+						gAllocation += "*";
+					}
 
 					if (gAllocation != "") {
 						int j = 0;
 
 						String^ maxDifference = "";
 						while (gAllocation[j] != ';') {
-							maxDifference += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								maxDifference += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ maxIteration = "";
 						while (gAllocation[j] != ';') {
-							maxIteration += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								maxIteration += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ initialElasticity = "";
 						while (gAllocation[j] != ';') {
-							initialElasticity += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								initialElasticity += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ minElasticity = "";
 						while (gAllocation[j] != ';') {
-							minElasticity += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								minElasticity += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ maxElasticity = "";
 						while (gAllocation[j] != ';') {
-							maxElasticity += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								maxElasticity += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ complementarLU = "";
 						while (gAllocation[j] != ';') {
-							complementarLU += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								complementarLU += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
-						array<String^>^ lines = gcnew array<String^>(count + 10);
+						array<String^>^ lines = gcnew array<String^>((count * nRegions) + 8);
 
 						lines[0] = "AllocationCClueLike";
 
@@ -6327,6 +6418,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 								lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
 								lines[count] = lines[count]->Replace(",", ", ");
 								lines[count] = lines[count]->Replace("=", " = ");
+								lines[count] = lines[count]->Replace("*", "");
 								count++;
 								change = 0;
 							}
@@ -6341,12 +6433,15 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
 							lines[count] = lines[count]->Replace(",", ", ");
 							lines[count] = lines[count]->Replace("=", " = ");
+							lines[count] = lines[count]->Replace("*", "");
 						}
+
 						tbAllocation->Lines = lines;
 					}
 				
 				}
 
+				//AllocationCClueLikeSaturation
 				if (tempLine == "AllocationCClueLikeSaturation") {
 					gAllocation = "";
 					gAllocationComponent = ALLOCATIONCCLUELIKESATURATION;
@@ -6457,86 +6552,129 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						j++;
 					}
 
-					tempLine = "";
-					line = sw->ReadLine();
-					while (line != "}") {
+					int countBraces = 0;
+
+					while (sw->EndOfStream != TRUE) {
 						line = sw->ReadLine();
-						line = line->Replace(" ", "");
-						line = line->Replace("\t", "");
-						line = line->Replace("--", "$");
-						j = 0;
-						while (line[j] != '$' && j < line->Length - 1) {
-							tempLine += line[j];
-							j++;
+						if (line->Contains("{")) {
+							countBraces++;
 						}
 					}
 
-					tempLine = tempLine->Replace("--", "");
-					tempLine = tempLine->Replace("Region 1", "");
-					tempLine = tempLine->Replace("Region1", "");
-					tempLine = tempLine->Replace("\t", "");
-					tempLine = tempLine->Replace("\n", "");
-					tempLine = tempLine->Replace("{{{", "{");
-					tempLine = tempLine->Replace("{{", "{");
-					tempLine = tempLine->Replace("{", "");
-					tempLine = tempLine->Replace("}}}", "}");
-					tempLine = tempLine->Replace("}}", "}");
-					tempLine = tempLine->Replace("}", ";");
-					tempLine = tempLine->Replace(";,", ";");
-					tempLine = tempLine->Replace(" ", "");
-					tempLine = tempLine->Replace("static=", "");
-					tempLine = tempLine->Replace("minValue=", "");
-					tempLine = tempLine->Replace("maxValue=", "");
-					tempLine = tempLine->Replace("minChange=", "");
-					tempLine = tempLine->Replace("maxChange=", "");
-					tempLine = tempLine->Replace("changeLimiarValue=", "");
-					tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
-					tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
+					countBraces -= 1; //To remove the potencialData brace
 
-					gAllocation += tempLine;
-					gAllocation = gAllocation->Substring(0, gAllocation->Length - 1);
+					int nLUT = countCaracter(gAllocationLUT, ',') + 1;
+					int bracesForLUT = 1;
+					int nRegions = countBraces / (bracesForLUT*(nLUT + 1));
+					int activeRegion = 0;
+					array<String^>^ auxAllocData = gcnew array<String^>(nRegions*nLUT);
+
+					gAllocationRegression = nRegions;
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					line = sw->ReadLine();
+					while (line->Contains("allocationData") != TRUE) {
+						line = sw->ReadLine();
+					}
+
+					for (int i = 0; i < nRegions; i++) {
+						tempLine = "";
+						line = sw->ReadLine();
+						while (line != "}," && line != "}") {
+							line = sw->ReadLine();
+							if (line->Contains("-- Region")) {
+								line = sw->ReadLine();
+							}
+							line = line->Replace(" ", "");
+							line = line->Replace("\t", "");
+							line = line->Replace("--", "$");
+							j = 0;
+							while (line[j] != '$' && j < line->Length - 1) {
+								tempLine += line[j];
+								j++;
+							}
+						}
+
+						tempLine = tempLine->Replace("--", "");
+						tempLine = tempLine->Replace("\t", "");
+						tempLine = tempLine->Replace("\n", "");
+						tempLine = tempLine->Replace("{{{", "{");
+						tempLine = tempLine->Replace("{{", "{");
+						tempLine = tempLine->Replace("{", "");
+						tempLine = tempLine->Replace("}}}", "}");
+						tempLine = tempLine->Replace("}}", "}");
+						tempLine = tempLine->Replace("}", ";");
+						tempLine = tempLine->Replace(";,", ";");
+						tempLine = tempLine->Replace(" ", "");
+						tempLine = tempLine->Replace("static=", "");
+						tempLine = tempLine->Replace("minValue=", "");
+						tempLine = tempLine->Replace("maxValue=", "");
+						tempLine = tempLine->Replace("minChange=", "");
+						tempLine = tempLine->Replace("maxChange=", "");
+						tempLine = tempLine->Replace("changeLimiarValue=", "");
+						tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
+						tempLine = tempLine->Replace("maxChangeAboveLimiar=", "");
+
+						gAllocation += tempLine;
+						gAllocation = gAllocation->Substring(0, gAllocation->Length - 1);
+						gAllocation += "*";
+					}
 
 					if (gAllocation != "") {
 						int j = 0;
 
 						String^ maxDifference = "";
 						while (gAllocation[j] != ';') {
-							maxDifference += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								maxDifference += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ maxIteration = "";
 						while (gAllocation[j] != ';') {
-							maxIteration += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								maxIteration += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ initialElasticity = "";
 						while (gAllocation[j] != ';') {
-							initialElasticity += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								initialElasticity += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ minElasticity = "";
 						while (gAllocation[j] != ';') {
-							minElasticity += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								minElasticity += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ maxElasticity = "";
 						while (gAllocation[j] != ';') {
-							maxElasticity += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								maxElasticity += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
 
 						String^ complementarLU = "";
 						while (gAllocation[j] != ';') {
-							complementarLU += gAllocation[j];
+							if (gAllocation[j] != '*') {
+								complementarLU += gAllocation[j];
+							}
 							j++;
 						}
 						j++;
@@ -6545,13 +6683,17 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						String^ attrProtection = "";
 						if (gAllocationComponent == ALLOCATIONCCLUELIKESATURATION) {
 							while (gAllocation[j] != ';') {
-								saturationIndicator += gAllocation[j];
+								if (gAllocation[j] != '*') {
+									saturationIndicator += gAllocation[j];
+								}
 								j++;
 							}
 							j++;
 
 							while (gAllocation[j] != ';') {
-								attrProtection += gAllocation[j];
+								if (gAllocation[j] != '*') {
+									attrProtection += gAllocation[j];
+								}
 								j++;
 							}
 							j++;
@@ -6561,7 +6703,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 						count += countCaracter(gAllocationLUT, ',');
 						
-						array<String^>^ lines = gcnew array<String^>(count + 10);
+						array<String^>^ lines = gcnew array<String^>((count * nRegions) + 10);
 
 						lines[0] = "AllocationCClueLikeSaturation";
 						lines[1] = "maxDifference = " + maxDifference;
@@ -6635,6 +6777,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 								lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
 								lines[count] = lines[count]->Replace(",", ", ");
 								lines[count] = lines[count]->Replace("=", " = ");
+								lines[count] = lines[count]->Replace("*", "");
 								count++;
 								change = 0;
 							}
@@ -6649,7 +6792,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 							lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
 							lines[count] = lines[count]->Replace(",", ", ");
 							lines[count] = lines[count]->Replace("=", " = ");
+							lines[count] = lines[count]->Replace("*", "");
 						}
+
 						tbAllocation->Lines = lines;
 					}
 				}
@@ -6659,6 +6804,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				submodel = true;
 			}
 		
+			//Check what was loaded
 			if (main && submodel && imported) {
 				if (gPotentialComponent > NUMDISCPOTCOMP && (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 					MessageBox::Show(gSPotContAlocDisc, gSPotContAlocDiscTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);

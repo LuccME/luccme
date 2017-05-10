@@ -2,6 +2,9 @@
 using namespace System;
 using namespace System::Collections::Generic;
 
+/*
+Struct to create or edit a Model Form
+*/
 public ref class cReturn
 {
 public:
@@ -14,6 +17,9 @@ public:
 	}
 };
 
+/*
+Struct for Pre Computed Value Demand Component
+*/
 public ref class cReturnPCVINPE
 {
 public:
@@ -36,6 +42,9 @@ public:
 	}
 };
 
+/*
+Struct for Computed Input Two Maps Demand Component
+*/
 public ref class cReturnCITwoMP
 {
 public:
@@ -56,6 +65,9 @@ public:
 	}
 };
 
+/*
+Struct for Computed Input Three Maps Demand Component
+*/
 public ref class cReturnCIThreeMP
 {
 public:
@@ -78,6 +90,9 @@ public:
 	}
 };
 
+/*
+Struct for Potential Components
+*/
 public ref class cReturnPotential
 {
 public:
@@ -97,18 +112,26 @@ public:
 	}
 };
 
+/*
+Struct for Allocation Components
+*/
 public ref class cReturnAllocation
 {
 public:
 	String^ Return;
 	String^ LUT;
-	int Component;
 	String^ Language;
+	int Component;
+	int Regression;
+	bool PotRegression;
+
 	cReturnAllocation()
 	{
 		Return = "";
 		LUT = "";
 		Component = 0;
 		Language = "";
+		Regression = 1;
+		PotRegression = false;
 	}
 };

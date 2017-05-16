@@ -43,7 +43,8 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		//tpCellularSpace
 		bShape->Text = "Select";
 		lCellSpaceName->Text = "    Cellular Space Output Name";
-		lCellSpaceResolution->Text = "Resolution";
+		lCellSpaceResolution->Text = "Spatial Resolution";
+		lM->Text = "meters";
 		cbUseCS->Text = "Use existing Cellular Space";
 		if (!csExist) {
 			tpCellularSpace->Text = "Creating Cellular Space";
@@ -55,13 +56,14 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		}
 		
 		//tpAttributeFill
-		tpAttributeFill->Text = "Attributes to Fill";
+		tpAttributeFill->Text = "Data to Fill";
 		bDeleteAttribute->Text = "Remove";
 		lOperationName->Text = "    Select an Operation";
 		lOperationOut->Text = "Output Attribute";
-		lSelectOperation->Text = "         Input Attribute";
-		lDefaultOperation->Text = "     Dummy Value";
+		lSelectOperation->Text = "Input Attribute";
+		lDefaultOperation->Text = "Default Value";
 		lAreaOperation->Text = "Use Area Geometry";
+		lDummyOperation->Text = "Dummy Value";
 
 		//tpMakeFiles
 		tpMakeFiles->Text = "Make File";
@@ -74,6 +76,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSShapeTitle = "Select a Shape File";
 		gSShapeFilter = "Shape File (*.shp)|*.shp";
 		gSAttributes = "Attributes";
+		gSFiles = "Files";
 		gSFileFormatError = "File added is not suported: ";
 		gSFileFormatErrorTitle = "Invalid file type";
 		gSAttributesTitle = "Select the Attribute(s) File(s)";
@@ -109,6 +112,8 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSEditing = "Editing a Script";
 		gSImportError = "Incloplete file, can't import it.";
 		gSImportErrorTitle = "Error - Importing Files";
+		gSGeometry = "Select the data geometry representation";
+		gSGeometryTitle = "Error - Select a Geometry Representation";
 	}
 	else {
 		this->Text = "Criando um Novo Script";
@@ -134,9 +139,11 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		lScriptName->Text = "Nome do Script";
 
 		//tpCellularSpace
+
 		bShape->Text = "Selecionar";
 		lCellSpaceName->Text = "Nome de Saída do Espaço Celular";
-		lCellSpaceResolution->Text = "Resolução";
+		lCellSpaceResolution->Text = "Resolução Espacial";
+		lM->Text = "metros";
 		cbUseCS->Text = "Usar Espaço Celular existente";
 		if (!csExist) {
 			tpCellularSpace->Text = "Criando o Espaço Celular";
@@ -148,13 +155,14 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		}
 
 		//tpAttributeFill
-		tpAttributeFill->Text = "Atributos de Preenchimento";
+		tpAttributeFill->Text = "Dados para Preenchimento";
 		bDeleteAttribute->Text = "Remover";
 		lOperationName->Text = "Selecione uma Operação";
 		lOperationOut->Text = "Atributo de Saída";
 		lSelectOperation->Text = "Atributo de Entrada";
-		lDefaultOperation->Text = "Valor de Dummy";
+		lDefaultOperation->Text = "Valor Default";
 		lAreaOperation->Text = "Usar Geometria da Área";
+		lDummyOperation->Text = "Valor Dummy";
 
 		//tpMakeFiles
 		tpMakeFiles->Text = "Gerar Arquivo";
@@ -167,6 +175,7 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSShapeTitle = "Escolha o arquivo Shape";
 		gSShapeFilter = "Arquivo Shape (*.shp)|*.shp";
 		gSAttributes = "Atributos";
+		gSFiles = "Arquivos";
 		gSFileFormatError = "Arquivo adicionado não é suportado: ";
 		gSFileFormatErrorTitle = "Tipo de Arquivo inválido";
 		gSAttributesTitle = "Selecione os Arquivos dos Atributos";
@@ -202,20 +211,26 @@ System::Void CellFulfill::NovoModelo::checkLanguage()
 		gSEditing = "Editando um Script";
 		gSImportError = "Arquivo incompleto, não pode ser carregado.";
 		gSImportErrorTitle = "Erro - Importando Arquivos";
+		gSGeometry = "Selecione a representação geométrica do dado.";
+		gSGeometryTitle = "Erro - Selecione a Representação Geométrica";
 	}
 }
 
 /*
-Set the Operation VIsual OFF
+Set the Operation Visual OFF
 */
 System::Void CellFulfill::NovoModelo::operationVisualOFF()
 {
 	cbOperation->Items->Clear();
 	cbOperation->Visible = false;
+
+	lGeometricRepresentation->Visible = false;
+	gbGeometricRepresentation->Visible = false;
 	
 	lOperationName->Visible = false;
 	lOperationOut->Visible = false;
 	lDefaultOperation->Visible = false;
+	lDummyOperation->Visible = false;
 	lSelectOperation->Visible = false;
 	lAreaOperation->Visible = false;
 
@@ -230,12 +245,14 @@ System::Void CellFulfill::NovoModelo::operationVisualOFF()
 	tDefaultOperation->Text = "";
 	tDefaultOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
 	tDefaultOperation->Visible = false;
+
+	tDummyOperation->Text = "";
+	tDummyOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
+	tDummyOperation->Visible = false;
 	
 	rbFalseOperation->Checked = true;
 	rbTrueOperation->Visible = false;
 	rbFalseOperation->Visible = false;
-	
-	
 	
 	for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
 		lvAttributesToFill->Items[i]->Selected = false;
@@ -251,7 +268,7 @@ System::Void CellFulfill::NovoModelo::operationVisualOFF()
 }
 
 /*
-Return the index for an Vector Operation
+Return the index for a file on AttributesToFill
 */
 System::Int32 CellFulfill::NovoModelo::attributeToindex()
 {
@@ -261,14 +278,14 @@ System::Int32 CellFulfill::NovoModelo::attributeToindex()
 			break;
 		}
 	}
-
+	
 	return i;
 }
 
 /*
-Return the Operation name based on the index
+Return the Operation name based on the index for Polygon Vector
 */
-System::String^ CellFulfill::NovoModelo::vectorOperationToName(int operation)
+System::String^ CellFulfill::NovoModelo::polygonOperationToName(int operation)
 {
 	if (operation == 0) {
 		return "coverage";
@@ -314,7 +331,52 @@ System::String^ CellFulfill::NovoModelo::vectorOperationToName(int operation)
 }
 
 /*
-Return the Operation name based on the index
+Return the Operation name based on the index for Non Polygon Vector
+*/
+System::String^ CellFulfill::NovoModelo::nonPolygonOperationToName(int operation)
+{
+	if (operation == 0) {
+		return "coverage";
+	}
+	else if (operation == 1) {
+		return "average";
+	}
+	else if (operation == 2) {
+		return "distance";
+	}
+	else if (operation == 3) {
+		return "presence";
+	}
+	else if (operation == 4) {
+		return "mode";
+	}
+	else if (operation == 5) {
+		return "maximum";
+	}
+	else if (operation == 6) {
+		return "minimum";
+	}
+	else if (operation == 7) {
+		return "sum";
+	}
+	else if (operation == 8) {
+		return "count";
+	}
+	else if (operation == 9) {
+		return "length";
+	}
+	else if (operation == 10) {
+		return "stdev";
+	}
+	else if (operation == 11) {
+		return "nearest";
+	}
+
+	return "";
+}
+
+/*
+Return the Operation name based on the index for Raster
 */
 System::String^ CellFulfill::NovoModelo::rasterOperationToName(int operation)
 {
@@ -344,9 +406,9 @@ System::String^ CellFulfill::NovoModelo::rasterOperationToName(int operation)
 }
 
 /*
-Return the index for an Vector Operation 
+Return the index for a Polygon Vector Operation 
 */
-System::Int32 CellFulfill::NovoModelo::vectorOperationToindex(String^ operation)
+System::Int32 CellFulfill::NovoModelo::polygonOperationToindex(String^ operation)
 {
 	if (operation->Equals("coverage")) {
 		return 0;
@@ -392,7 +454,52 @@ System::Int32 CellFulfill::NovoModelo::vectorOperationToindex(String^ operation)
 }
 
 /*
-Return the index for an Raster Operation
+Return the index for a Non Polygon Vector Operation
+*/
+System::Int32 CellFulfill::NovoModelo::nonPolygonOperationToindex(String^ operation)
+{
+	if (operation->Equals("coverage")) {
+		return 0;
+	}
+	else if (operation->Equals("average")) {
+		return 1;
+	}
+	else if (operation->Equals("distance")) {
+		return 2;
+	}
+	else if (operation->Equals("presence")) {
+		return 3;
+	}
+	else if (operation->Equals("mode")) {
+		return 4;
+	}
+	else if (operation->Equals("maximum")) {
+		return 5;
+	}
+	else if (operation->Equals("minimum")) {
+		return 6;
+	}
+	else if (operation->Equals("sum")) {
+		return 7;
+	}
+	else if (operation->Equals("count")) {
+		return 8;
+	}
+	else if (operation->Equals("length")) {
+		return 9;
+	}
+	else if (operation->Equals("stdev")) {
+		return 10;
+	}
+	else if (operation->Equals("nearest")) {
+		return 11;
+	}
+
+	return -1;
+}
+
+/*
+Return the index for a Raster Operation
 */
 System::Int32 CellFulfill::NovoModelo::rasterOperationToindex(String^ operation)
 {
@@ -514,7 +621,7 @@ System::Void CellFulfill::NovoModelo::tabControl1_SelectedIndexChanged(System::O
 			lvAttributesToFill->Clear();
 			lvAttributesToFill->View = View::Details;
 			lvAttributesToFill->GridLines = true;
-			lvAttributesToFill->Columns->Add(gSAttributes, lvAttributesToFill->Width - 50, HorizontalAlignment::Left);
+			lvAttributesToFill->Columns->Add(gSFiles, lvAttributesToFill->Width - 50, HorizontalAlignment::Left);
 			lvAttributesToFill->Columns->Add("Status", 47, HorizontalAlignment::Center);
 		}
 	}
@@ -543,7 +650,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_DragEnter(System::Objec
 		if (filePaths != nullptr && filePaths->Length > 0) {
 			for (int i = 0; i < filePaths->Length; i++) {
 				if (filePaths[i]->Contains(".shp") || filePaths[i]->Contains(".tif")) {
-					array<String^>^ attributeToList = { filePaths[i], "", "", "", "", "" };
+					array<String^>^ attributeToList = { filePaths[i], "", "", "", "", "", "", "" };
 					attributeList->Add(attributeToList);
 					lastSlash = 0;
 					for (int j = 0; j < filePaths[i]->Length; j++) {
@@ -591,134 +698,320 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 		tSelectedAttribute->Visible = true;
 		lvAttributesToFill->Visible = false;
 		
+		//Vector
 		if (lvAttributesToFill->Items[i]->Text->Contains(".shp")) {
+			lOperationName->Location = System::Drawing::Point(388, 105);
+			cbOperation->Location = System::Drawing::Point(362, 131);
+			lOperationOut->Location = System::Drawing::Point(328, 176);
+			tOperationOut->Location = System::Drawing::Point(482, 178);
+			lSelectOperation->Location = System::Drawing::Point(309, 213);
+			tSelectOperation->Location = System::Drawing::Point(482, 215);
+			lAreaOperation->Location = System::Drawing::Point(320, 251);
+			rbTrueOperation->Location = System::Drawing::Point(534, 253);
+			rbFalseOperation->Location = System::Drawing::Point(583, 253);
+
 			cbOperation->Items->Clear();
-			cbOperation->Items->AddRange(vectorList);
-			
+
+			rbLine->Checked = false;
+			rbDot->Checked = false;
+			rbPolygon->Checked = false;
+		
+			lGeometricRepresentation->Visible = true;
+			gbGeometricRepresentation->Visible = true;
 			lOperationName->Visible = true;
 			cbOperation->Visible = true;
 			bSaveOperation->Visible = true;
 
 			array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[i]);
+
+			if (dataTemp[AS_SHPTYPE] != "" && dataTemp[AS_SHPTYPE]->Equals("polygon")) {
+				rbPolygon->Checked = true;
+			} else if (dataTemp[AS_SHPTYPE] != "" && dataTemp[AS_SHPTYPE]->Equals("line")) {
+				rbLine->Checked = true;
+			} else if (dataTemp[AS_SHPTYPE] != "" && dataTemp[AS_SHPTYPE]->Equals("dot")) {
+				rbDot->Checked = true;
+			}
 			
 			if (dataTemp[AS_OPERATION] != "") {
-				cbOperation->SelectedIndex = vectorOperationToindex(dataTemp[AS_OPERATION]);
-				switch (cbOperation->SelectedIndex)
-				{
-				case 0:
-				case 5:
-				case 6:
-				case 7:
-				case 11:
-					if (dataTemp[AS_OUTPUT] != "") {
-						tOperationOut->Text = dataTemp[AS_OUTPUT];
-						tOperationOut->ForeColor = System::Drawing::Color::Black;
-					}
-					if (dataTemp[AS_SELECT] != "") {
-						tSelectOperation->Text = dataTemp[AS_SELECT];
-						tSelectOperation->ForeColor = System::Drawing::Color::Black;
-					}
-					if (dataTemp[AS_DEFAULT] != "") {
-						tDefaultOperation->Text = dataTemp[AS_DEFAULT];
-						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+				if (rbPolygon->Checked) {
+					cbOperation->Items->AddRange(polygonList);
+					cbOperation->SelectedIndex = polygonOperationToindex(dataTemp[AS_OPERATION]);
 
-					}
-					lOperationName->Visible = true;
-					lOperationOut->Visible = true;
-					tOperationOut->Visible = true;
-					lSelectOperation->Visible = true;
-					tSelectOperation->Visible = true;
-					lDefaultOperation->Visible = true;
-					tDefaultOperation->Visible = true;
-					bSaveOperation->Visible = true;
-					lAreaOperation->Visible = false;
-					rbTrueOperation->Visible = false;
-					rbFalseOperation->Visible = false;
-					break;
-				case 1:
-				case 8:
-				case 12:
-					if (dataTemp[AS_OUTPUT] != "") {
-						tOperationOut->Text = dataTemp[AS_OUTPUT];
-						tOperationOut->ForeColor = System::Drawing::Color::Black;
-					}
-					if (dataTemp[AS_SELECT] != "") {
-						tSelectOperation->Text = dataTemp[AS_SELECT];
-						tSelectOperation->ForeColor = System::Drawing::Color::Black;
-					}
-					if (dataTemp[AS_AREA] != "") {
-						if (dataTemp[AS_AREA] == "true") {
-							rbTrueOperation->Checked = true;
+					switch (cbOperation->SelectedIndex)
+					{
+					case P_COVERAGE:
+					case P_MODE:
+					case P_MAXIMUM:
+					case P_MINIMUM:
+					case P_STDEV:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
 						}
-						else {
-							rbFalseOperation->Checked = true;
+
+						if (dataTemp[AS_SELECT] != "") {
+							tSelectOperation->Text = dataTemp[AS_SELECT];
+							tSelectOperation->ForeColor = System::Drawing::Color::Black;
 						}
+
+						if (dataTemp[AS_DEFAULT] != "") {
+							tDefaultOperation->Text = dataTemp[AS_DEFAULT];
+							tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = true;
+						tSelectOperation->Visible = true;
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						lAreaOperation->Visible = false;
+						rbTrueOperation->Visible = false;
+						rbFalseOperation->Visible = false;
+						break;
+					case P_AVERAGE:
+					case P_SUM:
+					case P_NEAREST:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_SELECT] != "") {
+							tSelectOperation->Text = dataTemp[AS_SELECT];
+							tSelectOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_AREA] != "") {
+							if (dataTemp[AS_AREA] == "true") {
+								rbTrueOperation->Checked = true;
+							}
+							else {
+								rbFalseOperation->Checked = true;
+							}
+						}
+
+						if (dataTemp[AS_DEFAULT] != "") {
+							tDefaultOperation->Text = dataTemp[AS_DEFAULT];
+							tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = true;
+						tSelectOperation->Visible = true;
+
+						if (rbPolygon->Checked) {
+							lAreaOperation->Visible = true;
+							rbTrueOperation->Visible = true;
+							rbFalseOperation->Visible = true;
+						}
+
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						break;
+					default:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = false;
+						tSelectOperation->Visible = false;
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						lAreaOperation->Visible = false;
+						rbTrueOperation->Visible = false;
+						rbFalseOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						break;
 					}
-					if (dataTemp[AS_DEFAULT] != "") {
-						tDefaultOperation->Text = dataTemp[AS_DEFAULT];
-						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
-					}
-					lOperationName->Visible = true;
-					lOperationOut->Visible = true;
-					tOperationOut->Visible = true;
-					lSelectOperation->Visible = true;
-					tSelectOperation->Visible = true;
-					lAreaOperation->Visible = true;
-					rbTrueOperation->Visible = true;
-					rbFalseOperation->Visible = true;
-					lDefaultOperation->Visible = true;
-					tDefaultOperation->Visible = true;
-					bSaveOperation->Visible = true;
-					break;
-				default:
-					if (dataTemp[AS_OUTPUT] != "") {
-						tOperationOut->Text = dataTemp[AS_OUTPUT];
-						tOperationOut->ForeColor = System::Drawing::Color::Black;
-					}
-					lOperationName->Visible = true;
-					lOperationOut->Visible = true;
-					tOperationOut->Visible = true;
-					lSelectOperation->Visible = false;
-					tSelectOperation->Visible = false;
-					lDefaultOperation->Visible = false;
-					tDefaultOperation->Visible = false;
-					lAreaOperation->Visible = false;
-					rbTrueOperation->Visible = false;
-					rbFalseOperation->Visible = false;
-					bSaveOperation->Visible = true;
-					break;
 				}
+				else {
+					cbOperation->Items->AddRange(nonPolygonList);
+					cbOperation->SelectedIndex = nonPolygonOperationToindex(dataTemp[AS_OPERATION]);
+
+					switch (cbOperation->SelectedIndex)
+					{
+					case NP_COVERAGE:
+					case NP_MODE:
+					case NP_MAXIMUM:
+					case NP_MINIMUM:
+					case NP_STDEV:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_SELECT] != "") {
+							tSelectOperation->Text = dataTemp[AS_SELECT];
+							tSelectOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_DEFAULT] != "") {
+							tDefaultOperation->Text = dataTemp[AS_DEFAULT];
+							tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = true;
+						tSelectOperation->Visible = true;
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						lAreaOperation->Visible = false;
+						rbTrueOperation->Visible = false;
+						rbFalseOperation->Visible = false;
+						break;
+					case NP_AVERAGE:
+					case NP_SUM:
+					case NP_NEAREST:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_SELECT] != "") {
+							tSelectOperation->Text = dataTemp[AS_SELECT];
+							tSelectOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_AREA] != "") {
+							if (dataTemp[AS_AREA] == "true") {
+								rbTrueOperation->Checked = true;
+							}
+							else {
+								rbFalseOperation->Checked = true;
+							}
+						}
+
+						if (dataTemp[AS_DEFAULT] != "") {
+							tDefaultOperation->Text = dataTemp[AS_DEFAULT];
+							tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = true;
+						tSelectOperation->Visible = true;
+
+						if (rbPolygon->Checked) {
+							lAreaOperation->Visible = true;
+							rbTrueOperation->Visible = true;
+							rbFalseOperation->Visible = true;
+						}
+
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						break;
+					default:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = false;
+						tSelectOperation->Visible = false;
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						lAreaOperation->Visible = false;
+						rbTrueOperation->Visible = false;
+						rbFalseOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						break;
+					}
+				}
+				
+
+				
 			}
 		}
+		//Raster
 		else {
+			int yDelta = 10;
+			lOperationName->Location = System::Drawing::Point(388, 95 - yDelta);
+			cbOperation->Location = System::Drawing::Point(362, 121 - yDelta);
+			lOperationOut->Location = System::Drawing::Point(328, 176 - yDelta);
+			tOperationOut->Location = System::Drawing::Point(482, 178 - yDelta);
+			lDefaultOperation->Location = System::Drawing::Point(360, 213 - yDelta);
+			tDefaultOperation->Location = System::Drawing::Point(482, 215 - yDelta);
+			lDummyOperation->Location = System::Drawing::Point(360, 249 - yDelta);
+			tDummyOperation->Location = System::Drawing::Point(483, 251 - yDelta);
+			lAreaOperation->Location = System::Drawing::Point(320, 300 - yDelta);
+			rbTrueOperation->Location = System::Drawing::Point(534, 303 - yDelta);
+			rbFalseOperation->Location = System::Drawing::Point(583, 303 - yDelta);
+
 			cbOperation->Items->Clear();
 			cbOperation->Items->AddRange(rasterList);
+
+			lGeometricRepresentation->Visible = false;
+			gbGeometricRepresentation->Visible = false;
 			cbOperation->Visible = true;
 			lOperationName->Visible = true;
+			
 			array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[i]);
+			
 			if (dataTemp[AS_OPERATION] != "") {
 				cbOperation->SelectedIndex = rasterOperationToindex(dataTemp[AS_OPERATION]);
 				switch (cbOperation->SelectedIndex)
 				{
-				case 0:
-				case 2:
-				case 3:
-				case 4:
-				case 6:
+				case COVERAGE:
+				case MODE:
+				case MAXIMUM:
+				case MINIMUM:
+				case STDEV:
 					if (dataTemp[AS_OUTPUT] != "") {
 						tOperationOut->Text = dataTemp[AS_OUTPUT];
 						tOperationOut->ForeColor = System::Drawing::Color::Black;
 					}
+					
 					if (dataTemp[AS_DEFAULT] != "") {
 						tDefaultOperation->Text = dataTemp[AS_DEFAULT];
 						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
 
 					}
+					
+					if (dataTemp[AS_DUMMY] != "") {
+						tDefaultOperation->Text = dataTemp[AS_DUMMY];
+						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+
+					}
+					
 					lOperationName->Visible = true;
 					lOperationOut->Visible = true;
 					tOperationOut->Visible = true;
 					lDefaultOperation->Visible = true;
 					tDefaultOperation->Visible = true;
+					lDummyOperation->Visible = true;
+					tDummyOperation->Visible = true;
 					bSaveOperation->Visible = true;
 					lSelectOperation->Visible = false;
 					tSelectOperation->Visible = false;
@@ -726,16 +1019,18 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					rbTrueOperation->Visible = false;
 					rbFalseOperation->Visible = false;
 					break;
-				case 1:
-				case 5:
+				case AVERAGE:
+				case SUM:
 					if (dataTemp[AS_OUTPUT] != "") {
 						tOperationOut->Text = dataTemp[AS_OUTPUT];
 						tOperationOut->ForeColor = System::Drawing::Color::Black;
 					}
+				
 					if (dataTemp[AS_SELECT] != "") {
 						tSelectOperation->Text = dataTemp[AS_SELECT];
 						tSelectOperation->ForeColor = System::Drawing::Color::Black;
 					}
+					
 					if (dataTemp[AS_AREA] != "") {
 						if (dataTemp[AS_AREA] == "true") {
 							rbTrueOperation->Checked = true;
@@ -744,9 +1039,16 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 							rbFalseOperation->Checked = true;
 						}
 					}
+					
 					if (dataTemp[AS_DEFAULT] != "") {
 						tDefaultOperation->Text = dataTemp[AS_DEFAULT];
 						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+					}
+					
+					if (dataTemp[AS_DUMMY] != "") {
+						tDefaultOperation->Text = dataTemp[AS_DUMMY];
+						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+
 					}
 					lOperationName->Visible = true;
 					lOperationOut->Visible = true;
@@ -755,9 +1057,11 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					tSelectOperation->Visible = false;
 					lDefaultOperation->Visible = true;
 					tDefaultOperation->Visible = true;
-					lAreaOperation->Visible = true;
-					rbTrueOperation->Visible = true;
-					rbFalseOperation->Visible = true;
+					lDummyOperation->Visible = true;
+					tDummyOperation->Visible = true;
+					lAreaOperation->Visible = false;
+					rbTrueOperation->Visible = false;
+					rbFalseOperation->Visible = false;
 					bSaveOperation->Visible = true;
 					break;
 				default:
@@ -772,6 +1076,8 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					tSelectOperation->Visible = false;
 					lDefaultOperation->Visible = false;
 					tDefaultOperation->Visible = false;
+					lDummyOperation->Visible = false;
+					tDummyOperation->Visible = false;
 					lAreaOperation->Visible = false;
 					rbTrueOperation->Visible = false;
 					rbFalseOperation->Visible = false;
@@ -786,64 +1092,131 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 {
 	int i = attributeToindex();
+	//Vector
 	if (lvAttributesToFill->Items[i]->Text->Contains(".shp")) {
-		switch (cbOperation->SelectedIndex)
-		{
-		case 0:
-		case 5:
-		case 6:
-		case 7:
-		case 11:
-			lOperationName->Visible = true;
-			lOperationOut->Visible = true;
-			tOperationOut->Visible = true;
-			lSelectOperation->Visible = true;
-			tSelectOperation->Visible = true;
-			lDefaultOperation->Visible = true;
-			tDefaultOperation->Visible = true;
-			lAreaOperation->Visible = false;
-			rbTrueOperation->Visible = false;
-			rbFalseOperation->Visible = false;
-			bSaveOperation->Visible = true;
-			break;
-		case 1:
-		case 8:
-		case 12:
-			lOperationName->Visible = true;
-			lOperationOut->Visible = true;
-			tOperationOut->Visible = true;
-			lSelectOperation->Visible = true;
-			tSelectOperation->Visible = true;
-			lDefaultOperation->Visible = true;
-			tDefaultOperation->Visible = true;
-			lAreaOperation->Visible = true;
-			rbTrueOperation->Visible = true;
-			rbFalseOperation->Visible = true;
-			bSaveOperation->Visible = true;
-			break;
-		default:
-			lOperationName->Visible = true;
-			lOperationOut->Visible = true;
-			tOperationOut->Visible = true;
-			lSelectOperation->Visible = false;
-			tSelectOperation->Visible = false;
-			lDefaultOperation->Visible = false;
-			tDefaultOperation->Visible = false;
-			lAreaOperation->Visible = false;
-			rbTrueOperation->Visible = false;
-			rbFalseOperation->Visible = false;
-			bSaveOperation->Visible = true;
-			break;
+
+		if (rbPolygon->Checked) {
+			switch (cbOperation->SelectedIndex)
+			{
+			case P_COVERAGE:
+			case P_MODE:
+			case P_MAXIMUM:
+			case P_MINIMUM:
+			case P_STDEV:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = true;
+				tSelectOperation->Visible = true;
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				lAreaOperation->Visible = false;
+				rbTrueOperation->Visible = false;
+				rbFalseOperation->Visible = false;
+				bSaveOperation->Visible = true;
+				break;
+			case P_AVERAGE:
+			case P_SUM:
+			case P_NEAREST:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = true;
+				tSelectOperation->Visible = true;
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				if (rbPolygon->Checked) {
+					lAreaOperation->Visible = true;
+					rbTrueOperation->Visible = true;
+					rbFalseOperation->Visible = true;
+				}
+				bSaveOperation->Visible = true;
+				break;
+			default:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = false;
+				tSelectOperation->Visible = false;
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lAreaOperation->Visible = false;
+				rbTrueOperation->Visible = false;
+				rbFalseOperation->Visible = false;
+				bSaveOperation->Visible = true;
+				break;
+			}
+		}
+		else {
+			switch (cbOperation->SelectedIndex)
+			{
+			case NP_COVERAGE:
+			case NP_MODE:
+			case NP_MAXIMUM:
+			case NP_MINIMUM:
+			case NP_STDEV:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = true;
+				tSelectOperation->Visible = true;
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				lAreaOperation->Visible = false;
+				rbTrueOperation->Visible = false;
+				rbFalseOperation->Visible = false;
+				bSaveOperation->Visible = true;
+				break;
+			case NP_AVERAGE:
+			case NP_SUM:
+			case NP_NEAREST:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = true;
+				tSelectOperation->Visible = true;
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				if (rbPolygon->Checked) {
+					lAreaOperation->Visible = true;
+					rbTrueOperation->Visible = true;
+					rbFalseOperation->Visible = true;
+				}
+				bSaveOperation->Visible = true;
+				break;
+			default:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = false;
+				tSelectOperation->Visible = false;
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lAreaOperation->Visible = false;
+				rbTrueOperation->Visible = false;
+				rbFalseOperation->Visible = false;
+				bSaveOperation->Visible = true;
+				break;
+			}
 		}
 	}
+	//Raster
 	else {
 		switch (cbOperation->SelectedIndex)
 		{
-		case 0:
-		case 2:
-		case 3:
-		case 4:
-		case 6:
+		case COVERAGE:
+		case MODE:
+		case MAXIMUM:
+		case MINIMUM:
+		case STDEV:
 			lOperationName->Visible = true;
 			lOperationOut->Visible = true;
 			tOperationOut->Visible = true;
@@ -851,13 +1224,15 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			tSelectOperation->Visible = false;
 			lDefaultOperation->Visible = true;
 			tDefaultOperation->Visible = true;
+			lDummyOperation->Visible = true;
+			tDummyOperation->Visible = true;
 			lAreaOperation->Visible = false;
 			rbTrueOperation->Visible = false;
 			rbFalseOperation->Visible = false;
 			bSaveOperation->Visible = true;
 			break;
-		case 1:
-		case 5:
+		case AVERAGE:
+		case SUM:
 			lOperationName->Visible = true;
 			lOperationOut->Visible = true;
 			tOperationOut->Visible = true;
@@ -865,9 +1240,11 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			tSelectOperation->Visible = false;
 			lDefaultOperation->Visible = true;
 			tDefaultOperation->Visible = true;
-			lAreaOperation->Visible = true;
-			rbTrueOperation->Visible = true;
-			rbFalseOperation->Visible = true;
+			lDummyOperation->Visible = true;
+			tDummyOperation->Visible = true;
+			lAreaOperation->Visible = false;
+			rbTrueOperation->Visible = false;
+			rbFalseOperation->Visible = false;
 			bSaveOperation->Visible = true;
 			break;
 		default:
@@ -878,6 +1255,8 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			tSelectOperation->Visible = false;
 			lDefaultOperation->Visible = false;
 			tDefaultOperation->Visible = false;
+			lDummyOperation->Visible = false;
+			tDummyOperation->Visible = false;
 			lAreaOperation->Visible = false;
 			rbTrueOperation->Visible = false;
 			rbFalseOperation->Visible = false;
@@ -907,7 +1286,7 @@ System::Void CellFulfill::NovoModelo::bAddAttribute_Click(System::Object^  sende
 			bool error = false;
 			for (int i = 0; i < attributesFiles->FileNames->Length; i++) {
 				if (attributesFiles->FileNames[i]->Contains(".shp") || attributesFiles->FileNames[i]->Contains(".tif")) {
-					array<String^>^ attributeToList = { attributesFiles->FileNames[i], "", "", "", "", "" };
+					array<String^>^ attributeToList = { attributesFiles->FileNames[i], "", "", "", "", "", "", "" };
 					attributeList->Add(attributeToList);
 					lastSlash = 0;
 					for (int j = 0; j < attributesFiles->FileNames[i]->Length; j++) {
@@ -942,87 +1321,223 @@ System::Void CellFulfill::NovoModelo::bAddAttribute_Click(System::Object^  sende
 
 System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  sender, System::EventArgs^  e)
 {
+	bool check = true;
+	
+	if (tSelectedAttribute->Text->Contains(".shp")) {
+		if ((!rbLine->Checked) && (!rbDot->Checked) && (!rbPolygon->Checked)) {
+			MessageBox::Show(gSGeometry, gSGeometryTitle, MessageBoxButtons::OK, MessageBoxIcon::Error);
+			check = false;
+		}
+	}
+	
 	int attributeIndex = attributeToindex();
-	if (cbOperation->SelectedItem != "" && tOperationOut->Text != "") {
+
+	if (cbOperation->SelectedItem != "" && tOperationOut->Text != "" && check) {
 		array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[attributeIndex]);
+		
+		//Polygon Vector
 		if (attributeToList[AS_ATTRIBUTE]->Contains(".shp")) {
-			switch (cbOperation->SelectedIndex)
-			{
-			case 0:
-			case 5:
-			case 6:
-			case 7:
-			case 11:
-				attributeToList[AS_OPERATION] = vectorOperationToName(cbOperation->SelectedIndex);
-				attributeToList[AS_OUTPUT] = tOperationOut->Text;
-				attributeToList[AS_SELECT] = tSelectOperation->Text;
+			if (rbPolygon->Checked) {
+				switch (cbOperation->SelectedIndex)
+				{
+				case P_COVERAGE:
+				case P_MODE:
+				case P_MAXIMUM:
+				case P_MINIMUM:
+				case P_STDEV:
+					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					attributeToList[AS_SELECT] = tSelectOperation->Text;
 
-				if (tDefaultOperation->Text != "null" || tDefaultOperation->Text != "") {
-					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-				}
-				
-				attributeList[attributeIndex] = attributeToList;
-				lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
-				operationVisualOFF();
-				break;
-			case 1:
-			case 8:
-			case 12:
-				attributeToList[AS_OPERATION] = vectorOperationToName(cbOperation->SelectedIndex);
-				attributeToList[AS_OUTPUT] = tOperationOut->Text;
-				attributeToList[AS_SELECT] = tSelectOperation->Text;
-				
-				if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
-					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-				}
-				
-				if (rbTrueOperation->Checked) {
-					attributeToList[AS_AREA] = "true";
-				}
-				else {
-					attributeToList[AS_AREA] = "false";
-				}
+					if (tDefaultOperation->Text != "null" || tDefaultOperation->Text != "") {
+						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					}
 
-				attributeList[attributeIndex] = attributeToList;
-				lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
-				operationVisualOFF();
-				break;
-			default:
-				attributeToList[AS_OPERATION] = vectorOperationToName(cbOperation->SelectedIndex);
-				attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
 
-				attributeList[attributeIndex] = attributeToList;
-				lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
-				operationVisualOFF();
-				break;
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				case P_AVERAGE:
+				case P_SUM:
+				case P_NEAREST:
+					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					attributeToList[AS_SELECT] = tSelectOperation->Text;
+
+					if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
+						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					}
+
+					if (rbTrueOperation->Checked) {
+						attributeToList[AS_AREA] = "true";
+					}
+					else {
+						attributeToList[AS_AREA] = "false";
+					}
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				default:
+					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				}
+			}
+			//Non Polygon Vector
+			else {
+				switch (cbOperation->SelectedIndex)
+				{
+				case NP_COVERAGE:
+				case NP_MODE:
+				case NP_MAXIMUM:
+				case NP_MINIMUM:
+				case NP_STDEV:
+					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					attributeToList[AS_SELECT] = tSelectOperation->Text;
+
+					if (tDefaultOperation->Text != "null" || tDefaultOperation->Text != "") {
+						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					}
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				case NP_AVERAGE:
+				case NP_SUM:
+				case NP_NEAREST:
+					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					attributeToList[AS_SELECT] = tSelectOperation->Text;
+
+					if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
+						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					}
+
+					if (rbTrueOperation->Checked) {
+						attributeToList[AS_AREA] = "true";
+					}
+					else {
+						attributeToList[AS_AREA] = "false";
+					}
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				default:
+					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				}
 			}
 		}
+		//Raster
 		else {
 			switch (cbOperation->SelectedIndex)
 			{
-			case 0:
-			case 2:
-			case 3:
-			case 4:
-			case 6:
-				attributeToList[AS_OPERATION] = vectorOperationToName(cbOperation->SelectedIndex);
+			case COVERAGE:
+			case MODE:
+			case MAXIMUM:
+			case MINIMUM:
+			case STDEV:
+				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 
-				if (tDefaultOperation->Text != "null" || tDefaultOperation->Text != "") {
+				if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
 					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+				}
+
+				if (tDummyOperation->Text != "null" && tDummyOperation->Text != "") {
+					attributeToList[AS_DUMMY] = tDummyOperation->Text;
 				}
 
 				attributeList[attributeIndex] = attributeToList;
 				lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
 				operationVisualOFF();
 				break;
-			case 1:
-			case 5:
-				attributeToList[AS_OPERATION] = vectorOperationToName(cbOperation->SelectedIndex);
+			case AVERAGE:
+			case SUM:
+				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 
 				if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
 					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+				}
+
+				if (tDummyOperation->Text != "null" && tDummyOperation->Text != "") {
+					attributeToList[AS_DUMMY] = tDummyOperation->Text;
 				}
 
 				if (rbTrueOperation->Checked) {
@@ -1037,7 +1552,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				operationVisualOFF();
 				break;
 			default:
-				attributeToList[AS_OPERATION] = vectorOperationToName(cbOperation->SelectedIndex);
+				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 
 				attributeList[attributeIndex] = attributeToList;
@@ -1136,52 +1651,79 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("--       Generated with Fill Cell Script Configurator       --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
-				//sw->WriteLine("customError = function (msg)");
-				//sw->WriteLine("\tprint(msg)");
-				//sw->WriteLine("\tio.flush()");
-				//sw->WriteLine("\tio.read()");
-				//sw->WriteLine("\tos.exit()");
-				//sw->WriteLine("end");
-				//sw->WriteLine("");
 				sw->WriteLine("local x = os.clock()"); 
 				sw->WriteLine("import(\"terralib\")");
 				sw->WriteLine("");
+				sw->WriteLine("local projFile = File(\"t3mp.tview\")");
+				sw->WriteLine("if(projFile:exists()) then");
+				sw->WriteLine("\tprojFile:delete()");
+				sw->WriteLine("end");
+				sw->WriteLine("");
 				sw->WriteLine("-- CREATING PROJECT --");
-				sw->WriteLine("print(\"Creating Project\")");
+				sw->WriteLine("print(\"-- Creating Project --\\n\")");
+				sw->WriteLine("");
 				sw->WriteLine("proj = Project {");
 				sw->WriteLine("\tfile = \"t3mp.tview\",");
 				sw->WriteLine("\tclean = true");
 				sw->WriteLine("}");
 				sw->WriteLine("");
 				sw->WriteLine("-- ADDING LAYERS --");
-				sw->WriteLine("print(\"Adding Layers to the Project\")");
+				sw->WriteLine("print(\"-- Adding Layers to the Project --\")");
+				sw->WriteLine("");
 				sw->WriteLine("l1 = Layer{");
 				sw->WriteLine("\tproject = proj,");
 				sw->WriteLine("\tname = \"limit\",");
 				sw->WriteLine("\tfile = \"" + lLimitFileAddress->Text->Replace("\\", "\\\\") + "\"");
 				sw->WriteLine("}");
-				sw->WriteLine("");
+
+				int lastSlash = 0;
+				for (int i = 0; i < lLimitFileAddress->Text->Length; i++) {
+					if (lLimitFileAddress->Text[i] == '\\') {
+						lastSlash = i + 1;
+					}
+				}
+
 				if (!cbUseCS->Checked) {
-					sw->WriteLine("print(\"Limit added\")");
+					sw->WriteLine("print(\"Added Limit: " + lLimitFileAddress->Text->Substring(lastSlash, lLimitFileAddress->Text->Length - lastSlash) + "\")");
+					sw->WriteLine("");
 				}
 				else {
-					sw->WriteLine("print(\"Cellular Space added\")");
+					sw->WriteLine("print(\"Added Cellular Spaced: " + lLimitFileAddress->Text->Substring(lastSlash, lLimitFileAddress->Text->Length - lastSlash) + "\")");
+					sw->WriteLine("");
 				}
 				
 				for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
 					array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[i]);
+					
 					sw->WriteLine("l" + (i+2).ToString() + " = Layer{");
 					sw->WriteLine("\tproject = proj,");
 					sw->WriteLine("\tname = \"layer" + (i + 2).ToString() + "\",");
-					sw->WriteLine("\tfile = \"" + attributeToList[AS_ATTRIBUTE]->Replace("\\", "\\\\") + "\"");
+
+					if (attributeToList[AS_ATTRIBUTE]->Contains(".tif")) {
+						sw->WriteLine("\tfile = \"" + attributeToList[AS_ATTRIBUTE]->Replace("\\", "\\\\") + "\",");
+						sw->WriteLine("\tepsg = l1.epsg");
+					}
+					else {
+						sw->WriteLine("\tfile = \"" + attributeToList[AS_ATTRIBUTE]->Replace("\\", "\\\\") + "\"");
+					}
+					
 					sw->WriteLine("}");
-					sw->WriteLine("print(\"Layer" + (i + 2).ToString() + " added\")");
+
+					lastSlash = 0;
+					for (int i = 0; i < attributeToList[AS_ATTRIBUTE]->Length; i++) {
+						if (attributeToList[AS_ATTRIBUTE][i] == '\\') {
+							lastSlash = i + 1;
+						}
+					}
+
+					sw->WriteLine("print(\"Added Layer" + (i + 2).ToString() + ": " + attributeToList[AS_ATTRIBUTE]->Substring(lastSlash, attributeToList[AS_ATTRIBUTE]->Length - lastSlash) + "\")");
 					sw->WriteLine("");
 				}
 				
 				if (!cbUseCS->Checked) {
 					sw->WriteLine("-- CREATING CELLULAR SPACE --");
-					sw->WriteLine("print(\"Creating Cellular Space\")");
+					sw->WriteLine("print(\"\\n-- Creating Cellular Space --\\n\")");
+					sw->WriteLine("");
 					sw->WriteLine("local cs = Layer{");
 					sw->WriteLine("\tproject = proj,");
 
@@ -1202,7 +1744,7 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				}
 				else {
 					sw->WriteLine("-- OPENING CELLULAR SPACE --");
-					sw->WriteLine("print(\"Openning Cellular Space\")");
+					sw->WriteLine("print(\"\\n-- Openning Cellular Space -- \\n\")");
 					sw->WriteLine("local cs = Layer{");
 					sw->WriteLine("\tproject = proj,");
 					sw->WriteLine("\tname = l1.name,");
@@ -1210,41 +1752,52 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					sw->WriteLine("");
 				}
 
-				sw->WriteLine("-- ATTRIBUTES TO FILL --");
+				sw->WriteLine("-- FILLING CELLULAR SPACE --");
 				for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
 					array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[i]);
-					sw->WriteLine("print(\"Filling Attribute in Layer"+ (i + 2).ToString() + "\")");
+					
+					lastSlash = 0;
+					for (int i = 0; i < attributeToList[AS_ATTRIBUTE]->Length; i++) {
+						if (attributeToList[AS_ATTRIBUTE][i] == '\\') {
+							lastSlash = i + 1;
+						}
+					}
+
+					sw->WriteLine("print(\"Filling " + attributeToList[AS_ATTRIBUTE]->Substring(lastSlash, attributeToList[AS_ATTRIBUTE]->Length - lastSlash) + " into Cellular Space using " + attributeToList[AS_OPERATION] + " operation\")");
 					sw->WriteLine("cs:fill{");
 					sw->WriteLine("\tlayer = \"layer" + (i + 2).ToString() + "\",");
 					sw->WriteLine("\toperation = \""+ attributeToList[AS_OPERATION] +"\",");
+					
 					if (attributeToList[AS_OUTPUT] != "") {
 						sw->WriteLine("\tattribute = \"" + attributeToList[AS_OUTPUT] + "\",");
 					}
+					
 					if (attributeToList[AS_SELECT] != "") {
 						sw->WriteLine("\tselect = \"" + attributeToList[AS_SELECT] + "\",");
 					}
+					
 					if (attributeToList[AS_AREA] == "true") {
 						sw->WriteLine("\tarea = true,");
 					}
+					
 					if (attributeToList[AS_DEFAULT] != "" && attributeToList[AS_DEFAULT] != "null") {
-						sw->WriteLine("\tdefault = " + tDefaultOperation->Text);
+						sw->WriteLine("\tdefault = " + attributeToList[AS_DEFAULT] + ",");
 					}
-					sw->WriteLine("}");
-					sw->WriteLine("");
+
+					if (attributeToList[AS_DUMMY] != "" && attributeToList[AS_DUMMY] != "null") {
+						sw->WriteLine("\tnodata = " + attributeToList[AS_DUMMY] + ",");
+					}
+
+					if (attributeToList[AS_SHPTYPE] != "") {
+						sw->WriteLine("\tdataType = \"" + attributeToList[AS_SHPTYPE] + "\"");
+					}
+
+					sw->WriteLine("}\n");
 				}
 
 				sw->WriteLine("print(string.format(\"\\nElapsed time : %.2fs\\n\", os.clock() - x))");
 				sw->WriteLine("print(\"\\nEnd of Script\")");
 				sw->WriteLine("");
-				//sw->WriteLine("-- Hold the screen --");
-				//sw->WriteLine("io.write(\"\\nPress enter key to exit...\")");
-				//sw->WriteLine("io.flush()");
-				//sw->WriteLine("io.read()");
-				//sw->WriteLine("");
-				//sw->WriteLine("local projFile = File(\"t3mp.tview\")");
-				//sw->WriteLine("if(projFile:exists()) then");
-				//sw->WriteLine("\tprojFile:delete()");
-				//sw->WriteLine("end");
 
 				sw->Close();
 
@@ -1345,19 +1898,32 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 	rasterList[5] = "sum";
 	rasterList[6] = "stdev";
 
-	vectorList[0] = "coverage";
-	vectorList[1] = "average";
-	vectorList[2] = "area";
-	vectorList[3] = "distance";
-	vectorList[4] = "presence";
-	vectorList[5] = "mode";
-	vectorList[6] = "maximum";
-	vectorList[7] = "minimum";
-	vectorList[8] = "sum";
-	vectorList[9] = "count";
-	vectorList[10] = "length";
-	vectorList[11] = "stdev";
-	vectorList[12] = "nearest";
+	polygonList[0] = "coverage";
+	polygonList[1] = "average";
+	polygonList[2] = "area";
+	polygonList[3] = "distance";
+	polygonList[4] = "presence";
+	polygonList[5] = "mode";
+	polygonList[6] = "maximum";
+	polygonList[7] = "minimum";
+	polygonList[8] = "sum";
+	polygonList[9] = "count";
+	polygonList[10] = "length";
+	polygonList[11] = "stdev";
+	polygonList[12] = "nearest";
+
+	nonPolygonList[0] = "coverage";
+	nonPolygonList[1] = "average";
+	nonPolygonList[2] = "distance";
+	nonPolygonList[3] = "presence";
+	nonPolygonList[4] = "mode";
+	nonPolygonList[5] = "maximum";
+	nonPolygonList[6] = "minimum";
+	nonPolygonList[7] = "sum";
+	nonPolygonList[8] = "count";
+	nonPolygonList[9] = "length";
+	nonPolygonList[10] = "stdev";
+	nonPolygonList[11] = "nearest";
 	
 	checkLanguage();
 
@@ -1425,8 +1991,9 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 							line = line->Replace("file = ", "");
 							line = line->Replace("\t", "");
 							line = line->Replace("\"", "");
+							line = line->Replace(",", "");
 
-							array<String^>^ dataTemp = { line, "", "", "", "", "" };
+							array<String^>^ dataTemp = { line, "", "", "", "", "", "", "" };
 							attributeList->Add(dataTemp);
 
 							int lastSlash = 0;
@@ -1449,10 +2016,12 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 				// Remove the limit shape file from the attribute list and set the address
 				if (lvAttributesToFill->Items->Count > NONE) {
 					array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[0]);
+
 					lLimitFileAddress->Text = dataTemp[0];	//Address set
 					gParameters[SHPADDRESS] = lLimitFileAddress->Text;
 					lvAttributesToFill->Items->RemoveAt(0);
 					attributeList->RemoveAt(0);
+
 					for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
 						gParameters[SCRIPTATTRIBUTES] += lvAttributesToFill->Items[i]->Text + ";";
 					}
@@ -1569,6 +2138,20 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 								line = line->Replace(",", "");
 								dataTemp[AS_DEFAULT] = line;
 							}
+							else if (line->Contains("nodata = ")) {
+								line = line->Replace("nodata = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_DUMMY] = line;
+							}
+							else if (line->Contains("dataType = ")) {
+								line = line->Replace("dataType = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_SHPTYPE] = line;
+							}
 
 							line = sw->ReadLine();
 						}
@@ -1630,5 +2213,73 @@ System::Void CellFulfill::NovoModelo::cbUseCS_CheckedChanged(System::Object^  se
 		checkLanguage();
 		tCellSpaceName->Enabled = true;
 		tCellSpaceResolution->Enabled = true;
+	}
+}
+
+System::Void CellFulfill::NovoModelo::tCellSpaceResolution_TextChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	tResDummy->Text = tCellSpaceResolution->Text;
+}
+
+System::Void CellFulfill::NovoModelo::rbPolygon_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	if (rbPolygon->Checked) {
+		cbOperation->Items->Clear();
+		cbOperation->Items->AddRange(polygonList);
+
+		lOperationOut->Visible = false;
+		tOperationOut->Visible = false;
+		lSelectOperation->Visible = false;
+		tSelectOperation->Visible = false;
+		lDefaultOperation->Visible = false;
+		tDefaultOperation->Visible = false;
+		lDummyOperation->Visible = false;
+		tDummyOperation->Visible = false;
+		lAreaOperation->Visible = false;
+		rbTrueOperation->Visible = false;
+		rbFalseOperation->Visible = false;
+		bSaveOperation->Visible = true;
+	}
+}
+
+System::Void CellFulfill::NovoModelo::rbLine_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	if (rbLine->Checked) {
+		cbOperation->Items->Clear();
+		cbOperation->Items->AddRange(nonPolygonList);
+		
+		lOperationOut->Visible = false;
+		tOperationOut->Visible = false;
+		lSelectOperation->Visible = false;
+		tSelectOperation->Visible = false;
+		lDefaultOperation->Visible = false;
+		tDefaultOperation->Visible = false;
+		lDummyOperation->Visible = false;
+		tDummyOperation->Visible = false;
+		lAreaOperation->Visible = false;
+		rbTrueOperation->Visible = false;
+		rbFalseOperation->Visible = false;
+		bSaveOperation->Visible = true;
+	}
+}
+
+System::Void CellFulfill::NovoModelo::rbDot_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	if (rbDot->Checked) {
+		cbOperation->Items->Clear();
+		cbOperation->Items->AddRange(nonPolygonList);
+
+		lOperationOut->Visible = false;
+		tOperationOut->Visible = false;
+		lSelectOperation->Visible = false;
+		tSelectOperation->Visible = false;
+		lDefaultOperation->Visible = false;
+		tDefaultOperation->Visible = false;
+		lDummyOperation->Visible = false;
+		tDummyOperation->Visible = false;
+		lAreaOperation->Visible = false;
+		rbTrueOperation->Visible = false;
+		rbFalseOperation->Visible = false;
+		bSaveOperation->Visible = true;
 	}
 }

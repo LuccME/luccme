@@ -55,10 +55,14 @@ namespace CellFulfill {
 		String^ gSEditing = "";
 		String^ gSImportError = "";
 		String^ gSImportErrorTitle = "";
+		String^ gSFiles = "";
+		String^ gSGeometry = "";
+		String^ gSGeometryTitle = "";
 		
 		Collections::ArrayList^ attributeList = gcnew Collections::ArrayList();
 		array<String^>^ rasterList = gcnew array<String^>(RASTERLIST);
-		array<String^>^ vectorList = gcnew array<String^>(VECTORLIST);
+		array<String^>^ polygonList = gcnew array<String^>(POLYGONLIST);
+		array<String^>^ nonPolygonList = gcnew array<String^>(NONPOLYGONLIST);
 
 	public:
 		bool closing = false;
@@ -124,6 +128,16 @@ namespace CellFulfill {
 	private: System::Windows::Forms::Label^  lOperationName;
 	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
 	private: System::Windows::Forms::CheckBox^  cbUseCS;
+	private: System::Windows::Forms::TextBox^  tResDummy;
+	private: System::Windows::Forms::Label^  lX;
+	private: System::Windows::Forms::Label^  lM;
+	private: System::Windows::Forms::RadioButton^  rbPolygon;
+	private: System::Windows::Forms::RadioButton^  rbDot;
+	private: System::Windows::Forms::RadioButton^  rbLine;
+	private: System::Windows::Forms::Label^  lGeometricRepresentation;
+	private: System::Windows::Forms::GroupBox^  gbGeometricRepresentation;
+private: System::Windows::Forms::TextBox^  tDummyOperation;
+private: System::Windows::Forms::Label^  lDummyOperation;
 
 	public:
 		int lReturn;
@@ -187,6 +201,9 @@ namespace CellFulfill {
 			this->lScriptName = (gcnew System::Windows::Forms::Label());
 			this->lSelectedFolder = (gcnew System::Windows::Forms::Label());
 			this->tpCellularSpace = (gcnew System::Windows::Forms::TabPage());
+			this->lM = (gcnew System::Windows::Forms::Label());
+			this->tResDummy = (gcnew System::Windows::Forms::TextBox());
+			this->lX = (gcnew System::Windows::Forms::Label());
 			this->cbUseCS = (gcnew System::Windows::Forms::CheckBox());
 			this->tCellSpaceResolution = (gcnew System::Windows::Forms::TextBox());
 			this->lCellSpaceResolution = (gcnew System::Windows::Forms::Label());
@@ -196,6 +213,11 @@ namespace CellFulfill {
 			this->bShape = (gcnew System::Windows::Forms::Button());
 			this->lLimitFile = (gcnew System::Windows::Forms::Label());
 			this->tpAttributeFill = (gcnew System::Windows::Forms::TabPage());
+			this->gbGeometricRepresentation = (gcnew System::Windows::Forms::GroupBox());
+			this->rbPolygon = (gcnew System::Windows::Forms::RadioButton());
+			this->rbLine = (gcnew System::Windows::Forms::RadioButton());
+			this->rbDot = (gcnew System::Windows::Forms::RadioButton());
+			this->lGeometricRepresentation = (gcnew System::Windows::Forms::Label());
 			this->lOperationName = (gcnew System::Windows::Forms::Label());
 			this->tSelectedAttribute = (gcnew System::Windows::Forms::TextBox());
 			this->bSaveOperation = (gcnew System::Windows::Forms::Button());
@@ -219,6 +241,8 @@ namespace CellFulfill {
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
 			this->pbLogo2 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->lDummyOperation = (gcnew System::Windows::Forms::Label());
+			this->tDummyOperation = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->statusStrip1->SuspendLayout();
@@ -226,6 +250,7 @@ namespace CellFulfill {
 			this->tpScript->SuspendLayout();
 			this->tpCellularSpace->SuspendLayout();
 			this->tpAttributeFill->SuspendLayout();
+			this->gbGeometricRepresentation->SuspendLayout();
 			this->tpMakeFiles->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo2))->BeginInit();
 			this->SuspendLayout();
@@ -385,7 +410,7 @@ namespace CellFulfill {
 			this->lFiles->AutoSize = true;
 			this->lFiles->Font = (gcnew System::Drawing::Font(L"Calibri", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lFiles->Location = System::Drawing::Point(303, 19);
+			this->lFiles->Location = System::Drawing::Point(302, 19);
 			this->lFiles->Name = L"lFiles";
 			this->lFiles->Size = System::Drawing::Size(88, 26);
 			this->lFiles->TabIndex = 76;
@@ -449,6 +474,9 @@ namespace CellFulfill {
 			// 
 			// tpCellularSpace
 			// 
+			this->tpCellularSpace->Controls->Add(this->lM);
+			this->tpCellularSpace->Controls->Add(this->tResDummy);
+			this->tpCellularSpace->Controls->Add(this->lX);
 			this->tpCellularSpace->Controls->Add(this->cbUseCS);
 			this->tpCellularSpace->Controls->Add(this->tCellSpaceResolution);
 			this->tpCellularSpace->Controls->Add(this->lCellSpaceResolution);
@@ -464,6 +492,41 @@ namespace CellFulfill {
 			this->tpCellularSpace->TabIndex = 1;
 			this->tpCellularSpace->Text = L"Criando o Espaço Celular";
 			this->tpCellularSpace->UseVisualStyleBackColor = true;
+			// 
+			// lM
+			// 
+			this->lM->AutoSize = true;
+			this->lM->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lM->Location = System::Drawing::Point(465, 294);
+			this->lM->Name = L"lM";
+			this->lM->Size = System::Drawing::Size(65, 23);
+			this->lM->TabIndex = 100;
+			this->lM->Text = L"metros";
+			this->lM->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// tResDummy
+			// 
+			this->tResDummy->Enabled = false;
+			this->tResDummy->ForeColor = System::Drawing::Color::Black;
+			this->tResDummy->Location = System::Drawing::Point(373, 293);
+			this->tResDummy->Name = L"tResDummy";
+			this->tResDummy->Size = System::Drawing::Size(88, 20);
+			this->tResDummy->TabIndex = 99;
+			this->tResDummy->Text = L"5000";
+			this->tResDummy->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			// 
+			// lX
+			// 
+			this->lX->AutoSize = true;
+			this->lX->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lX->Location = System::Drawing::Point(348, 293);
+			this->lX->Name = L"lX";
+			this->lX->Size = System::Drawing::Size(19, 23);
+			this->lX->TabIndex = 98;
+			this->lX->Text = L"x";
+			this->lX->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
 			// cbUseCS
 			// 
@@ -481,12 +544,13 @@ namespace CellFulfill {
 			// tCellSpaceResolution
 			// 
 			this->tCellSpaceResolution->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tCellSpaceResolution->Location = System::Drawing::Point(280, 293);
+			this->tCellSpaceResolution->Location = System::Drawing::Point(254, 293);
 			this->tCellSpaceResolution->Name = L"tCellSpaceResolution";
-			this->tCellSpaceResolution->Size = System::Drawing::Size(151, 20);
+			this->tCellSpaceResolution->Size = System::Drawing::Size(88, 20);
 			this->tCellSpaceResolution->TabIndex = 5;
 			this->tCellSpaceResolution->Text = L"5000";
 			this->tCellSpaceResolution->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tCellSpaceResolution->TextChanged += gcnew System::EventHandler(this, &NovoModelo::tCellSpaceResolution_TextChanged);
 			this->tCellSpaceResolution->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lCellSpaceResolution
@@ -495,11 +559,11 @@ namespace CellFulfill {
 			this->lCellSpaceResolution->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lCellSpaceResolution->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lCellSpaceResolution->Location = System::Drawing::Point(310, 258);
+			this->lCellSpaceResolution->Location = System::Drawing::Point(278, 260);
 			this->lCellSpaceResolution->Name = L"lCellSpaceResolution";
-			this->lCellSpaceResolution->Size = System::Drawing::Size(91, 23);
+			this->lCellSpaceResolution->Size = System::Drawing::Size(158, 23);
 			this->lCellSpaceResolution->TabIndex = 96;
-			this->lCellSpaceResolution->Text = L"Resolução";
+			this->lCellSpaceResolution->Text = L"Resolução Espacial";
 			this->lCellSpaceResolution->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			// 
 			// tCellSpaceName
@@ -561,6 +625,10 @@ namespace CellFulfill {
 			// tpAttributeFill
 			// 
 			this->tpAttributeFill->AllowDrop = true;
+			this->tpAttributeFill->Controls->Add(this->tDummyOperation);
+			this->tpAttributeFill->Controls->Add(this->lDummyOperation);
+			this->tpAttributeFill->Controls->Add(this->gbGeometricRepresentation);
+			this->tpAttributeFill->Controls->Add(this->lGeometricRepresentation);
 			this->tpAttributeFill->Controls->Add(this->lOperationName);
 			this->tpAttributeFill->Controls->Add(this->tSelectedAttribute);
 			this->tpAttributeFill->Controls->Add(this->bSaveOperation);
@@ -581,8 +649,70 @@ namespace CellFulfill {
 			this->tpAttributeFill->Name = L"tpAttributeFill";
 			this->tpAttributeFill->Size = System::Drawing::Size(713, 428);
 			this->tpAttributeFill->TabIndex = 2;
-			this->tpAttributeFill->Text = L"Atributos de Preenchimento";
+			this->tpAttributeFill->Text = L"Dados para Preenchimento";
 			this->tpAttributeFill->UseVisualStyleBackColor = true;
+			// 
+			// gbGeometricRepresentation
+			// 
+			this->gbGeometricRepresentation->Controls->Add(this->rbPolygon);
+			this->gbGeometricRepresentation->Controls->Add(this->rbLine);
+			this->gbGeometricRepresentation->Controls->Add(this->rbDot);
+			this->gbGeometricRepresentation->Location = System::Drawing::Point(324, 57);
+			this->gbGeometricRepresentation->Name = L"gbGeometricRepresentation";
+			this->gbGeometricRepresentation->Size = System::Drawing::Size(349, 37);
+			this->gbGeometricRepresentation->TabIndex = 112;
+			this->gbGeometricRepresentation->TabStop = false;
+			this->gbGeometricRepresentation->Visible = false;
+			// 
+			// rbPolygon
+			// 
+			this->rbPolygon->AutoSize = true;
+			this->rbPolygon->Location = System::Drawing::Point(27, 13);
+			this->rbPolygon->Name = L"rbPolygon";
+			this->rbPolygon->Size = System::Drawing::Size(68, 17);
+			this->rbPolygon->TabIndex = 111;
+			this->rbPolygon->TabStop = true;
+			this->rbPolygon->Text = L"Polígono";
+			this->rbPolygon->UseVisualStyleBackColor = true;
+			this->rbPolygon->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::rbPolygon_CheckedChanged);
+			// 
+			// rbLine
+			// 
+			this->rbLine->AutoSize = true;
+			this->rbLine->Location = System::Drawing::Point(153, 13);
+			this->rbLine->Name = L"rbLine";
+			this->rbLine->Size = System::Drawing::Size(51, 17);
+			this->rbLine->TabIndex = 109;
+			this->rbLine->TabStop = true;
+			this->rbLine->Text = L"Linha";
+			this->rbLine->UseVisualStyleBackColor = true;
+			this->rbLine->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::rbLine_CheckedChanged);
+			// 
+			// rbDot
+			// 
+			this->rbDot->AutoSize = true;
+			this->rbDot->Location = System::Drawing::Point(265, 13);
+			this->rbDot->Name = L"rbDot";
+			this->rbDot->Size = System::Drawing::Size(53, 17);
+			this->rbDot->TabIndex = 110;
+			this->rbDot->TabStop = true;
+			this->rbDot->Text = L"Ponto";
+			this->rbDot->UseVisualStyleBackColor = true;
+			this->rbDot->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::rbDot_CheckedChanged);
+			// 
+			// lGeometricRepresentation
+			// 
+			this->lGeometricRepresentation->AutoSize = true;
+			this->lGeometricRepresentation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lGeometricRepresentation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lGeometricRepresentation->Location = System::Drawing::Point(374, 37);
+			this->lGeometricRepresentation->Name = L"lGeometricRepresentation";
+			this->lGeometricRepresentation->Size = System::Drawing::Size(226, 23);
+			this->lGeometricRepresentation->TabIndex = 108;
+			this->lGeometricRepresentation->Text = L"Representação Geométrica";
+			this->lGeometricRepresentation->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lGeometricRepresentation->Visible = false;
 			// 
 			// lOperationName
 			// 
@@ -590,7 +720,7 @@ namespace CellFulfill {
 			this->lOperationName->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lOperationName->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lOperationName->Location = System::Drawing::Point(391, 43);
+			this->lOperationName->Location = System::Drawing::Point(388, 105);
 			this->lOperationName->Name = L"lOperationName";
 			this->lOperationName->Size = System::Drawing::Size(205, 23);
 			this->lOperationName->TabIndex = 107;
@@ -603,13 +733,13 @@ namespace CellFulfill {
 			this->tSelectedAttribute->Enabled = false;
 			this->tSelectedAttribute->Location = System::Drawing::Point(14, 30);
 			this->tSelectedAttribute->Name = L"tSelectedAttribute";
-			this->tSelectedAttribute->Size = System::Drawing::Size(232, 20);
+			this->tSelectedAttribute->Size = System::Drawing::Size(267, 20);
 			this->tSelectedAttribute->TabIndex = 106;
 			this->tSelectedAttribute->Visible = false;
 			// 
 			// bSaveOperation
 			// 
-			this->bSaveOperation->Location = System::Drawing::Point(456, 333);
+			this->bSaveOperation->Location = System::Drawing::Point(456, 353);
 			this->bSaveOperation->Name = L"bSaveOperation";
 			this->bSaveOperation->Size = System::Drawing::Size(75, 23);
 			this->bSaveOperation->TabIndex = 13;
@@ -621,7 +751,7 @@ namespace CellFulfill {
 			// tDefaultOperation
 			// 
 			this->tDefaultOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tDefaultOperation->Location = System::Drawing::Point(482, 215);
+			this->tDefaultOperation->Location = System::Drawing::Point(482, 253);
 			this->tDefaultOperation->Name = L"tDefaultOperation";
 			this->tDefaultOperation->Size = System::Drawing::Size(151, 20);
 			this->tDefaultOperation->TabIndex = 11;
@@ -635,18 +765,18 @@ namespace CellFulfill {
 			this->lDefaultOperation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lDefaultOperation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lDefaultOperation->Location = System::Drawing::Point(335, 213);
+			this->lDefaultOperation->Location = System::Drawing::Point(360, 251);
 			this->lDefaultOperation->Name = L"lDefaultOperation";
-			this->lDefaultOperation->Size = System::Drawing::Size(140, 23);
+			this->lDefaultOperation->Size = System::Drawing::Size(114, 23);
 			this->lDefaultOperation->TabIndex = 103;
-			this->lDefaultOperation->Text = L"Valor de Dummy";
+			this->lDefaultOperation->Text = L"Valor Default";
 			this->lDefaultOperation->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			this->lDefaultOperation->Visible = false;
 			// 
 			// rbTrueOperation
 			// 
 			this->rbTrueOperation->AutoSize = true;
-			this->rbTrueOperation->Location = System::Drawing::Point(534, 267);
+			this->rbTrueOperation->Location = System::Drawing::Point(534, 303);
 			this->rbTrueOperation->Name = L"rbTrueOperation";
 			this->rbTrueOperation->Size = System::Drawing::Size(47, 17);
 			this->rbTrueOperation->TabIndex = 102;
@@ -658,7 +788,7 @@ namespace CellFulfill {
 			// 
 			this->rbFalseOperation->AutoSize = true;
 			this->rbFalseOperation->Checked = true;
-			this->rbFalseOperation->Location = System::Drawing::Point(583, 267);
+			this->rbFalseOperation->Location = System::Drawing::Point(583, 303);
 			this->rbFalseOperation->Name = L"rbFalseOperation";
 			this->rbFalseOperation->Size = System::Drawing::Size(50, 17);
 			this->rbFalseOperation->TabIndex = 12;
@@ -673,7 +803,7 @@ namespace CellFulfill {
 			this->lAreaOperation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lAreaOperation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lAreaOperation->Location = System::Drawing::Point(320, 262);
+			this->lAreaOperation->Location = System::Drawing::Point(320, 300);
 			this->lAreaOperation->Name = L"lAreaOperation";
 			this->lAreaOperation->Size = System::Drawing::Size(200, 23);
 			this->lAreaOperation->TabIndex = 100;
@@ -684,7 +814,7 @@ namespace CellFulfill {
 			// tOperationOut
 			// 
 			this->tOperationOut->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tOperationOut->Location = System::Drawing::Point(482, 140);
+			this->tOperationOut->Location = System::Drawing::Point(482, 178);
 			this->tOperationOut->MaxLength = 10;
 			this->tOperationOut->Name = L"tOperationOut";
 			this->tOperationOut->Size = System::Drawing::Size(151, 20);
@@ -700,7 +830,7 @@ namespace CellFulfill {
 			this->lOperationOut->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lOperationOut->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lOperationOut->Location = System::Drawing::Point(328, 138);
+			this->lOperationOut->Location = System::Drawing::Point(328, 176);
 			this->lOperationOut->Name = L"lOperationOut";
 			this->lOperationOut->Size = System::Drawing::Size(147, 23);
 			this->lOperationOut->TabIndex = 98;
@@ -711,7 +841,7 @@ namespace CellFulfill {
 			// tSelectOperation
 			// 
 			this->tSelectOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tSelectOperation->Location = System::Drawing::Point(482, 177);
+			this->tSelectOperation->Location = System::Drawing::Point(482, 215);
 			this->tSelectOperation->Name = L"tSelectOperation";
 			this->tSelectOperation->Size = System::Drawing::Size(151, 20);
 			this->tSelectOperation->TabIndex = 10;
@@ -725,7 +855,7 @@ namespace CellFulfill {
 			this->lSelectOperation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lSelectOperation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lSelectOperation->Location = System::Drawing::Point(309, 175);
+			this->lSelectOperation->Location = System::Drawing::Point(309, 213);
 			this->lSelectOperation->Name = L"lSelectOperation";
 			this->lSelectOperation->Size = System::Drawing::Size(166, 23);
 			this->lSelectOperation->TabIndex = 98;
@@ -736,7 +866,7 @@ namespace CellFulfill {
 			// cbOperation
 			// 
 			this->cbOperation->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->cbOperation->Location = System::Drawing::Point(366, 71);
+			this->cbOperation->Location = System::Drawing::Point(362, 131);
 			this->cbOperation->Name = L"cbOperation";
 			this->cbOperation->Size = System::Drawing::Size(246, 21);
 			this->cbOperation->TabIndex = 8;
@@ -770,7 +900,7 @@ namespace CellFulfill {
 			this->lvAttributesToFill->Location = System::Drawing::Point(14, 30);
 			this->lvAttributesToFill->MultiSelect = false;
 			this->lvAttributesToFill->Name = L"lvAttributesToFill";
-			this->lvAttributesToFill->Size = System::Drawing::Size(232, 359);
+			this->lvAttributesToFill->Size = System::Drawing::Size(267, 359);
 			this->lvAttributesToFill->TabIndex = 6;
 			this->lvAttributesToFill->UseCompatibleStateImageBehavior = false;
 			this->lvAttributesToFill->SelectedIndexChanged += gcnew System::EventHandler(this, &NovoModelo::lvAttributesToFill_SelectedIndexChanged);
@@ -856,6 +986,30 @@ namespace CellFulfill {
 			this->label1->TabIndex = 22;
 			this->label1->Text = L"&&";
 			// 
+			// lDummyOperation
+			// 
+			this->lDummyOperation->AutoSize = true;
+			this->lDummyOperation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lDummyOperation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lDummyOperation->Location = System::Drawing::Point(360, 287);
+			this->lDummyOperation->Name = L"lDummyOperation";
+			this->lDummyOperation->Size = System::Drawing::Size(116, 23);
+			this->lDummyOperation->TabIndex = 113;
+			this->lDummyOperation->Text = L"Valor Dummy";
+			this->lDummyOperation->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lDummyOperation->Visible = false;
+			// 
+			// tDummyOperation
+			// 
+			this->tDummyOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tDummyOperation->Location = System::Drawing::Point(483, 290);
+			this->tDummyOperation->Name = L"tDummyOperation";
+			this->tDummyOperation->Size = System::Drawing::Size(151, 20);
+			this->tDummyOperation->TabIndex = 114;
+			this->tDummyOperation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tDummyOperation->Visible = false;
+			// 
 			// NovoModelo
 			// 
 			this->AllowDrop = true;
@@ -886,6 +1040,8 @@ namespace CellFulfill {
 			this->tpCellularSpace->PerformLayout();
 			this->tpAttributeFill->ResumeLayout(false);
 			this->tpAttributeFill->PerformLayout();
+			this->gbGeometricRepresentation->ResumeLayout(false);
+			this->gbGeometricRepresentation->PerformLayout();
 			this->tpMakeFiles->ResumeLayout(false);
 			this->tpMakeFiles->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo2))->EndInit();
@@ -910,16 +1066,22 @@ namespace CellFulfill {
 	private: System::Void lvAttributesToFill_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cbOperation_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bAddAttribute_Click(System::Object^  sender, System::EventArgs^  e);
-	private: System::Int32 vectorOperationToindex(String^ operation);
+	private: System::Int32 polygonOperationToindex(String^ operation);
+	private: System::Int32 nonPolygonOperationToindex(String^ operation);
 	private: System::Int32 rasterOperationToindex(String^ operation);
 	private: System::Void bSaveOperation_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Int32 attributeToindex();
-	private: System::String^ vectorOperationToName(int operation);
+	private: System::String^ polygonOperationToName(int operation);
+	private: System::String^ nonPolygonOperationToName(int operation);
 	private: System::String^ rasterOperationToName(int operation);
 	private: System::Void operationVisualOFF();
 	private: System::Void bDeleteAttribute_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bFileMaker_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bRun_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cbUseCS_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
-	};
+	private: System::Void tCellSpaceResolution_TextChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void rbPolygon_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void rbLine_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void rbDot_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+};
 }

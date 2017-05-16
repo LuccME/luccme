@@ -183,16 +183,16 @@ function AllocationCClueLike(component)
 		local cs = luccMEModel.cs
 		
 		if (self.regionAttr == nil) then
-			self.regionAttr = "region"
+			self.regionAttr = "regionAloc"
 		end   
 
 		forEachCell(cs, function(cell)
 							cell["alternate_model"] = 0
 							
 							if (cell[self.regionAttr] == nil) then
-								cell["region"] = 1
+								cell["regionAloc"] = 1
 							else
-								cell["region"] = cell[self.regionAttr]
+								cell["regionAloc"] = cell[self.regionAttr]
 							end
 						end
 					)  
@@ -336,7 +336,7 @@ function AllocationCClueLike(component)
 			local luDirect = luccMEModel.demand:getCurrentLuDirection(i)
 
 			for k, cell in pairs (cs.cells) do    
-				if (cell.region == rNumber) then
+				if (cell.regionAloc == rNumber) then
 					local pot = cell[attr_pot]
 					local luStatic = luAllocData.static
 					local change = pot * self.elasticity[i]
@@ -485,7 +485,7 @@ function AllocationCClueLike(component)
 		local BACKP = 0.5
 
 		for k, cell in pairs (cs.cells) do
-			if (cell.region == rNumber) then
+			if (cell.regionregionAloc == rNumber) then
 				local nostatic = 0
 				local decr = 0
 				local incr = 0

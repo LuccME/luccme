@@ -15,8 +15,8 @@
 
 //List TYPES
 #define RASTERLIST		7
-#define POLYGONLIST		13
-#define NONPOLYGONLIST	12
+#define POLYGONLIST		11
+#define NONPOLYGONLIST	9
 
 //Raster
 #define COVERAGE	0
@@ -38,23 +38,19 @@
 #define P_MINIMUM	7
 #define P_SUM		8
 #define P_COUNT		9
-#define P_LENGTH	10
-#define P_STDEV		11
-#define P_NEAREST	12
+#define P_STDEV		10
 
 //Non Polygon
-#define NP_COVERAGE 0
-#define NP_AVERAGE	1
-#define NP_DISTANCE	2
-#define NP_PRESENCE	3
-#define NP_MODE		4
-#define NP_MAXIMUM	5
-#define NP_MINIMUM	6
-#define NP_SUM		7
-#define NP_COUNT	8
-#define NP_LENGTH	9
-#define NP_STDEV	10
-#define NP_NEAREST	11
+#define NP_AVERAGE	0
+#define NP_DISTANCE	1
+#define NP_PRESENCE	2
+#define NP_MODE		3
+#define NP_MAXIMUM	4
+#define NP_MINIMUM	5
+#define NP_SUM		6
+#define NP_COUNT	7
+#define NP_STDEV	8
+
 
 //TabPages
 #define ATTRFULFILL  2

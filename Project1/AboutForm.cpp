@@ -6,14 +6,14 @@ System::Void CellFulfill::AboutForm::AboutForm_Load(System::Object ^ sender, Sys
 	if (lLanguage == "en") {
 		this->Text = "About";
 		lProgram->Text = "CellFill Scripts Manager";
-		lCompatible->Text = "Compatible with LuccME and INPE-EM 3.0";
+		lCompatible->Text = "Compatible with LuccME and INPE-EM 3.X";
 		lVersion->Text = "Version 2.0";
 		lCopyright->Text = "Copyright © 2017. All rigths reserved.";
 	}
 	else {
 		this->Text = "Sobre";
 		lProgram->Text = "Gerenciador de Scripts de Preenchimento de Células";
-		lCompatible->Text = "Compatível com LuccME e INPE-EM 3.0";
+		lCompatible->Text = "Compatível com LuccME e INPE-EM 3.X";
 		lVersion->Text = "Versão 2.0";
 		lCopyright->Text = "Copyright © 2017. Todos os direitos reservados.";
 	}

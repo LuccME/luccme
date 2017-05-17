@@ -287,44 +287,38 @@ Return the Operation name based on the index for Polygon Vector
 */
 System::String^ CellFulfill::NovoModelo::polygonOperationToName(int operation)
 {
-	if (operation == 0) {
+	if (operation == P_COVERAGE) {
 		return "coverage";
 	}
-	else if (operation == 1) {
+	else if (operation == P_AVERAGE) {
 		return "average";
 	}
-	else if (operation == 2) {
+	else if (operation == P_AREA) {
 		return "area";
 	}
-	else if (operation == 3) {
+	else if (operation == P_DISTANCE) {
 		return "distance";
 	}
-	else if (operation == 4) {
+	else if (operation == P_PRESENCE) {
 		return "presence";
 	}
-	else if (operation == 5) {
+	else if (operation == P_MODE) {
 		return "mode";
 	}
-	else if (operation == 6) {
+	else if (operation == P_MAXIMUM) {
 		return "maximum";
 	}
-	else if (operation == 7) {
+	else if (operation == P_MINIMUM) {
 		return "minimum";
 	}
-	else if (operation == 8) {
+	else if (operation == P_SUM) {
 		return "sum";
 	}
-	else if (operation == 9) {
+	else if (operation == P_COUNT) {
 		return "count";
 	}
-	else if (operation == 10) {
-		return "length";
-	}
-	else if (operation == 11) {
+	else if (operation == P_STDEV) {
 		return "stdev";
-	}
-	else if (operation == 12) {
-		return "nearest";
 	}
 
 	return "";
@@ -335,41 +329,32 @@ Return the Operation name based on the index for Non Polygon Vector
 */
 System::String^ CellFulfill::NovoModelo::nonPolygonOperationToName(int operation)
 {
-	if (operation == 0) {
-		return "coverage";
-	}
-	else if (operation == 1) {
+	if (operation == NP_AVERAGE) {
 		return "average";
 	}
-	else if (operation == 2) {
+	else if (operation == NP_DISTANCE) {
 		return "distance";
 	}
-	else if (operation == 3) {
+	else if (operation == NP_PRESENCE) {
 		return "presence";
 	}
-	else if (operation == 4) {
+	else if (operation == NP_MODE) {
 		return "mode";
 	}
-	else if (operation == 5) {
+	else if (operation == NP_MAXIMUM) {
 		return "maximum";
 	}
-	else if (operation == 6) {
+	else if (operation == NP_MINIMUM) {
 		return "minimum";
 	}
-	else if (operation == 7) {
+	else if (operation == NP_SUM) {
 		return "sum";
 	}
-	else if (operation == 8) {
+	else if (operation == NP_COUNT) {
 		return "count";
 	}
-	else if (operation == 9) {
-		return "length";
-	}
-	else if (operation == 10) {
+	else if (operation == NP_STDEV) {
 		return "stdev";
-	}
-	else if (operation == 11) {
-		return "nearest";
 	}
 
 	return "";
@@ -380,25 +365,25 @@ Return the Operation name based on the index for Raster
 */
 System::String^ CellFulfill::NovoModelo::rasterOperationToName(int operation)
 {
-	if (operation == 0) {
+	if (operation == COVERAGE) {
 		return "coverage";
 	}
-	else if (operation == 1) {
+	else if (operation == AVERAGE) {
 		return "average";
 	}
-	else if (operation == 2) {
+	else if (operation == MODE) {
 		return "mode";
 	}
-	else if (operation == 3) {
+	else if (operation == MAXIMUM) {
 		return "maximum";
 	}
-	else if (operation == 4) {
+	else if (operation == MINIMUM) {
 		return "minimum";
 	}
-	else if (operation == 5) {
+	else if (operation == SUM) {
 		return "sum";
 	}
-	else if (operation == 6) {
+	else if (operation == STDEV) {
 		return "stdev";
 	}
 
@@ -411,43 +396,37 @@ Return the index for a Polygon Vector Operation
 System::Int32 CellFulfill::NovoModelo::polygonOperationToindex(String^ operation)
 {
 	if (operation->Equals("coverage")) {
-		return 0;
+		return P_COVERAGE;
 	} 
 	else if (operation->Equals("average")) {
-		return 1;
+		return P_AVERAGE;
 	}
 	else if (operation->Equals("area")) {
-		return 2;
+		return P_AREA;
 	}
 	else if (operation->Equals("distance")) {
-		return 3;
+		return P_DISTANCE;
 	}
 	else if (operation->Equals("presence")) {
-		return 4;
+		return P_PRESENCE;
 	}
 	else if (operation->Equals("mode")) {
-		return 5;
+		return P_MODE;
 	}
 	else if (operation->Equals("maximum")) {
-		return 6;
+		return P_MAXIMUM;
 	}
 	else if (operation->Equals("minimum")) {
-		return 7;
+		return P_MINIMUM;
 	}
 	else if (operation->Equals("sum")) {
-		return 8;
+		return P_SUM;
 	}
 	else if (operation->Equals("count")) {
-		return 9;
-	}
-	else if (operation->Equals("length")) {
-		return 10;
+		return P_COUNT;
 	}
 	else if (operation->Equals("stdev")) {
-		return 11;
-	}
-	else if (operation->Equals("nearest")) {
-		return 12;
+		return P_STDEV;
 	}
 
 	return -1;
@@ -458,41 +437,32 @@ Return the index for a Non Polygon Vector Operation
 */
 System::Int32 CellFulfill::NovoModelo::nonPolygonOperationToindex(String^ operation)
 {
-	if (operation->Equals("coverage")) {
-		return 0;
-	}
-	else if (operation->Equals("average")) {
-		return 1;
+	if (operation->Equals("average")) {
+		return NP_AVERAGE;
 	}
 	else if (operation->Equals("distance")) {
-		return 2;
+		return NP_DISTANCE;
 	}
 	else if (operation->Equals("presence")) {
-		return 3;
+		return NP_PRESENCE;
 	}
 	else if (operation->Equals("mode")) {
-		return 4;
+		return NP_MODE;
 	}
 	else if (operation->Equals("maximum")) {
-		return 5;
+		return NP_MAXIMUM;
 	}
 	else if (operation->Equals("minimum")) {
-		return 6;
+		return NP_MINIMUM;
 	}
 	else if (operation->Equals("sum")) {
-		return 7;
+		return NP_SUM;
 	}
 	else if (operation->Equals("count")) {
-		return 8;
-	}
-	else if (operation->Equals("length")) {
-		return 9;
+		return NP_COUNT;
 	}
 	else if (operation->Equals("stdev")) {
-		return 10;
-	}
-	else if (operation->Equals("nearest")) {
-		return 11;
+		return NP_STDEV;
 	}
 
 	return -1;
@@ -504,25 +474,25 @@ Return the index for a Raster Operation
 System::Int32 CellFulfill::NovoModelo::rasterOperationToindex(String^ operation)
 {
 	if (operation->Equals("coverage")) {
-		return 0;
+		return COVERAGE;
 	}
 	else if (operation->Equals("average")) {
-		return 1;
+		return AVERAGE;
 	}
 	else if (operation->Equals("mode")) {
-		return 2;
+		return MODE;
 	}
 	else if (operation->Equals("maximum")) {
-		return 3;
+		return MAXIMUM;
 	}
 	else if (operation->Equals("minimum")) {
-		return 4;
+		return MINIMUM;
 	}
 	else if (operation->Equals("sum")) {
-		return 5;
+		return SUM;
 	}
 	else if (operation->Equals("stdev")) {
-		return 6;
+		return STDEV;
 	}
 
 	return -1;
@@ -734,6 +704,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 			
 			if (dataTemp[AS_OPERATION] != "") {
 				if (rbPolygon->Checked) {
+					cbOperation->Items->Clear();
 					cbOperation->Items->AddRange(polygonList);
 					cbOperation->SelectedIndex = polygonOperationToindex(dataTemp[AS_OPERATION]);
 
@@ -776,7 +747,6 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						break;
 					case P_AVERAGE:
 					case P_SUM:
-					case P_NEAREST:
 						if (dataTemp[AS_OUTPUT] != "") {
 							tOperationOut->Text = dataTemp[AS_OUTPUT];
 							tOperationOut->ForeColor = System::Drawing::Color::Black;
@@ -842,12 +812,12 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					}
 				}
 				else {
+					cbOperation->Items->Clear();
 					cbOperation->Items->AddRange(nonPolygonList);
 					cbOperation->SelectedIndex = nonPolygonOperationToindex(dataTemp[AS_OPERATION]);
 
 					switch (cbOperation->SelectedIndex)
 					{
-					case NP_COVERAGE:
 					case NP_MODE:
 					case NP_MAXIMUM:
 					case NP_MINIMUM:
@@ -884,7 +854,6 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						break;
 					case NP_AVERAGE:
 					case NP_SUM:
-					case NP_NEAREST:
 						if (dataTemp[AS_OUTPUT] != "") {
 							tOperationOut->Text = dataTemp[AS_OUTPUT];
 							tOperationOut->ForeColor = System::Drawing::Color::Black;
@@ -1119,7 +1088,6 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				break;
 			case P_AVERAGE:
 			case P_SUM:
-			case P_NEAREST:
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
 				tOperationOut->Visible = true;
@@ -1154,7 +1122,6 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 		else {
 			switch (cbOperation->SelectedIndex)
 			{
-			case NP_COVERAGE:
 			case NP_MODE:
 			case NP_MAXIMUM:
 			case NP_MINIMUM:
@@ -1175,7 +1142,6 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				break;
 			case NP_AVERAGE:
 			case NP_SUM:
-			case NP_NEAREST:
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
 				tOperationOut->Visible = true;
@@ -1369,7 +1335,6 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					break;
 				case P_AVERAGE:
 				case P_SUM:
-				case P_NEAREST:
 					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
@@ -1423,7 +1388,6 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 			else {
 				switch (cbOperation->SelectedIndex)
 				{
-				case NP_COVERAGE:
 				case NP_MODE:
 				case NP_MAXIMUM:
 				case NP_MINIMUM:
@@ -1452,7 +1416,6 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					break;
 				case NP_AVERAGE:
 				case NP_SUM:
-				case NP_NEAREST:
 					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
@@ -1890,40 +1853,35 @@ System::Void CellFulfill::NovoModelo::bRun_Click(System::Object^  sender, System
 
 System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, System::EventArgs^  e)
 {
-	rasterList[0] = "coverage";
-	rasterList[1] = "average";
-	rasterList[2] = "mode";
-	rasterList[3] = "maximum";
-	rasterList[4] = "minimum";
-	rasterList[5] = "sum";
-	rasterList[6] = "stdev";
+	rasterList[COVERAGE] = "coverage";
+	rasterList[AVERAGE] = "average";
+	rasterList[MODE] = "mode";
+	rasterList[MAXIMUM] = "maximum";
+	rasterList[MINIMUM] = "minimum";
+	rasterList[SUM] = "sum";
+	rasterList[STDEV] = "stdev";
 
-	polygonList[0] = "coverage";
-	polygonList[1] = "average";
-	polygonList[2] = "area";
-	polygonList[3] = "distance";
-	polygonList[4] = "presence";
-	polygonList[5] = "mode";
-	polygonList[6] = "maximum";
-	polygonList[7] = "minimum";
-	polygonList[8] = "sum";
-	polygonList[9] = "count";
-	polygonList[10] = "length";
-	polygonList[11] = "stdev";
-	polygonList[12] = "nearest";
+	polygonList[P_COVERAGE] = "coverage";
+	polygonList[P_AVERAGE] = "average";
+	polygonList[P_AREA] = "area";
+	polygonList[P_DISTANCE] = "distance";
+	polygonList[P_PRESENCE] = "presence";
+	polygonList[P_MODE] = "mode";
+	polygonList[P_MAXIMUM] = "maximum";
+	polygonList[P_MINIMUM] = "minimum";
+	polygonList[P_SUM] = "sum";
+	polygonList[P_COUNT] = "count";
+	polygonList[P_STDEV] = "stdev";
 
-	nonPolygonList[0] = "coverage";
-	nonPolygonList[1] = "average";
-	nonPolygonList[2] = "distance";
-	nonPolygonList[3] = "presence";
-	nonPolygonList[4] = "mode";
-	nonPolygonList[5] = "maximum";
-	nonPolygonList[6] = "minimum";
-	nonPolygonList[7] = "sum";
-	nonPolygonList[8] = "count";
-	nonPolygonList[9] = "length";
-	nonPolygonList[10] = "stdev";
-	nonPolygonList[11] = "nearest";
+	nonPolygonList[NP_AVERAGE] = "average";
+	nonPolygonList[NP_DISTANCE] = "distance";
+	nonPolygonList[NP_PRESENCE] = "presence";
+	nonPolygonList[NP_MODE] = "mode";
+	nonPolygonList[NP_MAXIMUM] = "maximum";
+	nonPolygonList[NP_MINIMUM] = "minimum";
+	nonPolygonList[NP_SUM] = "sum";
+	nonPolygonList[NP_COUNT] = "count";
+	nonPolygonList[NP_STDEV] = "stdev";
 	
 	checkLanguage();
 

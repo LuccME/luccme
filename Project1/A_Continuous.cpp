@@ -21,16 +21,22 @@ System::Void LuccME::A_Continuous::A_Continuous_Shown(System::Object ^ sender, S
 		bSalvar->Text = "Save";
 		lLegend->Text = "* -1 - Unidirectional, 0 - Bidirectional, 1 - Static";
 		lMaxDiffHelp->Text = "Absolute Value";
+		cbPotReg->Text = "Use Potential Regions";
 	}
 	else {
 		bSalvar->Text = "Salvar";
 		lLegend->Text = "* -1 - Unidirecional, 0 - Bidirecional, 1 - Estático";
 		lMaxDiffHelp->Text = "Valor Absoluto";
+		cbPotReg->Text = "Usar Regiões do Potencial";
 	}
 
 	if (lReturn->Return != "") {
 		int j = 0;
 		
+		if (lReturn->PotRegression) {
+			cbPotReg->Checked = true;
+		}
+
 		String^ maxDifference = "";
 		while (lReturn->Return[j] != ';') {
 			maxDifference += lReturn->Return[j];
@@ -206,6 +212,13 @@ System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System
 {
 	lReturn->Regression = 0;
 	lReturn->Return = "";
+	
+	if (cbPotReg->Checked) {
+		lReturn->PotRegression = true;
+	}
+	else {
+		lReturn->PotRegression = false;
+	}
 
 	lReturn->Return += tMaxDifference->Text;
 	lReturn->Return += ";";

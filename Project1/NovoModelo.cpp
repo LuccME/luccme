@@ -32,7 +32,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		bPotContinuous->Enabled = true;
 		bAllocContinuous->Enabled = true;
 	}
-	else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) || (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
+	else if ((gPotentialComponent > NONE && gPotentialComponent <= NUMDISCPOTCOMP) || (gAllocationComponent > NONE && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 		bPotDiscrete->Enabled = true;
 		bAllocDiscrete->Enabled = true;
 		bPotContinuous->Enabled = false;
@@ -1770,7 +1770,7 @@ System::Void LuccME::NovoModelo::bPotContinuous_Click(System::Object ^ sender, S
 
 		case POTENTIALCSAMPLEBASED:
 			if (gPotential != "") {
-				showReturnMaxEntLike("PotencialCSampleBased");
+				showReturnMaxEntLike("PotentialCSampleBased");
 			}
 			break;
 		}
@@ -2158,7 +2158,7 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 			bPotContinuous->Enabled = true;
 			bAllocContinuous->Enabled = true;
 		}
-		else if ((gPotentialComponent > 0 && gPotentialComponent <= NUMDISCPOTCOMP) || (gAllocationComponent > 0 && gAllocationComponent <= NUMDISCALLOCCOMP)) {
+		else if ((gPotentialComponent > NONE && gPotentialComponent <= NUMDISCPOTCOMP) || (gAllocationComponent > NONE && gAllocationComponent <= NUMDISCALLOCCOMP)) {
 			bPotDiscrete->Enabled = true;
 			bAllocDiscrete->Enabled = true;
 			bPotContinuous->Enabled = false;
@@ -2228,10 +2228,6 @@ System::Void LuccME::NovoModelo::tNovoModelo_SelectedIndexChanged(System::Object
 			cReg->Enabled = true;
 		}
 
-		if (gAllocationComponent == ALLOCATIONDCLUESLIKE || gAllocationComponent == ALLOCATIONDCLUESNEIGHORDERING || gAllocationComponent == ALLOCATIONDSIMPLEORDERING) {
-			cChange->Checked = false;
-			cChange->Enabled = false;
-		}
 		else {
 			cChange->Enabled = true;
 		}
@@ -2422,6 +2418,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 		}
 	}
 
+	//Ready to write the files
 	if (checked) {
 		bool mainFile = false;
 		bool subFile = false;
@@ -2462,14 +2459,15 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
 
+				//Writing Terralib Parameters for Shape files 
 				if (shape) {
 					sw->WriteLine("--------------------------------------------------------------");
 					sw->WriteLine("-- Creating Terraview Project                               --");
 					sw->WriteLine("--------------------------------------------------------------");
 					sw->WriteLine("");
 					sw->WriteLine("import(\"terralib\")");
+					sw->WriteLine("");
 					if (shape) {
-						sw->WriteLine("");
 						sw->WriteLine("local projFile = File(\"t3mp.tview\")");
 						sw->WriteLine("if(projFile:exists()) then");
 						sw->WriteLine("\tprojFile:delete()");
@@ -2593,6 +2591,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t},");
 				}
 
+				//Writing Dynamic Variables and Scenario
 				if (cDynamicVariables->Checked == true || cScenario->Checked == true) {
 					sw->WriteLine();
 					sw->WriteLine("\t-----------------------------------------------------");
@@ -2622,7 +2621,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\t{");
 				sw->WriteLine("\t\t" + lLUTShow->Text->Replace(",", ", "));
 				sw->WriteLine("\t},\n");
-				sw->WriteLine("\tlandUseNoData	= " + lLUNDShow->Text->Replace(",", ", ") + ",\n");
+				sw->WriteLine("\tlandUseNoData = " + lLUNDShow->Text->Replace(",", ", ") + ",\n");
 
 				sw->WriteLine("\t-----------------------------------------------------");
 				sw->WriteLine("\t-- Behaviour dimension definition:                 --");
@@ -2770,6 +2769,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
 
+				//Writing Demand
 				if (tbDemand->Lines->Length > 0) {
 					sw->WriteLine("-----------------------------------------------------");
 					sw->WriteLine("-- Demand                                          --");
@@ -2786,7 +2786,12 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\t\t-- " + tbDemand->Lines[1]->ToString()->Replace(",", ", "));
 						tempYear = Convert::ToInt16(tStartTime->Text);
 						for (int i = 2; i < tbDemand->Lines->Length; i++) {
-							sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
+							if ((i + 1) < tbDemand->Lines->Length) {
+								sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + "\t-- " + Convert::ToString(tempYear + i - 2));
+							}
+							else {
+								sw->WriteLine("\t\t" + tbDemand->Lines[i]->ToString()->Replace(",", ", ") + " \t-- " + Convert::ToString(tempYear + i - 2));
+							}
 						}
 						sw->WriteLine("\t}");
 						sw->WriteLine("}\n");
@@ -2815,6 +2820,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					}
 				}
 
+				//Writing Potencial
 				if (tbPotential->Lines->Length > 0) {
 					sw->WriteLine("-----------------------------------------------------");
 					sw->WriteLine("-- Potential                                       --");
@@ -3303,15 +3309,19 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					}
 				}
 
+				//Writing Allocation
 				if (tbAllocation->Lines->Length > 0) {
 					sw->WriteLine("-----------------------------------------------------");
 					sw->WriteLine("-- Allocation                                      --");
 					sw->WriteLine("-----------------------------------------------------");
 
 					array<String^>^ tempLUTs = gcnew array<String^>(50);
-					int row = 0;
 					String^ aux = "";
 					String^ tempBetas = "";
+					int row = 0;
+					int nLut = countCaracter(gAllocationLUT, ',') + 1;
+					int countAllocReg = 1;
+					
 					for (int i = 0; i < gLandUseTypes->Length; i++) {
 						if (gLandUseTypes[i] != ',') {
 							if (gLandUseTypes[i] != '\"') {
@@ -3371,19 +3381,43 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\t" + tbAllocation->Lines[4] + ",");
 						sw->WriteLine("\t" + tbAllocation->Lines[5] + ",");
 						sw->WriteLine("\t" + tbAllocation->Lines[6]->ToString()->Replace("= ", "= \"") + "\",");
+						
+						if (gAllocationRegression > 1) {
+							if (gAllocUsePotReg) {
+								sw->WriteLine("\tregionAttr = \"region\",");
+							}
+							else {
+								sw->WriteLine("\tregionAttr = \"regionAloc\",");
+							}
+							sw->WriteLine("");
+						}
+
 						sw->WriteLine("\t" + tbAllocation->Lines[7] + " =");
 						sw->WriteLine("\t{");
-						for (int i = 8; i < tbAllocation->Lines->Length - 1; i++) {
+
+						for (int i = 8; i < tbAllocation->Lines->Length - 1; i += nLut) {
 							if (tbAllocation->Lines[i] != "") {
-								if (i + 1 < tbAllocation->Lines->Length) {
-									sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "},\t-- " + tempLUTs[i - 8]);
+								sw->WriteLine("\t\t-- Region " + countAllocReg);
+								countAllocReg++;
+								sw->WriteLine("\t\t{");
+								for (int j = 0; j < nLut; j++) {
+									if (i + 1 < tbAllocation->Lines->Length) {
+										sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i + j] + "},\t-- " + tempLUTs[j]);
+									}
+									else {
+										sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i + j] + "}\t-- " + tempLUTs[j]);
+										break;
+									}
+								}
+								if ((i + nLut) < tbAllocation->Lines->Length - 1) {
+									sw->WriteLine("\t\t},\n");
 								}
 								else {
-									sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "}\t-- " + tempLUTs[i - 8]);
-									break;
+									sw->WriteLine("\t\t}");
 								}
 							}
 						}
+
 						sw->WriteLine("\t}");
 						sw->WriteLine("}\n");
 						break;
@@ -3399,19 +3433,43 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\t" + tbAllocation->Lines[6]->ToString()->Replace("= ", "= \"") + "\",");
 						sw->WriteLine("\t" + tbAllocation->Lines[7]->ToString()->Replace("= ", "= \"") + "\",");
 						sw->WriteLine("\t" + tbAllocation->Lines[8]->ToString()->Replace("= ", "= \"") + "\",");
+
+						if (gAllocationRegression > 1) {
+							if (gAllocUsePotReg) {
+								sw->WriteLine("\tregionAttr = \"region\",");
+							}
+							else {
+								sw->WriteLine("\tregionAttr = \"regionAloc\",");
+							}
+							sw->WriteLine("");
+						}
+
 						sw->WriteLine("\t" + tbAllocation->Lines[9] + " =");
 						sw->WriteLine("\t{");
-						for (int i = 10; i < tbAllocation->Lines->Length; i++) {
+						
+						for (int i = 10; i < tbAllocation->Lines->Length - 1; i += nLut) {
 							if (tbAllocation->Lines[i] != "") {
-								if (i + 1 < tbAllocation->Lines->Length) {
-									sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "},\t-- " + tempLUTs[i - 10]);
+								sw->WriteLine("\t\t-- Region " + countAllocReg);
+								countAllocReg++;
+								sw->WriteLine("\t\t{");
+								for (int j = 0; j < nLut; j++) {
+									if (i + 1 < tbAllocation->Lines->Length) {
+										sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i + j] + "},\t-- " + tempLUTs[j]);
+									}
+									else {
+										sw->WriteLine("\t\t\t{" + tbAllocation->Lines[i + j] + "}\t-- " + tempLUTs[j]);
+										break;
+									}
+								}
+								if ((i + nLut) < tbAllocation->Lines->Length - 1) {
+									sw->WriteLine("\t\t},\n");
 								}
 								else {
-									sw->WriteLine("\t\t{" + tbAllocation->Lines[i] + "}\t-- " + tempLUTs[i - 10]);
-									break;
+									sw->WriteLine("\t\t}");
 								}
 							}
 						}
+
 						sw->WriteLine("\t}");
 						sw->WriteLine("}\n");
 						break;
@@ -3428,6 +3486,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 				}
 
+				//Check the generated files
 				if (mainFile && subFile) {
 					if (lSelectedFolder->Text->Length > ROOTDIR) {
 						MessageBox::Show(gSSuccess + lSelectedFolder->Text + "\\" + tModelName->Text->ToLower() + "_main.lua" +
@@ -6211,6 +6270,20 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					line = line->Replace(",", ";");
 					line = line->Replace("\"", "");
 					gAllocation += line;
+					
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
+
+					while (sw->EndOfStream != TRUE) {
+						line = sw->ReadLine();
+						if (line->Contains("regionAttr = \"region\",")) {
+							gAllocUsePotReg = true;
+							break;
+						}
+					}
+
+					sw->Close();
+					sw = gcnew System::IO::StreamReader(fileName);
 
 					line = sw->ReadLine();
 					while (line->Contains("allocationData") != TRUE) {
@@ -6359,7 +6432,7 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						count = 8;
 
 						int change = 0;
-						for (int i = j; i < gAllocation->Length; i++) {
+						for (int i = j; i < gAllocation->Length - 1; i++) {
 							if (gAllocation[i] != ';') {
 								if (gAllocation[i] != ',') {
 									lines[count] += gAllocation[i];
@@ -6423,17 +6496,19 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 								change = 0;
 							}
 						}
-						if (lines[count] != "") {
-							lines[count] = String::Concat("static=", lines[count]);
-							lines[count] = lines[count]->Replace("$", ",minValue=");
-							lines[count] = lines[count]->Replace("@", ",maxValue=");
-							lines[count] = lines[count]->Replace("%", ",minChange=");
-							lines[count] = lines[count]->Replace("&", ",maxChange=");
-							lines[count] = lines[count]->Replace("!", ",changeLimiarValue=");
-							lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
-							lines[count] = lines[count]->Replace(",", ", ");
-							lines[count] = lines[count]->Replace("=", " = ");
-							lines[count] = lines[count]->Replace("*", "");
+						if (count < lines->Length) {
+							if (lines[count] != "") {
+								lines[count] = String::Concat("static=", lines[count]);
+								lines[count] = lines[count]->Replace("$", ",minValue=");
+								lines[count] = lines[count]->Replace("@", ",maxValue=");
+								lines[count] = lines[count]->Replace("%", ",minChange=");
+								lines[count] = lines[count]->Replace("&", ",maxChange=");
+								lines[count] = lines[count]->Replace("!", ",changeLimiarValue=");
+								lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
+								lines[count] = lines[count]->Replace(",", ", ");
+								lines[count] = lines[count]->Replace("=", " = ");
+								lines[count] = lines[count]->Replace("*", "");
+							}
 						}
 
 						tbAllocation->Lines = lines;
@@ -6782,17 +6857,19 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 								change = 0;
 							}
 						}
-						if (lines[count] != "") {
-							lines[count] = String::Concat("static=", lines[count]);
-							lines[count] = lines[count]->Replace("$", ",minValue=");
-							lines[count] = lines[count]->Replace("@", ",maxValue=");
-							lines[count] = lines[count]->Replace("%", ",minChange=");
-							lines[count] = lines[count]->Replace("&", ",maxChange=");
-							lines[count] = lines[count]->Replace("!", ",changeLimiarValue=");
-							lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
-							lines[count] = lines[count]->Replace(",", ", ");
-							lines[count] = lines[count]->Replace("=", " = ");
-							lines[count] = lines[count]->Replace("*", "");
+						if (count < lines->Length) {
+							if (lines[count] != "") {
+								lines[count] = String::Concat("static=", lines[count]);
+								lines[count] = lines[count]->Replace("$", ",minValue=");
+								lines[count] = lines[count]->Replace("@", ",maxValue=");
+								lines[count] = lines[count]->Replace("%", ",minChange=");
+								lines[count] = lines[count]->Replace("&", ",maxChange=");
+								lines[count] = lines[count]->Replace("!", ",changeLimiarValue=");
+								lines[count] = lines[count]->Replace("£", ",maxChangeAboveLimiar=");
+								lines[count] = lines[count]->Replace(",", ", ");
+								lines[count] = lines[count]->Replace("=", " = ");
+								lines[count] = lines[count]->Replace("*", "");
+							}
 						}
 
 						tbAllocation->Lines = lines;
@@ -6993,6 +7070,11 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 			sw->WriteLine("-- CREATING PROJECT --");
 			sw->WriteLine("import(\"terralib\")");
 			sw->WriteLine("");
+			sw->WriteLine("local projFile = File(\"t3mp.tview\")");
+			sw->WriteLine("if (projFile:exists()) then");
+			sw->WriteLine("\tprojFile:delete()");
+			sw->WriteLine("end");
+			sw->WriteLine("");
 			sw->WriteLine("proj = Project{");
 			sw->WriteLine("\tfile = \"t3mp.tview\",");
 			sw->WriteLine("\tclean = true");
@@ -7082,7 +7164,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 		switch (cbValidationMethod->SelectedIndex)
 		{
 			//Ext Method
-			case 0:
+			case EXTVALIDATION:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
 					if (cbValidateAllRegions->Checked) {
@@ -7119,12 +7201,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\terror(\"Attribute: \"..last_sim..\". Does not exist into database.\")");
 				sw->WriteLine("end");
 				sw->WriteLine("");
-				sw->WriteLine("if cs.cells[1][\"region\"] == nil then");
-				sw->WriteLine("\terror(\"Column region does not exist into database.\") ");
-				sw->WriteLine("else");
-				sw->WriteLine("\tregionsValues[1] = cs.cells[1][\"region\"]");
-				sw->WriteLine("end");
-				sw->WriteLine("");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("if cs.cells[1][\"region\"] == nil then");
+					sw->WriteLine("\terror(\"Column region does not exist into database.\") ");
+					sw->WriteLine("else");
+					sw->WriteLine("\tregionsValues[1] = cs.cells[1][\"region\"]");
+					sw->WriteLine("end");
+					sw->WriteLine("");
+				}
 				sw->WriteLine("forEachCell(cs, function(cell) ");
 				sw->WriteLine("\tcell[attribute1] = cell[last_sim]");
 				sw->WriteLine("\tcell[attribute2] = cell[last_real]");
@@ -7313,10 +7397,15 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("file:close()");
+				sw->WriteLine("");
+				sw->WriteLine("projFile = File(\"t3mp.tview\")");
+				sw->WriteLine("if (projFile:exists()) then");
+				sw->WriteLine("\tprojFile:delete()");
+				sw->WriteLine("end");
 				break;
 
 			//Diff Method
-			case 1:
+			case DIFFVALIDATION:
 				folderAux = lSelectedFolder->Text->Replace("\\", "\\\\");
 				if (folderAux->Length > ROOTDIR) {
 					if (!cbValidateAllRegions->Checked) {
@@ -7353,12 +7442,14 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\terror(\"Attribute: \"..last_sim..\". Does not exist into database.\")");
 				sw->WriteLine("end");
 				sw->WriteLine("");
-				sw->WriteLine("if cs.cells[1][\"region\"] == nil then");
-				sw->WriteLine("\terror(\"Column region does not exist into database.\") ");
-				sw->WriteLine("else");
-				sw->WriteLine("\tregionsValues[1] = cs.cells[1][\"region\"]");
-				sw->WriteLine("end");
-				sw->WriteLine("");
+				if (cbValidationRegionEnable->Checked) {
+					sw->WriteLine("if cs.cells[1][\"region\"] == nil then");
+					sw->WriteLine("\terror(\"Column region does not exist into database.\") ");
+					sw->WriteLine("else");
+					sw->WriteLine("\tregionsValues[1] = cs.cells[1][\"region\"]");
+					sw->WriteLine("end");
+					sw->WriteLine("");
+				}
 				sw->WriteLine("forEachCell(cs, function(cell) ");
 				sw->WriteLine("\tcell[attribute1] = cell[last_sim] - cell[init_real]");
 				sw->WriteLine("\tcell[attribute2] = cell[last_real] - cell[init_real]");
@@ -7419,7 +7510,9 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("\t\t\t\tsumcc2 = sumcc2 + cc2[j][attribute2]");
 				sw->WriteLine("\t\t\tend");
 				sw->WriteLine("");
-				sw->WriteLine("\t\t\tif math.abs((sumcc2 - sumcc1)/internalcount) < range then sumcc1 = sumcc2 end");
+				sw->WriteLine("\t\t\tif math.abs((sumcc2 - sumcc1)/internalcount) < range then");
+				sw->WriteLine("\t\t\t\tsumcc1 = sumcc2");
+				sw->WriteLine("\t\t\tend");
 				sw->WriteLine("");
 				sw->WriteLine("\t\t\tdiffcell = (sumcc2 - sumcc1)");
 				sw->WriteLine("\t\t\tcount = count + 1");
@@ -7500,7 +7593,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 				sw->WriteLine("attrs = {}");
 				sw->WriteLine("");
 				sw->WriteLine("for i = 1, numberOfWindows do");
-				sw->WriteLine("\tattrs[i]=\"diff\"..i");
+				sw->WriteLine("\tattrs[i] = \"diff\"..i");
 				sw->WriteLine("");
 				if (cbValidationRegionEnable->Checked) {
 					sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i, selectedRegion)");
@@ -7517,17 +7610,28 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i)");
 				}
 				sw->WriteLine("\tend");
-				sw->WriteLine("\tif (sum == 0) then sum = 0.00001 end");
 				sw->WriteLine("");
-				sw->WriteLine("\tfile:write(i..\"\\t\", string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
-				sw->WriteLine("\tfile:write(\"\\n\")");
-				sw->WriteLine("\tprint(i, string.format(\"%.2f\",((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\tif (sum == 0) then");
+				sw->WriteLine("\t\tsum = 0.00001");
+				sw->WriteLine("\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\tif (i == 1) or (i % 1 == 0) then");
+				sw->WriteLine("\t\tif (1 - diff / (2 * sum)) >= 0 then");
+				sw->WriteLine("\t\t\tfile:write(i..\"\\t\", string.format(\"%.2f\", ((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\t\t\tfile:write(\"\\n\")");
+				sw->WriteLine("\t\t\tprint(i, string.format(\"%.2f\", ((1 - diff / (2 * sum)) * 100))..\" %\")");
+				sw->WriteLine("\t\telse");
+				sw->WriteLine("\t\t\tfile:write(i..\"\\t\", \"0.00 %\")");
+				sw->WriteLine("\t\t\tfile:write(\"\\n\")");
+				sw->WriteLine("\t\t\tprint(i, \"0.00 %\")");
+				sw->WriteLine("\t\tend");
+				sw->WriteLine("\tend");
 				sw->WriteLine("\tio.flush()");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("forEachCell(cs, function(cell)");
 				sw->WriteLine("\t\t\t\t for i = 1, #attrs do");
-				sw->WriteLine("\t\t\t\t\tif(not cell[attrs[i]]) then");
+				sw->WriteLine("\t\t\t\t\tif (not cell[attrs[i]]) then");
 				sw->WriteLine("\t\t\t\t\t\tcell[attrs[i]] = 0");
 				sw->WriteLine("\t\t\t\t\tend");
 				sw->WriteLine("\t\t\t\tend");
@@ -7540,12 +7644,17 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("end");
 					sw->WriteLine("");
 				}
-				sw->WriteLine("if (flag_save) then");
+				sw->WriteLine("if flag_save then");
 				sw->WriteLine("\tprint(\"\\nSaving \"..output_theme..\" into database.\")");
 				sw->WriteLine("\tcs:save(output_theme, attrs)");
 				sw->WriteLine("end");
 				sw->WriteLine("");
 				sw->WriteLine("file:close()");
+				sw->WriteLine("");
+				sw->WriteLine("projFile = File(\"t3mp.tview\")");
+				sw->WriteLine("if (projFile:exists()) then");
+				sw->WriteLine("\tprojFile:delete()");
+				sw->WriteLine("end");
 				break;
 			default:
 				break;

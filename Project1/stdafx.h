@@ -54,6 +54,10 @@
 #define NUMDISCPOTCOMP 7
 #define NUMDISCALLOCCOMP 3
 
+//Validation Methods
+#define EXTVALIDATION	0
+#define DIFFVALIDATION	1
+
 //Miscellaneous
 #define ROOTDIR	4
 #define SECOND	1000

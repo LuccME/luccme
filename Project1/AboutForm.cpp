@@ -6,15 +6,15 @@ System::Void LuccME::AboutForm::AboutForm_Load(System::Object ^ sender, System::
 	if (lLanguage == "en") {
 		this->Text = "About";
 		lProgram->Text = "LuccME Model Manager";
-		lCompatible->Text = "Compatible with LuccME 3.0";
-		lVersion->Text = "Version 3.3";
+		lCompatible->Text = "Compatible with LuccME 3.1";
+		lVersion->Text = "Version 4.0";
 		lCopyright->Text = "Copyright © 2017. All rigths reserved.";
 	}
 	else {
 		this->Text = "Sobre";
 		lProgram->Text = "Gerenciador de Modelos LuccME";
-		lCompatible->Text = "Compatível com LuccME 3.0";
-		lVersion->Text = "Versão 3.3";
+		lCompatible->Text = "Compatível com LuccME 3.1";
+		lVersion->Text = "Versão 4.0";
 		lCopyright->Text = "Copyright © 2017. Todos os direitos reservados.";
 	}
 }

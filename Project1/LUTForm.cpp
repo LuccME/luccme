@@ -188,3 +188,18 @@ System::Void LuccME::LUTForm::bSalvar_Click(System::Object ^ sender, System::Eve
 	close = true;
 	LuccME::Form::Close();
 }
+
+System::Void LuccME::LUTForm::tLUT_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e)
+{
+	switch (e->KeyCode)
+	{
+	case Keys::Enter:
+		if (tLUT->Text != "") {
+			bAddLUT_Click(sender, e);
+		}
+		break;
+	default:
+		break;
+	}
+
+}

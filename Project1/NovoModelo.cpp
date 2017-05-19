@@ -703,6 +703,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 			}
 			
 			if (dataTemp[AS_OPERATION] != "") {
+				//Polygon
 				if (rbPolygon->Checked) {
 					cbOperation->Items->Clear();
 					cbOperation->Items->AddRange(polygonList);
@@ -789,6 +790,34 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tDummyOperation->Visible = false;
 						bSaveOperation->Visible = true;
 						break;
+					case P_AREA:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+						
+						if (dataTemp[AS_DEFAULT] != "") {
+							tDefaultOperation->Text = dataTemp[AS_DEFAULT];
+							tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = false;
+						tSelectOperation->Visible = false;
+						lDefaultOperation->Visible = true;
+						tDefaultOperation->Visible = true;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						lAreaOperation->Visible = false;
+						rbTrueOperation->Visible = false;
+						rbFalseOperation->Visible = false;
+						bSaveOperation->Visible = true;
+						break;
+					case P_DISTANCE:
+					case P_PRESENCE:
+					case P_COUNT:
 					default:
 						if (dataTemp[AS_OUTPUT] != "") {
 							tOperationOut->Text = dataTemp[AS_OUTPUT];
@@ -811,6 +840,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						break;
 					}
 				}
+				//Non Polygon
 				else {
 					cbOperation->Items->Clear();
 					cbOperation->Items->AddRange(nonPolygonList);
@@ -843,8 +873,8 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tOperationOut->Visible = true;
 						lSelectOperation->Visible = true;
 						tSelectOperation->Visible = true;
-						lDefaultOperation->Visible = false;
-						tDefaultOperation->Visible = false;
+						lDefaultOperation->Visible = true;
+						tDefaultOperation->Visible = true;
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
 						bSaveOperation->Visible = true;
@@ -890,12 +920,15 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 							rbFalseOperation->Visible = true;
 						}
 
-						lDefaultOperation->Visible = false;
-						tDefaultOperation->Visible = false;
+						lDefaultOperation->Visible = true;
+						tDefaultOperation->Visible = true;
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
 						bSaveOperation->Visible = true;
 						break;
+					case NP_DISTANCE:
+					case NP_PRESENCE:
+					case NP_COUNT:
 					default:
 						if (dataTemp[AS_OUTPUT] != "") {
 							tOperationOut->Text = dataTemp[AS_OUTPUT];
@@ -1063,7 +1096,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 	int i = attributeToindex();
 	//Vector
 	if (lvAttributesToFill->Items[i]->Text->Contains(".shp")) {
-
+		//Polygon
 		if (rbPolygon->Checked) {
 			switch (cbOperation->SelectedIndex)
 			{
@@ -1077,8 +1110,8 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tOperationOut->Visible = true;
 				lSelectOperation->Visible = true;
 				tSelectOperation->Visible = true;
-				lDefaultOperation->Visible = false;
-				tDefaultOperation->Visible = false;
+				lDefaultOperation->Visible = true;
+				tDefaultOperation->Visible = true;
 				lDummyOperation->Visible = false;
 				tDummyOperation->Visible = false;
 				lAreaOperation->Visible = false;
@@ -1104,6 +1137,22 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				}
 				bSaveOperation->Visible = true;
 				break;
+			case P_AREA:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = false;
+				tSelectOperation->Visible = false;
+				lDefaultOperation->Visible = true;
+				tDefaultOperation->Visible = true;
+				lAreaOperation->Visible = false;
+				rbTrueOperation->Visible = false;
+				rbFalseOperation->Visible = false;
+				bSaveOperation->Visible = true;
+				break;
+			case P_DISTANCE:
+			case P_PRESENCE:
+			case P_COUNT:
 			default:
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
@@ -1119,6 +1168,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				break;
 			}
 		}
+		//Non Polygon
 		else {
 			switch (cbOperation->SelectedIndex)
 			{
@@ -1131,8 +1181,8 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tOperationOut->Visible = true;
 				lSelectOperation->Visible = true;
 				tSelectOperation->Visible = true;
-				lDefaultOperation->Visible = false;
-				tDefaultOperation->Visible = false;
+				lDefaultOperation->Visible = true;
+				tDefaultOperation->Visible = true;
 				lDummyOperation->Visible = false;
 				tDummyOperation->Visible = false;
 				lAreaOperation->Visible = false;
@@ -1147,8 +1197,8 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tOperationOut->Visible = true;
 				lSelectOperation->Visible = true;
 				tSelectOperation->Visible = true;
-				lDefaultOperation->Visible = false;
-				tDefaultOperation->Visible = false;
+				lDefaultOperation->Visible = true;
+				tDefaultOperation->Visible = true;
 				lDummyOperation->Visible = false;
 				tDummyOperation->Visible = false;
 				if (rbPolygon->Checked) {
@@ -1158,6 +1208,9 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				}
 				bSaveOperation->Visible = true;
 				break;
+			case NP_DISTANCE:
+			case NP_PRESENCE:
+			case NP_COUNT:
 			default:
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
@@ -1338,10 +1391,8 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
+					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
 
-					if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
-						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-					}
 
 					if (rbTrueOperation->Checked) {
 						attributeToList[AS_AREA] = "true";
@@ -1364,6 +1415,28 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
 					operationVisualOFF();
 					break;
+				case P_AREA:
+					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
+				case P_DISTANCE:
+				case P_PRESENCE:
+				case P_COUNT:
 				default:
 					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
@@ -1395,10 +1468,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
-
-					if (tDefaultOperation->Text != "null" || tDefaultOperation->Text != "") {
-						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-					}
+					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
 
 					if (rbPolygon->Checked) {
 						attributeToList[AS_SHPTYPE] = "polygon";
@@ -1419,11 +1489,8 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
-
-					if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
-						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-					}
-
+					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					
 					if (rbTrueOperation->Checked) {
 						attributeToList[AS_AREA] = "true";
 					}
@@ -1445,6 +1512,9 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
 					operationVisualOFF();
 					break;
+				case NP_DISTANCE:
+				case NP_PRESENCE:
+				case NP_COUNT:
 				default:
 					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
@@ -1477,10 +1547,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 			case STDEV:
 				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
-
-				if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
-					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-				}
+				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
 
 				if (tDummyOperation->Text != "null" && tDummyOperation->Text != "") {
 					attributeToList[AS_DUMMY] = tDummyOperation->Text;
@@ -1494,11 +1561,8 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 			case SUM:
 				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
-
-				if (tDefaultOperation->Text != "null" && tDefaultOperation->Text != "") {
-					attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
-				}
-
+				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+				
 				if (tDummyOperation->Text != "null" && tDummyOperation->Text != "") {
 					attributeToList[AS_DUMMY] = tDummyOperation->Text;
 				}
@@ -1743,11 +1807,11 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 						sw->WriteLine("\tarea = true,");
 					}
 					
-					if (attributeToList[AS_DEFAULT] != "" && attributeToList[AS_DEFAULT] != "null") {
+					if (attributeToList[AS_DEFAULT] != "" && attributeToList[AS_DEFAULT] != "null" && attributeToList[AS_DEFAULT] != "nill") {
 						sw->WriteLine("\tdefault = " + attributeToList[AS_DEFAULT] + ",");
 					}
 
-					if (attributeToList[AS_DUMMY] != "" && attributeToList[AS_DUMMY] != "null") {
+					if (attributeToList[AS_DUMMY] != "" && attributeToList[AS_DUMMY] != "null" && attributeToList[AS_DUMMY] != "nill") {
 						sw->WriteLine("\tnodata = " + attributeToList[AS_DUMMY] + ",");
 					}
 

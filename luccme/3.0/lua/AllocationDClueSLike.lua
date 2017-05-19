@@ -154,7 +154,8 @@ function AllocationDClueSLike(component)
 					end
 				end
 			elseif	(nIter >= max_iteration) then
-				error("\nDemand not allocated correctly in this time: "..event:getTime())
+				print("\nDemand not allocated correctly in this time step: "..event:getTime().."\n")
+				os.exit()
 			end      		
 		end -- end of 'while do'
 	end -- end of 'run'

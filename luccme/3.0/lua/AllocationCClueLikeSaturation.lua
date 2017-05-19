@@ -134,7 +134,8 @@ function AllocationCClueLikeSaturation(component)
 		until ((nIter >= self.maxIteration) or (allocation_ok == true))
 
 		if (nIter == self.maxIteration) then
-			error("\nDemand not allocated correctly in this time step: "..nIter)
+			print("\nDemand not allocated correctly in this time step: "..nIter.."\n")
+			os.exit()
 		end       
 
 		forEachCell(cs, function(cell)

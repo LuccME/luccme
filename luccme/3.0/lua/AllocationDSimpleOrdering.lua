@@ -151,7 +151,8 @@ function AllocationDSimpleOrdering(component)
 				end
 			end
 		else
-			error("\nDemand not allocated correctly in this time: "..event:getTime())
+			print("\nDemand not allocated correctly in this time step: "..event:getTime().."\n")
+			os.exit()
 		end      	
  	end -- end of 'run' function
  	

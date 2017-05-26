@@ -65,27 +65,22 @@ function AllocationCClueLikeSaturation(component)
 		local luTypes = luccMEModel.landUseTypes
 		local cs = luccMEModel.cs
 		
+		-- saving the first year values
 		if (event:getTime() == luccMEModel.startTime) then
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
 					cell[lu.."_backup"] = cell[lu]
 				end
 			end
-		elseif (belong(event:getTime() - 1,luccMEModel.save.saveYears) and (event:getTime() - 1)) then
+			
+		-- restoring the data from a saved year
+		elseif (belong(event:getTime() - 1,luccMEModel.save.saveYears) and (event:getTime() - 1) ~= luccMEModel.startTime) then
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
 					cell[lu] = cell[lu.."_backupYear"]
 				end
 			end
 		end				
-
-		if (belong(event:getTime(),luccMEModel.save.saveYears)) then
-			for k, cell in pairs (cs.cells) do
-				for luind, lu in  pairs (luTypes) do
-					cell[lu.."_backupYear"] = cell[lu]
-				end
-			end
-		end						
 
 		-- Initialize the demandDirection and elasticity(internal component variables)
 		self:initElasticity(luccMEModel, self.initialElasticity) 
@@ -153,6 +148,7 @@ function AllocationCClueLikeSaturation(component)
 						end
 					)
 
+		-- calculating changes and outputs
 		for i, lu in pairs (luTypes) do
 			local out = lu.."_out"
 			local diff = lu.."_chpast"
@@ -169,7 +165,8 @@ function AllocationCClueLikeSaturation(component)
 			end
 		end
 
-		if (belong(event:getTime(),luccMEModel.save.saveYears)) then
+		-- doing save year backup
+		if (belong(event:getTime(),luccMEModel.save.saveYears) and (event:getTime() ~= luccMEModel.startTime)) then
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
 					cell[lu] = cell[lu.."_backup"]

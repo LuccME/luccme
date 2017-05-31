@@ -169,7 +169,7 @@ function AllocationCClueLikeSaturation(component)
 		if (belong(event:getTime(),luccMEModel.save.saveYears) and (event:getTime() ~= luccMEModel.startTime)) then
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
-					cell[lu] = cell[lu.."_backup"]
+					cell[lu.."_backupYear"] = cell[lu]
 				end
 			end
 		end

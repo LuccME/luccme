@@ -1725,14 +1725,7 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					sw->WriteLine("l" + (i+2).ToString() + " = Layer{");
 					sw->WriteLine("\tproject = proj,");
 					sw->WriteLine("\tname = \"layer" + (i + 2).ToString() + "\",");
-
-					if (attributeToList[AS_ATTRIBUTE]->Contains(".tif")) {
-						sw->WriteLine("\tfile = \"" + attributeToList[AS_ATTRIBUTE]->Replace("\\", "\\\\") + "\",");
-						sw->WriteLine("\tepsg = l1.epsg");
-					}
-					else {
-						sw->WriteLine("\tfile = \"" + attributeToList[AS_ATTRIBUTE]->Replace("\\", "\\\\") + "\"");
-					}
+					sw->WriteLine("\tfile = \"" + attributeToList[AS_ATTRIBUTE]->Replace("\\", "\\\\") + "\"");
 					
 					sw->WriteLine("}");
 
@@ -1746,6 +1739,40 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					sw->WriteLine("print(\"Added Layer" + (i + 2).ToString() + ": " + attributeToList[AS_ATTRIBUTE]->Substring(lastSlash, attributeToList[AS_ATTRIBUTE]->Length - lastSlash) + "\")");
 					sw->WriteLine("");
 				}
+
+				sw->WriteLine("-- Checking EPSGs --");
+				sw->WriteLine("print(\"\\n-- Checking EPSGs--\")");
+				
+				String^ attributesName = "\"" + lLimitFileAddress->Text->Substring(lastSlash, lLimitFileAddress->Text->Length - lastSlash) + "\", "; 
+				String^ attributesEPSG = "l1.epsg, ";
+				
+				for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
+					array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[i]);
+					
+					attributesEPSG += "l" + (i + 2) + ".epsg";
+					attributesName += "\"" + attributeToList[AS_ATTRIBUTE]->Substring(lastSlash, attributeToList[AS_ATTRIBUTE]->Length - lastSlash) + "\"";
+					
+					if ((i + 1) < lvAttributesToFill->Items->Count) {
+						attributesName += ", ";
+						attributesEPSG += ", ";
+					}
+				}
+
+				sw->WriteLine("local epsgVector = {" + attributesEPSG + "}");
+				sw->WriteLine("local fileVector = {" + attributesName + "}");
+				sw->WriteLine("local checkEPSG = true");
+				sw->WriteLine("");
+				sw->WriteLine("for i = 1, #epsgVector, 1 do");
+				sw->WriteLine("\tif (epsgVector[i] ~= l1.epsg) then");
+				sw->WriteLine("\t\tprint(\"Error: EPSG does not math - limit : \"..l1.epsg..\" \"..fileVector[i]..\" : \"..epsgVector[i])");
+				sw->WriteLine("\t\tcheckEPSG = false");
+				sw->WriteLine("\tend");
+				sw->WriteLine("");
+				sw->WriteLine("\tif checkEPSG then print(\"EPSG - limit : \"..l1.epsg..\"\\t\"..fileVector[i]..\": \"..epsgVector[i]) end");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("if not checkEPSG then os.exit() end");
+				sw->WriteLine("");
 				
 				if (!cbUseCS->Checked) {
 					sw->WriteLine("-- CREATING CELLULAR SPACE --");
@@ -1822,6 +1849,10 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					sw->WriteLine("}\n");
 				}
 
+				sw->WriteLine("projFile = File(\"t3mp.tview\")");
+				sw->WriteLine("if(projFile:exists()) then");
+				sw->WriteLine("\tprojFile:delete()");
+				sw->WriteLine("end");
 				sw->WriteLine("print(string.format(\"\\nElapsed time : %.2fs\\n\", os.clock() - x))");
 				sw->WriteLine("print(\"\\nEnd of Script\")");
 				sw->WriteLine("");

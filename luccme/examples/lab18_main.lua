@@ -11,14 +11,14 @@ Lab18 = LuccMEModel
 	name = "Lab18",
 
 	-- Temporal dimension definition
-	startTime = 2008,
-	endTime = 2014,
+	startTime = 1999,
+	endTime = 2004,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
-		layer = "csrb",
+		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
+		layer = "layer",
 		cellArea = 1,
 	},
 
@@ -34,10 +34,10 @@ Lab18 = LuccMEModel
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
 	demand = DemandComputeThreeDates
 	{
-		middleYearForInterpolation = 2011,
-		middleLandUseTypesForInterpolation = {"f2011", "d2011", "outros"},
-		finalYearForInterpolation = 2014,
-		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
+		middleYearForInterpolation = 2004,
+		middleLandUseTypesForInterpolation = {"f04", "d04", "o"},
+		finalYearForInterpolation = 2007,
+		finalLandUseTypesForInterpolation = {"f07", "d07", "o"},
 	},
 	
 	potential = PotentialDLogisticRegression
@@ -48,36 +48,40 @@ Lab18 = LuccMEModel
 			{
 				-- f
 				{
-					const = -1.961,
+					const = -2.34187976925989,
+					elasticity = 0.0,
+
+					betas =
+					{
+						media_decl = -0.0272710076327129,
+						dist_area_ = 4.30977432375496,
+						dist_br = 3.10319957497883,
+						dist_curua = 0.445414024051873,
+						dist_rios_ = 47.3556329553235,
+						dist_estra = 38.4966894254506
+					}
+				},
+
+				-- d
+				{
+					const = -0.100351497277102,
 					elasticity = 0.6,
 
 					betas =
 					{
-						dist_rodov = 0.00008578,
-						assentamen = -0.2604,
-						uc_us = 0.6064,
-						fertilidad = 0.4393
+						media_decl = 0.0581358851690861,
+						dist_area_ = -0.974998890251365,
+						dist_br = -2.51650696123426,
+						dist_curua = -1.26742746441679,
+						dist_rios_ = -40.3646901047482,
+						dist_estra = -23.0841140199094
 					}
 				},
 
-				-- dto
+				-- o
 				{
-					const = 1.978,
-					elasticity = 0.6,
-
-					betas =
-					{
-						dist_rodov = -0.00008651,
-						assentamen = 0.2676,
-						uc_us = -0.6376,
-						fertilidad = -0.4565
-					}
-				},
-
-				-- outros
-				{
-					const = 0,
-					elasticity = 0,
+					const = 0.01,
+					elasticity = 0.5,
 
 					betas =
 					{
@@ -91,7 +95,7 @@ Lab18 = LuccMEModel
 	allocation = AllocationDClueSLike
 	{
 		maxIteration = 1000,
-		factorIteration = 0.000001,
+		factorIteration = 0.0001,
 		maxDifference = 106,
 		transitionMatrix =
 		{
@@ -108,14 +112,11 @@ Lab18 = LuccMEModel
 	{
 		outputTheme = "Lab18_",
 		mode = "multiple",
-		saveYears = {2014},
+		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
-			"d_change",
-			"d_pot",
 		},
-
 	},
 
 	isCoupled = false
@@ -141,5 +142,5 @@ if Lab18.isCoupled == false then
 	tsave = databaseSave(Lab18)
 	env_Lab18:add(tsave)
 	env_Lab18:run(Lab18.endTime)
-	saveSingleTheme (Lab18, true)
+	saveSingleTheme(Lab18, true)
 end

@@ -1,9 +1,7 @@
 -- @example LuccME Discrete Model using the following components, Dynamic Variables and Scenario.
--- DemandComputeThreeDates.
--- PotentialDLogisticRegression.
--- AllocationDClueSLike.
--- Dynamic Variables update in 2009.
--- Scenario staring in 2015, update variables in 2020, until 2025.
+-- DemandComputeTwoDates.
+-- PotentialDLogisticRegressionNeighAttractRepulsion.
+-- AllocationDClueSNeighOrdering.
 
 import("luccme")
 
@@ -13,21 +11,16 @@ Lab20 = LuccMEModel
 	name = "Lab20",
 
 	-- Temporal dimension definition
-	startTime = 2008,
-	endTime = 2025,
+	startTime = 1999,
+	endTime = 2004,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
-		layer = "csrb",
+		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\layer\\cs_discrete.tview",
+		layer = "layer",
 		cellArea = 1,
 	},
-
-	-- Dynamic variables definition
-	updateYears = {2009},
-	scenarioStartTime = 2015,
-	scenarioName = "cenarioA",
 
 	-- Land use variables definition
 	landUseTypes =
@@ -39,15 +32,13 @@ Lab20 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandComputeThreeDates
+	demand = DemandComputeTwoDates
 	{
-		middleYearForInterpolation = 2011,
-		middleLandUseTypesForInterpolation = {"f2011", "d2011", "outros"},
-		finalYearForInterpolation = 2014,
-		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
+		finalYearForInterpolation = 2004,
+		finalLandUseTypesForInterpolation = {"f04", "d04", "o"},
 	},
 	
-	potential = PotentialDLogisticRegression
+	potential = PotentialDLogisticRegressionNeighAttractRepulsion
 	{
 		potentialData =
 		{
@@ -55,36 +46,43 @@ Lab20 = LuccMEModel
 			{
 				-- f
 				{
-					const = -1.961,
-					elasticity = 0.6,
+					const = -2.34187976925989,
+					elasticity = 0.0,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
-						dist_rodov = 0.00008578,
-						assentamen = -0.2604,
-						uc_us = 0.6064,
-						fertilidad = 0.4393
+						media_decl = -0.0272710076327129,
+						dist_area_ = 4.30977432375496,
+						dist_br = 3.10319957497883,
+						dist_curua = 0.445414024051873,
+						dist_rios_ = 47.3556329553235,
+						dist_estra = 38.4966894254506
 					}
 				},
 
-				-- dto
+				-- d
 				{
-					const = 1.978,
+					const = -0.100351497277102,
 					elasticity = 0.6,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
-						dist_rodov = -0.00008651,
-						assentamen = 0.2676,
-						uc_us = -0.6376,
-						fertilidad = -0.4565
+						media_decl = 0.0581358851690861,
+						dist_area_ = -0.974998890251365,
+						dist_br = -2.51650696123426,
+						dist_curua = -1.26742746441679,
+						dist_rios_ = -40.3646901047482,
+						dist_estra = -23.0841140199094
 					}
 				},
 
-				-- outros
+				-- o
 				{
-					const = 0,
-					elasticity = 1,
+					const = 0.01,
+					elasticity = 0.5,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -92,14 +90,24 @@ Lab20 = LuccMEModel
 					}
 				}
 			}
+		},
+
+		affinityMatrix = 
+		{
+			-- Region 1
+			{
+				{1, -1, 0},
+				{-1, 1, 0},
+				{0, 0, 0}
+			}
 		}
 	},
 	
-	allocation = AllocationDClueSLike
+	allocation = AllocationDClueSNeighOrdering
 	{
 		maxIteration = 1000,
-		factorIteration = 0.000001,
-		maxDifference = 106,
+		factorIteration = 0.0001,
+		maxDifference = 100,
 		transitionMatrix =
 		{
 			--Region 1
@@ -115,14 +123,11 @@ Lab20 = LuccMEModel
 	{
 		outputTheme = "Lab20_",
 		mode = "multiple",
-		saveYears = {2014, 2025},
+		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
-			"d_change",
-			"d_pot",
 		},
-
 	},
 
 	isCoupled = false
@@ -148,5 +153,5 @@ if Lab20.isCoupled == false then
 	tsave = databaseSave(Lab20)
 	env_Lab20:add(tsave)
 	env_Lab20:run(Lab20.endTime)
-	saveSingleTheme (Lab20, true)
+	saveSingleTheme(Lab20, true)
 end

@@ -1,6 +1,6 @@
 -- @example LuccME Discrete Model using the following components and Dynamic Variables.
 -- DemandComputeThreeDates.
--- PotentialDLogisticRegression.
+-- PotentialDSampleBased.
 -- AllocationDClueSLike.
 -- Dynamic Variables update in 2009.
 
@@ -12,14 +12,14 @@ Lab19 = LuccMEModel
 	name = "Lab19",
 
 	-- Temporal dimension definition
-	startTime = 2008,
-	endTime = 2014,
+	startTime = 1999,
+	endTime = 2004,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
-		layer = "csrb",
+		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
+		layer = "layer",
 		cellArea = 1,
 	},
 
@@ -36,15 +36,21 @@ Lab19 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandComputeThreeDates
+	demand = DemandPreComputedValues
 	{
-		middleYearForInterpolation = 2011,
-		middleLandUseTypesForInterpolation = {"f2011", "d2011", "outros"},
-		finalYearForInterpolation = 2014,
-		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
+		annualDemand =
+		{
+			-- "f", "d", "o"
+			{5706, 205, 3}, 	-- 1999
+			{5658, 253, 3}, 	-- 2000
+			{5611, 300, 3}, 	-- 2001
+			{5563, 348, 3}, 	-- 2002
+			{5516, 395, 3}, 	-- 2003
+			{5468, 443, 3} 		-- 2004
+		}
 	},
 	
-	potential = PotentialDLogisticRegression
+	potential = PotentialDSampleBased
 	{
 		potentialData =
 		{
@@ -52,40 +58,49 @@ Lab19 = LuccMEModel
 			{
 				-- f
 				{
-					const = -1.961,
-					elasticity = 0.6,
+					cellUsePercentage = 100, 
 
-					betas =
+					attributesPerc = 
 					{
-						dist_rodov = 0.00008578,
-						assentamen = -0.2604,
-						uc_us = 0.6064,
-						fertilidad = 0.4393
+						"media_decl",
+						"dist_area_",
+						"dist_br",
+						"dist_curua",
+						"dist_rios_",
+						"dist_estra"
+					},
+
+					attributesClass = 
+					{
 					}
 				},
 
-				-- dto
+				-- d
 				{
-					const = 1.978,
-					elasticity = 0.6,
+					cellUsePercentage = 100, 
 
-					betas =
+					attributesPerc = 
 					{
-						dist_rodov = -0.00008651,
-						assentamen = 0.2676,
-						uc_us = -0.6376,
-						fertilidad = -0.4565
+						"media_decl",
+						"dist_area_",
+						"dist_curua"
+					},
+
+					attributesClass = 
+					{
 					}
 				},
 
-				-- outros
+				-- o
 				{
-					const = 0,
-					elasticity = 1,
+					cellUsePercentage = 100, 
 
-					betas =
+					attributesPerc = 
 					{
-						
+					},
+
+					attributesClass = 
+					{
 					}
 				}
 			}
@@ -95,14 +110,14 @@ Lab19 = LuccMEModel
 	allocation = AllocationDClueSLike
 	{
 		maxIteration = 1000,
-		factorIteration = 0.000001,
-		maxDifference = 106,
+		factorIteration = 0.00001,
+		maxDifference = 100,
 		transitionMatrix =
 		{
 			--Region 1
 			{
 				{1, 1, 0},
-				{0, 1, 0},
+				{1, 1, 0},
 				{0, 0, 1}
 			}
 		}
@@ -112,14 +127,11 @@ Lab19 = LuccMEModel
 	{
 		outputTheme = "Lab19_",
 		mode = "multiple",
-		saveYears = {2014},
+		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
-			"d_change",
-			"d_pot",
 		},
-
 	},
 
 	isCoupled = false
@@ -145,5 +157,5 @@ if Lab19.isCoupled == false then
 	tsave = databaseSave(Lab19)
 	env_Lab19:add(tsave)
 	env_Lab19:run(Lab19.endTime)
-	saveSingleTheme (Lab19, true)
+	saveSingleTheme(Lab19, true)
 end

@@ -115,9 +115,9 @@ Lab9 = LuccMEModel
 	
 	allocation = AllocationCClueLike
 	{
-		maxDifference = 2500,
-		maxIteration = 1000,
-		initialElasticity = 0.1,
+		maxDifference = 1643,
+		maxIteration = 10000,
+		initialElasticity = 0.01,
 		minElasticity = 0.001,
 		maxElasticity = 1.5,
 		complementarLU = "f",

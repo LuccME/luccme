@@ -11,14 +11,14 @@ Lab13 = LuccMEModel
 	name = "Lab13",
 
 	-- Temporal dimension definition
-	startTime = 2008,
-	endTime = 2014,
+	startTime = 1999,
+	endTime = 2004,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
-		layer = "csrb",
+		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
+		layer = "layer",
 		cellArea = 1,
 	},
 
@@ -36,14 +36,13 @@ Lab13 = LuccMEModel
 	{
 		annualDemand =
 		{
-			-- "f", "d", "outros"
-			{7771, 2829, 12}, 	-- 2008
-			{7766, 2834, 12}, 	-- 2009
-			{7762, 2838, 12}, 	-- 2010
-			{7757, 2843, 12}, 	-- 2011
-			{7754, 2846, 12}, 	-- 2012
-			{7751, 2849, 12}, 	-- 2013
-			{7748, 2852, 12}	-- 2014
+			-- "f", "d", "o"
+			{5706, 205, 3}, 	-- 1999
+			{5658, 253, 3}, 	-- 2000
+			{5611, 300, 3}, 	-- 2001
+			{5563, 348, 3}, 	-- 2002
+			{5516, 395, 3}, 	-- 2003
+			{5468, 443, 3} 		-- 2004
 		}
 	},
 	
@@ -55,33 +54,29 @@ Lab13 = LuccMEModel
 			{
 				-- f
 				{
-					const = -1.961,
+					const = 0.01,
 
 					betas =
 					{
-						dist_rodov = 0.00008578,
-						assentamen = -0.2604,
-						uc_us = 0.6064,
-						fertilidad = 0.4393
+						dist_estra = -0.3,
+						dist_br = -0.3
 					}
 				},
 
-				-- dto
+				-- d
 				{
-					const = 1.978,
+					const = 0.01,
 
 					betas =
 					{
-						dist_rodov = -0.00008651,
-						assentamen = 0.2676,
-						uc_us = -0.6376,
-						fertilidad = 0.4565
+						dist_estra = 0.3,
+						dist_br = 0.3
 					}
 				},
 
-				-- outros
+				-- o
 				{
-					const = 0,
+					const = 0.01,
 
 					betas =
 					{
@@ -101,14 +96,11 @@ Lab13 = LuccMEModel
 	{
 		outputTheme = "Lab13_",
 		mode = "multiple",
-		saveYears = {2014},
+		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
-			"d_change",
-			"d_pot",
 		},
-
 	},
 
 	isCoupled = false

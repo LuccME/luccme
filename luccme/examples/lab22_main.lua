@@ -11,14 +11,14 @@ Lab22 = LuccMEModel
 	name = "Lab22",
 
 	-- Temporal dimension definition
-	startTime = 2008,
-	endTime = 2014,
+	startTime = 1999,
+	endTime = 2004,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
-		layer = "csrb",
+		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
+		layer = "layer",
 		cellArea = 1,
 	},
 
@@ -36,18 +36,17 @@ Lab22 = LuccMEModel
 	{
 		annualDemand =
 		{
-			-- "f", "d", "outros"
-			{7771, 2829, 12}, 	-- 2008
-			{7766, 2834, 12}, 	-- 2009
-			{7762, 2838, 12}, 	-- 2010
-			{7757, 2843, 12}, 	-- 2011
-			{7754, 2846, 12}, 	-- 2012
-			{7751, 2849, 12}, 	-- 2013
-			{7748, 2852, 12}	-- 2014
+			-- "f", "d", "o"
+			{5706, 205, 3}, 	-- 1999
+			{5658, 253, 3}, 	-- 2000
+			{5611, 300, 3}, 	-- 2001
+			{5563, 348, 3}, 	-- 2002
+			{5516, 395, 3}, 	-- 2003
+			{5468, 443, 3} 		-- 2004
 		}
 	},
 	
-	potential = PotentialDLogisticRegressionNeighAttractRepulsion
+	potential = PotentialDLogisticRegression
 	{
 		potentialData =
 		{
@@ -55,55 +54,46 @@ Lab22 = LuccMEModel
 			{
 				-- f
 				{
-					const = -1.961,
-					elasticity = 0.1,
-					percNeighborsUse = 0.5,
+					const = -2.34187976925989,
+					elasticity = 0.0,
 
 					betas =
 					{
-						dist_rodov = 0.00008578,
-						assentamen = -0.2604,
-						uc_us = 0.6064,
-						fertilidad = 0.4393
+						media_decl = -0.0272710076327129,
+						dist_area_ = 4.30977432375496,
+						dist_br = 3.10319957497883,
+						dist_curua = 0.445414024051873,
+						dist_rios_ = 47.3556329553235,
+						dist_estra = 38.4966894254506
 					}
 				},
 
-				-- dto
+				-- d
 				{
-					const = 1.978,
-					elasticity = 0.1,
-					percNeighborsUse = 0.5,
+					const = -0.100351497277102,
+					elasticity = 0.6,
 
 					betas =
 					{
-						dist_rodov = -0.00008651,
-						assentamen = 0.2676,
-						uc_us = -0.6376,
-						fertilidad = -0.4565
+						media_decl = 0.0581358851690861,
+						dist_area_ = -0.974998890251365,
+						dist_br = -2.51650696123426,
+						dist_curua = -1.26742746441679,
+						dist_rios_ = -40.3646901047482,
+						dist_estra = -23.0841140199094
 					}
 				},
 
-				-- outros
+				-- o
 				{
-					const = 0,
-					elasticity = 0,
-					percNeighborsUse = 0,
+					const = 0.01,
+					elasticity = 0.5,
 
 					betas =
 					{
 						
 					}
 				}
-			}
-		},
-
-		affinityMatrix = 
-		{
-			-- Region 1
-			{
-				{1, -1, 0},
-				{-1, 1, 0},
-				{0, 0, 1}
 			}
 		}
 	},
@@ -112,7 +102,7 @@ Lab22 = LuccMEModel
 	{
 		maxIteration = 1000,
 		factorIteration = 0.0001,
-		maxDifference = 6,
+		maxDifference = 106,
 		transitionMatrix =
 		{
 			--Region 1
@@ -128,14 +118,11 @@ Lab22 = LuccMEModel
 	{
 		outputTheme = "Lab22_",
 		mode = "multiple",
-		saveYears = {2014},
+		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
-			"d_change",
-			"d_pot",
 		},
-
 	},
 
 	isCoupled = false
@@ -161,5 +148,5 @@ if Lab22.isCoupled == false then
 	tsave = databaseSave(Lab22)
 	env_Lab22:add(tsave)
 	env_Lab22:run(Lab22.endTime)
-	saveSingleTheme (Lab22, true)
+	saveSingleTheme(Lab22, true)
 end

@@ -1,6 +1,6 @@
 -- @example LuccME Model using the following components.
--- DemandPreComputedValues.
--- PotentialDMaximumEntropyLike.
+-- DemandComputeTwoDates.
+-- PotentialDLogisticRegressionNeighAttractRepulsion.
 -- AllocationCClueLike.
 
 import("luccme")
@@ -11,14 +11,14 @@ Lab21 = LuccMEModel
 	name = "Lab21",
 
 	-- Temporal dimension definition
-	startTime = 2008,
-	endTime = 2014,
+	startTime = 1999,
+	endTime = 2004,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\cs_discrete.tview",
-		layer = "csrb",
+		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
+		layer = "layer",
 		cellArea = 1,
 	},
 
@@ -32,22 +32,13 @@ Lab21 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandPreComputedValues
+	demand = DemandComputeTwoDates
 	{
-		annualDemand =
-		{
-			-- "f", "d", "outros"
-			{7771, 2829, 12}, 	-- 2008
-			{7766, 2834, 12}, 	-- 2009
-			{7762, 2838, 12}, 	-- 2010
-			{7757, 2843, 12}, 	-- 2011
-			{7754, 2846, 12}, 	-- 2012
-			{7751, 2849, 12}, 	-- 2013
-			{7748, 2852, 12}	-- 2014
-		}
+		finalYearForInterpolation = 2004,
+		finalLandUseTypesForInterpolation = {"f04", "d04", "o"},
 	},
 	
-	potential = PotentialDMaximumEntropyLike
+	potential = PotentialDLogisticRegressionNeighAttractRepulsion
 	{
 		potentialData =
 		{
@@ -55,73 +46,74 @@ Lab21 = LuccMEModel
 			{
 				-- f
 				{
-					cellUsePercentage = 100, 
+					const = -2.34187976925989,
+					elasticity = 0.0,
+					percNeighborsUse = 0.5,
 
-					attributesPerc = 
+					betas =
 					{
-						"dist_rodov",
-						"dist_centr",
-						 
-					},
-
-					attributesClass = 
-					{
-						"uc_us",
-						"fertilidad",
-						"assentamen",
-						"ti",
-						"d"
+						media_decl = -0.0272710076327129,
+						dist_area_ = 4.30977432375496,
+						dist_br = 3.10319957497883,
+						dist_curua = 0.445414024051873,
+						dist_rios_ = 47.3556329553235,
+						dist_estra = 38.4966894254506
 					}
 				},
 
 				-- d
 				{
-					cellUsePercentage = 100, 
+					const = -0.100351497277102,
+					elasticity = 0.6,
+					percNeighborsUse = 0.5,
 
-					attributesPerc = 
+					betas =
 					{
-						"dist_rodov",
-						"dist_centr",
-						 
-					},
-
-					attributesClass = 
-					{
-						"uc_us",
-						"fertilidad",
-						"assentamen",
-						"ti",
-						 
+						media_decl = 0.0581358851690861,
+						dist_area_ = -0.974998890251365,
+						dist_br = -2.51650696123426,
+						dist_curua = -1.26742746441679,
+						dist_rios_ = -40.3646901047482,
+						dist_estra = -23.0841140199094
 					}
 				},
 
-				-- outros
+				-- o
 				{
-					cellUsePercentage = 100, 
+					const = 0.01,
+					elasticity = 0.5,
+					percNeighborsUse = 0.5,
 
-					attributesPerc = 
+					betas =
 					{
-					},
-
-					attributesClass = 
-					{
+						
 					}
 				}
+			}
+		},
+
+		affinityMatrix = 
+		{
+			-- Region 1
+			{
+				{1, -1, 0},
+				{-1, 1, 0},
+				{0, 0, 0}
 			}
 		}
 	},
 	
 	allocation = AllocationDClueSLike
 	{
-		maxIteration = 5000,
-		factorIteration = 0.000001,
-		maxDifference = 2500,
+		maxIteration = 1000,
+		factorIteration = 0.0001,
+		maxDifference = 15,
 		transitionMatrix =
 		{
 			--Region 1
 			{
 				{1, 1, 0},
-				{1, 1, 0},
+				{0, 1, 0},
 				{0, 0, 1}
 			}
 		}
@@ -131,12 +123,10 @@ Lab21 = LuccMEModel
 	{
 		outputTheme = "Lab21_",
 		mode = "multiple",
-		saveYears = {2014},
+		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
-			"d_change",
-			"d_pot",
 		},
 
 	},

@@ -18,7 +18,7 @@ Lab5 = LuccMEModel
 	cs = CellularSpace
 	{
 		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_continuous.tview",
-		layer = "csAC",
+		layer = "layer",
 		cellArea = 25,
 	},
 

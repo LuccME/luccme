@@ -1,2 +1,0 @@
-LuccME version: 2.0.1
-(release date 08/05/2015)

@@ -139,7 +139,7 @@ function AllocationDClueSNeighOrdering(component)
 			end
 		end
 
-		while ((nIter <= max_iteration) and (allocation_ok == false) ) do	
+		while ((nIter <= max_iteration) and (allocation_ok == false)) do	
 			if useLog == true then
 				if (nIter == 0) then
 					print("\n")
@@ -183,7 +183,7 @@ function AllocationDClueSNeighOrdering(component)
 				self:changeUse(cell, lu_past, lu_maior, event:getTime(), luccMEModel.startTime)
 			end -- end for cell space
 
-			local diff = self:calcDifferences (event, luccMEModel)
+			local diff = self:calcDifferences(event, luccMEModel)
 
 			allocation_ok = self:convergency(diff, luTypes, self.maxDifference)
 			self:adjustIteration(diff, luTypes, self.factorIteration, iteration)
@@ -398,7 +398,7 @@ function AllocationDClueSNeighOrdering(component)
 	-- @usage --DONTRUN
 	-- component.currentUse(cell, luTypes)
 	component.currentUse = function(self, cell, landuses)
-		for i,land  in pairs( landuses ) do
+		for i, land in pairs (landuses) do
 			if (cell[land] == 1) then
 				return land
 			end

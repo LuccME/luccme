@@ -60,7 +60,7 @@ function AllocationCClueLikeSaturation(component)
 	-- @arg luccMEModel A LuccME model.
 	-- @usage --DONTRUN 
 	-- component.run(event, model)  	 
-	component.run = function (self,event,luccMEModel) 
+	component.run = function(self,event,luccMEModel) 
 		-- Synchronize cellular space in the first year
 		local luTypes = luccMEModel.landUseTypes
 		local cs = luccMEModel.cs
@@ -581,7 +581,7 @@ function AllocationCClueLikeSaturation(component)
 					max = diff
 				end
 
-				tot = tot + math.abs(areas[i] - currentDemand )
+				tot = tot + math.abs(areas[i] - currentDemand)
 			end -- for i
 		end -- for j
 		

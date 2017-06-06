@@ -180,7 +180,7 @@ function PotentialCLinearRegression(component)
 	-- @arg direction The direction for the regression.
 	-- @usage --DONTRUN
 	-- component.modify(luccMEModel, j, i, luDirect)
-	component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
+	component.modify = function(self, luccMEModel, rNumber, luIndex, direction)
 		local luData = self.potentialData[rNumber][luIndex] 
 
 		if (luData.newconst == nil) then 
@@ -209,7 +209,7 @@ function PotentialCLinearRegression(component)
 
 			luData.newconst = luData .const
 
-			if( luData.isLog ) then
+			if (luData.isLog) then
 				if (plus > 0) then 
 					luData.newconst = luData.newconst - math.log(plus, 10) * 0.01 
 				end

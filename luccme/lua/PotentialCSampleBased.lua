@@ -170,7 +170,7 @@ function PotentialCSampleBased(component)
 	-- @arg direction The direction for the regression.
 	-- @usage --DONTRUN
 	-- component.modify(luccMEModel, j, i, luDirect) 
-	component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
+	component.modify = function(self, luccMEModel, rNumber, luIndex, direction)
 		local cs = luccMEModel.cs 
 		local luTypes = luccMEModel.landUseTypes
 		local pot = luTypes[luIndex].."_pot"

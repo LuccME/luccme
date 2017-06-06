@@ -166,7 +166,7 @@ function PotentialDSampleBased(component)
 	-- @arg direction The direction for the regression.
 	-- @usage --DONTRUN
 	-- component.modify(luccMEModel, j, i, luDirect) 
-	component.modify = function (self, luccMEModel, rNumber, luIndex, direction)
+	component.modify = function(self, luccMEModel, rNumber, luIndex, direction)
 	end
   
 	-- Modify potencial for an protected area.

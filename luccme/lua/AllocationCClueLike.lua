@@ -468,7 +468,7 @@ function AllocationCClueLike(component)
 					max =  diff
 				end
 
-				tot = tot + math.abs(areas[i] - currentDemand )
+				tot = tot + math.abs(areas[i] - currentDemand)
 			end -- for i
 		end  -- for j
 

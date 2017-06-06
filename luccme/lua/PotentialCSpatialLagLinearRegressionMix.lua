@@ -274,7 +274,7 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 	-- @arg direction The direction for the regression.
 	-- @usage --DONTRUN
 	-- component.modify(luccMEModel, j, i, luDirect) 
-	component.modify = function (self, luccMEModel, rNumber, luIndex, direction, event)
+	component.modify = function(self, luccMEModel, rNumber, luIndex, direction, event)
 		local cs = luccMEModel.cs
 		local luData = self.potentialData[rNumber][luIndex] 
 
@@ -282,7 +282,7 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 			luData.newconst = 0 
 		end 
 
-		if( luData.isLog ) then 
+		if (luData.isLog) then 
 			local const_unlog = (10 ^ luData.newconst) + self.constChange * direction
 			
 			if (const_unlog ~= 0) then 
@@ -425,7 +425,7 @@ function PotentialCSpatialLagLinearRegressionMix(component)
 				local neighY = 0
 				local Y = 0
 
-				forEachNeighbor(cell, function (cell, neigh, weight)
+				forEachNeighbor(cell, function(cell, neigh, weight)
 											Y = cell.past[lu]
 											neighY = neigh.past[lu]
 

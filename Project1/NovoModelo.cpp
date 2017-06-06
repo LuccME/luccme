@@ -2454,7 +2454,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				//Main File
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("-- This file contains a LUCCME APPLICATION MODEL definition --");
-				sw->WriteLine("--               Compatible with LuccME 3.0                 --");
+				sw->WriteLine("--               Compatible with LuccME 3.1                 --");
 				sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
@@ -2764,7 +2764,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("--       This file contains the COMPONENTS definition       --");
-				sw->WriteLine("--               Compatible with LuccME 3.0                 --");
+				sw->WriteLine("--               Compatible with LuccME 3.1                 --");
 				sw->WriteLine("--        Generated with LuccMe Model Configurator          --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
@@ -3344,7 +3344,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("A1 = " + tbAllocation->Lines[0]);
 						sw->WriteLine("{");
 						sw->WriteLine("\t" + tbAllocation->Lines[1]);
-						sw->WriteLine("}\n");
+						sw->WriteLine("}");
 						break;
 
 					case ALLOCATIONDCLUESNEIGHORDERING:
@@ -3369,7 +3369,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						}
 						sw->WriteLine("\t\t}");
 						sw->WriteLine("\t}");
-						sw->WriteLine("}\n");
+						sw->WriteLine("}");
 						break;
 
 					case ALLOCATIONCCLUELIKE:
@@ -3419,7 +3419,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						}
 
 						sw->WriteLine("\t}");
-						sw->WriteLine("}\n");
+						sw->WriteLine("}");
 						break;
 
 					case ALLOCATIONCCLUELIKESATURATION:
@@ -3471,7 +3471,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						}
 
 						sw->WriteLine("\t}");
-						sw->WriteLine("}\n");
+						sw->WriteLine("}");
 						break;
 					default:
 						break;
@@ -6300,13 +6300,18 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 						}
 					}
 
-					countBraces -= 1; //To remove the potencialData brace
+					countBraces -= 1; //To remove the allocationData brace
 
 					int nLUT = countCaracter(gAllocationLUT, ',') + 1;
 					int bracesForLUT = 1;
-					int nRegions = countBraces / (bracesForLUT*(nLUT+1));
-					int activeRegion = 0;
+					int nRegions = countBraces / (bracesForLUT * (nLUT + 1));
+					int activeRegion = NONE;
 					array<String^>^ auxAllocData = gcnew array<String^>(nRegions*nLUT);
+
+					//This is to open old files (e.g. 3.0)
+					if (nRegions == NONE) {
+						nRegions = 1;
+					}
 
 					gAllocationRegression = nRegions;
 
@@ -6643,6 +6648,11 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int nRegions = countBraces / (bracesForLUT*(nLUT + 1));
 					int activeRegion = 0;
 					array<String^>^ auxAllocData = gcnew array<String^>(nRegions*nLUT);
+
+					//This is to open old files (e.g. 3.0)
+					if (nRegions == NONE) {
+						nRegions = 1;
+					}
 
 					gAllocationRegression = nRegions;
 
@@ -7586,9 +7596,9 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("print(\"\\nRegion: \"..selectedRegion..\"\\n\")");
 					sw->WriteLine("");
 				}
-				sw->WriteLine("file:write(\"" + gSValExt->Replace("print(\"", ""));
+				sw->WriteLine("file:write(\"" + gSValDiff->Replace("print(\"", ""));
 				sw->WriteLine("file:write(\"\\n\")");
-				sw->WriteLine(gSValExt);
+				sw->WriteLine(gSValDiff);
 				sw->WriteLine("io.flush()");
 				sw->WriteLine("attrs = {}");
 				sw->WriteLine("");

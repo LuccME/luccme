@@ -441,9 +441,9 @@ namespace LuccME {
 			this->lvYearsDynamic = (gcnew System::Windows::Forms::ListView());
 			this->cDynamicVariables = (gcnew System::Windows::Forms::CheckBox());
 			this->tabValidation = (gcnew System::Windows::Forms::TabPage());
+			this->tValidationRegion = (gcnew System::Windows::Forms::TextBox());
 			this->cbValidateAllRegions = (gcnew System::Windows::Forms::CheckBox());
 			this->cbValidationRegionEnable = (gcnew System::Windows::Forms::CheckBox());
-			this->tValidationRegion = (gcnew System::Windows::Forms::TextBox());
 			this->lValidationRegion = (gcnew System::Windows::Forms::Label());
 			this->lRangeHelp = (gcnew System::Windows::Forms::Label());
 			this->cbValidationMethod = (gcnew System::Windows::Forms::ComboBox());
@@ -795,6 +795,7 @@ namespace LuccME {
 			// 
 			this->tbSelectedBatabase->BackColor = System::Drawing::SystemColors::Control;
 			this->tbSelectedBatabase->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->tbSelectedBatabase->Enabled = false;
 			this->tbSelectedBatabase->Location = System::Drawing::Point(14, 128);
 			this->tbSelectedBatabase->Multiline = true;
 			this->tbSelectedBatabase->Name = L"tbSelectedBatabase";
@@ -1689,6 +1690,18 @@ namespace LuccME {
 			this->tabValidation->Text = L"Validação";
 			this->tabValidation->UseVisualStyleBackColor = true;
 			// 
+			// tValidationRegion
+			// 
+			this->tValidationRegion->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tValidationRegion->Location = System::Drawing::Point(646, 385);
+			this->tValidationRegion->Name = L"tValidationRegion";
+			this->tValidationRegion->Size = System::Drawing::Size(53, 20);
+			this->tValidationRegion->TabIndex = 122;
+			this->tValidationRegion->Text = L"1";
+			this->tValidationRegion->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tValidationRegion->Visible = false;
+			this->tValidationRegion->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
 			// cbValidateAllRegions
 			// 
 			this->cbValidateAllRegions->AutoSize = true;
@@ -1713,18 +1726,6 @@ namespace LuccME {
 			this->cbValidationRegionEnable->Text = L"Validar por Regiões";
 			this->cbValidationRegionEnable->UseVisualStyleBackColor = true;
 			this->cbValidationRegionEnable->CheckedChanged += gcnew System::EventHandler(this, &NovoModelo::cbValidationRegionEnable_CheckedChanged);
-			// 
-			// tValidationRegion
-			// 
-			this->tValidationRegion->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tValidationRegion->Location = System::Drawing::Point(646, 385);
-			this->tValidationRegion->Name = L"tValidationRegion";
-			this->tValidationRegion->Size = System::Drawing::Size(53, 20);
-			this->tValidationRegion->TabIndex = 122;
-			this->tValidationRegion->Text = L"1";
-			this->tValidationRegion->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tValidationRegion->Visible = false;
-			this->tValidationRegion->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lValidationRegion
 			// 

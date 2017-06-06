@@ -1674,7 +1674,7 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 			if (checked) {
 				sw->WriteLine("--------------------------------------------------------------");
 				sw->WriteLine("--          This file contains a Fill Cell Script           --");
-				sw->WriteLine("--               Compatible with LuccME 3.0                 --");
+				sw->WriteLine("--               Compatible with LuccME 3.1                 --");
 				sw->WriteLine("--       Generated with Fill Cell Script Configurator       --");
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");

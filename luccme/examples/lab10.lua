@@ -1,6 +1,6 @@
 -- @example LuccME Discrete Model using the following components: 
 -- DemandPreComputedValues, 
--- PotentialDInverseDistanceRule, 
+-- PotentialDNeighSimpleRule, 
 -- AllocationDSimpleOrdering.
 
 import("terralib")
@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab12 = LuccMEModel
+Lab10 = LuccMEModel
 {
-	name = "Lab12",
+	name = "Lab10",
 
 	-- Temporal dimension definition
 	startTime = 1999,
@@ -64,46 +64,7 @@ Lab12 = LuccMEModel
 		}
 	},
 	
-	potential = PotentialDInverseDistanceRule
-	{
-		potentialData =
-		{
-			-- Region 1
-			{
-				-- f
-				{
-					const = 0.01,
-
-					betas =
-					{
-						dist_estra = -0.3,
-						dist_br = -0.3
-					}
-				},
-
-				-- d
-				{
-					const = 0.01,
-
-					betas =
-					{
-						dist_estra = 0.3,
-						dist_br = 0.3
-					}
-				},
-
-				-- o
-				{
-					const = 0.01,
-
-					betas =
-					{
-						
-					}
-				}
-			}
-		}
-	},
+	potential = PotentialDNeighSimpleRule{},
 	
 	allocation = AllocationDSimpleOrdering
 	{
@@ -112,7 +73,7 @@ Lab12 = LuccMEModel
 
 	save  =
 	{
-		outputTheme = "Lab12_",
+		outputTheme = "Lab10_",
 		mode = "multiple",
 		saveYears = {2004},
 		saveAttrs = 
@@ -129,22 +90,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab12.startTime,
+		start = Lab10.startTime,
 		action = function(event)
-						Lab12:run(event)
+						Lab10:run(event)
 				  end
 	}
 }
 
-env_Lab12 = Environment{}
-env_Lab12:add(timer)
+env_Lab10 = Environment{}
+env_Lab10:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab12.isCoupled == false then
-	tsave = databaseSave(Lab12)
-	env_Lab12:add(tsave)
-	env_Lab12:run(Lab12.endTime)
-	saveSingleTheme(Lab12, true)
+if Lab10.isCoupled == false then
+	tsave = databaseSave(Lab10)
+	env_Lab10:add(tsave)
+	env_Lab10:run(Lab10.endTime)
+	saveSingleTheme(Lab10, true)
 end
 
 projFile = File("t3mp.tview")

@@ -1,7 +1,7 @@
--- @example LuccME Model using the following components: 
--- DemandComputeTwoDates, 
--- PotentialDLogisticRegressionNeighAttractRepulsion, 
--- AllocationCClueLike.
+-- @example LuccME Discrete Model using the following components: 
+-- DemandComputeThreeDates, 
+-- PotentialDLogisticRegression, 
+-- AllocationDClueSLike.
 
 import("terralib")
 
@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab21 = LuccMEModel
+Lab17 = LuccMEModel
 {
-	name = "Lab21",
+	name = "Lab17",
 
 	-- Temporal dimension definition
 	startTime = 1999,
@@ -50,13 +50,15 @@ Lab21 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandComputeTwoDates
+	demand = DemandComputeThreeDates
 	{
-		finalYearForInterpolation = 2004,
-		finalLandUseTypesForInterpolation = {"f04", "d04", "o"},
+		middleYearForInterpolation = 2004,
+		middleLandUseTypesForInterpolation = {"f04", "d04", "o"},
+		finalYearForInterpolation = 2007,
+		finalLandUseTypesForInterpolation = {"f07", "d07", "o"},
 	},
 	
-	potential = PotentialDLogisticRegressionNeighAttractRepulsion
+	potential = PotentialDLogisticRegression
 	{
 		potentialData =
 		{
@@ -66,7 +68,6 @@ Lab21 = LuccMEModel
 				{
 					const = -2.34187976925989,
 					elasticity = 0.0,
-					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -83,7 +84,6 @@ Lab21 = LuccMEModel
 				{
 					const = -0.100351497277102,
 					elasticity = 0.6,
-					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -100,23 +100,12 @@ Lab21 = LuccMEModel
 				{
 					const = 0.01,
 					elasticity = 0.5,
-					percNeighborsUse = 0.5,
 
 					betas =
 					{
 						
 					}
 				}
-			}
-		},
-
-		affinityMatrix = 
-		{
-			-- Region 1
-			{
-				{1, -1, 0},
-				{-1, 1, 0},
-				{0, 0, 0}
 			}
 		}
 	},
@@ -125,7 +114,7 @@ Lab21 = LuccMEModel
 	{
 		maxIteration = 1000,
 		factorIteration = 0.0001,
-		maxDifference = 15,
+		maxDifference = 106,
 		transitionMatrix =
 		{
 			--Region 1
@@ -139,14 +128,13 @@ Lab21 = LuccMEModel
 
 	save  =
 	{
-		outputTheme = "Lab21_",
+		outputTheme = "Lab17_",
 		mode = "multiple",
 		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
 		},
-
 	},
 
 	isCoupled = false
@@ -157,22 +145,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab21.startTime,
+		start = Lab17.startTime,
 		action = function(event)
-						Lab21:run(event)
+						Lab17:run(event)
 				  end
 	}
 }
 
-env_Lab21 = Environment{}
-env_Lab21:add(timer)
+env_Lab17 = Environment{}
+env_Lab17:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab21.isCoupled == false then
-	tsave = databaseSave(Lab21)
-	env_Lab21:add(tsave)
-	env_Lab21:run(Lab21.endTime)
-	saveSingleTheme(Lab21, true)
+if Lab17.isCoupled == false then
+	tsave = databaseSave(Lab17)
+	env_Lab17:add(tsave)
+	env_Lab17:run(Lab17.endTime)
+	saveSingleTheme(Lab17, true)
 end
 
 projFile = File("t3mp.tview")

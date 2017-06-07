@@ -1,6 +1,6 @@
 -- @example LuccME Continuous Model using the following components: 
--- DemandPreComputedValues, 
--- PotentialCLinearRegression, 
+-- DemandComputeTwoDates, 
+-- PotentialCSpatialLagRegression, 
 -- AllocationCClueLike.
 
 import("terralib")
@@ -24,15 +24,15 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab1 = LuccMEModel
+Lab04 = LuccMEModel
 {
-	name = "Lab1",
+	name = "Lab04",
 
-	-- Temporal dimension definition
+	-- Temporal dimension definition 
 	startTime = 2008,
 	endTime = 2014,
 
-	-- Spatial dimension definition
+	-- Spatial dimension definition  
 	cs = CellularSpace
 	{
 		project = proj,
@@ -50,22 +50,13 @@ Lab1 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandPreComputedValues
+	demand = DemandComputeTwoDates
 	{
-		annualDemand =
-		{
-			-- "f", "d", "outros"
-			{137878.1691, 19982.62882, 6489.202049}, 	-- 2008
-			{137622.2199, 20238.57805, 6489.202049}, 	-- 2009
-			{137366.2707, 20494.52729, 6489.202049}, 	-- 2010
-			{137110.3214, 20750.47652, 6489.202049}, 	-- 2011
-			{136824.6853, 21036.11265, 6489.202049}, 	-- 2012
-			{136539.0492, 21321.74879, 6489.202049}, 	-- 2013
-			{136253.4130, 21607.38493, 6489.202049}		-- 2014
-		}
+		finalYearForInterpolation = 2014,
+		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
 	},
 	
-	potential = PotentialCLinearRegression
+	potential = PotentialCSpatialLagRegression
 	{
 		potentialData =
 		{
@@ -74,31 +65,33 @@ Lab1 = LuccMEModel
 				-- f
 				{
 					isLog = false,
-					const = 0.7392,
+					const = 0.05266679,
+					minReg = 0,
+					maxReg = 1,
+					ro = 0.9124615,
 
 					betas =
 					{
-						assentamen = -0.2193,
-						uc_us = 0.1754,
-						uc_pi = 0.09708,
-						ti = 0.1207,
-						dist_riobr = 0.0000002388,
-						fertilidad = -0.1313
+						uc_us = 0.03789872,
+						uc_pi = 0.04141921,
+						ti = 0.04455667
 					}
 				},
 
 				-- d
 				{
 					isLog = false,
-					const = 0.267,
+					const = 0.01431553,
+					minReg = 0,
+					maxReg = 1,
+					ro = 0.9019253,
 
 					betas =
 					{
-						rodovias = -0.0000009922,
-						assentamen = 0.2294,
-						uc_us = -0.09867,
-						dist_riobr = -0.0000003216,
-						fertilidad = 0.1281
+						assentamen = 0.0443537,
+						uc_us = -0.01454847,
+						dist_riobr = -0.00000002262071,
+						fertilidad = 0.01701601
 					}
 				},
 
@@ -106,6 +99,9 @@ Lab1 = LuccMEModel
 				{
 					isLog = false,
 					const = 0,
+					minReg = 0,
+					maxReg = 1,
+					ro = 0,
 
 					betas =
 					{
@@ -137,13 +133,14 @@ Lab1 = LuccMEModel
 
 	save  =
 	{
-		outputTheme = "Lab1_",
+		outputTheme = "Lab04_",
 		mode = "multiple",
 		saveYears = {2014},
 		saveAttrs = 
 		{
 			"d_out",
 		},
+
 	},
 
 	isCoupled = false
@@ -154,22 +151,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab1.startTime,
+		start = Lab04.startTime,
 		action = function(event)
-						Lab1:run(event)
+						Lab04:run(event)
 				  end
 	}
 }
 
-env_Lab1 = Environment{}
-env_Lab1:add(timer)
+env_Lab04 = Environment{}
+env_Lab04:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab1.isCoupled == false then
-	tsave = databaseSave(Lab1)
-	env_Lab1:add(tsave)
-	env_Lab1:run(Lab1.endTime)
-	saveSingleTheme(Lab1, true)
+if Lab04.isCoupled == false then
+	tsave = databaseSave(Lab04)
+	env_Lab04:add(tsave)
+	env_Lab04:run(Lab04.endTime)
+	saveSingleTheme(Lab04, true)
 end
 
 projFile = File("t3mp.tview")

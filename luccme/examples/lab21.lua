@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab22 = LuccMEModel
+Lab21 = LuccMEModel
 {
-	name = "Lab22",
+	name = "Lab21",
 
 	-- Temporal dimension definition
 	startTime = 1999,
@@ -134,7 +134,7 @@ Lab22 = LuccMEModel
 
 	save  =
 	{
-		outputTheme = "Lab22_",
+		outputTheme = "Lab21_",
 		mode = "multiple",
 		saveYears = {2004},
 		saveAttrs = 
@@ -151,22 +151,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab22.startTime,
+		start = Lab21.startTime,
 		action = function(event)
-						Lab22:run(event)
+						Lab21:run(event)
 				  end
 	}
 }
 
-env_Lab22 = Environment{}
-env_Lab22:add(timer)
+env_Lab21 = Environment{}
+env_Lab21:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab22.isCoupled == false then
-	tsave = databaseSave(Lab22)
-	env_Lab22:add(tsave)
-	env_Lab22:run(Lab22.endTime)
-	saveSingleTheme(Lab22, true)
+if Lab21.isCoupled == false then
+	tsave = databaseSave(Lab21)
+	env_Lab21:add(tsave)
+	env_Lab21:run(Lab21.endTime)
+	saveSingleTheme(Lab21, true)
 end
 
 projFile = File("t3mp.tview")

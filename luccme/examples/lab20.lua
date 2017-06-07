@@ -1,7 +1,7 @@
--- @example LuccME Discrete Model using the following components: 
--- DemandPreComputedValues, 
--- PotentialDLogisticRegression, 
--- AllocationDSimpleOrdering.
+-- @example LuccME Model using the following components: 
+-- DemandComputeTwoDates, 
+-- PotentialDLogisticRegressionNeighAttractRepulsion, 
+-- AllocationCClueLike.
 
 import("terralib")
 
@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab14 = LuccMEModel
+Lab20 = LuccMEModel
 {
-	name = "Lab14",
+	name = "Lab20",
 
 	-- Temporal dimension definition
 	startTime = 1999,
@@ -50,21 +50,13 @@ Lab14 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandPreComputedValues
+	demand = DemandComputeTwoDates
 	{
-		annualDemand =
-		{
-			-- "f", "d", "o"
-			{5706, 205, 3}, 	-- 1999
-			{5658, 253, 3}, 	-- 2000
-			{5611, 300, 3}, 	-- 2001
-			{5563, 348, 3}, 	-- 2002
-			{5516, 395, 3}, 	-- 2003
-			{5468, 443, 3} 		-- 2004
-		}
+		finalYearForInterpolation = 2004,
+		finalLandUseTypesForInterpolation = {"f04", "d04", "o"},
 	},
 	
-	potential = PotentialDLogisticRegression
+	potential = PotentialDLogisticRegressionNeighAttractRepulsion
 	{
 		potentialData =
 		{
@@ -74,6 +66,7 @@ Lab14 = LuccMEModel
 				{
 					const = -2.34187976925989,
 					elasticity = 0.0,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -90,6 +83,7 @@ Lab14 = LuccMEModel
 				{
 					const = -0.100351497277102,
 					elasticity = 0.6,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -106,6 +100,7 @@ Lab14 = LuccMEModel
 				{
 					const = 0.01,
 					elasticity = 0.5,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -113,23 +108,45 @@ Lab14 = LuccMEModel
 					}
 				}
 			}
+		},
+
+		affinityMatrix = 
+		{
+			-- Region 1
+			{
+				{1, -1, 0},
+				{-1, 1, 0},
+				{0, 0, 0}
+			}
 		}
 	},
 	
-	allocation = AllocationDSimpleOrdering
+	allocation = AllocationDClueSLike
 	{
-		maxDifference = 106
+		maxIteration = 1000,
+		factorIteration = 0.0001,
+		maxDifference = 15,
+		transitionMatrix =
+		{
+			--Region 1
+			{
+				{1, 1, 0},
+				{0, 1, 0},
+				{0, 0, 1}
+			}
+		}
 	},
 
 	save  =
 	{
-		outputTheme = "Lab14_",
+		outputTheme = "Lab20_",
 		mode = "multiple",
 		saveYears = {2004},
 		saveAttrs = 
 		{
 			"d_out",
 		},
+
 	},
 
 	isCoupled = false
@@ -140,22 +157,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab14.startTime,
+		start = Lab20.startTime,
 		action = function(event)
-						Lab14:run(event)
+						Lab20:run(event)
 				  end
 	}
 }
 
-env_Lab14 = Environment{}
-env_Lab14:add(timer)
+env_Lab20 = Environment{}
+env_Lab20:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab14.isCoupled == false then
-	tsave = databaseSave(Lab14)
-	env_Lab14:add(tsave)
-	env_Lab14:run(Lab14.endTime)
-	saveSingleTheme(Lab14, true)
+if Lab20.isCoupled == false then
+	tsave = databaseSave(Lab20)
+	env_Lab20:add(tsave)
+	env_Lab20:run(Lab20.endTime)
+	saveSingleTheme(Lab20, true)
 end
 
 projFile = File("t3mp.tview")

@@ -1,7 +1,7 @@
 -- @example LuccME Discrete Model using the following components: 
--- DemandComputeThreeDates,
--- PotentialDSampleBased,
--- AllocationDClueSLike.
+-- DemandPreComputedValues, 
+-- PotentialDLogisticRegression, 
+-- AllocationDSimpleOrdering.
 
 import("terralib")
 
@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab19 = LuccMEModel
+Lab13 = LuccMEModel
 {
-	name = "Lab19",
+	name = "Lab13",
 
 	-- Temporal dimension definition
 	startTime = 1999,
@@ -39,9 +39,6 @@ Lab19 = LuccMEModel
 		layer = l1.name,
 		cellArea = 1,
 	},
-
-	-- Dynamic variables definition
-	updateYears = {2009},
 
 	-- Land use variables definition
 	landUseTypes =
@@ -67,7 +64,7 @@ Lab19 = LuccMEModel
 		}
 	},
 	
-	potential = PotentialDSampleBased
+	potential = PotentialDLogisticRegression
 	{
 		potentialData =
 		{
@@ -75,74 +72,58 @@ Lab19 = LuccMEModel
 			{
 				-- f
 				{
-					cellUsePercentage = 100, 
+					const = -2.34187976925989,
+					elasticity = 0.0,
 
-					attributesPerc = 
+					betas =
 					{
-						"media_decl",
-						"dist_area_",
-						"dist_br",
-						"dist_curua",
-						"dist_rios_",
-						"dist_estra"
-					},
-
-					attributesClass = 
-					{
+						media_decl = -0.0272710076327129,
+						dist_area_ = 4.30977432375496,
+						dist_br = 3.10319957497883,
+						dist_curua = 0.445414024051873,
+						dist_rios_ = 47.3556329553235,
+						dist_estra = 38.4966894254506
 					}
 				},
 
 				-- d
 				{
-					cellUsePercentage = 100, 
+					const = -0.100351497277102,
+					elasticity = 0.6,
 
-					attributesPerc = 
+					betas =
 					{
-						"media_decl",
-						"dist_area_",
-						"dist_curua"
-					},
-
-					attributesClass = 
-					{
+						media_decl = 0.0581358851690861,
+						dist_area_ = -0.974998890251365,
+						dist_br = -2.51650696123426,
+						dist_curua = -1.26742746441679,
+						dist_rios_ = -40.3646901047482,
+						dist_estra = -23.0841140199094
 					}
 				},
 
 				-- o
 				{
-					cellUsePercentage = 100, 
+					const = 0.01,
+					elasticity = 0.5,
 
-					attributesPerc = 
+					betas =
 					{
-					},
-
-					attributesClass = 
-					{
+						
 					}
 				}
 			}
 		}
 	},
 	
-	allocation = AllocationDClueSLike
+	allocation = AllocationDSimpleOrdering
 	{
-		maxIteration = 1000,
-		factorIteration = 0.00001,
-		maxDifference = 100,
-		transitionMatrix =
-		{
-			--Region 1
-			{
-				{1, 1, 0},
-				{1, 1, 0},
-				{0, 0, 1}
-			}
-		}
+		maxDifference = 106
 	},
 
 	save  =
 	{
-		outputTheme = "Lab19_",
+		outputTheme = "Lab13_",
 		mode = "multiple",
 		saveYears = {2004},
 		saveAttrs = 
@@ -159,22 +140,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab19.startTime,
+		start = Lab13.startTime,
 		action = function(event)
-						Lab19:run(event)
+						Lab13:run(event)
 				  end
 	}
 }
 
-env_Lab19 = Environment{}
-env_Lab19:add(timer)
+env_Lab13 = Environment{}
+env_Lab13:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab19.isCoupled == false then
-	tsave = databaseSave(Lab19)
-	env_Lab19:add(tsave)
-	env_Lab19:run(Lab19.endTime)
-	saveSingleTheme(Lab19, true)
+if Lab13.isCoupled == false then
+	tsave = databaseSave(Lab13)
+	env_Lab13:add(tsave)
+	env_Lab13:run(Lab13.endTime)
+	saveSingleTheme(Lab13, true)
 end
 
 projFile = File("t3mp.tview")

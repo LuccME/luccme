@@ -1,7 +1,7 @@
 -- @example LuccME Continuous Model using the following components: 
--- DemandComputeTwoDates, 
+-- DemandPreComputedValues, 
 -- PotentialCSpatialLagRegression, 
--- AllocationCClueLike.
+-- AllocationCClueLikeSaturation.
 
 import("terralib")
 
@@ -24,15 +24,15 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab4 = LuccMEModel
+Lab03 = LuccMEModel
 {
-	name = "Lab4",
+	name = "Lab03",
 
-	-- Temporal dimension definition 
+	-- Temporal dimension definition
 	startTime = 2008,
 	endTime = 2014,
 
-	-- Spatial dimension definition  
+	-- Spatial dimension definition
 	cs = CellularSpace
 	{
 		project = proj,
@@ -50,12 +50,21 @@ Lab4 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandComputeTwoDates
+	demand = DemandPreComputedValues
 	{
-		finalYearForInterpolation = 2014,
-		finalLandUseTypesForInterpolation = {"f2014", "d2014", "outros"},
+		annualDemand =
+		{
+			-- "f", "den", "outros"
+			{137878.1691, 19982.62882, 6489.202049}, 	-- 2008
+			{137622.2199, 20238.57805, 6489.202049}, 	-- 2009
+			{137366.2707, 20494.52729, 6489.202049}, 	-- 2010
+			{137110.3214, 20750.47652, 6489.202049}, 	-- 2011
+			{136824.6853, 21036.11265, 6489.202049}, 	-- 2012
+			{136539.0492, 21321.74879, 6489.202049}, 	-- 2013
+			{136253.4130, 21607.38493, 6489.202049}		-- 2014
+		}
 	},
-	
+
 	potential = PotentialCSpatialLagRegression
 	{
 		potentialData =
@@ -90,8 +99,9 @@ Lab4 = LuccMEModel
 					{
 						assentamen = 0.0443537,
 						uc_us = -0.01454847,
+						fertilidad = 0.01701601,
 						dist_riobr = -0.00000002262071,
-						fertilidad = 0.01701601
+						
 					}
 				},
 
@@ -112,7 +122,7 @@ Lab4 = LuccMEModel
 		}
 	},
 	
-	allocation = AllocationCClueLike
+	allocation = AllocationCClueLikeSaturation
 	{
 		maxDifference = 1643,
 		maxIteration = 1000,
@@ -120,6 +130,8 @@ Lab4 = LuccMEModel
 		minElasticity = 0.001,
 		maxElasticity = 1.5,
 		complementarLU = "f",
+		saturationIndicator = "saturationLimiar",
+		attrProtection = "uc_pi",
 		allocationData =
 		{
 			-- Region 1
@@ -130,10 +142,10 @@ Lab4 = LuccMEModel
 			}
 		}
 	},
-
+	
 	save  =
 	{
-		outputTheme = "Lab4_",
+		outputTheme = "Lab03_",
 		mode = "multiple",
 		saveYears = {2014},
 		saveAttrs = 
@@ -151,22 +163,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab4.startTime,
+		start = Lab03.startTime,
 		action = function(event)
-						Lab4:run(event)
+						Lab03:run(event)
 				  end
 	}
 }
 
-env_Lab4 = Environment{}
-env_Lab4:add(timer)
+env_Lab03 = Environment{}
+env_Lab03:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab4.isCoupled == false then
-	tsave = databaseSave(Lab4)
-	env_Lab4:add(tsave)
-	env_Lab4:run(Lab4.endTime)
-	saveSingleTheme(Lab4, true)
+if Lab03.isCoupled == false then
+	tsave = databaseSave(Lab03)
+	env_Lab03:add(tsave)
+	env_Lab03:run(Lab03.endTime)
+	saveSingleTheme(Lab03, true)
 end
 
 projFile = File("t3mp.tview")

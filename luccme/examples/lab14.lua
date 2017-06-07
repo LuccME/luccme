@@ -1,6 +1,6 @@
 -- @example LuccME Discrete Model using the following components: 
--- DemandComputeThreeDates, 
--- PotentialDLogisticRegression, 
+-- DemandPreComputedValues, 
+-- PotentialDLogisticRegressionNeighAttract, 
 -- AllocationDClueSLike.
 
 import("terralib")
@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab18 = LuccMEModel
+Lab14 = LuccMEModel
 {
-	name = "Lab18",
+	name = "Lab14",
 
 	-- Temporal dimension definition
 	startTime = 1999,
@@ -50,15 +50,21 @@ Lab18 = LuccMEModel
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
-	demand = DemandComputeThreeDates
+	demand = DemandPreComputedValues
 	{
-		middleYearForInterpolation = 2004,
-		middleLandUseTypesForInterpolation = {"f04", "d04", "o"},
-		finalYearForInterpolation = 2007,
-		finalLandUseTypesForInterpolation = {"f07", "d07", "o"},
+		annualDemand =
+		{
+			-- "f", "d", "o"
+			{5706, 205, 3}, 	-- 1999
+			{5658, 253, 3}, 	-- 2000
+			{5611, 300, 3}, 	-- 2001
+			{5563, 348, 3}, 	-- 2002
+			{5516, 395, 3}, 	-- 2003
+			{5468, 443, 3} 		-- 2004
+		}
 	},
 	
-	potential = PotentialDLogisticRegression
+	potential = PotentialDLogisticRegressionNeighAttract
 	{
 		potentialData =
 		{
@@ -66,8 +72,9 @@ Lab18 = LuccMEModel
 			{
 				-- f
 				{
-					const = -2.34187976925989,
-					elasticity = 0.0,
+					const = 0.01,
+					elasticity = 0.5,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -82,8 +89,9 @@ Lab18 = LuccMEModel
 
 				-- d
 				{
-					const = -0.100351497277102,
-					elasticity = 0.6,
+					const = 0.01,
+					elasticity = 0.5,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -100,6 +108,7 @@ Lab18 = LuccMEModel
 				{
 					const = 0.01,
 					elasticity = 0.5,
+					percNeighborsUse = 0.5,
 
 					betas =
 					{
@@ -114,7 +123,7 @@ Lab18 = LuccMEModel
 	{
 		maxIteration = 1000,
 		factorIteration = 0.0001,
-		maxDifference = 106,
+		maxDifference = 10,
 		transitionMatrix =
 		{
 			--Region 1
@@ -128,7 +137,7 @@ Lab18 = LuccMEModel
 
 	save  =
 	{
-		outputTheme = "Lab18_",
+		outputTheme = "Lab14_",
 		mode = "multiple",
 		saveYears = {2004},
 		saveAttrs = 
@@ -145,22 +154,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab18.startTime,
+		start = Lab14.startTime,
 		action = function(event)
-						Lab18:run(event)
+						Lab14:run(event)
 				  end
 	}
 }
 
-env_Lab18 = Environment{}
-env_Lab18:add(timer)
+env_Lab14 = Environment{}
+env_Lab14:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab18.isCoupled == false then
-	tsave = databaseSave(Lab18)
-	env_Lab18:add(tsave)
-	env_Lab18:run(Lab18.endTime)
-	saveSingleTheme(Lab18, true)
+if Lab14.isCoupled == false then
+	tsave = databaseSave(Lab14)
+	env_Lab14:add(tsave)
+	env_Lab14:run(Lab14.endTime)
+	saveSingleTheme(Lab14, true)
 end
 
 projFile = File("t3mp.tview")

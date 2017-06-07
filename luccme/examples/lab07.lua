@@ -1,7 +1,9 @@
--- @example LuccME Continuous Model using the following components: 
+-- @example LuccME Continuous Model using the following components, Dynamic Variables and Scenario: 
 -- DemandPreComputedValues, 
--- PotentialCSpatialLagLinearRegressionMix, 
--- AllocationCClueLike.
+-- PotentialCSpatialLagRegression, 
+-- AllocationCClueLike, 
+-- Dynamic Variables update in 2009, 
+-- Scenario staring in 2015, update variables in 2020, until 2025.
 
 import("terralib")
 
@@ -21,16 +23,28 @@ l1 = Layer{
 	file = filePath("test/csAC.shp", "luccme")
 }
 
+l2 = Layer{
+	project = proj,
+	name = "layer_2009",
+	file = filePath("test/csAC_2009.shp", "luccme")
+}
+
+l3 = Layer{
+	project = proj,
+	name = "layer_cenarioA_2020",
+	file = filePath("test/csAC_cenarioA_2020.shp", "luccme")
+}
+
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab8 = LuccMEModel
+Lab07 = LuccMEModel
 {
-	name = "Lab8",
+	name = "Lab07",
 
 	-- Temporal dimension definition
 	startTime = 2008,
-	endTime = 2014,
+	endTime = 2025,
 
 	-- Spatial dimension definition
 	cs = CellularSpace
@@ -39,6 +53,11 @@ Lab8 = LuccMEModel
 		layer = l1.name,
 		cellArea = 25,
 	},
+
+	-- Dynamic variables definition
+	updateYears = {2009},
+	scenarioStartTime = 2015,
+	scenarioName = "cenarioA",
 
 	-- Land use variables definition
 	landUseTypes =
@@ -61,11 +80,22 @@ Lab8 = LuccMEModel
 			{137110.3214, 20750.47652, 6489.202049}, 	-- 2011
 			{136824.6853, 21036.11265, 6489.202049}, 	-- 2012
 			{136539.0492, 21321.74879, 6489.202049}, 	-- 2013
-			{136253.413, 21607.38493, 6489.202049}		-- 2014
+			{136253.413, 21607.38493, 6489.202049}, 	-- 2014
+			{135973.413, 21887.38493, 6489.202049}, 	-- 2015
+			{135693.413, 22167.38493, 6489.202049}, 	-- 2016
+			{135413.413, 22447.38493, 6489.202049}, 	-- 2017
+			{135133.413, 22727.38493, 6489.202049}, 	-- 2018
+			{134853.413, 23007.38493, 6489.202049}, 	-- 2019
+			{134573.413, 23287.38493, 6489.202049}, 	-- 2020
+			{134293.413, 23567.38493, 6489.202049}, 	-- 2021
+			{133993.413, 23867.38493, 6489.202049}, 	-- 2022
+			{133693.413, 24167.38493, 6489.202049}, 	-- 2023
+			{133393.413, 24467.38493, 6489.202049}, 	-- 2024
+			{133093.413, 24767.38493, 6489.202049}		-- 2025
 		}
 	},
 	
-	potential = PotentialCSpatialLagLinearRegressionMix
+	potential = PotentialCSpatialLagRegression
 	{
 		potentialData =
 		{
@@ -79,31 +109,11 @@ Lab8 = LuccMEModel
 					maxReg = 1,
 					ro = 0.9124615,
 
-					betas  = 
+					betas =
 					{
 						uc_us = 0.03789872,
 						uc_pi = 0.04141921,
 						ti = 0.04455667
-					},
-
-					roadsModel = 
-					{
-						attrs = 
-						{
-							"rodovias"
-						},
-						const = 0.7392,
-						change = -1.5,
-
-						betas =
-						{
-							assentamen = -0.2193,
-							uc_us = 0.1754,
-							uc_pi = 0.09708,
-							ti = 0.1207,
-							dist_riobr = 0.0000002388,
-							fertilidad = -0.1313
-						}
 					}
 				},
 
@@ -115,32 +125,12 @@ Lab8 = LuccMEModel
 					maxReg = 1,
 					ro = 0.9019253,
 
-					betas  = 
+					betas =
 					{
-						rodovias = -0.00000004454423,
 						assentamen = 0.0443537,
 						uc_us = -0.01454847,
 						dist_riobr = -0.00000002262071,
 						fertilidad = 0.01701601
-					},
-
-					roadsModel = 
-					{
-						attrs = 
-						{
-							"rodovias"
-						},
-						const = 0.267,
-						change = -1.5,
-
-						betas =
-						{
-							rodovias = -0.0000009922,
-							assentamen = 0.2294,
-							uc_us = -0.09867,
-							dist_riobr = -0.0000003216,
-							fertilidad = 0.1281
-						}
 					}
 				},
 
@@ -152,27 +142,11 @@ Lab8 = LuccMEModel
 					maxReg = 1,
 					ro = 0,
 
-					betas  = 
+					betas =
 					{
 						
-					},
-
-					roadsModel = 
-					{
-						attrs = 
-						{
-							"rodovias"
-						},
-						const = 0,
-						change = 0,
-
-						betas =
-						{
-							
-						}
 					}
-				},
-
+				}
 			}
 		}
 	},
@@ -193,14 +167,14 @@ Lab8 = LuccMEModel
 				{static = -1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},	-- d
 				{static = 1, minValue = 0, maxValue = 1, minChange = 0, maxChange = 1, changeLimiarValue = 1, maxChangeAboveLimiar = 0},	-- outros
 			}
-		}	
+		}
 	},
 
 	save  =
 	{
-		outputTheme = "Lab8_",
+		outputTheme = "Lab07_",
 		mode = "multiple",
-		saveYears = {2014},
+		saveYears = {2014, 2025},
 		saveAttrs = 
 		{
 			"d_out",
@@ -215,22 +189,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab8.startTime,
+		start = Lab07.startTime,
 		action = function(event)
-						Lab8:run(event)
+						Lab07:run(event)
 				  end
 	}
 }
 
-env_Lab8 = Environment{}
-env_Lab8:add(timer)
+env_Lab07 = Environment{}
+env_Lab07:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab8.isCoupled == false then
-	tsave = databaseSave(Lab8)
-	env_Lab8:add(tsave)
-	env_Lab8:run(Lab8.endTime)
-	saveSingleTheme(Lab8, true)
+if Lab07.isCoupled == false then
+	tsave = databaseSave(Lab07)
+	env_Lab07:add(tsave)
+	env_Lab07:run(Lab07.endTime)
+	saveSingleTheme(Lab07, true)
 end
 
 projFile = File("t3mp.tview")

@@ -24,9 +24,9 @@ l1 = Layer{
 import("luccme")
 
 -- LuccME APPLICATION MODEL DEFINITION
-Lab9 = LuccMEModel
+Lab09 = LuccMEModel
 {
-	name = "Lab9",
+	name = "Lab09",
 
 	-- Temporal dimension definition
 	startTime = 2008,
@@ -65,7 +65,7 @@ Lab9 = LuccMEModel
 		}
 	},
 	
-	potential = PotentialCMaximumEntropyLike
+	potential = PotentialCSampleBased
 	{
 		potentialData =
 		{
@@ -152,7 +152,7 @@ Lab9 = LuccMEModel
 
 	save  =
 	{
-		outputTheme = "Lab9_",
+		outputTheme = "Lab09_",
 		mode = "multiple",
 		saveYears = {2014},
 		saveAttrs = 
@@ -169,22 +169,22 @@ timer = Timer
 {
 	Event
 	{
-		start = Lab9.startTime,
+		start = Lab09.startTime,
 		action = function(event)
-						Lab9:run(event)
+						Lab09:run(event)
 				  end
 	}
 }
 
-env_Lab9 = Environment{}
-env_Lab9:add(timer)
+env_Lab09 = Environment{}
+env_Lab09:add(timer)
 
 -- ENVIROMMENT EXECUTION
-if Lab9.isCoupled == false then
-	tsave = databaseSave(Lab9)
-	env_Lab9:add(tsave)
-	env_Lab9:run(Lab9.endTime)
-	saveSingleTheme(Lab9, true)
+if Lab09.isCoupled == false then
+	tsave = databaseSave(Lab09)
+	env_Lab09:add(tsave)
+	env_Lab09:run(Lab09.endTime)
+	saveSingleTheme(Lab09, true)
 end
 
 projFile = File("t3mp.tview")

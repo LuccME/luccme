@@ -22,7 +22,7 @@
 --
 -------------------------------------------------------------------------------------------
 return {
-	PotentialDMaximumEntropyLike = function(unitTest)
+	PotentialCSampleBased = function(unitTest)
 		unitTest:assert(true)
 	end,
 }	

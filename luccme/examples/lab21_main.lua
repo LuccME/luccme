@@ -1,7 +1,25 @@
--- @example LuccME Model using the following components.
--- DemandComputeTwoDates.
--- PotentialDLogisticRegressionNeighAttractRepulsion.
+-- @example LuccME Model using the following components: 
+-- DemandComputeTwoDates, 
+-- PotentialDLogisticRegressionNeighAttractRepulsion, 
 -- AllocationCClueLike.
+
+import("terralib")
+
+local projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+proj = Project {
+	file = "t3mp.tview",
+	clean = true
+}
+
+l1 = Layer{
+	project = proj,
+	name = "layer",
+	file = filePath("test/cs_moju.shp", "luccme")
+}
 
 import("luccme")
 
@@ -17,18 +35,18 @@ Lab21 = LuccMEModel
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
-		layer = "layer",
+		project = proj,
+		layer = l1.name,
 		cellArea = 1,
 	},
 
 	-- Land use variables definition
 	landUseTypes =
 	{
-		"f", "d", "outros"
+		"f", "d", "o"
 	},
 
-	landUseNoData	= "outros",
+	landUseNoData	= "o",
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
@@ -154,5 +172,10 @@ if Lab21.isCoupled == false then
 	tsave = databaseSave(Lab21)
 	env_Lab21:add(tsave)
 	env_Lab21:run(Lab21.endTime)
-	saveSingleTheme (Lab21, true)
+	saveSingleTheme(Lab21, true)
+end
+
+projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
 end

@@ -1,7 +1,25 @@
--- @example LuccME Continuous Model using the following components.
--- DemandComputeThreeDates.
--- PotentialCSpatialLagRegression.
+-- @example LuccME Continuous Model using the following components: 
+-- DemandComputeThreeDates, 
+-- PotentialCSpatialLagRegression, 
 -- AllocationCClueLike.
+
+import("terralib")
+
+local projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+proj = Project {
+	file = "t3mp.tview",
+	clean = true
+}
+
+l1 = Layer{
+	project = proj,
+	name = "layer",
+	file = filePath("test/csAC.shp", "luccme")
+}
 
 import("luccme")
 
@@ -17,8 +35,8 @@ Lab5 = LuccMEModel
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_continuous.tview",
-		layer = "layer",
+		project = proj,
+		layer = l1.name,
 		cellArea = 25,
 	},
 
@@ -149,5 +167,10 @@ if Lab5.isCoupled == false then
 	tsave = databaseSave(Lab5)
 	env_Lab5:add(tsave)
 	env_Lab5:run(Lab5.endTime)
-	saveSingleTheme (Lab5, true)
+	saveSingleTheme(Lab5, true)
+end
+
+projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
 end

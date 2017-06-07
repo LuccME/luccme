@@ -1,7 +1,25 @@
--- @example LuccME Discrete Model using the following components.
--- DemandPreComputedValues.
--- PotentialDNeighInverseDistanceRule.
+-- @example LuccME Discrete Model using the following components: 
+-- DemandPreComputedValues, 
+-- PotentialDNeighInverseDistanceRule, 
 -- AllocationDSimpleOrdering.
+
+import("terralib")
+
+local projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+proj = Project {
+	file = "t3mp.tview",
+	clean = true
+}
+
+l1 = Layer{
+	project = proj,
+	name = "layer",
+	file = filePath("test/cs_moju.shp", "luccme")
+}
 
 import("luccme")
 
@@ -17,18 +35,18 @@ Lab13 = LuccMEModel
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
-		layer = "layer",
+		project = proj,
+		layer = l1.name,
 		cellArea = 1,
 	},
 
 	-- Land use variables definition
 	landUseTypes =
 	{
-		"f", "d", "outros"
+		"f", "d", "o"
 	},
 
-	landUseNoData	= "outros",
+	landUseNoData	= "o",
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
@@ -126,5 +144,10 @@ if Lab13.isCoupled == false then
 	tsave = databaseSave(Lab13)
 	env_Lab13:add(tsave)
 	env_Lab13:run(Lab13.endTime)
-	saveSingleTheme (Lab13, true)
+	saveSingleTheme(Lab13, true)
+end
+
+projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
 end

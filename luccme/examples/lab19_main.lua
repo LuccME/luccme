@@ -1,8 +1,25 @@
--- @example LuccME Discrete Model using the following components and Dynamic Variables.
--- DemandComputeThreeDates.
--- PotentialDSampleBased.
+-- @example LuccME Discrete Model using the following components: 
+-- DemandComputeThreeDates,
+-- PotentialDSampleBased,
 -- AllocationDClueSLike.
--- Dynamic Variables update in 2009.
+
+import("terralib")
+
+local projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+proj = Project {
+	file = "t3mp.tview",
+	clean = true
+}
+
+l1 = Layer{
+	project = proj,
+	name = "layer",
+	file = filePath("test/cs_moju.shp", "luccme")
+}
 
 import("luccme")
 
@@ -18,8 +35,8 @@ Lab19 = LuccMEModel
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_discrete.tview",
-		layer = "layer",
+		project = proj,
+		layer = l1.name,
 		cellArea = 1,
 	},
 
@@ -29,10 +46,10 @@ Lab19 = LuccMEModel
 	-- Land use variables definition
 	landUseTypes =
 	{
-		"f", "d", "outros"
+		"f", "d", "o"
 	},
 
-	landUseNoData	= "outros",
+	landUseNoData	= "o",
 
 	-- Behaviour dimension definition:
 	-- DEMAND, POTENTIAL AND ALLOCATION COMPONENTS
@@ -158,4 +175,9 @@ if Lab19.isCoupled == false then
 	env_Lab19:add(tsave)
 	env_Lab19:run(Lab19.endTime)
 	saveSingleTheme(Lab19, true)
+end
+
+projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
 end

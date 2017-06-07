@@ -1,9 +1,39 @@
--- @example LuccME Continuous Model using the following components, Dynamic Variables and Scenario.
--- DemandPreComputedValues.
--- PotentialCSpatialLagRegression.
--- AllocationCClueLike.
--- Dynamic Variables update in 2009.
+-- @example LuccME Continuous Model using the following components, Dynamic Variables and Scenario: 
+-- DemandPreComputedValues, 
+-- PotentialCSpatialLagRegression, 
+-- AllocationCClueLike, 
+-- Dynamic Variables update in 2009, 
 -- Scenario staring in 2015, update variables in 2020, until 2025.
+
+import("terralib")
+
+local projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+proj = Project {
+	file = "t3mp.tview",
+	clean = true
+}
+
+l1 = Layer{
+	project = proj,
+	name = "layer",
+	file = filePath("test/csAC.shp", "luccme")
+}
+
+l2 = Layer{
+	project = proj,
+	name = "layer_2009",
+	file = filePath("test/csAC_2009.shp", "luccme")
+}
+
+l3 = Layer{
+	project = proj,
+	name = "layer_cenarioA_2020",
+	file = file = filePath("test/csAC_cenarioA_2020.shp", "luccme")
+}
 
 import("luccme")
 
@@ -19,8 +49,8 @@ Lab7 = LuccMEModel
 	-- Spatial dimension definition
 	cs = CellularSpace
 	{
-		project = "C:\\TerraME\\bin\\packages\\luccme\\data\\test\\cs_continuous.tview",
-		layer = "layer",
+		project = proj,
+		layer = l1.name,
 		cellArea = 25,
 	},
 
@@ -174,5 +204,10 @@ if Lab7.isCoupled == false then
 	tsave = databaseSave(Lab7)
 	env_Lab7:add(tsave)
 	env_Lab7:run(Lab7.endTime)
-	saveSingleTheme (Lab7, true)
+	saveSingleTheme(Lab7, true)
+end
+
+projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
 end

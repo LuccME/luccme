@@ -153,7 +153,7 @@ Lab07 = LuccMEModel
 	
 	allocation = AllocationCClueLike
 	{
-		maxDifference = 1643,
+		maxDifference = 2000,
 		maxIteration = 1000,
 		initialElasticity = 0.1,
 		minElasticity = 0.001,
@@ -174,7 +174,7 @@ Lab07 = LuccMEModel
 	{
 		outputTheme = "Lab07_",
 		mode = "multiple",
-		saveYears = {2014, 2025},
+		saveYears = {2025},
 		saveAttrs = 
 		{
 			"d_out",
@@ -207,7 +207,29 @@ if Lab07.isCoupled == false then
 	saveSingleTheme(Lab07, true)
 end
 
+-- Creating Map for test compare
+local cs2 = CellularSpace{
+				file = filePath("test/Lab07_2025.shp", "luccme"),
+				zero = "top"
+			}
+	
+mapsResult = Map{
+			target = cs2,
+			select = "d_out",
+			slices = 10,
+			min = 0,
+			max = 1,
+			color = "RdYlGn",
+			invert = true,
+		}
+
+-- Removing generated files		
 projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+projFile = filePath("test/Lab07_2025.shp", "luccme")
 if(projFile:exists()) then
 	projFile:delete()
 end

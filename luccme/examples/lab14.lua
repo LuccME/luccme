@@ -123,7 +123,7 @@ Lab14 = LuccMEModel
 	{
 		maxIteration = 1000,
 		factorIteration = 0.0001,
-		maxDifference = 10,
+		maxDifference = 500,
 		transitionMatrix =
 		{
 			--Region 1
@@ -172,7 +172,29 @@ if Lab14.isCoupled == false then
 	saveSingleTheme(Lab14, true)
 end
 
+-- Creating Map for test compare
+local cs2 = CellularSpace{
+				file = filePath("test/Lab14_2004.shp", "luccme"),
+				zero = "top"
+			}
+	
+mapsResult = Map{
+			target = cs2,
+			select = "d_out",
+			slices = 10,
+			min = 0,
+			max = 1,
+			color = "RdYlGn",
+			invert = true,
+		}
+
+-- Removing generated files		
 projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+projFile = filePath("test/Lab14_2004.shp", "luccme")
 if(projFile:exists()) then
 	projFile:delete()
 end

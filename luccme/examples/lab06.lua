@@ -191,7 +191,29 @@ if Lab06.isCoupled == false then
 	saveSingleTheme(Lab06, true)
 end
 
+-- Creating Map for test compare
+local cs2 = CellularSpace{
+				file = filePath("test/Lab06_2014.shp", "luccme"),
+				zero = "top"
+			}
+	
+mapsResult = Map{
+			target = cs2,
+			select = "d_out",
+			slices = 10,
+			min = 0,
+			max = 1,
+			color = "RdYlGn",
+			invert = true,
+		}
+
+-- Removing generated files		
 projFile = File("t3mp.tview")
+if(projFile:exists()) then
+	projFile:delete()
+end
+
+projFile = filePath("test/Lab06_2014.shp", "luccme")
 if(projFile:exists()) then
 	projFile:delete()
 end

@@ -123,7 +123,7 @@ function PotentialDLogisticRegressionNeighAttractRepulsion(component)
 				-- Step 1: Count neighbgours		
 				local numNeigh = 0;
 				
-				forEachNeighbor(cell, function(cell, neigh)			
+				forEachNeighbor(cell, function(neigh, _, cell)			
 											if (neigh[lu] == 1 and neigh ~= cell)  then		
 												numNeigh = numNeigh + 1
 											end						

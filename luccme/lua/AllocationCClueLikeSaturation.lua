@@ -365,7 +365,7 @@ function AllocationCClueLikeSaturation(component)
 									perc_def_original = 1
 								end
 								
-								forEachNeighbor(cell, "11x11", function(cell, neigh)
+								forEachNeighbor(cell, "11x11", function(neigh, _, cell)
 																	local prot_t = 0
 																	local original = 1
 																	

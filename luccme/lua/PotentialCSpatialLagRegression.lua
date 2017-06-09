@@ -335,7 +335,7 @@ function PotentialCSpatialLagRegression(component)
 				local neighY = 0
 				local Y = 0
 
-				forEachNeighbor(cell, function(cell, neigh)
+				forEachNeighbor(cell, function(neigh, _, cell)
 											Y = cell.past[lu]
 											neighY = neigh.past[lu]
 

@@ -83,7 +83,7 @@ function PotentialDNeighInverseDistanceRule(component)
 						cell[lu.."_pot"] = 0
 						local numNeigh = 0;
 
-						forEachNeighbor(cell, function(cell, neigh)				
+						forEachNeighbor(cell, function(neigh, _, cell)				
 													if (neigh[lu] == 1) then					
 													numNeigh = numNeigh + 1
 													end

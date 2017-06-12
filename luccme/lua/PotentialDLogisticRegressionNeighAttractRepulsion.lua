@@ -152,8 +152,12 @@ function PotentialDLogisticRegressionNeighAttractRepulsion(component)
 				-- Step 5: Calculates the regression estimates 
 				local regrProb = self.calcRegressionLogistic(cell, inputValues, self)
 
-				-- Step 6: Compute the potential
-				cell[lu.."_pot"] = regrProb + elas
+				-- Step 6: Compute potential
+				if numNeigh <= (totalNeigh * inputValues.percNeighborsUse - 1) then
+					cell[lu.."_pot"] = regrProb + (elas * cell["tau_"..lu])
+				elseif numNeigh > (totalNeigh * inputValues.percNeighborsUse - 1) then
+					cell[lu.."_pot"] = (regrProb + (elas * cell["tau_"..lu])) * (numNeigh / (totalNeigh * inputValues.percNeighborsUse))
+				end
 			end -- use type
 		end -- end cells
 	end -- end run

@@ -282,7 +282,7 @@ function LuccMEModel(model)
 														if (var ~= "cObj_" and var ~= "objectId_" and
 															var ~= "y" and var ~= "x" and var ~= "past" and
 															var ~= "agents" and var ~= "agents_" and
-															var ~= "object_id_") then
+															var ~= "object_id_" and var ~= "neighborhoods") then
 																if (cell[var] ~= nil) then
 																	cell[var] = cell_temp[var]
 																	if (flag == false) then

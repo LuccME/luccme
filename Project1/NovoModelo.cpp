@@ -1743,6 +1743,13 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("-- Checking EPSGs --");
 				sw->WriteLine("print(\"\\n-- Checking EPSGs--\")");
 				
+				lastSlash = 0;
+				for (int i = 0; i <lLimitFileAddress->Text->Length; i++) {
+					if (lLimitFileAddress->Text[i] == '\\') {
+						lastSlash = i + 1;
+					}
+				}
+
 				String^ attributesName = "\"" + lLimitFileAddress->Text->Substring(lastSlash, lLimitFileAddress->Text->Length - lastSlash) + "\", "; 
 				String^ attributesEPSG = "l1.epsg, ";
 				
@@ -1750,8 +1757,9 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					array<String^>^ attributeToList = safe_cast<array<String^>^>(attributeList[i]);
 					
 					attributesEPSG += "l" + (i + 2) + ".epsg";
-					attributesName += "\"" + attributeToList[AS_ATTRIBUTE]->Substring(lastSlash, attributeToList[AS_ATTRIBUTE]->Length - lastSlash) + "\"";
+					attributesName += "\"" + lvAttributesToFill->Items[i]->Text + "\"";
 					
+
 					if ((i + 1) < lvAttributesToFill->Items->Count) {
 						attributesName += ", ";
 						attributesEPSG += ", ";
@@ -1835,11 +1843,11 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					}
 					
 					if (attributeToList[AS_DEFAULT] != "" && attributeToList[AS_DEFAULT] != "null" && attributeToList[AS_DEFAULT] != "nill") {
-						sw->WriteLine("\tdefault = " + attributeToList[AS_DEFAULT] + ",");
+						sw->WriteLine("\tmissing = " + attributeToList[AS_DEFAULT] + ",");
 					}
 
 					if (attributeToList[AS_DUMMY] != "" && attributeToList[AS_DUMMY] != "null" && attributeToList[AS_DUMMY] != "nill") {
-						sw->WriteLine("\tnodata = " + attributeToList[AS_DUMMY] + ",");
+						sw->WriteLine("\tdummy = " + attributeToList[AS_DUMMY] + ",");
 					}
 
 					if (attributeToList[AS_SHPTYPE] != "") {
@@ -2184,15 +2192,15 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 							else if (line->Contains("area = ")) {
 								dataTemp[AS_AREA] = "true";
 							}
-							else if (line->Contains("default = ")) {
-								line = line->Replace("default = ", "");
+							else if (line->Contains("missing = ")) {
+								line = line->Replace("missing = ", "");
 								line = line->Replace("\t", "");
 								line = line->Replace("\"", "");
 								line = line->Replace(",", "");
 								dataTemp[AS_DEFAULT] = line;
 							}
-							else if (line->Contains("nodata = ")) {
-								line = line->Replace("nodata = ", "");
+							else if (line->Contains("dummy = ")) {
+								line = line->Replace("dummy = ", "");
 								line = line->Replace("\t", "");
 								line = line->Replace("\"", "");
 								line = line->Replace(",", "");

@@ -234,7 +234,7 @@ function AllocationDClueSLike(component)
 			differences[land] = (dem - (areaAlloc))
 			
 			if (luccMEModel.useLog == true) then
-				print(land.." -> " ..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
+				print(land.." -> "..areaAlloc.."\t\tdemand -> "..dem.." difference -> "..differences[land])
 			end
 		end
 

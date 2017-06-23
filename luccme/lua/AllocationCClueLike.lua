@@ -454,11 +454,11 @@ function AllocationCClueLike(component)
 					end
 					
 					if (luccMEModel.potential.potentialData[j][i].newminReg ~= nil) then
-						print(lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const: ",luccMEModel.potential.potentialData[j][i].const,"->", luccMEModel.potential.potentialData[j][i].newconst, luccMEModel.potential.potentialData[j][i].newminReg, luccMEModel.potential.potentialData[j][i].newmaxReg)
+						print(lu, "elas: ", self.elasticity[i],"dir: ", luDirect,"const: ", luccMEModel.potential.potentialData[j][i].const, "->", luccMEModel.potential.potentialData[j][i].newconst, luccMEModel.potential.potentialData[j][i].newminReg, luccMEModel.potential.potentialData[j][i].newmaxReg)
 					elseif (luccMEModel.potential.potentialData[j][i].const ~= nil) then
-						print(lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const: ",luccMEModel.potential.potentialData[j][i].const,"->", luccMEModel.potential.potentialData[j][i].newconst)
+						print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect,"const: ", luccMEModel.potential.potentialData[j][i].const, "->", luccMEModel.potential.potentialData[j][i].newconst)
 					else
-						print(lu, "elas: ", self.elasticity[i],"dir: ",luDirect)
+						print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect)
 					end
 				end
 
@@ -599,7 +599,7 @@ function AllocationCClueLike(component)
 							local lu = luTypes[i]
 							local luStatic = luAllocData.static
 
-							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+							if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
 								luStatic = 1
 							end
 							
@@ -664,7 +664,7 @@ function AllocationCClueLike(component)
 							local lu = luTypes[i]
 							local luStatic = luAllocData.static
 							
-							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+							if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
 								luStatic = 1
 							end   
 							

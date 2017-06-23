@@ -74,7 +74,7 @@ function AllocationCClueLikeSaturation(component)
 			end
 			
 		-- restoring the data from a saved year
-		elseif (belong(event:getTime() - 1,luccMEModel.save.saveYears) and (event:getTime() - 1) ~= luccMEModel.startTime) then
+		elseif (belong(event:getTime() - 1,luccMEModel.save.saveYears) and ((event:getTime() - 1) ~= luccMEModel.startTime)) then
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
 					cell[lu] = cell[lu.."_backupYear"]
@@ -507,7 +507,7 @@ function AllocationCClueLikeSaturation(component)
 			end  -- for k
 			
 			if (activeRegionNumber == 0) then
-				error("Region ".. rNumber.." is not set into database.")  
+				error("Region "..rNumber.." is not set into database.")  
 			end
 		end -- for i, lu
 	end -- computeChange
@@ -567,11 +567,11 @@ function AllocationCClueLikeSaturation(component)
 					end
 					
 					if (luccMEModel.potential.potentialData[j][i].newminReg ~= nil) then
-						print(lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const: ",luccMEModel.potential.potentialData[j][i].const,"->", luccMEModel.potential.potentialData[j][i].newconst, luccMEModel.potential.potentialData[j][i].newminReg, luccMEModel.potential.potentialData[j][i].newmaxReg)
+						print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect, "const: ", luccMEModel.potential.potentialData[j][i].const, "->", luccMEModel.potential.potentialData[j][i].newconst, luccMEModel.potential.potentialData[j][i].newminReg, luccMEModel.potential.potentialData[j][i].newmaxReg)
 					elseif (luccMEModel.potential.potentialData[j][i].const ~= nil) then
-						print(lu, "elas: ", self.elasticity[i],"dir: ",luDirect,"const: ",luccMEModel.potential.potentialData[j][i].const,"->", luccMEModel.potential.potentialData[j][i].newconst)
+						print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect, "const: ", luccMEModel.potential.potentialData[j][i].const, "->", luccMEModel.potential.potentialData[j][i].newconst)
 					else
-						print(lu, "elas: ", self.elasticity[i],"dir: ",luDirect)
+						print(lu, "elas: ", self.elasticity[i], "dir: ", luDirect)
 					end
 				end
 
@@ -678,11 +678,11 @@ function AllocationCClueLikeSaturation(component)
 							
 							if (luStatic < 1) then
 								if (incr == (NCOV - nostatic)) then
-									cell[lu] =  cell[lu] -(amin +(BACKP * totchange))
+									cell[lu] =  cell[lu] - (amin +(BACKP * totchange))
 								end
 								
 								if (decr == (NCOV - nostatic)) then
-									cell[lu] = cell[lu] +((BACKP * totchange) - amax)
+									cell[lu] = cell[lu] + ((BACKP * totchange) - amax)
 								end
 								
 								if (cell[lu] < 0) then
@@ -735,7 +735,7 @@ function AllocationCClueLikeSaturation(component)
 									end
 									
 									if (luStatic < 1) then
-										cell[lu] = cell[lu] *((1 - totstatic) / totcov)
+										cell[lu] = cell[lu] * ((1 - totstatic) / totcov)
 									end
 								end
 							else
@@ -751,7 +751,7 @@ function AllocationCClueLikeSaturation(component)
 								end
 							end
 						end
-					until(math.abs(totcov -(1-totstatic)) <= 0.005) or (l >= 25)
+					until ((math.abs(totcov -(1-totstatic)) <= 0.005) or (l >= 25))
 
 					if (l == 25) then
 						totcov = 0
@@ -761,7 +761,7 @@ function AllocationCClueLikeSaturation(component)
 							local lu = luTypes[i]
 							local luStatic = luAllocData.static
 							
-							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+							if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
 								luStatic =1
 							end  
 							
@@ -776,12 +776,12 @@ function AllocationCClueLikeSaturation(component)
 							local lu = luTypes[i]
 							local luStatic = luAllocData.static
 							
-							if ((cell[lu] <= luAllocData.minValue) or cell[lu] >= luAllocData.maxValue) then
+							if ((cell[lu] <= luAllocData.minValue) or (cell[lu] >= luAllocData.maxValue)) then
 								luStatic = 1
 							end     
 							
 							if (luStatic < 1) then
-								cell[lu] = cell[lu] *((1 - totstatic)/totcov)
+								cell[lu] = cell[lu] * ((1 - totstatic) / totcov)
 							end
 						end
 					end -- if l

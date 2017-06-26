@@ -162,6 +162,7 @@ function AllocationCClueLike(component)
 			for k, cell in pairs (cs.cells) do
 				for luind, lu in  pairs (luTypes) do
 					cell[lu.."_backupYear"] = cell[lu]
+					cell[lu] = cell[lu.."_backup"]
 				end
 			end
 		end

@@ -2734,7 +2734,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 				sw->WriteLine("\ttsave = databaseSave(" + tModelName->Text + ")");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":add(tsave)");
 				sw->WriteLine("\tenv_" + tModelName->Text + ":run(" + tModelName->Text + ".endTime)");
-				sw->WriteLine("\tsaveSingleTheme (" + tModelName->Text + ", true)");
+				sw->WriteLine("\tsaveSingleTheme(" + tModelName->Text + ", true)");
 				
 				if (shape) {
 					sw->WriteLine("\tprojFile = File(\"t3mp.tview\")");

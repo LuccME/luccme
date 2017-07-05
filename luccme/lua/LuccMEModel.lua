@@ -298,6 +298,32 @@ function LuccMEModel(model)
 		end -- for				
 	end -- dinamicVars
 
+	-- Implements the externatl method of a LuccMe model.
+	-- @arg event An Event represents a time instant when the simulation engine must execute some computation.
+	-- @usage --DONTRUN
+	-- model.external(event, file)
+	model.external = function(self, event, file)
+		print("\nExecuting External model") 
+		if(file ~= "") then
+			-- create global variables to use on the external file
+			_G.event = event
+			_G.luccMEModel = self
+			
+			-- call the external file
+			dofile(file)
+			
+			-- clear the global variables
+			_G.event = nil
+			_G.luccMEModel = nil
+			
+			self.currentDemand = self.annualDemand[1]	
+			self.previousDemand = self.annualDemand[1]
+			
+			-- delete the global variables
+			collectgarbage("collect")
+		end
+	end
+	
 	collectgarbage("collect")
 	return model
 end

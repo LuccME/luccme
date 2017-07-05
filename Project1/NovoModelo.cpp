@@ -7612,15 +7612,6 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 					sw->WriteLine("\ttotal, diff, sum = MultiRes(cs, attribute1, cs, attribute2, i)");
 				}
 				sw->WriteLine("");
-				sw->WriteLine("\tif (sum < diff) then");
-				if (cbValidationRegionEnable->Checked) {
-					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i, selectedRegion)");
-				}
-				else {
-					sw->WriteLine("\t\ttotal, diff, sum = MultiRes(cs, attribute2, cs, attribute1, i)");
-				}
-				sw->WriteLine("\tend");
-				sw->WriteLine("");
 				sw->WriteLine("\tif (sum == 0) then");
 				sw->WriteLine("\t\tsum = 0.00001");
 				sw->WriteLine("\tend");

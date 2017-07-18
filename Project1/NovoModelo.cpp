@@ -2465,7 +2465,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("-- Creating Terraview Project                               --");
 					sw->WriteLine("--------------------------------------------------------------");
 					sw->WriteLine("");
-					sw->WriteLine("import(\"terralib\")");
+					sw->WriteLine("import(\"gis\")");
 					sw->WriteLine("");
 					if (shape) {
 						sw->WriteLine("local projFile = File(\"t3mp.tview\")");
@@ -7078,7 +7078,7 @@ System::Void LuccME::NovoModelo::bValidate_Click(System::Object ^ sender, System
 
 		if (shape) {
 			sw->WriteLine("-- CREATING PROJECT --");
-			sw->WriteLine("import(\"terralib\")");
+			sw->WriteLine("import(\"gis\")");
 			sw->WriteLine("");
 			sw->WriteLine("local projFile = File(\"t3mp.tview\")");
 			sw->WriteLine("if (projFile:exists()) then");

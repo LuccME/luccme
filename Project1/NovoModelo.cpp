@@ -1679,7 +1679,7 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("--               " + dateTime + "                     --");
 				sw->WriteLine("--------------------------------------------------------------\n");
 				sw->WriteLine("local x = os.clock()"); 
-				sw->WriteLine("import(\"terralib\")");
+				sw->WriteLine("import(\"gis\")");
 				sw->WriteLine("");
 				sw->WriteLine("local projFile = File(\"t3mp.tview\")");
 				sw->WriteLine("if(projFile:exists()) then");

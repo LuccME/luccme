@@ -12,6 +12,7 @@
 #include "LanguageForm.h"
 #include "AboutForm.h"
 #include "LUND.h"
+#include "D_ExternalModel.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -1617,6 +1618,54 @@ System::Void LuccME::NovoModelo::bD_CIThreeDM_Click(System::Object ^ sender, Sys
 	}
 }
 
+System::Void LuccME::NovoModelo::bExternalDemand_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	cReturnExtModel^ lDemand = gcnew cReturnExtModel();
+	bool check = true;
+	String^ rTempAux = "";
+
+	if (gDemand == "" || gDemandLUT != gLandUseTypes || gDemandComponent != DEXTMODEL) {
+		if (gDemandComponent != DEXTMODEL && gDemandComponent != NONE) {
+			if (MessageBox::Show(gSDemand1Info, gSDemand1Title, MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == LuccME::DialogResult::Yes) {
+				rTempAux = gDemand;
+				gDemand = "";
+			}
+			else {
+				check = false;
+			}
+		}
+	}
+
+	if (check) {
+		lDemand->Return = gDemand;
+		lDemand->Language = lLanguage;
+
+		LuccME::D_ExternalModel^ demandForm = gcnew D_ExternalModel(lDemand);
+		demandForm->MinimizeBox = false;
+		demandForm->MaximizeBox = false;
+		demandForm->ShowInTaskbar = false;
+		demandForm->ShowDialog();
+
+		gDemand = lDemand->Return;
+		gDemand = gDemand->Replace("\n", "");
+		gDemand = gDemand->Replace("\r", "");
+
+		if (gDemand != "") {
+			array<String^>^ lines = gcnew array<String^>(2); 
+			String^ auxLine = "";
+
+			lines[0] = "DemandExternalModel";
+			lines[1] = gDemand;
+
+			tbDemand->Lines = lines;
+			gDemandComponent = DEXTMODEL;
+		}
+		else {
+			gDemand = rTempAux;
+		}
+	}
+}
+
 System::Void LuccME::NovoModelo::bPotDiscrete_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	bool check = true;
@@ -2776,6 +2825,10 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("-----------------------------------------------------");
 
 					int tempYear = 0;
+					int time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+					int nLUT = countCaracter(lLUTShow->Text, ',') + 1;
+					String^ auxLine = "";
+
 					switch (gDemandComponent)
 					{
 					case PCVINPE:
@@ -2812,6 +2865,44 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 						sw->WriteLine("\tmiddleLandUseTypesForInterpolation = {" + tbDemand->Lines[4]->ToString()->Replace(",", ", ") + "},");
 						sw->WriteLine("\t" + tbDemand->Lines[2]->ToString()->Replace(",", ", ") + ",");
 						sw->WriteLine("\tfinalLandUseTypesForInterpolation = {" + tbDemand->Lines[5]->ToString()->Replace(",", ", ") + "},");
+						sw->WriteLine("}\n");
+						break;
+
+					case DEXTMODEL:
+						sw->WriteLine("D1 = " + tbDemand->Lines[0]);
+						sw->WriteLine("{");
+						sw->WriteLine("\tfile = \"" + tbDemand->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
+						sw->WriteLine("\tannualDemand =");
+						sw->WriteLine("\t{");
+						sw->WriteLine("\t\t-- " + lLUTShow->Text);
+
+						tempYear = Convert::ToInt16(tStartTime->Text);
+						time = Convert::ToInt16(tEndTime->Text) - Convert::ToInt16(tStartTime->Text);
+						nLUT = countCaracter(lLUTShow->Text, ',') + 1;
+						auxLine = "";
+						
+						for (int i = 0; i <= time; i++) {
+							auxLine = "\t\t{";
+							
+							for (int j = 0; j < nLUT; j++) {
+								if (j + 1 < nLUT) {
+									auxLine += "0, ";
+								}
+								else {
+									auxLine += "0";
+								}
+							}
+							
+							if (i + 1 <= time) {
+								auxLine += "}, -- " + Convert::ToString(tempYear + i);
+							}
+							else {
+								auxLine += "}  -- " + Convert::ToString(tempYear + i);
+							}
+							sw->WriteLine(auxLine);
+						}
+
+						sw->WriteLine("\t}");
 						sw->WriteLine("}\n");
 						break;
 
@@ -4734,6 +4825,39 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 
 						tbDemand->Lines = lines;
 						gDemandComponent = CITHREEDM;
+					}
+				}
+
+				//DemandExternalModel
+				if (tempLine == "DemandExternalModel") {
+					tempLine = "";
+
+					while (line->Contains("file") != TRUE) {
+						line = sw->ReadLine();
+					}
+
+					gDemand = "";
+					line = line->Replace("file =", "");
+					line = line->Replace(" ", "");
+					line = line->Replace("\n", "");
+					line = line->Replace("\t", "");
+					line = line->Replace("\"", "");
+					line = line->Replace(",", "");
+					line = line->Replace("\\\\", "\\");
+
+					gDemand = line;
+
+					if (gDemand != "") {
+						array<String^>^ lines = gcnew array<String^>(2);
+						lines[0] = "DemandExternalModel";
+						lines[1] = gDemand;
+
+						tbDemand->Lines = lines;
+						gDemandComponent = DEXTMODEL;
+					}
+					
+					while (line->Contains("annualDemand") != TRUE) {
+						line = sw->ReadLine();
 					}
 				}
 

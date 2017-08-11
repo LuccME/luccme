@@ -199,6 +199,7 @@ namespace LuccME {
 			}
 		}
 	
+	private: System::Windows::Forms::Button^  bExternalDemand;
 	private: System::Windows::Forms::TextBox^  tValidationRegion;
 	private: System::Windows::Forms::Label^  lValidationRegion;
 	private: System::Windows::Forms::CheckBox^  cbValidateAllRegions;
@@ -466,6 +467,7 @@ namespace LuccME {
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->bExternalDemand = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -996,6 +998,7 @@ namespace LuccME {
 			this->tabComponent->Controls->Add(this->tbPotential);
 			this->tabComponent->Controls->Add(this->lPotential);
 			this->tabComponent->Controls->Add(this->tbDemand);
+			this->tabComponent->Controls->Add(this->bExternalDemand);
 			this->tabComponent->Controls->Add(this->bD_CIThreeDM);
 			this->tabComponent->Controls->Add(this->bD_CITwoDM);
 			this->tabComponent->Controls->Add(this->bD_PCVINPE);
@@ -1113,7 +1116,7 @@ namespace LuccME {
 			// 
 			// bD_CIThreeDM
 			// 
-			this->bD_CIThreeDM->Location = System::Drawing::Point(22, 260);
+			this->bD_CIThreeDM->Location = System::Drawing::Point(22, 214);
 			this->bD_CIThreeDM->Name = L"bD_CIThreeDM";
 			this->bD_CIThreeDM->Size = System::Drawing::Size(171, 39);
 			this->bD_CIThreeDM->TabIndex = 79;
@@ -1123,7 +1126,7 @@ namespace LuccME {
 			// 
 			// bD_CITwoDM
 			// 
-			this->bD_CITwoDM->Location = System::Drawing::Point(22, 190);
+			this->bD_CITwoDM->Location = System::Drawing::Point(22, 162);
 			this->bD_CITwoDM->Name = L"bD_CITwoDM";
 			this->bD_CITwoDM->Size = System::Drawing::Size(171, 39);
 			this->bD_CITwoDM->TabIndex = 78;
@@ -1133,7 +1136,7 @@ namespace LuccME {
 			// 
 			// bD_PCVINPE
 			// 
-			this->bD_PCVINPE->Location = System::Drawing::Point(22, 120);
+			this->bD_PCVINPE->Location = System::Drawing::Point(22, 110);
 			this->bD_PCVINPE->Name = L"bD_PCVINPE";
 			this->bD_PCVINPE->Size = System::Drawing::Size(171, 39);
 			this->bD_PCVINPE->TabIndex = 77;
@@ -1976,6 +1979,16 @@ namespace LuccME {
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
 			// 
+			// bExternalDemand
+			// 
+			this->bExternalDemand->Location = System::Drawing::Point(22, 266);
+			this->bExternalDemand->Name = L"bExternalDemand";
+			this->bExternalDemand->Size = System::Drawing::Size(171, 39);
+			this->bExternalDemand->TabIndex = 79;
+			this->bExternalDemand->Text = L"External Demand Model";
+			this->bExternalDemand->UseVisualStyleBackColor = true;
+			this->bExternalDemand->Click += gcnew System::EventHandler(this, &NovoModelo::bExternalDemand_Click);
+			// 
 			// NovoModelo
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
@@ -2065,5 +2078,6 @@ namespace LuccME {
 	private: System::Void validateDate(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cbValidationRegionEnable_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void cbValidateAllRegions_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bExternalDemand_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

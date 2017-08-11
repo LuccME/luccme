@@ -84,6 +84,9 @@
     <ClCompile Include="P_AttractRepulseLogisticRegression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D_ExternalModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyForm.h">
@@ -156,6 +159,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="P_AttractRepulseLogisticRegression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D_ExternalModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

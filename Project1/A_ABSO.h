@@ -37,12 +37,12 @@ namespace LuccME {
 				delete components;
 			}
 		}
+	
 	private: System::Windows::Forms::PictureBox^  pbLogo1;
 	private: System::Windows::Forms::Label^  lMaxDifference;
 	private: System::Windows::Forms::TextBox^  tMAxDifference;
 	private: System::Windows::Forms::Button^  bSalvar;
 	private: System::Windows::Forms::Label^  lMaxDiffHelp;
-
 
 	protected:
 

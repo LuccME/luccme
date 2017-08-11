@@ -14,6 +14,7 @@
 #define PCVINPE		1
 #define CITWODM		2
 #define CITHREEDM	3
+#define DEXTMODEL	4
 
 //Potential Components
 #define POTENTIALDNEIGHSIMPLERULE							1

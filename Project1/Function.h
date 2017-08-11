@@ -18,6 +18,23 @@ public:
 };
 
 /*
+Struct to create or edit a Model Form
+*/
+public ref class cReturnExtModel
+{
+public:
+	String^ Return;
+	String^ Language;
+	bool Empty;
+	cReturnExtModel()
+	{
+		Return = "";
+		Language = "";
+		Empty = true;
+	}
+};
+
+/*
 Struct for Pre Computed Value Demand Component
 */
 public ref class cReturnPCVINPE

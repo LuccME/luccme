@@ -167,6 +167,7 @@
     <ClCompile Include="A_Continuous.cpp" />
     <ClCompile Include="D_CIThreeDM.cpp" />
     <ClCompile Include="D_CITwoDM.cpp" />
+    <ClCompile Include="D_ExternalModel.cpp" />
     <ClCompile Include="D_PCVINPEForm.cpp" />
     <ClCompile Include="LanguageForm.cpp" />
     <ClCompile Include="LUND.cpp" />
@@ -206,6 +207,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="D_CITwoDM.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="D_ExternalModel.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="D_PCVINPEForm.h">
@@ -276,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="D_CITwoDM.resx">
       <DependentUpon>D_CITwoDM.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="D_ExternalModel.resx">
+      <DependentUpon>D_ExternalModel.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="D_PCVINPEForm.resx">
       <DependentUpon>D_PCVINPEForm.h</DependentUpon>

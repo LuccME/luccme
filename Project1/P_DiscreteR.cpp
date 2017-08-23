@@ -387,6 +387,10 @@ System::Void LuccME::P_DiscreteR::setRegionData(DataGridView^ dgBetas, TextBox^ 
 		}
 	}
 	lTempBetas[i] += "*";
+	lTempBetas[i] = lTempBetas[i]->Replace(",=", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\t", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\r", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\n", "");
 	lReturn->Regression += 1;
 }
 

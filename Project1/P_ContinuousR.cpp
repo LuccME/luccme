@@ -365,6 +365,10 @@ System::Void LuccME::P_ContinuousR::setRegionData(DataGridView^ dgBetas, CheckBo
 		}
 	}
 	lTempBetas[i] += "*";
+	lTempBetas[i] = lTempBetas[i]->Replace(",=","");
+	lTempBetas[i] = lTempBetas[i]->Replace("\t", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\r", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\n", "");
 	lReturn->Regression += 1;
 }
 
@@ -472,6 +476,7 @@ System::Void LuccME::P_ContinuousR::PasteClipboardValue(DataGridView^ dgView)
 	if (aux != "") {
 		array<String^>^ lines = aux->Split('\n');
 		array<String^>^ tempColumns = lines[0]->Split('\t');
+
 		array<String^>^ content = gcnew array<String^>((lines->Length - 1) * (tempColumns->Length));
 
 		int count = 0;

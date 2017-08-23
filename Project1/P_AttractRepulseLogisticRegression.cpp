@@ -384,6 +384,10 @@ System::Void LuccME::P_AttractRepulseLogisticRegression::setRegionData(DataGridV
 	}
 
 	lTempBetas[i] += "*";
+	lTempBetas[i] = lTempBetas[i]->Replace(",=", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\t", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\r", "");
+	lTempBetas[i] = lTempBetas[i]->Replace("\n", "");
 }
 
 /*

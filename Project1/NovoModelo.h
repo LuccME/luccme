@@ -396,6 +396,7 @@ namespace LuccME {
 			this->tbPotential = (gcnew System::Windows::Forms::TextBox());
 			this->lPotential = (gcnew System::Windows::Forms::Label());
 			this->tbDemand = (gcnew System::Windows::Forms::TextBox());
+			this->bExternalDemand = (gcnew System::Windows::Forms::Button());
 			this->bD_CIThreeDM = (gcnew System::Windows::Forms::Button());
 			this->bD_CITwoDM = (gcnew System::Windows::Forms::Button());
 			this->bD_PCVINPE = (gcnew System::Windows::Forms::Button());
@@ -467,7 +468,6 @@ namespace LuccME {
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
-			this->bExternalDemand = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -1114,6 +1114,16 @@ namespace LuccME {
 			this->tbDemand->TabIndex = 80;
 			this->tbDemand->WordWrap = false;
 			// 
+			// bExternalDemand
+			// 
+			this->bExternalDemand->Location = System::Drawing::Point(22, 266);
+			this->bExternalDemand->Name = L"bExternalDemand";
+			this->bExternalDemand->Size = System::Drawing::Size(171, 39);
+			this->bExternalDemand->TabIndex = 79;
+			this->bExternalDemand->Text = L"External Demand Model";
+			this->bExternalDemand->UseVisualStyleBackColor = true;
+			this->bExternalDemand->Click += gcnew System::EventHandler(this, &NovoModelo::bExternalDemand_Click);
+			// 
 			// bD_CIThreeDM
 			// 
 			this->bD_CIThreeDM->Location = System::Drawing::Point(22, 214);
@@ -1269,7 +1279,7 @@ namespace LuccME {
 			this->lAttrToSave->AutoSize = true;
 			this->lAttrToSave->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttrToSave->Location = System::Drawing::Point(486, 374);
+			this->lAttrToSave->Location = System::Drawing::Point(425, 374);
 			this->lAttrToSave->Name = L"lAttrToSave";
 			this->lAttrToSave->Size = System::Drawing::Size(0, 19);
 			this->lAttrToSave->TabIndex = 94;
@@ -1978,16 +1988,6 @@ namespace LuccME {
 			this->statusStrip1->Size = System::Drawing::Size(745, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
-			// 
-			// bExternalDemand
-			// 
-			this->bExternalDemand->Location = System::Drawing::Point(22, 266);
-			this->bExternalDemand->Name = L"bExternalDemand";
-			this->bExternalDemand->Size = System::Drawing::Size(171, 39);
-			this->bExternalDemand->TabIndex = 79;
-			this->bExternalDemand->Text = L"External Demand Model";
-			this->bExternalDemand->UseVisualStyleBackColor = true;
-			this->bExternalDemand->Click += gcnew System::EventHandler(this, &NovoModelo::bExternalDemand_Click);
 			// 
 			// NovoModelo
 			// 

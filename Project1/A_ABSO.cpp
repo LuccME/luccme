@@ -11,6 +11,8 @@ System::Void LuccME::A_ABSO::tMAxDifference_Enter(System::Object ^ sender, Syste
 
 System::Void LuccME::A_ABSO::bSalvar_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
+	tMAxDifference->Text = tMAxDifference->Text->Replace("\r","");
+	tMAxDifference->Text = tMAxDifference->Text->Replace("\t", "");
 	lReturn->Return = tMAxDifference->Text;
 	this->Close();
 }

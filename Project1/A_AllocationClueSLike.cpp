@@ -154,6 +154,15 @@ System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sende
 
 	this->lReturn->Return = "";
 
+	tMaxIteration->Text = tMaxIteration->Text->Replace("\r", "");
+	tMaxIteration->Text = tMaxIteration->Text->Replace("\t", "");
+
+	tFactorInteration->Text = tFactorInteration->Text->Replace("\r", "");
+	tFactorInteration->Text = tFactorInteration->Text->Replace("\t", "");
+
+	tMaxDifference->Text = tMaxDifference->Text->Replace("\r", "");
+	tMaxDifference->Text = tMaxDifference->Text->Replace("\t", "");
+
 	this->lReturn->Return += tMaxIteration->Text;
 	this->lReturn->Return += ";";
 	this->lReturn->Return += tFactorInteration->Text;

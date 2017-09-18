@@ -212,6 +212,25 @@ System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System
 {
 	lReturn->Regression = 0;
 	lReturn->Return = "";
+
+	tMaxDifference->Text = tMaxDifference->Text->Replace("\r", "");
+	tMaxDifference->Text = tMaxDifference->Text->Replace("\t", "");
+
+	tMaxIteration->Text = tMaxIteration->Text->Replace("\r", "");
+	tMaxIteration->Text = tMaxIteration->Text->Replace("\t", "");
+
+	tInitialElasticity->Text = tInitialElasticity->Text->Replace("\r", "");
+	tInitialElasticity->Text = tInitialElasticity->Text->Replace("\t", "");
+
+	tMinElasticity->Text = tMinElasticity->Text->Replace("\r", "");
+	tMinElasticity->Text = tMinElasticity->Text->Replace("\t", "");
+
+	tMaxElasticity->Text = tMaxElasticity->Text->Replace("\r", "");
+	tMaxElasticity->Text = tMaxElasticity->Text->Replace("\t", "");
+
+	tComplementarLU->Text = tComplementarLU->Text->Replace("\r", "");
+	tComplementarLU->Text = tComplementarLU->Text->Replace("\t", "");
+
 	
 	if (cbPotReg->Checked) {
 		lReturn->PotRegression = true;

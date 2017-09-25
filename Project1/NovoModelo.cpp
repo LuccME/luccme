@@ -386,6 +386,9 @@ System::String^ CellFulfill::NovoModelo::rasterOperationToName(int operation)
 	else if (operation == STDEV) {
 		return "stdev";
 	}
+	else if (operation == COUNT) {
+		return "count";
+	}
 
 	return "";
 }
@@ -493,6 +496,9 @@ System::Int32 CellFulfill::NovoModelo::rasterOperationToindex(String^ operation)
 	}
 	else if (operation->Equals("stdev")) {
 		return STDEV;
+	}
+	else if (operation->Equals("count")) {
+		return COUNT;
 	}
 
 	return -1;
@@ -990,6 +996,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 				case MAXIMUM:
 				case MINIMUM:
 				case STDEV:
+				case COUNT:
 					if (dataTemp[AS_OUTPUT] != "") {
 						tOperationOut->Text = dataTemp[AS_OUTPUT];
 						tOperationOut->ForeColor = System::Drawing::Color::Black;
@@ -1236,6 +1243,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 		case MAXIMUM:
 		case MINIMUM:
 		case STDEV:
+		case COUNT:
 			lOperationName->Visible = true;
 			lOperationOut->Visible = true;
 			tOperationOut->Visible = true;
@@ -1545,6 +1553,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 			case MAXIMUM:
 			case MINIMUM:
 			case STDEV:
+			case COUNT:
 				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
@@ -1963,6 +1972,7 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 	rasterList[MINIMUM] = "minimum";
 	rasterList[SUM] = "sum";
 	rasterList[STDEV] = "stdev";
+	rasterList[COUNT] = "count";
 
 	polygonList[P_COVERAGE] = "coverage";
 	polygonList[P_AVERAGE] = "average";

@@ -14,7 +14,7 @@
 #define OPENSCRIPT 2
 
 //List TYPES
-#define RASTERLIST		7
+#define RASTERLIST		8
 #define POLYGONLIST		11
 #define NONPOLYGONLIST	9
 
@@ -26,6 +26,7 @@
 #define MINIMUM		4
 #define SUM			5
 #define STDEV		6
+#define COUNT		7
 
 //Polygon
 #define P_COVERAGE  0

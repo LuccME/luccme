@@ -213,6 +213,8 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->bShape = (gcnew System::Windows::Forms::Button());
 			this->lLimitFile = (gcnew System::Windows::Forms::Label());
 			this->tpAttributeFill = (gcnew System::Windows::Forms::TabPage());
+			this->tDummyOperation = (gcnew System::Windows::Forms::TextBox());
+			this->lDummyOperation = (gcnew System::Windows::Forms::Label());
 			this->gbGeometricRepresentation = (gcnew System::Windows::Forms::GroupBox());
 			this->rbPolygon = (gcnew System::Windows::Forms::RadioButton());
 			this->rbLine = (gcnew System::Windows::Forms::RadioButton());
@@ -241,8 +243,6 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->lFileMaker = (gcnew System::Windows::Forms::Label());
 			this->pbLogo2 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->lDummyOperation = (gcnew System::Windows::Forms::Label());
-			this->tDummyOperation = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->statusStrip1->SuspendLayout();
@@ -652,6 +652,31 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->tpAttributeFill->Text = L"Dados para Preenchimento";
 			this->tpAttributeFill->UseVisualStyleBackColor = true;
 			// 
+			// tDummyOperation
+			// 
+			this->tDummyOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
+			this->tDummyOperation->Location = System::Drawing::Point(483, 290);
+			this->tDummyOperation->Name = L"tDummyOperation";
+			this->tDummyOperation->Size = System::Drawing::Size(151, 20);
+			this->tDummyOperation->TabIndex = 114;
+			this->tDummyOperation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tDummyOperation->Visible = false;
+			this->tDummyOperation->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
+			// 
+			// lDummyOperation
+			// 
+			this->lDummyOperation->AutoSize = true;
+			this->lDummyOperation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lDummyOperation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lDummyOperation->Location = System::Drawing::Point(360, 287);
+			this->lDummyOperation->Name = L"lDummyOperation";
+			this->lDummyOperation->Size = System::Drawing::Size(116, 23);
+			this->lDummyOperation->TabIndex = 113;
+			this->lDummyOperation->Text = L"Valor Dummy";
+			this->lDummyOperation->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lDummyOperation->Visible = false;
+			// 
 			// gbGeometricRepresentation
 			// 
 			this->gbGeometricRepresentation->Controls->Add(this->rbPolygon);
@@ -985,30 +1010,6 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->label1->Size = System::Drawing::Size(27, 26);
 			this->label1->TabIndex = 22;
 			this->label1->Text = L"&&";
-			// 
-			// lDummyOperation
-			// 
-			this->lDummyOperation->AutoSize = true;
-			this->lDummyOperation->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lDummyOperation->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->lDummyOperation->Location = System::Drawing::Point(360, 287);
-			this->lDummyOperation->Name = L"lDummyOperation";
-			this->lDummyOperation->Size = System::Drawing::Size(116, 23);
-			this->lDummyOperation->TabIndex = 113;
-			this->lDummyOperation->Text = L"Valor Dummy";
-			this->lDummyOperation->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			this->lDummyOperation->Visible = false;
-			// 
-			// tDummyOperation
-			// 
-			this->tDummyOperation->ForeColor = System::Drawing::SystemColors::ScrollBar;
-			this->tDummyOperation->Location = System::Drawing::Point(483, 290);
-			this->tDummyOperation->Name = L"tDummyOperation";
-			this->tDummyOperation->Size = System::Drawing::Size(151, 20);
-			this->tDummyOperation->TabIndex = 114;
-			this->tDummyOperation->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->tDummyOperation->Visible = false;
 			// 
 			// NovoModelo
 			// 

@@ -1005,13 +1005,11 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					if (dataTemp[AS_DEFAULT] != "") {
 						tDefaultOperation->Text = dataTemp[AS_DEFAULT];
 						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
-
 					}
 					
 					if (dataTemp[AS_DUMMY] != "") {
-						tDefaultOperation->Text = dataTemp[AS_DUMMY];
-						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
-
+						tDummyOperation->Text = dataTemp[AS_DUMMY];
+						tDummyOperation->ForeColor = System::Drawing::Color::Black;
 					}
 					
 					lOperationName->Visible = true;
@@ -1055,8 +1053,8 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					}
 					
 					if (dataTemp[AS_DUMMY] != "") {
-						tDefaultOperation->Text = dataTemp[AS_DUMMY];
-						tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+						tDummyOperation->Text = dataTemp[AS_DUMMY];
+						tDummyOperation->ForeColor = System::Drawing::Color::Black;
 
 					}
 					lOperationName->Visible = true;
@@ -1376,8 +1374,11 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
 
-					if (tDefaultOperation->Text != "null" || tDefaultOperation->Text != "") {
+					if (tDefaultOperation->Text != "null") {
 						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					}
+					else {
+						attributeToList[AS_DEFAULT] = "";
 					}
 
 					if (rbPolygon->Checked) {
@@ -1558,8 +1559,11 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
 
-				if (tDummyOperation->Text != "null" && tDummyOperation->Text != "") {
+				if (tDummyOperation->Text != "null") {
 					attributeToList[AS_DUMMY] = tDummyOperation->Text;
+				}
+				else {
+					attributeToList[AS_DUMMY] = "";
 				}
 
 				attributeList[attributeIndex] = attributeToList;
@@ -1572,8 +1576,11 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
 				
-				if (tDummyOperation->Text != "null" && tDummyOperation->Text != "") {
+				if (tDummyOperation->Text != "null") {
 					attributeToList[AS_DUMMY] = tDummyOperation->Text;
+				}
+				else {
+					attributeToList[AS_DUMMY] = "";
 				}
 
 				if (rbTrueOperation->Checked) {

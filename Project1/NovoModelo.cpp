@@ -685,6 +685,8 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 			lAreaOperation->Location = System::Drawing::Point(320, 251);
 			rbTrueOperation->Location = System::Drawing::Point(534, 253);
 			rbFalseOperation->Location = System::Drawing::Point(583, 253);
+			lDefaultOperation->Location = System::Drawing::Point(360, 251);
+			tDefaultOperation->Location = System::Drawing::Point(482, 253);
 
 			cbOperation->Items->Clear();
 

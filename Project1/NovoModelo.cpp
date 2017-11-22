@@ -4916,6 +4916,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
 					int activeRegion = 0;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -5025,6 +5031,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
 					int activeRegion = 0;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -5133,7 +5145,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
-					int activeRegion = 0;
+					int activeRegion = NONE;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -5256,6 +5274,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
 					int activeRegion = 0;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -5390,7 +5414,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
-					int activeRegion = 0;
+					int activeRegion = NONE;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -5557,7 +5587,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
-					int activeRegion = 0;
+					int activeRegion = NONE;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -5686,7 +5722,13 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int nLUT = countCaracter(gPotentialLUT, ',') + 1;
 					int bracesForLUT = 2;
 					int nRegions = countBraces / (bracesForLUT*nLUT);
-					int activeRegion = 0;
+					int activeRegion = NONE;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxPotData = gcnew array<String^>(nRegions*nLUT);
 
 					gPotentialRegression = nRegions;
@@ -6430,6 +6472,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int bracesForLUT = 1;
 					int nRegions = countBraces / (bracesForLUT * (nLUT + 1));
 					int activeRegion = NONE;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxAllocData = gcnew array<String^>(nRegions*nLUT);
 
 					//This is to open old files (e.g. 3.0)
@@ -6771,6 +6819,12 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					int bracesForLUT = 1;
 					int nRegions = countBraces / (bracesForLUT*(nLUT + 1));
 					int activeRegion = 0;
+
+					if (nRegions > 1) {
+						countBraces -= nRegions - 1;
+						nRegions = countBraces / (bracesForLUT*nLUT);
+					}
+
 					array<String^>^ auxAllocData = gcnew array<String^>(nRegions*nLUT);
 
 					//This is to open old files (e.g. 3.0)

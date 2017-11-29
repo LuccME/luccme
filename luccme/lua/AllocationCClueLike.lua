@@ -129,13 +129,26 @@ function AllocationCClueLike(component)
 
 		forEachCell(cs, function(cell)
 							local total = 0
+							local biggerLuValue = 0
+							local biggerLu = ""
+							
 							for i, lu in pairs (luTypes) do
-								if (lu ~= luccMEModel.complementarLU) then
+								if (lu ~= self.complementarLU) then
 									total = total + cell[lu]
+									if (lu ~= luccMEModel.landUseNoData) then
+										if (cell[lu] > biggerLuValue) then
+											biggerLuValue = cell[lu]
+											biggerLu = lu
+										end
+									end
 								end
 							end
-							if (luccMEModel.complementarLU ~= nil) then
-								cell[luccMEModel.complementarLU] = 1 - total
+							if (self.complementarLU ~= nil) then
+								cell[self.complementarLU] = 1 - total
+								if (cell[self.complementarLU] < 0) then
+									cell[biggerLu] = cell[biggerLu] + cell[self.complementarLU]
+									cell[self.complementarLU] = 0
+								end
 							end
 						end
 					)
@@ -350,8 +363,7 @@ function AllocationCClueLike(component)
 					if (math.abs(change) >= luAllocData.maxChange) then
 						change = luAllocData.maxChange * (pot / math.abs(pot))
 					end
-					
-					
+										
 					if (luStatic == 1) then  --do not change
 						cell[lu] = cell.past[lu]
 					elseif (luStatic == 0) then  -- change independent of demand direction (ANAP)
@@ -362,7 +374,6 @@ function AllocationCClueLike(component)
 						cell[lu] = cell.past[lu]
 					end
 				  
-
 					if (cell[lu] < 0) then
 						cell[lu] = 0
 					end

@@ -135,15 +135,26 @@ function AllocationCClueLikeSaturation(component)
 
 		forEachCell(cs, function(cell)
 							local total = 0
+							local biggerLuValue = 0
+							local biggerLu = ""
 							
 							for i, lu in pairs (luTypes) do
 								if (lu ~= self.complementarLU) then
 									total = total + cell[lu]
+									if (lu ~= luccMEModel.landUseNoData) then
+										if (cell[lu] > biggerLuValue) then
+											biggerLuValue = cell[lu]
+											biggerLu = lu
+										end
+									end
 								end
 							end
-							
 							if (self.complementarLU ~= nil) then
 								cell[self.complementarLU] = 1 - total
+								if (cell[self.complementarLU] < 0) then
+									cell[biggerLu] = cell[biggerLu] + cell[self.complementarLU]
+									cell[self.complementarLU] = 0
+								end
 							end
 						end
 					)

@@ -181,7 +181,7 @@ System::Void LuccME::A_AllocationClueSLike::bSalvar_Click(System::Object ^ sende
 				break;
 			}
 			else {
-				this->lReturn->Return += dgTransitionMatrix->Rows[i]->Cells[j]->Value;
+				this->lReturn->Return += dgTransitionMatrix->Rows[i]->Cells[j]->Value->ToString()->Replace(',','.');
 				if (j + 1 < dgTransitionMatrix->ColumnCount) {
 					this->lReturn->Return += ",";
 				}
@@ -235,10 +235,12 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::A_AllocationClueSLike::GetSta
 
 	for each(DataGridViewCell^ dgvCell in dgView->SelectedCells)
 	{
-		if (dgvCell->RowIndex < rowIndex)
+		if (dgvCell->RowIndex < rowIndex) {
 			rowIndex = dgvCell->RowIndex;
-		if (dgvCell->ColumnIndex < colIndex)
+		}
+		if (dgvCell->ColumnIndex < colIndex) {
 			colIndex = dgvCell->ColumnIndex;
+		}
 	}
 
 	return dgView[colIndex, rowIndex];

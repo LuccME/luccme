@@ -325,10 +325,12 @@ System::Windows::Forms::DataGridViewCell ^ LuccME::A_Continuous::GetStartCell(Sy
 
 	for each(DataGridViewCell^ dgvCell in dgView->SelectedCells)
 	{
-		if (dgvCell->RowIndex < rowIndex)
+		if (dgvCell->RowIndex < rowIndex) {
 			rowIndex = dgvCell->RowIndex;
-		if (dgvCell->ColumnIndex < colIndex)
+		}
+		if (dgvCell->ColumnIndex < colIndex) {
 			colIndex = dgvCell->ColumnIndex;
+		}
 	}
 
 	return dgView[colIndex, rowIndex];
@@ -441,7 +443,7 @@ System::Void LuccME::A_Continuous::setAllocationData(DataGridView^ dgAllocData, 
 {
 	dgAllocData->ColumnCount = 8;
 	dgAllocData->Columns[0]->Name = "LandUseType";
-	dgAllocData->Columns[1]->Name = "static";
+	dgAllocData->Columns[1]->Name = "static*";
 	dgAllocData->Columns[2]->Name = "minValue";
 	dgAllocData->Columns[3]->Name = "maxValue";
 	dgAllocData->Columns[4]->Name = "minChange";
@@ -631,19 +633,19 @@ System::Void LuccME::A_Continuous::getAllocationData(DataGridView^ dgAlloc)
 	}
 
 	for (int i = 0; i < count; i++) {
-		lReturn->Return += dgAlloc->Rows[i]->Cells[1]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[1]->Value->ToString()->Replace(',','.');
 		lReturn->Return += ",";
-		lReturn->Return += dgAlloc->Rows[i]->Cells[2]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[2]->Value->ToString()->Replace(',', '.');
 		lReturn->Return += ",";
-		lReturn->Return += dgAlloc->Rows[i]->Cells[3]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[3]->Value->ToString()->Replace(',', '.');
 		lReturn->Return += ",";
-		lReturn->Return += dgAlloc->Rows[i]->Cells[4]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[4]->Value->ToString()->Replace(',', '.');
 		lReturn->Return += ",";
-		lReturn->Return += dgAlloc->Rows[i]->Cells[5]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[5]->Value->ToString()->Replace(',', '.');
 		lReturn->Return += ",";
-		lReturn->Return += dgAlloc->Rows[i]->Cells[6]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[6]->Value->ToString()->Replace(',', '.');
 		lReturn->Return += ",";
-		lReturn->Return += dgAlloc->Rows[i]->Cells[7]->Value;
+		lReturn->Return += dgAlloc->Rows[i]->Cells[7]->Value->ToString()->Replace(',', '.');
 		lReturn->Return += ";";
 	}
 }

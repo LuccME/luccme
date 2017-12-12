@@ -136,8 +136,12 @@ namespace CellFulfill {
 	private: System::Windows::Forms::RadioButton^  rbLine;
 	private: System::Windows::Forms::Label^  lGeometricRepresentation;
 	private: System::Windows::Forms::GroupBox^  gbGeometricRepresentation;
-private: System::Windows::Forms::TextBox^  tDummyOperation;
-private: System::Windows::Forms::Label^  lDummyOperation;
+	private: System::Windows::Forms::TextBox^  tDummyOperation;
+	private: System::Windows::Forms::Label^  lDummyOperation;
+	private: System::Windows::Forms::Panel^  pPixelReference;
+	private: System::Windows::Forms::RadioButton^  rbOverlap;
+	private: System::Windows::Forms::RadioButton^  rbCentroid;
+	private: System::Windows::Forms::Label^  lPixelReference;
 
 	public:
 		int lReturn;
@@ -213,6 +217,10 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->bShape = (gcnew System::Windows::Forms::Button());
 			this->lLimitFile = (gcnew System::Windows::Forms::Label());
 			this->tpAttributeFill = (gcnew System::Windows::Forms::TabPage());
+			this->pPixelReference = (gcnew System::Windows::Forms::Panel());
+			this->rbOverlap = (gcnew System::Windows::Forms::RadioButton());
+			this->rbCentroid = (gcnew System::Windows::Forms::RadioButton());
+			this->lPixelReference = (gcnew System::Windows::Forms::Label());
 			this->tDummyOperation = (gcnew System::Windows::Forms::TextBox());
 			this->lDummyOperation = (gcnew System::Windows::Forms::Label());
 			this->gbGeometricRepresentation = (gcnew System::Windows::Forms::GroupBox());
@@ -250,6 +258,7 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->tpScript->SuspendLayout();
 			this->tpCellularSpace->SuspendLayout();
 			this->tpAttributeFill->SuspendLayout();
+			this->pPixelReference->SuspendLayout();
 			this->gbGeometricRepresentation->SuspendLayout();
 			this->tpMakeFiles->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo2))->BeginInit();
@@ -625,6 +634,8 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			// tpAttributeFill
 			// 
 			this->tpAttributeFill->AllowDrop = true;
+			this->tpAttributeFill->Controls->Add(this->pPixelReference);
+			this->tpAttributeFill->Controls->Add(this->lPixelReference);
 			this->tpAttributeFill->Controls->Add(this->tDummyOperation);
 			this->tpAttributeFill->Controls->Add(this->lDummyOperation);
 			this->tpAttributeFill->Controls->Add(this->gbGeometricRepresentation);
@@ -651,6 +662,52 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->tpAttributeFill->TabIndex = 2;
 			this->tpAttributeFill->Text = L"Dados para Preenchimento";
 			this->tpAttributeFill->UseVisualStyleBackColor = true;
+			// 
+			// pPixelReference
+			// 
+			this->pPixelReference->Controls->Add(this->rbOverlap);
+			this->pPixelReference->Controls->Add(this->rbCentroid);
+			this->pPixelReference->Location = System::Drawing::Point(498, 320);
+			this->pPixelReference->Name = L"pPixelReference";
+			this->pPixelReference->Size = System::Drawing::Size(131, 25);
+			this->pPixelReference->TabIndex = 117;
+			this->pPixelReference->Visible = false;
+			// 
+			// rbOverlap
+			// 
+			this->rbOverlap->AutoSize = true;
+			this->rbOverlap->Location = System::Drawing::Point(69, 8);
+			this->rbOverlap->Name = L"rbOverlap";
+			this->rbOverlap->Size = System::Drawing::Size(62, 17);
+			this->rbOverlap->TabIndex = 1;
+			this->rbOverlap->Text = L"Overlap";
+			this->rbOverlap->UseVisualStyleBackColor = true;
+			// 
+			// rbCentroid
+			// 
+			this->rbCentroid->AutoSize = true;
+			this->rbCentroid->Checked = true;
+			this->rbCentroid->Location = System::Drawing::Point(3, 8);
+			this->rbCentroid->Name = L"rbCentroid";
+			this->rbCentroid->Size = System::Drawing::Size(64, 17);
+			this->rbCentroid->TabIndex = 0;
+			this->rbCentroid->TabStop = true;
+			this->rbCentroid->Text = L"Centroid";
+			this->rbCentroid->UseVisualStyleBackColor = true;
+			// 
+			// lPixelReference
+			// 
+			this->lPixelReference->AutoSize = true;
+			this->lPixelReference->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lPixelReference->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lPixelReference->Location = System::Drawing::Point(378, 323);
+			this->lPixelReference->Name = L"lPixelReference";
+			this->lPixelReference->Size = System::Drawing::Size(96, 23);
+			this->lPixelReference->TabIndex = 116;
+			this->lPixelReference->Text = L"Referência";
+			this->lPixelReference->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lPixelReference->Visible = false;
 			// 
 			// tDummyOperation
 			// 
@@ -1041,6 +1098,8 @@ private: System::Windows::Forms::Label^  lDummyOperation;
 			this->tpCellularSpace->PerformLayout();
 			this->tpAttributeFill->ResumeLayout(false);
 			this->tpAttributeFill->PerformLayout();
+			this->pPixelReference->ResumeLayout(false);
+			this->pPixelReference->PerformLayout();
 			this->gbGeometricRepresentation->ResumeLayout(false);
 			this->gbGeometricRepresentation->PerformLayout();
 			this->tpMakeFiles->ResumeLayout(false);

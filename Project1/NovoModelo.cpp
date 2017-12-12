@@ -254,6 +254,10 @@ System::Void CellFulfill::NovoModelo::operationVisualOFF()
 	rbTrueOperation->Visible = false;
 	rbFalseOperation->Visible = false;
 	
+	lPixelReference->Visible = false;
+	rbCentroid->Checked = true;
+	pPixelReference->Visible = false;
+	
 	for (int i = 0; i < lvAttributesToFill->Items->Count; i++) {
 		lvAttributesToFill->Items[i]->Selected = false;
 	}
@@ -517,6 +521,9 @@ System::Void CellFulfill::NovoModelo::textBox_Enter(System::Object ^ sender, Sys
 	}
 }
 
+/*
+Call help files
+*/
 System::Void CellFulfill::NovoModelo::CellFulfillToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	if (lLanguage == "en") {
@@ -527,18 +534,27 @@ System::Void CellFulfill::NovoModelo::CellFulfillToolStripMenuItem_Click(System:
 	}
 }
 
+/*
+Open Menu
+*/
 System::Void CellFulfill::NovoModelo::abrirToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	lReturn = OPENSCRIPT;
 	this->Close();
 }
 
+/*
+New Menu
+*/
 System::Void CellFulfill::NovoModelo::novoToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	lReturn = NEWSCRIPT;
 	this->Close();
 }
 
+/*
+About Menu
+*/
 System::Void CellFulfill::NovoModelo::sobreToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	AboutForm^ aboutForm = gcnew AboutForm(lLanguage);
@@ -546,11 +562,17 @@ System::Void CellFulfill::NovoModelo::sobreToolStripMenuItem_Click(System::Objec
 	aboutForm->ShowDialog();
 }
 
+/*
+Exit Menu
+*/
 System::Void CellFulfill::NovoModelo::sairToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	Application::Exit();
 }
 
+/*
+Language Menu
+*/
 System::Void CellFulfill::NovoModelo::idiomaToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 	LanguageForm^ languageForm = gcnew LanguageForm(lLanguage);
@@ -626,9 +648,10 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_DragEnter(System::Objec
 		if (filePaths != nullptr && filePaths->Length > 0) {
 			for (int i = 0; i < filePaths->Length; i++) {
 				if (filePaths[i]->Contains(".shp") || filePaths[i]->Contains(".tif")) {
-					array<String^>^ attributeToList = { filePaths[i], "", "", "", "", "", "", "" };
+					array<String^>^ attributeToList = { filePaths[i], "", "", "", "", "", "", "", "" };
 					attributeList->Add(attributeToList);
 					lastSlash = 0;
+					
 					for (int j = 0; j < filePaths[i]->Length; j++) {
 						if (filePaths[i][j] == '\\') {
 							lastSlash = j + 1;
@@ -745,14 +768,18 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tOperationOut->Visible = true;
 						lSelectOperation->Visible = true;
 						tSelectOperation->Visible = true;
+
 						lDefaultOperation->Visible = false;
 						tDefaultOperation->Visible = false;
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
-						bSaveOperation->Visible = true;
 						lAreaOperation->Visible = false;
 						rbTrueOperation->Visible = false;
 						rbFalseOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
+						bSaveOperation->Visible = true;
 						break;
 					case P_AVERAGE:
 					case P_SUM:
@@ -796,6 +823,9 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tDefaultOperation->Visible = false;
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
 						bSaveOperation->Visible = true;
 						break;
 					case P_AREA:
@@ -812,15 +842,19 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						lOperationName->Visible = true;
 						lOperationOut->Visible = true;
 						tOperationOut->Visible = true;
-						lSelectOperation->Visible = false;
-						tSelectOperation->Visible = false;
 						lDefaultOperation->Visible = true;
 						tDefaultOperation->Visible = true;
+
+						lSelectOperation->Visible = false;
+						tSelectOperation->Visible = false;
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
 						lAreaOperation->Visible = false;
 						rbTrueOperation->Visible = false;
 						rbFalseOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
 						bSaveOperation->Visible = true;
 						break;
 					case P_DISTANCE:
@@ -835,6 +869,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						lOperationName->Visible = true;
 						lOperationOut->Visible = true;
 						tOperationOut->Visible = true;
+
 						lSelectOperation->Visible = false;
 						tSelectOperation->Visible = false;
 						lDefaultOperation->Visible = false;
@@ -844,6 +879,9 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						lAreaOperation->Visible = false;
 						rbTrueOperation->Visible = false;
 						rbFalseOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
 						bSaveOperation->Visible = true;
 						break;
 					}
@@ -883,12 +921,16 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tSelectOperation->Visible = true;
 						lDefaultOperation->Visible = true;
 						tDefaultOperation->Visible = true;
+
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
-						bSaveOperation->Visible = true;
 						lAreaOperation->Visible = false;
 						rbTrueOperation->Visible = false;
 						rbFalseOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
+						bSaveOperation->Visible = true;
 						break;
 					case NP_AVERAGE:
 					case NP_SUM:
@@ -930,8 +972,12 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 
 						lDefaultOperation->Visible = true;
 						tDefaultOperation->Visible = true;
+						
 						lDummyOperation->Visible = false;
 						tDummyOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
 						bSaveOperation->Visible = true;
 						break;
 					case NP_DISTANCE:
@@ -946,6 +992,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						lOperationName->Visible = true;
 						lOperationOut->Visible = true;
 						tOperationOut->Visible = true;
+
 						lSelectOperation->Visible = false;
 						tSelectOperation->Visible = false;
 						lDefaultOperation->Visible = false;
@@ -955,6 +1002,9 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						lAreaOperation->Visible = false;
 						rbTrueOperation->Visible = false;
 						rbFalseOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
 						bSaveOperation->Visible = true;
 						break;
 					}
@@ -978,6 +1028,8 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 			lAreaOperation->Location = System::Drawing::Point(320, 300 - yDelta);
 			rbTrueOperation->Location = System::Drawing::Point(534, 303 - yDelta);
 			rbFalseOperation->Location = System::Drawing::Point(583, 303 - yDelta);
+			lPixelReference->Location = System::Drawing::Point(378, 303 - yDelta);
+			pPixelReference->Location = System::Drawing::Point(498, 303 - yDelta);
 
 			cbOperation->Items->Clear();
 			cbOperation->Items->AddRange(rasterList);
@@ -986,6 +1038,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 			gbGeometricRepresentation->Visible = false;
 			cbOperation->Visible = true;
 			lOperationName->Visible = true;
+			rbCentroid->Checked = true;
 			
 			array<String^>^ dataTemp = safe_cast<array<String^>^>(attributeList[i]);
 			
@@ -1013,6 +1066,10 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tDummyOperation->Text = dataTemp[AS_DUMMY];
 						tDummyOperation->ForeColor = System::Drawing::Color::Black;
 					}
+
+					if (dataTemp[AS_PIXEL] == "overlap") {
+						rbOverlap->Checked = true;
+					}
 					
 					lOperationName->Visible = true;
 					lOperationOut->Visible = true;
@@ -1021,12 +1078,16 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					tDefaultOperation->Visible = true;
 					lDummyOperation->Visible = true;
 					tDummyOperation->Visible = true;
-					bSaveOperation->Visible = true;
+					lPixelReference->Visible = true;
+					pPixelReference->Visible = true;
+
 					lSelectOperation->Visible = false;
 					tSelectOperation->Visible = false;
 					lAreaOperation->Visible = false;
 					rbTrueOperation->Visible = false;
 					rbFalseOperation->Visible = false;
+
+					bSaveOperation->Visible = true;
 					break;
 				case AVERAGE:
 				case SUM:
@@ -1059,18 +1120,27 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tDummyOperation->ForeColor = System::Drawing::Color::Black;
 
 					}
+
+					if (dataTemp[AS_PIXEL] == "overlap") {
+						rbOverlap->Checked = true;
+					}
+					
 					lOperationName->Visible = true;
 					lOperationOut->Visible = true;
 					tOperationOut->Visible = true;
-					lSelectOperation->Visible = false;
-					tSelectOperation->Visible = false;
 					lDefaultOperation->Visible = true;
 					tDefaultOperation->Visible = true;
 					lDummyOperation->Visible = true;
 					tDummyOperation->Visible = true;
+					lPixelReference->Visible = true;
+					pPixelReference->Visible = true;
+
+					lSelectOperation->Visible = false;
+					tSelectOperation->Visible = false;
 					lAreaOperation->Visible = false;
 					rbTrueOperation->Visible = false;
 					rbFalseOperation->Visible = false;
+
 					bSaveOperation->Visible = true;
 					break;
 				default:
@@ -1078,9 +1148,11 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 						tOperationOut->Text = dataTemp[AS_OUTPUT];
 						tOperationOut->ForeColor = System::Drawing::Color::Black;
 					}
+					
 					lOperationName->Visible = true;
 					lOperationOut->Visible = true;
 					tOperationOut->Visible = true;
+
 					lSelectOperation->Visible = false;
 					tSelectOperation->Visible = false;
 					lDefaultOperation->Visible = false;
@@ -1090,6 +1162,9 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					lAreaOperation->Visible = false;
 					rbTrueOperation->Visible = false;
 					rbFalseOperation->Visible = false;
+					lPixelReference->Visible = false;
+					pPixelReference->Visible = false;
+
 					bSaveOperation->Visible = true;
 					break;
 				}
@@ -1119,11 +1194,15 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tSelectOperation->Visible = true;
 				lDefaultOperation->Visible = true;
 				tDefaultOperation->Visible = true;
+
 				lDummyOperation->Visible = false;
 				tDummyOperation->Visible = false;
 				lAreaOperation->Visible = false;
 				rbTrueOperation->Visible = false;
 				rbFalseOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+				
 				bSaveOperation->Visible = true;
 				break;
 			case P_AVERAGE:
@@ -1133,15 +1212,19 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tOperationOut->Visible = true;
 				lSelectOperation->Visible = true;
 				tSelectOperation->Visible = true;
-				lDefaultOperation->Visible = false;
-				tDefaultOperation->Visible = false;
-				lDummyOperation->Visible = false;
-				tDummyOperation->Visible = false;
 				if (rbPolygon->Checked) {
 					lAreaOperation->Visible = true;
 					rbTrueOperation->Visible = true;
 					rbFalseOperation->Visible = true;
 				}
+
+				lDefaultOperation->Visible = false;
+				tDefaultOperation->Visible = false;
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+				
 				bSaveOperation->Visible = true;
 				break;
 			case P_AREA:
@@ -1164,6 +1247,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
 				tOperationOut->Visible = true;
+
 				lSelectOperation->Visible = false;
 				tSelectOperation->Visible = false;
 				lDefaultOperation->Visible = false;
@@ -1171,6 +1255,9 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				lAreaOperation->Visible = false;
 				rbTrueOperation->Visible = false;
 				rbFalseOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+
 				bSaveOperation->Visible = true;
 				break;
 			}
@@ -1190,11 +1277,15 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tSelectOperation->Visible = true;
 				lDefaultOperation->Visible = true;
 				tDefaultOperation->Visible = true;
+
 				lDummyOperation->Visible = false;
 				tDummyOperation->Visible = false;
 				lAreaOperation->Visible = false;
 				rbTrueOperation->Visible = false;
 				rbFalseOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+
 				bSaveOperation->Visible = true;
 				break;
 			case NP_AVERAGE:
@@ -1206,13 +1297,17 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				tSelectOperation->Visible = true;
 				lDefaultOperation->Visible = true;
 				tDefaultOperation->Visible = true;
-				lDummyOperation->Visible = false;
-				tDummyOperation->Visible = false;
 				if (rbPolygon->Checked) {
 					lAreaOperation->Visible = true;
 					rbTrueOperation->Visible = true;
 					rbFalseOperation->Visible = true;
 				}
+
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+				
 				bSaveOperation->Visible = true;
 				break;
 			case NP_DISTANCE:
@@ -1222,6 +1317,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
 				tOperationOut->Visible = true;
+
 				lSelectOperation->Visible = false;
 				tSelectOperation->Visible = false;
 				lDefaultOperation->Visible = false;
@@ -1229,6 +1325,9 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 				lAreaOperation->Visible = false;
 				rbTrueOperation->Visible = false;
 				rbFalseOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+
 				bSaveOperation->Visible = true;
 				break;
 			}
@@ -1247,15 +1346,19 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			lOperationName->Visible = true;
 			lOperationOut->Visible = true;
 			tOperationOut->Visible = true;
-			lSelectOperation->Visible = false;
-			tSelectOperation->Visible = false;
 			lDefaultOperation->Visible = true;
 			tDefaultOperation->Visible = true;
 			lDummyOperation->Visible = true;
 			tDummyOperation->Visible = true;
+			lPixelReference->Visible = true;
+			pPixelReference->Visible = true;
+
+			lSelectOperation->Visible = false;
+			tSelectOperation->Visible = false;
 			lAreaOperation->Visible = false;
 			rbTrueOperation->Visible = false;
 			rbFalseOperation->Visible = false;
+
 			bSaveOperation->Visible = true;
 			break;
 		case AVERAGE:
@@ -1269,15 +1372,22 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			tDefaultOperation->Visible = true;
 			lDummyOperation->Visible = true;
 			tDummyOperation->Visible = true;
+			lPixelReference->Visible = true;
+			pPixelReference->Visible = true;
+
 			lAreaOperation->Visible = false;
 			rbTrueOperation->Visible = false;
 			rbFalseOperation->Visible = false;
+
 			bSaveOperation->Visible = true;
 			break;
 		default:
 			lOperationName->Visible = true;
 			lOperationOut->Visible = true;
 			tOperationOut->Visible = true;
+			lPixelReference->Visible = true;
+			pPixelReference->Visible = true;
+
 			lSelectOperation->Visible = false;
 			tSelectOperation->Visible = false;
 			lDefaultOperation->Visible = false;
@@ -1287,6 +1397,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			lAreaOperation->Visible = false;
 			rbTrueOperation->Visible = false;
 			rbFalseOperation->Visible = false;
+
 			bSaveOperation->Visible = true;
 			break;
 		}
@@ -1313,9 +1424,10 @@ System::Void CellFulfill::NovoModelo::bAddAttribute_Click(System::Object^  sende
 			bool error = false;
 			for (int i = 0; i < attributesFiles->FileNames->Length; i++) {
 				if (attributesFiles->FileNames[i]->Contains(".shp") || attributesFiles->FileNames[i]->Contains(".tif")) {
-					array<String^>^ attributeToList = { attributesFiles->FileNames[i], "", "", "", "", "", "", "" };
+					array<String^>^ attributeToList = { attributesFiles->FileNames[i], "", "", "", "", "", "", "", "" };
 					attributeList->Add(attributeToList);
 					lastSlash = 0;
+
 					for (int j = 0; j < attributesFiles->FileNames[i]->Length; j++) {
 						if (attributesFiles->FileNames[i][j] == '\\') {
 							lastSlash = j + 1;
@@ -1392,7 +1504,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					else if (rbDot->Checked) {
 						attributeToList[AS_SHPTYPE] = "dot";
 					}
-
+					
 					attributeList[attributeIndex] = attributeToList;
 					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
 					operationVisualOFF();
@@ -1568,6 +1680,12 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 					attributeToList[AS_DUMMY] = "";
 				}
 
+				if (rbOverlap->Checked) {
+					attributeToList[AS_PIXEL] = "overlap";
+				} else if (rbCentroid->Checked) {
+					attributeToList[AS_PIXEL] = "";
+				}
+
 				attributeList[attributeIndex] = attributeToList;
 				lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
 				operationVisualOFF();
@@ -1590,6 +1708,13 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				}
 				else {
 					attributeToList[AS_AREA] = "false";
+				}
+
+				if (rbOverlap->Checked) {
+					attributeToList[AS_PIXEL] = "overlap";
+				}
+				else if (rbCentroid->Checked) {
+					attributeToList[AS_PIXEL] = "";
 				}
 
 				attributeList[attributeIndex] = attributeToList;
@@ -1869,7 +1994,11 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 					}
 
 					if (attributeToList[AS_SHPTYPE] != "") {
-						sw->WriteLine("\tdataType = \"" + attributeToList[AS_SHPTYPE] + "\"");
+						sw->WriteLine("\tdataType = \"" + attributeToList[AS_SHPTYPE] + "\",");
+					}
+
+					if (attributeToList[AS_PIXEL] == "overlap") {
+						sw->WriteLine("\tpixel = \"overlap\"");
 					}
 
 					sw->WriteLine("}\n");
@@ -2073,7 +2202,7 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 							line = line->Replace("\"", "");
 							line = line->Replace(",", "");
 
-							array<String^>^ dataTemp = { line, "", "", "", "", "", "", "" };
+							array<String^>^ dataTemp = { line, "", "", "", "", "", "", "", "" };
 							attributeList->Add(dataTemp);
 
 							int lastSlash = 0;
@@ -2231,6 +2360,13 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 								line = line->Replace("\"", "");
 								line = line->Replace(",", "");
 								dataTemp[AS_SHPTYPE] = line;
+							}
+							else if (line->Contains("pixel = ")) {
+								line = line->Replace("pixel = ", "");
+								line = line->Replace("\t", "");
+								line = line->Replace("\"", "");
+								line = line->Replace(",", "");
+								dataTemp[AS_PIXEL] = line;
 							}
 
 							line = sw->ReadLine();

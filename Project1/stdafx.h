@@ -71,6 +71,7 @@
 #define AS_OUTPUT		5
 #define AS_DUMMY		6
 #define AS_SHPTYPE		7
+#define AS_PIXEL		8
 
 //Parameters
 #define PARAMETERSNUMBER 6

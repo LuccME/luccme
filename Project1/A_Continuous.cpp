@@ -278,6 +278,10 @@ System::Void LuccME::A_Continuous::bSalvar_Click(System::Object ^ sender, System
 			getAllocationData(dgAllocationData4);
 			lReturn->Return += "*";
 			break;
+		case 4:
+			getAllocationData(dgAllocationData5);
+			lReturn->Return += "*";
+			break;
 		case 5:
 			getAllocationData(dgAllocationData6);
 			lReturn->Return += "*";

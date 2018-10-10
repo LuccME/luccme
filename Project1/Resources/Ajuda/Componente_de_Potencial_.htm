@@ -1,0 +1,515 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Componente de Potencial </title>
+<meta name="GENERATOR" content="WinCHM">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+</style>
+
+</head>
+
+<body>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT size=5><STRONG><FONT face=Arial >Componente de Potencial</FONT> </STRONG></FONT> </P>
+<P class=western style="MARGIN-BOTTOM: 0in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Este componente indica a 
+adequação ou potencial de mudança de cada célula para um dado tipo de uso da 
+terra. Tal potencial é baseado em fatores determinantes espaciais (e.g. 
+distância a estradas, distância a centros urbanos, presença de áreas 
+protegidas), e/ou características de vizinhança indicados pelo usuário como 
+responsáveis pela localização das mudanças no uso da terra. A seleção de fatores 
+determinantes, bem como, a definição de seus pesos relativos é normalmente 
+baseada em análises empíricas, as quais devem ser consistentes com a abordagem 
+de modelagem selecionada no LuccME. Por exemplo, se o usuário seleciona um 
+algoritmo baseado em regressão linear para calcular o potencial de mudança de 
+cada célula, então, a seleção de fatores determinantes e definição dos pesos 
+relativos deve ser feita com base no mesmo tipo de abordagem. Conforme descrito 
+anteriormente, o processo de seleção de fatores determinantes e seus 
+coeficientes são entradas para o componente de Potencial, portanto, definidos 
+fora do LuccME, no terceiro passo do processo de modelagem. Os algoritmos de 
+Potencial disponíveis no LuccME 3.1 para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> são 
+sintetizados abaixo. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal">&nbsp;</P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><STRONG><FONT face=Arial size=4>Componentes de Potencial Discretos</FONT></STRONG></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Os algoritmos de Potencial 
+disponíveis no LuccME 3.1 para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+são:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDNeighSimpleRule</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modelo simples desenvolvido 
+como material para treinamento e iniciação no LuccME. Não deve ser utilizado em 
+aplicações reais. Estima o potencial de mudança de cada célula para um dado tipo 
+de uso da terra de acordo com o percentual de células do mesmo tipo numa 
+vizinhança de Moore;</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.25in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Parâmetros específicos de 
+alocação não estão disponíveis para este algoritmo. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDInverseDistanceRule</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modelo simples desenvolvido 
+como material para treinamento e iniciação no LuccME. Não deve ser utilizado em 
+aplicações reais. Estima o potencial de mudança de cada célula para um dado tipo 
+de uso da terra de acordo com a soma do inverso do valor de um determinado 
+atributo, ponderado por um peso (normalmente um atributo de 
+distância).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Peso </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a importância dos 
+múltiplos (de 0 a 1).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Atributo 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome do atributo e 
+seu peso.</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.49in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDNeighInverseDistanceRule</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modelo simples desenvolvido 
+como material para treinamento e iniciação no LuccME. Não deve ser utilizado em 
+aplicações reais. Estima o potencial de mudança de cada célula combinando os 
+dois métodos anteriores.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Peso </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a importância dos 
+múltiplos (de 0 a 1).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Atributo 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome do atributo e 
+seu peso.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDLogisticRegression</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Utiliza técnicas de regressão 
+logística para calcular o potencial de mudança da célula para cada tipo de uso 
+da terra. Baseado na abordagem original para cálculo de potencial do modelo 
+CLUE-S (Verburg et al., 2002). Para cada uso, define-se também uma elasticidade, 
+que indicará quão difícil é retirar aquele uso da célula (varia de 0-1, sendo 1 
+muito fácil e 0 muito difícil). Esta elasticidade é somada à probabilidade 
+estimada pela regressão logística para o uso atual da célula (área como uma 
+“ancora” – quanto maior, mais difícil de ocorrer uma mudança para outro tipo de 
+uso). </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão logística.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Elasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">elasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a parâmetro que deve 
+indicar quão difícil é retirar um uso de determinada célula variando de [0-1], 
+sendo 1, muito fácil, e 0 muito difícil. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">)</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Informa o nome e peso (betas) 
+de cada variável independente estimado por regressão logística. 
+</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDLogisticRegressionNeighAttract</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modificação do componente 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">LogisticRegression</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> combinando ideias de modelos 
+baseados em autômato celular. O potencial da célula é modificado de acordo com a 
+atratividade da mesma classe numa dada vizinhança (genérica). A vizinhança pode 
+ser construída externamente e carregada através de um arquivo (gal). Caso não 
+seja informada, uma vizinhança de Moore é construída. O potencial da célula é 
+alterado (aumentado) a partir de uma determinada quantidade de vizinhos 
+informado pelo parâmetro </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">percNeighborsUse.</SPAN></I></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">filename</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Informa o arquivo de 
+vizinhança no formato (gal). Este é um parâmetro opcional, caso não seja 
+informado uma vizinhança Moore será construída. </SPAN></FONT><FONT face="Arial Narrow, serif"><FONT size=2><SPAN style="FONT-WEIGHT: normal">(</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><FONT size=2><I><SPAN style="FONT-WEIGHT: normal">Não 
+disponível na interface)</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão logística.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Elasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">elasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a parâmetro que deve 
+indicar quão difícil é retirar um uso de determinada célula variando de [0-1], 
+sendo 1, muito fácil, e 0 muito difícil. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">percNeighborsUse 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">percNeighborsUse</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a partir de qual 
+percentual de vizinhos [0-1] será alterado o potencial. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome e peso 
+(betas) de cada variável independente estimado por regressão 
+logística.</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.49in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDLogisticRegressionNeighAttractRepulsion</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modificação do componente 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">LogisticRegression</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> combinando ideias de modelos 
+baseados em autômato celular. O potencial da célula é modificado de acordo com a 
+matriz de atratividade numa dada vizinhança (genérica). A vizinhança pode ser 
+construída externamente e carregada através de um arquivo (gal). Caso não seja 
+informada, uma vizinhança de Moore é construída. O potencial da célula é 
+alterado (aumentado) a partir de uma determinada quantidade de vizinhos 
+informado pelo parâmetro </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">percNeighborsUse.</SPAN></I></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">filename</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Informa o arquivo de 
+vizinhança no formato (gal). Este é um parâmetro opcional, caso não seja 
+informado uma vizinhança Moore será construída. </SPAN></FONT><FONT face="Arial Narrow, serif"><FONT size=2><SPAN style="FONT-WEIGHT: normal">(</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><FONT size=2><I><SPAN style="FONT-WEIGHT: normal">Não 
+disponível na interface)</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão logística.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Elasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">elasticity</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a parâmetro que deve 
+indicar quão difícil é retirar um uso de determinada célula variando de [0-1], 
+sendo 1, muito fácil, e 0 muito difícil. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">percNeighborsUse 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">percNeighborsUse</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a partir de qual 
+percentual de vizinhos [0-1] será alterado o potencial. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome e peso 
+(betas) de cada variável independente estimado por regressão 
+logística.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Matrix de Afinidade 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">affinityMatrix</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se os usos se atraem 
+(valores entre 0.1 a 1, sendo 1 atração máxima), se repelem (valores entre -0.1 
+a -1, sendo -1 repulsão máxima) ou se é indiferente (valores iguais a 0). 
+</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.49in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialDSampleBased</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Componente baseado nos 
+conceitos de máxima entropia. O algoritmo utiliza as variáveis informadas no 
+modelo para selecionar um conjunto de amostras que representa cada uso. Com os 
+dados das amostras, busca no espaço celular as células com potencial para aquele 
+uso, fazendo uma série de ponderações para determinar o valor do potencial da 
+célula. Para todas as variáveis informadas quanto mais perto for o valor de cada 
+parâmetro da média das amostras, maior será o potencial da 
+célula.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Porcentagem para considerar um 
+uso </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">cellUsePercentage</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Este valor para componentes 
+discretos será sempre 100 (valor em porcentagem).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Atributos de Intervalo 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">attributesPerc</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa os atributos de 
+intervalo (range), tais como temperatura, distância, etc. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Atributos Categóricos 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">attributesClass</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa os atributos 
+categóricos, tais como presença ou não, classificações, etc. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal">&nbsp;</P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><FONT size=4 face=Arial><STRONG>Componentes de Potencial Contínuos</STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Os componentes de Potencial 
+disponíveis no LuccME 3.1 para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">LinearRegression</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">, </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">SpatialLagRegression, 
+SpatialLagLinearRoads, SampleBased) </SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">são descritos 
+abaixo:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialCLinearRegression</STRONG></I></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">: </SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Utiliza técnicas de regressão 
+linear para estimar o potencial de mudança de cada célula. Baseado na proposta 
+original do modelo CLUE contínuo, o potencial de mudança para cada tipo de uso 
+(aumento ou redução no percentual de cada célula num dado período de tempo) é 
+estimado com base na diferença entre a superfície de regressão e o percentual 
+atual do uso da terra num dado período de tempo (veja Verburg et al., 1999 para 
+uma descrição detalhada). As mudanças serão distribuídas posteriormente pelo 
+componente de alocação proporcionalmente ao potencial de cada célula (de acordo 
+com a demanda). Uma diferença do modelo CLUE original é permitir que as 
+variáveis de uso sejam log10 transformadas. Para cada uso da terra no modelo, em 
+cada região (ver item...), o usuário deve fornecer os dados do modelo de 
+regressão. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.5in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">isLog 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">isLog</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se o tipo de uso da 
+terra considerado é Log10 transformado.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.5in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.5in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome e peso 
+(betas) de cada variável independente. O nome das variáveis independentes deve 
+ser exatamente o mesmo do banco de dados.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialCSpatialLagRegression</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Semelhante a abordagem 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">LinearRegression</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">, mas se baseia em técnicas de 
+regressão espacial (Anselin, 2002) para calcular a superfície de regressão. Este 
+componente deve ser utilizado (em casos em que os usos da terra apresentem alta 
+dependência espacial). Como no componente </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">LinearRegression</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">, as mudanças serão 
+distribuídas posteriormente pelo componente de alocação proporcionalmente ao 
+potencial de cada célula (de acordo com a demanda). Porém, para evitar o 
+espalhamento em células com baixo potencial (que posteriormente são 
+potencializadas pelos efeitos da vizinhança), foram introduzidos os controle 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minReg</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxReg</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+descritos abaixo. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">isLog 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">isLog</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se o tipo de uso da 
+terra considerado é Log transformado.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minReg 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minReg</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor mínimo da 
+regressão (0-1) que deve ser considerado para evitar espalhamento de um 
+determinado uso em células com baixo potencial. Deve ser usado para classes de 
+uso unidirecionais e que tenham sempre demanda por aumento de um ano para outro 
+(por exemplo, desmatamento). Caso não seja adequado, utilizar valor 
+0.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxReg 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxReg</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor máximo da 
+regressão (0-1) que deve ser considerado para evitar o decrescimento do uso em 
+células com alto potencial. Deve ser usado para classes de uso unidirecionais e 
+que tenham sempre demanda por diminuição de um ano para outro (por exemplo, 
+floresta primária). Caso não seja adequado, utilizar valor 1.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">ro </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">ro</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">): 
+Informa o coeficiente auto regressivo da regressão espacial 
+(0-1).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.5in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome e peso 
+(betas) de cada variável independente. O nome das variáveis independentes deve 
+ser exatamente o mesmo do banco de dados.</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.49in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialCSpatialLagLinearRegressionMix</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modificação do componente 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">SpatialLagRegression</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> para permitir o uso de 
+regressão linear simples em casos específicos, quando estradas são criadas ou 
+pavimentadas. Este componente é um exemplo de como a plataforma pode ser 
+estendida para aplicações específicas. Foi desenvolvido poder possibilitar o 
+surgimento de novas fronteiras de desmatamento na Amazônia Brasileira, quando 
+novas estradas são criadas, por exemplo (pois o método de regressão espacial 
+tende a favorecer os locais onde já existe concentração de desmatamento). 
+</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">isLog</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> (</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">isLog</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se o tipo de uso da 
+terra considerado é Log transformado.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão espacial.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minReg 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minReg</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor mínimo da 
+regressão (0-1) que deve ser considerado para evitar espalhamento de um 
+determinado uso em células com baixo potencial. Deve ser usado para classes de 
+uso unidirecionais e que tenham sempre demanda por aumento de um ano para outro. 
+(por exemplo, desmatamento). Caso não seja adequado, utilizar valor 
+0.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxReg 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxReg</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor máximo da 
+regressão (0-1) que deve ser considerado para evitar o decrescimento do uso em 
+células com alto potencial. Deve ser usado para classes de uso unidirecionais e 
+que tenham sempre demanda por diminuição de um ano para outro (por exemplo, 
+floresta primária). Caso não seja adequado, utilizar valor 1.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">ro </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">ro</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">): 
+Informa o coeficiente auto regressivo da regressão espacial 
+(0-1).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.5in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome e peso 
+(betas) de cada variável independente. O nome das variáveis independentes deve 
+ser exatamente o mesmo do banco de dados.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.5in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Roads Model 
+(</SPAN></FONT></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">roadsModel</SPAN></I></FONT></FONT><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Informa os dados de regressão, 
+tendo em conta as novas estradas construídas ou pavimentadas.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Roads Model Attributes 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">attrs</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome das variáveis 
+relacionadas a novas estradas.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Const 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">const</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a constante da 
+regressão linear.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Change 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">change</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se o valor do 
+atributo da célula (relacionado a estradas) deve mudar a partir de um 
+determinado nível (e.g. -1.5)</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Betas 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">betas</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome e peso 
+(betas) de cada variável independente. O nome das variáveis independentes deve 
+ser exatamente o mesmo do banco de dados.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in; FONT-WEIGHT: normal"><BR><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>PotentialCSampleBased</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Componente baseado nos 
+conceitos de máxima entropia. O algoritmo utiliza as variáveis informadas no 
+modelo para selecionar um conjunto de amostras que representa cada uso. Com os 
+dados das amostras, busca no espaço celular as células com potencial para aquele 
+uso, fazendo uma série de ponderações para determinar o valor do potencial da 
+célula. Para todas as variáveis informadas quanto mais perto for o valor de cada 
+parâmetro da média das amostras, maior será o potencial da 
+célula.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para cada tipo de usos da 
+terra:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Porcentagem para considerar um 
+uso </SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">cellUsePercentage</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a porcentagem do uso 
+presente na célula para que esta seja considerada uma amostra 
+(0-100).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Atributos de Intervalo 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">attributesPerc</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa os atributos de 
+intervalo (range), tais como temperatura, distância, etc. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Atributos Categóricos 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">attributesClass</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa os atributos 
+categóricos, tais como presença ou não, classificações, etc. 
+</SPAN></FONT></P></body>
+</html>

@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1F80FBB1-2C18-4FC0-85FB-E82346A23938}
 AppName=LuccME
-AppVersion=3.1.4.1
+AppVersion=3.1.4.2
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
 AppSupportURL=http://luccme.ccst.inpe.br/
@@ -18,7 +18,7 @@ DefaultGroupName=LuccME
 DisableProgramGroupPage=yes
 LicenseFile=D:\_SVN\LuccME\branches\Interface3.0\Project1\Resources\comment.txt
 OutputDir=D:\Diego\Desktop
-OutputBaseFilename=LuccME_3.1.4.1
+OutputBaseFilename=LuccME_3.1.4.2
 SetupIconFile=D:\_SVN\LuccME\branches\Interface3.0\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -34,8 +34,8 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "D:\_SVN\LuccME\branches\Interface3.0\Release\LuccME 3.1.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
-Source: "D:\_SVN\LuccME\branches\Interface3.0\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "D:\_SVN\LuccME\branches\Interface3.0\x64\Release\LuccME 3.1.exe"; DestDir: "C:\LuccME"; Flags: ignoreversion;
+Source: "D:\_SVN\LuccME\branches\Interface3.0\x64\Release\*"; DestDir: "C:\LuccME"; Flags: ignoreversion recursesubdirs createallsubdirs;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

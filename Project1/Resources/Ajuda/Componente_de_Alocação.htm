@@ -1,0 +1,406 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Componente de Alocação</title>
+<meta name="GENERATOR" content="WinCHM">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+</style>
+
+</head>
+
+<body>
+<P class=western style="MARGIN-BOTTOM: 0in"><SPAN 
+style="FONT-WEIGHT: normal"><STRONG><FONT size=5 face=Arial>Componente de 
+Alocação</FONT></STRONG></SPAN></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Os componentes de alocação 
+fazem a distribuição espacial das mudanças de uso e cobertura da terra com base 
+na demanda (seção 3.3.3) e potencial de mudança de cada célula (seção 3.3.1). 
+Diversas regras de alocação também podem ser definidas no componente de alocação 
+(e.g. quantidade e velocidade de mudança permitida em cada passo de tempo), mas 
+sua parametrização depende das necessidades do usuário. Os algoritmos e 
+parâmetros de alocação disponíveis no LuccME 2.1 para modelos 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> são 
+apresentados abaixo.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal">&nbsp;</P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><FONT size=4 face=Arial><STRONG>Componentes de Alocação Discretos</STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Os algoritmos de alocação 
+disponíveis no LuccME 3.1 para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+são:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>AllocationDClueSLike</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Baseado no processo de 
+competição entre classes de uso da terra dentro de uma mesma célula, ajustado de 
+modo interativo para satisfazer a demanda quando todas as células são 
+consideradas, conforme descrito em Verburg et al., (2002), mas estendido para 
+incorporar novas características, tais como mudanças em bloco (opcional, 
+parametrizado por célula).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxIteration 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxIteration</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o número máximo de 
+interações permitidas para cada passo de tempo do modelo (deve ser número 
+inteiro &gt; 0; valor recomendado = 1000). Caso este número de iterações seja 
+alcançado sem que o modelo obtenha sucesso na alocação da demanda informada, 
+então, o modelo interrompe sua execução e retorna uma mensagem de erro 
+informando que não conseguiu alocar a demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">factorIteration 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">factorIteration</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Valor inicial do parâmetro 
+que controla o fator de iteração da alocação.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxDifference 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxDifference</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a diferença máxima 
+entre o valor de demanda informado pelo usuário e a quantidade alocada pelo 
+modelo para cada tipo uso (deve ser informado na mesma unidade de área da 
+célula;</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Transition 
+Matrix</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">transitionMatrix</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa as transições 
+permitidas (1) e não permitidas (0) numa matriz uso da terra vs uso da terra 
+(deve ter pelo menos uma região). </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>AllocationDSimpleOrdering</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modelo simples desenvolvido 
+como material de aula. Não deve ser utilizado em aplicações reais. Ao invés de 
+utilizar o processo interativo empregado no modelo CLUE, este componente utiliza 
+uma abordagem de ordenamento simples. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxDifference 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxDifference</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a diferença máxima 
+entre o valor de demanda informado pelo usuário e a quantidade alocada pelo 
+modelo para cada tipo uso (deve ser informado na mesma unidade de área da 
+célula);</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.49in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>AllocationDClueSNeighOrdering</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Este componente é uma 
+modificação do componente </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">AllocationClueSLike,</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> onde, antes da execução da 
+alocação o potencial de cada uso é ordenado de acordo com a vizinhança da cada 
+célula.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxIteration 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxIteration</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o número máximo de 
+interações permitidas para cada passo de tempo do modelo (deve ser número 
+inteiro &gt; 0; valor recomendado = 1000). Caso este número de iterações seja 
+alcançado sem que o modelo obtenha sucesso na alocação da demanda informada, 
+então, o modelo interrompe sua execução e retorna uma mensagem de erro 
+informando que não conseguiu alocar a demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">factorIteration 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">factorIteration</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Valor inicial do parâmetro 
+que controla o fator de iteração da alocação.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxDifference 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxDifference</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a diferença máxima 
+entre o valor de demanda informado pelo usuário e a quantidade alocada pelo 
+modelo para cada tipo uso (deve ser informado na mesma unidade de área da 
+célula;</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Transition 
+Matrix</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">transitionMatrix</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa as transições 
+permitidas (1) e não permitidas (0) numa matriz uso da terra vs uso da terra 
+(deve ter pelo menos uma região).</SPAN></FONT></P><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.49in">&nbsp;</P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT size=4 face=Arial><STRONG>Componentes de Alocação 
+Contínuos</STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in">Os algoritmos 
+de Alocação disponíveis no LuccME 3.1 para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+são:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>AllocationCClueLike</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Baseado no processo de 
+competição entre classes de uso da terra dentro de uma mesma célula, ajustado de 
+modo interativo para satisfazer a demanda quando todas as células são 
+consideradas, conforme descrito em Verburg et al., (1999). As células recebem um 
+percentual da mudança que deve ser alocada em cada passo de tempo para toda a 
+área, proporcionalmente ao seu potencial. A versão do INPE difere do modelo 
+original CLUE, pois é adaptado para o contexto brasileiro, por exemplo, para 
+representar o cumprimento do Código Florestal (Aguiar, 2006). Existem ainda 
+parâmetros para controlar a quantidade e velocidade de mudança que pode ocorrer 
+em cada célula.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxDifference 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxDifference</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a diferença máxima 
+entre o valor de demanda informado pelo usuário e a quantidade alocada pelo 
+modelo para cada tipo uso (deve ser informado na mesma unidade de área da 
+célula;</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxIteration 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxIteration</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o número máximo de 
+interações permitidas para cada passo de tempo do modelo (deve ser número 
+inteiro &gt; 0; valor recomendado = 1000). Caso este número de iterações seja 
+alcançado sem que o modelo obtenha sucesso na alocação da demanda informada, 
+então, o modelo interrompe sua execução e retorna uma mensagem de erro 
+informando que não conseguiu alocar a demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">initialElasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">initialElasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor inicial de 
+elasticidade (iterationFactor) (flutuante &gt; 0; valor recomentado = 
+0.1).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minElasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minElasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor mínimo de 
+elasticidade (iterationFactor) (flutuante &gt; 0; valor recomentado = 
+0.001).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxElasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxElasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor máximo de 
+elasticidade (iterationFactor) (flutuante &gt; 1; valor recomendado = 
+1.5).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">complementarLU 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">complementarLU</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o tipo de uso da 
+terra que será recalculado no final caso a soma das percentagens de uso não 
+esteja somando exatamente 100% (null ou um nome de uso da terra 
+válido).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Allocation Data 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">allocationData</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Parâmetros para definir 
+regras de alocação específicas para cada tipo de uso da terra.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">static 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">static</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se a variável pode 
+aumentar ou diminuir em cada célula ou apenas mudar na direção da demanda. 
+Possíveis valores: -1 (mudanças apenas na direção da demanda); 0 (mudanças em 
+qualquer direção); 1 (estático); </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minValue 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minValue</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor percentual 
+mínimo de um dado tipo de uso da terra permitido na célula (como resultado das 
+novas mudanças – o percentual original pode estar fora do limite) (flutuante 
+[0,1]). Normalmente definido de acordo com regras de uso da terra tais como 
+Código Florestal. Note que as restrições devem ser consistentes com os 
+diferentes tipos de uso da terra, pois o somatório deve ser 100% (por exemplo, o 
+usuário não deve informar que todos os tipos de uso da terra têm um limite 
+mínimo de 50%, caso ele tenha 3 ou mais tipos de uso).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxValue 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxValue</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor percentual 
+máximo permitido para um dado tipo de uso da terra na célula (como resultado das 
+novas mudanças – o percentual original pode estar fora do limite) (flutuante 
+[0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minChange 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minChange</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a mudança mínima 
+permitida para um dado tipo de uso da terra na célula (como resultado das novas 
+mudanças – o percentual original pode estar fora do limite) (flutuante 
+[0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxChange 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxChange</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a mudança máxima 
+permitida para um dado tipo de uso da terra na célula em 1 passo de tempo até o 
+limite de saturação (flutuante [0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">changeLimiarValue 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">changeLimiarValue</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o limiar de mudança 
+para um dado tipo de uso da terra na célula. A partir deste limiar, a velocidade 
+de mudança de um dado tipo de uso pode ser modificada (flutuante [0,1]). Deve 
+ser calibrado de acordo com a quantidade média de mudança registrada de um ano 
+para outro em dados observados. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxChangeAboveLimiar 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxChangeAboveLimiar</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a mudança máxima 
+permitida para um dado tipo de uso da terra na célula após o limiar de saturação 
+(flutuante [0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>AllocationCClueLikeSaturation</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Modificação do componente 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">AllocationClueLike</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">. Neste caso, a velocidade de 
+mudança em cada célula utiliza uma variável espaço-temporal, atualizada 
+dinamicamente cada ano indicando se a célula está numa área consolidada ou área 
+de fronteira. O limiar de saturação considera uma vizinhança de 10x10, não 
+considerando área protegidas. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxDifference 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxDifference</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a diferença máxima 
+entre o valor de demanda informado pelo usuário e a quantidade alocada pelo 
+modelo para cada tipo uso (deve ser informado na mesma unidade de área da 
+célula;</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxIteration 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxIteration</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o número máximo de 
+interações permitidas para cada passo de tempo do modelo (deve ser número 
+inteiro &gt; 0; valor recomendado = 1000). Caso este número de iterações seja 
+alcançado sem que o modelo obtenha sucesso na alocação da demanda informada, 
+então, o modelo interrompe sua execução e retorna uma mensagem de erro 
+informando que não conseguiu alocar a demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">initialElasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">initialElasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor inicial de 
+elasticidade (iterationFactor) (flutuante &gt; 0; valor recomentado = 
+0.1).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minElasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minElasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor mínimo de 
+elasticidade (iterationFactor) (flutuante &gt; 0; valor recomentado = 
+0.001).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxElasticity 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxElasticity</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor máximo de 
+elasticidade (iterationFactor) (flutuante &gt; 1; valor recomendado = 
+1.5).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">complementarLU 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">complementarLU</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o tipo de uso da 
+terra que será recalculado no final caso a soma das percentagens de uso não 
+esteja somando exatamente 100% (null ou um nome de uso da terra 
+válido).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">saturationIndicator 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">saturationIndicator</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome de um 
+atributo que será dinamicamente atualizado (pode ser salvo para fins de 
+calibração).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">attrProtection 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">attrProtection</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o atributo do banco 
+de dados indicando o percentual de áreas protegidas a ser excluído a partir do 
+nível de saturação).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Allocation Data 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">allocationData</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Parâmetros para definir 
+regras de alocação específicas para cada tipo de uso da terra.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">static 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">static</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa se a variável pode 
+aumentar ou diminuir em cada célula ou apenas mudar na direção da demanda. 
+Possíveis valores: -1 (mudanças apenas na direção da demanda); 0 (mudanças em 
+qualquer direção); 1 (estático); </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minValue 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minValue</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor percentual 
+mínimo de um dado tipo de uso da terra permitido na célula (como resultado das 
+novas mudanças – o percentual original pode estar fora do limite) (flutuante 
+[0,1]). Normalmente definido de acordo com regras de uso da terra tais como 
+Código Florestal. Note que as restrições devem ser consistentes com os 
+diferentes tipos de uso da terra, pois o somatório deve ser 100% (por exemplo, o 
+usuário não deve informar que todos os tipos de uso da terra têm um limite 
+mínimo de 50%, caso ele tenha 3 ou mais tipos de uso).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxValue 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxValue</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o valor percentual 
+máximo permitido para um dado tipo de uso da terra na célula (como resultado das 
+novas mudanças – o percentual original pode estar fora do limite) (flutuante 
+[0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">minChange 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">minChange</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a mudança mínima 
+permitida para um dado tipo de uso da terra na célula em 1 passo de tempo até o 
+limite de saturação (flutuante [0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxChange 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxChange</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a mudança máxima 
+permitida para um dado tipo de uso da terra na célula em 1 passo de tempo até o 
+limite de saturação (flutuante [0,1]).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">changeLimiarValue 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">changeLimiarValue</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o limiar de mudança 
+para um dado tipo de uso da terra na célula. A partir deste limiar, a velocidade 
+de mudança de um dado tipo de uso pode ser modificada (flutuante [0,1]). Deve 
+ser calibrado de acordo com a quantidade média de mudança registrada de um ano 
+para outro em dados observados. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.98in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">maxChangeAboveLimiar 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">maxChangeAboveLimiar</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a mudança máxima 
+permitida para um dado tipo de uso da terra na célula após o limiar de saturação 
+(flutuante [0,1]).</SPAN></FONT></P></body>
+</html>

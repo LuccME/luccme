@@ -1,0 +1,129 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Componente de Demanda</title>
+<meta name="GENERATOR" content="WinCHM">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+</style>
+
+</head>
+
+<body>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT size=5><STRONG>Componente de Demanda </STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Este componente define a 
+quantidade ou magnitude das mudanças de uso da terra a serem alocadas em cada 
+passo de tempo. Esta informação é frequentemente uma entrada dos modelos de uso 
+da terra construídos no LuccME, especialmente quando aplicados em estudos de 
+cenários. Diversos métodos podem ser utilizados para fazer tais estimativas, 
+tais como projeções a partir de linhas de base, premissas de cenários, ou 
+valores de demanda derivados de modelos econômicos. Estimativas de demanda 
+também podem ser geradas internamente quando dois ou mais períodos de uso da 
+terra passados são fornecidos no banco de dados (seção 3.2.3.1). Todos os 
+algoritmos e parâmetros de demanda disponíveis no LuccME 3.1 são sintetizados 
+abaixo e podem ser utilizados tanto para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+como para modelos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">. 
+</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>DemandPreComputedValues</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Utiliza valores de demanda 
+predefinidos pelo usuário para cada tipo de uso da terra em cada passo de 
+tempo.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Demanda 
+Anual</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">annualDemand</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a demanda anual por 
+terra para cada tipo de uso (deve ser informado na mesma unidade de área da 
+célula), na mesma ordem informada no </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Tipos de 
+Uso</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>DemandComputeTwoDates</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Os valores de demanda são 
+calculados internamente com base em 2 períodos diferentes de dados de uso da 
+terra do passado fornecidos pelo usuário no banco de dados. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.25in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Ano Final para Interpolação 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">finalYearForInterpolation</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): O ano para ser considerado o 
+final da interpolação para o cálculo da demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.25in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Colunas para 
+Interpolação</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">finalLandUseTypesForInterpolation</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome da coluna com 
+os valores de demanda para o final da interpolação de cada tipo de uso (Ex.: Uso 
+– F, D, O; Colunas Finais – F_final, D_final, O_final).</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.25in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>DemandComputeThreeDates</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Os valores de demanda são 
+calculados internamente com base em 3 períodos diferentes de dados de uso da 
+terra do passado fornecidos pelo usuário no banco de dados.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.25in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Ano Intermediário 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">middleYearForInterpolation</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): O ano para ser considerado o 
+final da primeira interpolação para o cálculo da demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.25in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Ano Final 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">finalYearForInterpolation</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): O ano para ser considerado o 
+final da segunda interpolação para o cálculo da demanda.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.25in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Colunas para 
+Interpolação</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">middleLandUseTypesForInterpolation</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">, </SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">finalLandUseTypesForInterpolation</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome da coluna com 
+os valores de demanda para os dois cálculos de interpolação de cada tipo de uso 
+(Ex.: Uso – F_00, D_00, O_00; Colunas – F_05, D_ 05, O_ 05 (</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">middle</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">); F_10, D_10, O_10 
+(</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">final</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">)).</SPAN></FONT></P>
+<P class=western 
+style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.25in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0.14in"><FONT face="Arial Narrow, serif"><I><STRONG>DemandExternalModel</STRONG></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">: Faz chamada de um modelo 
+externo </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">.lua</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+para realizar o cálculo da demanda. É disponibilizado para o modelo externo 
+todos os dados da simulação, e é esperado em seu retorno o preenchimento da 
+demanda anual (annualDemand) para o ano corrente.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Arquivo</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> (</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">file</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Endereço do arquivo 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">.lua</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> do 
+modelo externo. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Demanda 
+Anual</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">annualDemand</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa a demanda anual por 
+terra para cada tipo de uso (deve ser informado na mesma unidade de área da 
+célula), na mesma ordem informada no </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Tipos de 
+Uso</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">, inicialmente vem zerada por 
+padrão, deve ser preenchida pelo modelo externo. </SPAN></FONT></P></body>
+</html>

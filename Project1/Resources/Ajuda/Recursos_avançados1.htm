@@ -1,0 +1,110 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Recursos avançados</title>
+<meta name="GENERATOR" content="WinCHM">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+</style>
+
+</head>
+
+<body>
+<P><FONT color=#00000a size=5><STRONG>Recursos avançados</STRONG></FONT></P>
+<P><FONT size=4><STRONG>Variáveis 
+dinâmicas</STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Um recurso avançado para 
+construção de modelos no LuccME 3.1 é a utilização de variáveis dinâmicas. Este 
+tipo de recurso é extremamente útil ao usuário quando os fatores determinantes 
+que explicam o padrão de distribuição espacial dos tipos de uso da terra mudam 
+significativamente ao longo do período considerado. Neste caso, as variáveis 
+dinâmicas podem ser atualizadas em diferentes passos de tempo para melhorar o 
+desempenho do modelo. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Quando o usuário desejar 
+utilizar variáveis dinâmicas, novos espaços celulares devem ser criados no 
+TerraME 2.0 ou outro SIG de preferência do usuário com a seguinte 
+organização:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">&lt;NomeEspaçoCelular&gt;_&lt;AnoAtualização&gt; (e.g. 
+CS_2015).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Isso significa que no ano de 
+atualização indicado no modelo, o LuccME vai ler o espaço celular atualizado. 
+Para um exemplo da utilização deste recurso, por favor, veja o Lab 6 para 
+modelos Contínuos </SPAN></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">disponibilizado junto com o pacote LuccME. Outro exemplo de 
+aplicação completa utilizando este tipo de recurso pode ser observado em Aguiar 
+et al. (2015).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"></SPAN></FONT>&nbsp;</P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"></SPAN></FONT><FONT size=4><STRONG>Regiões</STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Outro recurso avançado para 
+construção de modelos no LuccME 3.1 é a utilização de duas ou mais sub-regiões 
+para definição de </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Potencial </SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(tanto em modelos contínuos 
+quanto discretos). Este tipo de recurso é extremamente útil ao usuário quando os 
+fatores determinantes que explicam o padrão de distribuição espacial dos tipos 
+de uso da terra mudam significativamente no espaço. Neste caso, a definição de 
+sub-regiões permite ao usuário utilizar variáveis e coeficientes mais adequados 
+as peculiaridades locais e assim melhorar o desempenho do modelo. A ocorrência 
+de sub-regiões deve ser informada pelo usuário no componente de 
+potencial.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para um exemplo da utilização 
+deste recurso, por favor, veja o Lab Region para modelos Contínuos 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">disponibilizado junto com o 
+pacote LuccME. Um exemplo de aplicação construída utilizando este tipo de 
+recurso (com versões anteriores do LuccME) é Coelho (2009) e Pimenta et al. 
+(2010).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal">&nbsp;</P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><FONT size=4><STRONG>Cenários</STRONG></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Uma vez que o modelo 
+desenvolvido seja capaz de representar de modo consistente os padrões de uso da 
+terra observados no passado, o LuccME 3.1 oferece a possibilidade de explorar 
+cenários futuros de mudança. Neste caso, o usuário deve informar o tempo inicial 
+e nome do cenário de interesse, assim como, os períodos para atualização de 
+variáveis dinâmicas (se aplicável). </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Anos com Variáveis a serem 
+Atualizadas</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">updateYears</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Anos de atualização das 
+variáveis dinâmicas.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Ano de Início do Cenário 
+</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">scenarioStartTime</SPAN></I></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">) = &lt;value&gt;: Informa o 
+ano de início do cenário.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; MARGIN-LEFT: 0.49in"><FONT color=#7030a0><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Nome do 
+Cenário</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+(</SPAN></FONT><FONT color=#bf8f00><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">scenarioName</SPAN></FONT></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">): Informa o nome do 
+cenário.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">A </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Demanda</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> para os cenários passa a ser 
+uma entrada para o modelo e pode ser calculada por diferentes métodos, conforme 
+descrito no capítulo anterior. Para um exemplo da utilização deste recurso, por 
+favor, veja o Lab 7 para modelos Contínuos</SPAN></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> disponibilizado junto com o 
+pacote LuccME. Um exemplo de aplicação completa utilizando este tipo de recurso 
+é Aguiar et al. (2015).</SPAN></FONT></P></body>
+</html>

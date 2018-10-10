@@ -13,7 +13,7 @@
 	
 5. Copiar as dlls da pasta:\LuccME\branches\Interface3.0\Project1\Resources\dll\x64 para \LuccME\branches\Interface3.0\Release	
 
-6. 	Clicar em Build->Compiler (ou no icone com um papel, uma engrenagem e uma janela)
+6. Clicar em Build->Compiler (ou no icone com um papel, uma engrenagem e uma janela)
 
 7. Verfique o arquivo na pasta de saída, por padrao nao vem com x64 ou x86 no final, renomeie antes de gerar a outra versão
 	

@@ -1,0 +1,545 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Construindo um modelo com LuccME</title>
+<meta name="GENERATOR" content="WinCHM">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+</style>
+
+</head>
+
+<body>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT color=#00000a size=5 face=Arial>Construindo um modelo com 
+LuccME</FONT> </P>
+<P class=western style="MARGIN-BOTTOM: 0in"><BR></P>
+<OL>
+  <OL>
+    <LI>
+    <H2 class=western><A name=_Toc493513967 
+    ></A>Introdução</H2></LI></OL></OL>
+<P lang=en-US class=western style="MARGIN-BOTTOM: 0in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">A construção de um modelo no 
+LuccME pode ser dividida em 5 passos, conforme ilustrado na Figura 2. O primeiro 
+passo consiste na definição do objetivo da aplicação como, por exemplo, expansão 
+agrícola, expansão urbana, desertificação, desmatamento. Nesta etapa também 
+costuma ser definida a escala espacial e temporal de trabalho, os tipos de uso 
+da terra, assim como, os fatores determinantes de mudança para o modelo 
+pretendido (distância a centros urbanos, presença de áreas protegidas, relevo, 
+etc). </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 11" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_6dd8e725.png" width=564 align=bottom height=260 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 2 -</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+Etapas para construção de um modelo de uso da terra no LuccME 
+3.1.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal">
+<BR>
+</P>
+<P class=western style="MARGIN-BOTTOM: 0in">
+<FONT face="Arial Narrow, serif">
+<SPAN style="FONT-WEIGHT: normal">
+ O Segundo passo compreende a 
+preparação do banco de dados, expresso pelo preenchimento de um espaço celular.</SPAN></FONT>
+
+<FONT face="Arial Narrow, serif"> 
+ <SPAN 
+style="FONT-WEIGHT: normal">O espaço celular (Figura 3) é 
+uma estrutura matricial generalizada onde cada célula está associada a vários 
+tipos de atributos, sejam eles classes de uso/cobertura da terra (ex.: floresta, 
+agricultura, pastagem, etc) ou fatores determinantes (ex.: distância a rodovias, presença de assentamentos rurais, declividade média, etc). O</SPAN></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">objetivo consiste em 
+homogeneizar informações provenientes de diferentes fontes, em formatos 
+distintos (dados vetoriais, matriciais e também outros planos celulares), 
+agregando-os em uma mesma base espaço-temporal. </SPAN></FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">O espaço celular pode ser 
+construído através da interface FillCell, disponível em 
+(http://luccme.ccst.inpe.br/category/download-pt/) ou diretamente no TerraME 
+2.0, conforme descrito abaixo. O espaço celular pode ainda ser construído a 
+partir de Sistemas de Informação Geográfica (SIG) de preferência do usuário como 
+TerraView, ArcGIS ou QGIS. Para qualquer aplicação o espaço celular deve ser 
+construído e preenchido utilizando um sistema de coordenadas planas (ex: UTM, 
+Policonico, Albers).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 8" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_5b3eb56b.png" width=384 align=bottom height=244 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 3 -</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+Espaço celular – processo de homogeneização de diferentes bases de dados em 
+espaço celular.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">O gerenciador de scripts 
+FillCell é uma ferramenta oferecida ao usuário de forma gratuita e tem por 
+objetivo auxiliar na construção e preenchimento de um espaço celular compatível 
+com o LuccME 3.1. Através de uma interface intuitiva, o usuário fornece as 
+informações inerentes a sua aplicação sem precisar se importar com a sintaxe de 
+programação. Contudo, esta ferramenta não limita o usuário que desejar construir 
+seus scripts diretamente no TerraME, através do editor de sua preferência. 
+Abaixo encontra-se a janela principal do FillCell, onde é possível acessar as 
+funcionalidades deste gerenciador, tais como:</SPAN></FONT></P>
+<UL>
+  <LI>
+  <P style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">Criar um novo 
+  script;</SPAN></FONT></P>
+  <LI>
+  <P style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">Abrir um script gerado por 
+  esta ferramenta;</SPAN></FONT></P>
+  <LI>
+  <P style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">Selecionar o idioma de 
+  exibição (Português ou Inglês);</SPAN></FONT></P></LI></UL>
+<P style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal; MARGIN-LEFT: 0.5in"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_56401deb.gif" ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 4 - </FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">Janela principal do FillCell.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Outra forma de acessar o 
+formulário para criação de um novo script é através do menu principal, conforme 
+ilustrado na Figura 5.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 13" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_4709def9.png" width=368 align=bottom height=164 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 5 - </FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">Menu 
+Principal - Arquivo &gt; Novo.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Uma vez selecionada, a janela 
+de criação de script é aberta, conforme ilustrado na Figura 6. Nesta etapa o 
+usuário deve, em primeiro lugar, indicar o diretório onde o script será salvo, 
+utilizando a opção “pasta para salvar os scripts”. Após a seleção da pasta aonde 
+o arquivo será salvo, o endereço selecionado será exibido para o usuário. Em 
+segundo lugar, o usuário deve indicar um nome de saída para o script que será 
+criado, utilizando a opção “nome do script”.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 3" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_97bd0053.png" width=560 align=bottom height=532 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 6</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> - 
+Definições do script.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">O próximo passo consiste na 
+definição dos parâmetros para criação do espaço celular, conforme ilustrado na 
+Figura 7. Neste momento cabe ao usuário indicar:</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<OL>
+  <LI>
+  <P style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">Arquivo que contém o limite 
+  do espaço celular (ex. limite da área de estudo). Este arquivo deve ser um 
+  vetor, do tipo polígono, no formato </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+  style="FONT-WEIGHT: normal" 
+  >shapefile</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">;</SPAN></FONT></P>
+  <LI>
+  <P style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">Nome do espaço celular a ser 
+  criado;</SPAN></FONT></P>
+  <LI>
+  <P style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+  style="FONT-WEIGHT: normal">Resolução espacial das 
+  células (lado x lado);</SPAN></FONT></P></LI></OL>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 14" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_6e1934ea.png" width=560 align=bottom height=532 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 7 - </FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">Criando um espaço celular.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Uma vez que os parâmetros do 
+espaço celular tenham sido definidos, o usuário pode iniciar o seu preenchimento 
+através no menu “atributos de preenchimento”. Nesta seção o usuário deve 
+informar quais dados serão usados para preencher as células (ex: usos da terra), 
+conforme ilustrado na figura 8. Para adicionar os arquivos que contém os dados, 
+o usuário deve clicar no botão “+” localizado no canto inferior esquerdo da 
+janela. Após clicar neste botão a janela de seleção de arquivos aparecerá. Os 
+formatos de arquivos suportados atualmente na interface são </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">shapefile</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+para dados vetoriais (linhas, pontos e polígonos) e GeoTIFF para dados 
+matriciais. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 16" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_450ca44c.png" width=373 align=bottom height=374 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 8</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> - 
+Adicionando atributos de preenchimento.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Quando a seleção dos dados a 
+serem preenchidos for concluída, os nomes dos arquivos (.tif e .shp) vão 
+aparecer na coluna atributos, conforme ilustrado na Figura 9.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 21" src="LuccME_GuiaUsuario_html_993b828.png" width=356 align=bottom height=352 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 9</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> - 
+Dados incluídos na coluna atributos.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Uma vez que um dado é 
+adicionado à lista de atributos, o usuário pode selecionar a operação de 
+preenchimento desejada, para que esta variável fique disponível no espaço 
+celular. Para configurar uma operação de preenchimento, basta clicar no nome do 
+arquivo presente na lista, então a janela entrará no modo de configuração, 
+conforme ilustrado na Figura 10.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 23" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_6e2cfc1a.png" width=560 align=bottom height=532 > </P>
+<P class=western style="MARGIN-BOTTOM: 0in"></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 10</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> - 
+Selecionando uma operação de preenchimento.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">A lista de operadores 
+disponíveis para preenchimento é gerada de acordo com o formato dos arquivos 
+utilizados (.shp ou .tif). Quando a operação de preenchimento desejada for 
+selecionada, os parâmetros de configuração da operação irão 
+aparecer.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">A Tabela 1 apresenta uma 
+síntese dos principais operadores disponíveis para preenchimento de células via 
+TerraME.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">O exemplo de 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">script</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+apresentado a seguir pode ser utilizado para criação e preenchimento de um 
+espaço celular diretamente no TerraME (gerado com a interface FillCell). Cada 
+tipo de uso da terra, bem como, os diferentes fatores determinantes serão 
+representados por uma coluna no espaço celular. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT style="FONT-SIZE: 8pt" size=1><SPAN lang=en-US><SPAN style="FONT-WEIGHT: normal">----------------------------------------------------------------<BR>-- 
+This file contains a Fill Cell Script --<BR>-- Compatible with LuccME 3.1 
+--<BR>-- Generated with Fill Cell Script Configurator --<BR>-- 19/06/2017 at 
+09:24:50 
+--<BR>----------------------------------------------------------------</SPAN></SPAN></FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT style="FONT-SIZE: 8pt" size=1><SPAN lang=en-US><SPAN style="FONT-WEIGHT: normal">local x = 
+os.clock()<BR>import("terralib")</SPAN></SPAN></FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT style="FONT-SIZE: 8pt" size=1><SPAN lang=en-US><SPAN style="FONT-WEIGHT: normal">local projFile = 
+File("t3mp.tview")<BR>if(projFile:exists()) 
+then<BR>projFile:delete()<BR>end</SPAN></SPAN></FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT style="FONT-SIZE: 8pt" size=1><SPAN lang=en-US><SPAN style="FONT-WEIGHT: normal">-- 
+CREATING PROJECT --<BR>print("-- Creating Project 
+--\n")</SPAN></SPAN></FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT style="FONT-SIZE: 8pt" size=1><SPAN lang=en-US><SPAN style="FONT-WEIGHT: normal">proj 
+= Project {<BR>&nbsp;file = "t3mp.tview",<BR>&nbsp;clean = 
+true<BR>}</SPAN></SPAN></FONT></P><FONT style="FONT-SIZE: 8pt" ><SPAN lang=en-US><SPAN style="FONT-WEIGHT: normal">
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><BR><FONT size=1>-- ADDING LAYERS --<BR>print("-- Adding Layers to the Project 
+--")</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>l1 = Layer{<BR>&nbsp;project = proj,<BR>&nbsp;name = 
+"limit",<BR>&nbsp;file = 
+"C:\\Treinamento\\preenchimentoDeCelulas\\limitePA_src29101_pol.shp"<BR>}<BR>print("Added 
+Limit: limitePA_src29101_pol.shp")</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>l2 = Layer{<BR>&nbsp;project = proj,<BR>&nbsp;name = 
+"layer2",<BR>&nbsp;file = 
+"C:\\Treinamento\\preenchimentoDeCelulas\\rodoviasPA_src29101_lin.shp"<BR>}<BR>print("Added 
+Layer2: rodoviasPA_src29101_lin.shp")</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>-- Checking EPSGs --<BR>print("\n-- Checking EPSGs--")<BR>local 
+epsgVector = {l1.epsg, l2.epsg}<BR>local fileVector = 
+{"limitePA_src29101_pol.shp", "rodoviasPA_src29101_lin.shp"}<BR>local checkEPSG 
+= true</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>for i = 1, #epsgVector, 1 do<BR>&nbsp;if (epsgVector[i] ~= l1.epsg) 
+then<BR>&nbsp;&nbsp;print("Error: EPSG does not math - limit : "..l1.epsg.." 
+"..fileVector[i].." : "..epsgVector[i])<BR>&nbsp;&nbsp;checkEPSG = 
+false<BR>&nbsp;end</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>&nbsp;if checkEPSG then print("EPSG - limit : 
+"..l1.epsg.."\t"..fileVector[i]..": "..epsgVector[i]) end<BR>end</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>if not checkEPSG then os.exit() end</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT size=1>-- CREATING CELLULAR SPACE --<BR>print("\n-- Creating Cellular Space 
+--\n")</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><BR><FONT size=1>local cs = Layer{<BR>&nbsp;project = proj,<BR>&nbsp;source = 
+"shp",<BR>&nbsp;name = "cs",<BR>&nbsp;input = l1.name,<BR>&nbsp;resolution = 
+50000,<BR>&nbsp;file = "csExemplo.shp",<BR>&nbsp;clean = true<BR>}</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><BR><FONT size=1>-- FILLING CELLULAR SPACE --<BR>print("Filling 
+rodoviasPA_src29101_lin.shp into Cellular Space using distance 
+operation")<BR>cs:fill{<BR>&nbsp;layer = "layer2",<BR>&nbsp;operation = 
+"distance",<BR>&nbsp;attribute = "rod",<BR>&nbsp;dataType = 
+"line"<BR>}</FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><BR><FONT size=1>projFile = File("t3mp.tview")<BR>if(projFile:exists()) 
+then<BR>&nbsp;projFile:delete()<BR>end<BR>print(string.format("\nElapsed time : 
+%.2fs\n", os.clock() - x))<BR>print("\nEnd of 
+Script")</FONT></SPAN></SPAN></FONT></P>
+<P style="MARGIN-BOTTOM: 0in; LINE-HEIGHT: 100%"><FONT style="FONT-SIZE: 8pt" size=1><SPAN 
+style="FONT-WEIGHT: normal">  
+</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Tabela 1</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+</SPAN></FONT><FONT face="Arial Narrow, serif">-</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+Síntese dos principais operadores e funções disponíveis para preenchimento de 
+células via TerraME.</SPAN></FONT></P>
+<DIV align=center>
+<TABLE cellSpacing=0 cellPadding=7 width=576 align=center 
+  ><COLGROUP>
+  <COL width=115>
+  <COL width=431>
+  
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >area”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Área total de sobreposição entre a célula e um 
+      </SPAN></FONT><FONT face="Arial Narrow, serif"><I 
+      ><SPAN style="FONT-WEIGHT: normal" 
+      >layer</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+      style="FONT-WEIGHT: normal"> de polígonos. Os valores 
+      gerados podem variar de 0-1, indicando sua área de 
+      cobertura.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >average”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Média de valores quantitativos dos objetos que tem 
+      alguma intersecção com a célula, sem levar em consideração suas 
+      propriedades geométricas. Quando o argumento área é utilizado, ele calcula 
+      a média ponderada pela proporção das respectivas áreas de intersecção. 
+      Este operador costuma ser útil para distribuir atributos que representam 
+      médias como renda </SPAN></FONT><FONT face="Arial Narrow, serif" ><I><SPAN 
+      style="FONT-WEIGHT: normal" 
+      >percapita</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+      style="FONT-WEIGHT: normal">.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >count”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Número de objetos que tem alguma sobreposição com a 
+      célula.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >distance”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Distância ao objeto mais próximo. A distância é 
+      calculada a partir do centroide da célula até o ponto, linha ou borda mais 
+      próxima de um polígono.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >mode”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Valor qualitativo mais comum dos objetos que tem 
+      alguma intersecção com a célula sem levar em consideração suas 
+      propriedades geométricas. Esta operação converte o resultado para 
+      </SPAN></FONT><FONT face="Arial Narrow, serif"><I 
+      ><SPAN style="FONT-WEIGHT: normal" 
+      >string</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+      style="FONT-WEIGHT: normal">. Quando há dois ou mais 
+      valores com a mesma contagem, o valor resultante vai conter todos eles 
+      separados por vírgulas.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >maximum”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Valor quantitativo máximo entre os objetos que tem 
+      alguma intersecção com a célula sem levar em consideração suas 
+      propriedades geométricas.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >minimum”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Valor quantitativo mínimo entre os objetos que tem 
+      alguma intersecção com a célula sem levar em consideração suas 
+      propriedades geométricas.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >coverage”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Porcentagem de cada valor qualitativo cobrindo a 
+      célula, utilizando dados de polígonos ou matriz. Este operador cria um 
+      novo atributo para cada valor disponível, onde atributo é o valor passado 
+      como argumento para preenchimento e valor representa os diferentes valores 
+      nos dados de entrada. A soma dos valores do atributo criado para uma dada 
+      célula irá variar de 0-100 de acordo com a cobertura da célula. Quando 
+      utilizar arquivos </SPAN></FONT><FONT face="Arial Narrow, serif" ><I><SPAN 
+      style="FONT-WEIGHT: normal" 
+      >shapefile</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+      style="FONT-WEIGHT: normal">, lembre-se do limite de 
+      10 caracteres para nomes. Esta operação vai ser interrompida caso 2 nomes 
+      de saída tenham nomes iguais.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >presence”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Valores booleanos indicando se algum objeto tem 
+      sobreposição com a célula.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >stdev”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Desvio padrão dos objetos quantitativos que tem 
+      alguma sobreposição com a célula, sem levar com consideração suas 
+      propriedades geométricas.</SPAN></FONT></P></TD></TR>
+  <TR>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    width=115>
+      <P class=western>“<FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >sum”</SPAN></FONT></P></TD>
+    <TD 
+    style="BORDER-TOP: #00000a 1px solid; BORDER-RIGHT: #00000a 1px solid; BORDER-BOTTOM: #00000a 1px solid; PADDING-BOTTOM: 0in; PADDING-TOP: 0in; PADDING-LEFT: 0.08in; BORDER-LEFT: #00000a 1px solid; PADDING-RIGHT: 0.08in" 
+    vAlign=top width=431>
+      <P class=western><FONT face="Arial Narrow, serif" ><SPAN style="FONT-WEIGHT: normal" 
+      >Soma dos valores quantitativos dos objetos que tem 
+      alguma sobreposição com a célula, sem levar em consideração suas 
+      propriedades geométricas. Quando o argumento área é utilizado, o operador 
+      calcula a soma com base na proporção da área de intersecção. Este operador 
+      costuma ser útil para preservar a soma total em ambos os 
+      </SPAN></FONT><FONT face="Arial Narrow, serif"><I 
+      ><SPAN style="FONT-WEIGHT: normal" 
+      >layers</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN 
+      style="FONT-WEIGHT: normal">, como, por exemplo, o 
+      tamanho da população.</SPAN></FONT></P></TD></TR></TABLE></DIV>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif">Fonte:</FONT><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal"> Adaptado de Andrade e 
+Avancini, 2016 (<A href="https://github.com/TerraME/terrame/wiki/Fill" ><FONT color=#0563c1>https://github.com/TerraME/terrame/wiki/Fill</FONT></A>).</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Para modelos Contínuos, cada 
+célula (linha) deve ser preenchida com o percentual ocupado por cada tipo de uso 
+da terra. O somatório de todas as classes de uso/cobertura da terra deve 
+totalizar 1 em todas as células. A área total ocupada por cada classe de uso da 
+terra deve ser igual ao valor informado no primeiro passo de tempo no componente 
+de demanda. Para modelos Discretos, cada célula deve ser preenchida com o tipo 
+de uso da terra majoritário onde 1 deve indicar presença e 0 ausência de cada 
+tipo de uso na célula, conforme ilustrado na Figura 4.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Os nomes utilizados para 
+identificar os atributos (colunas com classes de uso/cobertura da terra e 
+fatores determinantes) no preenchimento do espaço celular também devem ser 
+utilizados para parametrizar o modelo desenvolvido a partir da plataforma 
+LuccME. Caso o usuário tenha optado por utilizar alguma transformação das 
+variáveis explicativas (ex.: logarítmica, radiciação, etc) durante as análises 
+estatísticas, deve-se fazer o mesmo com as respectivas colunas do espaço 
+celular, caso ainda não estejam transformadas. As variáveis dependentes (tipos 
+de uso/cobertura da terra) só poderão ser transformadas com o Log10, o que pode 
+ser indicado no LuccME. Para as demais variáveis (variáveis independentes) podem 
+ser utilizadas qualquer transformação.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">O terceiro passo visa, 
+fundamentalmente, apoiar a parametrização do componente de Potencial, mas também 
+dos componentes de Demanda e Alocação com base na análise do ritmo e aglutinação 
+das mudanças no tempo e espaço. Esta etapa é destinada a análise visual dos 
+dados de uso da terra (extensão e diferença), análise da quantidade de mudança e 
+análise visual dos fatores determinantes (relação qualitativa com os usos). O 
+terceiro passo também incluí a análise exploratória dos dados: correlações, 
+histogramas e transformações necessárias visando estabelecer relações potenciais 
+a partir de diferentes métodos (regressão linear, logística, espacial). Estas 
+análises são feitas fora do LuccME, normalmente em softwares como R, GeoDA, SPSS 
+entre outros. </SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Com base na aplicação e análise 
+das diferentes classes de uso/cobertura da terra e fatores determinantes, o 
+usuário pode iniciar o quarto passo, que consiste na parametrização do modelo 
+LuccME. Primeiro, o usuário deve selecionar os componentes de 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Potencial</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">, 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Demanda</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Alocação</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+mais adequados para a aplicação. Caso necessário, o usuário pode ainda 
+implementar novos componentes. Os componentes do LuccME (descritos nas próximas 
+seções) seguem uma abordagem estrutural (Verburg et al., 2004), onde os fatores 
+determinantes espaciais são relacionados a diferentes padrões de uso da terra, 
+com base num único mapa. Ou seja, os modelos de uso da terra construídos no 
+LuccME não trabalharam com as transições observadas entre classes de uso (ex.: 
+floresta para pastagem). Em outras palavras, a variável de uso da terra não é a 
+mudança que ocorreu entre duas classes de usos/cobertura num determinado 
+período, mas o padrão histórico acumulado. Além disso, os componentes do LuccME 
+são organizados em dois grupos (diretórios) que não podem ser combinados: 
+modelos i) </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+ii) </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">. Na 
+prática, algoritmos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Contínuos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+devem ser utilizados quando as variáveis de uso da terra são fornecidas como 
+percentual de cada célula no espaço celular (Figura 4). Por outro lado, 
+algoritmos </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Discretos</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+devem ser utilizados quando os tipos de uso da terra são fornecidos como 
+variáveis categóricas, representando a presença de cada classe numa célula. Em 
+cada um destes grupos (</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Contínuo</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Discreto</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">), 
+todos os componentes podem ser indistintamente utilizados. Novos componentes 
+implementados por usuários LuccME devem respeitar esta regra. Para maiores 
+informações sobre a criação de novos componentes, por favor, verificar o 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Guia 
+LuccME Criando Componentes</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">, 
+disponível na página do LuccME.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 1" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_122cc76d.png" width=567 align=bottom height=351 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 1 - </FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">Diferença entre modelos com dados de uso da terra 
+“contínuos” e “discretos”.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">Novos usuários são convidados a 
+explorar o LuccME combinando diferentes componentes de </SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN 
+style="FONT-WEIGHT: normal">Potencial</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal">, 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Alocação</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> e 
+</SPAN></FONT><FONT face="Arial Narrow, serif"><I><SPAN style="FONT-WEIGHT: normal">Demanda</SPAN></I></FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> já 
+implementados (Figura 5); desta forma, o usuário tem apenas que parametrizar um 
+modelo inicial a partir da interface gráfica levando em consideração as 
+orientações apresentadas seção 3.2.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal"><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><IMG border=0 name="Imagem 5" alt="" src="GuiaUsuario/LuccME_GuiaUsuario_html_cef8a162.png" width=567 height=146 ></P>
+<P class=western style="MARGIN-BOTTOM: 0in" align=center><FONT face="Arial Narrow, serif">Figura 2 -</FONT><FONT face="Arial Narrow, serif"><SPAN style="FONT-WEIGHT: normal"> 
+Componentes do LuccME.</SPAN></FONT></P>
+<P class=western style="MARGIN-BOTTOM: 0in; FONT-WEIGHT: normal" align=center><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in"><FONT face="Arial Narrow, serif"><SPAN 
+style="FONT-WEIGHT: normal">O quinto e último passo para 
+construção de um modelo no LuccME consiste em rodar o modelo após sua 
+parametrização e, sobretudo, na calibração e validação no modelo proposto. Esta 
+etapa será descrita em detalhes na última seção deste capítulo.</SPAN></FONT><BR></P>
+<P class=western style="MARGIN-BOTTOM: 0in">&nbsp;</P></body>
+</html>

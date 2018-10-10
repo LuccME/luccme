@@ -1,5 +1,5 @@
 FillCell - a TerraME script to generate Cellular Space file.
-Copyright © 2009 - 2017 INPE.
+Copyright © 2009 - 2018 INPE.
 
 This code is part of the TerraME framework.
 This framework is a free software; you can redistribute and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.

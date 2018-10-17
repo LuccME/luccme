@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{6D5D196C-1793-4C0B-843F-7009F6F330FD}
 AppName=FillCell
-AppVersion=2.1
+AppVersion=2.1.1
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
 AppSupportURL=http://luccme.ccst.inpe.br/
@@ -18,7 +18,7 @@ DefaultGroupName=FillCell
 DisableProgramGroupPage=yes
 LicenseFile=D:\_SVN\LuccME\branches\InterfaceCellFill\Project1\Resources\comment.txt
 OutputDir=D:\Diego\Desktop
-OutputBaseFilename=FillCell_2.1
+OutputBaseFilename=FillCell_2.1.1
 SetupIconFile=D:\_SVN\LuccME\branches\InterfaceCellFill\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes

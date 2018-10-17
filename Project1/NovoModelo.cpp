@@ -609,6 +609,15 @@ System::Void CellFulfill::NovoModelo::bShape_Click(System::Object^  sender, Syst
 	if (shapeFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
 		lLimitFileAddress->Text = shapeFile->FileName;
+		
+		int aux = 357;
+		aux -= lLimitFileAddress->Text->Length * 4;
+		
+		if (aux < 0) {
+			aux = 0;
+		}
+		
+		lLimitFileAddress->Location = System::Drawing::Point(aux, 140);
 	}
 }
 
@@ -2408,8 +2417,6 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 System::Void CellFulfill::NovoModelo::cbUseCS_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
 {
 	if (cbUseCS->Checked) {
-		checkLanguage();
-		
 		tCellSpaceName->Text = "";
 		tCellSpaceName->Enabled = false;
 		tCellSpaceResolution->Text = "";
@@ -2423,6 +2430,7 @@ System::Void CellFulfill::NovoModelo::cbUseCS_CheckedChanged(System::Object^  se
 		}
 
 		csExist = true;
+		checkLanguage();
 	}
 	else if (cbUseCS->Checked == false) {
 		csExist = false;

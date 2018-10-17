@@ -386,6 +386,7 @@ namespace CellFulfill {
 			// 
 			// tpScript
 			// 
+			this->tpScript->AutoScroll = true;
 			this->tpScript->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->tpScript->Controls->Add(this->lScriptDefinition);
 			this->tpScript->Controls->Add(this->lFiles);
@@ -483,6 +484,7 @@ namespace CellFulfill {
 			// 
 			// tpCellularSpace
 			// 
+			this->tpCellularSpace->AutoScroll = true;
 			this->tpCellularSpace->Controls->Add(this->lM);
 			this->tpCellularSpace->Controls->Add(this->tResDummy);
 			this->tpCellularSpace->Controls->Add(this->lX);
@@ -604,7 +606,7 @@ namespace CellFulfill {
 			this->lLimitFileAddress->AutoSize = true;
 			this->lLimitFileAddress->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lLimitFileAddress->Location = System::Drawing::Point(172, 140);
+			this->lLimitFileAddress->Location = System::Drawing::Point(357, 140);
 			this->lLimitFileAddress->Name = L"lLimitFileAddress";
 			this->lLimitFileAddress->Size = System::Drawing::Size(0, 19);
 			this->lLimitFileAddress->TabIndex = 95;

@@ -592,6 +592,7 @@ namespace LuccME {
 			// 
 			// tabDefModel
 			// 
+			this->tabDefModel->AutoScroll = true;
 			this->tabDefModel->Controls->Add(this->tEndTime);
 			this->tabDefModel->Controls->Add(this->lEndTime);
 			this->tabDefModel->Controls->Add(this->lDefinicoesModelo);
@@ -1180,6 +1181,7 @@ namespace LuccME {
 			// 
 			// tabSaveParam
 			// 
+			this->tabSaveParam->AutoScroll = true;
 			this->tabSaveParam->Controls->Add(this->cAuxOut);
 			this->tabSaveParam->Controls->Add(this->cReg);
 			this->tabSaveParam->Controls->Add(this->cChange);
@@ -1210,7 +1212,7 @@ namespace LuccME {
 			// 
 			this->cAuxOut->AutoSize = true;
 			this->cAuxOut->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
-			this->cAuxOut->Location = System::Drawing::Point(626, 429);
+			this->cAuxOut->Location = System::Drawing::Point(623, 422);
 			this->cAuxOut->Name = L"cAuxOut";
 			this->cAuxOut->Size = System::Drawing::Size(94, 23);
 			this->cAuxOut->TabIndex = 97;
@@ -1222,7 +1224,7 @@ namespace LuccME {
 			this->cReg->AutoSize = true;
 			this->cReg->Enabled = false;
 			this->cReg->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
-			this->cReg->Location = System::Drawing::Point(525, 429);
+			this->cReg->Location = System::Drawing::Point(522, 422);
 			this->cReg->Name = L"cReg";
 			this->cReg->Size = System::Drawing::Size(96, 23);
 			this->cReg->TabIndex = 97;
@@ -1233,7 +1235,7 @@ namespace LuccME {
 			// 
 			this->cChange->AutoSize = true;
 			this->cChange->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
-			this->cChange->Location = System::Drawing::Point(427, 429);
+			this->cChange->Location = System::Drawing::Point(424, 422);
 			this->cChange->Name = L"cChange";
 			this->cChange->Size = System::Drawing::Size(92, 23);
 			this->cChange->TabIndex = 97;
@@ -1244,7 +1246,7 @@ namespace LuccME {
 			// 
 			this->cPot->AutoSize = true;
 			this->cPot->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Bold));
-			this->cPot->Location = System::Drawing::Point(326, 429);
+			this->cPot->Location = System::Drawing::Point(323, 422);
 			this->cPot->Name = L"cPot";
 			this->cPot->Size = System::Drawing::Size(92, 23);
 			this->cPot->TabIndex = 97;
@@ -1279,7 +1281,7 @@ namespace LuccME {
 			this->lAttrToSave->AutoSize = true;
 			this->lAttrToSave->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lAttrToSave->Location = System::Drawing::Point(425, 374);
+			this->lAttrToSave->Location = System::Drawing::Point(422, 367);
 			this->lAttrToSave->Name = L"lAttrToSave";
 			this->lAttrToSave->Size = System::Drawing::Size(0, 19);
 			this->lAttrToSave->TabIndex = 94;
@@ -1310,7 +1312,7 @@ namespace LuccME {
 			this->lSaidaAdicionais->AutoSize = true;
 			this->lSaidaAdicionais->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lSaidaAdicionais->Location = System::Drawing::Point(439, 403);
+			this->lSaidaAdicionais->Location = System::Drawing::Point(436, 396);
 			this->lSaidaAdicionais->Name = L"lSaidaAdicionais";
 			this->lSaidaAdicionais->Size = System::Drawing::Size(146, 23);
 			this->lSaidaAdicionais->TabIndex = 91;
@@ -1470,6 +1472,7 @@ namespace LuccME {
 			// 
 			// tabAdvRes
 			// 
+			this->tabAdvRes->AutoScroll = true;
 			this->tabAdvRes->Controls->Add(this->bScenario);
 			this->tabAdvRes->Controls->Add(this->lScenarioYearsConfirm);
 			this->tabAdvRes->Controls->Add(this->lScenarioYears);

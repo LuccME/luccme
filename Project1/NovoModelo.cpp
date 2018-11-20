@@ -4546,20 +4546,23 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 				sw->Close();
 				main = true;
 				if (!oldModel) {
-					MessageBox::Show(gSMainImport, gSMainImportTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
+					MessageBox::Show(gSMainImport, gSMainImportTitle, MessageBoxButtons::OK, MessageBoxIcon::Information, MessageBoxDefaultButton::Button1, MessageBoxOptions::DefaultDesktopOnly);
 				}
 				else {
-					MessageBox::Show(gSMainImportOld, gSMainImportOldtTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
+					MessageBox::Show(gSMainImportOld, gSMainImportOldtTitle, MessageBoxButtons::OK, MessageBoxIcon::Information, MessageBoxDefaultButton::Button1, MessageBoxOptions::DefaultDesktopOnly);
 				}
 			}
 
+			this->Show();
+			this->WindowState = FormWindowState::Minimized;
+			this->WindowState = FormWindowState::Normal;
 			LuccME::OpenFileDialog^ submodelFile = gcnew OpenFileDialog;
 			submodelFile->Title = gSSubmodelFile;
 			submodelFile->Multiselect = false;
 			submodelFile->Filter = gSLuaFile;
 			submodelFile->FilterIndex = 1;
 			submodelFile->ShowHelp = true;
-
+			
 			//Submodel File
 			if (submodelFile->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 			{
@@ -7083,6 +7086,9 @@ System::Void LuccME::NovoModelo::NovoModelo_Load(System::Object ^ sender, System
 					runnable = true;
 					checkLanguage();
 					this->Text = gSEditing;
+					this->Show();
+					this->WindowState = FormWindowState::Minimized;
+					this->WindowState = FormWindowState::Normal;
 				}
 			}
 		} 

@@ -122,6 +122,15 @@ function saveSingleTheme(luccMEModel)
 		end
 	end
 	
-	print(string.format("\nElapsed time: %.2fs\n", os.clock() - x))
+	-- Calculating execution time
+	local sTime = os.clock() - x
+	local days = math.floor(sTime / 86400)
+	local hours = math.floor(sTime % 86400 / 3600)
+	local minutes = math.floor(sTime % 3600 / 60)
+	local seconds = math.floor(sTime % 60)
+	if seconds < 59 then
+		seconds = seconds + 1
+	end
+    print(string.format("Elapsed time: %.2d:%.2d:%.2d hh:mm:ss", hours,minutes,seconds))
 	print("\nEnd of Simulation")
 end

@@ -2628,7 +2628,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t{");
 					sw->WriteLine("\t\tproject = \"t3mp.tview\",");
 					sw->WriteLine("\t\tlayer = \"" + tThemeName->Text + "\",");
-					sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
+					sw->WriteLine("\t\tcellArea = " + tCellArea->Text->Replace(",",".") + ",");
 					sw->WriteLine("\t},");
 				}
 				else {
@@ -2636,7 +2636,7 @@ System::Void LuccME::NovoModelo::bGerarArquivos_Click(System::Object ^ sender, S
 					sw->WriteLine("\t{");
 					sw->WriteLine("\t\tproject = \"" + tbSelectedBatabase->Lines[1]->ToString()->Replace("\\", "\\\\") + "\",");
 					sw->WriteLine("\t\tlayer = \"" + tThemeName->Text + "\",");
-					sw->WriteLine("\t\tcellArea = " + tCellArea->Text + ",");
+					sw->WriteLine("\t\tcellArea = " + tCellArea->Text->Replace(",", ".") + ",");
 					sw->WriteLine("\t},");
 				}
 

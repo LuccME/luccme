@@ -13,6 +13,7 @@ System::Void LuccME::A_ABSO::bSalvar_Click(System::Object ^ sender, System::Even
 {
 	tMAxDifference->Text = tMAxDifference->Text->Replace("\r","");
 	tMAxDifference->Text = tMAxDifference->Text->Replace("\t", "");
+	tMAxDifference->Text = tMAxDifference->Text->Replace(",", ".");
 	lReturn->Return = tMAxDifference->Text;
 	this->Close();
 }

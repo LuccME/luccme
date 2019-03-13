@@ -714,11 +714,11 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 			tOperationOut->Location = System::Drawing::Point(482, 178);
 			lSelectOperation->Location = System::Drawing::Point(309, 213);
 			tSelectOperation->Location = System::Drawing::Point(482, 215);
-			lAreaOperation->Location = System::Drawing::Point(320, 251);
-			rbTrueOperation->Location = System::Drawing::Point(534, 253);
-			rbFalseOperation->Location = System::Drawing::Point(583, 253);
 			lDefaultOperation->Location = System::Drawing::Point(360, 251);
 			tDefaultOperation->Location = System::Drawing::Point(482, 253);
+			lAreaOperation->Location = System::Drawing::Point(320, 291);
+			rbTrueOperation->Location = System::Drawing::Point(534, 293);
+			rbFalseOperation->Location = System::Drawing::Point(583, 293);
 
 			cbOperation->Items->Clear();
 
@@ -752,6 +752,49 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					switch (cbOperation->SelectedIndex)
 					{
 					case P_COVERAGE:
+						if (dataTemp[AS_OUTPUT] != "") {
+							tOperationOut->Text = dataTemp[AS_OUTPUT];
+							tOperationOut->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_SELECT] != "") {
+							tSelectOperation->Text = dataTemp[AS_SELECT];
+							tSelectOperation->ForeColor = System::Drawing::Color::Black;
+						}
+
+						if (dataTemp[AS_AREA] != "") {
+							if (dataTemp[AS_AREA] == "true") {
+								rbTrueOperation->Checked = true;
+							}
+							else {
+								rbFalseOperation->Checked = true;
+							}
+						}
+
+						if (dataTemp[AS_DEFAULT] != "") {
+							tDefaultOperation->Text = dataTemp[AS_DEFAULT];
+							tDefaultOperation->ForeColor = System::Drawing::Color::Black;
+
+						}
+
+						lOperationName->Visible = true;
+						lOperationOut->Visible = true;
+						tOperationOut->Visible = true;
+						lSelectOperation->Visible = true;
+						tSelectOperation->Visible = true;
+						lAreaOperation->Visible = true;
+						rbTrueOperation->Visible = true;
+						rbFalseOperation->Visible = true;
+
+						lDefaultOperation->Visible = false;
+						tDefaultOperation->Visible = false;
+						lDummyOperation->Visible = false;
+						tDummyOperation->Visible = false;
+						lPixelReference->Visible = false;
+						pPixelReference->Visible = false;
+
+						bSaveOperation->Visible = true;
+						break;
 					case P_MODE:
 					case P_MAXIMUM:
 					case P_MINIMUM:
@@ -1192,6 +1235,24 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			switch (cbOperation->SelectedIndex)
 			{
 			case P_COVERAGE:
+				lOperationName->Visible = true;
+				lOperationOut->Visible = true;
+				tOperationOut->Visible = true;
+				lSelectOperation->Visible = true;
+				tSelectOperation->Visible = true;
+				lDefaultOperation->Visible = true;
+				tDefaultOperation->Visible = true;
+				lAreaOperation->Visible = true;
+				rbTrueOperation->Visible = true;
+				rbFalseOperation->Visible = true;
+
+				lDummyOperation->Visible = false;
+				tDummyOperation->Visible = false;
+				lPixelReference->Visible = false;
+				pPixelReference->Visible = false;
+
+				bSaveOperation->Visible = true;
+				break;
 			case P_MODE:
 			case P_MAXIMUM:
 			case P_MINIMUM:
@@ -1489,6 +1550,38 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				switch (cbOperation->SelectedIndex)
 				{
 				case P_COVERAGE:
+					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
+					attributeToList[AS_OUTPUT] = tOperationOut->Text;
+					attributeToList[AS_SELECT] = tSelectOperation->Text;
+
+					if (tDefaultOperation->Text != "null") {
+						attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+					}
+					else {
+						attributeToList[AS_DEFAULT] = "";
+					}
+
+					if (rbTrueOperation->Checked) {
+						attributeToList[AS_AREA] = "true";
+					}
+					else {
+						attributeToList[AS_AREA] = "false";
+					}
+
+					if (rbPolygon->Checked) {
+						attributeToList[AS_SHPTYPE] = "polygon";
+					}
+					else if (rbLine->Checked) {
+						attributeToList[AS_SHPTYPE] = "line";
+					}
+					else if (rbDot->Checked) {
+						attributeToList[AS_SHPTYPE] = "dot";
+					}
+
+					attributeList[attributeIndex] = attributeToList;
+					lvAttributesToFill->Items[attributeIndex]->SubItems->Add("OK");
+					operationVisualOFF();
+					break;
 				case P_MODE:
 				case P_MAXIMUM:
 				case P_MINIMUM:
@@ -1681,6 +1774,13 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
+
+				if (rbTrueOperation->Checked) {
+					attributeToList[AS_AREA] = "true";
+				}
+				else {
+					attributeToList[AS_AREA] = "false";
+				}
 
 				if (tDummyOperation->Text != "null") {
 					attributeToList[AS_DUMMY] = tDummyOperation->Text;
@@ -1934,6 +2034,19 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("if not checkEPSG then os.exit() end");
 				sw->WriteLine("");
 				
+				sw->WriteLine("-- Checking Shape Geometry --");
+				sw->WriteLine("print(\"\\n-- Checking Geometries--\")");
+
+				array<String^>^ filesNames = attributesName->Split(',');
+				for (int i = 0; i < filesNames->Length; i++)
+				{
+					if (filesNames[i]->Contains("shp")) {
+						sw->WriteLine("l" + (i+1) + ":check()");
+					}
+				}
+
+				sw->WriteLine("");
+
 				if (!cbUseCS->Checked) {
 					sw->WriteLine("-- CREATING CELLULAR SPACE --");
 					sw->WriteLine("print(\"\\n-- Creating Cellular Space --\\n\")");
@@ -2017,7 +2130,18 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("if(projFile:exists()) then");
 				sw->WriteLine("\tprojFile:delete()");
 				sw->WriteLine("end");
-				sw->WriteLine("print(string.format(\"\\nElapsed time : %.2fs\\n\", os.clock() - x))");
+				sw->WriteLine("");
+				sw->WriteLine("-- Calculating execution time --");
+				sw->WriteLine("local sTime = os.clock() - x");
+				sw->WriteLine("local days = math.floor(sTime / 86400)");
+				sw->WriteLine("local hours = math.floor(sTime % 86400 / 3600)");
+				sw->WriteLine("local minutes = math.floor(sTime % 3600 / 60)");
+				sw->WriteLine("local seconds = math.floor(sTime % 60)");
+				sw->WriteLine("if seconds < 59 then");
+				sw->WriteLine("\tseconds = seconds + 1");
+				sw->WriteLine("end");
+				sw->WriteLine("");
+				sw->WriteLine("print(string.format(\"\\nElapsed time : %.2d : %.2d : %.2d hh : mm:ss\", hours, minutes, seconds))");
 				sw->WriteLine("print(\"\\nEnd of Script\")");
 				sw->WriteLine("");
 
@@ -2245,6 +2369,14 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 					}
 				}
 
+				int aux = 357;
+				aux -= lLimitFileAddress->Text->Length * 4;
+
+				if (aux < 0) {
+					aux = 0;
+				}
+
+				lLimitFileAddress->Location = System::Drawing::Point(aux, 140);
 				sw->Close();
 					
 				if (!csExist) {

@@ -201,14 +201,14 @@ namespace CellFulfill {
 			// 
 			this->cellFillToolStripMenuItem->Name = L"cellFillToolStripMenuItem";
 			this->cellFillToolStripMenuItem->ShortcutKeys = System::Windows::Forms::Keys::F1;
-			this->cellFillToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->cellFillToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->cellFillToolStripMenuItem->Text = L"Cell Fill";
 			this->cellFillToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::CellFulfillToolStripMenuItem_Click);
 			// 
 			// sobreToolStripMenuItem
 			// 
 			this->sobreToolStripMenuItem->Name = L"sobreToolStripMenuItem";
-			this->sobreToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->sobreToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->sobreToolStripMenuItem->Text = L"Sobre";
 			this->sobreToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::sobreToolStripMenuItem_Click);
 			// 

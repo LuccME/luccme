@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{6D5D196C-1793-4C0B-843F-7009F6F330FD}
 AppName=FillCell
-AppVersion=2.1.1
+AppVersion=2.2
 AppPublisher=CCST - INPE
 AppPublisherURL=http://luccme.ccst.inpe.br/
 AppSupportURL=http://luccme.ccst.inpe.br/
@@ -18,7 +18,7 @@ DefaultGroupName=FillCell
 DisableProgramGroupPage=yes
 LicenseFile=D:\_SVN\LuccME\branches\InterfaceCellFill\Project1\Resources\comment.txt
 OutputDir=D:\Diego\Desktop
-OutputBaseFilename=FillCell_2.1.1
+OutputBaseFilename=FillCell_2.2
 SetupIconFile=D:\_SVN\LuccME\branches\InterfaceCellFill\Project1\Resources\icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -34,11 +34,11 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "D:\_SVN\LuccME\branches\InterfaceCellFill\x64\Release\FillCell 2.1.exe"; DestDir: "C:\FillCell"; Flags: ignoreversion;
+Source: "D:\_SVN\LuccME\branches\InterfaceCellFill\x64\Release\FillCell 2.2.exe"; DestDir: "C:\FillCell"; Flags: ignoreversion;
 Source: "D:\_SVN\LuccME\branches\InterfaceCellFill\x64\Release\*"; DestDir: "C:\FillCell"; Flags: ignoreversion recursesubdirs createallsubdirs;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\FillCell"; Filename: "C:\FillCell\FillCell 2.1.exe"
+Name: "{group}\FillCell"; Filename: "C:\FillCell\FillCell 2.2.exe"
 Name: "{group}\{cm:UninstallProgram,FillCell}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\FillCell 2.1"; Filename: "C:\FillCell\FillCell 2.1.exe"; Tasks: desktopicon
+Name: "{commondesktop}\FillCell 2.2"; Filename: "C:\FillCell\FillCell 2.2.exe"; Tasks: desktopicon

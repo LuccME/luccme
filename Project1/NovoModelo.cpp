@@ -83,6 +83,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lThemeName->Text = "Layer Name";
 		lCellArea->Text = "Cell Area";
 		lTerraview->Text = "Terraview Project";
+		bShape->Text = "Select";
 		//tabLUT
 		lLUTLarge->Text = "     Land Use Types";
 		lLUTMedium->Text = "Land Use Types";
@@ -285,6 +286,7 @@ System::Void LuccME::NovoModelo::checkLanguage()
 		lThemeName->Text = "Nome da Camada";
 		lCellArea->Text = "Área da Célula";
 		lTerraview->Text = "Projeto Terraview";
+		bShape->Text = "Selecionar";
 		//tabLUT
 		lLUTLarge->Text = "Tipos de Uso da Terra";
 		lLUTMedium->Text = "Tipos de Uso da Terra";

@@ -155,7 +155,10 @@ namespace LuccME {
 		String^ lLanguage;
 		
 		array<String^>^ gParametersValues = gcnew array<String^>(21);
-		//[0] = lSelectedFolder->Text;
+private: System::Windows::Forms::Label^  lShape;
+public:
+private: System::Windows::Forms::Button^  bShape;
+		 //[0] = lSelectedFolder->Text;
 		//[1] = tModelName->Text;
 		//[2] = tStartTime->Text;
 		//[3] = tEndTime->Text;
@@ -204,8 +207,8 @@ namespace LuccME {
 	private: System::Windows::Forms::Label^  lValidationRegion;
 	private: System::Windows::Forms::CheckBox^  cbValidateAllRegions;
 	private: System::Windows::Forms::CheckBox^  cbValidationRegionEnable;
-	private: System::Windows::Forms::Label^  lShape;
-	private: System::Windows::Forms::Button^  bShape;
+
+
 	private: System::Windows::Forms::Label^  lTerraview;
 	private: System::Windows::Forms::Button^  bScenario;
 	private: System::Windows::Forms::Label^  lScenarioYearsConfirm;
@@ -367,8 +370,6 @@ namespace LuccME {
 			this->lDirProj = (gcnew System::Windows::Forms::Label());
 			this->tabDefSpatial = (gcnew System::Windows::Forms::TabPage());
 			this->lTerraview = (gcnew System::Windows::Forms::Label());
-			this->lShape = (gcnew System::Windows::Forms::Label());
-			this->bShape = (gcnew System::Windows::Forms::Button());
 			this->tbSelectedBatabase = (gcnew System::Windows::Forms::TextBox());
 			this->bSelectDatabase = (gcnew System::Windows::Forms::Button());
 			this->tCellArea = (gcnew System::Windows::Forms::TextBox());
@@ -468,6 +469,8 @@ namespace LuccME {
 			this->tInputThemeName = (gcnew System::Windows::Forms::TextBox());
 			this->lInputThemeName = (gcnew System::Windows::Forms::Label());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->bShape = (gcnew System::Windows::Forms::Button());
+			this->lShape = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbLogo1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tNovoModelo->SuspendLayout();
@@ -740,7 +743,6 @@ namespace LuccME {
 			// 
 			// tabDefSpatial
 			// 
-			this->tabDefSpatial->Controls->Add(this->lTerraview);
 			this->tabDefSpatial->Controls->Add(this->lShape);
 			this->tabDefSpatial->Controls->Add(this->bShape);
 			this->tabDefSpatial->Controls->Add(this->tbSelectedBatabase);
@@ -752,6 +754,7 @@ namespace LuccME {
 			this->tabDefSpatial->Controls->Add(this->lSpacialDimensions);
 			this->tabDefSpatial->Controls->Add(this->lSelectedBatabase);
 			this->tabDefSpatial->Controls->Add(this->lDatabase);
+			this->tabDefSpatial->Controls->Add(this->lTerraview);
 			this->tabDefSpatial->Location = System::Drawing::Point(4, 22);
 			this->tabDefSpatial->Name = L"tabDefSpatial";
 			this->tabDefSpatial->Padding = System::Windows::Forms::Padding(3);
@@ -771,28 +774,7 @@ namespace LuccME {
 			this->lTerraview->TabIndex = 94;
 			this->lTerraview->Text = L"Projeto Terraview";
 			this->lTerraview->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			// 
-			// lShape
-			// 
-			this->lShape->AutoSize = true;
-			this->lShape->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lShape->Location = System::Drawing::Point(434, 68);
-			this->lShape->Name = L"lShape";
-			this->lShape->Size = System::Drawing::Size(58, 23);
-			this->lShape->TabIndex = 93;
-			this->lShape->Text = L"Shape";
-			this->lShape->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			// 
-			// bShape
-			// 
-			this->bShape->Location = System::Drawing::Point(425, 94);
-			this->bShape->Name = L"bShape";
-			this->bShape->Size = System::Drawing::Size(75, 23);
-			this->bShape->TabIndex = 92;
-			this->bShape->Text = L"Selecionar";
-			this->bShape->UseVisualStyleBackColor = true;
-			this->bShape->Click += gcnew System::EventHandler(this, &NovoModelo::bShape_Click);
+			this->lTerraview->Visible = false;
 			// 
 			// tbSelectedBatabase
 			// 
@@ -813,6 +795,7 @@ namespace LuccME {
 			this->bSelectDatabase->TabIndex = 79;
 			this->bSelectDatabase->Text = L"Selecionar";
 			this->bSelectDatabase->UseVisualStyleBackColor = true;
+			this->bSelectDatabase->Visible = false;
 			this->bSelectDatabase->Click += gcnew System::EventHandler(this, &NovoModelo::bSelectDatabase_Click);
 			// 
 			// tCellArea
@@ -848,6 +831,7 @@ namespace LuccME {
 			this->tThemeName->TabIndex = 83;
 			this->tThemeName->Text = L"layer_name";
 			this->tThemeName->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->tThemeName->Visible = false;
 			this->tThemeName->Enter += gcnew System::EventHandler(this, &NovoModelo::textBox_Enter);
 			// 
 			// lThemeName
@@ -862,6 +846,7 @@ namespace LuccME {
 			this->lThemeName->TabIndex = 82;
 			this->lThemeName->Text = L"Nome do Tema";
 			this->lThemeName->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->lThemeName->Visible = false;
 			// 
 			// lSpacialDimensions
 			// 
@@ -1991,6 +1976,28 @@ namespace LuccME {
 			this->statusStrip1->Size = System::Drawing::Size(745, 22);
 			this->statusStrip1->TabIndex = 19;
 			this->statusStrip1->Text = L"statusStrip1";
+			// 
+			// bShape
+			// 
+			this->bShape->Location = System::Drawing::Point(238, 94);
+			this->bShape->Name = L"bShape";
+			this->bShape->Size = System::Drawing::Size(75, 23);
+			this->bShape->TabIndex = 92;
+			this->bShape->Text = L"Selecionar";
+			this->bShape->UseVisualStyleBackColor = true;
+			this->bShape->Click += gcnew System::EventHandler(this, &NovoModelo::bShape_Click);
+			// 
+			// lShape
+			// 
+			this->lShape->AutoSize = true;
+			this->lShape->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lShape->Location = System::Drawing::Point(247, 68);
+			this->lShape->Name = L"lShape";
+			this->lShape->Size = System::Drawing::Size(58, 23);
+			this->lShape->TabIndex = 93;
+			this->lShape->Text = L"Shape";
+			this->lShape->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
 			// NovoModelo
 			// 

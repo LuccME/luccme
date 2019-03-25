@@ -3,7 +3,7 @@
 -- @arg component.file The file that execute the external model.
 -- @return the modified component.
 -- @usage --DONTRUN 
---D1 = DemandExternal
+--D1 = DemandExternalModel
 -- {
 -- 	file = "",
 -- 	annualDemand =

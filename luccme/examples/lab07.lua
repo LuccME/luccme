@@ -5,7 +5,7 @@
 -- Dynamic Variables update in 2009, 
 -- Scenario staring in 2015, update variables in 2020, until 2025.
 
-import("terralib")
+import("gis")
 
 local projFile = File("t3mp.tview")
 if(projFile:exists()) then

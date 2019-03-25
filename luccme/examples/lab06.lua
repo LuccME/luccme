@@ -4,7 +4,7 @@
 -- AllocationCClueLikeSaturation.
 -- Dynamic Variables update in 2009.
 
-import("terralib")
+import("gis")
 
 local projFile = File("t3mp.tview")
 if(projFile:exists()) then

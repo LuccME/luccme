@@ -3,7 +3,7 @@
 -- PotentialDSampleBased,
 -- AllocationDClueSLike.
 
-import("terralib")
+import("gis")
 
 local projFile = File("t3mp.tview")
 if(projFile:exists()) then

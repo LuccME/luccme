@@ -1,2 +1,2 @@
 lines = false
-tolerance = 0.1
+tolerance = 0.0

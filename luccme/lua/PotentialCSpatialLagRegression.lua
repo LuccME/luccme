@@ -360,7 +360,7 @@ function PotentialCSpatialLagRegression(component)
 					regresY = Y  
 				end	
                 
-                oldRegress = regresY
+                local oldRegress = regresY
 
 				if (luData.isLog) then -- if the land use is log transformed
 					regresY = math.log(regresY + 0.0001, 10)   -- ANAP

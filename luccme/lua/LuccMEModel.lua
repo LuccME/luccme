@@ -275,7 +275,7 @@ function LuccMEModel(model)
 				end
 
 				-- For each cell in the original cs, variables are contained in cs_temp is updated
-				local flag = false
+				local flag = true
 			       		
 				forEachCellPair(cs, cs_temp, function(cell, cell_temp)
 													for var, value in pairs (cell_temp) do
@@ -285,6 +285,7 @@ function LuccMEModel(model)
 															var ~= "object_id_" and var ~= "neighborhoods") then
 																if (cell[var] ~= nil) then
 																	cell[var] = cell_temp[var]
+																	-- print the column name if flag = false
 																	if (flag == false) then
 																		print("\t"..var)
 																	end		          					

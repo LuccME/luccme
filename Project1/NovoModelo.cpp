@@ -2038,6 +2038,19 @@ System::Void CellFulfill::NovoModelo::bFileMaker_Click(System::Object^  sender, 
 				sw->WriteLine("print(\"\\n-- Checking Geometries--\")");
 
 				array<String^>^ filesNames = attributesName->Split(',');
+				
+				//Remove duplicated files
+				for (int i = 0; i < filesNames->Length; i++)
+				{
+					for (int j = i + 1; j < filesNames->Length; j++) 
+					{
+						if (filesNames[i] == filesNames[j]) {
+							filesNames[j] = "";
+						}
+					}
+					
+				}
+
 				for (int i = 0; i < filesNames->Length; i++)
 				{
 					if (filesNames[i]->Contains("shp")) {

@@ -14,9 +14,9 @@
 #define OPENSCRIPT 2
 
 //List TYPES
-#define RASTERLIST		8
-#define POLYGONLIST		11
-#define NONPOLYGONLIST	9
+#define RASTERLIST		9
+#define POLYGONLIST		12
+#define NONPOLYGONLIST	10
 
 //Raster
 #define COVERAGE	0
@@ -27,6 +27,8 @@
 #define SUM			5
 #define STDEV		6
 #define COUNT		7
+#define MEDIAN		8
+
 
 //Polygon
 #define P_COVERAGE  0
@@ -40,6 +42,7 @@
 #define P_SUM		8
 #define P_COUNT		9
 #define P_STDEV		10
+#define P_MEDIAN	11
 
 //Non Polygon
 #define NP_AVERAGE	0
@@ -51,6 +54,7 @@
 #define NP_SUM		6
 #define NP_COUNT	7
 #define NP_STDEV	8
+#define NP_MEDIAN	9
 
 
 //TabPages

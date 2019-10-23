@@ -324,6 +324,9 @@ System::String^ CellFulfill::NovoModelo::polygonOperationToName(int operation)
 	else if (operation == P_STDEV) {
 		return "stdev";
 	}
+	else if (operation == P_MEDIAN) {
+		return "median";
+	}
 
 	return "";
 }
@@ -360,6 +363,9 @@ System::String^ CellFulfill::NovoModelo::nonPolygonOperationToName(int operation
 	else if (operation == NP_STDEV) {
 		return "stdev";
 	}
+	else if (operation == NP_MEDIAN) {
+		return "median";
+	}
 
 	return "";
 }
@@ -392,6 +398,9 @@ System::String^ CellFulfill::NovoModelo::rasterOperationToName(int operation)
 	}
 	else if (operation == COUNT) {
 		return "count";
+	}
+	else if (operation == MEDIAN) {
+		return "median";
 	}
 
 	return "";
@@ -435,6 +444,9 @@ System::Int32 CellFulfill::NovoModelo::polygonOperationToindex(String^ operation
 	else if (operation->Equals("stdev")) {
 		return P_STDEV;
 	}
+	else if (operation->Equals("median")) {
+		return P_MEDIAN;
+	}
 
 	return -1;
 }
@@ -471,6 +483,9 @@ System::Int32 CellFulfill::NovoModelo::nonPolygonOperationToindex(String^ operat
 	else if (operation->Equals("stdev")) {
 		return NP_STDEV;
 	}
+	else if (operation->Equals("median")) {
+		return NP_MEDIAN;
+	}
 
 	return -1;
 }
@@ -503,6 +518,9 @@ System::Int32 CellFulfill::NovoModelo::rasterOperationToindex(String^ operation)
 	}
 	else if (operation->Equals("count")) {
 		return COUNT;
+	}
+	else if (operation->Equals("median")) {
+		return MEDIAN;
 	}
 
 	return -1;
@@ -799,6 +817,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					case P_MAXIMUM:
 					case P_MINIMUM:
 					case P_STDEV:
+					case P_MEDIAN:
 						if (dataTemp[AS_OUTPUT] != "") {
 							tOperationOut->Text = dataTemp[AS_OUTPUT];
 							tOperationOut->ForeColor = System::Drawing::Color::Black;
@@ -950,6 +969,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 					case NP_MAXIMUM:
 					case NP_MINIMUM:
 					case NP_STDEV:
+					case NP_MEDIAN:
 						if (dataTemp[AS_OUTPUT] != "") {
 							tOperationOut->Text = dataTemp[AS_OUTPUT];
 							tOperationOut->ForeColor = System::Drawing::Color::Black;
@@ -1104,6 +1124,7 @@ System::Void CellFulfill::NovoModelo::lvAttributesToFill_SelectedIndexChanged(Sy
 				case MINIMUM:
 				case STDEV:
 				case COUNT:
+				case MEDIAN:
 					if (dataTemp[AS_OUTPUT] != "") {
 						tOperationOut->Text = dataTemp[AS_OUTPUT];
 						tOperationOut->ForeColor = System::Drawing::Color::Black;
@@ -1257,6 +1278,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 			case P_MAXIMUM:
 			case P_MINIMUM:
 			case P_STDEV:
+			case P_MEDIAN:
 				lOperationName->Visible = true;
 				lOperationOut->Visible = true;
 				tOperationOut->Visible = true;
@@ -1413,6 +1435,7 @@ System::Void CellFulfill::NovoModelo::cbOperation_SelectedIndexChanged(System::O
 		case MINIMUM:
 		case STDEV:
 		case COUNT:
+		case MEDIAN:
 			lOperationName->Visible = true;
 			lOperationOut->Visible = true;
 			tOperationOut->Visible = true;
@@ -1586,6 +1609,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				case P_MAXIMUM:
 				case P_MINIMUM:
 				case P_STDEV:
+				case P_MEDIAN:
 					attributeToList[AS_OPERATION] = polygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
@@ -1690,6 +1714,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 				case NP_MAXIMUM:
 				case NP_MINIMUM:
 				case NP_STDEV:
+				case NP_MEDIAN:
 					attributeToList[AS_OPERATION] = nonPolygonOperationToName(cbOperation->SelectedIndex);
 					attributeToList[AS_OUTPUT] = tOperationOut->Text;
 					attributeToList[AS_SELECT] = tSelectOperation->Text;
@@ -1771,6 +1796,7 @@ System::Void CellFulfill::NovoModelo::bSaveOperation_Click(System::Object^  send
 			case MINIMUM:
 			case STDEV:
 			case COUNT:
+			case MEDIAN:
 				attributeToList[AS_OPERATION] = rasterOperationToName(cbOperation->SelectedIndex);
 				attributeToList[AS_OUTPUT] = tOperationOut->Text;
 				attributeToList[AS_DEFAULT] = tDefaultOperation->Text;
@@ -2257,6 +2283,7 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 	rasterList[SUM] = "sum";
 	rasterList[STDEV] = "stdev";
 	rasterList[COUNT] = "count";
+	rasterList[MEDIAN] = "median";
 
 	polygonList[P_COVERAGE] = "coverage";
 	polygonList[P_AVERAGE] = "average";
@@ -2269,6 +2296,7 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 	polygonList[P_SUM] = "sum";
 	polygonList[P_COUNT] = "count";
 	polygonList[P_STDEV] = "stdev";
+	polygonList[P_MEDIAN] = "median";
 
 	nonPolygonList[NP_AVERAGE] = "average";
 	nonPolygonList[NP_DISTANCE] = "distance";
@@ -2279,6 +2307,7 @@ System::Void CellFulfill::NovoModelo::NovoModelo_Load(System::Object^  sender, S
 	nonPolygonList[NP_SUM] = "sum";
 	nonPolygonList[NP_COUNT] = "count";
 	nonPolygonList[NP_STDEV] = "stdev";
+	nonPolygonList[NP_MEDIAN] = "median";
 	
 	checkLanguage();
 
